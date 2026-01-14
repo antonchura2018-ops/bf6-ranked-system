@@ -1,169 +1,158 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>BF6 Ranked Dashboard</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<title>BF6 Ranked System</title>
 
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: radial-gradient(circle at top, #0b1d26, #000);
-      color: #fff;
-    }
+<style>
+/* ====== GLOBAL ====== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', sans-serif;
+}
 
-    .app {
-      display: grid;
-      grid-template-columns: 220px 1fr;
-      height: 100vh;
-    }
+body {
+  background: radial-gradient(circle at top, #0b0f1a, #05070d);
+  color: #e5e7eb;
+  min-height: 100vh;
+}
 
-    /* SIDEBAR */
-    .sidebar {
-      background: rgba(0,0,0,0.85);
-      border-right: 1px solid #00f0ff33;
-      padding: 20px;
-    }
+/* ====== NAV BAR ====== */
+.navbar {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  padding: 20px;
+  background: linear-gradient(180deg, #0f172a, #020617);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
 
-    .logo {
-      font-size: 22px;
-      color: #00f0ff;
-      font-weight: bold;
-      margin-bottom: 30px;
-      text-shadow: 0 0 10px #00f0ff;
-    }
+.nav-btn {
+  background: transparent;
+  border: none;
+  color: #9ca3af;
+  font-size: 15px;
+  letter-spacing: 1px;
+  cursor: pointer;
+  padding: 10px 20px;
+  position: relative;
+  transition: color 0.3s;
+}
 
-    .nav button {
-      width: 100%;
-      background: none;
-      border: none;
-      color: #ccc;
-      padding: 12px;
-      text-align: left;
-      cursor: pointer;
-      border-radius: 8px;
-      margin-bottom: 6px;
-    }
+.nav-btn:hover {
+  color: #38bdf8;
+}
 
-    .nav button:hover,
-    .nav button.active {
-      background: #00f0ff22;
-      color: #00f0ff;
-    }
+.nav-btn.active {
+  color: #22d3ee;
+}
 
-    /* MAIN */
-    .main {
-      padding: 30px;
-    }
+.nav-btn.active::after {
+  content: '';
+  position: absolute;
+  bottom: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40%;
+  height: 2px;
+  background: linear-gradient(90deg, #22d3ee, #38bdf8);
+  box-shadow: 0 0 12px #22d3ee;
+}
 
-    .rank-card {
-      background: linear-gradient(135deg, #111, #000);
-      border: 2px solid #00f0ff;
-      box-shadow: 0 0 25px #00f0ff;
-      border-radius: 18px;
-      padding: 25px;
-      max-width: 420px;
-    }
+/* ====== CONTENT ====== */
+.section {
+  display: none;
+  padding: 50px;
+  animation: fade 0.4s ease;
+}
 
-    .rank-name {
-      font-size: 26px;
-      color: #00f0ff;
-      text-shadow: 0 0 10px #00f0ff;
-    }
+.section.active {
+  display: block;
+}
 
-    .rp {
-      margin-top: 10px;
-      font-size: 18px;
-      opacity: 0.9;
-    }
+@keyframes fade {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 
-    .progress {
-      margin-top: 15px;
-      background: #111;
-      border-radius: 10px;
-      overflow: hidden;
-    }
+/* ====== HEADERS ====== */
+h1 {
+  font-size: 32px;
+  margin-bottom: 10px;
+  background: linear-gradient(90deg, #22d3ee, #38bdf8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
 
-    .progress-bar {
-      height: 10px;
-      width: 42%;
-      background: linear-gradient(90deg, #00f0ff, #6affff);
-      box-shadow: 0 0 10px #00f0ff;
-    }
+p {
+  color: #9ca3af;
+}
 
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 15px;
-      margin-top: 30px;
-      max-width: 420px;
-    }
-
-    .stat {
-      background: rgba(0,0,0,0.6);
-      border: 1px solid #ffffff22;
-      border-radius: 12px;
-      padding: 15px;
-      text-align: center;
-    }
-
-    .stat h3 {
-      margin: 0;
-      font-size: 14px;
-      opacity: 0.7;
-    }
-
-    .stat p {
-      margin: 6px 0 0;
-      font-size: 20px;
-      color: #00f0ff;
-    }
-  </style>
+/* ====== PANELS ====== */
+.panel {
+  margin-top: 30px;
+  background: linear-gradient(180deg, #0f172a, #020617);
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 14px;
+  padding: 25px;
+  box-shadow: 0 0 25px rgba(34,211,238,0.05);
+}
+</style>
 </head>
 
 <body>
-<div class="app">
 
-  <!-- SIDEBAR -->
-  <div class="sidebar">
-    <div class="logo">BF6 RANKED</div>
-    <div class="nav">
-      <button class="active">Dashboard</button>
-      <button>Ranks</button>
-      <button>History</button>
-      <button>Settings</button>
-    </div>
-  </div>
+<!-- NAVIGATION -->
+<div class="navbar">
+  <button class="nav-btn active" onclick="showTab('dashboard')">DASHBOARD</button>
+  <button class="nav-btn" onclick="showTab('rank')">RANK</button>
+  <button class="nav-btn" onclick="showTab('history')">MATCH HISTORY</button>
+</div>
 
-  <!-- MAIN -->
-  <div class="main">
+<!-- DASHBOARD -->
+<div id="dashboard" class="section active">
+  <h1>Player Dashboard</h1>
+  <p>Overview of your ranked progress.</p>
 
-    <div class="rank-card">
-      <div class="rank-name">PHANTOM III</div>
-      <div class="rp">RP: 1240 / 1500</div>
-
-      <div class="progress">
-        <div class="progress-bar"></div>
-      </div>
-    </div>
-
-    <div class="stats">
-      <div class="stat">
-        <h3>Matches</h3>
-        <p>42</p>
-      </div>
-      <div class="stat">
-        <h3>Avg Place</h3>
-        <p>6.8</p>
-      </div>
-      <div class="stat">
-        <h3>K / A / D</h3>
-        <p>8 / 5 / 4</p>
-      </div>
-    </div>
-
+  <div class="panel">
+    <p>🔹 Current RP: <strong>1250</strong></p>
+    <p>🔹 Current Rank: <strong>PHANTOM II</strong></p>
+    <p>🔹 Win Streak: <strong>3</strong></p>
   </div>
 </div>
+
+<!-- RANK -->
+<div id="rank" class="section">
+  <h1>Your Rank</h1>
+  <p>Rank tiers and progression.</p>
+
+  <div class="panel">
+    <p>🚀 Rank Icon Placeholder</p>
+    <p>Progress bar coming soon...</p>
+  </div>
+</div>
+
+<!-- HISTORY -->
+<div id="history" class="section">
+  <h1>Match History</h1>
+  <p>Last ranked games.</p>
+
+  <div class="panel">
+    <p>🕒 Match data will appear here.</p>
+  </div>
+</div>
+
+<script>
+function showTab(tabId) {
+  document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+
+  document.getElementById(tabId).classList.add('active');
+  event.target.classList.add('active');
+}
+</script>
+
 </body>
 </html>
