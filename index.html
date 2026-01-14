@@ -1,44 +1,169 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>BF6 Ranked System</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <title>BF6 Ranked Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <style>
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
-      background: radial-gradient(circle at top, #0f2027, #000);
-      color: white;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      font-family: 'Segoe UI', sans-serif;
+      background: radial-gradient(circle at top, #0b1d26, #000);
+      color: #fff;
+    }
+
+    .app {
+      display: grid;
+      grid-template-columns: 220px 1fr;
       height: 100vh;
     }
-    .card {
-      background: rgba(0,0,0,0.6);
+
+    /* SIDEBAR */
+    .sidebar {
+      background: rgba(0,0,0,0.85);
+      border-right: 1px solid #00f0ff33;
+      padding: 20px;
+    }
+
+    .logo {
+      font-size: 22px;
+      color: #00f0ff;
+      font-weight: bold;
+      margin-bottom: 30px;
+      text-shadow: 0 0 10px #00f0ff;
+    }
+
+    .nav button {
+      width: 100%;
+      background: none;
+      border: none;
+      color: #ccc;
+      padding: 12px;
+      text-align: left;
+      cursor: pointer;
+      border-radius: 8px;
+      margin-bottom: 6px;
+    }
+
+    .nav button:hover,
+    .nav button.active {
+      background: #00f0ff22;
+      color: #00f0ff;
+    }
+
+    /* MAIN */
+    .main {
+      padding: 30px;
+    }
+
+    .rank-card {
+      background: linear-gradient(135deg, #111, #000);
       border: 2px solid #00f0ff;
-      box-shadow: 0 0 30px #00f0ff;
-      border-radius: 16px;
-      padding: 40px;
-      text-align: center;
+      box-shadow: 0 0 25px #00f0ff;
+      border-radius: 18px;
+      padding: 25px;
       max-width: 420px;
     }
-    h1 {
-      margin-bottom: 10px;
+
+    .rank-name {
+      font-size: 26px;
       color: #00f0ff;
-      text-shadow: 0 0 12px #00f0ff;
+      text-shadow: 0 0 10px #00f0ff;
     }
-    p {
-      opacity: 0.85;
+
+    .rp {
+      margin-top: 10px;
+      font-size: 18px;
+      opacity: 0.9;
+    }
+
+    .progress {
+      margin-top: 15px;
+      background: #111;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      height: 10px;
+      width: 42%;
+      background: linear-gradient(90deg, #00f0ff, #6affff);
+      box-shadow: 0 0 10px #00f0ff;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+      margin-top: 30px;
+      max-width: 420px;
+    }
+
+    .stat {
+      background: rgba(0,0,0,0.6);
+      border: 1px solid #ffffff22;
+      border-radius: 12px;
+      padding: 15px;
+      text-align: center;
+    }
+
+    .stat h3 {
+      margin: 0;
+      font-size: 14px;
+      opacity: 0.7;
+    }
+
+    .stat p {
+      margin: 6px 0 0;
+      font-size: 20px;
+      color: #00f0ff;
     }
   </style>
 </head>
+
 <body>
-  <div class="card">
-    <h1>BF6 RANKED</h1>
-    <p>Custom Sci-Fi Ranking System</p>
-    <p>🚀 Project successfully deployed</p>
+<div class="app">
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div class="logo">BF6 RANKED</div>
+    <div class="nav">
+      <button class="active">Dashboard</button>
+      <button>Ranks</button>
+      <button>History</button>
+      <button>Settings</button>
+    </div>
   </div>
+
+  <!-- MAIN -->
+  <div class="main">
+
+    <div class="rank-card">
+      <div class="rank-name">PHANTOM III</div>
+      <div class="rp">RP: 1240 / 1500</div>
+
+      <div class="progress">
+        <div class="progress-bar"></div>
+      </div>
+    </div>
+
+    <div class="stats">
+      <div class="stat">
+        <h3>Matches</h3>
+        <p>42</p>
+      </div>
+      <div class="stat">
+        <h3>Avg Place</h3>
+        <p>6.8</p>
+      </div>
+      <div class="stat">
+        <h3>K / A / D</h3>
+        <p>8 / 5 / 4</p>
+      </div>
+    </div>
+
+  </div>
+</div>
 </body>
 </html>
