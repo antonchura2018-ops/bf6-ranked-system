@@ -703,15 +703,6 @@ p { color: #9ca3af; }
 </head>
 
 <body>
-<!-- CINEMATIC OVERLAY -->
-<div id="cinematic" class="cinematic hidden">
-  <div class="cinematic-bg"></div>
-
-  <div class="cinematic-card">
-    <h1 id="cinTitle">RANK PROMOTED</h1>
-    <p id="cinSub">PHANTOM → WARLORD</p>
-  </div>
-</div>
 
 <!-- NAVIGATION -->
 <div class="navbar">
@@ -1040,22 +1031,36 @@ function showCinematic(fromRank, toRank, isPromotion = true){
   title.textContent = isPromotion ? "RANK PROMOTED" : "RANK DEMOTED";
   sub.textContent = `${fromRank} → ${toRank}`;
 
+  // Show
   el.classList.remove("hidden");
 
+  // Auto-hide
   clearTimeout(window.__cinT);
   window.__cinT = setTimeout(() => {
     el.classList.add("hidden");
   }, 2400);
 }
 
+
 document.addEventListener("keydown", (e) => {
   if (e.key === "Escape") document.getElementById("cinematic")?.classList.add("hidden");
 });
-document.addEventListener("click", () => {
-  const cin = document.getElementById("cinematic");
-  if (!cin || cin.classList.contains("hidden")) return;
-  cin.classList.add("hidden");
+function hideCinematic() {
+  document.getElementById("cinematic")?.classList.add("hidden");
+}
+
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") hideCinematic();
 });
+
+// Close only when clicking the backdrop (not the card)
+const cinEl = document.getElementById("cinematic");
+cinEl?.addEventListener("click", (e) => {
+  const bg = e.target.classList.contains("cinematic-bg");
+  const root = e.target === cinEl;
+  if (bg || root) hideCinematic();
+});
+
 
 /* ===== UI UPDATES ===== */
 function updateRankUI(matches) {
