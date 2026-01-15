@@ -5,6 +5,97 @@
 <title>BF6 Ranked System</title>
 
 <style>
+  /* ====== FORM (ADD MATCH) ====== */
+.form .grid{
+  display:grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  max-width: 620px;
+}
+
+.form label{
+  display:flex;
+  flex-direction:column;
+  gap: 8px;
+  font-size: 12px;
+  color:#cbd5e1;
+  letter-spacing: .3px;
+}
+
+.form input[type="number"]{
+  padding: 12px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(2,6,23,0.55);
+  color:#e5e7eb;
+  outline: none;
+}
+
+.form input[type="number"]:focus{
+  border-color: rgba(34,211,238,0.35);
+  box-shadow: 0 0 18px rgba(34,211,238,0.08);
+}
+
+.toggles{
+  margin-top: 14px;
+  display:flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.toggle{
+  display:flex;
+  align-items:center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(2,6,23,0.45);
+  color:#e5e7eb;
+  font-size: 12px;
+}
+
+.toggle input{ transform: scale(1.1); }
+
+.actions{
+  margin-top: 16px;
+  display:flex;
+  align-items:center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.btn{
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(34,211,238,0.35);
+  background: rgba(34,211,238,0.14);
+  color:#a5f3fc;
+  cursor:pointer;
+  font-weight: 700;
+  letter-spacing: .3px;
+}
+
+.btn:hover{
+  background: rgba(34,211,238,0.22);
+}
+
+.btn.ghost{
+  border-color: rgba(251,113,133,0.35);
+  background: rgba(251,113,133,0.10);
+  color:#fecdd3;
+}
+
+.btn.ghost:hover{
+  background: rgba(251,113,133,0.16);
+}
+
+.hint{
+  font-size: 12px;
+  color:#9ca3af;
+  opacity: .9;
+}
+
   /* ====== MATCH HISTORY UI ====== */
 .history-top{
   margin-top: 22px;
@@ -511,6 +602,7 @@ p { color: #9ca3af; }
   <button class="nav-btn active" onclick="showTab('dashboard', this)">DASHBOARD</button>
   <button class="nav-btn" onclick="showTab('rank', this)">RANK</button>
   <button class="nav-btn" onclick="showTab('history', this)">MATCH HISTORY</button>
+  <button class="nav-btn" onclick="showTab('add', this)">ADD MATCH</button>
 </div>
 
 <!-- DASHBOARD -->
@@ -639,6 +731,50 @@ p { color: #9ca3af; }
     </div>
   </div>
 </div>
+  
+<!-- ADD MATCH -->
+<div id="add" class="section">
+  <h1>Add Match</h1>
+  <p>Enter your match results. Everything updates automatically.</p>
+
+  <div class="panel form">
+    <div class="grid">
+      <label>🏆 Place (1–25)
+        <input id="inPlace" type="number" min="1" max="25" value="10">
+      </label>
+
+      <label>🔫 Kills
+        <input id="inKills" type="number" min="0" value="0">
+      </label>
+
+      <label>🤝 Assists
+        <input id="inAssists" type="number" min="0" value="0">
+      </label>
+
+      <label>💀 Deaths
+        <input id="inDeaths" type="number" min="0" value="1">
+      </label>
+    </div>
+
+    <div class="toggles">
+      <label class="toggle">
+        <input id="inMVP" type="checkbox">
+        <span>⭐ MVP</span>
+      </label>
+
+      <label class="toggle">
+        <input id="inLeft" type="checkbox">
+        <span>⚠ Teammate Left</span>
+      </label>
+    </div>
+
+    <div class="actions">
+      <button class="btn" onclick="submitMatch()">Submit Match</button>
+      <button class="btn ghost" onclick="resetMatches()">Reset All Data</button>
+      <div class="hint">Data is stored locally in your browser.</div>
+    </div>
+  </div>
+</div>
 
 <!-- HISTORY -->
 <div id="history" class="section">
@@ -672,28 +808,138 @@ function showTab(tabId, btn) {
   document.getElementById(tabId).classList.add('active');
   btn.classList.add('active');
 }
-  // ===== DEMO MATCHES (temporary) =====
-const matches = [
-  { place: 2, kills: 8, assists: 4, deaths: 2, mvp: true, left: false, rp: +92 },
-  { place: 11, kills: 4, assists: 2, deaths: 5, mvp: false, left: false, rp: -8 },
-  { place: 5, kills: 10, assists: 3, deaths: 4, mvp: true, left: true, rp: +60 },
-  { place: 18, kills: 6, assists: 1, deaths: 6, mvp: false, left: false, rp: -34 },
-  { place: 1, kills: 12, assists: 6, deaths: 2, mvp: true, left: false, rp: +100 }
+  // ===== STORAGE KEY =====
+const STORAGE_KEY = "bf6_ranked_matches_v1";
+
+// ===== LOAD / SAVE =====
+function loadMatches() {
+  try {
+    return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+  } catch {
+    return [];
+  }
+}
+
+function saveMatches(matches) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(matches));
+}
+
+// ===== RP SYSTEM (hard, competitive) =====
+// Placement table (1..25) smooth scale
+const placementRP = {
+  1:100, 2:92, 3:85, 4:78, 5:70,
+  6:60, 7:52, 8:45, 9:38, 10:30,
+  11:20, 12:12, 13:6, 14:2, 15:0,
+  16:-8, 17:-16, 18:-24, 19:-32, 20:-40,
+  21:-48, 22:-54, 23:-58, 24:-59, 25:-60
+};
+
+function calcRP(m) {
+  const place = Math.min(25, Math.max(1, m.place));
+  const base = placementRP[place] ?? 0;
+
+  const killsBase = Math.min(m.kills, 10) * 4;
+  const killsExtra = Math.max(0, m.kills - 10) * 2;
+  const assists = m.assists * 2;
+
+  const deaths = m.deaths * -3;
+  const earlyPenalty = (place > 15 && m.deaths > 0) ? -10 : 0;
+
+  const mvp = m.mvp ? 15 : 0;
+  const leftBonus = m.left ? 10 : 0;
+
+  // can't turn very bad placement into positive RP purely by teammate-left
+  let rp = base + killsBase + killsExtra + assists + deaths + earlyPenalty + mvp + leftBonus;
+
+  // clamp extremes
+  rp = Math.max(-80, Math.min(200, rp));
+  return Math.round(rp);
+}
+
+// ===== RANK THRESHOLDS =====
+const rankTiers = [
+  { name: "OUTCAST", color: "#ffb86b", min: 0 },
+  { name: "VANGUARD", color: "#22d3ee", min: 600 },
+  { name: "SENTINEL", color: "#38bdf8", min: 1200 },
+  { name: "PHANTOM", color: "#a78bfa", min: 2000 },
+  { name: "WARLORD", color: "#fb7185", min: 3000 },
+  { name: "ARCHON", color: "#fbbf24", min: 4200 },
+  { name: "OVERSEER", color: "#2dd4bf", min: 5400 },
+  { name: "ASCENDANT", color: "#60a5fa", min: 6800 },
+  { name: "PARAGON", color: "#e5e7eb", min: 8500 },
+  { name: "NEXUS", color: "#ff3b3b", min: 10500 }
 ];
 
-function renderHistory() {
+function getRank(totalRP) {
+  let tier = rankTiers[0];
+  for (const t of rankTiers) {
+    if (totalRP >= t.min) tier = t;
+  }
+  // divisions I/II/III for everything except NEXUS
+  if (tier.name === "NEXUS") return { label: "NEXUS", color: tier.color, rr: 100, nextMin: null };
+
+  const nextTier = rankTiers[rankTiers.indexOf(tier) + 1];
+  const tierSpan = (nextTier ? nextTier.min : (tier.min + 1000)) - tier.min;
+
+  const progress = Math.max(0, Math.min(0.999, (totalRP - tier.min) / tierSpan));
+  // map progress into 3 divisions: III (low) -> II -> I (high)
+  const div = progress < (1/3) ? "III" : (progress < (2/3) ? "II" : "I");
+  const rr = Math.round(progress * 100);
+
+  return { label: `${tier.name} ${div}`, color: tier.color, rr, nextMin: nextTier ? nextTier.min : null };
+}
+
+// ===== UI UPDATES =====
+function updateRankUI(matches) {
+  const totalRP = matches.reduce((s, m) => s + m.rp, 0);
+  const rank = getRank(totalRP);
+
+  // Update Rank card
+  const rankTitle = document.querySelector("#rank .rank-info h2");
+  const rankRP = document.querySelector("#rank .rank-rp");
+  const rpFill = document.querySelector("#rank .rp-fill");
+
+  if (rankTitle) rankTitle.textContent = rank.label;
+  if (rankRP) rankRP.textContent = rank.nextMin
+    ? `RP: ${totalRP} / ${rank.nextMin}`
+    : `RP: ${totalRP} (MAX)`;
+
+  if (rpFill) rpFill.style.width = `${rank.rr}%`;
+
+  // Update Dashboard quick stats
+  const dash = document.querySelector("#dashboard .panel");
+  if (dash) {
+    dash.innerHTML = `
+      <p>🔹 Current RP: <strong>${totalRP}</strong></p>
+      <p>🔹 Current Rank: <strong>${rank.label}</strong></p>
+      <p>🔹 Matches: <strong>${matches.length}</strong></p>
+    `;
+  }
+}
+
+function renderHistoryFromStorage() {
+  const matches = loadMatches();
+  updateRankUI(matches);
+
   const list = document.getElementById("matchList");
   if (!list) return;
-
   list.innerHTML = "";
+
+  if (matches.length === 0) {
+    list.innerHTML = `<div class="panel"><p>No matches yet. Add your first match in <b>ADD MATCH</b>.</p></div>`;
+    document.getElementById("streakValue").textContent = "0";
+    document.getElementById("bestValue").textContent = "+0";
+    document.getElementById("worstValue").textContent = "0";
+    return;
+  }
 
   const best = Math.max(...matches.map(m => m.rp));
   const worst = Math.min(...matches.map(m => m.rp));
 
-  document.getElementById("bestValue").textContent = `+${best}`;
+  document.getElementById("bestValue").textContent = best >= 0 ? `+${best}` : `${best}`;
   document.getElementById("worstValue").textContent = `${worst}`;
 
-  // Win streak: count consecutive top-3 from the end
+  // Win streak: consecutive top-3 from end
   let streak = 0;
   for (let i = matches.length - 1; i >= 0; i--) {
     if (matches[i].place <= 3) streak++;
@@ -704,6 +950,7 @@ function renderHistory() {
   matches.forEach((m, idx) => {
     const card = document.createElement("div");
     card.className = "match-card";
+
     if (m.rp === best) card.classList.add("best");
     if (m.rp === worst) card.classList.add("worst");
 
@@ -732,8 +979,35 @@ function renderHistory() {
   });
 }
 
-// render once on load
-renderHistory();
+// ===== ACTIONS =====
+function submitMatch() {
+  const place = Number(document.getElementById("inPlace").value);
+  const kills = Number(document.getElementById("inKills").value);
+  const assists = Number(document.getElementById("inAssists").value);
+  const deaths = Number(document.getElementById("inDeaths").value);
+  const mvp = document.getElementById("inMVP").checked;
+  const left = document.getElementById("inLeft").checked;
+
+  const match = { place, kills, assists, deaths, mvp, left, ts: Date.now() };
+  match.rp = calcRP(match);
+
+  const matches = loadMatches();
+  matches.push(match);
+  saveMatches(matches);
+
+  renderHistoryFromStorage();
+  showTab("history", document.querySelectorAll(".nav-btn")[2]); // go to history
+}
+
+function resetMatches() {
+  if (!confirm("Reset all saved matches?")) return;
+  localStorage.removeItem(STORAGE_KEY);
+  renderHistoryFromStorage();
+}
+
+// ===== INIT =====
+renderHistoryFromStorage();
+
 
 </script>
 
