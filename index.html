@@ -1080,6 +1080,34 @@ p { color: #9ca3af; }
       <button class="btn ghost" onclick="resetMatches()">Reset All Data</button>
       <div class="hint">Data is stored locally in your browser.</div>
     </div>
+    <div class="panel" style="margin-top:16px;">
+  <h3 style="margin-bottom:10px; letter-spacing:.6px;">Export / Import</h3>
+  <p style="color:#9ca3af; font-size:12px; margin-bottom:10px;">
+    Backup your matches as JSON, or import them on another device.
+  </p>
+
+  <textarea id="ioBox" rows="8" style="
+    width:100%;
+    resize:vertical;
+    padding:12px;
+    border-radius:12px;
+    border:1px solid rgba(255,255,255,0.08);
+    background:rgba(2,6,23,0.55);
+    color:#e5e7eb;
+    outline:none;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+    font-size:12px;
+    line-height:1.4;
+  " placeholder="Paste JSON here (Import) or click Export to generate..."></textarea>
+
+  <div class="actions" style="margin-top:10px;">
+    <button class="btn" onclick="exportData()">Export JSON</button>
+    <button class="btn" onclick="importData()">Import JSON</button>
+    <button class="btn ghost" onclick="clearIO()">Clear Box</button>
+  </div>
+
+  <div class="hint">Tip: Export copies JSON to clipboard automatically.</div>
+</div>
   </div>
 </div>
 
@@ -1592,7 +1620,120 @@ function submitMatch() {
 }
 
   
+function exportData() {
+  var box = document.getElementById("ioBox");
+  var matches = loadMatches();
 
+  var payload = {
+    version: 1,
+    exportedAt: Date.now(),
+    startRP: START_RP,
+    matches: matches
+  };
+
+  var json = JSON.stringify(payload, null, 2);
+  if (box) box.value = json;
+
+  // Copy to clipboard (best effort)
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(json).then(function () {
+      alert("Exported! JSON copied to clipboard.");
+    }).catch(function () {
+      alert("Exported! (Clipboard copy was blocked by browser.)");
+    });
+  } else {
+    alert("Exported! (Clipboard API not available.)");
+  }
+}
+
+function importData() {
+  var box = document.getElementById("ioBox");
+  if (!box) {
+    alert("Import box not found.");
+    return;
+  }
+
+  var text = String(box.value || "").trim();
+  if (!text) {
+    alert("Paste JSON into the box first.");
+    return;
+  }
+
+  var payload;
+  try {
+    payload = JSON.parse(text);
+  } catch (e) {
+    alert("Invalid JSON. Please check formatting.");
+    return;
+  }
+
+  // Accept either {matches:[...]} or raw array [...]
+  var matches = null;
+
+  if (Array.isArray(payload)) {
+    matches = payload;
+  } else if (payload && Array.isArray(payload.matches)) {
+    matches = payload.matches;
+  }
+
+  if (!matches) {
+    alert("JSON must contain an array of matches or { matches: [...] }");
+    return;
+  }
+
+  // Basic validation + backfill rp/breakdown
+  var cleaned = [];
+  for (var i = 0; i < matches.length; i++) {
+    var m = matches[i] || {};
+
+    // required numeric fields (fallback to 0)
+    var place = Number(m.place || 0);
+    var kills = Number(m.kills || 0);
+    var assists = Number(m.assists || 0);
+    var deaths = Number(m.deaths || 0);
+    var mvp = !!m.mvp;
+    var left = !!m.left;
+    var ts = Number(m.ts || Date.now());
+
+    // normalize constraints
+    if (!isFinite(place)) place = 0;
+    if (!isFinite(kills)) kills = 0;
+    if (!isFinite(assists)) assists = 0;
+    if (!isFinite(deaths)) deaths = 0;
+
+    var obj = {
+      place: place,
+      kills: kills,
+      assists: assists,
+      deaths: deaths,
+      mvp: mvp,
+      left: left,
+      ts: ts
+    };
+
+    obj.breakdown = calcRPBreakdown(obj);
+    obj.rp = obj.breakdown.total;
+
+    cleaned.push(obj);
+  }
+
+  if (!confirm("Import will replace your current saved data. Continue?")) return;
+
+  saveMatches(cleaned);
+  lastRankState = null;
+  renderHistoryFromStorage();
+
+  var btns = document.querySelectorAll(".nav-btn");
+  showTab("history", btns[2]);
+
+  alert("Import complete!");
+}
+
+function clearIO() {
+  var box = document.getElementById("ioBox");
+  if (box) box.value = "";
+}
+  
 function resetMatches() {
   if (!confirm("Reset all saved matches?")) return;
   localStorage.removeItem(STORAGE_KEY);
