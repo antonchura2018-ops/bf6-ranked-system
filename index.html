@@ -1342,13 +1342,12 @@ const rank = getRank(totalRP);
   if (rpFill) rpFill.style.width = `${rank.rr}%`;
 
   const dash = document.querySelector("#dashboard .panel");
-  if (dash) {
-    dash.innerHTML = `
-      <p>🔹 Current RP: <strong>${totalRP}</strong></p>
-      <p>🔹 Current Rank: <strong>${rank.label}</strong></p>
-      <p>🔹 Matches: <strong>${matches.length}</strong></p>
-    `;
-  }
+if (dash) {
+  dash.innerHTML =
+    "<p>🔹 Current RP: <strong>" + totalRP + "</strong></p>" +
+    "<p>🔹 Current Rank: <strong>" + rank.label + "</strong></p>" +
+    "<p>🔹 Matches: <strong>" + matches.length + "</strong></p>";
+}
 
   // CINEMATIC trigger (tier + division) - correct logic
 const currentState = {
