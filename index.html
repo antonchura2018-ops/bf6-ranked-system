@@ -1080,12 +1080,13 @@ if (lastRankIndex === null) {
   }
   // Division change (same tier, different I / II / III)
   else if (lastRankLabel !== rank.label) {
-    const promoted =
-      rank.label.endsWith("I") || rank.label.endsWith("II");
+  const promoted =
+    rank.label.endsWith("I") || rank.label.endsWith("II");
 
-    showCinematic(lastRankLabel, rank.label, promoted);
-    lastRankLabel = rank.label;
-  }
+  showCinematic(lastRankLabel, rank.label, promoted);
+  lastRankLabel = rank.label;
+}
+
 }
 
 
