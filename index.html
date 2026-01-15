@@ -1035,6 +1035,7 @@ p { color: #9ca3af; }
 
     <div class="actions">
       <button class="btn" onclick="submitMatch()">Submit Match</button>
+      <button class="btn" onclick="undoLastMatch()">Undo Last Match</button>
       <button class="btn ghost" onclick="resetMatches()">Reset All Data</button>
       <div class="hint">Data is stored locally in your browser.</div>
     </div>
@@ -1448,6 +1449,28 @@ function submitMatch() {
   var btns = document.querySelectorAll(".nav-btn");
   showTab("history", btns[2]);
 }
+  function undoLastMatch() {
+  var matches = loadMatches();
+  if (!matches || matches.length === 0) {
+    alert("No matches to undo.");
+    return;
+  }
+
+  // Remove last match
+  matches.pop();
+  saveMatches(matches);
+
+  // Reset cinematic state so it doesn't mis-trigger after undo
+  lastRankState = null;
+
+  renderHistoryFromStorage();
+
+  // Optional: go to history tab to see the result
+  var btns = document.querySelectorAll(".nav-btn");
+  showTab("history", btns[2]);
+}
+
+  
 
 function resetMatches() {
   if (!confirm("Reset all saved matches?")) return;
