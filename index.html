@@ -994,8 +994,10 @@ const rankTiers = [
   { name: "PARAGON", color: "#e5e7eb", min: 8500 },
   { name: "NEXUS", color: "#ff3b3b", min: 10500 }
 ];
-  let lastRankIndex = null;
+  // ===== CINEMATIC TRACKING =====
+let lastRankIndex = null;
 let lastRankLabel = null;
+
 
 
 function getRank(totalRP) {
@@ -1016,6 +1018,15 @@ function getRank(totalRP) {
 
   return { label: `${tier.name} ${div}`, color: tier.color, rr, nextMin: nextTier ? nextTier.min : null };
 }
+  // ===== RANK INDEX (for cinematic) =====
+function getRankIndex(totalRP){
+  let idx = 0;
+  for (let i = 0; i < rankTiers.length; i++){
+    if (totalRP >= rankTiers[i].min) idx = i;
+  }
+  return idx;
+}
+
 
 // ===== UI UPDATES =====
 function updateRankUI(matches) {
@@ -1043,7 +1054,31 @@ function updateRankUI(matches) {
       <p>🔹 Matches: <strong>${matches.length}</strong></p>
     `;
   }
+
+  // ===== CINEMATIC TRIGGER (MUST BE INSIDE THIS FUNCTION) =====
+  const currentIndex = getRankIndex(totalRP);
+
+  if (lastRankIndex === null) {
+    // first load
+    lastRankIndex = currentIndex;
+    lastRankLabel = rank.label;
+  } else if (currentIndex !== lastRankIndex) {
+    // rank tier changed
+    const promoted = currentIndex > lastRankIndex;
+    showCinematic(lastRankLabel, rank.label, promoted);
+
+    lastRankIndex = currentIndex;
+    lastRankLabel = rank.label;
+  } else if (lastRankLabel !== rank.label) {
+    // same tier, different division (I / II / III)
+    const promoted = rank.rr > 50;
+    showCinematic(lastRankLabel, rank.label, promoted);
+
+    lastRankLabel = rank.label;
+  }
 }
+
+
 
 function renderHistoryFromStorage() {
   const matches = loadMatches();
@@ -1132,6 +1167,37 @@ function resetMatches() {
   localStorage.removeItem(STORAGE_KEY);
   renderHistoryFromStorage();
 }
+// ===== CINEMATIC FUNCTIONS =====
+function showCinematic(fromRank, toRank, isPromotion = true){
+  const el = document.getElementById("cinematic");
+  const title = document.getElementById("cinTitle");
+  const sub = document.getElementById("cinSub");
+
+  if (!el) return;
+
+  title.textContent = isPromotion ? "RANK PROMOTED" : "RANK DEMOTED";
+  sub.textContent = `${fromRank} → ${toRank}`;
+
+  el.classList.remove("hidden");
+
+  clearTimeout(window.__cinT);
+  window.__cinT = setTimeout(() => {
+    el.classList.add("hidden");
+  }, 2400);
+}
+
+// Close cinematic
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") {
+    document.getElementById("cinematic")?.classList.add("hidden");
+  }
+});
+
+document.addEventListener("click", () => {
+  const cin = document.getElementById("cinematic");
+  if (!cin || cin.classList.contains("hidden")) return;
+  cin.classList.add("hidden");
+});
 
 // ===== INIT =====
 renderHistoryFromStorage();
