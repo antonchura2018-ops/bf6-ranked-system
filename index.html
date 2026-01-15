@@ -5,6 +5,140 @@
 <title>BF6 Ranked System</title>
 
 <style>
+  /* ====== MATCH HISTORY UI ====== */
+.history-top{
+  margin-top: 22px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  max-width: 900px;
+}
+
+.mini-card{
+  padding: 14px 16px;
+  border-radius: 14px;
+  background: linear-gradient(180deg, rgba(15,23,42,.85), rgba(2,6,23,.9));
+  border: 1px solid rgba(255,255,255,0.06);
+  box-shadow: 0 0 24px rgba(34,211,238,0.05);
+}
+
+.mini-label{
+  font-size: 12px;
+  color:#9ca3af;
+  letter-spacing: .8px;
+}
+
+.mini-value{
+  margin-top: 6px;
+  font-size: 22px;
+  font-weight: 800;
+  color:#22d3ee;
+  text-shadow: 0 0 10px rgba(34,211,238,0.25);
+}
+
+.match-list{
+  margin-top: 16px;
+  display: grid;
+  gap: 12px;
+  max-width: 900px;
+}
+
+.match-card{
+  position: relative;
+  padding: 16px 16px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, rgba(2,6,23,.85), rgba(15,23,42,.85));
+  border: 1px solid rgba(255,255,255,0.06);
+  overflow: hidden;
+  transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+}
+
+.match-card:hover{
+  transform: translateY(-1px);
+  border-color: rgba(34,211,238,0.18);
+  box-shadow: 0 0 28px rgba(34,211,238,0.06);
+}
+
+.match-card.best{
+  border-color: rgba(34,211,238,0.55);
+  box-shadow: 0 0 34px rgba(34,211,238,0.10);
+}
+
+.match-card.worst{
+  border-color: rgba(251,113,133,0.45);
+  box-shadow: 0 0 34px rgba(251,113,133,0.08);
+}
+
+.match-row{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.left{
+  display:flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.title{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-weight: 800;
+  letter-spacing: .8px;
+}
+
+.place{
+  font-size: 12px;
+  color:#9ca3af;
+}
+
+.kad{
+  font-size: 12px;
+  color:#9ca3af;
+}
+
+.rpDelta{
+  font-size: 18px;
+  font-weight: 900;
+  min-width: 90px;
+  text-align: right;
+}
+
+.rpPlus{ color:#22c55e; text-shadow: 0 0 12px rgba(34,197,94,0.15); }
+.rpMinus{ color:#fb7185; text-shadow: 0 0 12px rgba(251,113,133,0.15); }
+
+.badges{
+  display:flex;
+  gap:8px;
+  flex-wrap: wrap;
+}
+
+.badge-pill{
+  font-size: 11px;
+  letter-spacing: .6px;
+  padding: 5px 9px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(2,6,23,0.55);
+  color:#e5e7eb;
+  opacity: .95;
+}
+
+.badge-mvp{
+  border-color: rgba(251,191,36,0.35);
+  box-shadow: 0 0 14px rgba(251,191,36,0.10);
+  color:#fbbf24;
+}
+
+.badge-leave{
+  border-color: rgba(251,113,133,0.35);
+  box-shadow: 0 0 14px rgba(251,113,133,0.10);
+  color:#fb7185;
+}
+
   /* ====== RANK LADDER ====== */
 .ladder{
   margin-top: 28px;
@@ -509,12 +643,26 @@ p { color: #9ca3af; }
 <!-- HISTORY -->
 <div id="history" class="section">
   <h1>Match History</h1>
-  <p>Last ranked games.</p>
+  <p>Your recent ranked matches and RP changes.</p>
 
-  <div class="panel">
-    <p>🕒 Match data will appear here.</p>
+  <div class="history-top">
+    <div class="mini-card">
+      <div class="mini-label">Win Streak</div>
+      <div class="mini-value" id="streakValue">0</div>
+    </div>
+    <div class="mini-card">
+      <div class="mini-label">Best Match</div>
+      <div class="mini-value" id="bestValue">+0</div>
+    </div>
+    <div class="mini-card">
+      <div class="mini-label">Worst Match</div>
+      <div class="mini-value" id="worstValue">0</div>
+    </div>
   </div>
+
+  <div class="match-list" id="matchList"></div>
 </div>
+
 
 <script>
 function showTab(tabId, btn) {
@@ -524,6 +672,69 @@ function showTab(tabId, btn) {
   document.getElementById(tabId).classList.add('active');
   btn.classList.add('active');
 }
+  // ===== DEMO MATCHES (temporary) =====
+const matches = [
+  { place: 2, kills: 8, assists: 4, deaths: 2, mvp: true, left: false, rp: +92 },
+  { place: 11, kills: 4, assists: 2, deaths: 5, mvp: false, left: false, rp: -8 },
+  { place: 5, kills: 10, assists: 3, deaths: 4, mvp: true, left: true, rp: +60 },
+  { place: 18, kills: 6, assists: 1, deaths: 6, mvp: false, left: false, rp: -34 },
+  { place: 1, kills: 12, assists: 6, deaths: 2, mvp: true, left: false, rp: +100 }
+];
+
+function renderHistory() {
+  const list = document.getElementById("matchList");
+  if (!list) return;
+
+  list.innerHTML = "";
+
+  const best = Math.max(...matches.map(m => m.rp));
+  const worst = Math.min(...matches.map(m => m.rp));
+
+  document.getElementById("bestValue").textContent = `+${best}`;
+  document.getElementById("worstValue").textContent = `${worst}`;
+
+  // Win streak: count consecutive top-3 from the end
+  let streak = 0;
+  for (let i = matches.length - 1; i >= 0; i--) {
+    if (matches[i].place <= 3) streak++;
+    else break;
+  }
+  document.getElementById("streakValue").textContent = streak;
+
+  matches.forEach((m, idx) => {
+    const card = document.createElement("div");
+    card.className = "match-card";
+    if (m.rp === best) card.classList.add("best");
+    if (m.rp === worst) card.classList.add("worst");
+
+    const rpClass = m.rp >= 0 ? "rpPlus" : "rpMinus";
+    const rpText = m.rp >= 0 ? `+${m.rp}` : `${m.rp}`;
+
+    card.innerHTML = `
+      <div class="match-row">
+        <div class="left">
+          <div class="title">
+            <span>Match #${idx + 1}</span>
+            <div class="badges">
+              ${m.mvp ? `<span class="badge-pill badge-mvp">⭐ MVP</span>` : ``}
+              ${m.left ? `<span class="badge-pill badge-leave">⚠ Teammate Left</span>` : ``}
+            </div>
+          </div>
+          <div class="place">🏆 Place: <strong>${m.place}</strong> / 25</div>
+          <div class="kad">🔫 K/A/D: <strong>${m.kills}</strong> / <strong>${m.assists}</strong> / <strong>${m.deaths}</strong></div>
+        </div>
+
+        <div class="rpDelta ${rpClass}">${rpText} RP</div>
+      </div>
+    `;
+
+    list.appendChild(card);
+  });
+}
+
+// render once on load
+renderHistory();
+
 </script>
 
 </body>
