@@ -1087,14 +1087,14 @@ if (lastRankIndex === null) {
   lastRankLabel = rank.label;
 }
 
-}
-
-
-
+} // ✅ END updateRankUI
 
 function renderHistoryFromStorage() {
   const matches = loadMatches();
   updateRankUI(matches);
+  ...
+}
+
 
   const list = document.getElementById("matchList");
   if (!list) return;
