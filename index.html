@@ -1134,11 +1134,11 @@ function calcRP(m) {
   return Math.round(rp);
 }
   
+/* ===== RANKS ===== */
 // ===== RANK SETTINGS =====
 const START_RP = 1250;   // starting RP baseline (edit if you want)
 const MIN_RP = 0;        // never go below 0
 
-/* ===== RANKS ===== */
 const rankTiers = [
   { name: "OUTCAST",  color: "#ffb86b", min: 0 },
   { name: "VANGUARD", color: "#22d3ee", min: 600 },
@@ -1154,7 +1154,6 @@ const rankTiers = [
 
 // cinematic tracking (tier + division)
 let lastRankState = null; // { tierIndex, divIndex, label }
-
 
 function getRank(totalRP) {
   // find tier index
@@ -1211,6 +1210,7 @@ function getRank(totalRP) {
     nextMin: nextTier ? nextTier.min : null
   };
 }
+
 
 
 /* ===== CINEMATIC ===== */
