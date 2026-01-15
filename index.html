@@ -1087,19 +1087,27 @@ p { color: #9ca3af; }
 <script>
 /* ===== NAV ===== */
 function showTab(tabId, btn) {
-  document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
-  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-  const target = document.getElementById(tabId);
-  if (target) target.classList.add('active');
-  if (btn) btn.classList.add('active');
+  var sections = document.querySelectorAll(".section");
+  for (var i = 0; i < sections.length; i++) sections[i].classList.remove("active");
+
+  var buttons = document.querySelectorAll(".nav-btn");
+  for (var j = 0; j < buttons.length; j++) buttons[j].classList.remove("active");
+
+  var target = document.getElementById(tabId);
+  if (target) target.classList.add("active");
+  if (btn) btn.classList.add("active");
 }
 
 /* ===== STORAGE ===== */
-const STORAGE_KEY = "bf6_ranked_matches_v1";
+var STORAGE_KEY = "bf6_ranked_matches_v1";
 
 function loadMatches() {
-  try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; }
-  catch { return []; }
+  try {
+    var raw = localStorage.getItem(STORAGE_KEY);
+    return raw ? JSON.parse(raw) : [];
+  } catch (e) {
+    return [];
+  }
 }
 
 function saveMatches(matches) {
@@ -1107,7 +1115,7 @@ function saveMatches(matches) {
 }
 
 /* ===== RP TABLE ===== */
-const placementRP = {
+var placementRP = {
   1:100, 2:92, 3:85, 4:78, 5:70,
   6:60, 7:52, 8:45, 9:38, 10:30,
   11:20, 12:12, 13:6, 14:2, 15:0,
@@ -1116,30 +1124,30 @@ const placementRP = {
 };
 
 function calcRP(m) {
-  const place = Math.min(25, Math.max(1, m.place));
-  const base = placementRP[place] ?? 0;
+  var place = Math.min(25, Math.max(1, m.place));
+  var base = (placementRP[place] !== undefined) ? placementRP[place] : 0;
 
-  const killsBase = Math.min(m.kills, 10) * 4;
-  const killsExtra = Math.max(0, m.kills - 10) * 2;
-  const assists = m.assists * 2;
+  var killsBase = Math.min(m.kills, 10) * 4;
+  var killsExtra = Math.max(0, m.kills - 10) * 2;
+  var assists = m.assists * 2;
 
-  const deaths = m.deaths * -3;
-  const earlyPenalty = (place > 15 && m.deaths > 0) ? -10 : 0;
+  var deaths = m.deaths * -3;
+  var earlyPenalty = (place > 15 && m.deaths > 0) ? -10 : 0;
 
-  const mvp = m.mvp ? 15 : 0;
-  const leftBonus = m.left ? 10 : 0;
+  var mvp = m.mvp ? 15 : 0;
+  var leftBonus = m.left ? 10 : 0;
 
-  let rp = base + killsBase + killsExtra + assists + deaths + earlyPenalty + mvp + leftBonus;
+  var rp = base + killsBase + killsExtra + assists + deaths + earlyPenalty + mvp + leftBonus;
   rp = Math.max(-80, Math.min(200, rp));
   return Math.round(rp);
 }
-  
-/* ===== RANKS ===== */
-// ===== RANK SETTINGS =====
-const START_RP = 1250;   // starting RP baseline (edit if you want)
-const MIN_RP = 0;        // never go below 0
 
-const rankTiers = [
+/* ===== RANKS ===== */
+// Settings
+var START_RP = 1250;
+var MIN_RP = 0;
+
+var rankTiers = [
   { name: "OUTCAST",  color: "#ffb86b", min: 0 },
   { name: "VANGUARD", color: "#22d3ee", min: 600 },
   { name: "SENTINEL", color: "#38bdf8", min: 1200 },
@@ -1153,23 +1161,21 @@ const rankTiers = [
 ];
 
 // cinematic tracking (tier + division)
-let lastRankState = null; // { tierIndex, divIndex, label }
+var lastRankState = null; // { tierIndex, divIndex, label }
 
 function getRank(totalRP) {
-  // find tier index
-  let tierIndex = 0;
-  for (let i = 0; i < rankTiers.length; i++) {
+  var tierIndex = 0;
+  for (var i = 0; i < rankTiers.length; i++) {
     if (totalRP >= rankTiers[i].min) tierIndex = i;
   }
 
-  const tier = rankTiers[tierIndex];
+  var tier = rankTiers[tierIndex];
 
-  // NEXUS special case
   if (tier.name === "NEXUS") {
     return {
       label: "NEXUS",
       tierName: "NEXUS",
-      tierIndex,
+      tierIndex: tierIndex,
       div: null,
       divIndex: null,
       color: tier.color,
@@ -1178,15 +1184,13 @@ function getRank(totalRP) {
     };
   }
 
-  const nextTier = rankTiers[tierIndex + 1];
-  const tierSpan = (nextTier ? nextTier.min : (tier.min + 1000)) - tier.min;
+  var nextTier = rankTiers[tierIndex + 1];
+  var tierSpan = (nextTier ? nextTier.min : (tier.min + 1000)) - tier.min;
 
-  // progress 0..0.999 to avoid hitting next tier label early
-  const progress = Math.max(0, Math.min(0.999, (totalRP - tier.min) / tierSpan));
+  var progress = Math.max(0, Math.min(0.999, (totalRP - tier.min) / tierSpan));
 
-  // division mapping: III(0) -> II(1) -> I(2)
-  let div = "III";
-  let divIndex = 0;
+  var div = "III";
+  var divIndex = 0;
 
   if (progress < (1 / 3)) {
     div = "III"; divIndex = 0;
@@ -1196,202 +1200,144 @@ function getRank(totalRP) {
     div = "I"; divIndex = 2;
   }
 
-  const rr = Math.round(progress * 100);
-  const label = `${tier.name} ${div}`;
+  var rr = Math.round(progress * 100);
+  var label = tier.name + " " + div;
 
   return {
-    label,
+    label: label,
     tierName: tier.name,
-    tierIndex,
-    div,
-    divIndex,
+    tierIndex: tierIndex,
+    div: div,
+    divIndex: divIndex,
     color: tier.color,
-    rr,
+    rr: rr,
     nextMin: nextTier ? nextTier.min : null
   };
 }
 
-
-
 /* ===== CINEMATIC ===== */
-function getTierName(rankLabel){
-  // "PHANTOM II" -> "PHANTOM"
-  return String(rankLabel || "").trim().split(" ")[0].toUpperCase();
+function hideCinematic() {
+  var el = document.getElementById("cinematic");
+  if (el) el.classList.add("hidden");
 }
 
-const tierAccent = {
-  OUTCAST: "#ffb86b",
-  VANGUARD: "#22d3ee",
-  SENTINEL: "#38bdf8",
-  PHANTOM: "#a78bfa",
-  WARLORD: "#fb7185",
-  ARCHON: "#fbbf24",
-  OVERSEER: "#2dd4bf",
-  ASCENDANT: "#60a5fa",
-  PARAGON: "#e5e7eb",
-  NEXUS: "#ff3b3b"
-};
-
-function spawnCinematicParticles(accent, mode){
-  const wrap = document.getElementById("cinParticles");
-  if (!wrap) return;
-  wrap.innerHTML = "";
-
-  const count = mode === "down" ? 18 : 28;
-  const cx = window.innerWidth * 0.5;
-  const cy = window.innerHeight * 0.5;
-
-  for (let i = 0; i < count; i++){
-    const p = document.createElement("div");
-    p.className = "cin-particle";
-
-    const angle = Math.random() * Math.PI * 2;
-    const dist = (mode === "down" ? 120 : 170) + Math.random() * 140;
-    const dx = Math.cos(angle) * dist;
-    const dy = Math.sin(angle) * dist;
-
-    const jitterX = (Math.random() - 0.5) * 40;
-    const jitterY = (Math.random() - 0.5) * 25;
-
-    p.style.left = `${cx + jitterX}px`;
-    p.style.top = `${cy + jitterY}px`;
-    p.style.setProperty("--dx", `${dx}px`);
-    p.style.setProperty("--dy", `${dy}px`);
-    p.style.animationDelay = `${Math.random() * 140}ms`;
-
-    // Give each particle the accent color
-    p.style.background = accent;
-
-    if (mode === "down"){
-      p.style.width = "7px";
-      p.style.height = "7px";
-      p.style.animationDuration = "980ms";
-      p.style.opacity = "0.85";
-    }
-
-    wrap.appendChild(p);
-    setTimeout(() => p.remove(), 1200);
-  }
-}
-
-function showCinematic(fromRank, toRank, isPromotion = true){
-  const el = document.getElementById("cinematic");
-  const title = document.getElementById("cinTitle");
-  const sub = document.getElementById("cinSub");
+function showCinematic(fromRank, toRank, isPromotion) {
+  var el = document.getElementById("cinematic");
+  var title = document.getElementById("cinTitle");
+  var sub = document.getElementById("cinSub");
   if (!el || !title || !sub) return;
 
-  const mode = isPromotion ? "up" : "down";
+  var mode = isPromotion ? "up" : "down";
   el.dataset.mode = mode;
 
-  const toTier = getTierName(toRank);
-  const accent = tierAccent[toTier] || "#22d3ee";
-
-  // Set CSS accent for emblem glow
-  el.style.setProperty("--cin-accent", accent);
-
   title.textContent = isPromotion ? "RANK PROMOTED" : "RANK DEMOTED";
-  sub.textContent = `${fromRank} → ${toRank}`;
+  sub.textContent = String(fromRank) + " → " + String(toRank);
 
-  // Show
   el.classList.remove("hidden");
 
-  // Particles sync
-  setTimeout(() => spawnCinematicParticles(accent, mode), 40);
-
-  // Auto-hide
-  clearTimeout(window.__cinT);
-  window.__cinT = setTimeout(() => {
+  // Auto-hide (kept simple)
+  if (window.__cinT) clearTimeout(window.__cinT);
+  window.__cinT = setTimeout(function () {
     el.classList.add("hidden");
   }, 2400);
 }
 
-
-
-document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape") document.getElementById("cinematic")?.classList.add("hidden");
-});
-function hideCinematic() {
-  document.getElementById("cinematic")?.classList.add("hidden");
-}
-
-document.addEventListener("keydown", (e) => {
+// Close only on backdrop/root click + ESC
+document.addEventListener("keydown", function (e) {
   if (e.key === "Escape") hideCinematic();
 });
 
-// Close only when clicking the backdrop (not the card)
-const cinEl = document.getElementById("cinematic");
-cinEl?.addEventListener("click", (e) => {
-  const bg = e.target.classList.contains("cinematic-bg");
-  const root = e.target === cinEl;
-  if (bg || root) hideCinematic();
-});
-
-
-/* ===== UI UPDATES ===== */
-function updateRankUI(matches) {
-  let totalRP = START_RP + matches.reduce((s, m) => s + m.rp, 0);
-totalRP = Math.max(MIN_RP, totalRP);
-const rank = getRank(totalRP);
-
-  const rankTitle = document.querySelector("#rank .rank-info h2");
-  const rankRP = document.querySelector("#rank .rank-rp");
-  const rpFill = document.querySelector("#rank .rp-fill");
-
-  if (rankTitle) rankTitle.textContent = rank.label;
-  if (rankRP) rankRP.textContent = rank.nextMin ? `RP: ${totalRP} / ${rank.nextMin}` : `RP: ${totalRP} (MAX)`;
-  if (rpFill) rpFill.style.width = `${rank.rr}%`;
-
-  const dash = document.querySelector("#dashboard .panel");
-if (dash) {
-  dash.innerHTML =
-    "<p>🔹 Current RP: <strong>" + totalRP + "</strong></p>" +
-    "<p>🔹 Current Rank: <strong>" + rank.label + "</strong></p>" +
-    "<p>🔹 Matches: <strong>" + matches.length + "</strong></p>";
+var cinRoot = document.getElementById("cinematic");
+if (cinRoot) {
+  cinRoot.addEventListener("click", function (e) {
+    var t = e.target;
+    var isBg = t && t.classList && t.classList.contains("cinematic-bg");
+    var isRoot = t === cinRoot;
+    if (isBg || isRoot) hideCinematic();
+  });
 }
 
+/* ===== LADDER UI ===== */
+function updateLadderUI(currentTierIndex) {
+  var items = document.querySelectorAll(".ladder-list .ladder-item");
+  for (var i = 0; i < items.length; i++) {
+    var item = items[i];
+    item.classList.remove("locked", "unlocked", "current");
 
-  // CINEMATIC trigger (tier + division) - correct logic
-const currentState = {
-  tierIndex: rank.tierIndex,
-  divIndex: rank.divIndex,
-  label: rank.label
-};
-
-if (lastRankState === null) {
-  lastRankState = currentState;
-} else {
-  const tierChanged = currentState.tierIndex !== lastRankState.tierIndex;
-  const divChanged = currentState.divIndex !== lastRankState.divIndex;
-
-  if (tierChanged) {
-    const promoted = currentState.tierIndex > lastRankState.tierIndex;
-    showCinematic(lastRankState.label, currentState.label, promoted);
-    lastRankState = currentState;
-  } else if (divChanged) {
-    // III(0) -> II(1) -> I(2)
-    const promoted = (currentState.divIndex ?? 0) > (lastRankState.divIndex ?? 0);
-    showCinematic(lastRankState.label, currentState.label, promoted);
-    lastRankState = currentState;
+    if (i < currentTierIndex) item.classList.add("unlocked");
+    else if (i === currentTierIndex) item.classList.add("unlocked", "current");
+    else item.classList.add("locked");
   }
 }
 
+/* ===== UI UPDATES ===== */
+function updateRankUI(matches) {
+  var sum = 0;
+  for (var i = 0; i < matches.length; i++) sum += matches[i].rp;
+
+  var totalRP = START_RP + sum;
+  if (totalRP < MIN_RP) totalRP = MIN_RP;
+
+  var rank = getRank(totalRP);
+
+  var rankTitle = document.querySelector("#rank .rank-info h2");
+  var rankRP = document.querySelector("#rank .rank-rp");
+  var rpFill = document.querySelector("#rank .rp-fill");
+
+  if (rankTitle) rankTitle.textContent = rank.label;
+  if (rankRP) rankRP.textContent = rank.nextMin ? ("RP: " + totalRP + " / " + rank.nextMin) : ("RP: " + totalRP + " (MAX)");
+  if (rpFill) rpFill.style.width = String(rank.rr) + "%";
+
+  updateLadderUI(rank.tierIndex);
+
+  // Dashboard
+  var dash = document.querySelector("#dashboard .panel");
+  if (dash) {
+    dash.innerHTML =
+      "<p>🔹 Current RP: <strong>" + totalRP + "</strong></p>" +
+      "<p>🔹 Current Rank: <strong>" + rank.label + "</strong></p>" +
+      "<p>🔹 Matches: <strong>" + matches.length + "</strong></p>";
+  }
+
+  // CINEMATIC trigger (tier + division)
+  var currentState = { tierIndex: rank.tierIndex, divIndex: rank.divIndex, label: rank.label };
+
+  if (lastRankState === null) {
+    lastRankState = currentState;
+  } else {
+    var tierChanged = currentState.tierIndex !== lastRankState.tierIndex;
+    var divChanged = currentState.divIndex !== lastRankState.divIndex;
+
+    if (tierChanged) {
+      var promotedTier = currentState.tierIndex > lastRankState.tierIndex;
+      showCinematic(lastRankState.label, currentState.label, promotedTier);
+      lastRankState = currentState;
+    } else if (divChanged) {
+      var a = (currentState.divIndex === null || currentState.divIndex === undefined) ? 0 : currentState.divIndex;
+      var b = (lastRankState.divIndex === null || lastRankState.divIndex === undefined) ? 0 : lastRankState.divIndex;
+      var promotedDiv = a > b;
+      showCinematic(lastRankState.label, currentState.label, promotedDiv);
+      lastRankState = currentState;
+    }
+  }
+}
 
 function renderHistoryFromStorage() {
-  const matches = loadMatches();
+  var matches = loadMatches();
   updateRankUI(matches);
 
-  const list = document.getElementById("matchList");
+  var list = document.getElementById("matchList");
   if (!list) return;
   list.innerHTML = "";
 
-  const streakEl = document.getElementById("streakValue");
-  const bestEl = document.getElementById("bestValue");
-  const worstEl = document.getElementById("worstValue");
+  var streakEl = document.getElementById("streakValue");
+  var bestEl = document.getElementById("bestValue");
+  var worstEl = document.getElementById("worstValue");
 
   if (matches.length === 0) {
-    const panel = document.createElement("div");
+    var panel = document.createElement("div");
     panel.className = "panel";
-    const p = document.createElement("p");
+    var p = document.createElement("p");
     p.innerHTML = 'No matches yet. Add your first match in <b>ADD MATCH</b>.';
     panel.appendChild(p);
     list.appendChild(panel);
@@ -1402,108 +1348,105 @@ function renderHistoryFromStorage() {
     return;
   }
 
-  // Best / worst
-  let best = -Infinity;
-  let worst = Infinity;
-  for (const m of matches) {
-    if (m.rp > best) best = m.rp;
-    if (m.rp < worst) worst = m.rp;
+  var best = -Infinity;
+  var worst = Infinity;
+  for (var i = 0; i < matches.length; i++) {
+    if (matches[i].rp > best) best = matches[i].rp;
+    if (matches[i].rp < worst) worst = matches[i].rp;
   }
 
   if (bestEl) bestEl.textContent = best >= 0 ? ("+" + best) : String(best);
   if (worstEl) worstEl.textContent = String(worst);
 
-  // Streak (place <= 3)
-  let streak = 0;
-  for (let i = matches.length - 1; i >= 0; i--) {
-    if (matches[i].place <= 3) streak++;
+  var streak = 0;
+  for (var k = matches.length - 1; k >= 0; k--) {
+    if (matches[k].place <= 3) streak++;
     else break;
   }
   if (streakEl) streakEl.textContent = String(streak);
 
-  // Render cards
-  matches.forEach((m, idx) => {
-    const card = document.createElement("div");
+  for (var idx = 0; idx < matches.length; idx++) {
+    var m = matches[idx];
+
+    var card = document.createElement("div");
     card.className = "match-card";
     if (m.rp === best) card.classList.add("best");
     if (m.rp === worst) card.classList.add("worst");
 
-    const row = document.createElement("div");
+    var row = document.createElement("div");
     row.className = "match-row";
 
-    const left = document.createElement("div");
+    var left = document.createElement("div");
     left.className = "left";
 
-    const title = document.createElement("div");
+    var title = document.createElement("div");
     title.className = "title";
 
-    const matchNum = document.createElement("span");
+    var matchNum = document.createElement("span");
     matchNum.textContent = "Match #" + (idx + 1);
     title.appendChild(matchNum);
 
-    const badges = document.createElement("div");
+    var badges = document.createElement("div");
     badges.className = "badges";
 
     if (m.mvp) {
-      const b = document.createElement("span");
-      b.className = "badge-pill badge-mvp";
-      b.textContent = "⭐ MVP";
-      badges.appendChild(b);
+      var b1 = document.createElement("span");
+      b1.className = "badge-pill badge-mvp";
+      b1.textContent = "⭐ MVP";
+      badges.appendChild(b1);
     }
-
     if (m.left) {
-      const b = document.createElement("span");
-      b.className = "badge-pill badge-leave";
-      b.textContent = "⚠ Teammate Left";
-      badges.appendChild(b);
+      var b2 = document.createElement("span");
+      b2.className = "badge-pill badge-leave";
+      b2.textContent = "⚠ Teammate Left";
+      badges.appendChild(b2);
     }
 
     title.appendChild(badges);
 
-    const place = document.createElement("div");
+    var place = document.createElement("div");
     place.className = "place";
     place.innerHTML = "🏆 Place: <strong>" + m.place + "</strong> / 25";
 
-    const kad = document.createElement("div");
+    var kad = document.createElement("div");
     kad.className = "kad";
-    kad.innerHTML =
-      "🔫 K/A/D: <strong>" + m.kills + "</strong> / <strong>" + m.assists +
-      "</strong> / <strong>" + m.deaths + "</strong>";
+    kad.innerHTML = "🔫 K/A/D: <strong>" + m.kills + "</strong> / <strong>" + m.assists + "</strong> / <strong>" + m.deaths + "</strong>";
 
     left.appendChild(title);
     left.appendChild(place);
     left.appendChild(kad);
 
-    const rpDelta = document.createElement("div");
+    var rpDelta = document.createElement("div");
     rpDelta.className = "rpDelta " + (m.rp >= 0 ? "rpPlus" : "rpMinus");
     rpDelta.textContent = (m.rp >= 0 ? "+" + m.rp : String(m.rp)) + " RP";
 
     row.appendChild(left);
     row.appendChild(rpDelta);
+
     card.appendChild(row);
     list.appendChild(card);
-  });
+  }
 }
-
 
 /* ===== ACTIONS ===== */
 function submitMatch() {
-  const place = Number(document.getElementById("inPlace").value);
-  const kills = Number(document.getElementById("inKills").value);
-  const assists = Number(document.getElementById("inAssists").value);
-  const deaths = Number(document.getElementById("inDeaths").value);
-  const mvp = document.getElementById("inMVP").checked;
-  const left = document.getElementById("inLeft").checked;
+  var place = Number(document.getElementById("inPlace").value);
+  var kills = Number(document.getElementById("inKills").value);
+  var assists = Number(document.getElementById("inAssists").value);
+  var deaths = Number(document.getElementById("inDeaths").value);
+  var mvp = document.getElementById("inMVP").checked;
+  var left = document.getElementById("inLeft").checked;
 
-  const match = { place, kills, assists, deaths, mvp, left, ts: Date.now() };
+  var match = { place: place, kills: kills, assists: assists, deaths: deaths, mvp: mvp, left: left, ts: Date.now() };
   match.rp = calcRP(match);
 
-  const matches = loadMatches();
+  var matches = loadMatches();
   matches.push(match);
   saveMatches(matches);
 
   renderHistoryFromStorage();
-  showTab("history", document.querySelectorAll(".nav-btn")[2]);
+  var btns = document.querySelectorAll(".nav-btn");
+  showTab("history", btns[2]);
 }
 
 function resetMatches() {
