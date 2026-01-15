@@ -5,6 +5,83 @@
 <title>BF6 Ranked System</title>
 
 <style>
+  /* ====== RANK CARD ====== */
+.rank-card {
+  margin-top: 40px;
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  padding: 30px;
+  background: linear-gradient(135deg, #020617, #0f172a);
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,0.06);
+  box-shadow: 0 0 40px rgba(56,189,248,0.15);
+  max-width: 700px;
+}
+
+.rank-icon {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #22d3ee, #020617);
+  position: relative;
+  box-shadow: 0 0 25px rgba(34,211,238,0.8);
+  overflow: hidden;
+}
+
+.rank-glow {
+  position: absolute;
+  inset: -20px;
+  background: conic-gradient(
+    from 0deg,
+    transparent,
+    #38bdf8,
+    transparent
+  );
+  animation: spin 6s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.rank-info h2 {
+  font-size: 28px;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+  background: linear-gradient(90deg, #38bdf8, #22d3ee);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.rank-rp {
+  font-size: 14px;
+  color: #9ca3af;
+}
+
+/* ====== RP BAR ====== */
+.rp-bar {
+  margin-top: 14px;
+  width: 100%;
+  height: 12px;
+  background: #020617;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+.rp-fill {
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    #22d3ee,
+    #38bdf8,
+    #0ea5e9
+  );
+  box-shadow: 0 0 12px #38bdf8;
+  transition: width 0.5s ease;
+}
+
 /* ====== GLOBAL ====== */
 * {
   margin: 0;
@@ -125,14 +202,26 @@ p {
 
 <!-- RANK -->
 <div id="rank" class="section">
-  <h1>Your Rank</h1>
-  <p>Rank tiers and progression.</p>
+  <h1>Competitive Rank</h1>
+  <p>Your current competitive standing.</p>
 
-  <div class="panel">
-    <p>🚀 Rank Icon Placeholder</p>
-    <p>Progress bar coming soon...</p>
+  <div class="rank-card">
+    <div class="rank-icon">
+      <!-- Placeholder icon -->
+      <div class="rank-glow"></div>
+    </div>
+
+    <div class="rank-info">
+      <h2>PHANTOM II</h2>
+      <span class="rank-rp">RP: 1250 / 1500</span>
+
+      <div class="rp-bar">
+        <div class="rp-fill" style="width: 83%;"></div>
+      </div>
+    </div>
   </div>
 </div>
+
 
 <!-- HISTORY -->
 <div id="history" class="section">
