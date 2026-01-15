@@ -1133,6 +1133,10 @@ function calcRP(m) {
   rp = Math.max(-80, Math.min(200, rp));
   return Math.round(rp);
 }
+  
+// ===== RANK SETTINGS =====
+const START_RP = 1250;   // starting RP baseline (edit if you want)
+const MIN_RP = 0;        // never go below 0
 
 /* ===== RANKS ===== */
 const rankTiers = [
@@ -1148,37 +1152,66 @@ const rankTiers = [
   { name: "NEXUS",    color: "#ff3b3b", min: 10500 }
 ];
 
-// cinematic tracking
-let lastRankIndex = null;
-let lastRankLabel = null;
+// cinematic tracking (tier + division)
+let lastRankState = null; // { tierIndex, divIndex, label }
 
-function getRankIndex(totalRP){
-  let idx = 0;
-  for (let i = 0; i < rankTiers.length; i++){
-    if (totalRP >= rankTiers[i].min) idx = i;
-  }
-  return idx;
-}
 
 function getRank(totalRP) {
-  let tier = rankTiers[0];
-  for (const t of rankTiers) {
-    if (totalRP >= t.min) tier = t;
+  // find tier index
+  let tierIndex = 0;
+  for (let i = 0; i < rankTiers.length; i++) {
+    if (totalRP >= rankTiers[i].min) tierIndex = i;
   }
 
+  const tier = rankTiers[tierIndex];
+
+  // NEXUS special case
   if (tier.name === "NEXUS") {
-    return { label: "NEXUS", color: tier.color, rr: 100, nextMin: null };
+    return {
+      label: "NEXUS",
+      tierName: "NEXUS",
+      tierIndex,
+      div: null,
+      divIndex: null,
+      color: tier.color,
+      rr: 100,
+      nextMin: null
+    };
   }
 
-  const nextTier = rankTiers[rankTiers.indexOf(tier) + 1];
+  const nextTier = rankTiers[tierIndex + 1];
   const tierSpan = (nextTier ? nextTier.min : (tier.min + 1000)) - tier.min;
 
+  // progress 0..0.999 to avoid hitting next tier label early
   const progress = Math.max(0, Math.min(0.999, (totalRP - tier.min) / tierSpan));
-  const div = progress < (1/3) ? "III" : (progress < (2/3) ? "II" : "I");
-  const rr = Math.round(progress * 100);
 
-  return { label: `${tier.name} ${div}`, color: tier.color, rr, nextMin: nextTier ? nextTier.min : null };
+  // division mapping: III(0) -> II(1) -> I(2)
+  let div = "III";
+  let divIndex = 0;
+
+  if (progress < (1 / 3)) {
+    div = "III"; divIndex = 0;
+  } else if (progress < (2 / 3)) {
+    div = "II"; divIndex = 1;
+  } else {
+    div = "I"; divIndex = 2;
+  }
+
+  const rr = Math.round(progress * 100);
+  const label = `${tier.name} ${div}`;
+
+  return {
+    label,
+    tierName: tier.name,
+    tierIndex,
+    div,
+    divIndex,
+    color: tier.color,
+    rr,
+    nextMin: nextTier ? nextTier.min : null
+  };
 }
+
 
 /* ===== CINEMATIC ===== */
 function getTierName(rankLabel){
