@@ -1383,55 +1383,107 @@ function renderHistoryFromStorage() {
   if (!list) return;
   list.innerHTML = "";
 
+  const streakEl = document.getElementById("streakValue");
+  const bestEl = document.getElementById("bestValue");
+  const worstEl = document.getElementById("worstValue");
+
   if (matches.length === 0) {
-    list.innerHTML = `<div class="panel"><p>No matches yet. Add your first match in <b>ADD MATCH</b>.</p></div>`;
-    document.getElementById("streakValue").textContent = "0";
-    document.getElementById("bestValue").textContent = "+0";
-    document.getElementById("worstValue").textContent = "0";
+    const panel = document.createElement("div");
+    panel.className = "panel";
+    const p = document.createElement("p");
+    p.innerHTML = 'No matches yet. Add your first match in <b>ADD MATCH</b>.';
+    panel.appendChild(p);
+    list.appendChild(panel);
+
+    if (streakEl) streakEl.textContent = "0";
+    if (bestEl) bestEl.textContent = "+0";
+    if (worstEl) worstEl.textContent = "0";
     return;
   }
 
-  const best = Math.max(...matches.map(m => m.rp));
-  const worst = Math.min(...matches.map(m => m.rp));
+  // Best / worst
+  let best = -Infinity;
+  let worst = Infinity;
+  for (const m of matches) {
+    if (m.rp > best) best = m.rp;
+    if (m.rp < worst) worst = m.rp;
+  }
 
-  document.getElementById("bestValue").textContent = best >= 0 ? `+${best}` : `${best}`;
-  document.getElementById("worstValue").textContent = `${worst}`;
+  if (bestEl) bestEl.textContent = best >= 0 ? ("+" + best) : String(best);
+  if (worstEl) worstEl.textContent = String(worst);
 
+  // Streak (place <= 3)
   let streak = 0;
   for (let i = matches.length - 1; i >= 0; i--) {
     if (matches[i].place <= 3) streak++;
     else break;
   }
-  document.getElementById("streakValue").textContent = streak;
+  if (streakEl) streakEl.textContent = String(streak);
 
+  // Render cards
   matches.forEach((m, idx) => {
     const card = document.createElement("div");
     card.className = "match-card";
     if (m.rp === best) card.classList.add("best");
     if (m.rp === worst) card.classList.add("worst");
 
-    const rpClass = m.rp >= 0 ? "rpPlus" : "rpMinus";
-    const rpText = m.rp >= 0 ? `+${m.rp}` : `${m.rp}`;
+    const row = document.createElement("div");
+    row.className = "match-row";
 
-    card.innerHTML = `
-      <div class="match-row">
-        <div class="left">
-          <div class="title">
-            <span>Match #${idx + 1}</span>
-            <div class="badges">
-              ${m.mvp ? `<span class="badge-pill badge-mvp">⭐ MVP</span>` : ``}
-              ${m.left ? `<span class="badge-pill badge-leave">⚠ Teammate Left</span>` : ``}
-            </div>
-          </div>
-          <div class="place">🏆 Place: <strong>${m.place}</strong> / 25</div>
-          <div class="kad">🔫 K/A/D: <strong>${m.kills}</strong> / <strong>${m.assists}</strong> / <strong>${m.deaths}</strong></div>
-        </div>
-        <div class="rpDelta ${rpClass}">${rpText} RP</div>
-      </div>
-    `;
+    const left = document.createElement("div");
+    left.className = "left";
+
+    const title = document.createElement("div");
+    title.className = "title";
+
+    const matchNum = document.createElement("span");
+    matchNum.textContent = "Match #" + (idx + 1);
+    title.appendChild(matchNum);
+
+    const badges = document.createElement("div");
+    badges.className = "badges";
+
+    if (m.mvp) {
+      const b = document.createElement("span");
+      b.className = "badge-pill badge-mvp";
+      b.textContent = "⭐ MVP";
+      badges.appendChild(b);
+    }
+
+    if (m.left) {
+      const b = document.createElement("span");
+      b.className = "badge-pill badge-leave";
+      b.textContent = "⚠ Teammate Left";
+      badges.appendChild(b);
+    }
+
+    title.appendChild(badges);
+
+    const place = document.createElement("div");
+    place.className = "place";
+    place.innerHTML = "🏆 Place: <strong>" + m.place + "</strong> / 25";
+
+    const kad = document.createElement("div");
+    kad.className = "kad";
+    kad.innerHTML =
+      "🔫 K/A/D: <strong>" + m.kills + "</strong> / <strong>" + m.assists +
+      "</strong> / <strong>" + m.deaths + "</strong>";
+
+    left.appendChild(title);
+    left.appendChild(place);
+    left.appendChild(kad);
+
+    const rpDelta = document.createElement("div");
+    rpDelta.className = "rpDelta " + (m.rp >= 0 ? "rpPlus" : "rpMinus");
+    rpDelta.textContent = (m.rp >= 0 ? "+" + m.rp : String(m.rp)) + " RP";
+
+    row.appendChild(left);
+    row.appendChild(rpDelta);
+    card.appendChild(row);
     list.appendChild(card);
   });
 }
+
 
 /* ===== ACTIONS ===== */
 function submitMatch() {
