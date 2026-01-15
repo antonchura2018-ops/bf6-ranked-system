@@ -5,6 +5,131 @@
 <title>BF6 Ranked System</title>
 
 <style>
+  /* ====== RANK LADDER ====== */
+.ladder{
+  margin-top: 28px;
+  max-width: 900px;
+}
+
+.ladder-head{
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  margin-bottom: 12px;
+}
+
+.ladder-head h3{
+  font-size: 18px;
+  letter-spacing: .6px;
+  color:#e5e7eb;
+}
+
+.ladder-note{
+  font-size: 12px;
+  color:#9ca3af;
+  opacity:.9;
+}
+
+.ladder-list{
+  display:grid;
+  gap: 10px;
+}
+
+.ladder-item{
+  position:relative;
+  display:flex;
+  gap: 14px;
+  align-items:center;
+  padding: 14px 16px;
+  border-radius: 14px;
+  background: linear-gradient(180deg, rgba(15,23,42,.9), rgba(2,6,23,.9));
+  border: 1px solid rgba(255,255,255,0.06);
+  overflow:hidden;
+  transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+}
+
+.ladder-item:hover{
+  transform: translateY(-1px);
+  border-color: rgba(34,211,238,0.18);
+  box-shadow: 0 0 26px rgba(34,211,238,0.06);
+}
+
+.ladder-item.locked{
+  opacity: .35;
+  filter: grayscale(0.35);
+}
+
+.ladder-item.unlocked{
+  opacity: 1;
+}
+
+.ladder-item.current{
+  border-color: rgba(34,211,238,0.55);
+  box-shadow: 0 0 34px rgba(34,211,238,0.10);
+}
+
+.ladder-item.current::after{
+  content:"";
+  position:absolute;
+  inset:-2px;
+  border-radius: 14px;
+  padding: 2px;
+  background: linear-gradient(120deg, rgba(34,211,238,0.95), rgba(56,189,248,0.0), rgba(34,211,238,0.75));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: .55;
+  filter: drop-shadow(0 0 14px rgba(34,211,238,0.25));
+  pointer-events:none;
+}
+
+.badge{
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  position:relative;
+  overflow:hidden;
+  box-shadow: 0 0 16px rgba(0,0,0,.35);
+}
+
+.badge::before{
+  content:"";
+  position:absolute;
+  inset:-16px;
+  background: conic-gradient(from 0deg, rgba(255,255,255,0.0), rgba(255,255,255,0.55), rgba(255,255,255,0.0));
+  opacity:.25;
+  animation: spin 7s linear infinite;
+}
+
+.meta .name{
+  font-size: 14px;
+  letter-spacing: 1px;
+  font-weight: 700;
+  color:#e5e7eb;
+}
+
+.meta .desc{
+  margin-top: 2px;
+  font-size: 12px;
+  color:#9ca3af;
+}
+
+/* ====== BADGE COLORS (Neon identity) ====== */
+.b-outcast   { background: radial-gradient(circle at 30% 30%, #ffb86b, #111827 55%, #020617 85%); box-shadow: 0 0 18px rgba(255,146,76,.35); }
+.b-vanguard  { background: radial-gradient(circle at 30% 30%, #22d3ee, #0b1220 55%, #020617 85%); box-shadow: 0 0 18px rgba(34,211,238,.35); }
+.b-sentinel  { background: radial-gradient(circle at 30% 30%, #38bdf8, #0b1220 55%, #020617 85%); box-shadow: 0 0 18px rgba(56,189,248,.35); }
+.b-phantom   { background: radial-gradient(circle at 30% 30%, #a78bfa, #111827 55%, #020617 85%); box-shadow: 0 0 18px rgba(167,139,250,.35); }
+.b-warlord   { background: radial-gradient(circle at 30% 30%, #fb7185, #111827 55%, #020617 85%); box-shadow: 0 0 18px rgba(251,113,133,.35); }
+.b-archon    { background: radial-gradient(circle at 30% 30%, #fbbf24, #111827 55%, #020617 85%); box-shadow: 0 0 18px rgba(251,191,36,.35); }
+.b-overseer  { background: radial-gradient(circle at 30% 30%, #2dd4bf, #0b1220 55%, #020617 85%); box-shadow: 0 0 18px rgba(45,212,191,.35); }
+.b-ascendant { background: radial-gradient(circle at 30% 30%, #60a5fa, #0b1220 55%, #020617 85%); box-shadow: 0 0 18px rgba(96,165,250,.35); }
+.b-paragon   { background: radial-gradient(circle at 30% 30%, #e5e7eb, #111827 55%, #020617 85%); box-shadow: 0 0 18px rgba(229,231,235,.25); }
+.b-nexus     { background: radial-gradient(circle at 30% 30%, #ff3b3b, #0b0f1a 55%, #020617 85%); box-shadow: 0 0 22px rgba(255,59,59,.40); }
+
+.ladder-item.nexus{
+  border-color: rgba(255,59,59,0.25);
+}
+
 /* ====== GLOBAL ====== */
 * {
   margin: 0;
@@ -278,6 +403,96 @@ p { color: #9ca3af; }
     <div class="rank-icon">
       <div class="rank-glow"></div>
     </div>
+      <div class="ladder">
+    <div class="ladder-head">
+      <h3>Rank Ladder</h3>
+      <span class="ladder-note">Locked ranks are dimmed. Current rank is highlighted.</span>
+    </div>
+
+    <div class="ladder-list">
+      <!-- NOTE: Set data-rank + data-unlocked manually for now -->
+      <div class="ladder-item unlocked" data-rank="OUTCAST">
+        <div class="badge b-outcast"></div>
+        <div class="meta">
+          <div class="name">OUTCAST</div>
+          <div class="desc">Chaos-born survivors. Raw instinct.</div>
+        </div>
+      </div>
+
+      <div class="ladder-item unlocked" data-rank="VANGUARD">
+        <div class="badge b-vanguard"></div>
+        <div class="meta">
+          <div class="name">VANGUARD</div>
+          <div class="desc">Forward momentum. Rising contenders.</div>
+        </div>
+      </div>
+
+      <div class="ladder-item unlocked" data-rank="SENTINEL">
+        <div class="badge b-sentinel"></div>
+        <div class="meta">
+          <div class="name">SENTINEL</div>
+          <div class="desc">Control, discipline, stability.</div>
+        </div>
+      </div>
+
+      <div class="ladder-item unlocked current" data-rank="PHANTOM">
+        <div class="badge b-phantom"></div>
+        <div class="meta">
+          <div class="name">PHANTOM</div>
+          <div class="desc">Precision and shadow-speed mastery.</div>
+        </div>
+      </div>
+
+      <div class="ladder-item locked" data-rank="WARLORD">
+        <div class="badge b-warlord"></div>
+        <div class="meta">
+          <div class="name">WARLORD</div>
+          <div class="desc">Dominion. Aggressive control.</div>
+        </div>
+      </div>
+
+      <div class="ladder-item locked" data-rank="ARCHON">
+        <div class="badge b-archon"></div>
+        <div class="meta">
+          <div class="name">ARCHON</div>
+          <div class="desc">Authority. Sacred geometry.</div>
+        </div>
+      </div>
+
+      <div class="ladder-item locked" data-rank="OVERSEER">
+        <div class="badge b-overseer"></div>
+        <div class="meta">
+          <div class="name">OVERSEER</div>
+          <div class="desc">Vision. Tactical intelligence.</div>
+        </div>
+      </div>
+
+      <div class="ladder-item locked" data-rank="ASCENDANT">
+        <div class="badge b-ascendant"></div>
+        <div class="meta">
+          <div class="name">ASCENDANT</div>
+          <div class="desc">Transcendence. Elevated play.</div>
+        </div>
+      </div>
+
+      <div class="ladder-item locked" data-rank="PARAGON">
+        <div class="badge b-paragon"></div>
+        <div class="meta">
+          <div class="name">PARAGON</div>
+          <div class="desc">Perfection. Elite standard.</div>
+        </div>
+      </div>
+
+      <div class="ladder-item locked nexus" data-rank="NEXUS">
+        <div class="badge b-nexus"></div>
+        <div class="meta">
+          <div class="name">NEXUS</div>
+          <div class="desc">Absolute peak. Final convergence.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
 
     <div class="rank-info">
       <h2>PHANTOM II</h2>
