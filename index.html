@@ -935,31 +935,28 @@ p { color: #9ca3af; }
 </div>
 
 <script>
+/* ===== NAV ===== */
 function showTab(tabId, btn) {
   document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
   document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-
-  document.getElementById(tabId).classList.add('active');
-  btn.classList.add('active');
+  const target = document.getElementById(tabId);
+  if (target) target.classList.add('active');
+  if (btn) btn.classList.add('active');
 }
-  // ===== STORAGE KEY =====
+
+/* ===== STORAGE ===== */
 const STORAGE_KEY = "bf6_ranked_matches_v1";
 
-// ===== LOAD / SAVE =====
 function loadMatches() {
-  try {
-    return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
-  } catch {
-    return [];
-  }
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; }
+  catch { return []; }
 }
 
 function saveMatches(matches) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(matches));
 }
 
-// ===== RP SYSTEM (hard, competitive) =====
-// Placement table (1..25) smooth scale
+/* ===== RP TABLE ===== */
 const placementRP = {
   1:100, 2:92, 3:85, 4:78, 5:70,
   6:60, 7:52, 8:45, 9:38, 10:30,
@@ -982,52 +979,29 @@ function calcRP(m) {
   const mvp = m.mvp ? 15 : 0;
   const leftBonus = m.left ? 10 : 0;
 
-  // can't turn very bad placement into positive RP purely by teammate-left
   let rp = base + killsBase + killsExtra + assists + deaths + earlyPenalty + mvp + leftBonus;
-
-  // clamp extremes
   rp = Math.max(-80, Math.min(200, rp));
   return Math.round(rp);
 }
 
-// ===== RANK THRESHOLDS =====
+/* ===== RANKS ===== */
 const rankTiers = [
-  { name: "OUTCAST", color: "#ffb86b", min: 0 },
+  { name: "OUTCAST",  color: "#ffb86b", min: 0 },
   { name: "VANGUARD", color: "#22d3ee", min: 600 },
   { name: "SENTINEL", color: "#38bdf8", min: 1200 },
-  { name: "PHANTOM", color: "#a78bfa", min: 2000 },
-  { name: "WARLORD", color: "#fb7185", min: 3000 },
-  { name: "ARCHON", color: "#fbbf24", min: 4200 },
+  { name: "PHANTOM",  color: "#a78bfa", min: 2000 },
+  { name: "WARLORD",  color: "#fb7185", min: 3000 },
+  { name: "ARCHON",   color: "#fbbf24", min: 4200 },
   { name: "OVERSEER", color: "#2dd4bf", min: 5400 },
-  { name: "ASCENDANT", color: "#60a5fa", min: 6800 },
-  { name: "PARAGON", color: "#e5e7eb", min: 8500 },
-  { name: "NEXUS", color: "#ff3b3b", min: 10500 }
+  { name: "ASCENDANT",color: "#60a5fa", min: 6800 },
+  { name: "PARAGON",  color: "#e5e7eb", min: 8500 },
+  { name: "NEXUS",    color: "#ff3b3b", min: 10500 }
 ];
-  // ===== CINEMATIC TRACKING =====
+
+// cinematic tracking
 let lastRankIndex = null;
 let lastRankLabel = null;
 
-
-
-function getRank(totalRP) {
-  let tier = rankTiers[0];
-  for (const t of rankTiers) {
-    if (totalRP >= t.min) tier = t;
-  }
-  // divisions I/II/III for everything except NEXUS
-  if (tier.name === "NEXUS") return { label: "NEXUS", color: tier.color, rr: 100, nextMin: null };
-
-  const nextTier = rankTiers[rankTiers.indexOf(tier) + 1];
-  const tierSpan = (nextTier ? nextTier.min : (tier.min + 1000)) - tier.min;
-
-  const progress = Math.max(0, Math.min(0.999, (totalRP - tier.min) / tierSpan));
-  // map progress into 3 divisions: III (low) -> II -> I (high)
-  const div = progress < (1/3) ? "III" : (progress < (2/3) ? "II" : "I");
-  const rr = Math.round(progress * 100);
-
-  return { label: `${tier.name} ${div}`, color: tier.color, rr, nextMin: nextTier ? nextTier.min : null };
-}
-  // ===== RANK INDEX (for cinematic) =====
 function getRankIndex(totalRP){
   let idx = 0;
   for (let i = 0; i < rankTiers.length; i++){
@@ -1036,25 +1010,66 @@ function getRankIndex(totalRP){
   return idx;
 }
 
+function getRank(totalRP) {
+  let tier = rankTiers[0];
+  for (const t of rankTiers) {
+    if (totalRP >= t.min) tier = t;
+  }
 
-// ===== UI UPDATES =====
+  if (tier.name === "NEXUS") {
+    return { label: "NEXUS", color: tier.color, rr: 100, nextMin: null };
+  }
+
+  const nextTier = rankTiers[rankTiers.indexOf(tier) + 1];
+  const tierSpan = (nextTier ? nextTier.min : (tier.min + 1000)) - tier.min;
+
+  const progress = Math.max(0, Math.min(0.999, (totalRP - tier.min) / tierSpan));
+  const div = progress < (1/3) ? "III" : (progress < (2/3) ? "II" : "I");
+  const rr = Math.round(progress * 100);
+
+  return { label: `${tier.name} ${div}`, color: tier.color, rr, nextMin: nextTier ? nextTier.min : null };
+}
+
+/* ===== CINEMATIC ===== */
+function showCinematic(fromRank, toRank, isPromotion = true){
+  const el = document.getElementById("cinematic");
+  const title = document.getElementById("cinTitle");
+  const sub = document.getElementById("cinSub");
+  if (!el || !title || !sub) return;
+
+  title.textContent = isPromotion ? "RANK PROMOTED" : "RANK DEMOTED";
+  sub.textContent = `${fromRank} → ${toRank}`;
+
+  el.classList.remove("hidden");
+
+  clearTimeout(window.__cinT);
+  window.__cinT = setTimeout(() => {
+    el.classList.add("hidden");
+  }, 2400);
+}
+
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") document.getElementById("cinematic")?.classList.add("hidden");
+});
+document.addEventListener("click", () => {
+  const cin = document.getElementById("cinematic");
+  if (!cin || cin.classList.contains("hidden")) return;
+  cin.classList.add("hidden");
+});
+
+/* ===== UI UPDATES ===== */
 function updateRankUI(matches) {
   const totalRP = matches.reduce((s, m) => s + m.rp, 0);
   const rank = getRank(totalRP);
 
-  // Update Rank card
   const rankTitle = document.querySelector("#rank .rank-info h2");
   const rankRP = document.querySelector("#rank .rank-rp");
   const rpFill = document.querySelector("#rank .rp-fill");
 
   if (rankTitle) rankTitle.textContent = rank.label;
-  if (rankRP) rankRP.textContent = rank.nextMin
-    ? `RP: ${totalRP} / ${rank.nextMin}`
-    : `RP: ${totalRP} (MAX)`;
-
+  if (rankRP) rankRP.textContent = rank.nextMin ? `RP: ${totalRP} / ${rank.nextMin}` : `RP: ${totalRP} (MAX)`;
   if (rpFill) rpFill.style.width = `${rank.rr}%`;
 
-  // Update Dashboard quick stats
   const dash = document.querySelector("#dashboard .panel");
   if (dash) {
     dash.innerHTML = `
@@ -1064,37 +1079,29 @@ function updateRankUI(matches) {
     `;
   }
 
-  // ===== CINEMATIC TRIGGER (tier + division aware) =====
-const currentIndex = getRankIndex(totalRP);
+  // CINEMATIC trigger (tier + division)
+  const currentIndex = getRankIndex(totalRP);
 
-if (lastRankIndex === null) {
-  lastRankIndex = currentIndex;
-  lastRankLabel = rank.label;
-} else {
-  // Tier change (rank name changed)
-  if (currentIndex !== lastRankIndex) {
+  if (lastRankIndex === null) {
+    lastRankIndex = currentIndex;
+    lastRankLabel = rank.label;
+  } else if (currentIndex !== lastRankIndex) {
     const promoted = currentIndex > lastRankIndex;
     showCinematic(lastRankLabel, rank.label, promoted);
     lastRankIndex = currentIndex;
     lastRankLabel = rank.label;
+  } else if (lastRankLabel !== rank.label) {
+    // division changed inside same tier
+    // treat moving toward "I" as promotion
+    const promoted = rank.label.endsWith("I");
+    showCinematic(lastRankLabel, rank.label, promoted);
+    lastRankLabel = rank.label;
   }
-  // Division change (same tier, different I / II / III)
-  else if (lastRankLabel !== rank.label) {
-  const promoted =
-    rank.label.endsWith("I") || rank.label.endsWith("II");
-
-  showCinematic(lastRankLabel, rank.label, promoted);
-  lastRankLabel = rank.label;
 }
-
-} // ✅ END updateRankUI
 
 function renderHistoryFromStorage() {
   const matches = loadMatches();
   updateRankUI(matches);
-  ...
-}
-
 
   const list = document.getElementById("matchList");
   if (!list) return;
@@ -1114,7 +1121,6 @@ function renderHistoryFromStorage() {
   document.getElementById("bestValue").textContent = best >= 0 ? `+${best}` : `${best}`;
   document.getElementById("worstValue").textContent = `${worst}`;
 
-  // Win streak: consecutive top-3 from end
   let streak = 0;
   for (let i = matches.length - 1; i >= 0; i--) {
     if (matches[i].place <= 3) streak++;
@@ -1125,7 +1131,6 @@ function renderHistoryFromStorage() {
   matches.forEach((m, idx) => {
     const card = document.createElement("div");
     card.className = "match-card";
-
     if (m.rp === best) card.classList.add("best");
     if (m.rp === worst) card.classList.add("worst");
 
@@ -1145,16 +1150,14 @@ function renderHistoryFromStorage() {
           <div class="place">🏆 Place: <strong>${m.place}</strong> / 25</div>
           <div class="kad">🔫 K/A/D: <strong>${m.kills}</strong> / <strong>${m.assists}</strong> / <strong>${m.deaths}</strong></div>
         </div>
-
         <div class="rpDelta ${rpClass}">${rpText} RP</div>
       </div>
     `;
-
     list.appendChild(card);
   });
 }
 
-// ===== ACTIONS =====
+/* ===== ACTIONS ===== */
 function submitMatch() {
   const place = Number(document.getElementById("inPlace").value);
   const kills = Number(document.getElementById("inKills").value);
@@ -1171,53 +1174,21 @@ function submitMatch() {
   saveMatches(matches);
 
   renderHistoryFromStorage();
-  showTab("history", document.querySelectorAll(".nav-btn")[2]); // go to history
+  showTab("history", document.querySelectorAll(".nav-btn")[2]);
 }
 
 function resetMatches() {
   if (!confirm("Reset all saved matches?")) return;
   localStorage.removeItem(STORAGE_KEY);
+  lastRankIndex = null;
+  lastRankLabel = null;
   renderHistoryFromStorage();
 }
-// ===== CINEMATIC FUNCTIONS =====
-function showCinematic(fromRank, toRank, isPromotion = true){
-  const el = document.getElementById("cinematic");
-  const title = document.getElementById("cinTitle");
-  const sub = document.getElementById("cinSub");
 
-  if (!el) return;
-
-  title.textContent = isPromotion ? "RANK PROMOTED" : "RANK DEMOTED";
-  sub.textContent = `${fromRank} → ${toRank}`;
-
-  el.classList.remove("hidden");
-
-  clearTimeout(window.__cinT);
-  window.__cinT = setTimeout(() => {
-    el.classList.add("hidden");
-  }, 2400);
-}
-
-// Close cinematic
-document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape") {
-    document.getElementById("cinematic")?.classList.add("hidden");
-  }
-});
-
-document.addEventListener("click", () => {
-  const cin = document.getElementById("cinematic");
-  if (!cin || cin.classList.contains("hidden")) return;
-  cin.classList.add("hidden");
-});
-
-// ===== INIT =====
+/* ===== INIT ===== */
 renderHistoryFromStorage();
-  
-
-
-
 </script>
+
 
 </body>
 </html>
