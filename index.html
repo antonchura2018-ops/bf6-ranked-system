@@ -5,172 +5,6 @@
 <title>BF6 Ranked System</title>
 
 <style>
-  /* ====== RANK CARD GAME FX ====== */
-.rank-card {
-  position: relative;
-  overflow: hidden;
-}
-
-.rank-bg {
-  position: absolute;
-  inset: -40px;
-  background:
-    radial-gradient(circle at 20% 30%, rgba(34,211,238,0.25), transparent 55%),
-    radial-gradient(circle at 80% 70%, rgba(56,189,248,0.18), transparent 60%),
-    radial-gradient(circle at 50% 50%, rgba(14,165,233,0.12), transparent 65%);
-  filter: blur(12px);
-  animation: bgFloat 8s ease-in-out infinite;
-  z-index: 0;
-}
-
-@keyframes bgFloat {
-  0% { transform: translate(0,0) scale(1); }
-  50% { transform: translate(12px,-8px) scale(1.03); }
-  100% { transform: translate(0,0) scale(1); }
-}
-
-.rank-noise {
-  position: absolute;
-  inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='260' height='260' filter='url(%23n)' opacity='.18'/%3E%3C/svg%3E");
-  opacity: 0.12;
-  mix-blend-mode: overlay;
-  z-index: 1;
-}
-
-.rank-card::after {
-  content: "";
-  position: absolute;
-  inset: -2px;
-  border-radius: 18px;
-  padding: 2px;
-  background: linear-gradient(120deg, rgba(34,211,238,0.9), rgba(56,189,248,0.0), rgba(34,211,238,0.7));
-  -webkit-mask:
-    linear-gradient(#000 0 0) content-box,
-    linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  opacity: 0.55;
-  filter: drop-shadow(0 0 18px rgba(34,211,238,0.35));
-  animation: edgePulse 3.2s ease-in-out infinite;
-  z-index: 2;
-}
-
-@keyframes edgePulse {
-  0%, 100% { opacity: 0.35; }
-  50% { opacity: 0.75; }
-}
-
-/* make inner content above effects */
-.rank-icon, .rank-info { position: relative; z-index: 3; }
-
-/* hover feel */
-.rank-card:hover {
-  transform: translateY(-2px);
-  transition: transform 0.25s ease;
-}
-
-/* Orb upgrade */
-.rank-icon {
-  background: radial-gradient(circle at 30% 30%, #6affff, #0ea5e9 45%, #020617 70%);
-}
-
-.rank-icon::before {
-  content: "";
-  position: absolute;
-  inset: -18px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(34,211,238,0.35), transparent 65%);
-  filter: blur(10px);
-  opacity: 0.9;
-}
-
-.rank-icon::after {
-  content: "";
-  position: absolute;
-  inset: 10px;
-  border-radius: 50%;
-  background: radial-gradient(circle at 25% 25%, rgba(255,255,255,0.35), transparent 55%);
-  opacity: 0.7;
-}
-
-  /* ====== RANK CARD ====== */
-.rank-card {
-  margin-top: 40px;
-  display: flex;
-  align-items: center;
-  gap: 30px;
-  padding: 30px;
-  background: linear-gradient(135deg, #020617, #0f172a);
-  border-radius: 18px;
-  border: 1px solid rgba(255,255,255,0.06);
-  box-shadow: 0 0 40px rgba(56,189,248,0.15);
-  max-width: 700px;
-}
-
-.rank-icon {
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  background: radial-gradient(circle, #22d3ee, #020617);
-  position: relative;
-  box-shadow: 0 0 25px rgba(34,211,238,0.8);
-  overflow: hidden;
-}
-
-.rank-glow {
-  position: absolute;
-  inset: -20px;
-  background: conic-gradient(
-    from 0deg,
-    transparent,
-    #38bdf8,
-    transparent
-  );
-  animation: spin 6s linear infinite;
-}
-
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
-
-.rank-info h2 {
-  font-size: 28px;
-  letter-spacing: 1px;
-  margin-bottom: 8px;
-  background: linear-gradient(90deg, #38bdf8, #22d3ee);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.rank-rp {
-  font-size: 14px;
-  color: #9ca3af;
-}
-
-/* ====== RP BAR ====== */
-.rp-bar {
-  margin-top: 14px;
-  width: 100%;
-  height: 12px;
-  background: #020617;
-  border-radius: 10px;
-  overflow: hidden;
-  border: 1px solid rgba(255,255,255,0.08);
-}
-
-.rp-fill {
-  height: 100%;
-  background: linear-gradient(
-    90deg,
-    #22d3ee,
-    #38bdf8,
-    #0ea5e9
-  );
-  box-shadow: 0 0 12px #38bdf8;
-  transition: width 0.5s ease;
-}
-
 /* ====== GLOBAL ====== */
 * {
   margin: 0;
@@ -207,13 +41,8 @@ body {
   transition: color 0.3s;
 }
 
-.nav-btn:hover {
-  color: #38bdf8;
-}
-
-.nav-btn.active {
-  color: #22d3ee;
-}
+.nav-btn:hover { color: #38bdf8; }
+.nav-btn.active { color: #22d3ee; }
 
 .nav-btn.active::after {
   content: '';
@@ -233,10 +62,7 @@ body {
   padding: 50px;
   animation: fade 0.4s ease;
 }
-
-.section.active {
-  display: block;
-}
+.section.active { display: block; }
 
 @keyframes fade {
   from { opacity: 0; transform: translateY(10px); }
@@ -252,9 +78,7 @@ h1 {
   -webkit-text-fill-color: transparent;
 }
 
-p {
-  color: #9ca3af;
-}
+p { color: #9ca3af; }
 
 /* ====== PANELS ====== */
 .panel {
@@ -265,6 +89,159 @@ p {
   padding: 25px;
   box-shadow: 0 0 25px rgba(34,211,238,0.05);
 }
+
+/* ====== RANK CARD (BASE) ====== */
+.rank-card {
+  margin-top: 40px;
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  padding: 30px;
+  background: linear-gradient(135deg, #020617, #0f172a);
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,0.06);
+  box-shadow: 0 0 40px rgba(56,189,248,0.15);
+  max-width: 700px;
+
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.25s ease;
+}
+
+.rank-card:hover { transform: translateY(-2px); }
+
+.rank-icon {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 0 25px rgba(34,211,238,0.8);
+  background: radial-gradient(circle at 30% 30%, #6affff, #0ea5e9 45%, #020617 70%);
+}
+
+.rank-glow {
+  position: absolute;
+  inset: -20px;
+  background: conic-gradient(from 0deg, transparent, #38bdf8, transparent);
+  animation: spin 6s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.rank-info h2 {
+  font-size: 28px;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+  background: linear-gradient(90deg, #38bdf8, #22d3ee);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.rank-rp { font-size: 14px; color: #9ca3af; }
+
+/* ====== RP BAR ====== */
+.rp-bar {
+  margin-top: 14px;
+  width: 100%;
+  height: 12px;
+  background: #020617;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+.rp-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #22d3ee, #38bdf8, #0ea5e9);
+  box-shadow: 0 0 12px #38bdf8;
+  transition: width 0.5s ease;
+}
+
+/* ====== CHIP ====== */
+.chip{
+  display:inline-block;
+  margin-top:10px;
+  padding:6px 10px;
+  font-size:12px;
+  letter-spacing:1px;
+  color:#a5f3fc;
+  border:1px solid rgba(34,211,238,0.35);
+  border-radius:999px;
+  background: rgba(2,6,23,0.55);
+  box-shadow: 0 0 14px rgba(34,211,238,0.15);
+}
+
+/* ====== RANK CARD GAME FX ====== */
+.rank-bg {
+  position: absolute;
+  inset: -40px;
+  background:
+    radial-gradient(circle at 20% 30%, rgba(34,211,238,0.25), transparent 55%),
+    radial-gradient(circle at 80% 70%, rgba(56,189,248,0.18), transparent 60%),
+    radial-gradient(circle at 50% 50%, rgba(14,165,233,0.12), transparent 65%);
+  filter: blur(12px);
+  animation: bgFloat 8s ease-in-out infinite;
+  z-index: 0;
+}
+
+@keyframes bgFloat {
+  0% { transform: translate(0,0) scale(1); }
+  50% { transform: translate(12px,-8px) scale(1.03); }
+  100% { transform: translate(0,0) scale(1); }
+}
+
+.rank-noise {
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='260' height='260' filter='url(%23n)' opacity='.18'/%3E%3C/svg%3E");
+  opacity: 0.12;
+  mix-blend-mode: overlay;
+  z-index: 1;
+}
+
+.rank-card::after {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: 18px;
+  padding: 2px;
+  background: linear-gradient(120deg, rgba(34,211,238,0.9), rgba(56,189,248,0.0), rgba(34,211,238,0.7));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0.55;
+  filter: drop-shadow(0 0 18px rgba(34,211,238,0.35));
+  animation: edgePulse 3.2s ease-in-out infinite;
+  z-index: 2;
+}
+
+@keyframes edgePulse {
+  0%, 100% { opacity: 0.35; }
+  50% { opacity: 0.75; }
+}
+
+/* make inner content above effects */
+.rank-icon, .rank-info { position: relative; z-index: 3; }
+
+.rank-icon::before {
+  content: "";
+  position: absolute;
+  inset: -18px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(34,211,238,0.35), transparent 65%);
+  filter: blur(10px);
+  opacity: 0.9;
+}
+
+.rank-icon::after {
+  content: "";
+  position: absolute;
+  inset: 10px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 25% 25%, rgba(255,255,255,0.35), transparent 55%);
+  opacity: 0.7;
+}
 </style>
 </head>
 
@@ -272,9 +249,9 @@ p {
 
 <!-- NAVIGATION -->
 <div class="navbar">
-  <button class="nav-btn active" onclick="showTab('dashboard')">DASHBOARD</button>
-  <button class="nav-btn" onclick="showTab('rank')">RANK</button>
-  <button class="nav-btn" onclick="showTab('history')">MATCH HISTORY</button>
+  <button class="nav-btn active" onclick="showTab('dashboard', this)">DASHBOARD</button>
+  <button class="nav-btn" onclick="showTab('rank', this)">RANK</button>
+  <button class="nav-btn" onclick="showTab('history', this)">MATCH HISTORY</button>
 </div>
 
 <!-- DASHBOARD -->
@@ -296,9 +273,9 @@ p {
 
   <div class="rank-card">
     <div class="rank-bg"></div>
-<div class="rank-noise"></div>
+    <div class="rank-noise"></div>
+
     <div class="rank-icon">
-      <!-- Placeholder icon -->
       <div class="rank-glow"></div>
     </div>
 
@@ -306,19 +283,6 @@ p {
       <h2>PHANTOM II</h2>
       <span class="rank-rp">RP: 1250 / 1500</span>
       <div class="chip">NEON ASCENSION</div>
-.chip{
-  display:inline-block;
-  margin-top:10px;
-  padding:6px 10px;
-  font-size:12px;
-  letter-spacing:1px;
-  color:#a5f3fc;
-  border:1px solid rgba(34,211,238,0.35);
-  border-radius:999px;
-  background: rgba(2,6,23,0.55);
-  box-shadow: 0 0 14px rgba(34,211,238,0.15);
-}
-
 
       <div class="rp-bar">
         <div class="rp-fill" style="width: 83%;"></div>
@@ -326,7 +290,6 @@ p {
     </div>
   </div>
 </div>
-
 
 <!-- HISTORY -->
 <div id="history" class="section">
@@ -339,14 +302,15 @@ p {
 </div>
 
 <script>
-function showTab(tabId) {
+function showTab(tabId, btn) {
   document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
-  document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
 
   document.getElementById(tabId).classList.add('active');
-  event.target.classList.add('active');
+  btn.classList.add('active');
 }
 </script>
 
 </body>
 </html>
+
