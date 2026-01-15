@@ -1329,8 +1329,9 @@ cinEl?.addEventListener("click", (e) => {
 
 /* ===== UI UPDATES ===== */
 function updateRankUI(matches) {
-  const totalRP = matches.reduce((s, m) => s + m.rp, 0);
-  const rank = getRank(totalRP);
+  let totalRP = START_RP + matches.reduce((s, m) => s + m.rp, 0);
+totalRP = Math.max(MIN_RP, totalRP);
+const rank = getRank(totalRP);
 
   const rankTitle = document.querySelector("#rank .rank-info h2");
   const rankRP = document.querySelector("#rank .rank-rp");
@@ -1349,25 +1350,31 @@ function updateRankUI(matches) {
     `;
   }
 
-  // CINEMATIC trigger (tier + division)
-  const currentIndex = getRankIndex(totalRP);
+  // CINEMATIC trigger (tier + division) - correct logic
+const currentState = {
+  tierIndex: rank.tierIndex,
+  divIndex: rank.divIndex,
+  label: rank.label
+};
 
-  if (lastRankIndex === null) {
-    lastRankIndex = currentIndex;
-    lastRankLabel = rank.label;
-  } else if (currentIndex !== lastRankIndex) {
-    const promoted = currentIndex > lastRankIndex;
-    showCinematic(lastRankLabel, rank.label, promoted);
-    lastRankIndex = currentIndex;
-    lastRankLabel = rank.label;
-  } else if (lastRankLabel !== rank.label) {
-    // division changed inside same tier
-    // treat moving toward "I" as promotion
-    const promoted = rank.label.endsWith("I");
-    showCinematic(lastRankLabel, rank.label, promoted);
-    lastRankLabel = rank.label;
+if (lastRankState === null) {
+  lastRankState = currentState;
+} else {
+  const tierChanged = currentState.tierIndex !== lastRankState.tierIndex;
+  const divChanged = currentState.divIndex !== lastRankState.divIndex;
+
+  if (tierChanged) {
+    const promoted = currentState.tierIndex > lastRankState.tierIndex;
+    showCinematic(lastRankState.label, currentState.label, promoted);
+    lastRankState = currentState;
+  } else if (divChanged) {
+    // III(0) -> II(1) -> I(2)
+    const promoted = (currentState.divIndex ?? 0) > (lastRankState.divIndex ?? 0);
+    showCinematic(lastRankState.label, currentState.label, promoted);
+    lastRankState = currentState;
   }
 }
+
 
 function renderHistoryFromStorage() {
   const matches = loadMatches();
@@ -1450,8 +1457,7 @@ function submitMatch() {
 function resetMatches() {
   if (!confirm("Reset all saved matches?")) return;
   localStorage.removeItem(STORAGE_KEY);
-  lastRankIndex = null;
-  lastRankLabel = null;
+  lastRankState = null;
   renderHistoryFromStorage();
 }
 
