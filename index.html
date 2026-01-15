@@ -13,6 +13,14 @@
   display:flex;
   align-items:center;
   justify-content:center;
+
+    --cin-intensity: 1;          /* 1..10 */
+  --cin-burst: 0.25;           /* 0..1 */
+  --cin-shake: 0px;            /* px */
+  --cin-ring-speed: 2.2s;      /* time */
+  --cin-particles: 18;         /* count */
+  --cin-duration: 2400ms;      /* auto-hide */
+
 }
 
 .cinematic.hidden{ display:none; }
@@ -27,6 +35,33 @@
   backdrop-filter: blur(8px);
   animation: cinFade 0.35s ease;
 }
+  /* Epic burst layer (scales with intensity) */
+.cinematic-bg::after{
+  content:"";
+  position:absolute;
+  inset:-40%;
+  background:
+    radial-gradient(circle at 50% 45%,
+      color-mix(in srgb, var(--cin-accent, #22d3ee) 55%, transparent) 0%,
+      transparent 60%
+    ),
+    radial-gradient(circle at 50% 55%,
+      color-mix(in srgb, var(--cin-accent, #22d3ee) 35%, transparent) 0%,
+      transparent 70%
+    );
+  opacity: var(--cin-burst, 0.25);
+  filter: blur(2px);
+  transform: scale(calc(0.92 + (var(--cin-intensity, 1) * 0.012)));
+  pointer-events:none;
+  animation: cinBurstPulse 520ms ease;
+}
+
+@keyframes cinBurstPulse{
+  0%{ opacity: 0; transform: scale(0.90); }
+  45%{ opacity: var(--cin-burst, 0.25); transform: scale(1.03); }
+  100%{ opacity: calc(var(--cin-burst, 0.25) * 0.55); transform: scale(1.00); }
+}
+
 
 @keyframes cinFade{
   from { opacity:0; }
@@ -40,14 +75,30 @@
   border-radius: 22px;
   background: linear-gradient(135deg, rgba(2,6,23,0.85), rgba(15,23,42,0.85));
   border: 1px solid rgba(255,255,255,0.07);
-  box-shadow: 0 0 80px rgba(34,211,238,0.12);
+    box-shadow: 0 0 calc(60px + (var(--cin-intensity, 1) * 10px))
+    color-mix(in srgb, var(--cin-accent, #22d3ee) 18%, rgba(0,0,0,0));
   overflow:hidden;
-  animation: pop 0.45s ease;
+  transform: translateZ(0);
+}
+  
+  .cin-wrap{
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+  /* Shake helper (intensity-controlled) */
+.cinematic[data-shake="1"] .cin-wrap{
+  animation: cinShake 420ms ease;
 }
 
-@keyframes pop{
-  from { transform: translateY(14px) scale(0.98); opacity:0; }
-  to { transform: translateY(0) scale(1); opacity:1; }
+@keyframes cinShake{
+  0%{ transform: translateY(0) translateX(0) scale(1); }
+  25%{ transform: translateY(0) translateX(calc(var(--cin-shake, 0px) * -1)) scale(1); }
+  55%{ transform: translateY(0) translateX(var(--cin-shake, 0px)) scale(1); }
+  80%{ transform: translateY(0) translateX(calc(var(--cin-shake, 0px) * -0.5)) scale(1); }
+  100%{ transform: translateY(0) translateX(0) scale(1); }
 }
 
 .cinematic-card::after{
@@ -93,7 +144,7 @@
   inset:-18px;
   border-radius: 50%;
   background: conic-gradient(from 0deg, transparent, rgba(34,211,238,0.9), transparent, rgba(167,139,250,0.7), transparent);
-  animation: spin 2.2s linear infinite;
+  animation: spin var(--cin-ring-speed, 2.2s) linear infinite;
   box-shadow: 0 0 30px rgba(34,211,238,0.25);
 }
 
@@ -1017,7 +1068,8 @@ p { color: #9ca3af; }
 <div id="cinematic" class="cinematic hidden">
   <div class="cinematic-bg"></div>
   <div class="cin-particles" id="cinParticles"></div>
-
+ 
+  <div class="cin-wrap">
   <div class="cinematic-card">
     <div class="cinematic-title" id="cinTitle">RANK PROMOTED</div>
     <div class="cinematic-sub" id="cinSub">SENTINEL II → PHANTOM III</div>
@@ -1028,6 +1080,7 @@ p { color: #9ca3af; }
     </div>
 
     <div class="cin-hint">Click or press ESC</div>
+   </div>
   </div>
 </div>
 
