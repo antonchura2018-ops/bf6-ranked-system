@@ -453,6 +453,47 @@
   font-size: 12px;
   color:#9ca3af;
 }
+  .breakdown{
+  margin-top: 10px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.06);
+  background: rgba(2,6,23,0.42);
+}
+
+.break-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap: 10px;
+  font-size: 12px;
+  color:#9ca3af;
+  padding: 2px 0;
+}
+
+.break-row strong{
+  color:#e5e7eb;
+  font-weight: 800;
+}
+
+.break-row .pos{ color: #22c55e; }
+.break-row .neg{ color: #fb7185; }
+
+.break-total{
+  margin-top: 6px;
+  padding-top: 6px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  font-size: 12px;
+  letter-spacing: .4px;
+}
+
+.break-total span{
+  color:#cbd5e1;
+  font-weight: 800;
+}
 
 .rpDelta{
   font-size: 18px;
@@ -1124,12 +1165,14 @@ var placementRP = {
   21:-48, 22:-54, 23:-58, 24:-59, 25:-60
 };
 
-function calcRP(m) {
+function calcRPBreakdown(m) {
   var place = Math.min(25, Math.max(1, m.place));
   var base = (placementRP[place] !== undefined) ? placementRP[place] : 0;
 
   var killsBase = Math.min(m.kills, 10) * 4;
   var killsExtra = Math.max(0, m.kills - 10) * 2;
+  var kills = killsBase + killsExtra;
+
   var assists = m.assists * 2;
 
   var deaths = m.deaths * -3;
@@ -1138,10 +1181,23 @@ function calcRP(m) {
   var mvp = m.mvp ? 15 : 0;
   var leftBonus = m.left ? 10 : 0;
 
-  var rp = base + killsBase + killsExtra + assists + deaths + earlyPenalty + mvp + leftBonus;
-  rp = Math.max(-80, Math.min(200, rp));
-  return Math.round(rp);
+  var total = base + kills + assists + deaths + earlyPenalty + mvp + leftBonus;
+  total = Math.max(-80, Math.min(200, total));
+  total = Math.round(total);
+
+  return {
+    place: place,
+    base: base,
+    kills: kills,
+    assists: assists,
+    deaths: deaths,
+    earlyPenalty: earlyPenalty,
+    mvp: mvp,
+    leftBonus: leftBonus,
+    total: total
+  };
 }
+
 
 /* ===== RANKS ===== */
 // Settings
@@ -1325,6 +1381,16 @@ function updateRankUI(matches) {
 
 function renderHistoryFromStorage() {
   var matches = loadMatches();
+  // Backfill breakdown for old saved matches (compatibility)
+  var changed = false;
+  for (var bi = 0; bi < matches.length; bi++) {
+    if (!matches[bi].breakdown) {
+      matches[bi].breakdown = calcRPBreakdown(matches[bi]);
+      matches[bi].rp = matches[bi].breakdown.total;
+      changed = true;
+    }
+  }
+  if (changed) saveMatches(matches);
   updateRankUI(matches);
 
   var list = document.getElementById("matchList");
@@ -1412,10 +1478,64 @@ function renderHistoryFromStorage() {
     var kad = document.createElement("div");
     kad.className = "kad";
     kad.innerHTML = "🔫 K/A/D: <strong>" + m.kills + "</strong> / <strong>" + m.assists + "</strong> / <strong>" + m.deaths + "</strong>";
+    var bd = m.breakdown ? m.breakdown : calcRPBreakdown(m);
+
+    function fmt(val) {
+      var sign = val >= 0 ? "+" : "";
+      return sign + String(val);
+    }
+    function cls(val) {
+      return val >= 0 ? "pos" : "neg";
+    }
+
+    var breakdown = document.createElement("div");
+    breakdown.className = "breakdown";
+
+    var r1 = document.createElement("div");
+    r1.className = "break-row";
+    r1.innerHTML = "<span>Placement</span><strong class='" + cls(bd.base) + "'>" + fmt(bd.base) + "</strong>";
+
+    var r2 = document.createElement("div");
+    r2.className = "break-row";
+    r2.innerHTML = "<span>Kills</span><strong class='" + cls(bd.kills) + "'>" + fmt(bd.kills) + "</strong>";
+
+    var r3 = document.createElement("div");
+    r3.className = "break-row";
+    r3.innerHTML = "<span>Assists</span><strong class='" + cls(bd.assists) + "'>" + fmt(bd.assists) + "</strong>";
+
+    var r4 = document.createElement("div");
+    r4.className = "break-row";
+    r4.innerHTML = "<span>Deaths</span><strong class='" + cls(bd.deaths) + "'>" + fmt(bd.deaths) + "</strong>";
+
+    var r5 = document.createElement("div");
+    r5.className = "break-row";
+    r5.innerHTML = "<span>Early penalty</span><strong class='" + cls(bd.earlyPenalty) + "'>" + fmt(bd.earlyPenalty) + "</strong>";
+
+    var r6 = document.createElement("div");
+    r6.className = "break-row";
+    r6.innerHTML = "<span>MVP</span><strong class='" + cls(bd.mvp) + "'>" + fmt(bd.mvp) + "</strong>";
+
+    var r7 = document.createElement("div");
+    r7.className = "break-row";
+    r7.innerHTML = "<span>Teammate left</span><strong class='" + cls(bd.leftBonus) + "'>" + fmt(bd.leftBonus) + "</strong>";
+
+    var totalRow = document.createElement("div");
+    totalRow.className = "break-total";
+    totalRow.innerHTML = "<strong>Total</strong><span class='" + cls(bd.total) + "'>" + fmt(bd.total) + " RP</span>";
+
+    breakdown.appendChild(r1);
+    breakdown.appendChild(r2);
+    breakdown.appendChild(r3);
+    breakdown.appendChild(r4);
+    breakdown.appendChild(r5);
+    breakdown.appendChild(r6);
+    breakdown.appendChild(r7);
+    breakdown.appendChild(totalRow);
 
     left.appendChild(title);
     left.appendChild(place);
     left.appendChild(kad);
+    left.appendChild(breakdown);
 
     var rpDelta = document.createElement("div");
     rpDelta.className = "rpDelta " + (m.rp >= 0 ? "rpPlus" : "rpMinus");
@@ -1439,7 +1559,8 @@ function submitMatch() {
   var left = document.getElementById("inLeft").checked;
 
   var match = { place: place, kills: kills, assists: assists, deaths: deaths, mvp: mvp, left: left, ts: Date.now() };
-  match.rp = calcRP(match);
+  match.breakdown = calcRPBreakdown(match);
+  match.rp = match.breakdown.total;
 
   var matches = loadMatches();
   matches.push(match);
