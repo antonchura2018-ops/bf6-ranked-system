@@ -1064,28 +1064,30 @@ function updateRankUI(matches) {
     `;
   }
 
-  // ===== CINEMATIC TRIGGER (MUST BE INSIDE THIS FUNCTION) =====
-  const currentIndex = getRankIndex(totalRP);
+  // ===== CINEMATIC TRIGGER (tier + division aware) =====
+const currentIndex = getRankIndex(totalRP);
 
-  if (lastRankIndex === null) {
-    // first load
-    lastRankIndex = currentIndex;
-    lastRankLabel = rank.label;
-  } else if (currentIndex !== lastRankIndex) {
-    // rank tier changed
+if (lastRankIndex === null) {
+  lastRankIndex = currentIndex;
+  lastRankLabel = rank.label;
+} else {
+  // Tier change (rank name changed)
+  if (currentIndex !== lastRankIndex) {
     const promoted = currentIndex > lastRankIndex;
     showCinematic(lastRankLabel, rank.label, promoted);
-
     lastRankIndex = currentIndex;
     lastRankLabel = rank.label;
-  } else if (lastRankLabel !== rank.label) {
-    // same tier, different division (I / II / III)
-    const promoted = rank.rr > 50;
-    showCinematic(lastRankLabel, rank.label, promoted);
+  }
+  // Division change (same tier, different I / II / III)
+  else if (lastRankLabel !== rank.label) {
+    const promoted =
+      rank.label.endsWith("I") || rank.label.endsWith("II");
 
+    showCinematic(lastRankLabel, rank.label, promoted);
     lastRankLabel = rank.label;
   }
 }
+
 
 
 
@@ -1210,9 +1212,7 @@ document.addEventListener("click", () => {
 
 // ===== INIT =====
 renderHistoryFromStorage();
-  setTimeout(() => {
-  showCinematic("TEST FROM", "TEST TO", true);
-}, 1200);
+  
 
 
 
