@@ -770,8 +770,11 @@ p { color: #9ca3af; }
   border-radius: 50%;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 0 25px rgba(34,211,238,0.8);
-  background: radial-gradient(circle at 30% 30%, #6affff, #0ea5e9 45%, #020617 70%);
+  box-shadow: 0 0 25px color-mix(in srgb, var(--rank-accent, #22d3ee) 75%, transparent);
+  background: radial-gradient(circle at 30% 30%,
+    color-mix(in srgb, var(--rank-accent, #22d3ee) 55%, white),
+    var(--rank-accent, #22d3ee) 45%,
+    #020617 70%
 }
 
 .rank-glow {
@@ -931,17 +934,17 @@ p { color: #9ca3af; }
     <div class="rank-bg"></div>
     <div class="rank-noise"></div>
 
-    <div class="rank-icon">
+    <div class="rank-icon" id="rankCardIcon">
       <div class="rank-glow"></div>
     </div>
 
     <div class="rank-info">
-      <h2>PHANTOM II</h2>
-      <span class="rank-rp">RP: 1250 / 1500</span>
-      <div class="chip">NEON ASCENSION</div>
+      <h2 id="rankCardTitle">PHANTOM II</h2>
+      <span class="rank-rp" id="rankCardRP">RP: 1250 / 1500</span>
+      <div class="chip" id="rankCardChip">NEON ASCENSION</div>
 
       <div class="rp-bar">
-        <div class="rp-fill" style="width: 83%;"></div>
+        <div class="rp-fill" id="rankCardFill" style="width: 83%;"></div>
       </div>
     </div>
   </div>
@@ -1365,13 +1368,23 @@ function updateRankUI(matches) {
 
   var rank = getRank(totalRP);
 
-  var rankTitle = document.querySelector("#rank .rank-info h2");
-  var rankRP = document.querySelector("#rank .rank-rp");
-  var rpFill = document.querySelector("#rank .rp-fill");
+  var rankTitle = document.getElementById("rankCardTitle");
+var rankRP = document.getElementById("rankCardRP");
+var rpFill = document.getElementById("rankCardFill");
+var chip = document.getElementById("rankCardChip");
+var icon = document.getElementById("rankCardIcon");
 
   if (rankTitle) rankTitle.textContent = rank.label;
   if (rankRP) rankRP.textContent = rank.nextMin ? ("RP: " + totalRP + " / " + rank.nextMin) : ("RP: " + totalRP + " (MAX)");
   if (rpFill) rpFill.style.width = String(rank.rr) + "%";
+  // Rank card chip + accent sync
+if (chip) {
+  chip.textContent = rank.tierName === "NEXUS" ? "ABSOLUTE PEAK" : ("TIER: " + rank.tierName);
+}
+
+if (icon) {
+  icon.style.setProperty("--rank-accent", rank.color);
+}
 
   updateLadderUI(rank.tierIndex);
 
