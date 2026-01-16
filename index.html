@@ -1729,6 +1729,16 @@ function undoLastMatch() {
 
   var btns = document.querySelectorAll(".nav-btn");
   showTab("history", btns[2]);
+}
+
+  matches.splice(newestIndex, 1);
+  saveMatches(matches);
+
+  lastRankState = null;
+  renderHistoryFromStorage();
+
+  var btns = document.querySelectorAll(".nav-btn");
+  showTab("history", btns[2]);
     }
 
   matches.splice(newestIndex, 1);
