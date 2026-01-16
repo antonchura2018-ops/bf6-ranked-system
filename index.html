@@ -1197,33 +1197,124 @@ var placementRP = {
 };
 
 function calcRPBreakdown(m) {
-  var place = Math.min(25, Math.max(1, m.place));
-  var base = (placementRP[place] !== undefined) ? placementRP[place] : 0;
+  var place = Math.min(25, Math.max(1, Number(m.place || 25)));
+  var kills = Math.max(0, Number(m.kills || 0));
+  var assists = Math.max(0, Number(m.assists || 0));
+  var deaths = Math.max(0, Number(m.deaths || 0));
+  var mvp = !!m.mvp;
+  var left = !!m.left;
 
-  var killsBase = Math.min(m.kills, 10) * 4;
-  var killsExtra = Math.max(0, m.kills - 10) * 2;
-  var kills = killsBase + killsExtra;
+  var contrib = kills + assists;
 
-  var assists = m.assists * 2;
+  // Contribution tiers
+  var isLow = contrib < 5;
+  var isNormal = contrib >= 5;
+  var isHigh = (kills >= 10) || (contrib >= 20);
 
-  var deaths = m.deaths * -3;
-  var earlyPenalty = (place > 15 && m.deaths > 0) ? -10 : 0;
+  // ===== Placement base (25 teams) =====
+  // 1:+26, 2:+22, 3:+20, 4:+17, 5:+15, 6:+13, 7:+11,
+  // 8-11:0, 12-15:-2, 16:-4, 17:-6, 18:-8, 19:-10, 20:-12,
+  // 21:-14, 22:-16, 23:-18, 24:-20, 25:-22
+  var placementBase = 0;
 
-  var mvp = m.mvp ? 15 : 0;
-  var leftBonus = m.left ? 10 : 0;
+  if (place === 1) placementBase = 26;
+  else if (place === 2) placementBase = 22;
+  else if (place === 3) placementBase = 20;
+  else if (place === 4) placementBase = 17;
+  else if (place === 5) placementBase = 15;
+  else if (place === 6) placementBase = 13;
+  else if (place === 7) placementBase = 11;
+  else if (place >= 8 && place <= 11) placementBase = 0;
+  else if (place >= 12 && place <= 15) placementBase = -2;
+  else if (place === 16) placementBase = -4;
+  else if (place === 17) placementBase = -6;
+  else if (place === 18) placementBase = -8;
+  else if (place === 19) placementBase = -10;
+  else if (place === 20) placementBase = -12;
+  else if (place === 21) placementBase = -14;
+  else if (place === 22) placementBase = -16;
+  else if (place === 23) placementBase = -18;
+  else if (place === 24) placementBase = -20;
+  else placementBase = -22;
 
-  var total = base + kills + assists + deaths + earlyPenalty + mvp + leftBonus;
-  total = Math.max(-80, Math.min(200, total));
+  // ===== Placement modifier by contribution =====
+  var placementMod = 0;
+
+  if (place <= 7) {
+    if (isHigh) placementMod = 2;
+    else if (isNormal) placementMod = 1;
+    else placementMod = 0;
+  } else if (place >= 8 && place <= 11) {
+    if (isHigh) placementMod = 3;
+    else if (isNormal) placementMod = 2;
+    else placementMod = 0; // must stay 0 with low contrib
+  } else if (place >= 12 && place <= 15) {
+    if (isHigh) placementMod = 3;       // -2 + 3 = +1
+    else if (isNormal) placementMod = 2; // -2 + 2 = 0
+    else placementMod = -2;             // -2 -2 = -4
+  } else {
+    // place > 15: no placement mod (prevents farming kills with bad placement)
+    placementMod = 0;
+  }
+
+  var placementScore = placementBase + placementMod;
+
+  // ===== Combat score (normalized & capped) =====
+  // Kills: 1-5 => +2, 6-10 => +1, 11+ => +0
+  var killScore = 0;
+  var k1 = Math.min(kills, 5);
+  var k2 = Math.min(Math.max(kills - 5, 0), 5);
+  killScore += k1 * 2;
+  killScore += k2 * 1;
+
+  // Assists: 1-5 => +1, 6-10 => +0.5, 11+ => +0
+  var assistScore = 0;
+  var a1 = Math.min(assists, 5);
+  var a2 = Math.min(Math.max(assists - 5, 0), 5);
+  assistScore += a1 * 1;
+  assistScore += a2 * 0.5;
+
+  // Deaths: -2 each, capped to -10 max penalty
+  var deathScore = -2 * deaths;
+  if (deathScore < -10) deathScore = -10;
+
+  var combatScore = killScore + assistScore + deathScore;
+  if (combatScore > 14) combatScore = 14;
+
+  // ===== MVP bonus =====
+  var mvpBonus = mvp ? 3 : 0;
+
+  // ===== Teammate-left bonus + invalid-ish protection =====
+  var leftBonus = 0;
+  if (left) {
+    if (place === 1) leftBonus = 10;
+    else if (place <= 3) leftBonus = 7;
+    else if (place <= 7) leftBonus = 4;
+  }
+
+  // Total before clamp
+  var total = placementScore + combatScore + mvpBonus + leftBonus;
+
+  // Clamp final RR per match (hard to climb)
+  if (total > 32) total = 32;
+  if (total < -25) total = -25;
+
+  // Invalid-ish match protection
+  if (left && place > 15 && total < -8) total = -8;
+
   total = Math.round(total);
 
   return {
     place: place,
-    base: base,
-    kills: kills,
-    assists: assists,
-    deaths: deaths,
-    earlyPenalty: earlyPenalty,
-    mvp: mvp,
+    contrib: contrib,
+    placementBase: placementBase,
+    placementMod: placementMod,
+    placementScore: placementScore,
+    killScore: killScore,
+    assistScore: assistScore,
+    deathScore: deathScore,
+    combatScore: combatScore,
+    mvpBonus: mvpBonus,
     leftBonus: leftBonus,
     total: total
   };
@@ -1422,6 +1513,16 @@ if (icon) {
 
 function renderHistoryFromStorage() {
   var matches = loadMatches();
+  // Sort newest first
+matches.sort(function(a, b) {
+  return Number(b.ts || 0) - Number(a.ts || 0);
+});
+
+// Show only last 20 matches (Valorant-like)
+var MAX_MATCHES = 20; // set to 0 to show all
+if (MAX_MATCHES > 0 && matches.length > MAX_MATCHES) {
+  matches = matches.slice(0, MAX_MATCHES);
+}
   // Backfill breakdown for old saved matches (compatibility)
   var changed = false;
   for (var bi = 0; bi < matches.length; bi++) {
@@ -1519,68 +1620,16 @@ function renderHistoryFromStorage() {
     var kad = document.createElement("div");
     kad.className = "kad";
     kad.innerHTML = "🔫 K/A/D: <strong>" + m.kills + "</strong> / <strong>" + m.assists + "</strong> / <strong>" + m.deaths + "</strong>";
-    var bd = m.breakdown ? m.breakdown : calcRPBreakdown(m);
-
-    function fmt(val) {
-      var sign = val >= 0 ? "+" : "";
-      return sign + String(val);
-    }
-    function cls(val) {
-      return val >= 0 ? "pos" : "neg";
-    }
-
-    var breakdown = document.createElement("div");
-    breakdown.className = "breakdown";
-
-    var r1 = document.createElement("div");
-    r1.className = "break-row";
-    r1.innerHTML = "<span>Placement</span><strong class='" + cls(bd.base) + "'>" + fmt(bd.base) + "</strong>";
-
-    var r2 = document.createElement("div");
-    r2.className = "break-row";
-    r2.innerHTML = "<span>Kills</span><strong class='" + cls(bd.kills) + "'>" + fmt(bd.kills) + "</strong>";
-
-    var r3 = document.createElement("div");
-    r3.className = "break-row";
-    r3.innerHTML = "<span>Assists</span><strong class='" + cls(bd.assists) + "'>" + fmt(bd.assists) + "</strong>";
-
-    var r4 = document.createElement("div");
-    r4.className = "break-row";
-    r4.innerHTML = "<span>Deaths</span><strong class='" + cls(bd.deaths) + "'>" + fmt(bd.deaths) + "</strong>";
-
-    var r5 = document.createElement("div");
-    r5.className = "break-row";
-    r5.innerHTML = "<span>Early penalty</span><strong class='" + cls(bd.earlyPenalty) + "'>" + fmt(bd.earlyPenalty) + "</strong>";
-
-    var r6 = document.createElement("div");
-    r6.className = "break-row";
-    r6.innerHTML = "<span>MVP</span><strong class='" + cls(bd.mvp) + "'>" + fmt(bd.mvp) + "</strong>";
-
-    var r7 = document.createElement("div");
-    r7.className = "break-row";
-    r7.innerHTML = "<span>Teammate left</span><strong class='" + cls(bd.leftBonus) + "'>" + fmt(bd.leftBonus) + "</strong>";
-
-    var totalRow = document.createElement("div");
-    totalRow.className = "break-total";
-    totalRow.innerHTML = "<strong>Total</strong><span class='" + cls(bd.total) + "'>" + fmt(bd.total) + " RP</span>";
-
-    breakdown.appendChild(r1);
-    breakdown.appendChild(r2);
-    breakdown.appendChild(r3);
-    breakdown.appendChild(r4);
-    breakdown.appendChild(r5);
-    breakdown.appendChild(r6);
-    breakdown.appendChild(r7);
-    breakdown.appendChild(totalRow);
+    
 
     left.appendChild(title);
     left.appendChild(place);
     left.appendChild(kad);
-    left.appendChild(breakdown);
+    
 
     var rpDelta = document.createElement("div");
     rpDelta.className = "rpDelta " + (m.rp >= 0 ? "rpPlus" : "rpMinus");
-    rpDelta.textContent = (m.rp >= 0 ? "+" + m.rp : String(m.rp)) + " RP";
+    rpDelta.textContent = (m.rp >= 0 ? "+" + m.rp : String(m.rp)) + " RR";
 
     row.appendChild(left);
     row.appendChild(rpDelta);
