@@ -1731,26 +1731,6 @@ function undoLastMatch() {
   showTab("history", btns[2]);
 }
 
-  matches.splice(newestIndex, 1);
-  saveMatches(matches);
-
-  lastRankState = null;
-  renderHistoryFromStorage();
-
-  var btns = document.querySelectorAll(".nav-btn");
-  showTab("history", btns[2]);
-    }
-
-  matches.splice(newestIndex, 1);
-  saveMatches(matches);
-
-  lastRankState = null;
-  renderHistoryFromStorage();
-
-  var btns = document.querySelectorAll(".nav-btn");
-  showTab("history", btns[2]);
-}
-
 function resetMatches() {
   if (!confirm("Reset all saved matches?")) return;
   localStorage.removeItem(STORAGE_KEY);
@@ -1765,4 +1745,3 @@ renderHistoryFromStorage();
 
 </body>
 </html>
-
