@@ -1187,15 +1187,98 @@ function saveMatches(matches) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(matches));
 }
 
-/* ===== RP TABLE ===== */
-var placementRP = {
-  1:100, 2:92, 3:85, 4:78, 5:70,
-  6:60, 7:52, 8:45, 9:38, 10:30,
-  11:20, 12:12, 13:6, 14:2, 15:0,
-  16:-8, 17:-16, 18:-24, 19:-32, 20:-40,
-  21:-48, 22:-54, 23:-58, 24:-59, 25:-60
-};
+/* ===== RANK SETTINGS (Valorant-like divisions) ===== */
+var START_RP = 0;
+var MIN_RP = 0;
+var DIV_RR = 100;
+var DIVS_PER_TIER = 3;
 
+/*
+IMPORTANT:
+To have exactly 3 divisions per tier (III/II/I), each tier should span 300 RR.
+So tier mins are spaced by 300.
+This also makes ranking progression consistent and hard.
+*/
+var rankTiers = [
+  { name: "OUTCAST",  color: "#ffb86b", min: 0   },
+  { name: "VANGUARD", color: "#22d3ee", min: 300 },
+  { name: "SENTINEL", color: "#38bdf8", min: 600 },
+  { name: "PHANTOM",  color: "#a78bfa", min: 900 },
+  { name: "WARLORD",  color: "#fb7185", min: 1200 },
+  { name: "ARCHON",   color: "#fbbf24", min: 1500 },
+  { name: "OVERSEER", color: "#2dd4bf", min: 1800 },
+  { name: "ASCENDANT",color: "#60a5fa", min: 2100 },
+  { name: "PARAGON",  color: "#e5e7eb", min: 2400 },
+  { name: "NEXUS",    color: "#ff3b3b", min: 2700 }
+];
+
+// cinematic tracking (tier + division)
+var lastRankState = null; // { tierIndex, divIndex, label }
+
+/* ===== RANK CALC ===== */
+function getRank(totalRP) {
+  // find tier index
+  var tierIndex = 0;
+  for (var i = 0; i < rankTiers.length; i++) {
+    if (totalRP >= rankTiers[i].min) tierIndex = i;
+  }
+
+  var tier = rankTiers[tierIndex];
+
+  // NEXUS special case
+  if (tier.name === "NEXUS") {
+    return {
+      label: "NEXUS",
+      tierName: "NEXUS",
+      tierIndex: tierIndex,
+      div: null,
+      divIndex: null,
+      color: tier.color,
+      rr: 100,
+      nextMin: null
+    };
+  }
+
+  var nextTier = rankTiers[tierIndex + 1];
+
+  // RR inside this tier
+  var rrInTier = totalRP - tier.min;
+  if (rrInTier < 0) rrInTier = 0;
+
+  // Division index (0..2) based on 100 RR chunks
+  var divIndex = Math.floor(rrInTier / DIV_RR);
+  if (divIndex < 0) divIndex = 0;
+  if (divIndex > (DIVS_PER_TIER - 1)) divIndex = (DIVS_PER_TIER - 1);
+
+  // RR progress inside current division (0..99)
+  var rr = rrInTier - (divIndex * DIV_RR);
+  if (rr < 0) rr = 0;
+  if (rr > (DIV_RR - 1)) rr = (DIV_RR - 1);
+
+  // Division label mapping: 0->III, 1->II, 2->I
+  var div = (divIndex === 0) ? "III" : (divIndex === 1 ? "II" : "I");
+
+  // Label
+  var label = tier.name + " " + div;
+
+  // Next threshold shown on UI
+  var nextMin = null;
+  if (divIndex === (DIVS_PER_TIER - 1)) nextMin = nextTier ? nextTier.min : null;
+  else nextMin = tier.min + ((divIndex + 1) * DIV_RR);
+
+  return {
+    label: label,
+    tierName: tier.name,
+    tierIndex: tierIndex,
+    div: div,
+    divIndex: divIndex,
+    color: tier.color,
+    rr: rr, // 0..99
+    nextMin: nextMin
+  };
+}
+
+/* ===== BR RR FORMULA (hard to climb) ===== */
 function calcRPBreakdown(m) {
   var place = Math.min(25, Math.max(1, Number(m.place || 25)));
   var kills = Math.max(0, Number(m.kills || 0));
@@ -1211,12 +1294,8 @@ function calcRPBreakdown(m) {
   var isNormal = contrib >= 5;
   var isHigh = (kills >= 10) || (contrib >= 20);
 
-  // ===== Placement base (25 teams) =====
-  // 1:+26, 2:+22, 3:+20, 4:+17, 5:+15, 6:+13, 7:+11,
-  // 8-11:0, 12-15:-2, 16:-4, 17:-6, 18:-8, 19:-10, 20:-12,
-  // 21:-14, 22:-16, 23:-18, 24:-20, 25:-22
+  // Placement base
   var placementBase = 0;
-
   if (place === 1) placementBase = 26;
   else if (place === 2) placementBase = 22;
   else if (place === 3) placementBase = 20;
@@ -1237,9 +1316,8 @@ function calcRPBreakdown(m) {
   else if (place === 24) placementBase = -20;
   else placementBase = -22;
 
-  // ===== Placement modifier by contribution =====
+  // Placement modifier by contribution
   var placementMod = 0;
-
   if (place <= 7) {
     if (isHigh) placementMod = 2;
     else if (isNormal) placementMod = 1;
@@ -1247,44 +1325,38 @@ function calcRPBreakdown(m) {
   } else if (place >= 8 && place <= 11) {
     if (isHigh) placementMod = 3;
     else if (isNormal) placementMod = 2;
-    else placementMod = 0; // must stay 0 with low contrib
+    else placementMod = 0;
   } else if (place >= 12 && place <= 15) {
-    if (isHigh) placementMod = 3;       // -2 + 3 = +1
-    else if (isNormal) placementMod = 2; // -2 + 2 = 0
-    else placementMod = -2;             // -2 -2 = -4
+    if (isHigh) placementMod = 3;        // -2 +3 = +1
+    else if (isNormal) placementMod = 2;  // -2 +2 = 0
+    else placementMod = -2;              // -2 -2 = -4
   } else {
-    // place > 15: no placement mod (prevents farming kills with bad placement)
-    placementMod = 0;
+    placementMod = 0; // place > 15: no mod
   }
 
   var placementScore = placementBase + placementMod;
 
-  // ===== Combat score (normalized & capped) =====
-  // Kills: 1-5 => +2, 6-10 => +1, 11+ => +0
+  // Combat score (normalized & capped)
   var killScore = 0;
   var k1 = Math.min(kills, 5);
   var k2 = Math.min(Math.max(kills - 5, 0), 5);
   killScore += k1 * 2;
   killScore += k2 * 1;
 
-  // Assists: 1-5 => +1, 6-10 => +0.5, 11+ => +0
   var assistScore = 0;
   var a1 = Math.min(assists, 5);
   var a2 = Math.min(Math.max(assists - 5, 0), 5);
   assistScore += a1 * 1;
   assistScore += a2 * 0.5;
 
-  // Deaths: -2 each, capped to -10 max penalty
   var deathScore = -2 * deaths;
   if (deathScore < -10) deathScore = -10;
 
   var combatScore = killScore + assistScore + deathScore;
   if (combatScore > 14) combatScore = 14;
 
-  // ===== MVP bonus =====
   var mvpBonus = mvp ? 3 : 0;
 
-  // ===== Teammate-left bonus + invalid-ish protection =====
   var leftBonus = 0;
   if (left) {
     if (place === 1) leftBonus = 10;
@@ -1292,14 +1364,13 @@ function calcRPBreakdown(m) {
     else if (place <= 7) leftBonus = 4;
   }
 
-  // Total before clamp
   var total = placementScore + combatScore + mvpBonus + leftBonus;
 
-  // Clamp final RR per match (hard to climb)
+  // Clamp final RR per match
   if (total > 32) total = 32;
   if (total < -25) total = -25;
 
-  // Invalid-ish match protection
+  // Invalid-ish protection
   if (left && place > 15 && total < -8) total = -8;
 
   total = Math.round(total);
@@ -1317,91 +1388,6 @@ function calcRPBreakdown(m) {
     mvpBonus: mvpBonus,
     leftBonus: leftBonus,
     total: total
-  };
-}
-
-
-/* ===== RANKS ===== */
-// Settings (Valorant-like divisions)
-var START_RP = 0;        // starting RR
-var MIN_RP = 0;          // never go below 0
-var DIV_RR = 100;        // 100 RR per division
-var DIVS_PER_TIER = 3;   // III, II, I
-
-var rankTiers = [
-  { name: "OUTCAST",  color: "#ffb86b", min: 0 },
-  { name: "VANGUARD", color: "#22d3ee", min: 600 },
-  { name: "SENTINEL", color: "#38bdf8", min: 1200 },
-  { name: "PHANTOM",  color: "#a78bfa", min: 2000 },
-  { name: "WARLORD",  color: "#fb7185", min: 3000 },
-  { name: "ARCHON",   color: "#fbbf24", min: 4200 },
-  { name: "OVERSEER", color: "#2dd4bf", min: 5400 },
-  { name: "ASCENDANT",color: "#60a5fa", min: 6800 },
-  { name: "PARAGON",  color: "#e5e7eb", min: 8500 },
-  { name: "NEXUS",    color: "#ff3b3b", min: 10500 }
-];
-
-// cinematic tracking (tier + division)
-var lastRankState = null; // { tierIndex, divIndex, label }
-
-function getRank(totalRP) {
-  var tierIndex = 0;
-  for (var i = 0; i < rankTiers.length; i++) {
-    if (totalRP >= rankTiers[i].min) tierIndex = i;
-  }
-
-  var tier = rankTiers[tierIndex];
-
-  if (tier.name === "NEXUS") {
-    return {
-      label: "NEXUS",
-      tierName: "NEXUS",
-      tierIndex: tierIndex,
-      div: null,
-      divIndex: null,
-      color: tier.color,
-      rr: 100,
-      nextMin: null
-    };
-  }
-
-  var nextTier = rankTiers[tierIndex + 1];
-
-// RR inside this tier
-var rrInTier = totalRP - tier.min;
-if (rrInTier < 0) rrInTier = 0;
-
-// Division index (0..2) based on 100 RR chunks
-var divIndex = Math.floor(rrInTier / DIV_RR);
-if (divIndex < 0) divIndex = 0;
-if (divIndex > (DIVS_PER_TIER - 1)) divIndex = (DIVS_PER_TIER - 1);
-
-// RR progress inside current division (0..99)
-var rr = rrInTier - (divIndex * DIV_RR);
-if (rr < 0) rr = 0;
-if (rr > (DIV_RR - 1)) rr = (DIV_RR - 1);
-
-// Division label mapping: 0->III, 1->II, 2->I
-var div = (divIndex === 0) ? "III" : (divIndex === 1 ? "II" : "I");
-
-// Label
-var label = tier.name + " " + div;
-
-// Next threshold shown on UI:
-var nextMin = null;
-if (tier.name === "NEXUS") nextMin = null;
-else if (divIndex === (DIVS_PER_TIER - 1)) nextMin = nextTier ? nextTier.min : null;
-else nextMin = tier.min + ((divIndex + 1) * DIV_RR);
-
-return {
-  label: label,
-  tierName: tier.name,
-  tierIndex: tierIndex,
-  div: div,
-  divIndex: divIndex,
-  color: tier.color,
-  rr: rr,         // 0..99 now
-  nextMin: nextMin
   };
 }
 
@@ -1425,14 +1411,12 @@ function showCinematic(fromRank, toRank, isPromotion) {
 
   el.classList.remove("hidden");
 
-  // Auto-hide (kept simple)
   if (window.__cinT) clearTimeout(window.__cinT);
   window.__cinT = setTimeout(function () {
     el.classList.add("hidden");
   }, 2400);
 }
 
-// Close only on backdrop/root click + ESC
 document.addEventListener("keydown", function (e) {
   if (e.key === "Escape") hideCinematic();
 });
@@ -1461,34 +1445,48 @@ function updateLadderUI(currentTierIndex) {
 }
 
 /* ===== UI UPDATES ===== */
-function updateRankUI(matches) {
+function updateRankUI(matchesAll) {
+  // Backfill breakdown for old matches
+  for (var bi = 0; bi < matchesAll.length; bi++) {
+    if (!matchesAll[bi].breakdown) {
+      matchesAll[bi].breakdown = calcRPBreakdown(matchesAll[bi]);
+      matchesAll[bi].rp = matchesAll[bi].breakdown.total;
+    }
+  }
+
   var sum = 0;
-  for (var i = 0; i < matches.length; i++) sum += matches[i].rp;
+  for (var i = 0; i < matchesAll.length; i++) sum += Number(matchesAll[i].rp || 0);
 
   var totalRP = START_RP + sum;
   if (totalRP < MIN_RP) totalRP = MIN_RP;
 
   var rank = getRank(totalRP);
 
-  var rankTitle = document.getElementById("rankCardTitle");
-var rankRP = document.getElementById("rankCardRP");
-var rpFill = document.getElementById("rankCardFill");
-var chip = document.getElementById("rankCardChip");
-var icon = document.getElementById("rankCardIcon");
+  // Rank card elements (IDs preferred)
+  var rankTitle = document.getElementById("rankCardTitle") || document.querySelector("#rank .rank-info h2");
+  var rankRP = document.getElementById("rankCardRP") || document.querySelector("#rank .rank-rp");
+  var rpFill = document.getElementById("rankCardFill") || document.querySelector("#rank .rp-fill");
+  var chip = document.getElementById("rankCardChip");
+  var icon = document.getElementById("rankCardIcon");
 
   if (rankTitle) rankTitle.textContent = rank.label;
-  if (rankRP) {
-  if (rank.tierName === "NEXUS") rankRP.textContent = "RR: " + totalRP + " (MAX)";
-  else rankRP.textContent = "RR: " + totalRP + " / " + rank.nextMin;
-  if (rpFill) rpFill.style.width = String(Math.round((rank.rr / (DIV_RR - 1)) * 100)) + "%";
-  // Rank card chip + accent sync
-if (chip) {
-  chip.textContent = rank.tierName === "NEXUS" ? "ABSOLUTE PEAK" : ("TIER: " + rank.tierName);
-}
 
-if (icon) {
-  icon.style.setProperty("--rank-accent", rank.color);
-}
+  if (rankRP) {
+    if (rank.tierName === "NEXUS") rankRP.textContent = "RR: " + totalRP + " (MAX)";
+    else rankRP.textContent = "RR: " + totalRP + " / " + rank.nextMin;
+  }
+
+  if (rpFill) {
+    var pct = Math.round((rank.rr / (DIV_RR - 1)) * 100);
+    rpFill.style.width = String(pct) + "%";
+  }
+
+  if (chip) {
+    chip.textContent = rank.tierName === "NEXUS" ? "ABSOLUTE PEAK" : ("TIER: " + rank.tierName);
+  }
+  if (icon) {
+    icon.style.setProperty("--rank-accent", rank.color);
+  }
 
   updateLadderUI(rank.tierIndex);
 
@@ -1496,12 +1494,12 @@ if (icon) {
   var dash = document.querySelector("#dashboard .panel");
   if (dash) {
     dash.innerHTML =
-      "<p>🔹 Current RP: <strong>" + totalRP + "</strong></p>" +
+      "<p>🔹 Current RR: <strong>" + totalRP + "</strong></p>" +
       "<p>🔹 Current Rank: <strong>" + rank.label + "</strong></p>" +
-      "<p>🔹 Matches: <strong>" + matches.length + "</strong></p>";
+      "<p>🔹 Matches: <strong>" + matchesAll.length + "</strong></p>";
   }
 
-  // CINEMATIC trigger (tier + division)
+  // Cinematic trigger (tier + division)
   var currentState = { tierIndex: rank.tierIndex, divIndex: rank.divIndex, label: rank.label };
 
   if (lastRankState === null) {
@@ -1525,28 +1523,25 @@ if (icon) {
 }
 
 function renderHistoryFromStorage() {
-  var matches = loadMatches();
-  // Sort newest first
-matches.sort(function(a, b) {
-  return Number(b.ts || 0) - Number(a.ts || 0);
-});
+  var matchesAll = loadMatches();
 
-// Show only last 20 matches (Valorant-like)
-var MAX_MATCHES = 20; // set to 0 to show all
-if (MAX_MATCHES > 0 && matches.length > MAX_MATCHES) {
-  matches = matches.slice(0, MAX_MATCHES);
-}
-  // Backfill breakdown for old saved matches (compatibility)
+  // Backfill + recalc rp with current formula
   var changed = false;
-  for (var bi = 0; bi < matches.length; bi++) {
-    if (!matches[bi].breakdown) {
-      matches[bi].breakdown = calcRPBreakdown(matches[bi]);
-      matches[bi].rp = matches[bi].breakdown.total;
-      changed = true;
-    }
+  for (var i = 0; i < matchesAll.length; i++) {
+    matchesAll[i].breakdown = calcRPBreakdown(matchesAll[i]);
+    matchesAll[i].rp = matchesAll[i].breakdown.total;
+    changed = true;
   }
-  if (changed) saveMatches(matches);
-  updateRankUI(matches);
+  if (changed) saveMatches(matchesAll);
+
+  updateRankUI(matchesAll);
+
+  // Display list: newest first, last 20
+  var matches = matchesAll.slice();
+  matches.sort(function(a, b) { return Number(b.ts || 0) - Number(a.ts || 0); });
+
+  var MAX_MATCHES = 20;
+  if (MAX_MATCHES > 0 && matches.length > MAX_MATCHES) matches = matches.slice(0, MAX_MATCHES);
 
   var list = document.getElementById("matchList");
   if (!list) return;
@@ -1556,7 +1551,7 @@ if (MAX_MATCHES > 0 && matches.length > MAX_MATCHES) {
   var bestEl = document.getElementById("bestValue");
   var worstEl = document.getElementById("worstValue");
 
-  if (matches.length === 0) {
+  if (matchesAll.length === 0) {
     var panel = document.createElement("div");
     panel.className = "panel";
     var p = document.createElement("p");
@@ -1570,23 +1565,27 @@ if (MAX_MATCHES > 0 && matches.length > MAX_MATCHES) {
     return;
   }
 
+  // Best / worst across ALL matches
   var best = -Infinity;
   var worst = Infinity;
-  for (var i = 0; i < matches.length; i++) {
-    if (matches[i].rp > best) best = matches[i].rp;
-    if (matches[i].rp < worst) worst = matches[i].rp;
+  for (var b = 0; b < matchesAll.length; b++) {
+    var rp = Number(matchesAll[b].rp || 0);
+    if (rp > best) best = rp;
+    if (rp < worst) worst = rp;
   }
-
   if (bestEl) bestEl.textContent = best >= 0 ? ("+" + best) : String(best);
   if (worstEl) worstEl.textContent = String(worst);
 
+  // Streak across ALL matches (place <= 3), newest backwards by ts
+  var sortedAll = matchesAll.slice().sort(function(a, b) { return Number(b.ts || 0) - Number(a.ts || 0); });
   var streak = 0;
-  for (var k = matches.length - 1; k >= 0; k--) {
-    if (matches[k].place <= 3) streak++;
+  for (var s = 0; s < sortedAll.length; s++) {
+    if (Number(sortedAll[s].place || 99) <= 3) streak++;
     else break;
   }
   if (streakEl) streakEl.textContent = String(streak);
 
+  // Render visible cards
   for (var idx = 0; idx < matches.length; idx++) {
     var m = matches[idx];
 
@@ -1605,7 +1604,7 @@ if (MAX_MATCHES > 0 && matches.length > MAX_MATCHES) {
     title.className = "title";
 
     var matchNum = document.createElement("span");
-    matchNum.textContent = "Match #" + (idx + 1);
+    matchNum.textContent = "Match";
     title.appendChild(matchNum);
 
     var badges = document.createElement("div");
@@ -1623,22 +1622,20 @@ if (MAX_MATCHES > 0 && matches.length > MAX_MATCHES) {
       b2.textContent = "⚠ Teammate Left";
       badges.appendChild(b2);
     }
-
     title.appendChild(badges);
 
     var place = document.createElement("div");
     place.className = "place";
-    place.innerHTML = "🏆 Place: <strong>" + m.place + "</strong> / 25";
+    place.innerHTML = "🏆 Place: <strong>" + m.place + "</strong> / 25 teams";
 
     var kad = document.createElement("div");
     kad.className = "kad";
-    kad.innerHTML = "🔫 K/A/D: <strong>" + m.kills + "</strong> / <strong>" + m.assists + "</strong> / <strong>" + m.deaths + "</strong>";
-    
+    kad.innerHTML =
+      "🔫 K/A/D: <strong>" + m.kills + "</strong> / <strong>" + m.assists + "</strong> / <strong>" + m.deaths + "</strong>";
 
     left.appendChild(title);
     left.appendChild(place);
     left.appendChild(kad);
-    
 
     var rpDelta = document.createElement("div");
     rpDelta.className = "rpDelta " + (m.rp >= 0 ? "rpPlus" : "rpMinus");
@@ -1670,145 +1667,27 @@ function submitMatch() {
   saveMatches(matches);
 
   renderHistoryFromStorage();
+
   var btns = document.querySelectorAll(".nav-btn");
   showTab("history", btns[2]);
 }
-  function undoLastMatch() {
+
+function undoLastMatch() {
   var matches = loadMatches();
   if (!matches || matches.length === 0) {
     alert("No matches to undo.");
     return;
   }
-
-  // Remove last match
   matches.pop();
   saveMatches(matches);
 
-  // Reset cinematic state so it doesn't mis-trigger after undo
-  lastRankState = null;
-
-  renderHistoryFromStorage();
-
-  // Optional: go to history tab to see the result
-  var btns = document.querySelectorAll(".nav-btn");
-  showTab("history", btns[2]);
-}
-
-  
-function exportData() {
-  var box = document.getElementById("ioBox");
-  var matches = loadMatches();
-
-  var payload = {
-    version: 1,
-    exportedAt: Date.now(),
-    startRP: START_RP,
-    matches: matches
-  };
-
-  var json = JSON.stringify(payload, null, 2);
-  if (box) box.value = json;
-
-  // Copy to clipboard (best effort)
-  if (navigator.clipboard && navigator.clipboard.writeText) {
-    navigator.clipboard.writeText(json).then(function () {
-      alert("Exported! JSON copied to clipboard.");
-    }).catch(function () {
-      alert("Exported! (Clipboard copy was blocked by browser.)");
-    });
-  } else {
-    alert("Exported! (Clipboard API not available.)");
-  }
-}
-
-function importData() {
-  var box = document.getElementById("ioBox");
-  if (!box) {
-    alert("Import box not found.");
-    return;
-  }
-
-  var text = String(box.value || "").trim();
-  if (!text) {
-    alert("Paste JSON into the box first.");
-    return;
-  }
-
-  var payload;
-  try {
-    payload = JSON.parse(text);
-  } catch (e) {
-    alert("Invalid JSON. Please check formatting.");
-    return;
-  }
-
-  // Accept either {matches:[...]} or raw array [...]
-  var matches = null;
-
-  if (Array.isArray(payload)) {
-    matches = payload;
-  } else if (payload && Array.isArray(payload.matches)) {
-    matches = payload.matches;
-  }
-
-  if (!matches) {
-    alert("JSON must contain an array of matches or { matches: [...] }");
-    return;
-  }
-
-  // Basic validation + backfill rp/breakdown
-  var cleaned = [];
-  for (var i = 0; i < matches.length; i++) {
-    var m = matches[i] || {};
-
-    // required numeric fields (fallback to 0)
-    var place = Number(m.place || 0);
-    var kills = Number(m.kills || 0);
-    var assists = Number(m.assists || 0);
-    var deaths = Number(m.deaths || 0);
-    var mvp = !!m.mvp;
-    var left = !!m.left;
-    var ts = Number(m.ts || Date.now());
-
-    // normalize constraints
-    if (!isFinite(place)) place = 0;
-    if (!isFinite(kills)) kills = 0;
-    if (!isFinite(assists)) assists = 0;
-    if (!isFinite(deaths)) deaths = 0;
-
-    var obj = {
-      place: place,
-      kills: kills,
-      assists: assists,
-      deaths: deaths,
-      mvp: mvp,
-      left: left,
-      ts: ts
-    };
-
-    obj.breakdown = calcRPBreakdown(obj);
-    obj.rp = obj.breakdown.total;
-
-    cleaned.push(obj);
-  }
-
-  if (!confirm("Import will replace your current saved data. Continue?")) return;
-
-  saveMatches(cleaned);
   lastRankState = null;
   renderHistoryFromStorage();
 
   var btns = document.querySelectorAll(".nav-btn");
   showTab("history", btns[2]);
-
-  alert("Import complete!");
 }
 
-function clearIO() {
-  var box = document.getElementById("ioBox");
-  if (box) box.value = "";
-}
-  
 function resetMatches() {
   if (!confirm("Reset all saved matches?")) return;
   localStorage.removeItem(STORAGE_KEY);
