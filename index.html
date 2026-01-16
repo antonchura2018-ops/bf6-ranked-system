@@ -1634,7 +1634,7 @@ function renderHistoryFromStorage() {
     title.className = "title";
 
     var matchNum = document.createElement("span");
-    matchNum.textContent = "Match";
+    matchNum.textContent = "Match #" + (idx + 1);
     title.appendChild(matchNum);
 
     var badges = document.createElement("div");
@@ -1708,7 +1708,20 @@ function undoLastMatch() {
     alert("No matches to undo.");
     return;
   }
-  matches.pop();
+
+  // Remove newest match by timestamp (correct undo)
+  var newestIndex = 0;
+  var newestTs = Number(matches[0].ts || 0);
+
+  for (var i = 1; i < matches.length; i++) {
+    var ts = Number(matches[i].ts || 0);
+    if (ts > newestTs) {
+      newestTs = ts;
+      newestIndex = i;
+    }
+  }
+
+  matches.splice(newestIndex, 1);
   saveMatches(matches);
 
   lastRankState = null;
