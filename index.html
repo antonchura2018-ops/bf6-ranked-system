@@ -1322,9 +1322,11 @@ function calcRPBreakdown(m) {
 
 
 /* ===== RANKS ===== */
-// Settings
-var START_RP = 9000;
-var MIN_RP = 0;
+// Settings (Valorant-like divisions)
+var START_RP = 0;        // starting RR
+var MIN_RP = 0;          // never go below 0
+var DIV_RR = 100;        // 100 RR per division
+var DIVS_PER_TIER = 3;   // III, II, I
 
 var rankTiers = [
   { name: "OUTCAST",  color: "#ffb86b", min: 0 },
@@ -1364,33 +1366,42 @@ function getRank(totalRP) {
   }
 
   var nextTier = rankTiers[tierIndex + 1];
-  var tierSpan = (nextTier ? nextTier.min : (tier.min + 1000)) - tier.min;
 
-  var progress = Math.max(0, Math.min(0.999, (totalRP - tier.min) / tierSpan));
+// RR inside this tier
+var rrInTier = totalRP - tier.min;
+if (rrInTier < 0) rrInTier = 0;
 
-  var div = "III";
-  var divIndex = 0;
+// Division index (0..2) based on 100 RR chunks
+var divIndex = Math.floor(rrInTier / DIV_RR);
+if (divIndex < 0) divIndex = 0;
+if (divIndex > (DIVS_PER_TIER - 1)) divIndex = (DIVS_PER_TIER - 1);
 
-  if (progress < (1 / 3)) {
-    div = "III"; divIndex = 0;
-  } else if (progress < (2 / 3)) {
-    div = "II"; divIndex = 1;
-  } else {
-    div = "I"; divIndex = 2;
-  }
+// RR progress inside current division (0..99)
+var rr = rrInTier - (divIndex * DIV_RR);
+if (rr < 0) rr = 0;
+if (rr > (DIV_RR - 1)) rr = (DIV_RR - 1);
 
-  var rr = Math.round(progress * 100);
-  var label = tier.name + " " + div;
+// Division label mapping: 0->III, 1->II, 2->I
+var div = (divIndex === 0) ? "III" : (divIndex === 1 ? "II" : "I");
 
-  return {
-    label: label,
-    tierName: tier.name,
-    tierIndex: tierIndex,
-    div: div,
-    divIndex: divIndex,
-    color: tier.color,
-    rr: rr,
-    nextMin: nextTier ? nextTier.min : null
+// Label
+var label = tier.name + " " + div;
+
+// Next threshold shown on UI:
+var nextMin = null;
+if (tier.name === "NEXUS") nextMin = null;
+else if (divIndex === (DIVS_PER_TIER - 1)) nextMin = nextTier ? nextTier.min : null;
+else nextMin = tier.min + ((divIndex + 1) * DIV_RR);
+
+return {
+  label: label,
+  tierName: tier.name,
+  tierIndex: tierIndex,
+  div: div,
+  divIndex: divIndex,
+  color: tier.color,
+  rr: rr,         // 0..99 now
+  nextMin: nextMin
   };
 }
 
@@ -1466,8 +1477,10 @@ var chip = document.getElementById("rankCardChip");
 var icon = document.getElementById("rankCardIcon");
 
   if (rankTitle) rankTitle.textContent = rank.label;
-  if (rankRP) rankRP.textContent = rank.nextMin ? ("RP: " + totalRP + " / " + rank.nextMin) : ("RP: " + totalRP + " (MAX)");
-  if (rpFill) rpFill.style.width = String(rank.rr) + "%";
+  if (rankRP) {
+  if (rank.tierName === "NEXUS") rankRP.textContent = "RR: " + totalRP + " (MAX)";
+  else rankRP.textContent = "RR: " + totalRP + " / " + rank.nextMin;
+  if (rpFill) rpFill.style.width = String(Math.round((rank.rr / (DIV_RR - 1)) * 100)) + "%";
   // Rank card chip + accent sync
 if (chip) {
   chip.textContent = rank.tierName === "NEXUS" ? "ABSOLUTE PEAK" : ("TIER: " + rank.tierName);
