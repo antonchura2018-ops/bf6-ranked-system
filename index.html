@@ -1711,19 +1711,28 @@ function renderHistoryFromStorage() {
   var matchesAll = loadMatches();
   ensureSeasonSystem();
 
+var activeSeasonId = getActiveSeasonId();
 var selectedSeasonId = getSelectedSeasonId();
-var filteredAll = [];
+
+// Build two views: active (for Rank) and selected (for History)
+var activeMatchesAll = [];
+var selectedMatchesAll = [];
+
 for (var fi = 0; fi < matchesAll.length; fi++) {
   // If old match has no seasonId, assign to active season (legacy)
-  if (!matchesAll[fi].seasonId) matchesAll[fi].seasonId = getActiveSeasonId();
-  if (matchesAll[fi].seasonId === selectedSeasonId) filteredAll.push(matchesAll[fi]);
+  if (!matchesAll[fi].seasonId) matchesAll[fi].seasonId = activeSeasonId;
+
+  if (matchesAll[fi].seasonId === activeSeasonId) activeMatchesAll.push(matchesAll[fi]);
+  if (matchesAll[fi].seasonId === selectedSeasonId) selectedMatchesAll.push(matchesAll[fi]);
 }
 
-// If we patched legacy matches, persist
+// Persist possible legacy patch
 saveMatches(matchesAll);
 
-// From now on: use filteredAll as season scope
-matchesAll = filteredAll;
+// From now on:
+// - use activeMatchesAll for Rank UI
+// - use selectedMatchesAll for History list & stats
+  
   // Build season dropdown
 var seasons = loadSeasons();
 var activeId = getActiveSeasonId();
@@ -1757,10 +1766,10 @@ if (select) {
   }
   if (changed) saveMatches(matchesAll);
 
-  updateRankUI(matchesAll);
+  updateRankUI(activeMatchesAll);
 
   // Display list: newest first, last 20
-  var matches = matchesAll.slice();
+  var matches = selectedMatchesAll.slice();
   matches.sort(function(a, b) { return Number(b.ts || 0) - Number(a.ts || 0); });
 
   var mode = getHistoryLimit(); // "20" or "all"
@@ -1772,7 +1781,7 @@ if (MAX_MATCHES > 0 && matches.length > MAX_MATCHES) matches = matches.slice(0, 
 var toggleBtn = document.getElementById("toggleHistoryBtn");
 var hint = document.getElementById("historyHint");
 if (toggleBtn) toggleBtn.textContent = (mode === "all") ? "Show last 20" : "Show all";
-if (hint) hint.textContent = (mode === "all") ? ("Showing all matches (" + matchesAll.length + ")") : "Showing last 20 matches";
+if (hint) hint.textContent = (mode === "all") ? ("Showing all matches (" +selectedMatchesAll.length + ")") : "Showing last 20 matches";
 
   var list = document.getElementById("matchList");
   if (!list) return;
@@ -1782,7 +1791,7 @@ if (hint) hint.textContent = (mode === "all") ? ("Showing all matches (" + match
   var bestEl = document.getElementById("bestValue");
   var worstEl = document.getElementById("worstValue");
 
-  if (matchesAll.length === 0) {
+  if (selectedMatchesAll.length === 0) {
     var panel = document.createElement("div");
     panel.className = "panel";
     var p = document.createElement("p");
@@ -1799,8 +1808,8 @@ if (hint) hint.textContent = (mode === "all") ? ("Showing all matches (" + match
   // Best / worst across ALL matches
   var best = -Infinity;
   var worst = Infinity;
-  for (var b = 0; b < matchesAll.length; b++) {
-    var rp = Number(matchesAll[b].rp || 0);
+  for (var b = 0; b < selectedMatchesAll.length; b++) {
+    var rp = Number(selectedMatchesAll[b].rp || 0);
     if (rp > best) best = rp;
     if (rp < worst) worst = rp;
   }
@@ -1808,7 +1817,7 @@ if (hint) hint.textContent = (mode === "all") ? ("Showing all matches (" + match
   if (worstEl) worstEl.textContent = String(worst);
 
   // Streak across ALL matches (place <= 3), newest backwards by ts
-  var sortedAll = matchesAll.slice().sort(function(a, b) { return Number(b.ts || 0) - Number(a.ts || 0); });
+  var sortedAll = selectedMatchesAll.slice().sort(function(a, b) { return Number(b.ts || 0) - Number(a.ts || 0); });
   var streak = 0;
   for (var s = 0; s < sortedAll.length; s++) {
     if (Number(sortedAll[s].place || 99) <= 3) streak++;
