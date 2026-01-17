@@ -2106,22 +2106,33 @@ function startNewSeason() {
 }
 
 function undoLastMatch() {
+  ensureSeasonSystem();
+
+  var activeSeasonId = getActiveSeasonId();
   var matches = loadMatches();
+
   if (!matches || matches.length === 0) {
     alert("No matches to undo.");
     return;
   }
 
-  // Remove newest match by timestamp (correct undo)
-  var newestIndex = 0;
-  var newestTs = Number(matches[0].ts || 0);
+  // Find newest match ONLY in active season
+  var newestIndex = -1;
+  var newestTs = -Infinity;
 
-  for (var i = 1; i < matches.length; i++) {
+  for (var i = 0; i < matches.length; i++) {
+    if (matches[i].seasonId !== activeSeasonId) continue;
+
     var ts = Number(matches[i].ts || 0);
     if (ts > newestTs) {
       newestTs = ts;
       newestIndex = i;
     }
+  }
+
+  if (newestIndex === -1) {
+    alert("No matches to undo in the active season.");
+    return;
   }
 
   matches.splice(newestIndex, 1);
