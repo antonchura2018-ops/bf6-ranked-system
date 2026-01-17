@@ -1593,8 +1593,16 @@ function renderHistoryFromStorage() {
   var matches = matchesAll.slice();
   matches.sort(function(a, b) { return Number(b.ts || 0) - Number(a.ts || 0); });
 
-  var MAX_MATCHES = 20;
-  if (MAX_MATCHES > 0 && matches.length > MAX_MATCHES) matches = matches.slice(0, MAX_MATCHES);
+  var mode = getHistoryLimit(); // "20" or "all"
+var MAX_MATCHES = (mode === "all") ? 0 : 20;
+
+if (MAX_MATCHES > 0 && matches.length > MAX_MATCHES) matches = matches.slice(0, MAX_MATCHES);
+
+// Update UI label/button
+var toggleBtn = document.getElementById("toggleHistoryBtn");
+var hint = document.getElementById("historyHint");
+if (toggleBtn) toggleBtn.textContent = (mode === "all") ? "Show last 20" : "Show all";
+if (hint) hint.textContent = (mode === "all") ? ("Showing all matches (" + matchesAll.length + ")") : "Showing last 20 matches";
 
   var list = document.getElementById("matchList");
   if (!list) return;
@@ -1760,6 +1768,15 @@ function resetMatches() {
   lastRankState = null;
   renderHistoryFromStorage();
 }
+
+  document.addEventListener("click", function(e){
+  var t = e.target;
+  if (t && t.id === "toggleHistoryBtn") {
+    var mode = getHistoryLimit();
+    setHistoryLimit(mode === "all" ? "20" : "all");
+    renderHistoryFromStorage();
+  }
+});
 
 /* ===== INIT ===== */
 renderHistoryFromStorage();
