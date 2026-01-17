@@ -1709,7 +1709,16 @@ if (hint) hint.textContent = (mode === "all") ? ("Showing all matches (" + match
     list.appendChild(card);
   }
 }
-
+  
+function clampInt(value, min, max, fallback) {
+  var n = Number(value);
+  if (!isFinite(n)) n = (fallback !== undefined) ? fallback : min;
+  n = Math.floor(n);
+  if (n < min) n = min;
+  if (n > max) n = max;
+  return n;
+}
+  
 /* ===== ACTIONS ===== */
 function submitMatch() {
   var place = Number(document.getElementById("inPlace").value);
