@@ -367,6 +367,53 @@
   gap: 12px;
   max-width: 900px;
 }
+  .season-summary{
+  margin-top: 14px;
+  max-width: 1100px;
+  background: linear-gradient(180deg, rgba(15,23,42,.85), rgba(2,6,23,.9));
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 14px;
+  padding: 14px 16px;
+  box-shadow: 0 0 24px rgba(34,211,238,0.05);
+}
+
+.season-summary .row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap: 12px;
+  padding: 6px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+.season-summary .row:last-child{ border-bottom:none; }
+
+.season-summary .k{
+  color:#9ca3af;
+  font-size: 12px;
+  letter-spacing: .4px;
+}
+
+.season-summary .v{
+  color:#e5e7eb;
+  font-weight: 800;
+  font-size: 12px;
+  letter-spacing: .4px;
+}
+
+.season-tag{
+  display:inline-block;
+  padding: 4px 8px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.10);
+  background: rgba(2,6,23,0.55);
+  font-size: 11px;
+  color:#cbd5e1;
+}
+.season-tag.active{
+  border-color: rgba(34,211,238,0.30);
+  color:#a5f3fc;
+}
   .history-controls{
   margin-top: 16px;
   max-width: 900px;
@@ -1200,6 +1247,7 @@ margin: 32px auto 20px;
       <div class="mini-label">Worst Match</div>
       <div class="mini-value" id="worstValue">0</div>
     </div>
+    <div class="season-summary" id="seasonSummary"></div>
   </div>
 
   <div class="history-controls">
@@ -1785,6 +1833,54 @@ if (select) {
   }
 
   select.value = selectedSeasonId || activeId;
+}
+  // Render season summary panel (selected season)
+var summaryEl = document.getElementById("seasonSummary");
+if (summaryEl) {
+  var seasonsList = loadSeasons();
+  var selectedMeta = null;
+  for (var si = 0; si < seasonsList.length; si++) {
+    if (seasonsList[si].id === selectedSeasonId) selectedMeta = seasonsList[si];
+  }
+
+  var isActive = (selectedSeasonId === activeSeasonId);
+
+  // Compute current RR/rank for selected season (even if ended, for display consistency)
+  var sumRR = 0;
+  for (var mi = 0; mi < selectedMatchesAll.length; mi++) sumRR += Number(selectedMatchesAll[mi].rp || 0);
+  var currentRR = START_RP + sumRR;
+  if (currentRR < MIN_RP) currentRR = MIN_RP;
+  var currentRank = getRank(currentRR);
+
+  var stats = computeSeasonStats(selectedMatchesAll);
+
+  var html = "";
+  html += "<div class='row'><div class='k'>Season</div><div class='v'>" +
+          selectedSeasonId + " " + (isActive ? "<span class='season-tag active'>Active</span>" : "<span class='season-tag'>Ended</span>") +
+          "</div></div>";
+
+  html += "<div class='row'><div class='k'>Current Rank</div><div class='v'>" + currentRank.label + "</div></div>";
+  html += "<div class='row'><div class='k'>Current RR</div><div class='v'>" + currentRR + "</div></div>";
+
+  if (selectedMeta && !isActive) {
+    if (selectedMeta.finalRankLabel) {
+      html += "<div class='row'><div class='k'>Final Rank</div><div class='v'>" + selectedMeta.finalRankLabel + "</div></div>";
+    }
+    if (selectedMeta.finalRR !== null && selectedMeta.finalRR !== undefined) {
+      html += "<div class='row'><div class='k'>Final RR</div><div class='v'>" + selectedMeta.finalRR + "</div></div>";
+    }
+  }
+
+  html += "<div class='row'><div class='k'>Matches</div><div class='v'>" + stats.matchesCount + "</div></div>";
+  html += "<div class='row'><div class='k'>Avg RR / match</div><div class='v'>" + stats.avgRR + "</div></div>";
+  html += "<div class='row'><div class='k'>Best / Worst</div><div class='v'>" + (stats.bestRR >= 0 ? "+" + stats.bestRR : stats.bestRR) +
+          " / " + (stats.worstRR >= 0 ? "+" + stats.worstRR : stats.worstRR) + "</div></div>";
+  html += "<div class='row'><div class='k'>Top1 / Top3 / Top7</div><div class='v'>" +
+          stats.top1Count + " / " + stats.top3Count + " / " + stats.top7Count + "</div></div>";
+  html += "<div class='row'><div class='k'>MVP</div><div class='v'>" + stats.mvpCount + "</div></div>";
+  html += "<div class='row'><div class='k'>Teammate Left</div><div class='v'>" + stats.leftCount + "</div></div>";
+
+  summaryEl.innerHTML = html;
 }
 
   // Backfill + recalc rp with current formula
