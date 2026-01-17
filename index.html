@@ -1565,7 +1565,16 @@ if (badgeImg && rank.tierName) {
     }
   }
 }
+function getHistoryLimit() {
+  // "20" or "all"
+  var v = localStorage.getItem(HISTORY_LIMIT_KEY);
+  return v ? v : "20";
+}
 
+function setHistoryLimit(val) {
+  localStorage.setItem(HISTORY_LIMIT_KEY, val);
+}
+  
 function renderHistoryFromStorage() {
   var matchesAll = loadMatches();
 
