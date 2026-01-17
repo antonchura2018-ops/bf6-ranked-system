@@ -431,6 +431,18 @@
   outline:none;
   font-size: 12px;
 }
+  .ro-badge{
+  display:inline-block;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.14);
+  background: rgba(255,255,255,0.06);
+  color: rgba(255,255,255,0.78);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .12em;
+}
+  
 .season-select:focus{
   border-color: rgba(34,211,238,0.35);
   box-shadow: 0 0 18px rgba(34,211,238,0.08);
@@ -1285,6 +1297,7 @@ margin: 32px auto 20px;
   <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
     <label style="font-size:12px; color:#9ca3af;">Season:</label>
     <select id="seasonSelect" class="season-select"></select>
+    <span id="readOnlyBadge" class="ro-badge" style="display:none;">READ ONLY</span>
     <button class="btn" id="toggleHistoryBtn" type="button">Show all</button>
     <button class="btn" type="button" onclick="renameSeason()">Rename</button>
     <button class="btn" type="button" onclick="renumberSeasonIds()">Fix IDs</button>
@@ -1878,6 +1891,21 @@ if (select) {
 
   select.value = selectedSeasonId || activeId;
 }
+  // Read-only mode indicator (History viewing non-active season)
+var ro = document.getElementById("readOnlyBadge");
+var isReadOnly = (selectedSeasonId !== activeSeasonId);
+if (ro) ro.style.display = isReadOnly ? "inline-block" : "none";
+
+// Disable destructive season actions when read-only (optional UX)
+var renameBtn = document.querySelector('button[onclick="renameSeason()"]');
+var deleteBtn = document.querySelector('button[onclick="deleteSeason()"]');
+if (renameBtn) renameBtn.disabled = false; // allow rename anytime (your choice)
+if (deleteBtn) deleteBtn.disabled = false; // delete already has safety checks
+
+// If you want to block rename/delete while viewing non-active season, uncomment:
+// if (renameBtn) renameBtn.disabled = isReadOnly;
+// if (deleteBtn) deleteBtn.disabled = isReadOnly;
+  
   // Render season summary panel (selected season)
 var summaryEl = document.getElementById("seasonSummary");
 if (summaryEl) {
@@ -2060,13 +2088,20 @@ if (m.seasonId === activeId) {
   var actions = document.createElement("div");
   actions.className = "match-actions";
 
+  var editBtn = document.createElement("button");
+  editBtn.className = "btn-mini";
+  editBtn.type = "button";
+  editBtn.textContent = "Edit";
+  editBtn.setAttribute("data-edit-ts", String(m.ts));
+  actions.appendChild(editBtn);
+
   var delBtn = document.createElement("button");
   delBtn.className = "btn-mini danger";
   delBtn.type = "button";
   delBtn.textContent = "Delete";
   delBtn.setAttribute("data-ts", String(m.ts));
-
   actions.appendChild(delBtn);
+
   left.appendChild(actions);
 }
 
@@ -2547,6 +2582,47 @@ function deleteSeason() {
 }
   document.addEventListener("click", function(e){
   var t = e.target;
+    // Edit match button (active season)
+if (t && t.getAttribute && t.getAttribute("data-edit-ts")) {
+  var tsEdit = Number(t.getAttribute("data-edit-ts"));
+  if (!isFinite(tsEdit)) return;
+
+  ensureSeasonSystem();
+  var activeId = getActiveSeasonId();
+
+  var matches = loadMatches();
+  var found = null;
+  for (var i = 0; i < matches.length; i++) {
+    if (matches[i].seasonId === activeId && Number(matches[i].ts) === tsEdit) {
+      found = matches[i];
+      break;
+    }
+  }
+
+  if (!found) {
+    alert("Match not found (or not in active season).");
+    return;
+  }
+
+  // Fill form inputs
+  document.getElementById("inPlace").value = found.place;
+  document.getElementById("inKills").value = found.kills;
+  document.getElementById("inAssists").value = found.assists;
+  document.getElementById("inDeaths").value = found.deaths;
+  document.getElementById("inMVP").checked = !!found.mvp;
+  document.getElementById("inLeft").checked = !!found.left;
+
+  editingMatchTs = found.ts;
+
+  var saveBtn = document.getElementById("saveEditBtn");
+  if (saveBtn) saveBtn.style.display = "inline-block";
+
+  // Go to ADD tab
+  var btns = document.querySelectorAll(".nav-btn");
+  showTab("add", btns[3]);
+
+  return;
+}
 
   // Delete match button
   if (t && t.classList && t.classList.contains("btn-mini") && t.classList.contains("danger") && t.getAttribute("data-ts")) {
