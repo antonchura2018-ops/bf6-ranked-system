@@ -645,6 +645,7 @@
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
+  background-color: transparent;
 }
   /* Ladder badge states (images) */
 .ladder-item.locked .badge{
@@ -1625,19 +1626,20 @@ function updateLadderUI(currentTierIndex) {
 
   for (var i = 0; i < items.length; i++) {
     var item = items[i];
-    item.classList.remove("locked", "unlocked", "current");
 
+    // State classes
+    item.classList.remove("locked", "unlocked", "current");
     if (i < currentTierIndex) item.classList.add("unlocked");
     else if (i === currentTierIndex) item.classList.add("unlocked", "current");
     else item.classList.add("locked");
 
-    // Set ladder badge image based on tier name text
-    var nameEl = item.querySelector(".meta .name");
+    // Badge image from rankTiers (reliable)
     var badgeEl = item.querySelector(".badge");
-    if (nameEl && badgeEl) {
-      var tierKey = String(nameEl.textContent || "").trim().toLowerCase();
-      // example: "OUTCAST" -> assets/ranks/outcast.webp
-      badgeEl.style.backgroundImage = "url('assets/ranks/" + tierKey + ".webp')";
+    if (badgeEl && rankTiers[i] && rankTiers[i].name) {
+      var tierKey = String(rankTiers[i].name).toLowerCase();
+
+      // Force override ANY existing gradient backgrounds
+      badgeEl.style.background = 'url("assets/ranks/' + tierKey + '.webp") center / contain no-repeat';
     }
   }
 }
