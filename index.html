@@ -1721,12 +1721,16 @@ function clampInt(value, min, max, fallback) {
   
 /* ===== ACTIONS ===== */
 function submitMatch() {
-  var place = Number(document.getElementById("inPlace").value);
-  var kills = Number(document.getElementById("inKills").value);
-  var assists = Number(document.getElementById("inAssists").value);
-  var deaths = Number(document.getElementById("inDeaths").value);
+  var place = clampInt(document.getElementById("inPlace").value, 1, 25, 10);
+  var kills = clampInt(document.getElementById("inKills").value, 0, 60, 0);
+  var assists = clampInt(document.getElementById("inAssists").value, 0, 60, 0);
+  var deaths = clampInt(document.getElementById("inDeaths").value, 0, 60, 1);
   var mvp = document.getElementById("inMVP").checked;
   var left = document.getElementById("inLeft").checked;
+  document.getElementById("inPlace").value = place;
+  document.getElementById("inKills").value = kills;
+  document.getElementById("inAssists").value = assists;
+  document.getElementById("inDeaths").value = deaths;
 
   var match = { place: place, kills: kills, assists: assists, deaths: deaths, mvp: mvp, left: left, ts: Date.now() };
   match.breakdown = calcRPBreakdown(match);
