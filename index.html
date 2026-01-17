@@ -375,6 +375,19 @@
   justify-content:space-between;
   gap: 12px;
 }
+  .season-select{
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.10);
+  background: rgba(2,6,23,0.55);
+  color:#e5e7eb;
+  outline:none;
+  font-size: 12px;
+}
+.season-select:focus{
+  border-color: rgba(34,211,238,0.35);
+  box-shadow: 0 0 18px rgba(34,211,238,0.08);
+}
 
 .mini-card{
   padding: 14px 16px;
@@ -1171,7 +1184,11 @@ margin: 32px auto 20px;
   </div>
 
   <div class="history-controls">
-  <button class="btn" id="toggleHistoryBtn" type="button">Show all</button>
+  <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+    <label style="font-size:12px; color:#9ca3af;">Season:</label>
+    <select id="seasonSelect" class="season-select"></select>
+    <button class="btn" id="toggleHistoryBtn" type="button">Show all</button>
+  </div>
   <div class="hint" id="historyHint">Showing last 20 matches</div>
 </div>
 
@@ -1692,6 +1709,44 @@ function setHistoryLimit(val) {
   
 function renderHistoryFromStorage() {
   var matchesAll = loadMatches();
+  ensureSeasonSystem();
+
+var selectedSeasonId = getSelectedSeasonId();
+var filteredAll = [];
+for (var fi = 0; fi < matchesAll.length; fi++) {
+  // If old match has no seasonId, assign to active season (legacy)
+  if (!matchesAll[fi].seasonId) matchesAll[fi].seasonId = getActiveSeasonId();
+  if (matchesAll[fi].seasonId === selectedSeasonId) filteredAll.push(matchesAll[fi]);
+}
+
+// If we patched legacy matches, persist
+saveMatches(matchesAll);
+
+// From now on: use filteredAll as season scope
+matchesAll = filteredAll;
+  // Build season dropdown
+var seasons = loadSeasons();
+var activeId = getActiveSeasonId();
+var select = document.getElementById("seasonSelect");
+
+if (select) {
+  select.innerHTML = "";
+  for (var si = seasons.length - 1; si >= 0; si--) {
+    var s = seasons[si];
+    var opt = document.createElement("option");
+    var label = s.id;
+
+    if (s.id === activeId) label += " (Active)";
+    if (s.finalRankLabel) label += " • " + s.finalRankLabel;
+
+    opt.value = s.id;
+    opt.textContent = label;
+
+    select.appendChild(opt);
+  }
+
+  select.value = selectedSeasonId || activeId;
+}
 
   // Backfill + recalc rp with current formula
   var changed = false;
@@ -1835,7 +1890,61 @@ function clampInt(value, min, max, fallback) {
 }
   
 /* ===== ACTIONS ===== */
-function submitMatch() {
+function startNewSeason() {
+  ensureSeasonSystem();
+
+  var seasons = loadSeasons();
+  var activeId = getActiveSeasonId();
+
+  // Compute final stats for active season
+  var allMatches = loadMatches();
+  var activeMatches = [];
+  for (var i = 0; i < allMatches.length; i++) {
+    if (allMatches[i].seasonId === activeId) activeMatches.push(allMatches[i]);
+  }
+
+  // Final RR for season = START_RP + sum(rr)
+  var sum = 0;
+  for (var j = 0; j < activeMatches.length; j++) sum += Number(activeMatches[j].rp || 0);
+  var finalRR = START_RP + sum;
+  if (finalRR < MIN_RP) finalRR = MIN_RP;
+
+  var finalRank = getRank(finalRR);
+
+  // Close current season
+  for (var s = 0; s < seasons.length; s++) {
+    if (seasons[s].id === activeId) {
+      seasons[s].endAt = Date.now();
+      seasons[s].finalRR = finalRR;
+      seasons[s].finalRankLabel = finalRank.label;
+      seasons[s].stats = computeSeasonStats(activeMatches);
+    }
+  }
+
+  // Create next season id S{n+1}
+  var nextNum = seasons.length + 1;
+  var newId = "S" + nextNum;
+
+  seasons.push({
+    id: newId,
+    startAt: Date.now(),
+    endAt: null,
+    finalRR: null,
+    finalRankLabel: null,
+    stats: null
+  });
+
+  saveSeasons(seasons);
+  setActiveSeasonId(newId);
+  setSelectedSeasonId(newId);
+
+  lastRankState = null;
+  renderHistoryFromStorage();
+
+  alert("New season started! RR has been reset for the active season.");
+}
+  
+  function submitMatch() {
   var place = clampInt(document.getElementById("inPlace").value, 1, 25, 10);
   var kills = clampInt(document.getElementById("inKills").value, 0, 60, 0);
   var assists = clampInt(document.getElementById("inAssists").value, 0, 60, 0);
@@ -1847,7 +1956,7 @@ function submitMatch() {
   document.getElementById("inAssists").value = assists;
   document.getElementById("inDeaths").value = deaths;
 
-  var match = { place: place, kills: kills, assists: assists, deaths: deaths, mvp: mvp, left: left, ts: Date.now() };
+  var match = { place: place, kills: kills, assists: assists, deaths: deaths, mvp: mvp, left: left, ts: Date.now(), seasonId: getActiveSeasonId() };
   match.breakdown = calcRPBreakdown(match);
   match.rp = match.breakdown.total;
 
@@ -1902,6 +2011,15 @@ function resetMatches() {
   if (t && t.id === "toggleHistoryBtn") {
     var mode = getHistoryLimit();
     setHistoryLimit(mode === "all" ? "20" : "all");
+    renderHistoryFromStorage();
+  }
+});
+  
+  document.addEventListener("change", function(e){
+  var t = e.target;
+  if (t && t.id === "seasonSelect") {
+    setSelectedSeasonId(t.value);
+    lastRankState = null;
     renderHistoryFromStorage();
   }
 });
