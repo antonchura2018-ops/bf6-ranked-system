@@ -569,6 +569,37 @@
   min-width: 90px;
   text-align: right;
 }
+  .match-actions{
+  display:flex;
+  gap:8px;
+  justify-content:flex-end;
+  margin-top:10px;
+}
+
+.btn-mini{
+  padding: 6px 10px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.06);
+  color: rgba(255,255,255,0.85);
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.btn-mini:hover{
+  background: rgba(255,255,255,0.10);
+  border-color: rgba(255,255,255,0.18);
+}
+
+.btn-mini.danger{
+  border-color: rgba(251,113,133,0.35);
+  background: rgba(251,113,133,0.10);
+  color:#fecdd3;
+}
+.btn-mini.danger:hover{
+  background: rgba(251,113,133,0.16);
+}
 
 .rpPlus{ color:#22c55e; text-shadow: 0 0 12px rgba(34,197,94,0.15); }
 .rpMinus{ color:#fb7185; text-shadow: 0 0 12px rgba(251,113,133,0.15); }
@@ -2022,6 +2053,22 @@ if (hint) hint.textContent = (mode === "all") ? ("Showing all matches (" +select
 
     row.appendChild(left);
     row.appendChild(rpDelta);
+    
+    // Match actions (delete) - only for active season
+var activeId = getActiveSeasonId();
+if (m.seasonId === activeId) {
+  var actions = document.createElement("div");
+  actions.className = "match-actions";
+
+  var delBtn = document.createElement("button");
+  delBtn.className = "btn-mini danger";
+  delBtn.type = "button";
+  delBtn.textContent = "Delete";
+  delBtn.setAttribute("data-ts", String(m.ts));
+
+  actions.appendChild(delBtn);
+  left.appendChild(actions);
+}
 
     card.appendChild(row);
     list.appendChild(card);
@@ -2498,6 +2545,42 @@ function deleteSeason() {
 
   alert("Season IDs renumbered successfully.");
 }
+  document.addEventListener("click", function(e){
+  var t = e.target;
+
+  // Delete match button
+  if (t && t.classList && t.classList.contains("btn-mini") && t.classList.contains("danger") && t.getAttribute("data-ts")) {
+    var ts = Number(t.getAttribute("data-ts"));
+    if (!isFinite(ts)) return;
+
+    ensureSeasonSystem();
+    var activeId = getActiveSeasonId();
+
+    if (!confirm("Delete this match from the active season? This cannot be undone.")) return;
+
+    var matches = loadMatches();
+    var kept = [];
+    var removed = false;
+
+    for (var i = 0; i < matches.length; i++) {
+      // Only allow deleting from active season
+      if (matches[i].seasonId === activeId && Number(matches[i].ts) === ts) {
+        removed = true;
+        continue;
+      }
+      kept.push(matches[i]);
+    }
+
+    if (!removed) {
+      alert("Match not found (or not in active season).");
+      return;
+    }
+
+    saveMatches(kept);
+    lastRankState = null;
+    renderHistoryFromStorage();
+  }
+});
   
 /* ===== INIT ===== */
 renderHistoryFromStorage();
