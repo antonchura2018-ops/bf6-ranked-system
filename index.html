@@ -1255,6 +1255,8 @@ margin: 32px auto 20px;
     <label style="font-size:12px; color:#9ca3af;">Season:</label>
     <select id="seasonSelect" class="season-select"></select>
     <button class="btn" id="toggleHistoryBtn" type="button">Show all</button>
+    <button class="btn" type="button" onclick="renameSeason()">Rename</button>
+    <button class="btn ghost" type="button" onclick="deleteSeason()">Delete</button>
   </div>
   <div class="hint" id="historyHint">Showing last 20 matches</div>
 </div>
@@ -1335,6 +1337,15 @@ function setSelectedSeasonId(id) {
 
 function ensureSeasonSystem() {
   var seasons = loadSeasons();
+  // Backfill season name for legacy seasons
+  var changed = false;
+  for (var i = 0; i < seasons.length; i++) {
+    if (!seasons[i].name) {
+      seasons[i].name = seasons[i].id; // default name
+      changed = true;
+    }
+  }
+  if (changed) saveSeasons(seasons);
   var active = getActiveSeasonId();
 
   if (!seasons || seasons.length === 0 || !active) {
@@ -1821,7 +1832,8 @@ if (select) {
   for (var si = seasons.length - 1; si >= 0; si--) {
     var s = seasons[si];
     var opt = document.createElement("option");
-    var label = s.id;
+    var label = (s.name ? s.name : s.id);
+    label += " [" + s.id + "]";
 
     if (s.id === activeId) label += " (Active)";
     if (s.finalRankLabel) label += " • " + s.finalRankLabel;
@@ -2061,13 +2073,14 @@ function startNewSeason() {
   var newId = "S" + nextNum;
 
   seasons.push({
-    id: newId,
-    startAt: Date.now(),
-    endAt: null,
-    finalRR: null,
-    finalRankLabel: null,
-    stats: null
-  });
+  id: newId,
+  name: newId,
+  startAt: Date.now(),
+  endAt: null,
+  finalRR: null,
+  finalRankLabel: null,
+  stats: null
+});
 
   saveSeasons(seasons);
   setActiveSeasonId(newId);
@@ -2331,6 +2344,91 @@ function importData() {
 function clearIO() {
   var box = document.getElementById("ioBox");
   if (box) box.value = "";
+}
+  function renameSeason() {
+  ensureSeasonSystem();
+
+  var seasons = loadSeasons();
+  var selectedId = getSelectedSeasonId();
+
+  var season = null;
+  for (var i = 0; i < seasons.length; i++) {
+    if (seasons[i].id === selectedId) season = seasons[i];
+  }
+  if (!season) {
+    alert("Season not found.");
+    return;
+  }
+
+  var currentName = season.name || season.id;
+  var next = prompt("Enter season name:", currentName);
+  if (next === null) return;
+
+  next = String(next).trim();
+  if (!next) {
+    alert("Name cannot be empty.");
+    return;
+  }
+  if (next.length > 40) {
+    alert("Name too long (max 40 chars).");
+    return;
+  }
+
+  season.name = next;
+  saveSeasons(seasons);
+  renderHistoryFromStorage();
+}
+
+function deleteSeason() {
+  ensureSeasonSystem();
+
+  var seasons = loadSeasons();
+  var selectedId = getSelectedSeasonId();
+  var activeId = getActiveSeasonId();
+
+  if (selectedId === activeId) {
+    alert("You can't delete the active season. Start a new season first, then delete the old one.");
+    return;
+  }
+
+  // Only allow deleting ended seasons (safety)
+  var season = null;
+  for (var i = 0; i < seasons.length; i++) {
+    if (seasons[i].id === selectedId) season = seasons[i];
+  }
+  if (!season) {
+    alert("Season not found.");
+    return;
+  }
+  if (!season.endAt) {
+    alert("You can only delete ended seasons.");
+    return;
+  }
+
+  if (!confirm("Delete season " + selectedId + " and all its matches? This cannot be undone.")) return;
+
+  // Remove season
+  var nextSeasons = [];
+  for (var s = 0; s < seasons.length; s++) {
+    if (seasons[s].id !== selectedId) nextSeasons.push(seasons[s]);
+  }
+  saveSeasons(nextSeasons);
+
+  // Remove matches for that season
+  var matches = loadMatches();
+  var kept = [];
+  for (var m = 0; m < matches.length; m++) {
+    if (matches[m].seasonId !== selectedId) kept.push(matches[m]);
+  }
+  saveMatches(kept);
+
+  // After delete, set selected season back to active
+  setSelectedSeasonId(activeId);
+
+  lastRankState = null;
+  renderHistoryFromStorage();
+
+  alert("Season deleted.");
 }
   
 /* ===== INIT ===== */
