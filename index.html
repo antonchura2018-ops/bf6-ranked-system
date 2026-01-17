@@ -1270,6 +1270,57 @@ function ensureSeasonSystem() {
   var selected = getSelectedSeasonId();
   if (!selected) setSelectedSeasonId(active);
 }
+  function computeSeasonStats(matches) {
+  var count = matches.length;
+  if (count === 0) {
+    return {
+      matchesCount: 0,
+      bestRR: 0,
+      worstRR: 0,
+      avgRR: 0,
+      top1Count: 0,
+      top3Count: 0,
+      top7Count: 0,
+      mvpCount: 0,
+      leftCount: 0
+    };
+  }
+
+  var best = -Infinity;
+  var worst = Infinity;
+  var sum = 0;
+
+  var top1 = 0, top3 = 0, top7 = 0, mvpCount = 0, leftCount = 0;
+
+  for (var i = 0; i < matches.length; i++) {
+    var m = matches[i];
+    var rr = Number(m.rp || 0);
+    sum += rr;
+    if (rr > best) best = rr;
+    if (rr < worst) worst = rr;
+
+    var p = Number(m.place || 99);
+    if (p === 1) top1++;
+    if (p <= 3) top3++;
+    if (p <= 7) top7++;
+
+    if (m.mvp) mvpCount++;
+    if (m.left) leftCount++;
+  }
+
+  return {
+    matchesCount: count,
+    bestRR: best,
+    worstRR: worst,
+    avgRR: Math.round(sum / count),
+    top1Count: top1,
+    top3Count: top3,
+    top7Count: top7,
+    mvpCount: mvpCount,
+    leftCount: leftCount
+  };
+}
+  
 var HISTORY_LIMIT_KEY = "bf6_history_limit_v1";
 
 function loadMatches() {
