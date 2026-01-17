@@ -2020,6 +2020,7 @@ function resetMatches() {
   if (t && t.id === "seasonSelect") {
     setSelectedSeasonId(t.value);
     lastRankState = null;
+    ensureSeasonSystem();
     renderHistoryFromStorage();
   }
 });
