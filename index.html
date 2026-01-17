@@ -2079,11 +2079,19 @@ function startNewSeason() {
   alert("New season started! RR has been reset for the active season.");
 }
   
+  function clampNumber(val, min, max, fallback) {
+  val = Number(val);
+  if (!isFinite(val)) return fallback;
+  if (val < min) return min;
+  if (val > max) return max;
+  return val;
+}
+  
   function submitMatch() {
-  var place = clampInt(document.getElementById("inPlace").value, 1, 25, 10);
-  var kills = clampInt(document.getElementById("inKills").value, 0, 60, 0);
-  var assists = clampInt(document.getElementById("inAssists").value, 0, 60, 0);
-  var deaths = clampInt(document.getElementById("inDeaths").value, 0, 60, 1);
+  const place = clampNumber(document.getElementById("inPlace").value, 1, 25, 25);
+  const kills = clampNumber(document.getElementById("inKills").value, 0, 99, 0);
+  const assists = clampNumber(document.getElementById("inAssists").value, 0, 99, 0);
+  const deaths = clampNumber(document.getElementById("inDeaths").value, 0, 99, 0);
   var mvp = document.getElementById("inMVP").checked;
   var left = document.getElementById("inLeft").checked;
   document.getElementById("inPlace").value = place;
@@ -2098,6 +2106,11 @@ function startNewSeason() {
   var matches = loadMatches();
   matches.push(match);
   saveMatches(matches);
+    document.getElementById("inKills").value = 0;
+    document.getElementById("inAssists").value = 0;
+    document.getElementById("inDeaths").value = 1;
+    document.getElementById("inMVP").checked = false;
+    document.getElementById("inLeft").checked = false;
 
   renderHistoryFromStorage();
 
