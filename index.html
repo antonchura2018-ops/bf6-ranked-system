@@ -1210,6 +1210,66 @@ function showTab(tabId, btn) {
 
 /* ===== STORAGE ===== */
 var STORAGE_KEY = "bf6_ranked_matches_v1";
+var SEASONS_KEY = "bf6_seasons_v1";
+var ACTIVE_SEASON_KEY = "bf6_active_season_v1";
+var SELECTED_SEASON_KEY = "bf6_selected_season_v1"; // for UI viewing
+
+function loadSeasons() {
+  try {
+    var raw = localStorage.getItem(SEASONS_KEY);
+    return raw ? JSON.parse(raw) : [];
+  } catch (e) {
+    return [];
+  }
+}
+
+function saveSeasons(seasons) {
+  localStorage.setItem(SEASONS_KEY, JSON.stringify(seasons));
+}
+
+function getActiveSeasonId() {
+  return localStorage.getItem(ACTIVE_SEASON_KEY);
+}
+
+function setActiveSeasonId(id) {
+  localStorage.setItem(ACTIVE_SEASON_KEY, id);
+}
+
+function getSelectedSeasonId() {
+  // Selected season for viewing; default to active
+  var v = localStorage.getItem(SELECTED_SEASON_KEY);
+  return v ? v : getActiveSeasonId();
+}
+
+function setSelectedSeasonId(id) {
+  localStorage.setItem(SELECTED_SEASON_KEY, id);
+}
+
+function ensureSeasonSystem() {
+  var seasons = loadSeasons();
+  var active = getActiveSeasonId();
+
+  if (!seasons || seasons.length === 0 || !active) {
+    // Create first season
+    var id = "S1";
+    var season = {
+      id: id,
+      startAt: Date.now(),
+      endAt: null,
+      finalRR: null,
+      finalRankLabel: null,
+      stats: null
+    };
+    saveSeasons([season]);
+    setActiveSeasonId(id);
+    setSelectedSeasonId(id);
+    return;
+  }
+
+  // If selected missing, set to active
+  var selected = getSelectedSeasonId();
+  if (!selected) setSelectedSeasonId(active);
+}
 var HISTORY_LIMIT_KEY = "bf6_history_limit_v1";
 
 function loadMatches() {
