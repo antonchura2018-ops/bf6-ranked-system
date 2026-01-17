@@ -1256,6 +1256,7 @@ margin: 32px auto 20px;
     <select id="seasonSelect" class="season-select"></select>
     <button class="btn" id="toggleHistoryBtn" type="button">Show all</button>
     <button class="btn" type="button" onclick="renameSeason()">Rename</button>
+    <button class="btn" type="button" onclick="renumberSeasonIds()">Fix IDs</button>
     <button class="btn ghost" type="button" onclick="deleteSeason()">Delete</button>
   </div>
   <div class="hint" id="historyHint">Showing last 20 matches</div>
@@ -2444,6 +2445,58 @@ function deleteSeason() {
   renderHistoryFromStorage();
 
   alert("Season deleted.");
+}
+  function renumberSeasonIds() {
+  ensureSeasonSystem();
+
+  var seasons = loadSeasons();
+  var matches = loadMatches();
+
+  if (!seasons || seasons.length === 0) {
+    alert("No seasons found.");
+    return;
+  }
+
+  if (!confirm("This will rename season IDs to S1, S2, S3... and update all matches. Continue?")) return;
+
+  // Sort seasons by start time (oldest first)
+  seasons.sort(function(a, b) {
+    return Number(a.startAt || 0) - Number(b.startAt || 0);
+  });
+
+  // Build mapping oldId -> newId
+  var map = {};
+  for (var i = 0; i < seasons.length; i++) {
+    var oldId = seasons[i].id;
+    var newId = "S" + (i + 1);
+    map[oldId] = newId;
+
+    seasons[i].id = newId;
+
+    // Default name if empty
+    if (!seasons[i].name) seasons[i].name = newId;
+  }
+
+  // Update matches seasonId
+  for (var m = 0; m < matches.length; m++) {
+    var old = matches[m].seasonId;
+    if (old && map[old]) matches[m].seasonId = map[old];
+  }
+
+  // Update active/selected IDs
+  var activeOld = getActiveSeasonId();
+  var selectedOld = getSelectedSeasonId();
+
+  if (activeOld && map[activeOld]) setActiveSeasonId(map[activeOld]);
+  if (selectedOld && map[selectedOld]) setSelectedSeasonId(map[selectedOld]);
+
+  saveSeasons(seasons);
+  saveMatches(matches);
+
+  lastRankState = null;
+  renderHistoryFromStorage();
+
+  alert("Season IDs renumbered successfully.");
 }
   
 /* ===== INIT ===== */
