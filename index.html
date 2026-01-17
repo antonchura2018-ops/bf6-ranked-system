@@ -2035,6 +2035,14 @@ function clampInt(value, min, max, fallback) {
   if (n > max) n = max;
   return n;
 }
+  function clampInt(value, min, max, fallback) {
+  var n = Number(value);
+  if (!isFinite(n)) n = (fallback !== undefined) ? fallback : min;
+  n = Math.floor(n);
+  if (n < min) n = min;
+  if (n > max) n = max;
+  return n;
+}
   
 /* ===== ACTIONS ===== */
 function startNewSeason() {
@@ -2068,9 +2076,16 @@ function startNewSeason() {
     }
   }
 
-  // Create next season id S{n+1}
-  var nextNum = seasons.length + 1;
-  var newId = "S" + nextNum;
+  // Create next season id based on max existing S#
+var maxNum = 0;
+for (var x = 0; x < seasons.length; x++) {
+  var m = String(seasons[x].id || "").match(/^S(\d+)$/);
+  if (m) {
+    var n = Number(m[1]);
+    if (n > maxNum) maxNum = n;
+  }
+}
+var newId = "S" + (maxNum + 1);
 
   seasons.push({
   id: newId,
@@ -2287,10 +2302,10 @@ function importData() {
   for (var i = 0; i < matches.length; i++) {
     var m = matches[i] || {};
 
-    var place = Number(m.place || 25);
-    var kills = Number(m.kills || 0);
-    var assists = Number(m.assists || 0);
-    var deaths = Number(m.deaths || 0);
+    var place = clampInt(m.place, 1, 25, 25);
+    var kills = clampInt(m.kills, 0, 99, 0);
+    var assists = clampInt(m.assists, 0, 99, 0);
+    var deaths = clampInt(m.deaths, 0, 99, 0);
     var mvp = !!m.mvp;
     var left = !!m.left;
     var ts = Number(m.ts || Date.now());
