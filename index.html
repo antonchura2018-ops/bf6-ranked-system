@@ -367,6 +367,14 @@
   gap: 12px;
   max-width: 900px;
 }
+  .history-controls{
+  margin-top: 16px;
+  max-width: 900px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap: 12px;
+}
 
 .mini-card{
   padding: 14px 16px;
@@ -1158,7 +1166,12 @@ margin: 32px auto 20px;
     </div>
   </div>
 
-  <div class="match-list" id="matchList"></div>
+  <div class="history-controls">
+  <button class="btn" id="toggleHistoryBtn" type="button">Show all</button>
+  <div class="hint" id="historyHint">Showing last 20 matches</div>
+</div>
+
+<div class="match-list" id="matchList"></div>
 </div>
 
 <!-- CINEMATIC OVERLAY -->
@@ -1197,6 +1210,7 @@ function showTab(tabId, btn) {
 
 /* ===== STORAGE ===== */
 var STORAGE_KEY = "bf6_ranked_matches_v1";
+var HISTORY_LIMIT_KEY = "bf6_history_limit_v1";
 
 function loadMatches() {
   try {
