@@ -642,6 +642,24 @@
   position:relative;
   overflow:hidden;
   box-shadow: 0 0 16px rgba(0,0,0,.35);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+  /* Ladder badge states (images) */
+.ladder-item.locked .badge{
+  filter: grayscale(1) brightness(0.35);
+  opacity: 0.35;
+}
+
+.ladder-item.unlocked .badge{
+  filter: grayscale(0.15) brightness(0.9);
+  opacity: 0.9;
+}
+
+.ladder-item.current .badge{
+  filter: grayscale(0) brightness(1.05);
+  opacity: 1;
 }
 
 .badge::before{
@@ -1604,6 +1622,7 @@ if (cinRoot) {
 /* ===== LADDER UI ===== */
 function updateLadderUI(currentTierIndex) {
   var items = document.querySelectorAll(".ladder-list .ladder-item");
+
   for (var i = 0; i < items.length; i++) {
     var item = items[i];
     item.classList.remove("locked", "unlocked", "current");
@@ -1611,6 +1630,15 @@ function updateLadderUI(currentTierIndex) {
     if (i < currentTierIndex) item.classList.add("unlocked");
     else if (i === currentTierIndex) item.classList.add("unlocked", "current");
     else item.classList.add("locked");
+
+    // Set ladder badge image based on tier name text
+    var nameEl = item.querySelector(".meta .name");
+    var badgeEl = item.querySelector(".badge");
+    if (nameEl && badgeEl) {
+      var tierKey = String(nameEl.textContent || "").trim().toLowerCase();
+      // example: "OUTCAST" -> assets/ranks/outcast.webp
+      badgeEl.style.backgroundImage = "url('assets/ranks/" + tierKey + ".webp')";
+    }
   }
 }
 
