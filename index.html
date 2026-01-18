@@ -1347,6 +1347,7 @@ function showTab(tabId, btn) {
 /* ===== STORAGE ===== */
 var STORAGE_KEY = "bf6_ranked_matches_v1";
   var BACKUP_KEY = "bf6_backup_v1";
+  var editingMatchId = null;
 
 function makeBackup(reason) {
   var payload = {
@@ -2345,12 +2346,80 @@ function resetMatches() {
   renderHistoryFromStorage();
 }
 
-  document.addEventListener("click", function(e){
-  var t = e.target;
-  if (t && t.id === "toggleHistoryBtn") {
-    var mode = getHistoryLimit();
-    setHistoryLimit(mode === "all" ? "20" : "all");
+  document.addEventListener("click", function(e) {
+  var btn = e.target && e.target.closest ? e.target.closest("[data-edit-id],[data-del-id]") : null;
+  if (!btn) return;
+
+  // EDIT (active season only)
+  var editId = btn.getAttribute("data-edit-id");
+  if (editId) {
+    ensureSeasonSystem();
+    var activeId = getActiveSeasonId();
+
+    var matches = loadMatches();
+    var found = null;
+
+    for (var i = 0; i < matches.length; i++) {
+      if (matches[i].seasonId === activeId && String(matches[i].matchId) === String(editId)) {
+        found = matches[i];
+        break;
+      }
+    }
+
+    if (!found) {
+      alert("Match not found (or not in active season).");
+      return;
+    }
+
+    document.getElementById("inPlace").value = found.place;
+    document.getElementById("inKills").value = found.kills;
+    document.getElementById("inAssists").value = found.assists;
+    document.getElementById("inDeaths").value = found.deaths;
+    document.getElementById("inMVP").checked = !!found.mvp;
+    document.getElementById("inLeft").checked = !!found.left;
+
+    // IMPORTANT: store matchId (not ts)
+    editingMatchId = found.matchId;
+
+    var saveBtn = document.getElementById("saveEditBtn");
+    if (saveBtn) saveBtn.style.display = "inline-block";
+
+    var navBtns = document.querySelectorAll(".nav-btn");
+    showTab("add", navBtns[3]);
+    return;
+  }
+
+  // DELETE (active season only)
+  var delId = btn.getAttribute("data-del-id");
+  if (delId) {
+    ensureSeasonSystem();
+    var activeId2 = getActiveSeasonId();
+
+    makeBackup("before delete match");
+
+    if (!confirm("Delete this match from the active season? This cannot be undone.")) return;
+
+    var matches2 = loadMatches();
+    var kept = [];
+    var removed = false;
+
+    for (var j = 0; j < matches2.length; j++) {
+      if (matches2[j].seasonId === activeId2 && String(matches2[j].matchId) === String(delId)) {
+        removed = true;
+        continue;
+      }
+      kept.push(matches2[j]);
+    }
+
+    if (!removed) {
+      alert("Match not found (or not in active season).");
+      return;
+    }
+
+    saveMatches(kept);
+    lastRankState = null;
     renderHistoryFromStorage();
+    return;
   }
 });
   
@@ -2572,7 +2641,8 @@ function deleteSeason() {
     alert("You can only delete ended seasons.");
     return;
   }
-
+  
+  makeBackup("before delete season");
   if (!confirm("Delete season " + selectedId + " and all its matches? This cannot be undone.")) return;
 
   // Remove season
