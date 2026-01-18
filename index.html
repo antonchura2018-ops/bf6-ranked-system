@@ -2687,35 +2687,69 @@ if (t && t.getAttribute && t.getAttribute("data-edit-id")) {
   var saveBtn = document.getElementById("saveEditBtn");
   if (saveBtn) saveBtn.style.display = "inline-block";
 
-  // Go to ADD tab
-  var btns = document.querySelectorAll(".nav-btn");
-  showTab("add", btns[3]);
+  document.addEventListener("click", function(e) {
+  var btn = e.target.closest ? e.target.closest("button") : e.target;
+  if (!btn) return;
 
-  return;
-}
-
-  // Delete match button
-  if (t && t.classList && t.classList.contains("btn-mini") && t.classList.contains("danger") && t.getAttribute("data-ts")) {
-    var ts = Number(t.getAttribute("data-ts"));
-    if (!isFinite(ts)) return;
-
+  // EDIT match (active season)
+  var editId = btn.getAttribute && btn.getAttribute("data-edit-id");
+  if (editId) {
     ensureSeasonSystem();
     var activeId = getActiveSeasonId();
-    
-    makeBackup("before delete match");
-    if (!confirm("Delete this match from the active season? This cannot be undone.")) return;
 
     var matches = loadMatches();
+    var found = null;
+
+    for (var i = 0; i < matches.length; i++) {
+      if (matches[i].seasonId === activeId && String(matches[i].matchId) === String(editId)) {
+        found = matches[i];
+        break;
+      }
+    }
+
+    if (!found) {
+      alert("Match not found (or not in active season).");
+      return;
+    }
+
+    document.getElementById("inPlace").value = found.place;
+    document.getElementById("inKills").value = found.kills;
+    document.getElementById("inAssists").value = found.assists;
+    document.getElementById("inDeaths").value = found.deaths;
+    document.getElementById("inMVP").checked = !!found.mvp;
+    document.getElementById("inLeft").checked = !!found.left;
+
+    // If you have editing state:
+    if (typeof editingMatchId !== "undefined") editingMatchId = found.matchId;
+
+    var saveBtn = document.getElementById("saveEditBtn");
+    if (saveBtn) saveBtn.style.display = "inline-block";
+
+    var navBtns = document.querySelectorAll(".nav-btn");
+    showTab("add", navBtns[3]);
+    return;
+  }
+
+  // DELETE match (active season)
+  var delId = btn.getAttribute && btn.getAttribute("data-del-id");
+  if (delId) {
+    ensureSeasonSystem();
+    var activeId2 = getActiveSeasonId();
+
+    makeBackup("before delete match");
+
+    if (!confirm("Delete this match from the active season? This cannot be undone.")) return;
+
+    var matches2 = loadMatches();
     var kept = [];
     var removed = false;
 
-    for (var i = 0; i < matches.length; i++) {
-      // Only allow deleting from active season
-      if (matches[i].seasonId === activeId && Number(matches[i].ts) === ts) {
+    for (var j = 0; j < matches2.length; j++) {
+      if (matches2[j].seasonId === activeId2 && String(matches2[j].matchId) === String(delId)) {
         removed = true;
         continue;
       }
-      kept.push(matches[i]);
+      kept.push(matches2[j]);
     }
 
     if (!removed) {
@@ -2726,6 +2760,7 @@ if (t && t.getAttribute && t.getAttribute("data-edit-id")) {
     saveMatches(kept);
     lastRankState = null;
     renderHistoryFromStorage();
+    return;
   }
 });
   
