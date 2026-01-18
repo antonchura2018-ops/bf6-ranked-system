@@ -1265,6 +1265,7 @@ margin: 32px auto 20px;
     <button class="btn" onclick="exportData()">Export JSON</button>
     <button class="btn" onclick="importData()">Import JSON</button>
     <button class="btn ghost" onclick="clearIO()">Clear Box</button>
+    <button class="btn ghost" onclick="restoreBackup()">Restore Backup</button>
   </div>
 
   <div class="hint">Tip: Export copies JSON to clipboard automatically.</div>
@@ -1345,6 +1346,54 @@ function showTab(tabId, btn) {
 
 /* ===== STORAGE ===== */
 var STORAGE_KEY = "bf6_ranked_matches_v1";
+  var BACKUP_KEY = "bf6_backup_v1";
+
+function makeBackup(reason) {
+  var payload = {
+    version: 1,
+    reason: reason || "manual",
+    createdAt: Date.now(),
+    seasons: loadSeasons(),
+    activeSeasonId: getActiveSeasonId(),
+    selectedSeasonId: getSelectedSeasonId(),
+    matches: loadMatches()
+  };
+  localStorage.setItem(BACKUP_KEY, JSON.stringify(payload));
+}
+
+function restoreBackup() {
+  var raw = localStorage.getItem(BACKUP_KEY);
+  if (!raw) {
+    alert("No backup found.");
+    return;
+  }
+
+  var payload;
+  try {
+    payload = JSON.parse(raw);
+  } catch (e) {
+    alert("Backup is corrupted.");
+    return;
+  }
+
+  if (!payload || !Array.isArray(payload.matches) || !Array.isArray(payload.seasons)) {
+    alert("Backup format invalid.");
+    return;
+  }
+
+  if (!confirm("Restore backup? This will replace current data.")) return;
+
+  saveMatches(payload.matches);
+  saveSeasons(payload.seasons);
+
+  setActiveSeasonId(payload.activeSeasonId || (payload.seasons[0] && payload.seasons[0].id) || "S1");
+  setSelectedSeasonId(payload.selectedSeasonId || getActiveSeasonId());
+
+  lastRankState = null;
+  renderHistoryFromStorage();
+
+  alert("Backup restored.");
+}
 var SEASONS_KEY = "bf6_seasons_v1";
 var ACTIVE_SEASON_KEY = "bf6_active_season_v1";
 var SELECTED_SEASON_KEY = "bf6_selected_season_v1"; // for UI viewing
@@ -1844,6 +1893,16 @@ function setHistoryLimit(val) {
 function renderHistoryFromStorage() {
   var matchesAll = loadMatches();
   ensureSeasonSystem();
+  
+  // Backfill matchId for legacy matches
+var changedId = false;
+for (var mi = 0; mi < matchesAll.length; mi++) {
+  if (!matchesAll[mi].matchId) {
+    matchesAll[mi].matchId = genMatchId(matchesAll[mi].ts || Date.now());
+    changedId = true;
+  }
+}
+if (changedId) saveMatches(matchesAll);
 
 var activeSeasonId = getActiveSeasonId();
 var selectedSeasonId = getSelectedSeasonId();
@@ -2092,14 +2151,14 @@ if (m.seasonId === activeId) {
   editBtn.className = "btn-mini";
   editBtn.type = "button";
   editBtn.textContent = "Edit";
-  editBtn.setAttribute("data-edit-ts", String(m.ts));
+  editBtn.setAttribute("data-edit-id", String(m.matchId));
   actions.appendChild(editBtn);
 
   var delBtn = document.createElement("button");
   delBtn.className = "btn-mini danger";
   delBtn.type = "button";
   delBtn.textContent = "Delete";
-  delBtn.setAttribute("data-ts", String(m.ts));
+  delBtn.setAttribute("data-del-id", String(m.matchId));
   actions.appendChild(delBtn);
 
   left.appendChild(actions);
@@ -2198,6 +2257,13 @@ var newId = "S" + (maxNum + 1);
   return val;
 }
   
+  function genMatchId(ts) {
+  // Unique-enough ID without crypto dependency
+  var r = Math.random().toString(16).slice(2);
+  return "m_" + String(ts) + "_" + r;
+}
+  
+  
   function submitMatch() {
   const place = clampNumber(document.getElementById("inPlace").value, 1, 25, 25);
   const kills = clampNumber(document.getElementById("inKills").value, 0, 99, 0);
@@ -2210,7 +2276,8 @@ var newId = "S" + (maxNum + 1);
   document.getElementById("inAssists").value = assists;
   document.getElementById("inDeaths").value = deaths;
 
-  var match = { place: place, kills: kills, assists: assists, deaths: deaths, mvp: mvp, left: left, ts: Date.now(), seasonId: getActiveSeasonId() };
+  var ts = Date.now();
+  var match = { place: place, kills: kills, assists: assists, deaths: deaths, mvp: mvp, left: left, ts: ts, seasonId: getActiveSeasonId(), matchId: genMatchId(ts) };
   match.breakdown = calcRPBreakdown(match);
   match.rp = match.breakdown.total;
 
@@ -2416,7 +2483,8 @@ function importData() {
 
     cleaned.push(obj);
   }
-
+  
+  makeBackup("before import");
   if (!confirm("Import will replace your current saved data (seasons + matches). Continue?")) return;
 
   saveMatches(cleaned);
@@ -2583,9 +2651,9 @@ function deleteSeason() {
   document.addEventListener("click", function(e){
   var t = e.target;
     // Edit match button (active season)
-if (t && t.getAttribute && t.getAttribute("data-edit-ts")) {
-  var tsEdit = Number(t.getAttribute("data-edit-ts"));
-  if (!isFinite(tsEdit)) return;
+if (t && t.getAttribute && t.getAttribute("data-edit-id")) {
+  var idEdit = String(t.getAttribute("data-edit-id") || "");
+  if (!idEdit) return;
 
   ensureSeasonSystem();
   var activeId = getActiveSeasonId();
@@ -2593,7 +2661,7 @@ if (t && t.getAttribute && t.getAttribute("data-edit-ts")) {
   var matches = loadMatches();
   var found = null;
   for (var i = 0; i < matches.length; i++) {
-    if (matches[i].seasonId === activeId && Number(matches[i].ts) === tsEdit) {
+    if (matches[i].seasonId === activeId && String(matches[i].matchId) === idEdit) {
       found = matches[i];
       break;
     }
@@ -2612,7 +2680,7 @@ if (t && t.getAttribute && t.getAttribute("data-edit-ts")) {
   document.getElementById("inMVP").checked = !!found.mvp;
   document.getElementById("inLeft").checked = !!found.left;
 
-  editingMatchTs = found.ts;
+  editingMatchId = found.ts;
 
   var saveBtn = document.getElementById("saveEditBtn");
   if (saveBtn) saveBtn.style.display = "inline-block";
@@ -2631,7 +2699,8 @@ if (t && t.getAttribute && t.getAttribute("data-edit-ts")) {
 
     ensureSeasonSystem();
     var activeId = getActiveSeasonId();
-
+    
+    makeBackup("before delete match");
     if (!confirm("Delete this match from the active season? This cannot be undone.")) return;
 
     var matches = loadMatches();
