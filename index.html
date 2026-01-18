@@ -1892,8 +1892,6 @@ function setHistoryLimit(val) {
   
 function renderHistoryFromStorage() {
   var matchesAll = loadMatches();
-  ensureSeasonSystem();
-  
   // Backfill matchId for legacy matches
 var changedId = false;
 for (var mi = 0; mi < matchesAll.length; mi++) {
@@ -1903,6 +1901,10 @@ for (var mi = 0; mi < matchesAll.length; mi++) {
   }
 }
 if (changedId) saveMatches(matchesAll);
+  
+  ensureSeasonSystem();
+  
+  
 
 var activeSeasonId = getActiveSeasonId();
 var selectedSeasonId = getSelectedSeasonId();
