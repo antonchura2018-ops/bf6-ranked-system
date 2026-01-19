@@ -1236,7 +1236,7 @@ margin: 32px auto 20px;
     </div>
 
     <div class="actions">
-      <button class="btn" onclick="submitMatch()">Submit Match</button>
+      <button type="button" class="btn" onclick="submitMatch()">Submit Match</button>
       <button class="btn" onclick="undoLastMatch()">Undo Last Match</button>
       <button class="btn ghost" onclick="resetMatches()">Reset All Data</button>
       <div class="hint">Data is stored locally in your browser.</div>
@@ -2276,13 +2276,7 @@ var newId = "S" + (maxNum + 1);
     renderHistoryFromStorage();
     return;
   }
-    // Anti double-click: ignore rapid repeated submits
-  var now = Date.now();
-  if (now - _lastSubmitTs < SUBMIT_COOLDOWN_MS) {
-    showToast("Too fast. Please wait a moment.", "warn");
-    return;
-  }
-  _lastSubmitTs = now;
+   
   const place = clampNumber(document.getElementById("inPlace").value, 1, 25, 25);
   const kills = clampNumber(document.getElementById("inKills").value, 0, 99, 0);
   const assists = clampNumber(document.getElementById("inAssists").value, 0, 99, 0);
