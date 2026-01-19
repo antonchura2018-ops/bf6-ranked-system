@@ -1202,6 +1202,260 @@ margin: 32px auto 20px;
   .cinematic-bg::after{ animation: none !important; }
   .cinematic-card, .cin-badgeImg{ animation: none !important; opacity: 1 !important; transform: none !important; }
 }
+  /* =============================
+   CINEMATIC V3 (AAA, NO LAG)
+   ============================= */
+
+#cinematic.cinematic{
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 180ms ease;
+  --cin-accent: #22d3ee;
+  --cin-accent2: #a78bfa;
+}
+
+#cinematic.cinematic.is-open{
+  opacity: 1;
+  pointer-events: auto;
+}
+
+#cinematic .cinematic-bg{
+  position:absolute;
+  inset:0;
+  background: rgba(0,0,0,0.80);
+}
+
+/* FX layers */
+#cinematic .cin-fx{
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+}
+
+#cinematic .cin-rays{
+  position:absolute;
+  inset:-30%;
+  background:
+    conic-gradient(from 180deg,
+      transparent 0deg,
+      color-mix(in srgb, var(--cin-accent) 22%, transparent) 25deg,
+      transparent 70deg,
+      color-mix(in srgb, var(--cin-accent2) 18%, transparent) 110deg,
+      transparent 360deg
+    );
+  opacity: 0;
+  transform: scale(0.96) rotate(0deg);
+  will-change: transform, opacity;
+}
+
+#cinematic .cin-burst{
+  position:absolute;
+  inset:-35%;
+  background:
+    radial-gradient(circle at 50% 45%,
+      color-mix(in srgb, var(--cin-accent) 35%, transparent) 0%,
+      transparent 60%
+    ),
+    radial-gradient(circle at 50% 55%,
+      color-mix(in srgb, var(--cin-accent2) 25%, transparent) 0%,
+      transparent 65%
+    );
+  opacity: 0;
+  transform: scale(0.92);
+  will-change: transform, opacity;
+  filter: blur(1px); /* tiny blur ok; large blur can lag */
+}
+
+#cinematic .cin-scan{
+  position:absolute;
+  inset:0;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(255,255,255,0.040) 0px,
+    rgba(255,255,255,0.040) 1px,
+    rgba(0,0,0,0) 4px,
+    rgba(0,0,0,0) 9px
+  );
+  opacity: 0.0;
+  will-change: transform, opacity;
+}
+
+/* Center wrapper */
+#cinematic .cin-wrap{
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+#cinematic .cin-card{
+  width: min(920px, 92vw);
+  border-radius: 22px;
+  border: 1px solid rgba(255,255,255,0.10);
+  background: linear-gradient(135deg, rgba(2,6,23,0.92), rgba(15,23,42,0.90));
+  box-shadow: 0 24px 70px rgba(0,0,0,0.55);
+  overflow: hidden;
+
+  transform: translate3d(0, 18px, 0) scale(0.98);
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
+#cinematic .cin-top{
+  padding: 18px 18px 10px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+#cinematic .cin-tag{
+  display:inline-flex;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--cin-accent) 35%, rgba(255,255,255,0.10));
+  background: color-mix(in srgb, var(--cin-accent) 10%, rgba(255,255,255,0.06));
+  color: rgba(255,255,255,0.92);
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+#cinematic .cin-sub{
+  margin-top: 10px;
+  color:#cbd5e1;
+  opacity: 0.9;
+  font-size: 13px;
+  letter-spacing: .6px;
+}
+
+#cinematic .cin-main{
+  padding: 20px 18px 18px;
+  text-align:center;
+}
+
+#cinematic .cin-badgeWrap{
+  position: relative;
+  width: 190px;
+  height: 190px;
+  margin: 0 auto 10px;
+}
+
+#cinematic .cin-badgeImg{
+  position:absolute;
+  inset: 12px;
+  width: calc(100% - 24px);
+  height: calc(100% - 24px);
+  object-fit: contain;
+  opacity: 0;
+  transform: translate3d(0, 8px, 0) scale(0.92);
+  will-change: transform, opacity;
+  filter: drop-shadow(0 0 18px color-mix(in srgb, var(--cin-accent) 35%, transparent));
+}
+
+#cinematic .cin-badgeRing{
+  position:absolute;
+  inset: 0;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.10);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.05);
+  background:
+    radial-gradient(circle at 30% 25%,
+      color-mix(in srgb, var(--cin-accent) 18%, transparent) 0%,
+      transparent 60%
+    );
+  opacity: 0.9;
+}
+
+#cinematic .cin-rankText{
+  margin-top: 10px;
+  font-size: clamp(26px, 3.2vw, 44px);
+  font-weight: 1000;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.92);
+}
+
+#cinematic .cin-hint{
+  margin-top: 10px;
+  color: rgba(255,255,255,0.55);
+  font-size: 12px;
+}
+
+#cinematic .cin-key{
+  display:inline-block;
+  padding: 2px 6px;
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.14);
+  background: rgba(255,255,255,0.06);
+}
+
+/* OPEN timeline (no layout) */
+#cinematic.is-open .cin-card{
+  animation: cinCardIn 520ms cubic-bezier(.2,.9,.2,1) forwards;
+}
+@keyframes cinCardIn{
+  0% { opacity:0; transform: translate3d(0, 18px, 0) scale(0.98); }
+  55%{ opacity:1; transform: translate3d(0, -2px, 0) scale(1.02); }
+  100%{ opacity:1; transform: translate3d(0, 0, 0) scale(1); }
+}
+
+#cinematic.is-open .cin-burst{
+  animation: cinBurst 740ms ease forwards;
+}
+@keyframes cinBurst{
+  0%{ opacity:0; transform: scale(0.90); }
+  40%{ opacity:0.9; transform: scale(1.03); }
+  100%{ opacity:0.25; transform: scale(1.00); }
+}
+
+#cinematic.is-open .cin-rays{
+  animation: cinRays 900ms ease forwards;
+}
+@keyframes cinRays{
+  0%{ opacity:0; transform: scale(0.96) rotate(0deg); }
+  45%{ opacity:0.65; transform: scale(1.02) rotate(12deg); }
+  100%{ opacity:0.15; transform: scale(1.00) rotate(18deg); }
+}
+
+#cinematic.is-open .cin-scan{
+  opacity: 0.12;
+  animation: cinScan 1.6s linear infinite;
+}
+@keyframes cinScan{
+  0%{ transform: translateY(-6%); }
+  100%{ transform: translateY(6%); }
+}
+
+#cinematic.is-open .cin-badgeImg{
+  animation: cinBadgeIn 520ms cubic-bezier(.2,.9,.2,1) 90ms forwards;
+}
+@keyframes cinBadgeIn{
+  0%{ opacity:0; transform: translate3d(0, 10px, 0) scale(0.90); }
+  60%{ opacity:1; transform: translate3d(0, -2px, 0) scale(1.05); }
+  100%{ opacity:1; transform: translate3d(0, 0, 0) scale(1.00); }
+}
+
+/* MODE tweaks */
+#cinematic[data-mode="down"]{
+  --cin-accent2: #fb7185;
+}
+#cinematic[data-mode="down"] .cin-tag{
+  border-color: rgba(251,113,133,0.35);
+  background: rgba(251,113,133,0.10);
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce){
+  #cinematic .cin-scan{ animation:none !important; }
+  #cinematic .cin-card, #cinematic .cin-badgeImg, #cinematic .cin-rays, #cinematic .cin-burst{
+    animation:none !important;
+    opacity:1 !important;
+    transform:none !important;
+  }
+}
   
 </style>
   <!-- ===== END OF CSS ===== -->
@@ -1465,21 +1719,36 @@ margin: 32px auto 20px;
 <div class="match-list" id="matchList"></div>
 </div>
 
-<!-- CINEMATIC OVERLAY -->
-<div id="cinematic" class="cinematic hidden">
+<!-- ============================= -->
+<!-- ===== CINEMATIC OVERLAY ===== -->
+<!-- ============================= -->
+<div id="cinematic" class="cinematic" aria-hidden="true">
   <div class="cinematic-bg"></div>
-  <div class="cin-particles" id="cinParticles"></div>
- 
-  <div class="cin-wrap">
-  <div class="cinematic-card">
-    <div class="cinematic-title" id="cinTitle">RANK PROMOTED</div>
-    <div class="cinematic-sub" id="cinSub">SENTINEL II → PHANTOM III</div>
-    <div class="cin-badgeWrap">
-  <img id="cinBadgeImg" class="cin-badgeImg" src="" alt="Rank badge">
-</div>
 
-    <div class="cin-hint">Click or press ESC</div>
-   </div>
+  <!-- FX layers (GPU-friendly) -->
+  <div class="cin-fx">
+    <div class="cin-rays"></div>
+    <div class="cin-burst"></div>
+    <div class="cin-scan"></div>
+  </div>
+
+  <div class="cin-wrap">
+    <div class="cin-card" role="dialog" aria-modal="true" aria-label="Rank change">
+      <div class="cin-top">
+        <div class="cin-tag" id="cinTitle">DIVISION UP</div>
+        <div class="cin-sub" id="cinSub">OUTCAST III → OUTCAST II</div>
+      </div>
+
+      <div class="cin-main">
+        <div class="cin-badgeWrap">
+          <img id="cinBadgeImg" class="cin-badgeImg" src="" alt="Rank badge" />
+          <div class="cin-badgeRing"></div>
+        </div>
+
+        <div class="cin-rankText" id="cinRankText">OUTCAST II</div>
+        <div class="cin-hint">Press <span class="cin-key">Esc</span> to close</div>
+      </div>
+    </div>
   </div>
 </div>
   
@@ -1488,6 +1757,34 @@ margin: 32px auto 20px;
 <!-- ===== JAVASCRIPT (JS) ======= -->
 <!-- ============================= -->
 <script>
+  var sfxUp = null;
+var sfxDown = null;
+
+function preloadSfx() {
+  // If files missing, it won't crash; just won't play.
+  try {
+    sfxUp = new Audio("assets/sfx/rank_up.mp3");
+    sfxUp.preload = "auto";
+    sfxUp.volume = 0.7;
+  } catch(e) {}
+
+  try {
+    sfxDown = new Audio("assets/sfx/rank_down.mp3");
+    sfxDown.preload = "auto";
+    sfxDown.volume = 0.7;
+  } catch(e) {}
+}
+
+function playSfx(mode) {
+  // mode: "up" | "down"
+  try {
+    var a = (mode === "down") ? sfxDown : sfxUp;
+    if (!a) return;
+    a.currentTime = 0;
+    a.play();
+  } catch(e) {}
+}
+  
   function preloadRankBadges() {
   for (var i = 0; i < rankTiers.length; i++) {
     var img = new Image();
@@ -2933,6 +3230,7 @@ if (t && t.getAttribute && t.getAttribute("data-edit-id")) {
 
     saveMatches(kept);
     lastRankState = null;
+    preloadSfx();
     renderHistoryFromStorage();
   }
 });
