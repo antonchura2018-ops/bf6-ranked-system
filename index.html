@@ -1488,6 +1488,13 @@ margin: 32px auto 20px;
 <!-- ===== JAVASCRIPT (JS) ======= -->
 <!-- ============================= -->
 <script>
+  function preloadRankBadges() {
+  for (var i = 0; i < rankTiers.length; i++) {
+    var img = new Image();
+    img.src = "assets/ranks/" + String(rankTiers[i].name).toLowerCase() + ".webp";
+  }
+}
+  
 /* ===== NAV ===== */
 function showTab(tabId, btn) {
   var sections = document.querySelectorAll(".section");
@@ -2929,6 +2936,8 @@ if (t && t.getAttribute && t.getAttribute("data-edit-id")) {
     renderHistoryFromStorage();
   }
 });
+  
+  preloadRankBadges();
   
 /* ===== INIT ===== */
 renderHistoryFromStorage();
