@@ -2748,39 +2748,8 @@ if (t && t.getAttribute && t.getAttribute("data-edit-id")) {
   return;
 }
 
-  // Delete match button
-  if (t && t.classList && t.classList.contains("btn-mini") && t.classList.contains("danger") && t.getAttribute("data-ts")) {
-    var ts = Number(t.getAttribute("data-ts"));
-    if (!isFinite(ts)) return;
-
-    ensureSeasonSystem();
-    var activeId = getActiveSeasonId();
-    
-    makeBackup("before delete match");
-    if (!confirm("Delete this match from the active season? This cannot be undone.")) return;
-
-    var matches = loadMatches();
-    var kept = [];
-    var removed = false;
-
-    for (var i = 0; i < matches.length; i++) {
-      // Only allow deleting from active season
-      if (matches[i].seasonId === activeId && Number(matches[i].ts) === ts) {
-        removed = true;
-        continue;
-      }
-      kept.push(matches[i]);
-    }
-
-    if (!removed) {
-      alert("Match not found (or not in active season).");
-      return;
-    }
-
-    saveMatches(kept);
-    lastRankState = null;
-    renderHistoryFromStorage();
-  }
+  document.addEventListener("click", function(e){
+  // reserved for future actions
 });
   
 /* ===== INIT ===== */
