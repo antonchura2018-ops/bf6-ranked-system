@@ -2143,28 +2143,7 @@ if (hint) hint.textContent = (mode === "all") ? ("Showing all matches (" +select
     row.appendChild(left);
     row.appendChild(rpDelta);
     
-    // Match actions (delete) - only for active season
-var activeId = getActiveSeasonId();
-if (m.seasonId === activeId) {
-  var actions = document.createElement("div");
-  actions.className = "match-actions";
-
-  var editBtn = document.createElement("button");
-  editBtn.className = "btn-mini";
-  editBtn.type = "button";
-  editBtn.textContent = "Edit";
-  editBtn.setAttribute("data-edit-id", String(m.matchId));
-  actions.appendChild(editBtn);
-
-  var delBtn = document.createElement("button");
-  delBtn.className = "btn-mini danger";
-  delBtn.type = "button";
-  delBtn.textContent = "Delete";
-  delBtn.setAttribute("data-del-id", String(m.matchId));
-  actions.appendChild(delBtn);
-
-  left.appendChild(actions);
-}
+    
 
     card.appendChild(row);
     list.appendChild(card);
