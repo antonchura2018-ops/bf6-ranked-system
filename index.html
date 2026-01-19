@@ -1341,6 +1341,12 @@ function showTab(tabId, btn) {
 
   var target = document.getElementById(tabId);
   if (target) target.classList.add("active");
+  // Lock RP: when going to ADD MATCH, always switch viewing to ACTIVE season
+  if (tabId === "add") {
+    ensureSeasonSystem();
+    var activeId = getActiveSeasonId();
+    if (activeId) setSelectedSeasonId(activeId);
+  }
   if (btn) btn.classList.add("active");
 }
 
@@ -1528,6 +1534,7 @@ function loadMatches() {
 function saveMatches(matches) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(matches));
 }
+  
 
 /* ===== RANK SETTINGS (Valorant-like divisions) ===== */
 var START_RP = 0;
@@ -2244,8 +2251,27 @@ var newId = "S" + (maxNum + 1);
   return "m_" + String(ts) + "_" + r;
 }
   
+  function enforceActiveSeasonContext() {
+  ensureSeasonSystem();
+
+  var activeId = getActiveSeasonId();
+  var selectedId = getSelectedSeasonId();
+
+  if (selectedId && activeId && selectedId !== activeId) {
+    setSelectedSeasonId(activeId);
+    return false;
+  }
+  return true;
+}
   
   function submitMatch() {
+    // Lock RP: prevent adding match while viewing past season
+  var okSeason = enforceActiveSeasonContext();
+  if (!okSeason) {
+    showToast("Switched back to ACTIVE season. Please submit again.", "warn");
+    renderHistoryFromStorage();
+    return;
+  }
   const place = clampNumber(document.getElementById("inPlace").value, 1, 25, 25);
   const kills = clampNumber(document.getElementById("inKills").value, 0, 99, 0);
   const assists = clampNumber(document.getElementById("inAssists").value, 0, 99, 0);
