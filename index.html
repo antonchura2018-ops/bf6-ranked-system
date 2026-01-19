@@ -2289,29 +2289,7 @@ var newId = "S" + (maxNum + 1);
   document.getElementById("inDeaths").value = deaths;
 
   var ts = Date.now();
-    // Duplicate protection: identical match entered shortly after previous one
-  var existing = loadMatches();
-  var last = findNewestMatchInActiveSeason(existing);
-
-  if (last) {
-    var same =
-      Number(last.place) === Number(place) &&
-      Number(last.kills) === Number(kills) &&
-      Number(last.assists) === Number(assists) &&
-      Number(last.deaths) === Number(deaths) &&
-      !!last.mvp === !!mvp &&
-      !!last.left === !!left;
-
-    var lastTs = Number(last.ts || 0);
-
-    if (same && (Date.now() - lastTs) < DUPLICATE_WINDOW_MS) {
-      var okDup = confirm("This looks identical to your last match. Add anyway?");
-      if (!okDup) {
-        showToast("Cancelled duplicate match.", "info");
-        return;
-      }
-    }
-  }
+    
   var match = { place: place, kills: kills, assists: assists, deaths: deaths, mvp: mvp, left: left, ts: ts, seasonId: getActiveSeasonId(), matchId: genMatchId(ts) };
   match.breakdown = calcRPBreakdown(match);
   match.rp = match.breakdown.total;
