@@ -2141,6 +2141,10 @@ if (hint) hint.textContent = (mode === "all") ? ("Showing all matches (" +select
 
     left.appendChild(title);
     left.appendChild(place);
+    var time = document.createElement("div");
+    time.className = "kad";
+    time.textContent = "🕒 " + new Date(Number(m.ts || 0)).toLocaleString();
+    left.appendChild(time);
     left.appendChild(kad);
 
     var rpDelta = document.createElement("div");
