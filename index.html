@@ -4,6 +4,9 @@
 <meta charset="UTF-8" />
 <title>BF6 Ranked System</title>
 
+<!-- ============================= -->
+<!-- ===== GLOBAL STYLES (CSS) === -->
+<!-- ============================= -->
 <style>
   /* ====== CINEMATIC OVERLAY ====== */
 .cinematic{
@@ -1052,9 +1055,161 @@ margin: 32px auto 20px;
   background: radial-gradient(circle at 25% 25%, rgba(255,255,255,0.35), transparent 55%);
   opacity: 0.7;
 }
-</style>
-</head>
+  * ===========================
+   CINEMATIC V2 (NO-LAG)
+   =========================== */
 
+/* keep in DOM; animate opacity/transform only */
+.cinematic{
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 180ms ease;
+  will-change: opacity;
+}
+
+.cinematic.is-open{
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* backdrop: avoid heavy backdrop-filter */
+.cinematic-bg{
+  position:absolute;
+  inset:0;
+  background: rgba(0,0,0,0.78);
+}
+
+/* FX layer via pseudo elements (cheap) */
+.cinematic-bg::before{
+  content:"";
+  position:absolute;
+  inset:-30%;
+  background:
+    radial-gradient(circle at 50% 40%,
+      color-mix(in srgb, var(--cin-accent, #22d3ee) 35%, transparent) 0%,
+      transparent 62%
+    );
+  opacity: var(--cin-burst, 0.25);
+  transform: scale(0.95);
+  filter: blur(1px);
+}
+
+.cinematic-bg::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(255,255,255,0.035) 0px,
+    rgba(255,255,255,0.035) 1px,
+    rgba(0,0,0,0) 4px,
+    rgba(0,0,0,0) 8px
+  );
+  opacity: 0.08;
+  animation: cinScan 1.6s linear infinite;
+  pointer-events:none;
+}
+
+@keyframes cinScan{
+  0%{ transform: translateY(-6%); }
+  100%{ transform: translateY(6%); }
+}
+
+/* card */
+.cinematic-card{
+  position:relative;
+  width: min(820px, 92vw);
+  border-radius: 22px;
+  background: linear-gradient(135deg, rgba(2,6,23,0.92), rgba(15,23,42,0.90));
+  border: 1px solid rgba(255,255,255,0.08);
+  padding: 28px 24px 22px;
+  overflow:hidden;
+
+  /* GPU-friendly entry */
+  transform: translate3d(0, 18px, 0) scale(0.98);
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
+/* open animations */
+.cinematic.is-open .cinematic-card{
+  animation: cinCardIn 420ms cubic-bezier(.2,.9,.2,1) forwards;
+}
+@keyframes cinCardIn{
+  to { transform: translate3d(0,0,0) scale(1); opacity: 1; }
+}
+
+/* modes */
+.cinematic[data-mode="up"]{ --cin-burst: 0.32; }
+.cinematic[data-mode="down"]{ --cin-burst: 0.22; }
+
+.cinematic[data-mode="up"].is-open .cinematic-card{
+  animation: cinUp 520ms cubic-bezier(.2,.9,.2,1) forwards;
+}
+@keyframes cinUp{
+  0%{ transform: translate3d(0, 22px, 0) scale(0.96); opacity: 0; }
+  55%{ transform: translate3d(0, -2px, 0) scale(1.02); opacity: 1; }
+  100%{ transform: translate3d(0, 0, 0) scale(1); opacity: 1; }
+}
+
+.cinematic[data-mode="down"].is-open .cinematic-card{
+  animation: cinDown 520ms cubic-bezier(.2,.9,.2,1) forwards;
+}
+@keyframes cinDown{
+  0%{ transform: translate3d(0, -10px, 0) scale(0.98); opacity: 0; }
+  55%{ transform: translate3d(0, 10px, 0) scale(1.00); opacity: 1; }
+  100%{ transform: translate3d(0, 0, 0) scale(1); opacity: 1; }
+}
+
+/* badge */
+.cin-badgeWrap{
+  margin-top: 14px;
+  display:flex;
+  justify-content:center;
+}
+
+.cin-badgeImg{
+  width: 160px;
+  height: 160px;
+  object-fit: contain;
+  transform: translate3d(0,0,0);
+  will-change: transform, opacity;
+  filter: drop-shadow(0 0 18px color-mix(in srgb, var(--cin-accent, #22d3ee) 35%, transparent));
+  opacity: 0;
+}
+
+.cinematic.is-open .cin-badgeImg{
+  animation: cinBadgePop 520ms cubic-bezier(.2,.9,.2,1) 60ms forwards;
+}
+
+@keyframes cinBadgePop{
+  0%{ opacity: 0; transform: translate3d(0, 10px, 0) scale(0.92); }
+  60%{ opacity: 1; transform: translate3d(0, -2px, 0) scale(1.05); }
+  100%{ opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
+}
+
+/* close (fade out) */
+.cinematic.is-closing{
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* reduce motion */
+@media (prefers-reduced-motion: reduce){
+  .cinematic-bg::after{ animation: none !important; }
+  .cinematic-card, .cin-badgeImg{ animation: none !important; opacity: 1 !important; transform: none !important; }
+}
+  
+</style>
+  <!-- ===== END OF CSS ===== -->
+</head>
+  
+<!-- ============================= -->
+<!-- ===== APPLICATION UI ======= -->
+<!-- ============================= -->
 <body>
 
 <!-- NAVIGATION -->
@@ -1327,7 +1482,11 @@ margin: 32px auto 20px;
    </div>
   </div>
 </div>
-
+  
+<!-- ============================= -->
+<!-- ===== APPLICATION LOGIC ===== -->
+<!-- ===== JAVASCRIPT (JS) ======= -->
+<!-- ============================= -->
 <script>
 /* ===== NAV ===== */
 function showTab(tabId, btn) {
@@ -1744,24 +1903,57 @@ function hideCinematic() {
   if (el) el.classList.add("hidden");
 }
 
-function showCinematic(fromRank, toRank, isPromotion) {
+function getTierNameFromLabel(label) {
+  return String(label || "").trim().split(" ")[0].toUpperCase();
+}
+
+function getTierKeyFromLabel(label) {
+  return getTierNameFromLabel(label).toLowerCase();
+}
+
+function showCinematic(fromRank, toRank, isPromotion, changeType) {
+  // changeType: "division" | "tier"
   var el = document.getElementById("cinematic");
   var title = document.getElementById("cinTitle");
   var sub = document.getElementById("cinSub");
+  var badge = document.getElementById("cinBadgeImg");
+
   if (!el || !title || !sub) return;
 
   var mode = isPromotion ? "up" : "down";
   el.dataset.mode = mode;
 
-  title.textContent = isPromotion ? "RANK PROMOTED" : "RANK DEMOTED";
+  // accent from toTier
+  var toTier = getTierNameFromLabel(toRank);
+  var accent = "#22d3ee";
+  for (var i = 0; i < rankTiers.length; i++) {
+    if (rankTiers[i].name === toTier) accent = rankTiers[i].color;
+  }
+  el.style.setProperty("--cin-accent", accent);
+
+  // title text differs by change type
+  if (changeType === "tier") title.textContent = isPromotion ? "TIER UP" : "TIER DOWN";
+  else title.textContent = isPromotion ? "DIVISION UP" : "DIVISION DOWN";
+
   sub.textContent = String(fromRank) + " → " + String(toRank);
 
-  el.classList.remove("hidden");
+  // badge image
+  if (badge) {
+    badge.src = "assets/ranks/" + getTierKeyFromLabel(toRank) + ".webp";
+  }
 
+  // cancel previous timers
   if (window.__cinT) clearTimeout(window.__cinT);
+
+  // open without layout thrash: use requestAnimationFrame to trigger animations
+  el.classList.remove("hidden"); // if you still have old hidden class
+  el.classList.remove("is-closing");
+  el.classList.add("is-open");
+
   window.__cinT = setTimeout(function () {
-    el.classList.add("hidden");
-  }, 2400);
+    el.classList.add("is-closing");
+    el.classList.remove("is-open");
+  }, (changeType === "tier" ? 2600 : 1600));
 }
 
 document.addEventListener("keydown", function (e) {
@@ -2741,7 +2933,8 @@ if (t && t.getAttribute && t.getAttribute("data-edit-id")) {
 /* ===== INIT ===== */
 renderHistoryFromStorage();
 </script>
+  <!-- ===== END OF JAVASCRIPT ===== -->
 
-
+<!-- ===== END OF UI ===== -->
 </body>
 </html>
