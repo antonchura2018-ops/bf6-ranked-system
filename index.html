@@ -2066,13 +2066,13 @@ if (badgeImg && rank.tierName) {
 
     if (tierChanged) {
       var promotedTier = currentState.tierIndex > lastRankState.tierIndex;
-      showCinematic(lastRankState.label, currentState.label, promotedTier);
+      showCinematic(lastRankState.label, currentState.label, promotedTier, "tier");
       lastRankState = currentState;
     } else if (divChanged) {
       var a = (currentState.divIndex === null || currentState.divIndex === undefined) ? 0 : currentState.divIndex;
       var b = (lastRankState.divIndex === null || lastRankState.divIndex === undefined) ? 0 : lastRankState.divIndex;
       var promotedDiv = a > b;
-      showCinematic(lastRankState.label, currentState.label, promotedDiv);
+      showCinematic(lastRankState.label, currentState.label, promotedDiv, "division");
       lastRankState = currentState;
     }
   }
