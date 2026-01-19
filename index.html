@@ -1535,7 +1535,10 @@ function saveMatches(matches) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(matches));
 }
   
-
+var SUBMIT_COOLDOWN_MS = 1500;   // anti double-click
+var DUPLICATE_WINDOW_MS = 60000; // identical match within 60s
+var _lastSubmitTs = 0;
+  
 /* ===== RANK SETTINGS (Valorant-like divisions) ===== */
 var START_RP = 0;
 var MIN_RP = 0;
