@@ -2201,12 +2201,7 @@ function calcRPBreakdown(m) {
   };
 }
 
-/* ===== CINEMATIC ===== */
-function hideCinematic() {
-  var el = document.getElementById("cinematic");
-  if (el) el.classList.add("hidden");
-}
-
+/* ===== CINEMATIC (V3) ===== */
 function getTierNameFromLabel(label) {
   return String(label || "").trim().split(" ")[0].toUpperCase();
 }
@@ -2215,19 +2210,27 @@ function getTierKeyFromLabel(label) {
   return getTierNameFromLabel(label).toLowerCase();
 }
 
+function closeCinematic() {
+  var el = document.getElementById("cinematic");
+  if (!el) return;
+  el.classList.remove("is-open");
+  el.setAttribute("aria-hidden", "true");
+}
+
 function showCinematic(fromRank, toRank, isPromotion, changeType) {
   // changeType: "division" | "tier"
   var el = document.getElementById("cinematic");
   var title = document.getElementById("cinTitle");
   var sub = document.getElementById("cinSub");
   var badge = document.getElementById("cinBadgeImg");
+  var rankText = document.getElementById("cinRankText");
 
   if (!el || !title || !sub) return;
 
   var mode = isPromotion ? "up" : "down";
   el.dataset.mode = mode;
 
-  // accent from toTier
+  // Accent from to-tier
   var toTier = getTierNameFromLabel(toRank);
   var accent = "#22d3ee";
   for (var i = 0; i < rankTiers.length; i++) {
@@ -2235,44 +2238,45 @@ function showCinematic(fromRank, toRank, isPromotion, changeType) {
   }
   el.style.setProperty("--cin-accent", accent);
 
-  // title text differs by change type
+  // Text differs by change type
   if (changeType === "tier") title.textContent = isPromotion ? "TIER UP" : "TIER DOWN";
   else title.textContent = isPromotion ? "DIVISION UP" : "DIVISION DOWN";
 
   sub.textContent = String(fromRank) + " → " + String(toRank);
+  if (rankText) rankText.textContent = String(toRank);
 
-  // badge image
+  // Badge image (preloaded later)
   if (badge) {
     badge.src = "assets/ranks/" + getTierKeyFromLabel(toRank) + ".webp";
   }
 
-  // cancel previous timers
+  // Cancel previous timer
   if (window.__cinT) clearTimeout(window.__cinT);
 
-  // open without layout thrash: use requestAnimationFrame to trigger animations
-  el.classList.remove("hidden"); // if you still have old hidden class
-  el.classList.remove("is-closing");
+  // Open (no hidden class)
   el.classList.add("is-open");
+  el.setAttribute("aria-hidden", "false");
 
   window.__cinT = setTimeout(function () {
-    el.classList.add("is-closing");
-    el.classList.remove("is-open");
+    closeCinematic();
   }, (changeType === "tier" ? 2600 : 1600));
 }
 
-document.addEventListener("keydown", function (e) {
-  if (e.key === "Escape") hideCinematic();
+// Close UX: Esc + click on backdrop
+document.addEventListener("keydown", function(e){
+  if (e.key === "Escape") closeCinematic();
 });
 
-var cinRoot = document.getElementById("cinematic");
-if (cinRoot) {
-  cinRoot.addEventListener("click", function (e) {
-    var t = e.target;
-    var isBg = t && t.classList && t.classList.contains("cinematic-bg");
-    var isRoot = t === cinRoot;
-    if (isBg || isRoot) hideCinematic();
-  });
-}
+document.addEventListener("click", function(e){
+  var el = document.getElementById("cinematic");
+  if (!el || !el.classList.contains("is-open")) return;
+
+  // Close only if clicking background/root (not the card)
+  var t = e.target;
+  var bg = t && t.classList && t.classList.contains("cinematic-bg");
+  var root = t === el;
+  if (bg || root) closeCinematic();
+});
 
 /* ===== LADDER UI ===== */
 function updateLadderUI(currentTierIndex) {
