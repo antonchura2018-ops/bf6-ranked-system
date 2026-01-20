@@ -2286,6 +2286,8 @@ function showCinematic(fromRank, toRank, isPromotion, changeType) {
   var card = document.querySelector("#cinematic .cin-card");
   var burst = document.querySelector("#cinematic .cin-burst");
   var rays = document.querySelector("#cinematic .cin-rays");
+  var flash = document.querySelector("#cinematic .cin-flash");
+  var ring = document.querySelector("#cinematic .cin-badgeRing");
 
   if (!el || !title || !sub || !card) return;
 
@@ -2315,39 +2317,71 @@ function showCinematic(fromRank, toRank, isPromotion, changeType) {
   el.classList.add("is-open");
   el.setAttribute("aria-hidden", "false");
 
-  var durCard = (changeType === "tier") ? 700 : 520;
-  var durFx = (changeType === "tier") ? 900 : 740;
+  // Timings (tier is longer + more epic)
+  var durCard = (changeType === "tier") ? 780 : 520;
+  var durFx = (changeType === "tier") ? 980 : 720;
+  var closeAfter = (changeType === "tier") ? 2800 : 1700;
 
-  // CARD animation (GPU: transform + opacity)
+  // Easing presets
+  var easeInOut = "cubic-bezier(.2,.9,.2,1)";
+  var easeOut = "cubic-bezier(.12,.92,.18,1)";
+
+  // -----------------
+  // CARD TIMELINE
+  // -----------------
+  // Promotion: stronger "lift + impact"
+  // Demotion: slight "drop + heavier settle"
+  var cardStartY = isPromotion ? 30 : -14;
+  var cardMidY = isPromotion ? 6 : 10;
+  var cardImpactY = isPromotion ? -4 : 4;
+  var cardScaleStart = isPromotion ? 0.94 : 0.98;
+
   card.animate([
-    { opacity: 0, transform: "translate3d(0, 22px, 0) scale(0.96)" },
-    { opacity: 1, transform: "translate3d(0, -2px, 0) scale(1.02)", offset: 0.55 },
-    { opacity: 1, transform: "translate3d(0, 0px, 0) scale(1.00)" }
-  ], {
-    duration: durCard,
-    easing: "cubic-bezier(.2,.9,.2,1)",
-    fill: "forwards"
-  });
+    { opacity: 0, transform: "translate3d(0," + cardStartY + "px,0) scale(" + cardScaleStart + ")" },
+    { opacity: 1, transform: "translate3d(0," + cardMidY + "px,0) scale(0.985)", offset: 0.34 },
+    { opacity: 1, transform: "translate3d(0," + cardImpactY + "px,0) scale(1.03)", offset: 0.62 },
+    { opacity: 1, transform: "translate3d(0,0,0) scale(1)" }
+  ], { duration: durCard, easing: easeInOut, fill: "forwards" });
 
-  // BADGE animation
-  if (badge) {
-    badge.animate([
-      { opacity: 0, transform: "translate3d(0, 10px, 0) scale(0.90)" },
-      { opacity: 1, transform: "translate3d(0, -2px, 0) scale(1.05)", offset: 0.6 },
-      { opacity: 1, transform: "translate3d(0, 0px, 0) scale(1.00)" }
-    ], {
-      duration: durCard,
-      delay: 90,
-      easing: "cubic-bezier(.2,.9,.2,1)",
-      fill: "forwards"
-    });
+  // Tier-up: micro shake for impact (transform only, no lag)
+  if (changeType === "tier" && isPromotion) {
+    card.animate([
+      { transform: "translate3d(0,0,0)" },
+      { transform: "translate3d(-7px,0,0)", offset: 0.12 },
+      { transform: "translate3d(7px,0,0)", offset: 0.24 },
+      { transform: "translate3d(-4px,0,0)", offset: 0.36 },
+      { transform: "translate3d(0,0,0)" }
+    ], { duration: 420, easing: "ease-out", fill: "none", delay: 260 });
   }
 
-  // FX burst/rays (opacity + transform only)
+  // -----------------
+  // BADGE POP
+  // -----------------
+  if (badge) {
+    badge.animate([
+      { opacity: 0, transform: "translate3d(0,16px,0) scale(0.84)" },
+      { opacity: 1, transform: "translate3d(0,2px,0) scale(0.98)", offset: 0.34 },
+      { opacity: 1, transform: "translate3d(0,-2px,0) scale(1.10)", offset: 0.62 },
+      { opacity: 1, transform: "translate3d(0,0,0) scale(1)" }
+    ], { duration: durCard, delay: 120, easing: easeOut, fill: "forwards" });
+  }
+
+  // Ring subtle spin (cheap)
+  if (ring) {
+    ring.animate([
+      { opacity: 0.85, transform: "rotate(0deg)" },
+      { opacity: 1.0, transform: "rotate(120deg)" },
+      { opacity: 0.9, transform: "rotate(220deg)" }
+    ], { duration: durFx, easing: "linear", fill: "forwards" });
+  }
+
+  // -----------------
+  // FX: Burst / Rays / Flash
+  // -----------------
   if (burst) {
     burst.animate([
       { opacity: 0, transform: "scale(0.90)" },
-      { opacity: 0.85, transform: "scale(1.03)", offset: 0.4 },
+      { opacity: (isPromotion ? 0.9 : 0.55), transform: "scale(1.05)", offset: 0.42 },
       { opacity: 0.22, transform: "scale(1.00)" }
     ], { duration: durFx, easing: "ease-out", fill: "forwards" });
   }
@@ -2355,16 +2389,26 @@ function showCinematic(fromRank, toRank, isPromotion, changeType) {
   if (rays) {
     rays.animate([
       { opacity: 0, transform: "scale(0.96) rotate(0deg)" },
-      { opacity: 0.60, transform: "scale(1.02) rotate(12deg)", offset: 0.45 },
+      { opacity: (isPromotion ? 0.65 : 0.35), transform: "scale(1.03) rotate(12deg)", offset: 0.45 },
       { opacity: 0.14, transform: "scale(1.00) rotate(18deg)" }
     ], { duration: durFx, easing: "ease-out", fill: "forwards" });
+  }
+
+  // Flash is only for tier changes (big moment)
+  if (flash) {
+    var flashPeak = (changeType === "tier") ? (isPromotion ? 0.55 : 0.28) : 0.0;
+    flash.animate([
+      { opacity: 0 },
+      { opacity: flashPeak, offset: 0.35 },
+      { opacity: 0.0 }
+    ], { duration: (changeType === "tier" ? 680 : 1), easing: "ease-out", fill: "forwards", delay: 110 });
   }
 
   // Auto-close
   window.__cinT = setTimeout(function () {
     el.classList.remove("is-open");
     el.setAttribute("aria-hidden", "true");
-  }, (changeType === "tier" ? 2600 : 1600));
+  }, closeAfter);
 }
 
 // Close UX: Esc + click on backdrop
