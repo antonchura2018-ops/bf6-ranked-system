@@ -1550,6 +1550,81 @@ margin: 32px auto 20px;
   position: relative;
   z-index: 3;
 }
+  /* =============================
+   CINEMATIC FORCE (FINAL OVERRIDE)
+   Put this at the VERY END of <style>
+   ============================= */
+
+/* Ensure overlay actually shows */
+#cinematic.cinematic{
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+#cinematic.cinematic.is-open{
+  opacity: 1 !important;
+  pointer-events: auto !important;
+}
+
+/* Make sure card is visible + animated */
+#cinematic .cin-card{
+  opacity: 0 !important;
+  transform: translate3d(0, 18px, 0) scale(0.98) !important;
+  will-change: transform, opacity !important;
+}
+
+#cinematic.is-open .cin-card{
+  animation: cinCardIn 520ms cubic-bezier(.2,.9,.2,1) forwards !important;
+}
+
+@keyframes cinCardIn{
+  0% { opacity:0; transform: translate3d(0, 18px, 0) scale(0.98); }
+  55%{ opacity:1; transform: translate3d(0, -2px, 0) scale(1.02); }
+  100%{ opacity:1; transform: translate3d(0, 0, 0) scale(1); }
+}
+
+/* Badge pop */
+#cinematic .cin-badgeImg{
+  opacity: 0 !important;
+  transform: translate3d(0, 10px, 0) scale(0.90) !important;
+  will-change: transform, opacity !important;
+}
+
+#cinematic.is-open .cin-badgeImg{
+  animation: cinBadgeIn 520ms cubic-bezier(.2,.9,.2,1) 90ms forwards !important;
+}
+
+@keyframes cinBadgeIn{
+  0%{ opacity:0; transform: translate3d(0, 10px, 0) scale(0.90); }
+  60%{ opacity:1; transform: translate3d(0, -2px, 0) scale(1.05); }
+  100%{ opacity:1; transform: translate3d(0, 0, 0) scale(1.00); }
+}
+
+/* FX layers (optional but nice) */
+#cinematic .cin-rays,
+#cinematic .cin-burst{
+  opacity: 0 !important;
+  transform: scale(0.92) !important;
+  will-change: transform, opacity !important;
+}
+
+#cinematic.is-open .cin-burst{
+  animation: cinBurst 740ms ease forwards !important;
+}
+#cinematic.is-open .cin-rays{
+  animation: cinRays 900ms ease forwards !important;
+}
+
+@keyframes cinBurst{
+  0%{ opacity:0; transform: scale(0.90); }
+  40%{ opacity:0.9; transform: scale(1.03); }
+  100%{ opacity:0.25; transform: scale(1.00); }
+}
+
+@keyframes cinRays{
+  0%{ opacity:0; transform: scale(0.96) rotate(0deg); }
+  45%{ opacity:0.65; transform: scale(1.02) rotate(12deg); }
+  100%{ opacity:0.15; transform: scale(1.00) rotate(18deg); }
+}
   
 </style>
   <!-- ===== END OF CSS ===== -->
@@ -2347,8 +2422,14 @@ function showCinematic(fromRank, toRank, isPromotion, changeType) {
   if (window.__cinT) clearTimeout(window.__cinT);
 
   // Open (no hidden class)
+  // Force restart of CSS animation
+el.classList.remove("is-open");
+el.setAttribute("aria-hidden", "true");
+
+requestAnimationFrame(function(){
   el.classList.add("is-open");
   el.setAttribute("aria-hidden", "false");
+});
 
   window.__cinT = setTimeout(function () {
     closeCinematic();
