@@ -1514,6 +1514,32 @@ margin: 32px auto 20px;
   opacity: 0;
   pointer-events:none;
 }
+  #cinematic .cin-shockwave{
+  position:absolute;
+  inset:-40%;
+  border-radius: 999px;
+  border: 2px solid color-mix(in srgb, var(--cin-accent, #22d3ee) 35%, transparent);
+  opacity: 0;
+  transform: scale(0.25);
+  pointer-events:none;
+}
+
+#cinematic .cin-glowfield{
+  position:absolute;
+  inset:-30%;
+  background:
+    radial-gradient(circle at 50% 55%,
+      color-mix(in srgb, var(--cin-accent, #22d3ee) 18%, transparent) 0%,
+      transparent 60%
+    ),
+    radial-gradient(circle at 30% 30%,
+      color-mix(in srgb, var(--cin-accent2, #a78bfa) 14%, transparent) 0%,
+      transparent 55%
+    );
+  opacity: 0;
+  transform: scale(0.95);
+  pointer-events:none;
+}
   
 </style>
   <!-- ===== END OF CSS ===== -->
@@ -1787,6 +1813,8 @@ margin: 32px auto 20px;
   <div class="cin-rays"></div>
   <div class="cin-burst"></div>
   <div class="cin-flash"></div>
+  <div class="cin-shockwave"></div>
+  <div class="cin-glowfield"></div>
   <div class="cin-scan"></div>
 </div>
 
@@ -2287,6 +2315,8 @@ function showCinematic(fromRank, toRank, isPromotion, changeType) {
   var burst = document.querySelector("#cinematic .cin-burst");
   var rays = document.querySelector("#cinematic .cin-rays");
   var flash = document.querySelector("#cinematic .cin-flash");
+  var shock = document.querySelector("#cinematic .cin-shockwave");
+  var glowf = document.querySelector("#cinematic .cin-glowfield");
   var ring = document.querySelector("#cinematic .cin-badgeRing");
 
   if (!el || !title || !sub || !card) return;
@@ -2403,7 +2433,38 @@ function showCinematic(fromRank, toRank, isPromotion, changeType) {
       { opacity: 0.0 }
     ], { duration: (changeType === "tier" ? 680 : 1), easing: "ease-out", fill: "forwards", delay: 110 });
   }
+// -----------------
+// EPIC MOMENT (Tier only)
+// -----------------
+if (changeType === "tier") {
+  // Glowfield "charge"
+  if (glowf) {
+    glowf.animate([
+      { opacity: 0, transform: "scale(0.95)" },
+      { opacity: 0.55, transform: "scale(1.03)", offset: 0.45 },
+      { opacity: 0.18, transform: "scale(1.00)" }
+    ], { duration: 1100, easing: "ease-out", fill: "forwards" });
+  }
 
+  // Shockwave "impact"
+  if (shock) {
+    shock.animate([
+      { opacity: 0, transform: "scale(0.25)" },
+      { opacity: 0.55, transform: "scale(0.55)", offset: 0.25 },
+      { opacity: 0.22, transform: "scale(1.10)", offset: 0.65 },
+      { opacity: 0.0, transform: "scale(1.35)" }
+    ], { duration: 900, easing: "cubic-bezier(.1,.9,.2,1)", fill: "forwards", delay: 120 });
+  }
+
+  // Extra badge "power punch" (small, no lag)
+  if (badge) {
+    badge.animate([
+      { transform: "scale(1)" },
+      { transform: "scale(1.14)", offset: 0.35 },
+      { transform: "scale(1.00)" }
+    ], { duration: 520, easing: "cubic-bezier(.2,.9,.2,1)", fill: "forwards", delay: 340 });
+  }
+}
   // Auto-close
   window.__cinT = setTimeout(function () {
     el.classList.remove("is-open");
