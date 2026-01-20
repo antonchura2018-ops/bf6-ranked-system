@@ -3988,6 +3988,141 @@ if (t && t.getAttribute && t.getAttribute("data-edit-id")) {
     if (e.key === "Escape") closeOverlay();
   });
 })();
+
+  // =============================
+// DIGITAL RIFT PROTOCOL - PUBLIC API (SAFE)
+// Always defines window.showRankUp / window.showTierUp
+// =============================
+
+function _ruGetRoot() {
+  return document.getElementById("rankup");
+}
+
+function _ruSetPhase(root, phase) {
+  root.dataset.phase = phase;
+}
+
+function _ruSetOpen(root, isOpen) {
+  root.classList.toggle("is-open", isOpen);
+  root.setAttribute("aria-hidden", isOpen ? "false" : "true");
+}
+
+function _ruTierKeyFromText(t) {
+  return String(t || "").trim().split(" ")[0].toLowerCase();
+}
+
+function _ruIsTopRankText(toText) {
+  const t = String(toText || "").toUpperCase();
+  return t.includes("NEXUS") || t.includes("ABSOLUTE") || t.includes("ELITE");
+}
+
+function _ruFill(payload) {
+  const root = _ruGetRoot();
+  if (!root) return null;
+
+  const subEl = document.getElementById("rankupSub");
+  const rightEl = document.getElementById("rankupRight");
+  const oldLabelEl = document.getElementById("rankupOldLabel");
+  const newLabelEl = document.getElementById("rankupNewLabel");
+  const oldImg = document.getElementById("rankupOldImg");
+  const newImg = document.getElementById("rankupNewImg");
+  const btn = document.getElementById("rankupContinue");
+
+  const fromText = payload?.fromText || "";
+  const toText = payload?.toText || "";
+  const rrText = payload?.rrText || "";
+
+  if (oldLabelEl) oldLabelEl.textContent = fromText;
+  if (newLabelEl) newLabelEl.textContent = toText;
+
+  if (subEl) subEl.textContent = payload?.subText || subEl.textContent;
+  if (rightEl) rightEl.textContent = rrText;
+
+  if (oldImg) oldImg.src = "assets/ranks/" + _ruTierKeyFromText(fromText) + ".webp";
+  if (newImg) newImg.src = "assets/ranks/" + _ruTierKeyFromText(toText) + ".webp";
+
+  if (btn) btn.style.display = "none";
+
+  return { root, btn, toText };
+}
+
+function _ruRunTimeline(root, steps) {
+  let i = 0;
+  function next() {
+    if (i >= steps.length) return;
+    const s = steps[i++];
+    _ruSetPhase(root, s.phase);
+    if (s.ms != null) setTimeout(next, s.ms);
+  }
+  next();
+}
+
+window.hideRankUp = function () {
+  const root = _ruGetRoot();
+  if (!root) return;
+  _ruSetOpen(root, false);
+  _ruSetPhase(root, "idle");
+};
+
+window.showRankUp = function (payload) {
+  const res = _ruFill(payload);
+  if (!res) return;
+
+  const { root, btn, toText } = res;
+
+  root.dataset.type = "rank";
+  root.dataset.top = _ruIsTopRankText(toText) ? "1" : "0";
+
+  _ruSetOpen(root, true);
+
+  const timeline = [
+    { phase: "open", ms: 1000 },
+    { phase: "collapse", ms: 700 },
+    { phase: "impact", ms: 280 },
+    { phase: "reveal", ms: 1050 },
+    { phase: "done", ms: null }
+  ];
+
+  _ruRunTimeline(root, timeline);
+
+  // show CTA near done
+  if (btn) {
+    setTimeout(() => { btn.style.display = "inline-block"; }, 1000 + 700 + 280 + 1050 - 200);
+  }
+};
+
+window.showTierUp = function (payload) {
+  const res = _ruFill(payload);
+  if (!res) return;
+
+  const { root } = res;
+
+  root.dataset.type = "tier";
+  root.dataset.top = "0";
+
+  _ruSetOpen(root, true);
+
+  const timeline = [
+    { phase: "impact", ms: 220 },
+    { phase: "reveal", ms: 650 },
+    { phase: "done", ms: 350 }
+  ];
+
+  _ruRunTimeline(root, timeline);
+
+  // auto close tier-up
+  setTimeout(() => window.hideRankUp(), 1400);
+};
+
+// Close UX
+document.addEventListener("keydown", function (e) {
+  if (e.key === "Escape") window.hideRankUp();
+});
+
+document.addEventListener("click", function (e) {
+  const t = e.target;
+  if (t && t.id === "rankupContinue") window.hideRankUp();
+});
   
 /* ===== INIT ===== */
 renderHistoryFromStorage();
