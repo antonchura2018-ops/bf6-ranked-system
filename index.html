@@ -2955,13 +2955,6 @@ if (badgeImg && rank.tierName) {
       var promotedTier = currentState.tierIndex > lastRankState.tierIndex;
       
       window.showRankUp({
-        if (typeof window.showRankUp === "function") {
-  window.showRankUp({
-    fromText: lastRankState.label,
-    toText: currentState.label,
-    rrText: "NEW RANK UNLOCKED"
-  });
-}
       fromText: lastRankState.label,
       toText: currentState.label,
       rrText: "NEW RANK UNLOCKED"
@@ -2973,13 +2966,6 @@ if (badgeImg && rank.tierName) {
       var promotedDiv = a > b;
       
       window.showTierUp({
-        if (typeof window.showTierUp === "function") {
-  window.showTierUp({
-    fromText: lastRankState.label,
-    toText: currentState.label,
-    rrText: "TIER UPGRADED"
-  });
-}
       fromText: lastRankState.label,
       toText: currentState.label,
       rrText: "TIER UPGRADED"
