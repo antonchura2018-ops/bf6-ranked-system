@@ -1829,6 +1829,14 @@ margin: 32px auto 20px;
 }
 .rankup[data-phase="impact"] .rankup__burst{
   animation: ruBurst .6s ease forwards;
+  .rankup[data-phase="impact"] .rankup__flash{
+  animation: ruFlash .35s ease forwards;
+}
+
+@keyframes ruFlash{
+  0%{ opacity:0; }
+  25%{ opacity:1; }
+  100%{ opacity:0; }
 }
 @keyframes ruImpactShake{
   0%{ transform: translateY(0) scale(1); }
@@ -1925,6 +1933,21 @@ margin: 32px auto 20px;
 .rankup[data-top="1"][data-phase="done"] .rankup__burst{
   opacity: .18;
   transform: scale(1.05);
+}
+  /* =========================
+   RANKUP FLASH LAYER
+   ========================= */
+.rankup__flash{
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(closest-side at 50% 45%, rgba(255,255,255,.45), transparent 60%),
+    radial-gradient(closest-side at 50% 55%, rgba(35,243,255,.22), transparent 70%),
+    radial-gradient(closest-side at 50% 55%, rgba(168,85,255,.18), transparent 75%);
+  opacity:0;
+  mix-blend-mode:screen;
+  pointer-events:none;
+  will-change: opacity;
 }
   
 </style>
@@ -4187,6 +4210,7 @@ renderHistoryFromStorage();
   <div class="rankup__stage" role="dialog" aria-label="Rank up cinematic">
     <div class="rankup__scan" aria-hidden="true"></div>
     <div class="rankup__burst" aria-hidden="true"></div>
+    <div class="rankup__flash" aria-hidden="true"></div>
 
     <!-- Top HUD -->
     <header class="rankup__hud">
