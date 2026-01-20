@@ -3876,173 +3876,7 @@ if (t && t.getAttribute && t.getAttribute("data-edit-id")) {
   
   preloadRankBadges();
   // =============================
-// DIGITAL RIFT PROTOCOL - API + STATE MACHINE
-// =============================
-(function(){
-  const root = document.getElementById("rankup");
-  if (!root) return;
 
-  const subEl = document.getElementById("rankupSub");
-  const rightEl = document.getElementById("rankupRight");
-  const oldLabelEl = document.getElementById("rankupOldLabel");
-  const newLabelEl = document.getElementById("rankupNewLabel");
-  const oldImg = document.getElementById("rankupOldImg");
-  const newImg = document.getElementById("rankupNewImg");
-  const btn = document.getElementById("rankupContinue");
-
-  let timerIds = [];
-
-  function clearTimers(){
-    while (timerIds.length) clearTimeout(timerIds.pop());
-  }
-
-  function setPhase(phase){
-  root.dataset.phase = phase;
-
-  // Optional readable HUD text per phase
-  if (!subEl) return;
-
-  if (root.dataset.type === "tier") {
-    if (phase === "impact") subEl.textContent = "Protocol: Tier sync • Calibrating…";
-    else if (phase === "reveal") subEl.textContent = "Protocol: Tier sync • Updating tier…";
-    else if (phase === "done") subEl.textContent = "Protocol: Tier sync • Complete.";
-    return;
-  }
-
-  // rank mode
-  if (phase === "open") subEl.textContent = "Protocol: Digital Rift • Opening breach…";
-  else if (phase === "collapse") subEl.textContent = "Protocol: Digital Rift • Old rank collapsing…";
-  else if (phase === "impact") subEl.textContent = "Protocol: Digital Rift • Breach impact!";
-  else if (phase === "reveal") subEl.textContent = "Protocol: Digital Rift • New rank emerging…";
-  else if (phase === "done") subEl.textContent = "Protocol: Digital Rift • Confirmed.";
-}
-
-  function setOpen(isOpen){
-  root.classList.toggle("is-open", isOpen);
-  root.setAttribute("aria-hidden", isOpen ? "false" : "true");
-}
-
-  function tierKeyFromText(t){
-    // Expect "SENTINEL II" or "NEXUS"
-    const tier = String(t || "").trim().split(" ")[0].toLowerCase();
-    return tier;
-  }
-
-  function isTopRank(toText){
-    // Your top rank currently is NEXUS (10th)
-    const t = String(toText || "").toUpperCase();
-    return t.includes("NEXUS") || t.includes("ABSOLUTE") || t.includes("ELITE");
-  }
-
-  function runTimeline(steps){
-    // steps: [{phase, ms}, ...]
-    let i = 0;
-    function next(){
-      if (i >= steps.length) return;
-      const s = steps[i++];
-      setPhase(s.phase);
-      if (s.ms != null) timerIds.push(setTimeout(next, s.ms));
-    }
-    next();
-  }
-
-  function closeOverlay(){
-  clearTimers();
-  setOpen(false);
-  setPhase("idle");
-  root.dataset.type = "rank";
-  root.dataset.top = "0";
-  btn.style.display = "none";
-}
-
-  // Public API
-  window.hideRankUp = function(){
-    closeOverlay();
-  };
-
-  window.showRankUp = function(payload){
-  closeOverlay(); // resets to idle + clears timers
-
-    const fromText = payload?.fromText || "";
-    const toText = payload?.toText || "";
-    const rrText = payload?.rrText || "NEW RANK UNLOCKED";
-
-    root.dataset.type = "rank";
-    root.dataset.top = isTopRank(toText) ? "1" : "0";
-
-    if (subEl) subEl.textContent = "Protocol: Digital Rift • Opening breach…";
-    if (rightEl) rightEl.textContent = rrText;
-
-    if (oldLabelEl) oldLabelEl.textContent = fromText;
-    if (newLabelEl) newLabelEl.textContent = toText;
-
-    if (oldImg) oldImg.src = "assets/ranks/" + tierKeyFromText(fromText) + ".webp";
-    if (newImg) newImg.src = "assets/ranks/" + tierKeyFromText(toText) + ".webp";
-
-    // CTA: show only at DONE
-    btn.style.display = "none";
-
-    
-
-    // Full rift timeline (tuneable)
-    const timeline = [
-      { phase: "open", ms: 1000 },
-      { phase: "collapse", ms: 700 },
-      { phase: "impact", ms: 280 },
-      { phase: "reveal", ms: 1050 },
-      { phase: "done", ms: null }
-    ];
-
-    runTimeline(timeline);
-
-    // Show CTA at done (slightly delayed to ensure CSS is in done)
-    later(1000+700+280+1050-150, () => { btn.style.display = "inline-block"; });
-  };
-
-  window.showTierUp = function(payload){
-  closeOverlay();
-
-    const fromText = payload?.fromText || "";
-    const toText = payload?.toText || "";
-    const rrText = payload?.rrText || "TIER UPGRADED";
-
-    root.dataset.type = "tier";
-    root.dataset.top = "0";
-
-    if (subEl) subEl.textContent = "Protocol: Tier sync • Updating…";
-    if (rightEl) rightEl.textContent = rrText;
-
-    if (oldLabelEl) oldLabelEl.textContent = fromText;
-    if (newLabelEl) newLabelEl.textContent = toText;
-
-    // In tier mode we only show new badge
-    if (newImg) newImg.src = "assets/ranks/" + tierKeyFromText(toText) + ".webp";
-
-    btn.style.display = "none";
-    setOpen(true);
-
-    const timeline = [
-      { phase: "impact", ms: 220 },
-      { phase: "reveal", ms: 650 },
-      { phase: "done", ms: 350 }
-    ];
-    runTimeline(timeline);
-
-    // Auto-close (short)
-    later(1400, () => closeOverlay());
-  };
-
-  // Continue button closes (rank mode)
-  btn.addEventListener("click", function(){
-    // If top rank, user still closes manually; just close.
-    closeOverlay();
-  });
-
-  // ESC closes
-  document.addEventListener("keydown", function(e){
-    if (e.key === "Escape") closeOverlay();
-  });
-})();
 
   // =============================
 // DIGITAL RIFT PROTOCOL - PUBLIC API (SAFE)
@@ -4136,6 +3970,9 @@ window.hideRankUp = function () {
 };
 
 window.showRankUp = function (payload) {
+  _ruClearTimers();
+  window.hideRankUp();
+
   const res = _ruFill(payload);
   if (!res) return;
 
@@ -4164,9 +4001,11 @@ window.showRankUp = function (payload) {
 };
 
 window.showTierUp = function (payload) {
+  _ruClearTimers();
+  window.hideRankUp();
+
   const res = _ruFill(payload);
   if (!res) return;
-
   const { root } = res;
 
   root.dataset.type = "tier";
