@@ -3917,6 +3917,8 @@ if (t && t.getAttribute && t.getAttribute("data-edit-id")) {
   };
 
   window.showRankUp = function(payload){
+    _ruClearTimers();
+    window.hideRankUp();
     // Full rift (rank changed)
     clearTimers();
 
@@ -3957,6 +3959,8 @@ if (t && t.getAttribute && t.getAttribute("data-edit-id")) {
   };
 
   window.showTierUp = function(payload){
+    _ruClearTimers();
+    window.hideRankUp();
     // Short mode (tier/division changed only) - no rift
     clearTimers();
 
@@ -4053,6 +4057,8 @@ function _ruFill(payload) {
 
   if (oldImg) oldImg.src = "assets/ranks/" + _ruTierKeyFromText(fromText) + ".webp";
   if (newImg) newImg.src = "assets/ranks/" + _ruTierKeyFromText(toText) + ".webp";
+  if (oldImg) oldImg.onerror = function(){ oldImg.removeAttribute("src"); };
+  if (newImg) newImg.onerror = function(){ newImg.removeAttribute("src"); };
 
   if (btn) btn.style.display = "none";
 
@@ -4065,12 +4071,25 @@ function _ruRunTimeline(root, steps) {
     if (i >= steps.length) return;
     const s = steps[i++];
     _ruSetPhase(root, s.phase);
-    if (s.ms != null) setTimeout(next, s.ms);
+    if (s.ms != null) _ruLater(next, s.ms);
   }
   next();
 }
 
+  var _ruTimers = [];
+
+function _ruLater(fn, ms) {
+  var id = setTimeout(fn, ms);
+  _ruTimers.push(id);
+  return id;
+}
+
+function _ruClearTimers() {
+  while (_ruTimers.length) clearTimeout(_ruTimers.pop());
+}
+  
 window.hideRankUp = function () {
+  _ruClearTimers();
   const root = _ruGetRoot();
   if (!root) return;
   _ruSetOpen(root, false);
