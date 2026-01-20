@@ -3874,9 +3874,9 @@ if (t && t.getAttribute && t.getAttribute("data-edit-id")) {
   }
 
   function setOpen(isOpen){
-    root.classList.toggle("is-open", isOpen);
-    root.setAttribute("aria-hidden", isOpen ? "false" : "true");
-  }
+  root.classList.toggle("is-open", isOpen);
+  root.setAttribute("aria-hidden", isOpen ? "false" : "true");
+}
 
   function tierKeyFromText(t){
     // Expect "SENTINEL II" or "NEXUS"
@@ -3903,13 +3903,13 @@ if (t && t.getAttribute && t.getAttribute("data-edit-id")) {
   }
 
   function closeOverlay(){
-    clearTimers();
-    setOpen(false);
-    setPhase("idle");
-    root.dataset.type = "rank";
-    root.dataset.top = "0";
-    btn.style.display = "none";
-  }
+  clearTimers();
+  setOpen(false);
+  setPhase("idle");
+  root.dataset.type = "rank";
+  root.dataset.top = "0";
+  btn.style.display = "none";
+}
 
   // Public API
   window.hideRankUp = function(){
@@ -3917,9 +3917,7 @@ if (t && t.getAttribute && t.getAttribute("data-edit-id")) {
   };
 
   window.showRankUp = function(payload){
-  closeOverlay(); // this already clears timers + resets phase
-  // Full rift (rank changed)
-    clearTimers();
+  closeOverlay(); // resets to idle + clears timers
 
     const fromText = payload?.fromText || "";
     const toText = payload?.toText || "";
@@ -3959,8 +3957,6 @@ if (t && t.getAttribute && t.getAttribute("data-edit-id")) {
 
   window.showTierUp = function(payload){
   closeOverlay();
-    // Short mode (tier/division changed only) - no rift
-    clearTimers();
 
     const fromText = payload?.fromText || "";
     const toText = payload?.toText || "";
