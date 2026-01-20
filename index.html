@@ -4017,6 +4017,7 @@ function _ruGetRoot() {
 
 function _ruSetPhase(root, phase) {
   root.dataset.phase = phase;
+  console.log("RIFT PHASE:", phase);
 }
 
 function _ruSetOpen(root, isOpen) {
@@ -4106,6 +4107,7 @@ window.showRankUp = function (payload) {
   root.dataset.top = _ruIsTopRankText(toText) ? "1" : "0";
 
   _ruSetOpen(root, true);
+  _ruSetPhase(root, "open"); // force first phase immediately
 
   const timeline = [
     { phase: "open", ms: 1000 },
@@ -4133,6 +4135,7 @@ window.showTierUp = function (payload) {
   root.dataset.top = "0";
 
   _ruSetOpen(root, true);
+  _ruSetPhase(root, "impact"); // force first phase immediately (tier mode)
 
   const timeline = [
     { phase: "impact", ms: 220 },
