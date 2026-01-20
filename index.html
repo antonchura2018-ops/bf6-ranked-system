@@ -1842,16 +1842,15 @@ margin: 32px auto 20px;
 }
 .rankup[data-phase="impact"] .rankup__burst{
   animation: ruBurst .6s ease forwards;
-  rankup[data-phase="impact"] .rankup__flash{
+  .rankup[data-phase="impact"] .rankup__flash{
   animation: ruFlash .35s ease forwards;
 }
-
 @keyframes ruFlash{
   0%{ opacity:0; }
   25%{ opacity:1; }
   100%{ opacity:0; }
-
 }
+  
 @keyframes ruImpactShake{
   0%{ transform: translateY(0) scale(1); }
   20%{ transform: translateY(-2px) translateX(2px) scale(1.002); }
@@ -3294,14 +3293,7 @@ if (hint) hint.textContent = (mode === "all") ? ("Showing all matches (" +select
   }
 }
   
-function clampInt(value, min, max, fallback) {
-  var n = Number(value);
-  if (!isFinite(n)) n = (fallback !== undefined) ? fallback : min;
-  n = Math.floor(n);
-  if (n < min) n = min;
-  if (n > max) n = max;
-  return n;
-}
+
   function clampInt(value, min, max, fallback) {
   var n = Number(value);
   if (!isFinite(n)) n = (fallback !== undefined) ? fallback : min;
