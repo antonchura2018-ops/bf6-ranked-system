@@ -1540,6 +1540,375 @@ margin: 32px auto 20px;
   transform: scale(0.95);
   pointer-events:none;
 }
+  /* ===== Digital Rift Protocol (Desktop) ===== */
+:root{
+  --ru-bg:#070A12;
+  --ru-ink:#EAF2FF;
+  --ru-muted:#98A2B3;
+
+  --ru-c1:#23f3ff;   /* cyan */
+  --ru-c2:#a855ff;   /* purple */
+  --ru-c3:#ff3df2;   /* magenta */
+
+  --ru-border: rgba(234,242,255,.12);
+  --ru-glow: 0 0 18px rgba(35,243,255,.55), 0 0 42px rgba(168,85,255,.25);
+}
+
+/* Overlay container:
+   Expect integration that toggles:
+   - .rankup.is-open (opacity/pointer-events)
+   - #rankup[data-phase="open|collapse|impact|reveal|done"] */
+.rankup{
+  position:fixed; inset:0; z-index:9999;
+  display:grid; place-items:center;
+  opacity:0; pointer-events:none;
+  transition: opacity .25s ease;
+}
+.rankup.is-open{ opacity:1; pointer-events:auto; }
+
+/* Veil + grain */
+.rankup__veil{
+  position:absolute; inset:0;
+  background: radial-gradient(900px 500px at 50% 35%, rgba(0,0,0,.25), rgba(0,0,0,.78));
+  opacity:0;
+}
+.rankup.is-open .rankup__veil{ animation: ruVeilIn .35s ease forwards; }
+@keyframes ruVeilIn{ to{ opacity:1; } }
+
+.rankup__grain{
+  position:absolute; inset:-20%;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='.35'/%3E%3C/svg%3E");
+  mix-blend-mode:overlay;
+  opacity:0;
+  pointer-events:none;
+}
+.rankup.is-open .rankup__grain{ animation: ruGrainIn .35s ease .05s forwards; }
+@keyframes ruGrainIn{ to{ opacity:.18; } }
+
+/* Stage */
+.rankup__stage{
+  position:relative;
+  width:min(900px, 92vw);
+  height:min(520px, 76vh);
+  border-radius:28px;
+  overflow:hidden;
+  background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+  border:1px solid var(--ru-border);
+  box-shadow: 0 40px 120px rgba(0,0,0,.55);
+  transform: translateY(14px) scale(.98);
+  opacity:0;
+  will-change: transform, opacity;
+}
+.rankup.is-open .rankup__stage{ animation: ruStageIn .55s cubic-bezier(.2,.9,.2,1) .05s forwards; }
+@keyframes ruStageIn{
+  to{ opacity:1; transform: translateY(0) scale(1); }
+}
+
+/* Background scanlines */
+.rankup__scan{
+  position:absolute; inset:0;
+  background:
+    linear-gradient(90deg, rgba(35,243,255,.08), transparent 40%),
+    repeating-linear-gradient(180deg, rgba(234,242,255,.08) 0, rgba(234,242,255,.08) 1px, transparent 1px, transparent 7px);
+  opacity:.35;
+  mix-blend-mode:screen;
+  animation: ruScanMove 3.2s linear infinite;
+  pointer-events:none;
+}
+@keyframes ruScanMove{ to{ background-position: 220px 0, 0 140px; } }
+
+/* HUD */
+.rankup__hud{
+  position:absolute; left:24px; right:24px; top:20px;
+  display:flex; align-items:flex-start; justify-content:space-between;
+  pointer-events:none;
+  opacity:.92;
+}
+.rankup__kicker{
+  font-size:14px;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  color:rgba(234,242,255,.85);
+}
+.rankup__sub{
+  margin-top:8px;
+  font-size:12px;
+  color:rgba(152,162,179,.9);
+  letter-spacing:.06em;
+}
+.rankup__hudRight{
+  text-align:right;
+  font-size:12px;
+  color:rgba(234,242,255,.72);
+  letter-spacing:.1em;
+  text-transform:uppercase;
+}
+
+/* Rift */
+.rankup__riftWrap{
+  position:absolute; inset:0;
+  display:grid; place-items:center;
+  pointer-events:none;
+}
+.rankup__rift{
+  position:relative;
+  width:min(420px, 66vw);
+  height:min(520px, 76vh);
+  opacity:0;
+  transform: translateY(10px) scaleX(.65) scaleY(.92) skewX(-8deg);
+  will-change: transform, opacity;
+  filter: drop-shadow(0 0 18px rgba(35,243,255,.45)) drop-shadow(0 0 40px rgba(168,85,255,.25));
+}
+.rankup__rift::before{
+  content:"";
+  position:absolute; inset:0;
+  background:
+    radial-gradient(160px 240px at 50% 50%, rgba(35,243,255,.25), transparent 60%),
+    radial-gradient(240px 280px at 50% 50%, rgba(168,85,255,.22), transparent 65%),
+    linear-gradient(90deg, transparent, rgba(255,255,255,.10), transparent);
+  border-radius:999px;
+  clip-path: polygon(46% 0, 54% 0, 58% 8%, 62% 16%, 56% 28%, 66% 40%, 54% 54%, 62% 66%, 52% 80%, 58% 92%, 54% 100%, 46% 100%, 42% 92%, 48% 80%, 38% 66%, 46% 54%, 34% 40%, 44% 28%, 38% 16%, 42% 8%);
+  transform: skewX(-6deg) scaleY(.95);
+  opacity:.95;
+}
+.rankup__rift::after{
+  content:"";
+  position:absolute; inset:-16%;
+  background: conic-gradient(from 90deg,
+    rgba(35,243,255,.0),
+    rgba(35,243,255,.55),
+    rgba(168,85,255,.0),
+    rgba(255,61,242,.35),
+    rgba(35,243,255,.0)
+  );
+  border-radius:999px;
+  filter: blur(14px);
+  opacity:.65;
+  animation: ruRiftSpin 2.8s linear infinite;
+}
+@keyframes ruRiftSpin{ to{ transform: rotate(360deg); } }
+
+.rankup__riftEdge{
+  position:absolute; inset:-8% -18%;
+  background:
+    repeating-linear-gradient(90deg, rgba(35,243,255,.0) 0, rgba(35,243,255,.0) 18px, rgba(35,243,255,.22) 19px, rgba(35,243,255,.0) 24px),
+    repeating-linear-gradient(180deg, rgba(255,61,242,.0) 0, rgba(255,61,242,.0) 10px, rgba(255,61,242,.18) 11px, rgba(255,61,242,.0) 18px);
+  mix-blend-mode:screen;
+  opacity:0;
+  filter: blur(.4px);
+  will-change: opacity, transform;
+}
+
+/* Emblems */
+.rankup__emblems{
+  position:absolute; inset:0;
+  display:grid; place-items:center;
+  pointer-events:none;
+}
+.rankup__emblem{
+  width:220px; height:220px;
+  border-radius:26px;
+  display:grid; place-items:center;
+  position:absolute;
+  background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+  border:1px solid rgba(234,242,255,.14);
+  backdrop-filter: blur(6px);
+  will-change: transform, opacity, filter;
+}
+.rankup__badge{
+  width:150px; height:150px;
+  border-radius:18px;
+  background:
+    radial-gradient(70px 70px at 40% 35%, rgba(35,243,255,.25), transparent 60%),
+    radial-gradient(80px 80px at 65% 70%, rgba(168,85,255,.18), transparent 60%),
+    linear-gradient(135deg, rgba(35,243,255,.18), rgba(255,61,242,.10));
+  border:1px solid rgba(35,243,255,.22);
+  box-shadow: var(--ru-glow);
+  display:grid; place-items:center;
+  position:relative;
+  overflow:hidden;
+}
+.rankup__badge::after{
+  content:"";
+  position:absolute; inset:-60%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.35), transparent);
+  transform: rotate(22deg) translateX(-45%);
+  opacity:.15;
+  animation: ruSheen 2.8s ease-in-out infinite;
+}
+@keyframes ruSheen{
+  0%,55%{ transform: rotate(22deg) translateX(-45%); opacity:.15;}
+  75%{ opacity:.55; }
+  100%{ transform: rotate(22deg) translateX(45%); opacity:.12;}
+}
+.rankup__badge--new{
+  border-color: rgba(168,85,255,.32);
+  box-shadow: 0 0 18px rgba(168,85,255,.35), 0 0 42px rgba(35,243,255,.20);
+}
+.rankup__label{
+  font-weight:800;
+  letter-spacing:.14em;
+  font-size:18px;
+  text-transform:uppercase;
+  text-shadow: 0 0 16px rgba(35,243,255,.35);
+}
+
+/* New emblem starts hidden (revealed later) */
+.rankup__emblem--new{
+  opacity:0;
+  transform: translateY(22px) scale(.78);
+  filter: blur(.6px) drop-shadow(0 0 26px rgba(168,85,255,.25));
+}
+
+/* Burst */
+.rankup__burst{
+  position:absolute; inset:-30%;
+  background:
+    radial-gradient(closest-side at 50% 50%, rgba(255,255,255,.22), transparent 60%),
+    radial-gradient(closest-side at 50% 50%, rgba(35,243,255,.18), transparent 70%),
+    radial-gradient(closest-side at 50% 50%, rgba(168,85,255,.16), transparent 75%);
+  opacity:0;
+  transform: scale(.75);
+  mix-blend-mode:screen;
+  pointer-events:none;
+  will-change: transform, opacity;
+}
+
+/* CTA */
+.rankup__cta{
+  position:absolute; left:0; right:0; bottom:22px;
+  display:flex; justify-content:center;
+  pointer-events:auto;
+  opacity:0;
+  transform: translateY(10px);
+  will-change: transform, opacity;
+}
+.rankup__btn{
+  appearance:none;
+  border:1px solid rgba(35,243,255,.26);
+  background: linear-gradient(180deg, rgba(35,243,255,.16), rgba(168,85,255,.12));
+  color:var(--ru-ink);
+  padding:12px 18px;
+  border-radius:16px;
+  cursor:pointer;
+  font-weight:700;
+  box-shadow: 0 10px 30px rgba(0,0,0,.35);
+}
+.rankup__btn:hover{ border-color: rgba(35,243,255,.35); }
+
+/* =========================
+   PHASES via [data-phase="..."]
+   ========================= */
+
+/* OPEN: rift appears */
+.rankup[data-phase="open"] .rankup__rift{
+  animation: ruRiftOpen 1.0s cubic-bezier(.2,.9,.2,1) forwards;
+}
+.rankup[data-phase="open"] .rankup__riftEdge{
+  animation: ruEdgeIn .7s ease .25s forwards;
+}
+@keyframes ruRiftOpen{
+  0%{ opacity:0; transform: translateY(10px) scaleX(.65) scaleY(.92) skewX(-8deg); }
+  100%{ opacity:1; transform: translateY(0) scaleX(1) scaleY(1) skewX(-6deg); }
+}
+@keyframes ruEdgeIn{ to{ opacity:.55; } }
+
+/* COLLAPSE: old emblem collapses into rift */
+.rankup[data-phase="collapse"] .rankup__emblem--old{
+  animation: ruOldCollapse .7s cubic-bezier(.2,.9,.2,1) forwards;
+}
+@keyframes ruOldCollapse{
+  0%{ opacity:1; transform: translateY(0) scale(1); filter: drop-shadow(0 0 16px rgba(35,243,255,.25)); }
+  60%{ transform: translateY(6px) scale(.88) skewX(-2deg); }
+  100%{ opacity:0; transform: translateY(28px) scale(.55) skewX(-8deg); filter: blur(1.2px); }
+}
+
+/* IMPACT: flash + shake */
+.rankup[data-phase="impact"] .rankup__stage{
+  animation: ruImpactShake .28s ease forwards;
+}
+.rankup[data-phase="impact"] .rankup__burst{
+  animation: ruBurst .6s ease forwards;
+}
+@keyframes ruImpactShake{
+  0%{ transform: translateY(0) scale(1); }
+  20%{ transform: translateY(-2px) translateX(2px) scale(1.002); }
+  45%{ transform: translateY(2px) translateX(-2px) scale(1.002); }
+  70%{ transform: translateY(-1px) translateX(1px) scale(1.001); }
+  100%{ transform: translateY(0) translateX(0) scale(1); }
+}
+@keyframes ruBurst{
+  0%{ opacity:0; transform: scale(.75); }
+  35%{ opacity:1; transform: scale(1); }
+  100%{ opacity:0; transform: scale(1.12); }
+}
+
+/* REVEAL: new emblem emerges + rift edge flicker */
+.rankup[data-phase="reveal"] .rankup__emblem--new{
+  animation: ruNewReveal 1.05s cubic-bezier(.12,.95,.18,1) forwards;
+}
+.rankup[data-phase="reveal"] .rankup__riftEdge{
+  animation: ruEdgeFlicker 1s ease .15s forwards;
+}
+@keyframes ruNewReveal{
+  0%{ opacity:0; transform: translateY(22px) scale(.78); }
+  55%{ opacity:1; transform: translateY(-6px) scale(1.02); }
+  100%{ opacity:1; transform: translateY(0) scale(1); filter: blur(0) drop-shadow(0 0 22px rgba(35,243,255,.26)); }
+}
+@keyframes ruEdgeFlicker{
+  0%{ opacity:.55; }
+  30%{ opacity:.15; transform: translateX(2px); }
+  60%{ opacity:.45; transform: translateX(-2px); }
+  100%{ opacity:.28; transform: translateX(0); }
+}
+
+/* DONE: CTA in */
+.rankup[data-phase="done"] .rankup__cta{
+  animation: ruCtaIn .55s cubic-bezier(.2,.9,.2,1) forwards;
+}
+@keyframes ruCtaIn{ to{ opacity:1; transform: translateY(0); } }
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce){
+  .rankup__scan,.rankup__rift::after,.rankup__badge::after{ animation:none!important; }
+  .rankup[data-phase="open"] .rankup__rift,
+  .rankup[data-phase="open"] .rankup__riftEdge,
+  .rankup[data-phase="collapse"] .rankup__emblem--old,
+  .rankup[data-phase="impact"] .rankup__stage,
+  .rankup[data-phase="impact"] .rankup__burst,
+  .rankup[data-phase="reveal"] .rankup__emblem--new,
+  .rankup[data-phase="reveal"] .rankup__riftEdge,
+  .rankup[data-phase="done"] .rankup__cta{
+    animation:none!important;
+  }
+  .rankup{ transition:none!important; }
+  .rankup.is-open{ opacity:1; }
+  .rankup__stage{ opacity:1; transform:none; }
+  .rankup__rift{ opacity:1; transform:none; }
+  .rankup__emblem--old{ opacity:0; }
+  .rankup__emblem--new{ opacity:1; transform:none; filter:none; }
+  .rankup__cta{ opacity:1; transform:none; }
+}
+  .rankup__img{
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display:block;
+  pointer-events:none;
+  filter: drop-shadow(0 0 18px rgba(35,243,255,.25));
+}
+.rankup__badge{
+  display:grid;
+  place-items:center;
+}
+.rankup__badge .rankup__img{
+  width: 120px;
+  height: 120px;
+}
+  /* Tier mode: no rift, no collapse */
+.rankup[data-type="tier"] .rankup__riftWrap{ display:none; }
+.rankup[data-type="tier"] .rankup__emblem--old{ display:none; }
+.rankup[data-type="tier"] .rankup__hudRight{ opacity:.85; }
   
 </style>
   <!-- ===== END OF CSS ===== -->
@@ -2584,13 +2953,23 @@ if (badgeImg && rank.tierName) {
 
     if (tierChanged) {
       var promotedTier = currentState.tierIndex > lastRankState.tierIndex;
-      showCinematic(lastRankState.label, currentState.label, promotedTier, "tier");
+      
+      window.showRankUp({
+      fromText: lastRankState.label,
+      toText: currentState.label,
+      rrText: "NEW RANK UNLOCKED"
+});
       lastRankState = currentState;
     } else if (divChanged) {
       var a = (currentState.divIndex === null || currentState.divIndex === undefined) ? 0 : currentState.divIndex;
       var b = (lastRankState.divIndex === null || lastRankState.divIndex === undefined) ? 0 : lastRankState.divIndex;
       var promotedDiv = a > b;
-      showCinematic(lastRankState.label, currentState.label, promotedDiv, "division");
+      
+      window.showTierUp({
+      fromText: lastRankState.label,
+      toText: currentState.label,
+      rrText: "TIER UPGRADED"
+});
       lastRankState = currentState;
     }
   }
@@ -3450,12 +3829,215 @@ if (t && t.getAttribute && t.getAttribute("data-edit-id")) {
 });
   
   preloadRankBadges();
+  // =============================
+// DIGITAL RIFT PROTOCOL - API + STATE MACHINE
+// =============================
+(function(){
+  const root = document.getElementById("rankup");
+  if (!root) return;
+
+  const subEl = document.getElementById("rankupSub");
+  const rightEl = document.getElementById("rankupRight");
+  const oldLabelEl = document.getElementById("rankupOldLabel");
+  const newLabelEl = document.getElementById("rankupNewLabel");
+  const oldImg = document.getElementById("rankupOldImg");
+  const newImg = document.getElementById("rankupNewImg");
+  const btn = document.getElementById("rankupContinue");
+
+  let timerIds = [];
+
+  function clearTimers(){
+    while (timerIds.length) clearTimeout(timerIds.pop());
+  }
+
+  function setPhase(phase){
+    root.dataset.phase = phase;
+  }
+
+  function setOpen(isOpen){
+    root.classList.toggle("is-open", isOpen);
+    root.setAttribute("aria-hidden", isOpen ? "false" : "true");
+  }
+
+  function tierKeyFromText(t){
+    // Expect "SENTINEL II" or "NEXUS"
+    const tier = String(t || "").trim().split(" ")[0].toLowerCase();
+    return tier;
+  }
+
+  function isTopRank(toText){
+    // Your top rank currently is NEXUS (10th)
+    const t = String(toText || "").toUpperCase();
+    return t.includes("NEXUS") || t.includes("ABSOLUTE") || t.includes("ELITE");
+  }
+
+  function runTimeline(steps){
+    // steps: [{phase, ms}, ...]
+    let i = 0;
+    function next(){
+      if (i >= steps.length) return;
+      const s = steps[i++];
+      setPhase(s.phase);
+      if (s.ms != null) timerIds.push(setTimeout(next, s.ms));
+    }
+    next();
+  }
+
+  function closeOverlay(){
+    clearTimers();
+    setOpen(false);
+    setPhase("idle");
+    root.dataset.type = "rank";
+    root.dataset.top = "0";
+    btn.style.display = "none";
+  }
+
+  // Public API
+  window.hideRankUp = function(){
+    closeOverlay();
+  };
+
+  window.showRankUp = function(payload){
+    // Full rift (rank changed)
+    clearTimers();
+
+    const fromText = payload?.fromText || "";
+    const toText = payload?.toText || "";
+    const rrText = payload?.rrText || "NEW RANK UNLOCKED";
+
+    root.dataset.type = "rank";
+    root.dataset.top = isTopRank(toText) ? "1" : "0";
+
+    if (subEl) subEl.textContent = "Protocol: Digital Rift • Opening breach…";
+    if (rightEl) rightEl.textContent = rrText;
+
+    if (oldLabelEl) oldLabelEl.textContent = fromText;
+    if (newLabelEl) newLabelEl.textContent = toText;
+
+    if (oldImg) oldImg.src = "assets/ranks/" + tierKeyFromText(fromText) + ".webp";
+    if (newImg) newImg.src = "assets/ranks/" + tierKeyFromText(toText) + ".webp";
+
+    // CTA: show only at DONE
+    btn.style.display = "none";
+
+    setOpen(true);
+
+    // Full rift timeline (tuneable)
+    const timeline = [
+      { phase: "open", ms: 1000 },
+      { phase: "collapse", ms: 700 },
+      { phase: "impact", ms: 280 },
+      { phase: "reveal", ms: 1050 },
+      { phase: "done", ms: null }
+    ];
+
+    runTimeline(timeline);
+
+    // Show CTA at done (slightly delayed to ensure CSS is in done)
+    timerIds.push(setTimeout(() => { btn.style.display = "inline-block"; }, 1000+700+280+1050-150));
+  };
+
+  window.showTierUp = function(payload){
+    // Short mode (tier/division changed only) - no rift
+    clearTimers();
+
+    const fromText = payload?.fromText || "";
+    const toText = payload?.toText || "";
+    const rrText = payload?.rrText || "TIER UPGRADED";
+
+    root.dataset.type = "tier";
+    root.dataset.top = "0";
+
+    if (subEl) subEl.textContent = "Protocol: Tier sync • Updating…";
+    if (rightEl) rightEl.textContent = rrText;
+
+    if (oldLabelEl) oldLabelEl.textContent = fromText;
+    if (newLabelEl) newLabelEl.textContent = toText;
+
+    // In tier mode we only show new badge
+    if (newImg) newImg.src = "assets/ranks/" + tierKeyFromText(toText) + ".webp";
+
+    btn.style.display = "none";
+    setOpen(true);
+
+    const timeline = [
+      { phase: "impact", ms: 220 },
+      { phase: "reveal", ms: 650 },
+      { phase: "done", ms: 350 }
+    ];
+    runTimeline(timeline);
+
+    // Auto-close (short)
+    timerIds.push(setTimeout(() => closeOverlay(), 1400));
+  };
+
+  // Continue button closes (rank mode)
+  btn.addEventListener("click", function(){
+    // If top rank, user still closes manually; just close.
+    closeOverlay();
+  });
+
+  // ESC closes
+  document.addEventListener("keydown", function(e){
+    if (e.key === "Escape") closeOverlay();
+  });
+})();
   
 /* ===== INIT ===== */
 renderHistoryFromStorage();
 </script>
   <!-- ===== END OF JAVASCRIPT ===== -->
+<!-- ===== RANKUP OVERLAY (Digital Rift Protocol / Desktop) ===== -->
+<div class="rankup" id="rankup" aria-hidden="true" data-phase="idle" data-type="rank" data-top="0">
+  <div class="rankup__veil"></div>
+  <div class="rankup__grain" aria-hidden="true"></div>
 
+  <div class="rankup__stage" role="dialog" aria-label="Rank up cinematic">
+    <div class="rankup__scan" aria-hidden="true"></div>
+    <div class="rankup__burst" aria-hidden="true"></div>
+
+    <!-- Top HUD -->
+    <header class="rankup__hud">
+      <div class="rankup__hudLeft">
+        <div class="rankup__kicker">RANKED UPDATE</div>
+        <div class="rankup__sub" id="rankupSub">Protocol: Digital Rift • Opening breach…</div>
+      </div>
+      <div class="rankup__hudRight" id="rankupRight">NEW RANK UNLOCKED</div>
+    </header>
+
+    <!-- Rift -->
+    <div class="rankup__riftWrap" aria-hidden="true">
+      <div class="rankup__rift">
+        <div class="rankup__riftEdge"></div>
+      </div>
+    </div>
+
+    <!-- Emblems -->
+    <div class="rankup__emblems">
+      <!-- OLD -->
+      <div class="rankup__emblem rankup__emblem--old" id="rankupOld">
+        <div class="rankup__badge">
+          <img class="rankup__img" id="rankupOldImg" alt="Old rank badge" />
+          <span class="rankup__label" id="rankupOldLabel">RANK 6 / T3</span>
+        </div>
+      </div>
+
+      <!-- NEW -->
+      <div class="rankup__emblem rankup__emblem--new" id="rankupNew">
+        <div class="rankup__badge rankup__badge--new">
+          <img class="rankup__img" id="rankupNewImg" alt="New rank badge" />
+          <span class="rankup__label" id="rankupNewLabel">RANK 7 / T1</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <footer class="rankup__cta">
+      <button class="rankup__btn" id="rankupContinue" type="button">Continue</button>
+    </footer>
+  </div>
+</div>
+  
 <!-- ===== END OF UI ===== -->
 </body>
 </html>
