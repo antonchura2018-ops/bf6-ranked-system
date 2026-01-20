@@ -1175,6 +1175,16 @@ margin: 32px auto 20px;
 .rankup[data-phase="done"] .rankup__cta{
   animation: ruCtaIn .55s cubic-bezier(.2,.9,.2,1) forwards;
 }
+  /* DONE: keep NEW emblem visible + keep OLD hidden */
+.rankup[data-phase="done"] .rankup__emblem--new{
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  filter: blur(0) drop-shadow(0 0 22px rgba(35,243,255,.26));
+}
+
+.rankup[data-phase="done"] .rankup__emblem--old{
+  opacity: 0;
+}
 @keyframes ruCtaIn{ to{ opacity:1; transform: translateY(0); } }
 
 /* Reduced motion */
