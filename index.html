@@ -1393,32 +1393,18 @@ margin: 32px auto 20px;
 }
 
 /* OPEN timeline (no layout) */
-#cinematic.is-open .cin-card{
-  animation: cinCardIn 520ms cubic-bezier(.2,.9,.2,1) forwards;
-}
-@keyframes cinCardIn{
-  0% { opacity:0; transform: translate3d(0, 18px, 0) scale(0.98); }
-  55%{ opacity:1; transform: translate3d(0, -2px, 0) scale(1.02); }
-  100%{ opacity:1; transform: translate3d(0, 0, 0) scale(1); }
-}
+
+
 
 #cinematic.is-open .cin-burst{
   animation: cinBurst 740ms ease forwards;
 }
-@keyframes cinBurst{
-  0%{ opacity:0; transform: scale(0.90); }
-  40%{ opacity:0.9; transform: scale(1.03); }
-  100%{ opacity:0.25; transform: scale(1.00); }
-}
+
 
 #cinematic.is-open .cin-rays{
   animation: cinRays 900ms ease forwards;
 }
-@keyframes cinRays{
-  0%{ opacity:0; transform: scale(0.96) rotate(0deg); }
-  45%{ opacity:0.65; transform: scale(1.02) rotate(12deg); }
-  100%{ opacity:0.15; transform: scale(1.00) rotate(18deg); }
-}
+
 
 #cinematic.is-open .cin-scan{
   opacity: 0.12;
@@ -1432,11 +1418,7 @@ margin: 32px auto 20px;
 #cinematic.is-open .cin-badgeImg{
   animation: cinBadgeIn 520ms cubic-bezier(.2,.9,.2,1) 90ms forwards;
 }
-@keyframes cinBadgeIn{
-  0%{ opacity:0; transform: translate3d(0, 10px, 0) scale(0.90); }
-  60%{ opacity:1; transform: translate3d(0, -2px, 0) scale(1.05); }
-  100%{ opacity:1; transform: translate3d(0, 0, 0) scale(1.00); }
-}
+
 
 /* MODE tweaks */
 #cinematic[data-mode="down"]{
