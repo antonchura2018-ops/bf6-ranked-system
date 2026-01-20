@@ -1909,13 +1909,18 @@ margin: 32px auto 20px;
 .rankup[data-type="tier"] .rankup__riftWrap{ display:none; }
 .rankup[data-type="tier"] .rankup__emblem--old{ display:none; }
 .rankup[data-type="tier"] .rankup__hudRight{ opacity:.85; }
+  /* Tier mode: make stage smaller + snappier */
+.rankup[data-type="tier"] .rankup__stage{
+  height: min(380px, 62vh);
+}
+.rankup[data-type="tier"] .rankup__cta{ display:none; }
 
-  /* Top rank: keep afterglow/edge visible in done phase */
+  /* Top rank: keep rift alive in DONE (afterglow stays) */
 .rankup[data-top="1"][data-phase="done"] .rankup__rift{
   opacity: 1;
 }
 .rankup[data-top="1"][data-phase="done"] .rankup__riftEdge{
-  opacity: .45;
+  opacity: .55;
 }
 .rankup[data-top="1"][data-phase="done"] .rankup__burst{
   opacity: .18;
@@ -3870,8 +3875,25 @@ if (t && t.getAttribute && t.getAttribute("data-edit-id")) {
   }
 
   function setPhase(phase){
-    root.dataset.phase = phase;
+  root.dataset.phase = phase;
+
+  // Optional readable HUD text per phase
+  if (!subEl) return;
+
+  if (root.dataset.type === "tier") {
+    if (phase === "impact") subEl.textContent = "Protocol: Tier sync • Calibrating…";
+    else if (phase === "reveal") subEl.textContent = "Protocol: Tier sync • Updating tier…";
+    else if (phase === "done") subEl.textContent = "Protocol: Tier sync • Complete.";
+    return;
   }
+
+  // rank mode
+  if (phase === "open") subEl.textContent = "Protocol: Digital Rift • Opening breach…";
+  else if (phase === "collapse") subEl.textContent = "Protocol: Digital Rift • Old rank collapsing…";
+  else if (phase === "impact") subEl.textContent = "Protocol: Digital Rift • Breach impact!";
+  else if (phase === "reveal") subEl.textContent = "Protocol: Digital Rift • New rank emerging…";
+  else if (phase === "done") subEl.textContent = "Protocol: Digital Rift • Confirmed.";
+}
 
   function setOpen(isOpen){
   root.classList.toggle("is-open", isOpen);
