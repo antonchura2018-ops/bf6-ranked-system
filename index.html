@@ -3917,9 +3917,8 @@ if (t && t.getAttribute && t.getAttribute("data-edit-id")) {
   };
 
   window.showRankUp = function(payload){
-    _ruClearTimers();
-    window.hideRankUp();
-    // Full rift (rank changed)
+  closeOverlay(); // this already clears timers + resets phase
+  // Full rift (rank changed)
     clearTimers();
 
     const fromText = payload?.fromText || "";
@@ -3955,12 +3954,11 @@ if (t && t.getAttribute && t.getAttribute("data-edit-id")) {
     runTimeline(timeline);
 
     // Show CTA at done (slightly delayed to ensure CSS is in done)
-    timerIds.push(setTimeout(() => { btn.style.display = "inline-block"; }, 1000+700+280+1050-150));
+    later(1000+700+280+1050-150, () => { btn.style.display = "inline-block"; });
   };
 
   window.showTierUp = function(payload){
-    _ruClearTimers();
-    window.hideRankUp();
+  closeOverlay();
     // Short mode (tier/division changed only) - no rift
     clearTimers();
 
@@ -3991,7 +3989,7 @@ if (t && t.getAttribute && t.getAttribute("data-edit-id")) {
     runTimeline(timeline);
 
     // Auto-close (short)
-    timerIds.push(setTimeout(() => closeOverlay(), 1400));
+    later(1400, () => closeOverlay());
   };
 
   // Continue button closes (rank mode)
