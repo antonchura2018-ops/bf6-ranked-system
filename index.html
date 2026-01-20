@@ -4017,7 +4017,7 @@ function _ruGetRoot() {
 
 function _ruSetPhase(root, phase) {
   root.dataset.phase = phase;
-  console.log("RIFT PHASE:", phase);
+  
 }
 
 function _ruSetOpen(root, isOpen) {
@@ -4107,7 +4107,7 @@ window.showRankUp = function (payload) {
   root.dataset.top = _ruIsTopRankText(toText) ? "1" : "0";
 
   _ruSetOpen(root, true);
-  _ruSetPhase(root, "open"); // force first phase immediately
+  
 
   const timeline = [
     { phase: "open", ms: 1000 },
@@ -4121,7 +4121,7 @@ window.showRankUp = function (payload) {
 
   // show CTA near done
   if (btn) {
-    setTimeout(() => { btn.style.display = "inline-block"; }, 1000 + 700 + 280 + 1050 - 200);
+    _ruLater(() => { if (btn) btn.style.display = "inline-block"; }, 1000 + 700 + 280 + 1050 - 200);
   }
 };
 
@@ -4135,7 +4135,7 @@ window.showTierUp = function (payload) {
   root.dataset.top = "0";
 
   _ruSetOpen(root, true);
-  _ruSetPhase(root, "impact"); // force first phase immediately (tier mode)
+  
 
   const timeline = [
     { phase: "impact", ms: 220 },
@@ -4146,7 +4146,7 @@ window.showTierUp = function (payload) {
   _ruRunTimeline(root, timeline);
 
   // auto close tier-up
-  setTimeout(() => window.hideRankUp(), 1400);
+  _ruLater(() => window.hideRankUp(), 1400);
 };
 
 // Close UX
