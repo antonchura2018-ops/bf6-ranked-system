@@ -1909,6 +1909,18 @@ margin: 32px auto 20px;
 .rankup[data-type="tier"] .rankup__riftWrap{ display:none; }
 .rankup[data-type="tier"] .rankup__emblem--old{ display:none; }
 .rankup[data-type="tier"] .rankup__hudRight{ opacity:.85; }
+
+  /* Top rank: keep afterglow/edge visible in done phase */
+.rankup[data-top="1"][data-phase="done"] .rankup__rift{
+  opacity: 1;
+}
+.rankup[data-top="1"][data-phase="done"] .rankup__riftEdge{
+  opacity: .45;
+}
+.rankup[data-top="1"][data-phase="done"] .rankup__burst{
+  opacity: .18;
+  transform: scale(1.05);
+}
   
 </style>
   <!-- ===== END OF CSS ===== -->
