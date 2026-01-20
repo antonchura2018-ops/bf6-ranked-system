@@ -2943,43 +2943,43 @@ if (badgeImg && rank.tierName) {
   }
 
   // Cinematic trigger (tier + division)
-  var currentState = { tierIndex: rank.tierIndex, divIndex: rank.divIndex, label: rank.label };
+var currentState = { tierIndex: rank.tierIndex, divIndex: rank.divIndex, label: rank.label };
 
-  if (lastRankState === null) {
-    lastRankState = currentState;
-  } else {
-    var tierChanged = currentState.tierIndex !== lastRankState.tierIndex;
-    var divChanged = currentState.divIndex !== lastRankState.divIndex;
+if (lastRankState === null) {
+  lastRankState = currentState;
+} else {
+  var tierChanged = currentState.tierIndex !== lastRankState.tierIndex;
+  var divChanged = currentState.divIndex !== lastRankState.divIndex;
 
-    if (tierChanged) {
-      var promotedTier = currentState.tierIndex > lastRankState.tierIndex;
+  if (tierChanged) {
+    var promotedTier = currentState.tierIndex > lastRankState.tierIndex;
 
-      if (typeof window.showRankUp === "function") {
-  window.showRankUp({
-    fromText: lastRankState.label,
-    toText: currentState.label,
-    rrText: "NEW RANK UNLOCKED"
-  });
-}
-      
-      lastRankState = currentState;
-    } else if (divChanged) {
-      var a = (currentState.divIndex === null || currentState.divIndex === undefined) ? 0 : currentState.divIndex;
-      var b = (lastRankState.divIndex === null || lastRankState.divIndex === undefined) ? 0 : lastRankState.divIndex;
-      var promotedDiv = a > b;
-      
-      if (typeof window.showTierUp === "function") {
-  window.showTierUp({
-    fromText: lastRankState.label,
-    toText: currentState.label,
-    rrText: "TIER UPGRADED"
-  });
-}
-      
-      lastRankState = currentState;
+    if (typeof window.showRankUp === "function") {
+      window.showRankUp({
+        fromText: lastRankState.label,
+        toText: currentState.label,
+        rrText: promotedTier ? "NEW RANK UNLOCKED" : "RANK DOWN"
+      });
     }
+
+    lastRankState = currentState;
+  } else if (divChanged) {
+    var a = (currentState.divIndex === null || currentState.divIndex === undefined) ? 0 : currentState.divIndex;
+    var b = (lastRankState.divIndex === null || lastRankState.divIndex === undefined) ? 0 : lastRankState.divIndex;
+    var promotedDiv = a > b;
+
+    if (typeof window.showTierUp === "function") {
+      window.showTierUp({
+        fromText: lastRankState.label,
+        toText: currentState.label,
+        rrText: promotedDiv ? "TIER UPGRADED" : "TIER DOWNGRADED"
+      });
+    }
+
+    lastRankState = currentState;
   }
 }
+
 function getHistoryLimit() {
   // "20" or "all"
   var v = localStorage.getItem(HISTORY_LIMIT_KEY);
