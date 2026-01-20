@@ -1503,6 +1503,17 @@ margin: 32px auto 20px;
   position: relative;
   z-index: 3;
 }
+  /* Cinematic flash layer (cheap: opacity only) */
+#cinematic .cin-flash{
+  position:absolute;
+  inset:0;
+  background: radial-gradient(circle at 50% 45%,
+    color-mix(in srgb, var(--cin-accent, #22d3ee) 35%, transparent) 0%,
+    transparent 55%
+  );
+  opacity: 0;
+  pointer-events:none;
+}
   
 </style>
   <!-- ===== END OF CSS ===== -->
@@ -1773,10 +1784,11 @@ margin: 32px auto 20px;
   <div class="cinematic-bg"></div>
 
   <div class="cin-fx">
-    <div class="cin-rays"></div>
-    <div class="cin-burst"></div>
-    <div class="cin-scan"></div>
-  </div>
+  <div class="cin-rays"></div>
+  <div class="cin-burst"></div>
+  <div class="cin-flash"></div>
+  <div class="cin-scan"></div>
+</div>
 
   <div class="cin-wrap">
     <div class="cin-card" role="dialog" aria-modal="true" aria-label="Rank change">
