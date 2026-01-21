@@ -1256,6 +1256,10 @@ margin: 32px auto 20px;
     transform: translateY(0) scale(1);
     filter: blur(0) drop-shadow(0 0 22px rgba(35,243,255,.26));
   }
+  .rankup[data-phase="reveal"] .rankup__beams{
+  opacity: .55;
+  transform: scale(1.03) rotate(14deg);
+  }
 }
 @keyframes ruEdgeFlicker{
   0%{ opacity:.55; }
@@ -1292,6 +1296,8 @@ margin: 32px auto 20px;
   .rankup[data-phase="reveal"] .rankup__riftEdge,
   .rankup[data-phase="done"] .rankup__cta{
     animation:none!important;
+    .rankup__beams, .rankup__chroma, .rankup__shards{ display:none!important; }
+.rankup__stage{ filter:none!important; }
   }
   .rankup{ transition:none!important; }
   .rankup.is-open{ opacity:1; }
@@ -1317,6 +1323,7 @@ margin: 32px auto 20px;
   width: 120px;
   height: 120px;
 }
+  
   /* Tier mode: no rift, no collapse */
 .rankup[data-type="tier"] .rankup__riftWrap{ display:none; }
 .rankup[data-type="tier"] .rankup__emblem--old{ display:none; }
@@ -1337,6 +1344,14 @@ margin: 32px auto 20px;
 .rankup[data-top="1"][data-phase="done"] .rankup__burst{
   opacity: .18;
   transform: scale(1.05);
+}
+  .rankup[data-phase="done"] .rankup__badge--new{
+  animation: ruAfterglowBreath 2.2s ease-in-out infinite;
+}
+
+@keyframes ruAfterglowBreath{
+  0%,100%{ box-shadow: 0 0 18px rgba(168,85,255,.35), 0 0 42px rgba(35,243,255,.18); }
+  50%{ box-shadow: 0 0 26px rgba(168,85,255,.45), 0 0 70px rgba(35,243,255,.26); }
 }
   
 </style>
