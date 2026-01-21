@@ -2081,35 +2081,7 @@ function calcRPBreakdown(m) {
   };
 }
 
-/* ===== CINEMATIC (V3) ===== */
 
-function closeCinematic() {
-  var el = document.getElementById("cinematic");
-  if (!el) return;
-  el.classList.remove("is-open");
-  el.setAttribute("aria-hidden", "true");
-}
-
-function showCinematic(fromRank, toRank, isPromotion, changeType) {
-  // changeType: "division" | "tier"
-  var el = document.getElementById("cinematic");
-  var title = document.getElementById("cinTitle");
-  var sub = document.getElementById("cinSub");
-  var badge = document.getElementById("cinBadgeImg");
-  var rankText = document.getElementById("cinRankText");
-
-  var card = document.querySelector("#cinematic .cin-card");
-  var burst = document.querySelector("#cinematic .cin-burst");
-  var rays = document.querySelector("#cinematic .cin-rays");
-  var flash = document.querySelector("#cinematic .cin-flash");
-  var shock = document.querySelector("#cinematic .cin-shockwave");
-  var glowf = document.querySelector("#cinematic .cin-glowfield");
-  var ring = document.querySelector("#cinematic .cin-badgeRing");
-
-  if (!el || !title || !sub || !card) return;
-
-  var mode = isPromotion ? "up" : "down";
-  el.dataset.mode = mode;
 
   // Accent from tier color
   var toTier = getTierNameFromLabel(toRank);
