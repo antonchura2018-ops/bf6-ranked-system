@@ -1041,6 +1041,66 @@ margin: 32px auto 20px;
   pointer-events:none;
   will-change: opacity;
 }
+  /* =========================
+   EPIC FX LAYERS (lightweight)
+   ========================= */
+
+.rankup__beams,
+.rankup__chroma,
+.rankup__shards{
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  opacity:0;
+  will-change: opacity, transform;
+}
+
+/* BEAMS: depth rays */
+.rankup__beams{
+  background:
+    conic-gradient(from 180deg,
+      transparent 0deg,
+      rgba(35,243,255,.10) 20deg,
+      transparent 55deg,
+      rgba(168,85,255,.08) 110deg,
+      transparent 360deg
+    ),
+    radial-gradient(600px 340px at 50% 45%,
+      rgba(35,243,255,.10),
+      transparent 60%
+    );
+  mix-blend-mode: screen;
+  transform: scale(.98) rotate(0deg);
+}
+
+/* CHROMA: RGB split glitch (impact only) */
+.rankup__chroma{
+  background:
+    radial-gradient(closest-side at 50% 50%, rgba(255,0,255,.14), transparent 62%),
+    radial-gradient(closest-side at 50% 50%, rgba(0,255,255,.12), transparent 68%),
+    radial-gradient(closest-side at 50% 50%, rgba(255,255,255,.10), transparent 72%);
+  mix-blend-mode: screen;
+  transform: translate3d(0,0,0);
+}
+
+/* SHARDS: thin lines flying toward rift */
+.rankup__shards{
+  background:
+    repeating-linear-gradient(90deg,
+      rgba(35,243,255,0) 0,
+      rgba(35,243,255,0) 18px,
+      rgba(35,243,255,.18) 19px,
+      rgba(35,243,255,0) 28px
+    ),
+    repeating-linear-gradient(180deg,
+      rgba(255,61,242,0) 0,
+      rgba(255,61,242,0) 12px,
+      rgba(255,61,242,.12) 13px,
+      rgba(255,61,242,0) 22px
+    );
+  mix-blend-mode: screen;
+  transform: translate3d(0,0,0) scale(1.02);
+}
 
 
 /* CTA */
@@ -1072,6 +1132,13 @@ margin: 32px auto 20px;
 /* OPEN: rift appears */
 .rankup[data-phase="open"] .rankup__rift{
   animation: ruRiftOpen 1.0s cubic-bezier(.2,.9,.2,1) forwards;
+}
+  .rankup[data-phase="open"] .rankup__beams{
+  animation: ruBeamsIn 1.05s ease forwards;
+}
+@keyframes ruBeamsIn{
+  0%{ opacity:0; transform: scale(.98) rotate(0deg); }
+  100%{ opacity:.65; transform: scale(1.02) rotate(10deg); }
 }
 .rankup[data-phase="open"] .rankup__riftEdge{
   animation: ruEdgeIn .7s ease .25s forwards;
@@ -1105,6 +1172,15 @@ margin: 32px auto 20px;
     transform: translateY(86px) scale(.28) rotate(-18deg) skewX(-10deg);
     filter: blur(2px);
   }
+  .rankup[data-phase="collapse"] .rankup__shards{
+  animation: ruShardsPull .70s ease forwards;
+}
+@keyframes ruShardsPull{
+  0%{ opacity:0; transform: translate3d(0,0,0) scale(1.02); }
+  25%{ opacity:.65; }
+  100%{ opacity:0; transform: translate3d(0,60px,0) scale(.88); }
+  }
+  
 }
 
 /* IMPACT: flash + shake */
@@ -1138,6 +1214,23 @@ margin: 32px auto 20px;
   0%{ opacity:0; transform: scale(.75); }
   35%{ opacity:1; transform: scale(1); }
   100%{ opacity:0; transform: scale(1.12); }
+}
+  .rankup[data-phase="impact"] .rankup__chroma{
+  animation: ruChromaHit .22s ease forwards;
+}
+@keyframes ruChromaHit{
+  0%{ opacity:0; transform: translate3d(0,0,0); }
+  35%{ opacity:.75; transform: translate3d(8px,-2px,0); }
+  100%{ opacity:0; transform: translate3d(-6px,2px,0); }
+}
+
+/* Upgrade shake to include micro-zoom + brief brightness */
+@keyframes ruImpactShake{
+  0%{ transform: translateY(0) scale(1); filter: brightness(1); }
+  20%{ transform: translateY(-2px) translateX(2px) scale(1.012); filter: brightness(1.08); }
+  45%{ transform: translateY(2px) translateX(-2px) scale(1.010); filter: brightness(1.06); }
+  70%{ transform: translateY(-1px) translateX(1px) scale(1.006); filter: brightness(1.03); }
+  100%{ transform: translateY(0) translateX(0) scale(1); filter: brightness(1); }
 }
 
 /* REVEAL: new emblem emerges + rift edge flicker */
@@ -3322,6 +3415,9 @@ renderHistoryFromStorage();
     <div class="rankup__scan" aria-hidden="true"></div>
     <div class="rankup__burst" aria-hidden="true"></div>
     <div class="rankup__flash" aria-hidden="true"></div>
+    <div class="rankup__beams" aria-hidden="true"></div>
+    <div class="rankup__chroma" aria-hidden="true"></div>
+    <div class="rankup__shards" aria-hidden="true"></div>
 
     <!-- Top HUD -->
     <header class="rankup__hud">
