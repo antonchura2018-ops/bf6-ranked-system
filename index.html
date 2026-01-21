@@ -847,9 +847,10 @@ margin: 32px auto 20px;
   height:min(520px, 76vh);
   border-radius:28px;
   overflow:hidden;
-  background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
-  border:1px solid var(--ru-border);
-  box-shadow: 0 40px 120px rgba(0,0,0,.55);
+  background: radial-gradient(900px 520px at 50% 45%, rgba(35,243,255,.06), rgba(0,0,0,0) 60%),
+            linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));
+  border: 1px solid rgba(255,255,255,.06);
+  box-shadow: 0 60px 160px rgba(0,0,0,.72);
   transform: translateY(14px) scale(.98);
   opacity:0;
   will-change: transform, opacity;
@@ -864,9 +865,9 @@ margin: 32px auto 20px;
   position:absolute; inset:0;
   background:
     linear-gradient(90deg, rgba(35,243,255,.08), transparent 40%),
-    repeating-linear-gradient(180deg, rgba(234,242,255,.08) 0, rgba(234,242,255,.08) 1px, transparent 1px, transparent 7px);
-  opacity:.35;
-  mix-blend-mode:screen;
+    repeating-linear-gradient(180deg, rgba(234,242,255,.08) 0, rgba(234,242,255,.08) 1px, transparent 1px, transparent 11px);
+  opacity:.14;
+  mix-blend-mode:overlay;
   animation: ruScanMove 3.2s linear infinite;
   pointer-events:none;
 }
@@ -3354,6 +3355,7 @@ window.hideRankUp = function () {
 
 window.showRankUp = function (payload) {
   window.hideRankUp();
+  // Force a clean restart on next frame
 
   const res = _ruFill(payload);
   if (!res) return;
@@ -3363,7 +3365,10 @@ window.showRankUp = function (payload) {
   root.dataset.type = "rank";
   root.dataset.top = _ruIsTopRankText(toText) ? "1" : "0";
 
+  requestAnimationFrame(() => {
   _ruSetOpen(root, true);
+  _ruRunTimeline(root, timeline);
+});
   
 
   const timeline = [
@@ -3392,7 +3397,10 @@ window.showTierUp = function (payload) {
   root.dataset.type = "tier";
   root.dataset.top = "0";
 
+  requestAnimationFrame(() => {
   _ruSetOpen(root, true);
+  _ruRunTimeline(root, timeline);
+});
   
 
   const timeline = [
