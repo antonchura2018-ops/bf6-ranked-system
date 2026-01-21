@@ -2082,13 +2082,6 @@ function calcRPBreakdown(m) {
 }
 
 /* ===== CINEMATIC (V3) ===== */
-function getTierNameFromLabel(label) {
-  return String(label || "").trim().split(" ")[0].toUpperCase();
-}
-
-function getTierKeyFromLabel(label) {
-  return getTierNameFromLabel(label).toLowerCase();
-}
 
 function closeCinematic() {
   var el = document.getElementById("cinematic");
