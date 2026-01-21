@@ -1359,9 +1359,15 @@ margin: 32px auto 20px;
   0%,100%{ box-shadow: 0 0 18px rgba(168,85,255,.35), 0 0 42px rgba(35,243,255,.18); }
   50%{ box-shadow: 0 0 26px rgba(168,85,255,.45), 0 0 70px rgba(35,243,255,.26); }
 }
-  /* TEMP FIX: hide legacy cinematic overlay */
-#cinematic { display: none !important; }
-.cinematic { display: none !important; }
+  /* TEMP FIX: hide legacy cinematic leftovers (cin-*) */
+.cin-wrap, .cin-card, .cin-top, .cin-main,
+.cin-rankText, .cin-hint, .cin-key,
+.cin-fx, .cin-rays, .cin-burst, .cin-scan,
+.cin-badgeWrap, .cin-badgeImg, .cin-badgeRing,
+.cinematic-bg, .cinematic {
+  display: none !important;
+}
+
   
 </style>
   <!-- ===== END OF CSS ===== -->
