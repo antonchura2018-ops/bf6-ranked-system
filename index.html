@@ -824,11 +824,13 @@ margin: 32px auto 20px;
 /* Veil + grain */
 .rankup__veil{
   position:absolute; inset:0;
-  background: radial-gradient(900px 500px at 50% 35%, rgba(0,0,0,.25), rgba(0,0,0,.78));
+  background: radial-gradient(900px 520px at 50% 40%, rgba(0,0,0,.35), rgba(0,0,0,.90));
   opacity:0;
+  filter: saturate(0.9);
 }
 .rankup.is-open .rankup__veil{ animation: ruVeilIn .35s ease forwards; }
-@keyframes ruVeilIn{ to{ opacity:1; } }
+@keyframes ruVeilIn{ to{ opacity:1; } } /* ok */
+  animation: ruVeilIn .25s ease forwards;
 
 .rankup__grain{
   position:absolute; inset:-20%;
@@ -848,12 +850,15 @@ margin: 32px auto 20px;
   border-radius:28px;
   overflow:hidden;
   background: radial-gradient(900px 520px at 50% 45%, rgba(35,243,255,.06), rgba(0,0,0,0) 60%),
-            linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));
-  border: 1px solid rgba(255,255,255,.06);
-  box-shadow: 0 60px 160px rgba(0,0,0,.72);
+            radial-gradient(900px 520px at 50% 55%, rgba(168,85,255,.05), rgba(0,0,0,0) 65%),
+            rgba(7,10,18,0.55);
+  border: 1px solid rgba(255,255,255,0.05);
+  box-shadow: 0 70px 200px rgba(0,0,0,0.78);
   transform: translateY(14px) scale(.98);
   opacity:0;
   will-change: transform, opacity;
+  outline: 1px solid rgba(255,255,255,0.04);
+  backdrop-filter: none;
 }
 .rankup.is-open .rankup__stage{ animation: ruStageIn .55s cubic-bezier(.2,.9,.2,1) .05s forwards; }
 @keyframes ruStageIn{
@@ -866,7 +871,7 @@ margin: 32px auto 20px;
   background:
     linear-gradient(90deg, rgba(35,243,255,.08), transparent 40%),
     repeating-linear-gradient(180deg, rgba(234,242,255,.08) 0, rgba(234,242,255,.08) 1px, transparent 1px, transparent 11px);
-  opacity:.14;
+  opacity:.12;
   mix-blend-mode:overlay;
   animation: ruScanMove 3.2s linear infinite;
   pointer-events:none;
