@@ -1445,33 +1445,33 @@ margin: 32px auto 20px;
       </div>
 
       <div class="ladder-item unlocked">
-        <div class="badge b-vanguard"></div>
+        <div class="badge b-thrall"></div>
         <div class="meta">
-          <div class="name">VANGUARD</div>
+          <div class="name">THRALL</div>
           <div class="desc">Rising force.</div>
         </div>
       </div>
 
       <div class="ladder-item unlocked">
-        <div class="badge b-sentinel"></div>
+        <div class="badge b-marauder"></div>
         <div class="meta">
-          <div class="name">SENTINEL</div>
+          <div class="name">MARAUDER</div>
           <div class="desc">Control & discipline.</div>
         </div>
       </div>
 
       <div class="ladder-item unlocked current">
-        <div class="badge b-phantom"></div>
+        <div class="badge b-harbinger"></div>
         <div class="meta">
-          <div class="name">PHANTOM</div>
+          <div class="name">HARBINGER</div>
           <div class="desc">Precision mastery.</div>
         </div>
       </div>
 
       <div class="ladder-item locked">
-        <div class="badge b-warlord"></div>
+        <div class="badge b-reaper"></div>
         <div class="meta">
-          <div class="name">WARLORD</div>
+          <div class="name">REAPER</div>
           <div class="desc">Aggressive dominance.</div>
         </div>
       </div>
@@ -1485,33 +1485,33 @@ margin: 32px auto 20px;
       </div>
 
       <div class="ladder-item locked">
-        <div class="badge b-overseer"></div>
+        <div class="badge b-overlord"></div>
         <div class="meta">
-          <div class="name">OVERSEER</div>
+          <div class="name">OVERLORD</div>
           <div class="desc">Vision & tactics.</div>
         </div>
       </div>
 
       <div class="ladder-item locked">
-        <div class="badge b-ascendant"></div>
+        <div class="badge b-monarch"></div>
         <div class="meta">
-          <div class="name">ASCENDANT</div>
+          <div class="name">MONARCH</div>
           <div class="desc">Transcendence.</div>
         </div>
       </div>
 
       <div class="ladder-item locked">
-        <div class="badge b-paragon"></div>
+        <div class="badge b-seraph"></div>
         <div class="meta">
-          <div class="name">PARAGON</div>
+          <div class="name">SERAPH</div>
           <div class="desc">Elite standard.</div>
         </div>
       </div>
 
       <div class="ladder-item locked nexus">
-        <div class="badge b-nexus"></div>
+        <div class="badge b-eidolon"></div>
         <div class="meta">
-          <div class="name">NEXUS</div>
+          <div class="name">EIDOLON</div>
           <div class="desc">Absolute peak.</div>
         </div>
       </div>
@@ -1890,16 +1890,16 @@ So tier mins are spaced by 300.
 This also makes ranking progression consistent and hard.
 */
 var rankTiers = [
-  { name: "OUTCAST",  color: "#ffb86b", min: 0   },
-  { name: "VANGUARD", color: "#22d3ee", min: 300 },
-  { name: "SENTINEL", color: "#38bdf8", min: 600 },
-  { name: "PHANTOM",  color: "#a78bfa", min: 900 },
-  { name: "WARLORD",  color: "#fb7185", min: 1200 },
-  { name: "ARCHON",   color: "#fbbf24", min: 1500 },
-  { name: "OVERSEER", color: "#2dd4bf", min: 1800 },
-  { name: "ASCENDANT",color: "#60a5fa", min: 2100 },
-  { name: "PARAGON",  color: "#e5e7eb", min: 2400 },
-  { name: "NEXUS",    color: "#ff3b3b", min: 2700 }
+  { name: "OUTCAST",   color: "#ffb86b", min: 0   },
+  { name: "THRALL",    color: "#22d3ee", min: 300 },
+  { name: "MARAUDER",  color: "#38bdf8", min: 600 },
+  { name: "HARBINGER", color: "#a78bfa", min: 900 },
+  { name: "REAPER",    color: "#fb7185", min: 1200 },
+  { name: "ARCHON",    color: "#fbbf24", min: 1500 },
+  { name: "OVERLORD",  color: "#2dd4bf", min: 1800 },
+  { name: "MONARCH",   color: "#60a5fa", min: 2100 },
+  { name: "SERAPH",    color: "#e5e7eb", min: 2400 },
+  { name: "EIDOLON",   color: "#ff3b3b", min: 2700 }
 ];
 
 // cinematic tracking (tier + division)
@@ -1916,10 +1916,10 @@ function getRank(totalRP) {
   var tier = rankTiers[tierIndex];
 
   // NEXUS special case
-  if (tier.name === "NEXUS") {
+  if (tier.name === "EIDOLON") {
     return {
-      label: "NEXUS",
-      tierName: "NEXUS",
+      label: "EIDOLON",
+      tierName: "EIDOLON",
       tierIndex: tierIndex,
       div: null,
       divIndex: null,
@@ -3275,7 +3275,7 @@ function _ruTierKeyFromText(t) {
 
 function _ruIsTopRankText(toText) {
   const t = String(toText || "").toUpperCase();
-  return t.includes("NEXUS") || t.includes("ABSOLUTE") || t.includes("ELITE");
+  return t.includes("EIDOLON");
 }
 
 function _ruFill(payload) {
