@@ -58,13 +58,14 @@
     #award.is-open{ opacity:1; pointer-events:auto; }
 
     .veil{
-      position:absolute; inset:0;
-      background:
-        radial-gradient(900px 520px at 50% 38%, rgba(0,0,0,.18), rgba(0,0,0,.84)),
-        radial-gradient(1200px 700px at 50% 10%, rgba(168,85,255,.10), transparent 60%),
-        radial-gradient(900px 500px at 70% 85%, rgba(35,243,255,.09), transparent 60%);
-      opacity:0;
-    }
+  position:absolute; inset:0;
+  background:
+    radial-gradient(900px 520px at 50% 42%, color-mix(in srgb, var(--accent) 22%, transparent), rgba(0,0,0,.86)),
+    radial-gradient(1200px 720px at 50% 10%, color-mix(in srgb, var(--accent) 16%, transparent), transparent 60%),
+    radial-gradient(900px 560px at 70% 85%, color-mix(in srgb, var(--accent) 12%, transparent), transparent 62%),
+    linear-gradient(180deg, rgba(0,0,0,.78), rgba(0,0,0,.92));
+  opacity:0;
+}
     #award.is-open .veil{ animation: veilIn .26s ease forwards; }
     @keyframes veilIn{ to{ opacity:1; } }
 
@@ -489,6 +490,24 @@
 #award[data-phase="impact"] .slice{ opacity:0; transition: opacity 120ms ease; }
     
     .grain{ display:none !important; }
+
+    /* Keep final badge visible from impact to end */
+#award[data-phase="impact"] .rankBadge__img,
+#award[data-phase="reveal"] .rankBadge__img,
+#award[data-phase="done"] .rankBadge__img{
+  opacity:1 !important;
+}
+    #award[data-phase="reveal"] .slice,
+#award[data-phase="done"] .slice{
+  opacity:0 !important;
+}
+    /* Prevent circles from covering the badge in DONE */
+#award[data-phase="done"] .rankBadge__halo,
+#award[data-phase="done"] .rankBadge__sigil{
+  opacity: .18 !important;
+  transform: scale(1.05) !important;
+}
+    #award[data-phase="done"] .rankBadge__sigil{ opacity:0 !important; }
     
   </style>
 </head>
@@ -544,7 +563,7 @@
         <div class="labelName" id="labelName">EIDOLON</div>
       </div>
 
-      <div class="hint">auto-close…</div>
+      
     </div>
   </div>
 
@@ -615,6 +634,7 @@
 
     function playTierUp({rankName, iconSrc, divIndex}){
       openOverlay('tierUp');
+      award.style.setProperty('--accent', accentColor);
       subText.textContent = 'Division upgrade • Apex-style evolution.';
       rightText.textContent = 'AUTO';
 
@@ -643,6 +663,7 @@
 
     function playRankUp({rankName, iconSrc, isTop=false}){
       openOverlay('rankUp');
+      award.style.setProperty('--accent', accentColor);
       award.classList.toggle('is-top', !!isTop);
 
       subText.textContent = isTop ? 'Top rank achieved • Reward state active.' : 'Promotion confirmed • Award unlocked.';
