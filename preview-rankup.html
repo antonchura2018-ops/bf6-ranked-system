@@ -132,14 +132,15 @@
     .center::before{
   content:"";
   position:absolute;
-  inset:-35%;
-  background: radial-gradient(circle at 50% 50%,
-    rgba(255,106,0,.14),
-    rgba(168,85,255,.08),
-    transparent 62%
-  );
-  opacity:.85;
-  filter: blur(14px);
+  inset:-45%;
+  background:
+    radial-gradient(circle at 50% 50%,
+      color-mix(in srgb, var(--accent) 22%, transparent),
+      color-mix(in srgb, var(--accent) 10%, transparent),
+      transparent 62%
+    );
+  opacity:.95;
+  filter: blur(16px);
   pointer-events:none;
 }
     #award[data-phase="done"] .rankBadge__halo{
@@ -508,6 +509,41 @@
   transform: scale(1.05) !important;
 }
     #award[data-phase="done"] .rankBadge__sigil{ opacity:0 !important; }
+
+    .sparks{
+  position:absolute;
+  inset:-35%;
+  opacity:0;
+  pointer-events:none;
+  mix-blend-mode: screen;
+  background:
+    radial-gradient(circle at 20% 30%, color-mix(in srgb, var(--accent) 22%, transparent), transparent 38%),
+    radial-gradient(circle at 70% 55%, color-mix(in srgb, var(--accent) 16%, transparent), transparent 40%),
+    radial-gradient(circle at 55% 25%, rgba(255,255,255,.10), transparent 34%),
+    radial-gradient(circle at 35% 70%, color-mix(in srgb, var(--accent) 14%, transparent), transparent 42%);
+  filter: blur(8px);
+  transform: scale(.98);
+  will-change: opacity, transform, filter;
+}
+
+/* sparks on OPEN + REVEAL */
+#award[data-phase="open"] .sparks{
+  animation: sparksOpen 900ms ease forwards;
+}
+#award[data-phase="reveal"] .sparks{
+  animation: sparksReveal 1200ms ease forwards;
+}
+
+@keyframes sparksOpen{
+  0%{ opacity:0; transform: scale(.96); }
+  35%{ opacity:.65; }
+  100%{ opacity:.10; transform: scale(1.06); }
+}
+@keyframes sparksReveal{
+  0%{ opacity:.08; transform: scale(1.00); }
+  35%{ opacity:.55; transform: scale(1.10); }
+  100%{ opacity:0; transform: scale(1.16); }
+}
     
   </style>
 </head>
@@ -542,6 +578,7 @@
 
     <div class="center">
       <div class="impactFlash" aria-hidden="true"></div>
+      <div class="sparks" aria-hidden="true"></div>
 
       <div class="rankBadge tier-0 animated" id="badge">
   <div class="rankBadge__img" id="rankIcon" aria-hidden="true"></div>
