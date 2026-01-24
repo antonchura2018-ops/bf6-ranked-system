@@ -3159,7 +3159,194 @@ if (t && t.getAttribute && t.getAttribute("data-edit-id")) {
   
   preloadRankBadges();
   // =============================
+// =============================
+// AWARD OVERLAY ENGINE (Apex-style, auto-close)
+// =============================
 
+const award = document.getElementById('award');
+const badge = document.getElementById('badge');
+const subText = document.getElementById('subText');
+const rightText = document.getElementById('rightText');
+const labelTop = document.getElementById('labelTop');
+const labelName = document.getElementById('labelName');
+
+let timers = [];
+const clearTimers = () => { timers.forEach(t => clearTimeout(t)); timers = []; };
+
+// Accent fallback table (optional)
+const ACCENT_BY_RANK = {
+  eidolon:"#d61830",
+  seraph:"#d9f9e8",
+  monarch:"#c7336c",
+  overlord:"#8c4826",
+  archon:"#01a7ef",
+  reaper:"#9bb1f6",
+  harbinger:"#a6b1b9",
+  marauder:"#fef525",
+  thrall:"#60eb89",
+  outcast:"#0f0f13",
+};
+
+// Tiny SFX (WebAudio, no external files)
+let audioCtx = null;
+function ensureAudio(){
+  if(!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  return audioCtx;
+}
+function playTone({freqFrom, freqTo, dur=0.18, gain=0.08, type='sine'}){
+  const ctx = ensureAudio();
+  const t0 = ctx.currentTime;
+
+  const o = ctx.createOscillator();
+  const g = ctx.createGain();
+
+  o.type = type;
+  o.frequency.setValueAtTime(freqFrom, t0);
+  o.frequency.exponentialRampToValueAtTime(freqTo, t0 + Math.max(0.01, dur*0.45));
+
+  g.gain.setValueAtTime(0.0001, t0);
+  g.gain.exponentialRampToValueAtTime(gain, t0 + 0.02);
+  g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
+
+  o.connect(g);
+  g.connect(ctx.destination);
+
+  o.start(t0);
+  o.stop(t0 + dur + 0.02);
+}
+
+function sfxTier(){
+  playTone({freqFrom:520, freqTo:860, dur:0.14, gain:0.06, type:'sine'});
+  setTimeout(()=>playTone({freqFrom:900, freqTo:1200, dur:0.10, gain:0.03, type:'triangle'}), 70);
+}
+function sfxRankRiser(){
+  playTone({freqFrom:180, freqTo:520, dur:0.30, gain:0.05, type:'sine'});
+  setTimeout(()=>playTone({freqFrom:260, freqTo:740, dur:0.34, gain:0.04, type:'triangle'}), 120);
+}
+function sfxRankImpact(){ playTone({freqFrom:220, freqTo:680, dur:0.12, gain:0.10, type:'sine'}); }
+function sfxRankHero(){
+  playTone({freqFrom:520, freqTo:780, dur:0.18, gain:0.05, type:'triangle'});
+  setTimeout(()=>playTone({freqFrom:390, freqTo:620, dur:0.18, gain:0.04, type:'triangle'}), 20);
+}
+
+function openOverlay(mode){
+  if (!award || !badge) return;
+  clearTimers();
+
+  award.classList.add('is-open');
+  award.setAttribute('aria-hidden','false');
+
+  award.classList.toggle('is-tierup', mode === 'tierUp');
+  award.classList.toggle('is-rankup', mode === 'rankUp');
+  award.classList.remove('is-top','is-down');
+  award.dataset.phase = 'open';
+
+  badge.classList.remove('anim-up');
+  void badge.offsetWidth;
+}
+
+function closeOverlay(){
+  if (!award) return;
+  clearTimers();
+  award.classList.remove('is-open','is-tierup','is-rankup','is-top','is-down');
+  award.removeAttribute('data-phase');
+  award.removeAttribute('data-tier');
+  award.setAttribute('aria-hidden','true');
+}
+
+function setTierClass(divIndex){
+  if (!badge) return;
+  badge.classList.remove('tier-0','tier-1','tier-2');
+  badge.classList.add(`tier-${Math.max(0, Math.min(2, divIndex))}`);
+}
+
+function setBadge(iconSrc){
+  if (!badge) return;
+  if(iconSrc) badge.style.setProperty('--badge-url', `url("${iconSrc}")`);
+}
+
+// PUBLIC play functions
+function playTierUp({rankName, iconSrc, divIndex, accentColor="#01a7ef"}){
+  openOverlay('tierUp');
+  award.style.setProperty('--accent', accentColor);
+
+  if (subText) subText.textContent = 'Division upgrade • Apex-style evolution.';
+  if (rightText) rightText.textContent = 'AUTO';
+  if (labelTop) labelTop.textContent = 'DIVISION UP';
+  if (labelName) labelName.textContent = rankName;
+
+  setBadge(iconSrc);
+  setTierClass(divIndex);
+  award.dataset.tier = String(divIndex);
+
+  badge.classList.add('anim-up');
+
+  timers.push(setTimeout(()=>{ award.dataset.phase='impact'; sfxTier(); }, 900));
+  timers.push(setTimeout(()=>{ award.dataset.phase='reveal'; }, 1350));
+  timers.push(setTimeout(()=>{ award.dataset.phase='done'; }, 3000));
+  timers.push(setTimeout(closeOverlay, 3000 + 2000));
+}
+
+function playTierDown({rankName, iconSrc, divIndex, accentColor="#01a7ef"}){
+  openOverlay('tierUp');
+  award.classList.add('is-down');
+  award.style.setProperty('--accent', accentColor);
+  award.dataset.tier = String(divIndex);
+
+  if (subText) subText.textContent = 'Division decreased • Syncing…';
+  if (rightText) rightText.textContent = 'AUTO';
+  if (labelTop) labelTop.textContent = 'DIVISION DOWN';
+  if (labelName) labelName.textContent = rankName;
+
+  setBadge(iconSrc);
+  setTierClass(divIndex);
+
+  timers.push(setTimeout(()=>{ award.dataset.phase='impact'; }, 650));
+  timers.push(setTimeout(()=>{ award.dataset.phase='done'; }, 1500));
+  timers.push(setTimeout(()=>{ award.classList.remove('is-down'); closeOverlay(); }, 1500 + 1400));
+}
+
+function playRankUp({rankName, iconSrc, isTop=false, accentColor="#23f3ff"}){
+  openOverlay('rankUp');
+  award.style.setProperty('--accent', accentColor);
+  award.classList.toggle('is-top', !!isTop);
+
+  if (subText) subText.textContent = isTop ? 'Top rank achieved • Reward state active.' : 'Promotion confirmed • Award unlocked.';
+  if (rightText) rightText.textContent = 'AUTO';
+  if (labelTop) labelTop.textContent = 'NEW RANK';
+  if (labelName) labelName.textContent = rankName;
+
+  setBadge(iconSrc);
+  setTierClass(0);
+
+  badge.classList.add('anim-up');
+  sfxRankRiser();
+
+  timers.push(setTimeout(()=>{ award.dataset.phase='impact'; sfxRankImpact(); }, 1050));
+  timers.push(setTimeout(()=>{ award.dataset.phase='reveal'; sfxRankHero(); }, 1300));
+  timers.push(setTimeout(()=>{ award.dataset.phase='done'; }, 2150));
+
+  const hold = isTop ? 3200 : 2600;
+  timers.push(setTimeout(closeOverlay, 2150 + hold));
+}
+
+function playRankDown({rankName, iconSrc, accentColor="#23f3ff"}){
+  openOverlay('rankUp');
+  award.classList.add('is-down');
+  award.style.setProperty('--accent', accentColor);
+
+  if (subText) subText.textContent = 'Rank decreased • Syncing…';
+  if (rightText) rightText.textContent = 'AUTO';
+  if (labelTop) labelTop.textContent = 'RANK DOWN';
+  if (labelName) labelName.textContent = rankName;
+
+  setBadge(iconSrc);
+  setTierClass(0);
+
+  timers.push(setTimeout(()=>{ award.dataset.phase='impact'; }, 900));
+  timers.push(setTimeout(()=>{ award.dataset.phase='done'; }, 2000));
+  timers.push(setTimeout(()=>{ award.classList.remove('is-down'); closeOverlay(); }, 2000 + 1800));
+}
 
  
   function _rankKeyFromText(t){
