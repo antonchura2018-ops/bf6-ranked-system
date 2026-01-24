@@ -80,15 +80,18 @@
     @keyframes grainIn{ to{ opacity:.14; } }
 
     .scan{
-      position:absolute; inset:0;
-      background:
-        linear-gradient(90deg, rgba(35,243,255,.06), transparent 38%),
-        repeating-linear-gradient(180deg, rgba(234,242,255,.06) 0, rgba(234,242,255,.06) 1px, transparent 1px, transparent 7px);
-      opacity:.20;
-      mix-blend-mode:screen;
-      animation: scanMove 3.2s linear infinite;
-      pointer-events:none;
-    }
+  position:absolute; inset:0;
+  background: repeating-linear-gradient(180deg,
+    rgba(234,242,255,.05) 0,
+    rgba(234,242,255,.05) 1px,
+    transparent 1px,
+    transparent 7px
+  );
+  opacity:.12;
+  mix-blend-mode:screen;
+  animation: scanMove 3.2s linear infinite;
+  pointer-events:none;
+}
     @keyframes scanMove{ to{ background-position: 220px 0, 0 140px; } }
 
     /* Top minimal HUD (optional, Apex-like minimal) */
@@ -131,23 +134,23 @@
        Apex-style “evolution” via tiers + upgrade burst
        ========================================================= */
     .rankBadge{
-      position:relative;
-      width: 280px;
-      height: 280px;
-      display:grid;
-      place-items:center;
-      transform: translateY(0) scale(1);
-      opacity: 1;
-      will-change: transform, opacity, filter;
-    }
+  position:relative;
+  width: min(520px, 80vw);
+  height: min(520px, 80vw);
+  display:grid;
+  place-items:center;
+  transform: translateY(0) scale(1);
+  opacity: 1;
+  will-change: transform, opacity, filter;
+}
 
-    .rankBadge__img{
-      width: 220px;
-      height: 220px;
-      object-fit: contain;
-      filter: drop-shadow(0 0 16px rgba(0,0,0,.35));
-      transform: translateZ(0);
-    }
+.rankBadge__img{
+  width: min(420px, 65vw);
+  height: min(420px, 65vw);
+  object-fit: contain;
+  filter: drop-shadow(0 0 16px rgba(0,0,0,.35));
+  transform: translateZ(0);
+}
 
     /* Layers */
     .rankBadge__halo,
@@ -367,9 +370,15 @@
     }
 
     /* Show label only on rankUp (optional) */
-    #award.is-rankup[data-phase="reveal"] .label{
-      animation: labelIn 820ms cubic-bezier(.2,.9,.2,1) 120ms forwards;
-    }
+    #award.is-rankup[data-phase="reveal"] .label,
+#award.is-rankup[data-phase="done"] .label{
+  opacity:1;
+  transform: translateX(-50%) translateY(0);
+}
+
+#award.is-rankup[data-phase="reveal"] .label{
+  animation: labelIn 820ms cubic-bezier(.2,.9,.2,1) 120ms forwards;
+}
     @keyframes labelIn{
       0%{ opacity:0; transform: translateX(-50%) translateY(14px); }
       100%{ opacity:1; transform: translateX(-50%) translateY(0); }
@@ -410,6 +419,57 @@
       #award.is-open{ opacity:1; }
       .label{ opacity:1; transform: translateX(-50%); }
     }
+    /* --- Use CSS variable for the badge image --- */
+.rankBadge{
+  --badge-url: url("assets/ranks/eidolon.webp"); /* default */
+}
+
+/* Replace <img> with background image */
+.rankBadge__img{
+  width: min(420px, 65vw);
+  height: min(420px, 65vw);
+  background: var(--badge-url) center/contain no-repeat;
+  filter: drop-shadow(0 0 18px rgba(0,0,0,.35));
+  opacity:0; /* стане видимою після assembly */
+}
+
+/* Slices use same image */
+.slice{
+  position:absolute;
+  inset: 8%;
+  background: var(--badge-url) center/contain no-repeat;
+  opacity:0;
+  will-change: transform, opacity, filter;
+  filter: drop-shadow(0 0 22px rgba(255,106,0,.10));
+}
+
+/* Clip each slice to a quadrant */
+.slice.s1{ clip-path: polygon(0 0, 50% 0, 50% 50%, 0 50%); }
+.slice.s2{ clip-path: polygon(50% 0, 100% 0, 100% 50%, 50% 50%); }
+.slice.s3{ clip-path: polygon(0 50%, 50% 50%, 50% 100%, 0 100%); }
+.slice.s4{ clip-path: polygon(50% 50%, 100% 50%, 100% 100%, 50% 100%); }
+
+/* OPEN: slices fly in and assemble */
+#award[data-phase="open"] .slice{
+  animation: sliceIn 900ms cubic-bezier(.2,.9,.2,1) forwards;
+}
+#award[data-phase="open"] .slice.s1{ transform: translate(-70px,-70px) scale(.92); }
+#award[data-phase="open"] .slice.s2{ transform: translate(70px,-70px) scale(.92); }
+#award[data-phase="open"] .slice.s3{ transform: translate(-70px,70px) scale(.92); }
+#award[data-phase="open"] .slice.s4{ transform: translate(70px,70px) scale(.92); }
+
+@keyframes sliceIn{
+  0%{ opacity:0; }
+  35%{ opacity:1; }
+  100%{ opacity:1; transform: translate(0,0) scale(1); }
+}
+
+/* After assembly: show clean image and hide slices */
+#award[data-phase="impact"] .rankBadge__img{ opacity:1; }
+#award[data-phase="impact"] .slice{ opacity:0; transition: opacity 120ms ease; }
+    
+    .grain{ display:none !important; }
+    
   </style>
 </head>
 <body>
@@ -445,12 +505,19 @@
       <div class="impactFlash" aria-hidden="true"></div>
 
       <div class="rankBadge tier-0 animated" id="badge">
-        <img class="rankBadge__img" id="rankIcon" alt="Rank icon" src="assets/ranks/eidolon.webp">
-        <span class="rankBadge__halo" aria-hidden="true"></span>
-        <span class="rankBadge__sigil" aria-hidden="true"></span>
-        <span class="rankBadge__embers" aria-hidden="true"></span>
-        <span class="rankBadge__sweep" aria-hidden="true"></span>
-      </div>
+  <div class="rankBadge__img" id="rankIcon" aria-hidden="true"></div>
+
+  <!-- assembly slices -->
+  <div class="slice s1" aria-hidden="true"></div>
+  <div class="slice s2" aria-hidden="true"></div>
+  <div class="slice s3" aria-hidden="true"></div>
+  <div class="slice s4" aria-hidden="true"></div>
+
+  <span class="rankBadge__halo" aria-hidden="true"></span>
+  <span class="rankBadge__sigil" aria-hidden="true"></span>
+  <span class="rankBadge__embers" aria-hidden="true"></span>
+  <span class="rankBadge__sweep" aria-hidden="true"></span>
+</div>
 
       <div class="label" aria-hidden="true">
         <div class="labelTop" id="labelTop">NEW RANK</div>
@@ -531,7 +598,7 @@
       subText.textContent = 'Division upgrade • Apex-style evolution.';
       rightText.textContent = 'AUTO';
 
-      if(iconSrc) rankIcon.src = iconSrc;
+      if (iconSrc) badge.style.setProperty('--badge-url', `url("${iconSrc}")`);
       labelName.textContent = rankName;
       labelTop.textContent = 'DIVISION UP';
 
@@ -543,14 +610,14 @@
       timers.push(setTimeout(()=>{
         award.dataset.phase = 'impact';
         beep('impact');
-      }, 520));
+      }, 900));
 
       timers.push(setTimeout(()=>{
         award.dataset.phase = 'reveal';
         beep('up');
-      }, 760));
+      }, 1350));
 
-      timers.push(setTimeout(()=>{ award.dataset.phase = 'done'; }, 1050));
+      timers.push(setTimeout(()=>{ award.dataset.phase = 'done'; }, 3000));
       timers.push(setTimeout(closeOverlay, 1050 + 1500)); // auto-close after done
     }
 
@@ -561,7 +628,7 @@
       subText.textContent = isTop ? 'Top rank achieved • Reward state active.' : 'Promotion confirmed • Award unlocked.';
       rightText.textContent = 'AUTO';
 
-      if(iconSrc) rankIcon.src = iconSrc;
+      if (iconSrc) badge.style.setProperty('--badge-url', `url("${iconSrc}")`);
       labelName.textContent = rankName;
       labelTop.textContent = 'NEW RANK';
 
@@ -582,8 +649,8 @@
 
       timers.push(setTimeout(()=>{ award.dataset.phase = 'done'; }, 2150));
 
-      const hold = isTop ? 2200 : 1600;
-      timers.push(setTimeout(closeOverlay, 2150 + hold));
+      const hold = isTop ? 3200 : 2600;
+      timers.push(setTimeout(closeOverlay, 3000 + hold));
     }
 
     // Buttons
