@@ -1368,6 +1368,91 @@ margin: 32px auto 20px;
   display: none !important;
 }
 
+  /* ===== Tier Dots (3 segments) ===== */
+#rankupNew{ position: absolute; } /* ensure anchor exists (safe) */
+
+.tierDots{
+  position:absolute;
+  left:50%;
+  top: calc(50% + 118px); /* under 150px badge inside 220px emblem */
+  transform: translateX(-50%);
+  display:flex;
+  gap:10px;
+  padding:8px 12px;
+  border-radius:999px;
+  border:1px solid rgba(234,242,255,.12);
+  background: rgba(0,0,0,.18);
+  backdrop-filter: blur(6px);
+  opacity:0;
+  pointer-events:none;
+  will-change: transform, opacity;
+}
+
+/* dot base */
+.tierDot{
+  width:10px;
+  height:10px;
+  border-radius:999px;
+  background: rgba(234,242,255,.12);
+  box-shadow: none;
+  transform: translateY(0) scale(1);
+  will-change: transform, opacity, box-shadow;
+}
+
+/* active dot */
+.tierDot.is-on{
+  background: rgba(35,243,255,.65);
+  box-shadow:
+    0 0 10px rgba(35,243,255,.35),
+    0 0 22px rgba(168,85,255,.18);
+}
+
+/* show in reveal/done (rank) and always for tier mode when open */
+#rankup.is-open .tierDots{
+  opacity:1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* TierUp pulse */
+#rankup.is-tierup .tierDots{
+  animation: tdWrapIn .55s cubic-bezier(.2,.9,.2,1) forwards;
+}
+@keyframes tdWrapIn{
+  0%{ opacity:0; transform: translateX(-50%) translateY(10px) scale(.98); }
+  100%{ opacity:1; transform: translateX(-50%) translateY(0) scale(1); }
+}
+
+#rankup.is-tierup .tierDot.is-justOn{
+  animation: tdPing .7s cubic-bezier(.2,.95,.2,1) forwards;
+}
+@keyframes tdPing{
+  0%{ transform: translateY(0) scale(.9); box-shadow: none; }
+  40%{ transform: translateY(-2px) scale(1.35);
+       box-shadow: 0 0 12px rgba(35,243,255,.55), 0 0 26px rgba(168,85,255,.22); }
+  100%{ transform: translateY(0) scale(1);
+        box-shadow: 0 0 10px rgba(35,243,255,.35), 0 0 22px rgba(168,85,255,.18); }
+}
+
+/* subtle breathing in DONE */
+#rankup[data-phase="done"] .tierDot.is-on{
+  animation: tdBreath 2.2s ease-in-out infinite;
+}
+@keyframes tdBreath{
+  0%,100%{ opacity: .95; }
+  50%{ opacity: 1; }
+}
+
+/* NEXUS / top rank: no dots */
+#rankup[data-top="1"] .tierDots{ display:none !important; }
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce){
+  #rankup.is-tierup .tierDots,
+  #rankup.is-tierup .tierDot.is-justOn,
+  #rankup[data-phase="done"] .tierDot.is-on{
+    animation:none !important;
+  }
+}
   
 </style>
   <!-- ===== END OF CSS ===== -->
@@ -2391,6 +2476,7 @@ if (lastRankState === null) {
         fromText: lastRankState.label,
         toText: currentState.label,
         rrText: promotedDiv ? "TIER UPGRADED" : "TIER DOWNGRADED"
+        divIndex: currentState.divIndex
       });
     }
 
@@ -3344,6 +3430,7 @@ window.hideRankUp = function () {
 
   _ruSetOpen(root, false);
   _ruSetPhase(root, "idle");
+  root.classList.remove("is-tierup");
 
   const btn = document.getElementById("rankupContinue");
   if (btn) btn.style.display = "none";
@@ -3387,6 +3474,33 @@ window.showTierUp = function (payload) {
   window.hideRankUp();
 
   const res = _ruFill(payload);
+  // Tier dots logic
+  const dotsWrap = document.getElementById("tierDots");
+  if (dotsWrap) {
+    const dots = dotsWrap.querySelectorAll(".tierDot");
+
+    // reset classes
+    for (let i = 0; i < dots.length; i++) {
+      dots[i].classList.remove("is-on", "is-justOn");
+    }
+
+    const di = (payload && payload.divIndex !== undefined && payload.divIndex !== null) ? Number(payload.divIndex) : 0;
+    const onCount = Math.max(0, Math.min(3, di + 1)); // 0->1,1->2,2->3
+
+    for (let i = 0; i < onCount; i++) dots[i].classList.add("is-on");
+
+    // ping newly lit dot (promotion only)
+    if (payload && payload.rrText && String(payload.rrText).toUpperCase().includes("UPGRADED")) {
+      const justOnIndex = Math.max(0, Math.min(2, di));
+      dots[justOnIndex].classList.add("is-justOn");
+      // remove ping class after animation
+      _ruLater(() => dots[justOnIndex].classList.remove("is-justOn"), 720);
+    }
+
+    // mark overlay as tierup for CSS
+    res.root.classList.add("is-tierup");
+    _ruLater(() => res.root.classList.remove("is-tierup"), 1400);
+  }
   if (!res) return;
   const { root } = res;
 
