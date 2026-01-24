@@ -681,6 +681,109 @@
     
     /* Disable diagonal sweep completely (user request) */
 .rankBadge__sweep{ display:none !important; }
+
+    /* =========================================================
+   APEX-STYLE: CREATION GLOW + WING CREATION (FPS-SAFE)
+   - No blur(), no backdrop-filter, no mix-blend on fullscreen
+   - Only opacity + transform (GPU-friendly)
+   ========================================================= */
+
+/* Big glow behind badge that expands beyond screen */
+.creationGlow{
+  position:absolute;
+  inset:-140%;               /* huge so it can go “past screen” */
+  border-radius:999px;
+  pointer-events:none;
+  opacity:0;
+  transform: scale(.18);
+  will-change: transform, opacity;
+  /* Cheap glow: layered radials, no blur */
+  background:
+    radial-gradient(circle at 50% 50%,
+      rgba(255,255,255,.14) 0%,
+      color-mix(in srgb, var(--accent) 28%, transparent) 18%,
+      color-mix(in srgb, var(--accent) 14%, transparent) 36%,
+      transparent 62%
+    );
+}
+
+/* WingWave: two side glows that expand outward like “wings are forming” */
+.wingWave{
+  position:absolute;
+  inset:-110%;
+  border-radius:999px;
+  pointer-events:none;
+  opacity:0;
+  transform: scale(.55);
+  will-change: transform, opacity;
+  background:
+    radial-gradient(circle at 18% 52%,
+      color-mix(in srgb, var(--accent) 34%, transparent) 0%,
+      transparent 42%
+    ),
+    radial-gradient(circle at 82% 52%,
+      color-mix(in srgb, var(--accent) 34%, transparent) 0%,
+      transparent 42%
+    );
+}
+
+/* WingRays: thin rays that shoot outward (subtle, Apex-like) */
+.wingRays{
+  position:absolute;
+  inset:-120%;
+  border-radius:999px;
+  pointer-events:none;
+  opacity:0;
+  transform: scale(.65) rotate(0deg);
+  will-change: transform, opacity;
+  background:
+    conic-gradient(from 0deg,
+      transparent 0deg,
+      color-mix(in srgb, var(--accent) 16%, transparent) 20deg,
+      transparent 42deg,
+      color-mix(in srgb, var(--accent) 12%, transparent) 80deg,
+      transparent 120deg,
+      color-mix(in srgb, var(--accent) 10%, transparent) 165deg,
+      transparent 220deg,
+      color-mix(in srgb, var(--accent) 10%, transparent) 265deg,
+      transparent 360deg
+    );
+}
+
+/* Trigger animations on REVEAL (можеш перенести на IMPACT якщо хочеш) */
+#award[data-phase="reveal"] .creationGlow{
+  animation: cgPop 1150ms cubic-bezier(.12,.95,.18,1) forwards;
+}
+#award[data-phase="reveal"] .wingWave{
+  animation: wwPop 1100ms cubic-bezier(.12,.95,.18,1) forwards;
+}
+#award[data-phase="reveal"] .wingRays{
+  animation: wrPop 950ms cubic-bezier(.12,.95,.18,1) forwards;
+}
+
+/* Creation glow expands beyond screen */
+@keyframes cgPop{
+  0%   { opacity:0;   transform: scale(.18); }
+  18%  { opacity:1;   transform: scale(.52); }
+  100% { opacity:0;   transform: scale(1.55); }
+}
+
+/* Wing glow expands a bit faster */
+@keyframes wwPop{
+  0%   { opacity:0;   transform: scale(.52); }
+  20%  { opacity:.95; transform: scale(.82); }
+  100% { opacity:0;   transform: scale(1.40); }
+}
+
+/* Rays: quick “punch” then fade */
+@keyframes wrPop{
+  0%   { opacity:0;   transform: scale(.62) rotate(0deg); }
+  25%  { opacity:.55; transform: scale(1.02) rotate(6deg); }
+  100% { opacity:0;   transform: scale(1.22) rotate(0deg); }
+}
+
+/* Performance mode (optional): disable rays first */
+.fx-low .wingRays{ display:none !important; }
     
   </style>
 </head>
@@ -715,6 +818,10 @@
 
     <div class="center">
       <div class="impactFlash" aria-hidden="true"></div>
+      <!-- Apex-style creation glow + wing flare -->
+      <div class="creationGlow" aria-hidden="true"></div>
+      <div class="wingWave" aria-hidden="true"></div>
+      <div class="wingRays" aria-hidden="true"></div>
       <div class="glowBurst" aria-hidden="true"></div>
       <div class="rays" aria-hidden="true"></div>
       <div class="sparks" aria-hidden="true"></div>
