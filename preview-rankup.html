@@ -655,6 +655,7 @@
 
       root.classList.remove("is-tierup");
       root.classList.remove("is-rankup");
+      root.classList.remove("is-rankup");
       _ruSetOpen(root, false);
       _ruSetPhase(root, "idle");
 
@@ -672,6 +673,7 @@
       const { root, btn, toTextRaw } = res;
 
       root.dataset.type = "rank";
+      root.classList.add("is-rankup");
       root.dataset.top = _ruIsTopRankText(toTextRaw) ? "1" : "0";
       root.classList.add("is-rankup");
 
@@ -700,6 +702,7 @@
       if (!res) return;
 
       const { root } = res;
+      root.classList.remove("is-rankup");
 
       root.dataset.type = "tier";
       root.dataset.top = "0";
