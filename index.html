@@ -2473,9 +2473,10 @@ if (lastRankState === null) {
 
     if (typeof window.showTierUp === "function") {
       window.showTierUp({
-        fromText: lastRankState.label,
-        toText: currentState.label,
-        rrText: promotedDiv ? "TIER UPGRADED" : "TIER DOWNGRADED"
+  fromText: lastRankState.label,
+  toText: currentState.label,
+  rrText: promotedDiv ? "TIER UPGRADED" : "TIER DOWNGRADED",
+  divIndex: currentState.divIndex
       });
     }
 
