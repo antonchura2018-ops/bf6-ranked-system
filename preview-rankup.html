@@ -459,6 +459,70 @@
       }
       .label{ opacity:1; }
     }
+
+    /* =========================
+   TIER INTENSITY (FPS-safe)
+   tier-0 = III, tier-1 = II, tier-2 = I
+   ========================= */
+
+/* Base (tier-0) already OK. Make it slightly calmer */
+.rankBadge.tier-0 .rankBadge__halo{ opacity:.12; transform: scale(.98); }
+#award.is-tierup[data-phase="reveal"] .rankBadge.tier-0 ~ .label{}
+
+/* Tier-1: medium */
+.rankBadge.tier-1 .rankBadge__halo{ opacity:.22; transform: scale(1.01); }
+#award.is-tierup[data-phase="reveal"] .rankBadge.tier-1{
+  filter: drop-shadow(0 0 10px rgba(255,255,255,.05));
+}
+
+/* Tier-2: strongest (I) */
+.rankBadge.tier-2 .rankBadge__halo{ opacity:.34; transform: scale(1.05); }
+
+/* Make wingWave / creationGlow scale with tier during reveal */
+#award.is-tierup[data-phase="reveal"] .creationGlow{ opacity:0; } /* default uses animation; we scale via keyframes below */
+#award.is-tierup[data-phase="reveal"] .rankBadge.tier-0 ~ .label{}
+
+/* Tier-based multiplier using small overrides */
+#award.is-tierup[data-phase="reveal"] .rankBadge.tier-0 ~ .label{}
+
+/* Quick hack: tier-2 gets a slightly longer/stronger burst */
+#award.is-tierup[data-phase="reveal"] .rankBadge.tier-2 ~ .label{}
+
+/* NOTE: Since creationGlow/wingWave are siblings, we use a data attr on #award instead (JS sets it). */
+    /* FX intensity driven by award[data-tier] to avoid complex selectors */
+#award[data-tier="0"][data-phase="reveal"] .creationGlow{ animation-duration: 950ms; }
+#award[data-tier="1"][data-phase="reveal"] .creationGlow{ animation-duration: 1100ms; }
+#award[data-tier="2"][data-phase="reveal"] .creationGlow{ animation-duration: 1250ms; }
+
+#award[data-tier="0"][data-phase="reveal"] .wingWave{ animation-duration: 900ms; opacity:0; }
+#award[data-tier="1"][data-phase="reveal"] .wingWave{ animation-duration: 1050ms; }
+#award[data-tier="2"][data-phase="reveal"] .wingWave{ animation-duration: 1200ms; }
+
+#award[data-tier="0"] .falling{ opacity:.35 !important; }
+#award[data-tier="1"] .falling{ opacity:.50 !important; }
+#award[data-tier="2"] .falling{ opacity:.62 !important; }
+
+    /* =========================
+   DOWN STYLE (light + FPS-safe)
+   ========================= */
+#award.is-down .rankBadge{ animation: downShake 260ms ease forwards; }
+@keyframes downShake{
+  0%{ transform: translateY(0) scale(1); }
+  25%{ transform: translateY(2px) scale(.995); }
+  55%{ transform: translateY(-1px) scale(.992); }
+  100%{ transform: translateY(0) scale(1); }
+}
+#award.is-down .center::before{
+  opacity:.65; /* dim backlight */
+}
+#award.is-down .rankBadge__halo{
+  opacity:.12 !important; /* reduce glory */
+}
+#award.is-down .wingWave,
+#award.is-down .creationGlow{
+  display:none !important; /* no “wings” for down */
+}
+    
   </style>
 </head>
 <body>
@@ -541,27 +605,53 @@
 
     // Tiny SFX (no external files)
     let audioCtx = null;
-    function beep(kind='impact'){
-      try{
-        if(!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        const t0 = audioCtx.currentTime;
-        const o = audioCtx.createOscillator();
-        const g = audioCtx.createGain();
-        o.type = 'sine';
 
-        const base = kind === 'impact' ? 220 : 520;
-        o.frequency.setValueAtTime(base, t0);
-        o.frequency.exponentialRampToValueAtTime(base * (kind === 'impact' ? 3.0 : 1.6), t0 + 0.08);
+function ensureAudio(){
+  if(!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  return audioCtx;
+}
 
-        g.gain.setValueAtTime(0.0001, t0);
-        g.gain.exponentialRampToValueAtTime(kind === 'impact' ? 0.10 : 0.07, t0 + 0.02);
-        g.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.18);
+function playTone({freqFrom, freqTo, dur=0.18, gain=0.08, type='sine'}){
+  const ctx = ensureAudio();
+  const t0 = ctx.currentTime;
 
-        o.connect(g); g.connect(audioCtx.destination);
-        o.start(t0);
-        o.stop(t0 + 0.22);
-      }catch(e){}
-    }
+  const o = ctx.createOscillator();
+  const g = ctx.createGain();
+
+  o.type = type;
+  o.frequency.setValueAtTime(freqFrom, t0);
+  o.frequency.exponentialRampToValueAtTime(freqTo, t0 + Math.max(0.01, dur*0.45));
+
+  g.gain.setValueAtTime(0.0001, t0);
+  g.gain.exponentialRampToValueAtTime(gain, t0 + 0.02);
+  g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
+
+  o.connect(g);
+  g.connect(ctx.destination);
+
+  o.start(t0);
+  o.stop(t0 + dur + 0.02);
+}
+
+/* TierUp: short “ping + sparkle” */
+function sfxTier(){
+  playTone({freqFrom:520, freqTo:860, dur:0.14, gain:0.06, type:'sine'});
+  setTimeout(()=>playTone({freqFrom:900, freqTo:1200, dur:0.10, gain:0.03, type:'triangle'}), 70);
+}
+
+/* RankUp: riser + impact + hero ping */
+function sfxRankRiser(){
+  playTone({freqFrom:180, freqTo:520, dur:0.30, gain:0.05, type:'sine'});
+  setTimeout(()=>playTone({freqFrom:260, freqTo:740, dur:0.34, gain:0.04, type:'triangle'}), 120);
+}
+function sfxRankImpact(){
+  playTone({freqFrom:220, freqTo:680, dur:0.12, gain:0.10, type:'sine'});
+}
+function sfxRankHero(){
+  // small 2-note chord illusion
+  playTone({freqFrom:520, freqTo:780, dur:0.18, gain:0.05, type:'triangle'});
+  setTimeout(()=>playTone({freqFrom:390, freqTo:620, dur:0.18, gain:0.04, type:'triangle'}), 20);
+}
 
     function openOverlay(mode){
       clearTimers();
@@ -581,6 +671,7 @@
       clearTimers();
       award.classList.remove('is-open','is-tierup','is-rankup','is-top');
       award.removeAttribute('data-phase');
+      award.removeAttribute('data-tier');
       award.setAttribute('aria-hidden','true');
     }
 
@@ -604,14 +695,34 @@
 
       setBadge(iconSrc);
       setTierClass(divIndex);
+      award.dataset.tier = String(divIndex); // 0/1/2 -> drives FX intensity
 
       badge.classList.add('anim-up');
 
-      timers.push(setTimeout(()=>{ award.dataset.phase='impact'; beep('impact'); }, 900));
+      timers.push(setTimeout(()=>{ award.dataset.phase='impact'; sfxTier(); }, 900));
       timers.push(setTimeout(()=>{ award.dataset.phase='reveal'; beep('up'); }, 1350));
       timers.push(setTimeout(()=>{ award.dataset.phase='done'; }, 3000));
       timers.push(setTimeout(closeOverlay, 3000 + 2000));
     }
+    function playTierDown({rankName, iconSrc, divIndex, accentColor="#01a7ef"}){
+  openOverlay('tierUp'); // reuse tier mode (no label)
+  award.classList.add('is-down');
+  award.style.setProperty('--accent', accentColor);
+  award.dataset.tier = String(divIndex);
+
+  subText.textContent = 'Division decreased • Syncing…';
+  rightText.textContent = 'AUTO';
+  labelTop.textContent = 'DIVISION DOWN';
+  labelName.textContent = rankName;
+
+  setBadge(iconSrc);
+  setTierClass(divIndex);
+
+  // phases: open -> impact -> done (short)
+  timers.push(setTimeout(()=>{ award.dataset.phase='impact'; }, 650));
+  timers.push(setTimeout(()=>{ award.dataset.phase='done'; }, 1500));
+  timers.push(setTimeout(()=>{ award.classList.remove('is-down'); closeOverlay(); }, 1500 + 1400));
+}
 
     function playRankUp({rankName, iconSrc, isTop=false, accentColor="#23f3ff"}){
       openOverlay('rankUp');
@@ -626,14 +737,33 @@
       setBadge(iconSrc);
       setTierClass(0);
       badge.classList.add('anim-up');
+      sfxRankRiser();
 
-      timers.push(setTimeout(()=>{ award.dataset.phase='impact'; beep('impact'); }, 1050));
-      timers.push(setTimeout(()=>{ award.dataset.phase='reveal'; beep('up'); }, 1300));
+      timers.push(setTimeout(()=>{ award.dataset.phase='impact'; sfxRankImpact(); }, 1050));
+      timers.push(setTimeout(()=>{ award.dataset.phase='reveal'; sfxRankHero(); }, 1300));
       timers.push(setTimeout(()=>{ award.dataset.phase='done'; }, 2150));
 
       const hold = isTop ? 3200 : 2600;
       timers.push(setTimeout(closeOverlay, 2150 + hold));
     }
+    
+    function playRankDown({rankName, iconSrc, accentColor="#23f3ff"}){
+  openOverlay('rankUp');
+  award.classList.add('is-down');
+  award.style.setProperty('--accent', accentColor);
+
+  subText.textContent = 'Rank decreased • Syncing…';
+  rightText.textContent = 'AUTO';
+  labelTop.textContent = 'RANK DOWN';
+  labelName.textContent = rankName;
+
+  setBadge(iconSrc);
+  setTierClass(0);
+
+  timers.push(setTimeout(()=>{ award.dataset.phase='impact'; }, 900));
+  timers.push(setTimeout(()=>{ award.dataset.phase='done'; }, 2000));
+  timers.push(setTimeout(()=>{ award.classList.remove('is-down'); closeOverlay(); }, 2000 + 1800));
+}
 
     // Buttons
     let divIndex = 0;
