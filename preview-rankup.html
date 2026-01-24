@@ -571,6 +571,88 @@
   transform: scale(.95);
   will-change: opacity, transform;
 }
+    .glowBurst{
+  position:absolute;
+  inset:-120%;
+  border-radius:999px;
+  opacity:0;
+  pointer-events:none;
+  mix-blend-mode: screen;
+  background: radial-gradient(circle at 50% 50%,
+    color-mix(in srgb, var(--accent) 30%, transparent),
+    color-mix(in srgb, var(--accent) 16%, transparent),
+    transparent 62%
+  );
+  filter: blur(22px);
+  transform: scale(.35);
+  will-change: opacity, transform, filter;
+}
+    .falling{
+  position:absolute;
+  inset:-20%;
+  opacity:0;
+  pointer-events:none;
+  mix-blend-mode: screen;
+  background:
+    radial-gradient(circle, rgba(255,255,255,.10) 1px, transparent 2px) 0 0/ 80px 80px,
+    radial-gradient(circle, color-mix(in srgb, var(--accent) 18%, transparent) 1px, transparent 2px) 20px 30px/ 110px 110px,
+    radial-gradient(circle, color-mix(in srgb, var(--accent) 12%, transparent) 1px, transparent 2px) 40px 10px/ 140px 140px;
+  filter: blur(.2px);
+  transform: translateY(-40px);
+  will-change: transform, opacity;
+}
+    .wingFlare{
+  position:absolute;
+  top: 18%;
+  width: 55%;
+  height: 60%;
+  opacity:0;
+  pointer-events:none;
+  mix-blend-mode: screen;
+  background: radial-gradient(circle at 30% 50%,
+    color-mix(in srgb, var(--accent) 28%, transparent),
+    transparent 60%
+  );
+  filter: blur(10px);
+  will-change: transform, opacity;
+}
+.wingFlare.left{ left: -8%; transform: translateX(-20px) scale(.9); }
+.wingFlare.right{ right: -8%; transform: translateX(20px) scale(.9); }
+
+/* flare during assembly/reveal */
+#award[data-phase="open"] .wingFlare,
+#award[data-phase="reveal"] .wingFlare{
+  animation: wingFlareIn 900ms ease forwards;
+}
+@keyframes wingFlareIn{
+  0%{ opacity:0; }
+  35%{ opacity:.65; transform: translateX(0) scale(1.05); }
+  100%{ opacity:0; transform: translateX(0) scale(1.15); }
+}
+
+/* show particles from open to done */
+#award[data-phase="open"] .falling,
+#award[data-phase="impact"] .falling,
+#award[data-phase="reveal"] .falling,
+#award[data-phase="done"] .falling{
+  opacity:.55;
+  animation: fallingMove 2.6s linear infinite;
+}
+
+@keyframes fallingMove{
+  from{ transform: translateY(-40px); }
+  to{ transform: translateY(120px); }
+}
+
+/* expands beyond screen during reveal */
+#award[data-phase="reveal"] .glowBurst{
+  animation: glowBurstOut 1200ms cubic-bezier(.12,.95,.18,1) forwards;
+}
+@keyframes glowBurstOut{
+  0%{ opacity:0; transform: scale(.25); }
+  18%{ opacity:.85; transform: scale(.55); }
+  100%{ opacity:0; transform: scale(1.35); }
+}
 
 /* show rays on impact/reveal softly */
 #award[data-phase="impact"] .rays{
@@ -590,6 +672,15 @@
   35%{ opacity:.55; transform: scale(1.06); }
   100%{ opacity:.22; transform: scale(1.02); }
 }
+    .label{
+  left:50% !important;
+  transform: translateX(-50%) translateY(0) !important;
+  width: min(900px, 92vw);
+  text-align:center !important;
+}
+    
+    /* Disable diagonal sweep completely (user request) */
+.rankBadge__sweep{ display:none !important; }
     
   </style>
 </head>
@@ -624,8 +715,10 @@
 
     <div class="center">
       <div class="impactFlash" aria-hidden="true"></div>
+      <div class="glowBurst" aria-hidden="true"></div>
       <div class="rays" aria-hidden="true"></div>
       <div class="sparks" aria-hidden="true"></div>
+      <div class="falling" aria-hidden="true"></div>
 
       <div class="rankBadge tier-0 animated" id="badge">
   <div class="rankBadge__img" id="rankIcon" aria-hidden="true"></div>
@@ -635,6 +728,8 @@
   <div class="slice s2" aria-hidden="true"></div>
   <div class="slice s3" aria-hidden="true"></div>
   <div class="slice s4" aria-hidden="true"></div>
+  <div class="wingFlare left" aria-hidden="true"></div>
+  <div class="wingFlare right" aria-hidden="true"></div>
 
   <span class="rankBadge__halo" aria-hidden="true"></span>
   <span class="rankBadge__sigil" aria-hidden="true"></span>
@@ -729,7 +824,7 @@
       badge.classList.add(`tier-${Math.max(0, Math.min(2, divIndex))}`);
     }
 
-    function playTierUp({rankName, iconSrc, divIndex, accentColor="#23f3ff"}){
+    function playTierUp({rankName, iconSrc, divIndex, accentColor="#01a7ef"}){
       openOverlay('tierUp');
       award.style.setProperty('--accent', accentColor);
       subText.textContent = 'Division upgrade • Apex-style evolution.';
@@ -800,7 +895,7 @@ document.getElementById('btnTierUp').addEventListener('click', ()=>{
     rankName: 'REAPER',
     iconSrc: 'assets/ranks/reaper.webp',
     divIndex,
-    accentColor: ACCENT_BY_RANK.reaper || "#9bb1f6"
+    accentColor: ACCENT_BY_RANK.reaper
   });
 });
 
