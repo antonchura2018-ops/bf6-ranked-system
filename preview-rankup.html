@@ -1,1 +1,117 @@
+<!doctype html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>RankUp Preview</title>
+  <style>
+    body{ margin:0; background:#0b1020; color:#eaf2ff; font-family:system-ui,Segoe UI,Roboto,Arial; }
+    .wrap{ max-width:1000px; margin:28px auto; padding:0 16px; }
+    .row{ display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
+    button{
+      padding:10px 14px; border-radius:12px;
+      border:1px solid rgba(234,242,255,.18);
+      background: rgba(255,255,255,.06);
+      color:#eaf2ff; font-weight:700; cursor:pointer;
+    }
+    button:hover{ border-color: rgba(35,243,255,.35); }
 
+    /* ===== PASTE YOUR RANKUP CSS HERE ===== */
+    /* 1) встав сюди CSS вашого overlay (#rankup) */
+    /* 2) + патч TierDots */
+    /* 3) + патч Evolution (evoHalo/evoSigil/evoStamp) */
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h2>Rank Ceremony Preview (Dev)</h2>
+    <div class="row">
+      <button id="btnTierUp">Tier Up (III→II→I)</button>
+      <button id="btnRankUp">Rank Up</button>
+      <button id="btnClose">Close</button>
+    </div>
+    <p style="opacity:.75;margin-top:14px">
+      Тут ти тестиш анімації без матчів і без localStorage — просто дивишся “як у грі”.
+    </p>
+  </div>
+
+  <!-- ===== PASTE YOUR RANKUP HTML HERE ===== -->
+  <!-- ВСТАВ СЮДИ ваш готовий #rankup overlay (повністю) -->
+
+  <script>
+    // Якщо у вас вже є window.showRankUp/showTierUp на сайті — тут вони будуть "моки" для превʼю.
+    const rankup = document.getElementById('rankup');
+
+    function setPhase(p){ rankup.dataset.phase = p; }
+
+    function openOverlay(){
+      rankup.classList.add('is-open');
+      rankup.setAttribute('aria-hidden','false');
+    }
+    function closeOverlay(){
+      rankup.classList.remove('is-open');
+      rankup.removeAttribute('data-phase');
+      rankup.classList.remove('is-tierup','is-rankup');
+      rankup.setAttribute('aria-hidden','true');
+    }
+
+    function applyTier(divIndex){
+      const dots = document.querySelectorAll('#tierDots .tierDot');
+      if(!dots.length) return;
+      dots.forEach((d,i)=>{
+        d.classList.toggle('is-on', i <= divIndex);
+        d.classList.remove('is-justOn');
+      });
+      const just = document.querySelector(`#tierDots .tierDot[data-i="${divIndex}"]`);
+      if(just) just.classList.add('is-justOn');
+      setTimeout(()=>{ if(just) just.classList.remove('is-justOn'); }, 750);
+    }
+
+    // Demo TierUp
+    let divIndex = 0; // 0..2
+    window.showTierUp = function(){
+      openOverlay();
+      rankup.classList.add('is-tierup');
+
+      applyTier(divIndex);
+
+      setPhase('open');
+      setTimeout(()=>setPhase('impact'), 650);
+      setTimeout(()=>setPhase('reveal'), 900);
+      setTimeout(()=>setPhase('done'), 1300);
+    };
+
+    // Demo RankUp
+    window.showRankUp = function({toTierName="NEXUS"} = {}){
+      openOverlay();
+      rankup.classList.add('is-rankup');
+
+      const nameEl = document.getElementById('evoRankName');
+      if(nameEl) nameEl.textContent = toTierName;
+
+      setPhase('open');
+      setTimeout(()=>setPhase('collapse'), 1000);
+      setTimeout(()=>setPhase('impact'), 1700);
+      setTimeout(()=>setPhase('reveal'), 2000);
+      setTimeout(()=>setPhase('done'), 3600);
+    };
+
+    document.getElementById('btnTierUp')?.addEventListener('click', ()=>{
+      divIndex = Math.min(2, divIndex + 1);
+      showTierUp();
+    });
+
+    document.getElementById('btnRankUp')?.addEventListener('click', ()=>{
+      divIndex = 0;
+      applyTier(divIndex);
+      showRankUp({toTierName:"NEXUS"});
+    });
+
+    document.getElementById('btnClose')?.addEventListener('click', closeOverlay);
+
+    window.addEventListener('keydown', (e)=>{
+      if(e.key === 'Escape' && rankup?.classList.contains('is-open')) closeOverlay();
+    });
+  </script>
+</body>
+</html>
