@@ -1,312 +1,159 @@
 <!doctype html>
-<html lang="en">
+<html lang="uk">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>RankUp Preview</title>
-
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Award Ceremony Preview (No Rift / No Swap)</title>
   <style>
-    /* ===== Preview page UI ===== */
+    :root{
+      --bg:#070A12;
+      --ink:#EAF2FF;
+      --muted:#98A2B3;
+
+      --c1:#23f3ff;   /* cyan */
+      --c2:#a855ff;   /* purple */
+      --c3:#ff3df2;   /* magenta */
+      --border: rgba(234,242,255,.12);
+    }
+
     body{
       margin:0;
-      background: radial-gradient(circle at top, #0b0f1a, #05070d);
-      color:#e5e7eb;
-      font-family: Segoe UI, system-ui, sans-serif;
-      padding: 24px;
-    }
-    .controls{
-      display:flex;
-      gap:12px;
-      flex-wrap:wrap;
-      align-items:center;
-      margin-bottom: 18px;
-    }
-    .btn{
-      padding: 10px 14px;
-      border-radius: 12px;
-      border: 1px solid rgba(34,211,238,0.35);
-      background: rgba(34,211,238,0.14);
-      color:#a5f3fc;
-      cursor:pointer;
-      font-weight: 700;
-      letter-spacing: .3px;
-    }
-    .btn:hover{ background: rgba(34,211,238,0.22); }
-    .btn.ghost{
-      border-color: rgba(251,113,133,0.35);
-      background: rgba(251,113,133,0.10);
-      color:#fecdd3;
-    }
-    .btn.ghost:hover{ background: rgba(251,113,133,0.16); }
-    .note{ color:#9ca3af; font-size:12px; }
-
-    /* =========================
-       NEW RANKUP STYLE PACK
-       (TierUp v2 + RankUp Evolution)
-       transform/opacity + gradients
-       ========================= */
-
-    :root{
-      --ru-bg:#070A12;
-      --ru-ink:#EAF2FF;
-      --ru-muted:#98A2B3;
-      --ru-c1:#23f3ff;
-      --ru-c2:#a855ff;
-      --ru-c3:#ff3df2;
-      --ru-border: rgba(234,242,255,.10);
+      background: radial-gradient(1200px 700px at 50% 10%, rgba(168,85,255,.15), transparent 60%),
+                  radial-gradient(900px 500px at 70% 85%, rgba(35,243,255,.10), transparent 60%),
+                  var(--bg);
+      color:var(--ink);
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
     }
 
-    .rankup{
+    /* ===== Preview UI ===== */
+    .wrap{ max-width:1000px; margin:28px auto; padding:0 16px; }
+    .row{ display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
+    button{
+      padding:10px 14px; border-radius:12px;
+      border:1px solid rgba(234,242,255,.18);
+      background: rgba(255,255,255,.06);
+      color:var(--ink); font-weight:800; cursor:pointer;
+      box-shadow: 0 10px 30px rgba(0,0,0,.25);
+    }
+    button:hover{ border-color: rgba(35,243,255,.35); }
+    .pill{
+      padding:8px 12px; border-radius:999px;
+      border:1px solid rgba(234,242,255,.12);
+      background: rgba(255,255,255,.04);
+      color: rgba(234,242,255,.72);
+      font-size:12px;
+    }
+
+    /* =========================================================
+       AWARD CEREMONY OVERLAY (NEW) — NO RIFT, NO SWAP
+       ========================================================= */
+    #award{
       position:fixed; inset:0; z-index:9999;
       display:grid; place-items:center;
       opacity:0; pointer-events:none;
-      transition: opacity .18s ease;
+      transition: opacity .22s ease;
     }
-    .rankup.is-open{ opacity:1; pointer-events:auto; }
+    #award.is-open{ opacity:1; pointer-events:auto; }
 
-    .rankup__veil{
+    .veil{
       position:absolute; inset:0;
-      background: radial-gradient(900px 520px at 50% 40%, rgba(0,0,0,.35), rgba(0,0,0,.92));
+      background: radial-gradient(900px 500px at 50% 35%, rgba(0,0,0,.22), rgba(0,0,0,.82));
       opacity:0;
     }
-    .rankup.is-open .rankup__veil{ opacity:1; transition: opacity .18s ease; }
+    #award.is-open .veil{ animation: veilIn .32s ease forwards; }
+    @keyframes veilIn{ to{ opacity:1; } }
 
-    .rankup__grain{
+    .grain{
       position:absolute; inset:-20%;
-      opacity:.12;
-      pointer-events:none;
-      mix-blend-mode:overlay;
       background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='.35'/%3E%3C/svg%3E");
+      mix-blend-mode: overlay;
+      opacity:0;
+      pointer-events:none;
     }
+    #award.is-open .grain{ animation: grainIn .32s ease .05s forwards; }
+    @keyframes grainIn{ to{ opacity:.16; } }
 
-    .rankup__stage{
+    .stage{
       position:relative;
-      width:min(980px, 92vw);
-      height:min(560px, 76vh);
-      border-radius:26px;
+      width:min(860px, 92vw);
+      height:min(520px, 76vh);
+      border-radius:28px;
       overflow:hidden;
-      background:
-        radial-gradient(900px 520px at 50% 45%, rgba(35,243,255,.06), rgba(0,0,0,0) 60%),
-        radial-gradient(900px 520px at 50% 55%, rgba(168,85,255,.05), rgba(0,0,0,0) 65%),
-        rgba(7,10,18,0.55);
-      border:1px solid rgba(255,255,255,0.05);
-      box-shadow: 0 70px 200px rgba(0,0,0,0.78);
-      transform: translateY(14px) scale(.98);
+      background: linear-gradient(180deg, rgba(255,255,255,.045), rgba(255,255,255,.02));
+      border:1px solid var(--border);
+      box-shadow: 0 40px 130px rgba(0,0,0,.55);
       opacity:0;
-      will-change: transform, opacity;
+      transform: translateY(14px) scale(.985);
+      will-change: transform, opacity, filter;
     }
-    .rankup.is-open .rankup__stage{
-      animation: ruStageIn .45s cubic-bezier(.2,.9,.2,1) .05s forwards;
-    }
-    @keyframes ruStageIn{ to{ opacity:1; transform: translateY(0) scale(1); } }
-
-    .rankup__scan{
-      position:absolute; inset:0;
-      background: repeating-linear-gradient(180deg, rgba(234,242,255,.06) 0, rgba(234,242,255,.06) 1px, transparent 1px, transparent 11px);
-      opacity:.12;
-      mix-blend-mode:overlay;
-      animation: ruScanMove 3.2s linear infinite;
-      pointer-events:none;
-    }
-    @keyframes ruScanMove{ to{ background-position: 0 140px; } }
-
-    .rankup__burst{
-      position:absolute; inset:-30%;
-      background:
-        radial-gradient(closest-side at 50% 50%, rgba(255,255,255,.16), transparent 60%),
-        radial-gradient(closest-side at 50% 50%, rgba(35,243,255,.14), transparent 70%),
-        radial-gradient(closest-side at 50% 50%, rgba(168,85,255,.12), transparent 75%);
-      opacity:0;
-      transform: scale(.75);
-      mix-blend-mode:screen;
-      pointer-events:none;
-      will-change: transform, opacity;
+    #award.is-open .stage{ animation: stageIn .55s cubic-bezier(.2,.9,.2,1) .05s forwards; }
+    @keyframes stageIn{
+      to{ opacity:1; transform: translateY(0) scale(1); }
     }
 
-    .rankup__flash{
+    /* subtle scanlines */
+    .scan{
       position:absolute; inset:0;
       background:
-        radial-gradient(closest-side at 50% 45%, rgba(255,255,255,.48), transparent 60%),
-        radial-gradient(closest-side at 50% 55%, rgba(35,243,255,.24), transparent 70%),
-        radial-gradient(closest-side at 50% 55%, rgba(168,85,255,.20), transparent 75%);
-      opacity:0;
-      mix-blend-mode:screen;
+        linear-gradient(90deg, rgba(35,243,255,.08), transparent 40%),
+        repeating-linear-gradient(180deg, rgba(234,242,255,.08) 0, rgba(234,242,255,.08) 1px, transparent 1px, transparent 7px);
+      opacity:.30;
+      mix-blend-mode: screen;
+      animation: scanMove 3.2s linear infinite;
       pointer-events:none;
-      will-change: opacity;
     }
-
-    /* Director FX layers */
-    .rankup__beams, .rankup__chroma, .rankup__shards{
-      position:absolute; inset:0;
-      opacity:0;
-      pointer-events:none;
-      will-change: opacity, transform;
-      mix-blend-mode:screen;
-    }
-    .rankup__beams{
-      background: conic-gradient(from 180deg, transparent 0deg, rgba(35,243,255,.10) 20deg, transparent 55deg, rgba(168,85,255,.08) 110deg, transparent 360deg);
-      transform: scale(.98) rotate(0deg);
-    }
-    .rankup__chroma{
-      background:
-        radial-gradient(closest-side at 50% 50%, rgba(255,0,255,.14), transparent 62%),
-        radial-gradient(closest-side at 50% 50%, rgba(0,255,255,.12), transparent 68%);
-      transform: translate3d(0,0,0);
-    }
-    .rankup__shards{
-      background: repeating-linear-gradient(90deg, rgba(35,243,255,0) 0, rgba(35,243,255,0) 18px, rgba(35,243,255,.18) 19px, rgba(35,243,255,0) 28px);
-      transform: translate3d(0,0,0) scale(1.02);
-    }
+    @keyframes scanMove{ to{ background-position: 220px 0, 0 140px; } }
 
     /* HUD */
-    .rankup__hud{
+    .hud{
       position:absolute; left:24px; right:24px; top:20px;
-      display:flex; justify-content:space-between;
+      display:flex; align-items:flex-start; justify-content:space-between;
       pointer-events:none;
       opacity:.92;
-      z-index: 6;
     }
-    .rankup__kicker{
-      font-size:14px; letter-spacing:.22em; text-transform:uppercase;
+    .kicker{
+      font-size:14px;
+      letter-spacing:.22em;
+      text-transform:uppercase;
       color:rgba(234,242,255,.85);
     }
-    .rankup__sub{ margin-top:8px; font-size:12px; color:rgba(152,162,179,.9); letter-spacing:.06em; }
-    .rankup__hudRight{ font-size:12px; color:rgba(234,242,255,.72); letter-spacing:.1em; text-transform:uppercase; }
-
-    /* Rift */
-    .rankup__riftWrap{ position:absolute; inset:0; display:grid; place-items:center; pointer-events:none; z-index:2; }
-    .rankup__rift{
-      position:relative;
-      width:min(420px, 66vw);
-      height:min(520px, 76vh);
-      opacity:0;
-      transform: translateY(10px) scaleX(.65) scaleY(.92) skewX(-8deg);
-      will-change: transform, opacity;
+    .sub{
+      margin-top:8px;
+      font-size:12px;
+      color:rgba(152,162,179,.9);
+      letter-spacing:.06em;
+      max-width: 520px;
     }
-    .rankup__rift::before{
-      content:"";
+    .right{
+      text-align:right;
+      font-size:12px;
+      color:rgba(234,242,255,.72);
+      letter-spacing:.1em;
+      text-transform:uppercase;
+    }
+
+    /* Center group */
+    .center{
       position:absolute; inset:0;
-      background:
-        radial-gradient(200px 280px at 50% 50%, rgba(35,243,255,.20), transparent 62%),
-        radial-gradient(260px 320px at 50% 50%, rgba(168,85,255,.16), transparent 70%);
-      border-radius:999px;
-      opacity:.95;
-    }
-    .rankup__riftEdge{
-      position:absolute; inset:-8% -18%;
-      background: repeating-linear-gradient(90deg, rgba(35,243,255,0) 0, rgba(35,243,255,0) 18px, rgba(35,243,255,.18) 19px, rgba(35,243,255,0) 26px);
-      opacity:0;
-    }
-
-    /* Emblems */
-    .rankup__emblems{ position:absolute; inset:0; display:grid; place-items:center; pointer-events:none; z-index:5; }
-    .rankup__emblem{
-      width:220px; height:220px;
-      border-radius:26px;
       display:grid; place-items:center;
-      position:absolute;
-      background: rgba(255,255,255,.04);
-      border:1px solid rgba(234,242,255,.10);
-      will-change: transform, opacity, filter;
-    }
-    .rankup__badge{
-      width:150px; height:150px;
-      border-radius:18px;
-      display:grid; place-items:center;
-      position:relative;
-    }
-    .rankup__img{ width:120px; height:120px; object-fit:contain; pointer-events:none; }
-
-    .rankup__emblem--new{
-      opacity:0;
-      transform: translateY(22px) scale(.78);
-      filter: blur(.6px) drop-shadow(0 0 26px rgba(168,85,255,.25));
-    }
-
-    /* CTA */
-    .rankup__cta{
-      position:absolute; left:0; right:0; bottom:22px;
-      display:flex; justify-content:center;
-      opacity:0;
-      transform: translateY(10px);
-      will-change: transform, opacity;
-      z-index:6;
-    }
-    .rankup__btn{
-      border:1px solid rgba(35,243,255,.26);
-      background: linear-gradient(180deg, rgba(35,243,255,.16), rgba(168,85,255,.12));
-      color:var(--ru-ink);
-      padding:12px 18px;
-      border-radius:16px;
-      cursor:pointer;
-      font-weight:700;
-    }
-
-    /* ===== Tier Dots (3 segments) ===== */
-    #rankupNew{ position:absolute; }
-    .tierDots{
-      position:absolute;
-      left:50%;
-      top: calc(50% + 118px);
-      transform: translateX(-50%);
-      display:flex;
-      gap:10px;
-      padding:8px 12px;
-      border-radius:999px;
-      border:1px solid rgba(234,242,255,.12);
-      background: rgba(0,0,0,.18);
-      backdrop-filter: blur(6px);
-      opacity:0;
       pointer-events:none;
-      will-change: transform, opacity;
-      z-index: 6;
     }
-    .tierDot{
-      width:10px; height:10px; border-radius:999px;
-      background: rgba(234,242,255,.12);
-      box-shadow:none;
-      transform: translateY(0) scale(1);
-      will-change: transform, opacity, box-shadow;
-    }
-    .tierDot.is-on{
-      background: rgba(35,243,255,.65);
-      box-shadow: 0 0 10px rgba(35,243,255,.35), 0 0 22px rgba(168,85,255,.18);
-    }
-    #rankup.is-open .tierDots{
-      opacity:1;
-      transform: translateX(-50%) translateY(0);
-    }
-    #rankup.is-tierup .tierDots{ animation: tdWrapIn .55s cubic-bezier(.2,.9,.2,1) forwards; }
-    @keyframes tdWrapIn{
-      0%{ opacity:0; transform: translateX(-50%) translateY(10px) scale(.98); }
-      100%{ opacity:1; transform: translateX(-50%) translateY(0) scale(1); }
-    }
-    #rankup.is-tierup .tierDot.is-justOn{ animation: tdPing .7s cubic-bezier(.2,.95,.2,1) forwards; }
-    @keyframes tdPing{
-      0%{ transform: translateY(0) scale(.9); box-shadow:none; }
-      40%{ transform: translateY(-2px) scale(1.35); box-shadow: 0 0 12px rgba(35,243,255,.55), 0 0 26px rgba(168,85,255,.22); }
-      100%{ transform: translateY(0) scale(1); box-shadow: 0 0 10px rgba(35,243,255,.35), 0 0 22px rgba(168,85,255,.18); }
-    }
-    #rankup[data-phase="done"] .tierDot.is-on{ animation: tdBreath 2.2s ease-in-out infinite; }
-    @keyframes tdBreath{ 0%,100%{ opacity:.95; } 50%{ opacity:1; } }
-    #rankup[data-top="1"] .tierDots{ display:none !important; }
 
-    /* ===== RankUp Evolution layers ===== */
-    #rankup.is-rankup .evoHalo,
-    #rankup.is-rankup .evoSigil{
+    /* FX: halo + sigil */
+    .evoHalo, .evoSigil{
       position:absolute;
       left:50%; top:50%;
-      transform: translate(-50%,-50%) scale(.9);
-      width: min(520px, 78vmin);
-      height: min(520px, 78vmin);
+      transform: translate(-50%,-50%) scale(.92);
+      width: min(540px, 78vmin);
+      height: min(540px, 78vmin);
       border-radius: 999px;
-      pointer-events:none;
       opacity:0;
-      will-change: transform, opacity, filter;
+      pointer-events:none;
       mix-blend-mode: screen;
-      z-index: 3;
+      will-change: transform, opacity, filter;
     }
-    #rankup.is-rankup .evoHalo{
+
+    .evoHalo{
       background:
         radial-gradient(closest-side, rgba(35,243,255,.12), transparent 62%),
         radial-gradient(closest-side, rgba(168,85,255,.10), transparent 68%),
@@ -321,7 +168,8 @@
         );
       filter: blur(10px);
     }
-    #rankup.is-rankup .evoSigil{
+
+    .evoSigil{
       background:
         radial-gradient(circle at 50% 50%, transparent 56%, rgba(234,242,255,.14) 57%, transparent 58%),
         radial-gradient(circle at 50% 50%, transparent 66%, rgba(35,243,255,.18) 67%, transparent 68%),
@@ -332,488 +180,425 @@
         );
       filter: blur(.2px);
     }
-    #rankup.is-rankup .evoStamp{
+
+    /* Flash burst on impact */
+    .burst{
+      position:absolute; inset:-30%;
+      background:
+        radial-gradient(closest-side at 50% 50%, rgba(255,255,255,.22), transparent 60%),
+        radial-gradient(closest-side at 50% 50%, rgba(35,243,255,.18), transparent 70%),
+        radial-gradient(closest-side at 50% 50%, rgba(168,85,255,.16), transparent 75%);
+      opacity:0;
+      transform: scale(.75);
+      mix-blend-mode: screen;
+      pointer-events:none;
+      will-change: transform, opacity;
+    }
+
+    /* Badge card */
+    .badgeWrap{
+      position:relative;
+      width: 250px; height: 250px;
+      border-radius: 28px;
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      border:1px solid rgba(234,242,255,.14);
+      backdrop-filter: blur(6px);
+      display:grid; place-items:center;
+      box-shadow: 0 30px 80px rgba(0,0,0,.35);
+      opacity:0;
+      transform: translateY(10px) scale(.98);
+      will-change: transform, opacity, filter;
+    }
+
+    /* Your rank icon */
+    .badgeImg{
+      width: 190px; height: 190px;
+      object-fit: contain;
+      image-rendering: auto;
+      filter: drop-shadow(0 0 16px rgba(35,243,255,.18));
+    }
+
+    /* Tier dots (3 segments) */
+    .tierDots{
       position:absolute;
       left:50%;
-      top: calc(50% + 190px);
+      top: calc(50% + 182px);
+      transform: translateX(-50%);
+      display:flex;
+      gap:10px;
+      padding:8px 12px;
+      border-radius:999px;
+      border:1px solid rgba(234,242,255,.12);
+      background: rgba(0,0,0,.18);
+      backdrop-filter: blur(6px);
+      opacity:0;
+      pointer-events:none;
+      will-change: transform, opacity;
+    }
+    .tierDot{
+      width:10px; height:10px; border-radius:999px;
+      background: rgba(234,242,255,.12);
+      transform: translateY(0) scale(1);
+      will-change: transform, opacity, box-shadow;
+    }
+    .tierDot.is-on{
+      background: rgba(35,243,255,.65);
+      box-shadow: 0 0 10px rgba(35,243,255,.35), 0 0 22px rgba(168,85,255,.18);
+    }
+    .tierDot.is-justOn{
+      animation: tdPing .7s cubic-bezier(.2,.95,.2,1) forwards;
+    }
+    @keyframes tdPing{
+      0%{ transform: translateY(0) scale(.9); box-shadow:none; }
+      40%{ transform: translateY(-2px) scale(1.35);
+           box-shadow: 0 0 12px rgba(35,243,255,.55), 0 0 26px rgba(168,85,255,.22); }
+      100%{ transform: translateY(0) scale(1);
+            box-shadow: 0 0 10px rgba(35,243,255,.35), 0 0 22px rgba(168,85,255,.18); }
+    }
+
+    /* Stamp text */
+    .stamp{
+      position:absolute;
+      left:50%;
+      top: calc(50% + 235px);
       transform: translateX(-50%) translateY(10px);
       text-align:center;
       pointer-events:none;
       opacity:0;
       will-change: transform, opacity;
-      z-index: 7;
     }
-    #rankup.is-rankup .evoStamp__top{
+    .stampTop{
       font-size:12px;
       letter-spacing:.22em;
       text-transform:uppercase;
       color: rgba(234,242,255,.82);
     }
-    #rankup.is-rankup .evoStamp__name{
+    .stampName{
       margin-top:8px;
-      font-size:26px;
+      font-size:22px;
       font-weight:900;
       letter-spacing:.18em;
       text-transform:uppercase;
       color: rgba(234,242,255,.92);
-      text-shadow:
-  0 0 16px rgba(35,243,255,.22),
-  0 0 30px rgba(168,85,255,.18);
+      text-shadow: 0 0 16px rgba(35,243,255,.22);
     }
 
-    /* ===== PHASES ===== */
+    /* =========================================================
+       PHASES (open → impact → reveal → done)
+       ========================================================= */
 
-    /* OPEN */
-    .rankup[data-phase="open"] .rankup__rift{ animation: ruRiftOpen 1.0s cubic-bezier(.2,.9,.2,1) forwards; }
-    .rankup[data-phase="open"] .rankup__riftEdge{ animation: ruEdgeIn .7s ease .25s forwards; }
-    .rankup[data-phase="open"] .rankup__beams{ animation: ruBeamsIn 1.05s ease forwards; }
-    #rankup.is-rankup[data-phase="open"] .evoHalo{ animation: evoHaloOpen 1.0s cubic-bezier(.2,.9,.2,1) forwards; }
-
-    @keyframes ruRiftOpen{
-      0%{ opacity:0; transform: translateY(10px) scaleX(.65) scaleY(.92) skewX(-8deg); }
-      100%{ opacity:1; transform: translateY(0) scaleX(1) scaleY(1) skewX(-6deg); }
+    /* OPEN: pre-charge (halo appears, badge comes in gently) */
+    #award[data-phase="open"] .evoHalo{
+      animation: haloOpen 900ms cubic-bezier(.2,.9,.2,1) forwards;
     }
-    @keyframes ruEdgeIn{ to{ opacity:.55; } }
-    @keyframes ruBeamsIn{
-      0%{ opacity:0; transform: scale(.98) rotate(0deg); }
-      100%{ opacity:.65; transform: scale(1.02) rotate(10deg); }
-    }
-    @keyframes evoHaloOpen{
-  0%{ opacity:0; transform: translate(-50%,-50%) scale(.78); filter: blur(14px); }
-  100%{ opacity:.38; transform: translate(-50%,-50%) scale(1.02); filter: blur(10px); }
-}
-
-    /* COLLAPSE */
-    .rankup[data-phase="collapse"] .rankup__emblem--old{ animation: ruOldCollapse .7s cubic-bezier(.2,.9,.2,1) forwards; }
-    .rankup[data-phase="collapse"] .rankup__shards{ animation: ruShardsPull .70s ease forwards; }
-    #rankup.is-rankup[data-phase="collapse"] .evoHalo{ opacity:.35; transform: translate(-50%,-50%) scale(1.0); }
-
-    @keyframes ruOldCollapse{
-      0%{ opacity:1; transform: translateY(0) scale(1) rotate(0deg); }
-      35%{ transform: translateY(18px) scale(.92) rotate(-3deg); }
-      70%{ transform: translateY(46px) scale(.62) rotate(-10deg) skewX(-8deg); opacity:.55; filter: blur(1px); }
-      100%{ opacity:0; transform: translateY(86px) scale(.28) rotate(-18deg) skewX(-10deg); filter: blur(2px); }
-    }
-    @keyframes ruShardsPull{
-      0%{ opacity:0; transform: translate3d(0,0,0) scale(1.02); }
-      25%{ opacity:.65; }
-      100%{ opacity:0; transform: translate3d(0,60px,0) scale(.88); }
+    @keyframes haloOpen{
+      0%{ opacity:0; transform: translate(-50%,-50%) scale(.86); }
+      100%{ opacity:.22; transform: translate(-50%,-50%) scale(.98); }
     }
 
-    /* IMPACT */
-    .rankup[data-phase="impact"] .rankup__stage{ animation: ruImpactShake .28s ease forwards; }
-    .rankup[data-phase="impact"] .rankup__burst{ animation: ruBurst .6s ease forwards; }
-    .rankup[data-phase="impact"] .rankup__flash{ animation: ruFlash .35s ease forwards; }
-    .rankup[data-phase="impact"] .rankup__chroma{ animation: ruChromaHit .22s ease forwards; }
-    #rankup.is-rankup[data-phase="impact"] .evoHalo{ animation: evoHaloImpact .55s ease forwards; }
-    #rankup.is-rankup[data-phase="impact"] .evoSigil{ animation: evoSigilImpact .55s ease forwards; }
+    #award[data-phase="open"] .badgeWrap{
+      animation: badgeIn 700ms cubic-bezier(.2,.9,.2,1) 80ms forwards;
+    }
+    @keyframes badgeIn{
+      0%{ opacity:0; transform: translateY(14px) scale(.98); }
+      100%{ opacity:1; transform: translateY(0) scale(1); }
+    }
 
-    @keyframes ruFlash{ 0%{opacity:0;} 22%{opacity:1;} 100%{opacity:0;} }
-    @keyframes ruBurst{
+    /* IMPACT: hero moment (flash + micro zoom + halo burst + sigil pop) */
+    #award[data-phase="impact"] .burst{
+      animation: burst 520ms ease forwards;
+    }
+    @keyframes burst{
       0%{ opacity:0; transform: scale(.75); }
       35%{ opacity:1; transform: scale(1); }
       100%{ opacity:0; transform: scale(1.12); }
     }
-    @keyframes ruChromaHit{
-      0%{ opacity:0; transform: translate3d(0,0,0); }
-      35%{ opacity:.75; transform: translate3d(8px,-2px,0); }
-      100%{ opacity:0; transform: translate3d(-6px,2px,0); }
-    }
-    @keyframes ruImpactShake{
-      0%{ transform: translateY(0) scale(1); }
-      20%{ transform: translateY(-2px) translateX(2px) scale(1.012); }
-      45%{ transform: translateY(2px) translateX(-2px) scale(1.010); }
-      70%{ transform: translateY(-1px) translateX(1px) scale(1.006); }
-      100%{ transform: translateY(0) translateX(0) scale(1); }
-    }
-    @keyframes evoHaloImpact{
-  0%{ opacity:.35; transform: translate(-50%,-50%) scale(1.02); filter: blur(10px); }
-  30%{ opacity:1; transform: translate(-50%,-50%) scale(1.18) rotate(10deg); filter: blur(7px); }
-  100%{ opacity:.40; transform: translate(-50%,-50%) scale(1.05) rotate(0deg); filter: blur(10px); }
-}
 
+    #award[data-phase="impact"] .stage{
+      animation: impactStage 300ms ease forwards;
     }
-    @keyframes evoSigilImpact{
+    @keyframes impactStage{
+      0%{ transform: translateY(0) scale(1); filter:none; }
+      25%{ transform: translateY(-1px) translateX(1px) scale(1.01); filter: brightness(1.07); }
+      55%{ transform: translateY(1px) translateX(-1px) scale(1.008); filter: brightness(1.03); }
+      100%{ transform: translateY(0) translateX(0) scale(1); filter:none; }
+    }
+
+    #award[data-phase="impact"] .evoHalo{
+      animation: haloImpact 560ms ease forwards;
+    }
+    @keyframes haloImpact{
+      0%{ opacity:.22; transform: translate(-50%,-50%) scale(.98); filter: blur(10px); }
+      35%{ opacity:.95; transform: translate(-50%,-50%) scale(1.06) rotate(8deg); filter: blur(8px); }
+      100%{ opacity:.30; transform: translate(-50%,-50%) scale(1.02) rotate(0deg); filter: blur(10px); }
+    }
+
+    #award[data-phase="impact"] .evoSigil{
+      animation: sigilImpact 560ms ease forwards;
+    }
+    @keyframes sigilImpact{
       0%{ opacity:0; transform: translate(-50%,-50%) scale(.92); }
       35%{ opacity:.85; transform: translate(-50%,-50%) scale(1.03); }
-      100%{ opacity:.18; transform: translate(-50%,-50%) scale(1.02); }
+      100%{ opacity:.16; transform: translate(-50%,-50%) scale(1.02); }
     }
 
-    /* REVEAL */
-    .rankup[data-phase="reveal"] .rankup__emblem--new{ animation: evoNewEmblem 1.15s cubic-bezier(.12,.95,.18,1) forwards; }
-    .rankup[data-phase="reveal"] .rankup__beams{ opacity:.55; transform: scale(1.03) rotate(14deg); }
-    #rankup.is-rankup[data-phase="reveal"] .evoStamp{ animation: evoStampIn .8s cubic-bezier(.2,.9,.2,1) .15s forwards; }
-
-    @keyframes evoNewEmblem{
-      0%{ opacity:0; transform: translateY(90px) scale(.55); filter: blur(1px) drop-shadow(0 0 30px rgba(168,85,255,.35)); }
-      45%{ opacity:1; transform: translateY(-10px) scale(1.08); filter: blur(0) drop-shadow(0 0 28px rgba(35,243,255,.28)); }
-      100%{ opacity:1; transform: translateY(0) scale(1); filter: blur(0) drop-shadow(0 0 20px rgba(35,243,255,.20)); }
+    /* REVEAL: badge “becomes a reward” (overshoot + settle) + stamp appears */
+    #award[data-phase="reveal"] .badgeWrap{
+      animation: badgeReveal 1150ms cubic-bezier(.12,.95,.18,1) forwards;
     }
-    @keyframes evoStampIn{
+    @keyframes badgeReveal{
+      0%{ opacity:1; transform: translateY(10px) scale(.86); filter: drop-shadow(0 0 26px rgba(168,85,255,.18)); }
+      45%{ transform: translateY(-8px) scale(1.08); filter: drop-shadow(0 0 30px rgba(35,243,255,.24)); }
+      100%{ transform: translateY(0) scale(1); filter: drop-shadow(0 0 18px rgba(35,243,255,.18)); }
+    }
+
+    #award[data-phase="reveal"] .stamp{
+      animation: stampIn 820ms cubic-bezier(.2,.9,.2,1) 140ms forwards;
+    }
+    @keyframes stampIn{
       0%{ opacity:0; transform: translateX(-50%) translateY(14px); }
       100%{ opacity:1; transform: translateX(-50%) translateY(0); }
     }
 
-    /* DONE */
-    .rankup[data-phase="done"] .rankup__cta{ animation: ruCtaIn .55s cubic-bezier(.2,.9,.2,1) forwards; }
-    @keyframes ruCtaIn{ to{ opacity:1; transform: translateY(0); } }
-
-    .rankup[data-phase="done"] .rankup__emblem--new{ opacity:1; transform: translateY(0) scale(1); filter:none; }
-    .rankup[data-phase="done"] .rankup__emblem--old{ opacity:0; }
-    
-    #rankup.is-rankup[data-phase="done"] .rankup__emblem--new{
-  filter: drop-shadow(0 0 18px rgba(35,243,255,.18)) drop-shadow(0 0 34px rgba(168,85,255,.14));
-}
-
-    /* top rank: keep rift alive */
-    #rankup[data-top="1"][data-phase="done"] .rankup__rift{ opacity: 1; }
-    #rankup[data-top="1"][data-phase="done"] .rankup__riftEdge{ opacity: .55; }
-    #rankup[data-top="1"][data-phase="done"] .rankup__burst{ opacity: .18; transform: scale(1.05); }
-
-    /* RankUp evolution: keep halo alive faintly */
-    #rankup.is-rankup[data-phase="done"] .evoHalo{ opacity:.22; transform: translate(-50%,-50%) scale(1.02); }
-
-    /* =========================
-       TIERUP v2 overrides
-       ========================= */
-    #rankup[data-type="tier"] .rankup__riftWrap{ display:none !important; }
-    #rankup[data-type="tier"] #rankupOld{ display:none !important; }
-    #rankup[data-type="tier"] .rankup__cta{ display:none !important; }
-    #rankup[data-type="tier"] .rankup__stage{ height: min(360px, 58vh); }
-
-    #rankup[data-type="tier"][data-phase="impact"] .rankup__stage{ animation: tdStageHit .22s ease forwards; }
-    @keyframes tdStageHit{
-      0%{ transform: translateY(0) scale(1); }
-      40%{ transform: translateY(-1px) scale(1.01); }
-      100%{ transform: translateY(0) scale(1); }
+    /* DONE: show tier dots + subtle afterglow breathing */
+    #award[data-phase="done"] .tierDots{
+      opacity:1;
+      transform: translateX(-50%) translateY(0);
     }
-    #rankup[data-type="tier"][data-phase="reveal"] .rankup__emblem--new{
-      animation: tdNewPop .55s cubic-bezier(.2,.95,.2,1) forwards;
+
+    #award[data-phase="done"] .badgeWrap{
+      animation: afterglow 2400ms ease-in-out infinite;
     }
-    @keyframes tdNewPop{
-      0%{ opacity:0; transform: translateY(12px) scale(.92); }
-      60%{ opacity:1; transform: translateY(-2px) scale(1.06); }
-      100%{ opacity:1; transform: translateY(0) scale(1); }
+    @keyframes afterglow{
+      0%,100%{ filter: drop-shadow(0 0 10px rgba(35,243,255,.14)); }
+      50%{ filter: drop-shadow(0 0 22px rgba(168,85,255,.18)); }
     }
+
+    #award[data-phase="done"] .evoHalo{
+      opacity:.18;
+      transform: translate(-50%,-50%) scale(1.02);
+    }
+
+    /* Hide tierDots for top rank */
+    #award.is-top .tierDots{ display:none; }
 
     /* Reduced motion */
     @media (prefers-reduced-motion: reduce){
-      .rankup__beams, .rankup__chroma, .rankup__shards{ display:none!important; }
-      .evoHalo,.evoSigil,.evoStamp{ display:none!important; }
+      .scan,.evoHalo,.evoSigil,.grain{ animation:none !important; }
+      #award[data-phase="open"] .badgeWrap,
+      #award[data-phase="impact"] .burst,
+      #award[data-phase="impact"] .stage,
+      #award[data-phase="impact"] .evoHalo,
+      #award[data-phase="impact"] .evoSigil,
+      #award[data-phase="reveal"] .badgeWrap,
+      #award[data-phase="reveal"] .stamp,
+      #award[data-phase="done"] .badgeWrap{
+        animation:none !important;
+      }
+      #award.is-open{ opacity:1; }
+      .stage{ opacity:1; transform:none; }
+      .badgeWrap{ opacity:1; transform:none; filter:none; }
+      .tierDots{ opacity:1; transform: translateX(-50%); }
+      .stamp{ opacity:1; transform: translateX(-50%); }
     }
-    #rankup.is-rankup[data-phase="done"] .rankup__emblem--new{
-  filter: drop-shadow(0 0 18px rgba(35,243,255,.18))
-          drop-shadow(0 0 34px rgba(168,85,255,.14));
-}
-    /* ===== FORCE EVO TIMELINE (preview) ===== */
-#rankup.is-rankup .evoHalo,
-#rankup.is-rankup .evoSigil,
-#rankup.is-rankup .evoStamp{
-  opacity: 0 !important;
-}
-
-/* OPEN */
-#rankup.is-rankup[data-phase="open"] .evoHalo{
-  opacity: .25 !important;
-  transform: translate(-50%,-50%) scale(.96) !important;
-}
-
-/* IMPACT */
-#rankup.is-rankup[data-phase="impact"] .evoHalo{
-  opacity: .95 !important;
-}
-#rankup.is-rankup[data-phase="impact"] .evoSigil{
-  opacity: .85 !important;
-}
-
-/* REVEAL */
-#rankup.is-rankup[data-phase="reveal"] .evoStamp{
-  opacity: 1 !important;
-}
-
-/* DONE */
-#rankup.is-rankup[data-phase="done"] .evoHalo{
-  opacity: .22 !important;
-}
-    
   </style>
 </head>
 <body>
-
-  <div class="controls">
-    <button class="btn" id="btnRankUp">Play RankUp</button>
-    <button class="btn" id="btnTierUp">Play TierUp</button>
-    <button class="btn ghost" id="btnHide">Hide</button>
-    <span class="note">Preview page — does not touch matches/RR.</span>
+  <div class="wrap">
+    <h2>Award Ceremony Preview (clean)</h2>
+    <div class="row">
+      <button id="btnTierUp">Tier Up (III→II→I)</button>
+      <button id="btnRankUp">Rank Up</button>
+      <button id="btnTop">Top Rank (EIDOLON)</button>
+      <button id="btnClose">Close</button>
+      <span class="pill">auto-close • no rift • no swap</span>
+    </div>
+    <p style="opacity:.78;margin-top:14px;line-height:1.45">
+      Натискай кнопки і дивись “як у грі”. Коли буде вау — переносимо 1:1 в index.html.
+    </p>
   </div>
 
-  <!-- ===== RANKUP OVERLAY (Digital Rift Protocol / Desktop) ===== -->
-  <div class="rankup" id="rankup" aria-hidden="true" data-phase="idle" data-type="rank" data-top="0">
-    <div class="rankup__veil"></div>
-    <div class="rankup__grain" aria-hidden="true"></div>
+  <!-- ===== Award overlay (new, standalone) ===== -->
+  <div id="award" aria-hidden="true">
+    <div class="veil"></div>
+    <div class="grain" aria-hidden="true"></div>
 
-    <div class="rankup__stage" role="dialog" aria-label="Rank up cinematic">
-      <div class="rankup__scan" aria-hidden="true"></div>
-      <div class="rankup__burst" aria-hidden="true"></div>
-      <div class="rankup__flash" aria-hidden="true"></div>
-      <div class="rankup__beams" aria-hidden="true"></div>
-      <div class="rankup__chroma" aria-hidden="true"></div>
-      <div class="rankup__shards" aria-hidden="true"></div>
+    <div class="stage" role="dialog" aria-label="Award ceremony">
+      <div class="scan" aria-hidden="true"></div>
+      <div class="burst" aria-hidden="true"></div>
 
-      <!-- Evolution FX layers -->
-      <div class="evoHalo" aria-hidden="true"></div>
-      <div class="evoSigil" aria-hidden="true"></div>
-
-      <div class="evoStamp" aria-hidden="true">
-        <div class="evoStamp__top">NEW RANK</div>
-        <div class="evoStamp__name" id="evoRankName">EIDOLON</div>
-      </div>
-
-      <!-- Top HUD -->
-      <header class="rankup__hud">
-        <div class="rankup__hudLeft">
-          <div class="rankup__kicker">RANKED UPDATE</div>
-          <div class="rankup__sub" id="rankupSub">Protocol: Digital Rift • Opening breach…</div>
+      <header class="hud">
+        <div>
+          <div class="kicker">RANKED UPDATE</div>
+          <div class="sub" id="subText">Award Ceremony • Preparing…</div>
         </div>
-        <div class="rankup__hudRight" id="rankupRight">NEW RANK UNLOCKED</div>
+        <div class="right" id="rightText">AUTO</div>
       </header>
 
-      <!-- Rift -->
-      <div class="rankup__riftWrap" aria-hidden="true">
-        <div class="rankup__rift">
-          <div class="rankup__riftEdge"></div>
+      <div class="center">
+        <div class="evoHalo" aria-hidden="true"></div>
+        <div class="evoSigil" aria-hidden="true"></div>
+
+        <div class="badgeWrap" id="badgeWrap">
+          <!-- Put your real icon path here -->
+          <img class="badgeImg" id="rankIcon" alt="Rank icon" src="assets/ranks/eidolon.webp">
+        </div>
+
+        <div class="tierDots" id="tierDots" aria-hidden="true">
+          <span class="tierDot" data-i="0"></span>
+          <span class="tierDot" data-i="1"></span>
+          <span class="tierDot" data-i="2"></span>
+        </div>
+
+        <div class="stamp" aria-hidden="true">
+          <div class="stampTop" id="stampTop">NEW RANK</div>
+          <div class="stampName" id="stampName">EIDOLON</div>
         </div>
       </div>
-
-      <!-- Emblems -->
-      <div class="rankup__emblems">
-        <!-- OLD -->
-        <div class="rankup__emblem rankup__emblem--old" id="rankupOld">
-          <div class="rankup__badge">
-            <img class="rankup__img" id="rankupOldImg" alt="Old rank badge" />
-          </div>
-        </div>
-
-        <!-- NEW -->
-        <div class="rankup__emblem rankup__emblem--new" id="rankupNew">
-          <div class="rankup__badge rankup__badge--new">
-            <img class="rankup__img" id="rankupNewImg" alt="New rank badge" />
-          </div>
-
-          <!-- Tier (Division) indicator: 3 segments -->
-          <div class="tierDots" id="tierDots" aria-hidden="true">
-            <span class="tierDot" data-i="0"></span>
-            <span class="tierDot" data-i="1"></span>
-            <span class="tierDot" data-i="2"></span>
-          </div>
-        </div>
-      </div>
-
-      <!-- CTA -->
-      <footer class="rankup__cta">
-        <button class="rankup__btn" id="rankupContinue" type="button">Continue</button>
-      </footer>
     </div>
   </div>
 
   <script>
-    // =============================
-    // DIGITAL RIFT PROTOCOL - PUBLIC API (SAFE)
-    // =============================
+    const award = document.getElementById('award');
+    const subText = document.getElementById('subText');
+    const rightText = document.getElementById('rightText');
+    const stampTop = document.getElementById('stampTop');
+    const stampName = document.getElementById('stampName');
+    const rankIcon = document.getElementById('rankIcon');
 
-    function _ruGetRoot() { return document.getElementById("rankup"); }
+    let timers = [];
+    const clearTimers = ()=>{ timers.forEach(t=>clearTimeout(t)); timers=[]; };
 
-    function _ruSetPhase(root, phase) { root.dataset.phase = phase; }
+    // WebAudio micro SFX (no files needed). Works when triggered by button click.
+    let audioCtx = null;
+    function beep(type='up'){
+      try{
+        if(!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const t0 = audioCtx.currentTime;
+        const o = audioCtx.createOscillator();
+        const g = audioCtx.createGain();
+        o.type = 'sine';
 
-    function _ruSetOpen(root, isOpen) {
-      root.classList.toggle("is-open", isOpen);
-      root.setAttribute("aria-hidden", isOpen ? "false" : "true");
+        const base = (type==='impact') ? 220 : (type==='up' ? 520 : 300);
+        o.frequency.setValueAtTime(base, t0);
+        o.frequency.exponentialRampToValueAtTime(base * (type==='impact' ? 3.2 : 1.6), t0 + 0.08);
+
+        g.gain.setValueAtTime(0.0001, t0);
+        g.gain.exponentialRampToValueAtTime(type==='impact' ? 0.12 : 0.08, t0 + 0.02);
+        g.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.18);
+
+        o.connect(g); g.connect(audioCtx.destination);
+        o.start(t0);
+        o.stop(t0 + 0.22);
+      }catch(e){}
     }
 
-    function _ruTierKeyFromText(t) {
-      return String(t || "").trim().split(" ")[0].toLowerCase();
+    function setPhase(p){ award.dataset.phase = p; }
+
+    function openOverlay(){
+      clearTimers();
+      award.classList.add('is-open');
+      award.setAttribute('aria-hidden','false');
+    }
+    function closeOverlay(){
+      clearTimers();
+      award.classList.remove('is-open','is-top');
+      award.removeAttribute('data-phase');
+      award.setAttribute('aria-hidden','true');
     }
 
-    function _ruIsTopRankText(toText) {
-      const t = String(toText || "").toUpperCase();
-      return t.includes("EIDOLON");
+    function setTier(divIndex){
+      const dots = [...document.querySelectorAll('#tierDots .tierDot')];
+      dots.forEach((d,i)=>{
+        d.classList.toggle('is-on', i <= divIndex);
+        d.classList.remove('is-justOn');
+      });
+      const just = document.querySelector(`#tierDots .tierDot[data-i="${divIndex}"]`);
+      if(just) just.classList.add('is-justOn');
+      timers.push(setTimeout(()=>{ if(just) just.classList.remove('is-justOn'); }, 720));
     }
 
-    function _ruFill(payload) {
-      const root = _ruGetRoot();
-      if (!root) return null;
+    // Core ceremony (open → impact → reveal → done → auto close)
+    function playAward({rankName, iconSrc, isTop=false, divIndex=2, mode='rankUp'}){
+      openOverlay();
 
-      const subEl = document.getElementById("rankupSub");
-      const rightEl = document.getElementById("rankupRight");
-      const oldImg = document.getElementById("rankupOldImg");
-      const newImg = document.getElementById("rankupNewImg");
-      const btn = document.getElementById("rankupContinue");
+      award.classList.toggle('is-top', !!isTop);
 
-      const fromText = payload?.fromText || "";
-      const toText = payload?.toText || "";
-      const rrText = payload?.rrText || "";
+      stampName.textContent = rankName;
+      stampTop.textContent = (mode === 'tierUp') ? 'DIVISION UP' : 'NEW RANK';
+      rightText.textContent = 'AUTO';
+      subText.textContent = (mode === 'tierUp')
+        ? 'Division update • Confirmed.'
+        : 'Award Ceremony • Promotion confirmed.';
 
-      if (subEl) subEl.textContent = payload?.subText || subEl.textContent;
-      if (rightEl) rightEl.textContent = rrText;
+      if(iconSrc) rankIcon.src = iconSrc;
 
-      if (oldImg) oldImg.src = "assets/ranks/" + _ruTierKeyFromText(fromText) + ".webp";
-      if (newImg) newImg.src = "assets/ranks/" + _ruTierKeyFromText(toText) + ".webp";
-
-      if (btn) btn.style.display = "none";
-
-      // Update evo stamp name
-      const evoName = document.getElementById("evoRankName");
-      if (evoName) evoName.textContent = _ruTierKeyFromText(toText).toUpperCase();
-
-      return { root, btn, toText, fromText, toTextRaw: toText };
-    }
-
-    var _ruTimers = [];
-    function _ruLater(fn, ms) {
-      var id = setTimeout(fn, ms);
-      _ruTimers.push(id);
-      return id;
-    }
-    function _ruClearTimers() {
-      while (_ruTimers.length) clearTimeout(_ruTimers.pop());
-    }
-
-    function _ruRunTimeline(root, steps) {
-      let i = 0;
-      function next() {
-        if (i >= steps.length) return;
-        const s = steps[i++];
-        _ruSetPhase(root, s.phase);
-        if (s.ms != null) _ruLater(next, s.ms);
-      }
-      next();
-    }
-
-    window.hideRankUp = function () {
-      _ruClearTimers();
-      try { document.activeElement && document.activeElement.blur(); } catch(e) {}
-
-      const root = _ruGetRoot();
-      if (!root) return;
-
-      root.classList.remove("is-tierup");
-      root.classList.remove("is-rankup");
-      root.classList.remove("is-rankup");
-      _ruSetOpen(root, false);
-      _ruSetPhase(root, "idle");
-
-      const btn = document.getElementById("rankupContinue");
-      if (btn) btn.style.display = "none";
-    };
-
-    window.showRankUp = function (payload) {
-      window.hideRankUp();
-      _ruClearTimers();
-
-      const res = _ruFill(payload);
-      if (!res) return;
-
-      const { root, btn, toTextRaw } = res;
-
-      root.dataset.type = "rank";
-      root.classList.add("is-rankup");
-      root.dataset.top = _ruIsTopRankText(toTextRaw) ? "1" : "0";
-      root.classList.add("is-rankup");
-
-      _ruSetOpen(root, true);
-
-      const timeline = [
-        { phase: "open", ms: 1000 },
-        { phase: "collapse", ms: 700 },
-        { phase: "impact", ms: 280 },
-        { phase: "reveal", ms: 1050 },
-        { phase: "done", ms: null }
-      ];
-
-      _ruRunTimeline(root, timeline);
-
-      if (btn) {
-        _ruLater(() => { btn.style.display = "inline-block"; }, 1000 + 700 + 280 + 1050 - 200);
-      }
-    };
-
-    window.showTierUp = function (payload) {
-      window.hideRankUp();
-      _ruClearTimers();
-
-      const res = _ruFill(payload);
-      if (!res) return;
-
-      const { root } = res;
-      root.classList.remove("is-rankup");
-
-      root.dataset.type = "tier";
-      root.dataset.top = "0";
-      root.classList.remove("is-rankup");
-
-      _ruSetOpen(root, true);
-
-      // Tier dots logic
-      const dotsWrap = document.getElementById("tierDots");
-      if (dotsWrap) {
-        const dots = dotsWrap.querySelectorAll(".tierDot");
-        for (let i = 0; i < dots.length; i++) dots[i].classList.remove("is-on", "is-justOn");
-
-        const di = (payload && payload.divIndex !== undefined && payload.divIndex !== null) ? Number(payload.divIndex) : 0;
-        const onCount = Math.max(0, Math.min(3, di + 1));
-        for (let i = 0; i < onCount; i++) dots[i].classList.add("is-on");
-
-        // Ping when upgraded
-        if (payload && payload.rrText && String(payload.rrText).toUpperCase().includes("UPGRADED")) {
-          const justOnIndex = Math.max(0, Math.min(2, di));
-          dots[justOnIndex].classList.add("is-justOn");
-          _ruLater(() => dots[justOnIndex].classList.remove("is-justOn"), 720);
-        }
-
-        root.classList.add("is-tierup");
-        _ruLater(() => root.classList.remove("is-tierup"), 1400);
+      if(!isTop){
+        setTier(divIndex);
       }
 
-      const timeline = [
-        { phase: "impact", ms: 220 },
-        { phase: "reveal", ms: 650 },
-        { phase: "done", ms: 350 }
-      ];
+      // Timeline tuned for “award feel”
+      setPhase('open');
 
-      _ruRunTimeline(root, timeline);
+      // Impact: 200–300ms hero moment
+      timers.push(setTimeout(()=>{
+        setPhase('impact');
+        beep('impact');
+      }, mode === 'tierUp' ? 520 : 1050));
 
-      _ruLater(() => window.hideRankUp(), 1400);
-    };
+      // Reveal: badge becomes reward
+      timers.push(setTimeout(()=>{
+        setPhase('reveal');
+        beep('up');
+      }, mode === 'tierUp' ? 720 : 1300));
 
-    document.addEventListener("keydown", function (e) {
-      if (e.key === "Escape") window.hideRankUp();
-    });
+      // Done: hold (top rank holds a bit longer)
+      timers.push(setTimeout(()=>{
+        setPhase('done');
+      }, mode === 'tierUp' ? 1100 : 2300));
 
-    document.addEventListener("click", function (e) {
-      const t = e.target;
-      if (t && t.id === "rankupContinue") window.hideRankUp();
-    });
+      const holdMs = isTop ? 2600 : 1800; // from done to close
+      timers.push(setTimeout(()=>closeOverlay(), (mode === 'tierUp' ? 1100 : 2300) + holdMs));
+    }
 
-    // ===== Preview buttons =====
-    document.getElementById("btnRankUp").addEventListener("click", () => {
-      window.showRankUp({
-        fromText: "OUTCAST I",
-        toText: "THRALL III",
-        rrText: "NEW RANK UNLOCKED"
+    // Buttons
+    let divIndex = 0; // III→II→I as 0→1→2
+    document.getElementById('btnTierUp').addEventListener('click', ()=>{
+      divIndex = Math.min(2, divIndex + 1);
+      playAward({
+        rankName: 'MARAUDER',
+        iconSrc: 'assets/ranks/marauder.webp', // replace with real path
+        isTop: false,
+        divIndex,
+        mode: 'tierUp'
       });
     });
 
-    document.getElementById("btnTierUp").addEventListener("click", () => {
-      window.showTierUp({
-        fromText: "ARCHON III",
-        toText: "ARCHON II",
-        rrText: "TIER UPGRADED",
-        divIndex: 1
+    document.getElementById('btnRankUp').addEventListener('click', ()=>{
+      divIndex = 0;
+      playAward({
+        rankName: 'REAPER',
+        iconSrc: 'assets/ranks/reaper.webp', // replace with real path
+        isTop: false,
+        divIndex,
+        mode: 'rankUp'
       });
     });
 
-    document.getElementById("btnHide").addEventListener("click", () => {
-      window.hideRankUp();
+    document.getElementById('btnTop').addEventListener('click', ()=>{
+      playAward({
+        rankName: 'EIDOLON',
+        iconSrc: 'assets/ranks/eidolon.webp', // replace with real path
+        isTop: true,
+        divIndex: null,
+        mode: 'rankUp'
+      });
+    });
+
+    document.getElementById('btnClose').addEventListener('click', closeOverlay);
+
+    window.addEventListener('keydown', (e)=>{
+      if(e.key === 'Escape' && award.classList.contains('is-open')) closeOverlay();
     });
   </script>
 </body>
