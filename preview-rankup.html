@@ -129,18 +129,17 @@
       place-items:center;
       pointer-events:none;
     }
+    
     .center::before{
   content:"";
   position:absolute;
-  inset:-70%;
-  background:
-    radial-gradient(circle at 50% 50%,
-      color-mix(in srgb, var(--accent) 26%, transparent),
-      color-mix(in srgb, var(--accent) 12%, transparent),
-      transparent 65%
-    );
+  inset:-95%;
+  background: radial-gradient(circle at 50% 50%,
+    color-mix(in srgb, var(--accent) 20%, transparent),
+    transparent 64%
+  );
   opacity:1;
-  filter: blur(18px);
+  filter:none !important;
   pointer-events:none;
 }
     #award[data-phase="done"] .rankBadge__halo{
@@ -166,13 +165,6 @@
   will-change: transform, opacity, filter;
 }
 
-.rankBadge__img{
-  width: min(500px, 72vw);
-  height: min(500px, 72vw);
-  object-fit: contain;
-  filter: drop-shadow(0 0 16px rgba(0,0,0,.35));
-  transform: translateZ(0);
-}
 
     /* Layers */
     .rankBadge__halo,
@@ -203,7 +195,7 @@
           rgba(255,61,242,.14) 280deg,
           rgba(255,106,0,0) 360deg
         );
-      filter: blur(12px);
+      filter: none;
     }
 
     /* Sigil: crisp tech rings */
@@ -365,16 +357,7 @@
     }
 
     /* Text (minimal, Apex-like) */
-    .label{
-      position:absolute;
-      left:50%;
-      top: calc(50% + 250px);
-      transform: translateX(-50%) translateY(10px);
-      text-align:center;
-      opacity:0;
-      pointer-events:none;
-      will-change: opacity, transform;
-    }
+    
     .labelTop{
       font-size:12px;
       letter-spacing:.22em;
@@ -749,6 +732,29 @@
       transparent 360deg
     );
 }
+    .coreFlash{
+  position:absolute;
+  width: 22vmin;
+  height: 22vmin;
+  border-radius:999px;
+  opacity:0;
+  pointer-events:none;
+  background: radial-gradient(circle,
+    rgba(255,255,255,.22),
+    color-mix(in srgb, var(--accent) 26%, transparent),
+    transparent 70%
+  );
+  transform: scale(.6);
+  will-change: transform, opacity;
+}
+#award[data-phase="impact"] .coreFlash{
+  animation: corePop 360ms ease forwards;
+}
+@keyframes corePop{
+  0%{opacity:0; transform: scale(.55);}
+  35%{opacity:1; transform: scale(1.05);}
+  100%{opacity:0; transform: scale(1.35);}
+}
 
 /* Trigger animations on REVEAL (можеш перенести на IMPACT якщо хочеш) */
 #award[data-phase="reveal"] .creationGlow{
@@ -784,6 +790,58 @@
 
 /* Performance mode (optional): disable rays first */
 .fx-low .wingRays{ display:none !important; }
+
+    .impactFlash,
+.sparks,
+.falling,
+.wingFlare,
+.creationGlow,
+.wingWave,
+.wingRays{
+  mix-blend-mode: normal !important;
+}
+    .wingWave{
+  opacity:0;
+  filter:none !important;
+  background:
+    radial-gradient(circle at 18% 52%,
+      color-mix(in srgb, var(--accent) 42%, transparent) 0%,
+      transparent 40%
+    ),
+    radial-gradient(circle at 82% 52%,
+      color-mix(in srgb, var(--accent) 42%, transparent) 0%,
+      transparent 40%
+    );
+}
+    .stack{
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap: 22px;
+}
+.label{
+  position:static !important;
+  transform:none !important;
+  opacity:0;
+  text-align:center;
+  width: min(900px, 92vw);
+}
+#award.is-rankup[data-phase="reveal"] .label,
+#award.is-rankup[data-phase="done"] .label{
+  opacity:1;
+}
+    
+#award[data-phase="reveal"] .wingWave{
+  animation: wwPop 1050ms cubic-bezier(.12,.95,.18,1) forwards;
+}
+    
+    .scan{ display:none !important; }
+    .rays{ display:none !important; }
+    .glowBurst{ display:none !important; }
+    .scan{ display:none !important; }
+  
     
   </style>
 </head>
@@ -826,7 +884,9 @@
       <div class="rays" aria-hidden="true"></div>
       <div class="sparks" aria-hidden="true"></div>
       <div class="falling" aria-hidden="true"></div>
-
+      <div class="coreFlash" aria-hidden="true"></div>
+      
+      <div class="stack">
       <div class="rankBadge tier-0 animated" id="badge">
   <div class="rankBadge__img" id="rankIcon" aria-hidden="true"></div>
 
@@ -957,7 +1017,7 @@
       }, 1350));
 
       timers.push(setTimeout(()=>{ award.dataset.phase = 'done'; }, 3000));
-      timers.push(setTimeout(closeOverlay, 1050 + 1500)); // auto-close after done
+      timers.push(setTimeout(closeOverlay, 3000 + 2000)); // close 2s after done
     }
 
     function playRankUp({rankName, iconSrc, isTop=false, accentColor="#23f3ff"}){
@@ -990,7 +1050,7 @@
       timers.push(setTimeout(()=>{ award.dataset.phase = 'done'; }, 2150));
 
       const hold = isTop ? 3200 : 2600;
-      timers.push(setTimeout(closeOverlay, 3000 + hold));
+      timers.push(setTimeout(closeOverlay, 2150 + hold));
     }
 
     // Buttons
