@@ -3,24 +3,19 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Apex-style Badge Preview (Fullscreen TierUp + Animated Rewards)</title>
+  <title>Apex-style Badge Preview (Fullscreen, FPS-safe)</title>
   <style>
     :root{
       --bg:#070A12;
       --ink:#EAF2FF;
       --muted:#98A2B3;
-
-      /* Accent defaults (can be overridden per rank if you want later) */
-      --c1:#23f3ff;      /* cyan */
-      --c2:#a855ff;      /* purple */
-      --c3:#ff3df2;      /* magenta */
-      --hot:#ff6a00;     /* orange highlight */
+      --accent:#01a7ef;
     }
 
     body{
       margin:0;
-      background: radial-gradient(1200px 700px at 50% 10%, rgba(168,85,255,.12), transparent 60%),
-                  radial-gradient(900px 500px at 70% 85%, rgba(35,243,255,.10), transparent 60%),
+      background: radial-gradient(1200px 700px at 50% 10%, rgba(168,85,255,.10), transparent 60%),
+                  radial-gradient(900px 500px at 70% 85%, rgba(35,243,255,.08), transparent 60%),
                   var(--bg);
       color:var(--ink);
       font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
@@ -46,8 +41,7 @@
     }
 
     /* =========================================================
-       FULLSCREEN OVERLAY (APEX-STYLE)
-       - No big window / no card UI
+       FULLSCREEN OVERLAY (FPS-SAFE)
        ========================================================= */
     #award{
       position:fixed; inset:0; z-index:9999;
@@ -58,44 +52,23 @@
     #award.is-open{ opacity:1; pointer-events:auto; }
 
     .veil{
-  position:absolute; inset:0;
-  background:
-    radial-gradient(900px 520px at 50% 42%, color-mix(in srgb, var(--accent) 22%, transparent), rgba(0,0,0,.86)),
-    radial-gradient(1200px 720px at 50% 10%, color-mix(in srgb, var(--accent) 16%, transparent), transparent 60%),
-    radial-gradient(900px 560px at 70% 85%, color-mix(in srgb, var(--accent) 12%, transparent), transparent 62%),
-    linear-gradient(180deg, rgba(0,0,0,.78), rgba(0,0,0,.92));
-  opacity:0;
-}
+      position:absolute; inset:0;
+      background:
+        radial-gradient(900px 520px at 50% 42%,
+          color-mix(in srgb, var(--accent) 18%, transparent),
+          rgba(0,0,0,.88)
+        ),
+        radial-gradient(1200px 720px at 50% 10%,
+          color-mix(in srgb, var(--accent) 10%, transparent),
+          transparent 60%
+        ),
+        linear-gradient(180deg, rgba(0,0,0,.78), rgba(0,0,0,.92));
+      opacity:0;
+    }
     #award.is-open .veil{ animation: veilIn .26s ease forwards; }
     @keyframes veilIn{ to{ opacity:1; } }
 
-    .grain{
-      position:absolute; inset:-20%;
-      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='.35'/%3E%3C/svg%3E");
-      mix-blend-mode:overlay;
-      opacity:0;
-      pointer-events:none;
-      transform: translateZ(0);
-    }
-    #award.is-open .grain{ animation: grainIn .26s ease .05s forwards; }
-    @keyframes grainIn{ to{ opacity:.14; } }
-
-    .scan{
-  position:absolute; inset:0;
-  background: repeating-linear-gradient(180deg,
-    rgba(234,242,255,.05) 0,
-    rgba(234,242,255,.05) 1px,
-    transparent 1px,
-    transparent 7px
-  );
-  opacity:.12;
-  mix-blend-mode:screen;
-  animation: scanMove 3.2s linear infinite;
-  pointer-events:none;
-}
-    @keyframes scanMove{ to{ background-position: 220px 0, 0 140px; } }
-
-    /* Top minimal HUD (optional, Apex-like minimal) */
+    /* Minimal HUD (optional) */
     .hud{
       position:absolute; left:34px; right:34px; top:22px;
       display:flex; justify-content:space-between; gap:14px;
@@ -120,174 +93,52 @@
       color: rgba(234,242,255,.66);
     }
 
-    /* Center stack */
+    /* Center */
     .center{
       position:relative;
-      width: min(520px, 88vw);
-      height: min(520px, 70vh);
+      width: min(920px, 96vw);
+      height: min(820px, 86vh);
       display:grid;
       place-items:center;
       pointer-events:none;
+      will-change: transform;
     }
+
+    /* Backlight (NO blur) */
     .center::before{
-  content:"";
-  position:absolute;
-  inset:-70%;
-  background:
-    radial-gradient(circle at 50% 50%,
-      color-mix(in srgb, var(--accent) 26%, transparent),
-      color-mix(in srgb, var(--accent) 12%, transparent),
-      transparent 65%
-    );
-  opacity:1;
-  filter: blur(18px);
-  pointer-events:none;
-}
-    #award[data-phase="done"] .rankBadge__halo{
-  animation: haloIdle 1.8s ease-in-out infinite;
-}
-@keyframes haloIdle{
-  0%,100%{ opacity:.26; transform: scale(1.03); }
-  50%{ opacity:.44; transform: scale(1.08); }
-}
-
-    /* =========================================================
-       BADGE COMPONENT (ONE IMAGE + CSS LAYERS)
-       Apex-style “evolution” via tiers + upgrade burst
-       ========================================================= */
-    .rankBadge{
-  position:relative;
-  width: min(620px, 86vw);
-  height: min(620px, 86vw);
-  display:grid;
-  place-items:center;
-  transform: translateY(0) scale(1);
-  opacity: 1;
-  will-change: transform, opacity, filter;
-}
-
-
-    /* Layers */
-    .rankBadge__halo,
-    .rankBadge__sigil,
-    .rankBadge__sweep,
-    .rankBadge__embers{
+      content:"";
       position:absolute;
-      inset:-28%;
-      border-radius:999px;
+      inset:-95%;
+      background: radial-gradient(circle at 50% 50%,
+        color-mix(in srgb, var(--accent) 18%, transparent),
+        transparent 64%
+      );
+      opacity:1;
+      filter:none;
       pointer-events:none;
-      opacity:0;
-      transform: scale(.96);
-      mix-blend-mode:screen;
-      will-change: opacity, transform, filter;
     }
 
-    /* Halo: soft energy bloom */
-    .rankBadge__halo{
-      background:
-        radial-gradient(closest-side, rgba(255,255,255,.06), transparent 62%),
-        radial-gradient(closest-side, rgba(255,106,0,.10), transparent 68%),
-        conic-gradient(from 0deg,
-          rgba(255,106,0,0) 0deg,
-          rgba(255,106,0,.22) 36deg,
-          rgba(168,85,255,0) 110deg,
-          rgba(35,243,255,.16) 155deg,
-          rgba(255,106,0,0) 220deg,
-          rgba(255,61,242,.14) 280deg,
-          rgba(255,106,0,0) 360deg
-        );
-      filter: blur(12px);
-    }
-
-    /* Sigil: crisp tech rings */
-    .rankBadge__sigil{
-      background:
-        radial-gradient(circle at 50% 50%, transparent 56%, rgba(234,242,255,.10) 57%, transparent 58%),
-        radial-gradient(circle at 50% 50%, transparent 66%, rgba(255,106,0,.14) 67%, transparent 68%),
-        repeating-conic-gradient(from 0deg,
-          rgba(255,106,0,0) 0 12deg,
-          rgba(255,106,0,.14) 12deg 14deg,
-          rgba(255,106,0,0) 14deg 30deg
-        );
-      filter: none;
-    }
-
-    /* Sweep: one-time light pass (Apex-like shimmer) */
-    .rankBadge__sweep{
-      inset:-40%;
-      background:
-        linear-gradient(115deg,
-          rgba(255,255,255,0) 0%,
-          rgba(255,255,255,.26) 44%,
-          rgba(255,106,0,.18) 50%,
-          rgba(255,255,255,0) 62%
-        );
-      filter: blur(1px);
-      transform: rotate(18deg) translateX(-45%);
-      opacity:0;
-      mix-blend-mode:screen;
-    }
-
-    /* Embers: very subtle, short-lived */
-    .rankBadge__embers{
-      inset:-45%;
-      background:
-        radial-gradient(circle at 20% 30%, rgba(255,106,0,.12), transparent 40%),
-        radial-gradient(circle at 70% 60%, rgba(255,61,242,.10), transparent 42%,
-        transparent),
-        radial-gradient(circle at 55% 25%, rgba(35,243,255,.08), transparent 38%);
-      filter: none;
-      opacity:0;
+    /* Stack = badge + label centered together */
+    .stack{
+      position:relative;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      gap: 22px;
     }
 
     /* =========================================================
-       TIER EVOLUTION (III/II/I) — increase layer intensity
-       We map:
-       tier-0 = III (lowest)
-       tier-1 = II
-       tier-2 = I (highest)
+       FX LAYERS (FPS-SAFE): opacity + transform only
        ========================================================= */
 
-    /* tier-0: minimal */
-    .rankBadge.tier-0 .rankBadge__halo{ opacity:.14; transform: scale(.98); }
-    .rankBadge.tier-0 .rankBadge__sigil{ opacity:.06; transform: scale(.99); }
-
-    /* tier-1: stronger */
-    .rankBadge.tier-1 .rankBadge__halo{ opacity:.22; transform: scale(1.01); }
-    .rankBadge.tier-1 .rankBadge__sigil{ opacity:.12; transform: scale(1.01); }
-
-    /* tier-2: strongest */
-    .rankBadge.tier-2 .rankBadge__halo{ opacity:.32; transform: scale(1.04); filter: blur(11px); }
-    .rankBadge.tier-2 .rankBadge__sigil{ opacity:.18; transform: scale(1.03); }
-
-    /* Top rank styling tweak (EIDOLON) */
-    .rankBadge.is-top .rankBadge__halo{ opacity:.40; transform: scale(1.06); }
-    .rankBadge.is-top .rankBadge__sigil{ opacity:.22; transform: scale(1.05); }
-
-    /* =========================================================
-       UPGRADE MOMENT (TierUp / RankUp) — quick impact + sweep + settle
-       These run when we add class .anim-up to .rankBadge
-       ========================================================= */
-
-    .rankBadge.anim-up{
-      animation: badgePop 820ms cubic-bezier(.12,.95,.18,1) forwards;
-    }
-    @keyframes badgePop{
-      0%{ transform: translateY(6px) scale(.98); filter: none; }
-      35%{ transform: translateY(-8px) scale(1.07); filter: drop-shadow(0 0 18px rgba(255,106,0,.18)); }
-      100%{ transform: translateY(0) scale(1); filter: drop-shadow(0 0 14px rgba(255,106,0,.10)); }
-    }
-
-    /* Impact flash (fullscreen) */
     .impactFlash{
       position:absolute; inset:-30%;
       background:
-        radial-gradient(closest-side at 50% 50%, rgba(255,255,255,.20), transparent 60%),
-        radial-gradient(closest-side at 50% 50%, rgba(255,106,0,.16), transparent 70%),
-        radial-gradient(closest-side at 50% 50%, rgba(168,85,255,.12), transparent 75%);
+        radial-gradient(closest-side at 50% 50%, rgba(255,255,255,.18), transparent 60%),
+        radial-gradient(closest-side at 50% 50%, color-mix(in srgb, var(--accent) 18%, transparent), transparent 72%);
       opacity:0;
       transform: scale(.78);
-      mix-blend-mode:screen;
       pointer-events:none;
       will-change: opacity, transform;
     }
@@ -300,535 +151,333 @@
       100%{ opacity:0; transform: scale(1.12); }
     }
 
-    /* Micro zoom on impact (very short) */
+    /* Core flash (Apex-like) */
+    .coreFlash{
+      position:absolute;
+      width: 22vmin;
+      height: 22vmin;
+      border-radius:999px;
+      opacity:0;
+      pointer-events:none;
+      background: radial-gradient(circle,
+        rgba(255,255,255,.20),
+        color-mix(in srgb, var(--accent) 22%, transparent),
+        transparent 70%
+      );
+      transform: scale(.6);
+      will-change: transform, opacity;
+    }
+    #award[data-phase="impact"] .coreFlash{
+      animation: corePop 360ms ease forwards;
+    }
+    @keyframes corePop{
+      0%{opacity:0; transform: scale(.55);}
+      35%{opacity:1; transform: scale(1.05);}
+      100%{opacity:0; transform: scale(1.35);}
+    }
+
+    /* Creation glow burst */
+    .creationGlow{
+      position:absolute;
+      inset:-140%;
+      border-radius:999px;
+      pointer-events:none;
+      opacity:0;
+      transform: scale(.18);
+      will-change: transform, opacity;
+      background:
+        radial-gradient(circle at 50% 50%,
+          rgba(255,255,255,.12) 0%,
+          color-mix(in srgb, var(--accent) 22%, transparent) 20%,
+          color-mix(in srgb, var(--accent) 12%, transparent) 40%,
+          transparent 64%
+        );
+    }
+    #award[data-phase="reveal"] .creationGlow{
+      animation: cgPop 1150ms cubic-bezier(.12,.95,.18,1) forwards;
+    }
+    @keyframes cgPop{
+      0%   { opacity:0; transform: scale(.18); }
+      18%  { opacity:1; transform: scale(.52); }
+      100% { opacity:0; transform: scale(1.55); }
+    }
+
+    /* Wing creation: two side glows expanding outward */
+    .wingWave{
+      position:absolute;
+      inset:-110%;
+      border-radius:999px;
+      pointer-events:none;
+      opacity:0;
+      transform: scale(.55);
+      will-change: transform, opacity;
+      background:
+        radial-gradient(circle at 18% 52%,
+          color-mix(in srgb, var(--accent) 40%, transparent) 0%,
+          transparent 40%
+        ),
+        radial-gradient(circle at 82% 52%,
+          color-mix(in srgb, var(--accent) 40%, transparent) 0%,
+          transparent 40%
+        );
+    }
+    #award[data-phase="reveal"] .wingWave{
+      animation: wwPop 1050ms cubic-bezier(.12,.95,.18,1) forwards;
+    }
+    @keyframes wwPop{
+      0%   { opacity:0; transform: scale(.52); }
+      20%  { opacity:.95; transform: scale(.82); }
+      100% { opacity:0; transform: scale(1.40); }
+    }
+
+    /* Sparks (no blur) */
+    .sparks{
+      position:absolute;
+      inset:-35%;
+      opacity:0;
+      pointer-events:none;
+      background:
+        radial-gradient(circle at 20% 30%, color-mix(in srgb, var(--accent) 18%, transparent), transparent 38%),
+        radial-gradient(circle at 70% 55%, color-mix(in srgb, var(--accent) 14%, transparent), transparent 40%),
+        radial-gradient(circle at 55% 25%, rgba(255,255,255,.08), transparent 34%),
+        radial-gradient(circle at 35% 70%, color-mix(in srgb, var(--accent) 12%, transparent), transparent 42%);
+      transform: scale(.98);
+      will-change: opacity, transform;
+    }
+    #award[data-phase="open"] .sparks{ animation: sparksOpen 900ms ease forwards; }
+    #award[data-phase="reveal"] .sparks{ animation: sparksReveal 1200ms ease forwards; }
+    @keyframes sparksOpen{
+      0%{ opacity:0; transform: scale(.96); }
+      35%{ opacity:.55; }
+      100%{ opacity:.08; transform: scale(1.06); }
+    }
+    @keyframes sparksReveal{
+      0%{ opacity:.06; transform: scale(1.00); }
+      35%{ opacity:.45; transform: scale(1.10); }
+      100%{ opacity:0; transform: scale(1.16); }
+    }
+
+    /* Falling particles (no blur) */
+    .falling{
+      position:absolute;
+      inset:-20%;
+      opacity:0;
+      pointer-events:none;
+      background:
+        radial-gradient(circle, rgba(255,255,255,.10) 1px, transparent 2px) 0 0/ 90px 90px,
+        radial-gradient(circle, color-mix(in srgb, var(--accent) 16%, transparent) 1px, transparent 2px) 20px 30px/ 120px 120px,
+        radial-gradient(circle, color-mix(in srgb, var(--accent) 12%, transparent) 1px, transparent 2px) 40px 10px/ 150px 150px;
+      transform: translateY(-40px);
+      will-change: transform, opacity;
+    }
+    #award[data-phase="open"] .falling,
+    #award[data-phase="impact"] .falling,
+    #award[data-phase="reveal"] .falling,
+    #award[data-phase="done"] .falling{
+      opacity:.50;
+      animation: fallingMove 2.8s linear infinite;
+    }
+    @keyframes fallingMove{
+      from{ transform: translateY(-40px); }
+      to{ transform: translateY(140px); }
+    }
+
+    /* Micro zoom on impact (short) */
     #award[data-phase="impact"] .center{
       animation: microZoom 300ms ease forwards;
     }
     @keyframes microZoom{
-      0%{ transform: scale(1); filter:none; }
-      30%{ transform: scale(1.015); filter: brightness(1.06); }
-      100%{ transform: scale(1); filter:none; }
+      0%{ transform: scale(1); }
+      30%{ transform: scale(1.015); }
+      100%{ transform: scale(1); }
     }
 
-    /* Halo burst + sigil pop on impact */
+    /* =========================================================
+       BADGE (ONE IMAGE + slices)
+       ========================================================= */
+    .rankBadge{
+      position:relative;
+      width: min(760px, 92vw);
+      height: min(760px, 92vw);
+      display:grid;
+      place-items:center;
+      transform: translateY(0) scale(1);
+      opacity: 1;
+      will-change: transform, opacity;
+      --badge-url: url("assets/ranks/eidolon.webp");
+    }
+
+    .rankBadge__img{
+      width: min(600px, 82vw);
+      height: min(600px, 82vw);
+      background: var(--badge-url) center/contain no-repeat;
+      filter: drop-shadow(0 0 18px rgba(0,0,0,.35));
+      opacity:0; /* visible after assembly */
+    }
+
+    /* 4 slices */
+    .slice{
+      position:absolute;
+      inset: 8%;
+      background: var(--badge-url) center/contain no-repeat;
+      opacity:0;
+      will-change: transform, opacity;
+    }
+    .slice.s1{ clip-path: polygon(0 0, 50% 0, 50% 50%, 0 50%); }
+    .slice.s2{ clip-path: polygon(50% 0, 100% 0, 100% 50%, 50% 50%); }
+    .slice.s3{ clip-path: polygon(0 50%, 50% 50%, 50% 100%, 0 100%); }
+    .slice.s4{ clip-path: polygon(50% 50%, 100% 50%, 100% 100%, 50% 100%); }
+
+    #award[data-phase="open"] .slice{ animation: sliceIn 900ms cubic-bezier(.2,.9,.2,1) forwards; }
+    #award[data-phase="open"] .slice.s1{ transform: translate(-70px,-70px) scale(.92); }
+    #award[data-phase="open"] .slice.s2{ transform: translate(70px,-70px) scale(.92); }
+    #award[data-phase="open"] .slice.s3{ transform: translate(-70px,70px) scale(.92); }
+    #award[data-phase="open"] .slice.s4{ transform: translate(70px,70px) scale(.92); }
+
+    @keyframes sliceIn{
+      0%{ opacity:0; }
+      35%{ opacity:1; }
+      100%{ opacity:1; transform: translate(0,0) scale(1); }
+    }
+
+    /* Show final image from impact to end; hide slices after impact */
+    #award[data-phase="impact"] .rankBadge__img,
+    #award[data-phase="reveal"] .rankBadge__img,
+    #award[data-phase="done"] .rankBadge__img{ opacity:1; }
+
+    #award[data-phase="impact"] .slice,
+    #award[data-phase="reveal"] .slice,
+    #award[data-phase="done"] .slice{ opacity:0; transition: opacity 120ms ease; }
+
+    /* Halo (no blur) */
+    .rankBadge__halo{
+      position:absolute;
+      inset:-28%;
+      border-radius:999px;
+      pointer-events:none;
+      opacity:.18;
+      transform: scale(1.02);
+      will-change: transform, opacity;
+      background:
+        radial-gradient(closest-side, rgba(255,255,255,.06), transparent 62%),
+        radial-gradient(closest-side, color-mix(in srgb, var(--accent) 16%, transparent), transparent 68%),
+        conic-gradient(from 0deg,
+          rgba(255,255,255,0) 0deg,
+          color-mix(in srgb, var(--accent) 16%, transparent) 36deg,
+          rgba(255,255,255,0) 120deg,
+          color-mix(in srgb, var(--accent) 10%, transparent) 200deg,
+          rgba(255,255,255,0) 360deg
+        );
+    }
+
+    /* Tier strength */
+    .rankBadge.tier-0 .rankBadge__halo{ opacity:.14; transform: scale(.98); }
+    .rankBadge.tier-1 .rankBadge__halo{ opacity:.22; transform: scale(1.01); }
+    .rankBadge.tier-2 .rankBadge__halo{ opacity:.32; transform: scale(1.04); }
+    .rankBadge.is-top .rankBadge__halo{ opacity:.40; transform: scale(1.06); }
+
+    /* Impact halo burst */
     #award[data-phase="impact"] .rankBadge__halo{
       animation: haloBurst 560ms ease forwards;
     }
-    #award[data-phase="impact"] .rankBadge__sigil{
-      animation: sigilPop 560ms ease forwards;
-    }
     @keyframes haloBurst{
       0%{ opacity: .22; transform: scale(1.02); }
-      35%{ opacity: .95; transform: scale(1.10) rotate(8deg); }
-      100%{ opacity: .30; transform: scale(1.05) rotate(0deg); }
-    }
-    @keyframes sigilPop{
-      0%{ opacity: 0; transform: scale(.98); }
-      35%{ opacity: .75; transform: scale(1.06); }
-      100%{ opacity: .16; transform: scale(1.04); }
+      35%{ opacity: .85; transform: scale(1.10) rotate(8deg); }
+      100%{ opacity: .28; transform: scale(1.05) rotate(0deg); }
     }
 
-    /* Sweep runs once during reveal */
-    #award[data-phase="reveal"] .rankBadge__sweep{
-      animation: sweep 820ms cubic-bezier(.2,.9,.2,1) forwards;
+    /* Idle glow in done */
+    #award[data-phase="done"] .rankBadge__halo{
+      animation: haloIdle 1.9s ease-in-out infinite;
     }
-    @keyframes sweep{
-      0%{ opacity:0; transform: rotate(18deg) translateX(-55%); }
-      25%{ opacity:.85; }
-      100%{ opacity:0; transform: rotate(18deg) translateX(55%); }
-    }
-
-    /* Embers briefly on reveal (optional, subtle) */
-    #award[data-phase="reveal"] .rankBadge__embers{
-      animation: embers 900ms ease forwards;
-    }
-    @keyframes embers{
-      0%{ opacity:0; transform: scale(.98); }
-      35%{ opacity:.35; transform: scale(1.03); }
-      100%{ opacity:0; transform: scale(1.06); }
+    @keyframes haloIdle{
+      0%,100%{ opacity:.24; transform: scale(1.03); }
+      50%{ opacity:.42; transform: scale(1.08); }
     }
 
-    /* DONE: animated reward idle loop for ALL ranks */
-    .rankBadge.animated{
-      animation: idleGlow 3200ms ease-in-out infinite;
-    }
-    @keyframes idleGlow{
-      0%,100%{ filter: drop-shadow(0 0 10px rgba(255,106,0,.08)); }
-      50%{ filter: drop-shadow(0 0 18px rgba(255,106,0,.14)); }
+    /* Badge pop */
+    .rankBadge.anim-up{ animation: badgePop 820ms cubic-bezier(.12,.95,.18,1) forwards; }
+    @keyframes badgePop{
+      0%{ transform: translateY(6px) scale(.98); }
+      35%{ transform: translateY(-8px) scale(1.07); }
+      100%{ transform: translateY(0) scale(1); }
     }
 
-    /* Text (minimal, Apex-like) */
+    /* =========================================================
+       LABEL (centered in stack)
+       ========================================================= */
     .label{
-      position:absolute;
-      left:50%;
-      top: calc(50% + 250px);
-      transform: translateX(-50%) translateY(10px);
-      text-align:center;
       opacity:0;
-      pointer-events:none;
-      will-change: opacity, transform;
+      text-align:center;
+      width: min(900px, 92vw);
     }
     .labelTop{
-      font-size:12px;
+      font-size:13px;
       letter-spacing:.22em;
       text-transform:uppercase;
       color: rgba(234,242,255,.78);
     }
     .labelName{
       margin-top:8px;
-      font-size:28px;
+      font-size:34px;
       font-weight:900;
-      letter-spacing:.18em;
+      letter-spacing:.20em;
       text-transform:uppercase;
       color: rgba(234,242,255,.92);
-      text-shadow: 0 0 16px rgba(255,106,0,.18);
+      text-shadow: 0 0 16px rgba(255,255,255,.10);
     }
 
-    /* Show label only on rankUp (optional) */
-    #award.is-rankup[data-phase="reveal"] .label,
-#award.is-rankup[data-phase="done"] .label{
-  opacity:1;
-  transform: translateX(-50%) translateY(0);
-}
-
-#award.is-rankup[data-phase="reveal"] .label{
-  animation: labelIn 820ms cubic-bezier(.2,.9,.2,1) 120ms forwards;
-}
-    @keyframes labelIn{
-      0%{ opacity:0; transform: translateX(-50%) translateY(14px); }
-      100%{ opacity:1; transform: translateX(-50%) translateY(0); }
-    }
-
-    /* Hide label on tierUp */
     #award.is-tierup .label{ display:none; }
 
-    /* Auto-close hint */
-    .hint{
-      position:absolute;
-      bottom:18px;
-      left:50%;
-      transform: translateX(-50%);
-      font-size:12px;
-      letter-spacing:.08em;
-      color: rgba(152,162,179,.85);
-      opacity:.0;
-      pointer-events:none;
+    #award.is-rankup[data-phase="reveal"] .label,
+    #award.is-rankup[data-phase="done"] .label{
+      opacity:1;
+      animation: labelIn 620ms cubic-bezier(.2,.9,.2,1) forwards;
     }
-    #award[data-phase="done"] .hint{
-      opacity:.9;
+    @keyframes labelIn{
+      from{ opacity:0; transform: translateY(8px); }
+      to{ opacity:1; transform: translateY(0); }
     }
 
     /* Reduced motion */
     @media (prefers-reduced-motion: reduce){
-      .scan,.grain{ animation:none !important; }
       #award[data-phase="impact"] .impactFlash,
+      #award[data-phase="impact"] .coreFlash,
       #award[data-phase="impact"] .center,
-      #award[data-phase="impact"] .rankBadge__halo,
-      #award[data-phase="impact"] .rankBadge__sigil,
-      #award[data-phase="reveal"] .rankBadge__sweep,
-      #award[data-phase="reveal"] .rankBadge__embers,
-      .rankBadge.anim-up,
-      .rankBadge.animated{
+      #award[data-phase="reveal"] .creationGlow,
+      #award[data-phase="reveal"] .wingWave,
+      #award[data-phase="open"] .slice,
+      #award[data-phase="open"] .sparks,
+      #award[data-phase="reveal"] .sparks,
+      #award[data-phase="open"] .falling,
+      #award[data-phase="impact"] .falling,
+      #award[data-phase="reveal"] .falling,
+      #award[data-phase="done"] .falling,
+      #award[data-phase="done"] .rankBadge__halo,
+      .rankBadge.anim-up{
         animation:none !important;
       }
-      #award.is-open{ opacity:1; }
-      .label{ opacity:1; transform: translateX(-50%); }
+      .label{ opacity:1; }
     }
-    /* --- Use CSS variable for the badge image --- */
-.rankBadge{
-  --badge-url: url("assets/ranks/eidolon.webp"); /* default */
-}
-
-/* Replace <img> with background image */
-.rankBadge__img{
-  width: min(420px, 65vw);
-  height: min(420px, 65vw);
-  background: var(--badge-url) center/contain no-repeat;
-  filter: drop-shadow(0 0 18px rgba(0,0,0,.35));
-  opacity:0; /* стане видимою після assembly */
-}
-
-/* Slices use same image */
-.slice{
-  position:absolute;
-  inset: 8%;
-  background: var(--badge-url) center/contain no-repeat;
-  opacity:0;
-  will-change: transform, opacity, filter;
-  filter: drop-shadow(0 0 22px rgba(255,106,0,.10));
-}
-
-/* Clip each slice to a quadrant */
-.slice.s1{ clip-path: polygon(0 0, 50% 0, 50% 50%, 0 50%); }
-.slice.s2{ clip-path: polygon(50% 0, 100% 0, 100% 50%, 50% 50%); }
-.slice.s3{ clip-path: polygon(0 50%, 50% 50%, 50% 100%, 0 100%); }
-.slice.s4{ clip-path: polygon(50% 50%, 100% 50%, 100% 100%, 50% 100%); }
-
-/* OPEN: slices fly in and assemble */
-#award[data-phase="open"] .slice{
-  animation: sliceIn 900ms cubic-bezier(.2,.9,.2,1) forwards;
-}
-#award[data-phase="open"] .slice.s1{ transform: translate(-70px,-70px) scale(.92); }
-#award[data-phase="open"] .slice.s2{ transform: translate(70px,-70px) scale(.92); }
-#award[data-phase="open"] .slice.s3{ transform: translate(-70px,70px) scale(.92); }
-#award[data-phase="open"] .slice.s4{ transform: translate(70px,70px) scale(.92); }
-
-@keyframes sliceIn{
-  0%{ opacity:0; }
-  35%{ opacity:1; }
-  100%{ opacity:1; transform: translate(0,0) scale(1); }
-}
-
-/* After assembly: show clean image and hide slices */
-#award[data-phase="impact"] .rankBadge__img{ opacity:1; }
-#award[data-phase="impact"] .slice{ opacity:0; transition: opacity 120ms ease; }
-    
-    .grain{ display:none !important; }
-
-    /* Keep final badge visible from impact to end */
-#award[data-phase="impact"] .rankBadge__img,
-#award[data-phase="reveal"] .rankBadge__img,
-#award[data-phase="done"] .rankBadge__img{
-  opacity:1 !important;
-}
-    #award[data-phase="reveal"] .slice,
-#award[data-phase="done"] .slice{
-  opacity:0 !important;
-}
-    /* Prevent circles from covering the badge in DONE */
-#award[data-phase="done"] .rankBadge__halo,
-#award[data-phase="done"] .rankBadge__sigil{
-  opacity: .18 !important;
-  transform: scale(1.05) !important;
-}
-    #award[data-phase="done"] .rankBadge__sigil{ opacity:0 !important; }
-
-    .sparks{
-  position:absolute;
-  inset:-35%;
-  opacity:0;
-  pointer-events:none;
-  mix-blend-mode: screen;
-  background:
-    radial-gradient(circle at 20% 30%, color-mix(in srgb, var(--accent) 22%, transparent), transparent 38%),
-    radial-gradient(circle at 70% 55%, color-mix(in srgb, var(--accent) 16%, transparent), transparent 40%),
-    radial-gradient(circle at 55% 25%, rgba(255,255,255,.10), transparent 34%),
-    radial-gradient(circle at 35% 70%, color-mix(in srgb, var(--accent) 14%, transparent), transparent 42%);
-  filter: none;
-  transform: scale(.98);
-  will-change: opacity, transform, filter;
-}
-
-/* sparks on OPEN + REVEAL */
-#award[data-phase="open"] .sparks{
-  animation: sparksOpen 900ms ease forwards;
-}
-#award[data-phase="reveal"] .sparks{
-  animation: sparksReveal 1200ms ease forwards;
-}
-
-@keyframes sparksOpen{
-  0%{ opacity:0; transform: scale(.96); }
-  35%{ opacity:.65; }
-  100%{ opacity:.10; transform: scale(1.06); }
-}
-@keyframes sparksReveal{
-  0%{ opacity:.08; transform: scale(1.00); }
-  35%{ opacity:.55; transform: scale(1.10); }
-  100%{ opacity:0; transform: scale(1.16); }
-}
-    /* remove the annoying circle at the end */
-#award[data-phase="done"] .rankBadge__sigil{
-  opacity:0 !important;
-}
-    .rays{
-  position:absolute;
-  inset:-60%;
-  border-radius:999px;
-  opacity:0;
-  pointer-events:none;
-  mix-blend-mode: screen;
-  background:
-    conic-gradient(from 0deg,
-      transparent 0deg,
-      color-mix(in srgb, var(--accent) 18%, transparent) 20deg,
-      transparent 45deg,
-      color-mix(in srgb, var(--accent) 14%, transparent) 80deg,
-      transparent 120deg,
-      color-mix(in srgb, var(--accent) 12%, transparent) 160deg,
-      transparent 210deg,
-      color-mix(in srgb, var(--accent) 10%, transparent) 260deg,
-      transparent 360deg
-    );
-  filter: blur(10px);
-  transform: scale(.95);
-  will-change: opacity, transform;
-}
-    .glowBurst{
-  position:absolute;
-  inset:-120%;
-  border-radius:999px;
-  opacity:0;
-  pointer-events:none;
-  mix-blend-mode: screen;
-  background: radial-gradient(circle at 50% 50%,
-    color-mix(in srgb, var(--accent) 30%, transparent),
-    color-mix(in srgb, var(--accent) 16%, transparent),
-    transparent 62%
-  );
-  filter: blur(22px);
-  transform: scale(.35);
-  will-change: opacity, transform, filter;
-}
-    .falling{
-  position:absolute;
-  inset:-20%;
-  opacity:0;
-  pointer-events:none;
-  mix-blend-mode: screen;
-  background:
-    radial-gradient(circle, rgba(255,255,255,.10) 1px, transparent 2px) 0 0/ 80px 80px,
-    radial-gradient(circle, color-mix(in srgb, var(--accent) 18%, transparent) 1px, transparent 2px) 20px 30px/ 110px 110px,
-    radial-gradient(circle, color-mix(in srgb, var(--accent) 12%, transparent) 1px, transparent 2px) 40px 10px/ 140px 140px;
-  filter: blur(.2px);
-  transform: translateY(-40px);
-  will-change: transform, opacity;
-}
-    .wingFlare{
-  position:absolute;
-  top: 18%;
-  width: 55%;
-  height: 60%;
-  opacity:0;
-  pointer-events:none;
-  mix-blend-mode: screen;
-  background: radial-gradient(circle at 30% 50%,
-    color-mix(in srgb, var(--accent) 28%, transparent),
-    transparent 60%
-  );
-  filter: blur(10px);
-  will-change: transform, opacity;
-}
-.wingFlare.left{ left: -8%; transform: translateX(-20px) scale(.9); }
-.wingFlare.right{ right: -8%; transform: translateX(20px) scale(.9); }
-
-/* flare during assembly/reveal */
-#award[data-phase="open"] .wingFlare,
-#award[data-phase="reveal"] .wingFlare{
-  animation: wingFlareIn 900ms ease forwards;
-}
-@keyframes wingFlareIn{
-  0%{ opacity:0; }
-  35%{ opacity:.65; transform: translateX(0) scale(1.05); }
-  100%{ opacity:0; transform: translateX(0) scale(1.15); }
-}
-
-/* show particles from open to done */
-#award[data-phase="open"] .falling,
-#award[data-phase="impact"] .falling,
-#award[data-phase="reveal"] .falling,
-#award[data-phase="done"] .falling{
-  opacity:.55;
-  animation: fallingMove 2.6s linear infinite;
-}
-
-@keyframes fallingMove{
-  from{ transform: translateY(-40px); }
-  to{ transform: translateY(120px); }
-}
-
-/* expands beyond screen during reveal */
-#award[data-phase="reveal"] .glowBurst{
-  animation: glowBurstOut 1200ms cubic-bezier(.12,.95,.18,1) forwards;
-}
-@keyframes glowBurstOut{
-  0%{ opacity:0; transform: scale(.25); }
-  18%{ opacity:.85; transform: scale(.55); }
-  100%{ opacity:0; transform: scale(1.35); }
-}
-
-/* show rays on impact/reveal softly */
-#award[data-phase="impact"] .rays{
-  animation: raysIn 700ms ease forwards;
-}
-#award[data-phase="reveal"] .rays{
-  opacity:.35;
-  transform: scale(1.03);
-}
-#award[data-phase="done"] .rays{
-  opacity:.18;
-  transform: scale(1.02);
-}
-
-@keyframes raysIn{
-  0%{ opacity:0; transform: scale(.92); }
-  35%{ opacity:.55; transform: scale(1.06); }
-  100%{ opacity:.22; transform: scale(1.02); }
-}
-    .label{
-  left:50% !important;
-  transform: translateX(-50%) translateY(0) !important;
-  width: min(900px, 92vw);
-  text-align:center !important;
-}
-    
-    /* Disable diagonal sweep completely (user request) */
-.rankBadge__sweep{ display:none !important; }
-
-    /* =========================================================
-   APEX-STYLE: CREATION GLOW + WING CREATION (FPS-SAFE)
-   - No blur(), no backdrop-filter, no mix-blend on fullscreen
-   - Only opacity + transform (GPU-friendly)
-   ========================================================= */
-
-/* Big glow behind badge that expands beyond screen */
-.creationGlow{
-  position:absolute;
-  inset:-140%;               /* huge so it can go “past screen” */
-  border-radius:999px;
-  pointer-events:none;
-  opacity:0;
-  transform: scale(.18);
-  will-change: transform, opacity;
-  /* Cheap glow: layered radials, no blur */
-  background:
-    radial-gradient(circle at 50% 50%,
-      rgba(255,255,255,.14) 0%,
-      color-mix(in srgb, var(--accent) 28%, transparent) 18%,
-      color-mix(in srgb, var(--accent) 14%, transparent) 36%,
-      transparent 62%
-    );
-}
-
-/* WingWave: two side glows that expand outward like “wings are forming” */
-.wingWave{
-  position:absolute;
-  inset:-110%;
-  border-radius:999px;
-  pointer-events:none;
-  opacity:0;
-  transform: scale(.55);
-  will-change: transform, opacity;
-  background:
-    radial-gradient(circle at 18% 52%,
-      color-mix(in srgb, var(--accent) 34%, transparent) 0%,
-      transparent 42%
-    ),
-    radial-gradient(circle at 82% 52%,
-      color-mix(in srgb, var(--accent) 34%, transparent) 0%,
-      transparent 42%
-    );
-}
-
-/* WingRays: thin rays that shoot outward (subtle, Apex-like) */
-.wingRays{
-  position:absolute;
-  inset:-120%;
-  border-radius:999px;
-  pointer-events:none;
-  opacity:0;
-  transform: scale(.65) rotate(0deg);
-  will-change: transform, opacity;
-  background:
-    conic-gradient(from 0deg,
-      transparent 0deg,
-      color-mix(in srgb, var(--accent) 16%, transparent) 20deg,
-      transparent 42deg,
-      color-mix(in srgb, var(--accent) 12%, transparent) 80deg,
-      transparent 120deg,
-      color-mix(in srgb, var(--accent) 10%, transparent) 165deg,
-      transparent 220deg,
-      color-mix(in srgb, var(--accent) 10%, transparent) 265deg,
-      transparent 360deg
-    );
-}
-    .stack{
-  position:relative;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  gap: 22px;
-}
-.label{
-  position:static !important;
-  transform:none !important;
-  opacity:0;
-  text-align:center;
-  width: min(900px, 92vw);
-}
-#award.is-rankup[data-phase="reveal"] .label,
-#award.is-rankup[data-phase="done"] .label{
-  opacity:1;
-}
-    .rankBadge{
-  width: min(760px, 92vw) !important;
-  height: min(760px, 92vw) !important;
-}
-.rankBadge__img{
-  width: min(600px, 82vw) !important;
-  height: min(600px, 82vw) !important;
-}
-.labelName{ font-size:34px !important; }
-.labelTop{ font-size:13px !important; }
-    
-
-/* Trigger animations on REVEAL (можеш перенести на IMPACT якщо хочеш) */
-#award[data-phase="reveal"] .creationGlow{
-  animation: cgPop 1150ms cubic-bezier(.12,.95,.18,1) forwards;
-}
-#award[data-phase="reveal"] .wingWave{
-  animation: wwPop 1100ms cubic-bezier(.12,.95,.18,1) forwards;
-}
-#award[data-phase="reveal"] .wingRays{
-  animation: wrPop 950ms cubic-bezier(.12,.95,.18,1) forwards;
-}
-
-/* Creation glow expands beyond screen */
-@keyframes cgPop{
-  0%   { opacity:0;   transform: scale(.18); }
-  18%  { opacity:1;   transform: scale(.52); }
-  100% { opacity:0;   transform: scale(1.55); }
-}
-
-/* Wing glow expands a bit faster */
-@keyframes wwPop{
-  0%   { opacity:0;   transform: scale(.52); }
-  20%  { opacity:.95; transform: scale(.82); }
-  100% { opacity:0;   transform: scale(1.40); }
-}
-
-/* Rays: quick “punch” then fade */
-@keyframes wrPop{
-  0%   { opacity:0;   transform: scale(.62) rotate(0deg); }
-  25%  { opacity:.55; transform: scale(1.02) rotate(6deg); }
-  100% { opacity:0;   transform: scale(1.22) rotate(0deg); }
-}
-
-/* Performance mode (optional): disable rays first */
-.fx-low .wingRays{ display:none !important; }
-    
   </style>
 </head>
 <body>
   <div class="wrap">
-    <h2>Apex-style Badge Preview (Fullscreen TierUp + Animated Rewards)</h2>
+    <h2>Apex-style Badge Preview (Fullscreen, FPS-safe)</h2>
     <div class="row">
       <button id="btnTierUp">Tier Up (III→II→I)</button>
       <button id="btnRankUp">Rank Up</button>
       <button id="btnTop">Top Rank (EIDOLON)</button>
       <button id="btnClose">Close</button>
-      <span class="pill">One image + CSS layers • fullscreen • auto-close</span>
+      <span class="pill">Allowed FX • centered • auto-close</span>
     </div>
     <p style="opacity:.78;margin-top:12px;line-height:1.45">
-      Мета: як в Apex — бейдж еволюціонує шарами, без “вікон/панелей”. TierUp теж fullscreen (як ти захотів).
+      Мета: як в Apex — бейдж еволюціонує шарами (без лагів). Центрований бейдж + текст + glow + wing burst + particles.
     </p>
   </div>
 
-  <!-- Fullscreen Award Overlay -->
   <div id="award" aria-hidden="true">
     <div class="veil"></div>
-    
 
     <div class="hud">
       <div class="left">
@@ -840,65 +489,57 @@
 
     <div class="center">
       <div class="impactFlash" aria-hidden="true"></div>
-      <!-- Apex-style creation glow + wing flare -->
+      <div class="coreFlash" aria-hidden="true"></div>
       <div class="creationGlow" aria-hidden="true"></div>
       <div class="wingWave" aria-hidden="true"></div>
       <div class="sparks" aria-hidden="true"></div>
       <div class="falling" aria-hidden="true"></div>
-      
+
       <div class="stack">
-      <div class="rankBadge tier-0 animated" id="badge">
-  <div class="rankBadge__img" id="rankIcon" aria-hidden="true"></div>
+        <div class="rankBadge tier-0 animated" id="badge">
+          <div class="rankBadge__img" id="rankIcon" aria-hidden="true"></div>
 
-  <!-- assembly slices -->
-  <div class="slice s1" aria-hidden="true"></div>
-  <div class="slice s2" aria-hidden="true"></div>
-  <div class="slice s3" aria-hidden="true"></div>
-  <div class="slice s4" aria-hidden="true"></div>
-  <div class="wingFlare left" aria-hidden="true"></div>
-  <div class="wingFlare right" aria-hidden="true"></div>
+          <div class="slice s1" aria-hidden="true"></div>
+          <div class="slice s2" aria-hidden="true"></div>
+          <div class="slice s3" aria-hidden="true"></div>
+          <div class="slice s4" aria-hidden="true"></div>
 
-  <span class="rankBadge__halo" aria-hidden="true"></span>
-  <span class="rankBadge__sigil" aria-hidden="true"></span>
-  <span class="rankBadge__embers" aria-hidden="true"></span>
-  <span class="rankBadge__sweep" aria-hidden="true"></span>
-</div>
+          <span class="rankBadge__halo" aria-hidden="true"></span>
+        </div>
 
-      <div class="label" aria-hidden="true">
-        <div class="labelTop" id="labelTop">NEW RANK</div>
-        <div class="labelName" id="labelName">EIDOLON</div>
+        <div class="label" aria-hidden="true">
+          <div class="labelTop" id="labelTop">NEW RANK</div>
+          <div class="labelName" id="labelName">EIDOLON</div>
+        </div>
       </div>
-
-      
     </div>
   </div>
 
   <script>
     const award = document.getElementById('award');
     const badge = document.getElementById('badge');
-    const rankIcon = document.getElementById('rankIcon');
     const subText = document.getElementById('subText');
     const rightText = document.getElementById('rightText');
     const labelTop = document.getElementById('labelTop');
     const labelName = document.getElementById('labelName');
 
     let timers = [];
-    const ACCENT_BY_RANK = {
-  eidolon:"#d61830",
-  seraph:"#d9f9e8",
-  monarch:"#c7336c",
-  overlord:"#8c4826",
-  archon:"#01a7ef",
-  reaper:"#9bb1f6",
-  harbinger:"#a6b1b9",
-  marauder:"#fef525",
-  thrall:"#60eb89",
-  outcast:"#0f0f13",
-      
-};
     const clearTimers = ()=>{ timers.forEach(t=>clearTimeout(t)); timers=[]; };
 
-    // Tiny SFX (no external files) — works after click
+    const ACCENT_BY_RANK = {
+      eidolon:"#d61830",
+      seraph:"#d9f9e8",
+      monarch:"#c7336c",
+      overlord:"#8c4826",
+      archon:"#01a7ef",
+      reaper:"#9bb1f6",
+      harbinger:"#a6b1b9",
+      marauder:"#fef525",
+      thrall:"#60eb89",
+      outcast:"#0f0f13",
+    };
+
+    // Tiny SFX (no external files)
     let audioCtx = null;
     function beep(kind='impact'){
       try{
@@ -910,10 +551,10 @@
 
         const base = kind === 'impact' ? 220 : 520;
         o.frequency.setValueAtTime(base, t0);
-        o.frequency.exponentialRampToValueAtTime(base * (kind === 'impact' ? 3.1 : 1.6), t0 + 0.08);
+        o.frequency.exponentialRampToValueAtTime(base * (kind === 'impact' ? 3.0 : 1.6), t0 + 0.08);
 
         g.gain.setValueAtTime(0.0001, t0);
-        g.gain.exponentialRampToValueAtTime(kind === 'impact' ? 0.12 : 0.08, t0 + 0.02);
+        g.gain.exponentialRampToValueAtTime(kind === 'impact' ? 0.10 : 0.07, t0 + 0.02);
         g.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.18);
 
         o.connect(g); g.connect(audioCtx.destination);
@@ -932,52 +573,44 @@
       award.classList.remove('is-top');
       award.dataset.phase = 'open';
 
-      // reset animation helper class
       badge.classList.remove('anim-up');
-      // force reflow to restart animation on next add
       void badge.offsetWidth;
     }
 
     function closeOverlay(){
       clearTimers();
-      award.classList.remove('is-open','is-tierup','is-rankup');
+      award.classList.remove('is-open','is-tierup','is-rankup','is-top');
       award.removeAttribute('data-phase');
       award.setAttribute('aria-hidden','true');
     }
 
     function setTierClass(divIndex){
-      // map divIndex: 0=III -> tier-0, 1=II -> tier-1, 2=I -> tier-2
       badge.classList.remove('tier-0','tier-1','tier-2');
       badge.classList.add(`tier-${Math.max(0, Math.min(2, divIndex))}`);
+    }
+
+    function setBadge(iconSrc){
+      if(iconSrc) badge.style.setProperty('--badge-url', `url("${iconSrc}")`);
     }
 
     function playTierUp({rankName, iconSrc, divIndex, accentColor="#01a7ef"}){
       openOverlay('tierUp');
       award.style.setProperty('--accent', accentColor);
+
       subText.textContent = 'Division upgrade • Apex-style evolution.';
       rightText.textContent = 'AUTO';
-
-      if (iconSrc) badge.style.setProperty('--badge-url', `url("${iconSrc}")`);
-      labelName.textContent = rankName;
       labelTop.textContent = 'DIVISION UP';
+      labelName.textContent = rankName;
 
+      setBadge(iconSrc);
       setTierClass(divIndex);
 
-      // Timeline: open → impact → reveal → done → close
       badge.classList.add('anim-up');
 
-      timers.push(setTimeout(()=>{
-        award.dataset.phase = 'impact';
-        beep('impact');
-      }, 900));
-
-      timers.push(setTimeout(()=>{
-        award.dataset.phase = 'reveal';
-        beep('up');
-      }, 1350));
-
-      timers.push(setTimeout(()=>{ award.dataset.phase = 'done'; }, 3000));
-      timers.push(setTimeout(closeOverlay, 3000 + 2000)); // close 2s after done
+      timers.push(setTimeout(()=>{ award.dataset.phase='impact'; beep('impact'); }, 900));
+      timers.push(setTimeout(()=>{ award.dataset.phase='reveal'; beep('up'); }, 1350));
+      timers.push(setTimeout(()=>{ award.dataset.phase='done'; }, 3000));
+      timers.push(setTimeout(closeOverlay, 3000 + 2000));
     }
 
     function playRankUp({rankName, iconSrc, isTop=false, accentColor="#23f3ff"}){
@@ -987,66 +620,53 @@
 
       subText.textContent = isTop ? 'Top rank achieved • Reward state active.' : 'Promotion confirmed • Award unlocked.';
       rightText.textContent = 'AUTO';
-
-      if (iconSrc) badge.style.setProperty('--badge-url', `url("${iconSrc}")`);
-      labelName.textContent = rankName;
       labelTop.textContent = 'NEW RANK';
+      labelName.textContent = rankName;
 
-      // for rankUp, typically start at tier-0 (or whatever you want)
+      setBadge(iconSrc);
       setTierClass(0);
-
       badge.classList.add('anim-up');
 
-      timers.push(setTimeout(()=>{
-        award.dataset.phase = 'impact';
-        beep('impact');
-      }, 1050));
-
-      timers.push(setTimeout(()=>{
-        award.dataset.phase = 'reveal';
-        beep('up');
-      }, 1300));
-
-      timers.push(setTimeout(()=>{ award.dataset.phase = 'done'; }, 2150));
+      timers.push(setTimeout(()=>{ award.dataset.phase='impact'; beep('impact'); }, 1050));
+      timers.push(setTimeout(()=>{ award.dataset.phase='reveal'; beep('up'); }, 1300));
+      timers.push(setTimeout(()=>{ award.dataset.phase='done'; }, 2150));
 
       const hold = isTop ? 3200 : 2600;
       timers.push(setTimeout(closeOverlay, 2150 + hold));
     }
 
     // Buttons
-let divIndex = 0;
+    let divIndex = 0;
+    document.getElementById('btnTierUp').addEventListener('click', ()=>{
+      divIndex = Math.min(2, divIndex + 1);
+      playTierUp({
+        rankName: 'REAPER',
+        iconSrc: 'assets/ranks/reaper.webp',
+        divIndex,
+        accentColor: ACCENT_BY_RANK.reaper
+      });
+    });
 
-document.getElementById('btnTierUp').addEventListener('click', ()=>{
-  divIndex = Math.min(2, divIndex + 1);
-  playTierUp({
-    rankName: 'REAPER',
-    iconSrc: 'assets/ranks/reaper.webp',
-    divIndex,
-    accentColor: ACCENT_BY_RANK.reaper
-  });
-});
+    document.getElementById('btnRankUp').addEventListener('click', ()=>{
+      divIndex = 0;
+      playRankUp({
+        rankName: 'ARCHON',
+        iconSrc: 'assets/ranks/archon.webp',
+        isTop: false,
+        accentColor: ACCENT_BY_RANK.archon
+      });
+    });
 
-document.getElementById('btnRankUp').addEventListener('click', ()=>{
-  divIndex = 0;
-  playRankUp({
-    rankName: 'ARCHON',
-    iconSrc: 'assets/ranks/archon.webp',
-    isTop: false,
-    accentColor: ACCENT_BY_RANK.archon
-  });
-});
-
-document.getElementById('btnTop').addEventListener('click', ()=>{
-  playRankUp({
-    rankName: 'EIDOLON',
-    iconSrc: 'assets/ranks/eidolon.webp',
-    isTop: true,
-    accentColor: ACCENT_BY_RANK.eidolon
-  });
-});
+    document.getElementById('btnTop').addEventListener('click', ()=>{
+      playRankUp({
+        rankName: 'EIDOLON',
+        iconSrc: 'assets/ranks/eidolon.webp',
+        isTop: true,
+        accentColor: ACCENT_BY_RANK.eidolon
+      });
+    });
 
     document.getElementById('btnClose').addEventListener('click', closeOverlay);
-
     window.addEventListener('keydown', (e)=>{
       if(e.key === 'Escape' && award.classList.contains('is-open')) closeOverlay();
     });
