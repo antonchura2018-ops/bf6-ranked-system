@@ -351,12 +351,14 @@
     }
     #rankup.is-rankup .evoStamp__name{
       margin-top:8px;
-      font-size:22px;
+      font-size:26px;
       font-weight:900;
       letter-spacing:.18em;
       text-transform:uppercase;
       color: rgba(234,242,255,.92);
-      text-shadow: 0 0 16px rgba(35,243,255,.22);
+      text-shadow:
+  0 0 16px rgba(35,243,255,.22),
+  0 0 30px rgba(168,85,255,.18);
     }
 
     /* ===== PHASES ===== */
@@ -377,9 +379,9 @@
       100%{ opacity:.65; transform: scale(1.02) rotate(10deg); }
     }
     @keyframes evoHaloOpen{
-      0%{ opacity:0; transform: translate(-50%,-50%) scale(.86); }
-      100%{ opacity:.25; transform: translate(-50%,-50%) scale(.96); }
-    }
+  0%{ opacity:0; transform: translate(-50%,-50%) scale(.78); filter: blur(14px); }
+  100%{ opacity:.38; transform: translate(-50%,-50%) scale(1.02); filter: blur(10px); }
+}
 
     /* COLLAPSE */
     .rankup[data-phase="collapse"] .rankup__emblem--old{ animation: ruOldCollapse .7s cubic-bezier(.2,.9,.2,1) forwards; }
@@ -425,9 +427,11 @@
       100%{ transform: translateY(0) translateX(0) scale(1); }
     }
     @keyframes evoHaloImpact{
-      0%{ opacity:.25; transform: translate(-50%,-50%) scale(.96); filter: blur(10px); }
-      35%{ opacity:.95; transform: translate(-50%,-50%) scale(1.06) rotate(8deg); filter: blur(8px); }
-      100%{ opacity:.35; transform: translate(-50%,-50%) scale(1.02) rotate(0deg); filter: blur(10px); }
+  0%{ opacity:.35; transform: translate(-50%,-50%) scale(1.02); filter: blur(10px); }
+  30%{ opacity:1; transform: translate(-50%,-50%) scale(1.18) rotate(10deg); filter: blur(7px); }
+  100%{ opacity:.40; transform: translate(-50%,-50%) scale(1.05) rotate(0deg); filter: blur(10px); }
+}
+
     }
     @keyframes evoSigilImpact{
       0%{ opacity:0; transform: translate(-50%,-50%) scale(.92); }
@@ -456,6 +460,10 @@
 
     .rankup[data-phase="done"] .rankup__emblem--new{ opacity:1; transform: translateY(0) scale(1); filter:none; }
     .rankup[data-phase="done"] .rankup__emblem--old{ opacity:0; }
+    
+    #rankup.is-rankup[data-phase="done"] .rankup__emblem--new{
+  filter: drop-shadow(0 0 18px rgba(35,243,255,.18)) drop-shadow(0 0 34px rgba(168,85,255,.14));
+}
 
     /* top rank: keep rift alive */
     #rankup[data-top="1"][data-phase="done"] .rankup__rift{ opacity: 1; }
