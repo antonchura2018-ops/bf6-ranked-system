@@ -132,15 +132,15 @@
     .center::before{
   content:"";
   position:absolute;
-  inset:-45%;
+  inset:-70%;
   background:
     radial-gradient(circle at 50% 50%,
-      color-mix(in srgb, var(--accent) 22%, transparent),
-      color-mix(in srgb, var(--accent) 10%, transparent),
-      transparent 62%
+      color-mix(in srgb, var(--accent) 26%, transparent),
+      color-mix(in srgb, var(--accent) 12%, transparent),
+      transparent 65%
     );
-  opacity:.95;
-  filter: blur(16px);
+  opacity:1;
+  filter: blur(18px);
   pointer-events:none;
 }
     #award[data-phase="done"] .rankBadge__halo{
@@ -157,8 +157,8 @@
        ========================================================= */
     .rankBadge{
   position:relative;
-  width: min(520px, 80vw);
-  height: min(520px, 80vw);
+  width: min(620px, 86vw);
+  height: min(620px, 86vw);
   display:grid;
   place-items:center;
   transform: translateY(0) scale(1);
@@ -167,8 +167,8 @@
 }
 
 .rankBadge__img{
-  width: min(420px, 65vw);
-  height: min(420px, 65vw);
+  width: min(500px, 72vw);
+  height: min(500px, 72vw);
   object-fit: contain;
   filter: drop-shadow(0 0 16px rgba(0,0,0,.35));
   transform: translateZ(0);
@@ -368,7 +368,7 @@
     .label{
       position:absolute;
       left:50%;
-      top: calc(50% + 210px);
+      top: calc(50% + 250px);
       transform: translateX(-50%) translateY(10px);
       text-align:center;
       opacity:0;
@@ -383,7 +383,7 @@
     }
     .labelName{
       margin-top:8px;
-      font-size:22px;
+      font-size:28px;
       font-weight:900;
       letter-spacing:.18em;
       text-transform:uppercase;
@@ -544,6 +544,52 @@
   35%{ opacity:.55; transform: scale(1.10); }
   100%{ opacity:0; transform: scale(1.16); }
 }
+    /* remove the annoying circle at the end */
+#award[data-phase="done"] .rankBadge__sigil{
+  opacity:0 !important;
+}
+    .rays{
+  position:absolute;
+  inset:-60%;
+  border-radius:999px;
+  opacity:0;
+  pointer-events:none;
+  mix-blend-mode: screen;
+  background:
+    conic-gradient(from 0deg,
+      transparent 0deg,
+      color-mix(in srgb, var(--accent) 18%, transparent) 20deg,
+      transparent 45deg,
+      color-mix(in srgb, var(--accent) 14%, transparent) 80deg,
+      transparent 120deg,
+      color-mix(in srgb, var(--accent) 12%, transparent) 160deg,
+      transparent 210deg,
+      color-mix(in srgb, var(--accent) 10%, transparent) 260deg,
+      transparent 360deg
+    );
+  filter: blur(10px);
+  transform: scale(.95);
+  will-change: opacity, transform;
+}
+
+/* show rays on impact/reveal softly */
+#award[data-phase="impact"] .rays{
+  animation: raysIn 700ms ease forwards;
+}
+#award[data-phase="reveal"] .rays{
+  opacity:.35;
+  transform: scale(1.03);
+}
+#award[data-phase="done"] .rays{
+  opacity:.18;
+  transform: scale(1.02);
+}
+
+@keyframes raysIn{
+  0%{ opacity:0; transform: scale(.92); }
+  35%{ opacity:.55; transform: scale(1.06); }
+  100%{ opacity:.22; transform: scale(1.02); }
+}
     
   </style>
 </head>
@@ -578,6 +624,7 @@
 
     <div class="center">
       <div class="impactFlash" aria-hidden="true"></div>
+      <div class="rays" aria-hidden="true"></div>
       <div class="sparks" aria-hidden="true"></div>
 
       <div class="rankBadge tier-0 animated" id="badge">
@@ -682,7 +729,7 @@
       badge.classList.add(`tier-${Math.max(0, Math.min(2, divIndex))}`);
     }
 
-    function playTierUp({rankName, iconSrc, divIndex}){
+    function playTierUp({rankName, iconSrc, divIndex, accentColor="#23f3ff"}){
       openOverlay('tierUp');
       award.style.setProperty('--accent', accentColor);
       subText.textContent = 'Division upgrade • Apex-style evolution.';
@@ -753,7 +800,7 @@ document.getElementById('btnTierUp').addEventListener('click', ()=>{
     rankName: 'REAPER',
     iconSrc: 'assets/ranks/reaper.webp',
     divIndex,
-    accentColor: ACCENT_BY_RANK.reaper
+    accentColor: ACCENT_BY_RANK.reaper || "#9bb1f6"
   });
 });
 
