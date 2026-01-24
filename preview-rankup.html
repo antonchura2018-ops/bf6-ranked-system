@@ -6,6 +6,7 @@
   <title>RankUp Preview</title>
 
   <style>
+    /* ===== Preview page UI ===== */
     body{
       margin:0;
       background: radial-gradient(circle at top, #0b0f1a, #05070d);
@@ -13,7 +14,6 @@
       font-family: Segoe UI, system-ui, sans-serif;
       padding: 24px;
     }
-
     .controls{
       display:flex;
       gap:12px;
@@ -21,7 +21,6 @@
       align-items:center;
       margin-bottom: 18px;
     }
-
     .btn{
       padding: 10px 14px;
       border-radius: 12px;
@@ -33,675 +32,467 @@
       letter-spacing: .3px;
     }
     .btn:hover{ background: rgba(34,211,238,0.22); }
-
     .btn.ghost{
       border-color: rgba(251,113,133,0.35);
       background: rgba(251,113,133,0.10);
       color:#fecdd3;
     }
     .btn.ghost:hover{ background: rgba(251,113,133,0.16); }
-
     .note{ color:#9ca3af; font-size:12px; }
 
-     /* ===== Digital Rift Protocol (Desktop) ===== */
-:root{
-  --ru-bg:#070A12;
-  --ru-ink:#EAF2FF;
-  --ru-muted:#98A2B3;
+    /* =========================
+       NEW RANKUP STYLE PACK
+       (TierUp v2 + RankUp Evolution)
+       transform/opacity + gradients
+       ========================= */
 
-  --ru-c1:#23f3ff;   /* cyan */
-  --ru-c2:#a855ff;   /* purple */
-  --ru-c3:#ff3df2;   /* magenta */
+    :root{
+      --ru-bg:#070A12;
+      --ru-ink:#EAF2FF;
+      --ru-muted:#98A2B3;
+      --ru-c1:#23f3ff;
+      --ru-c2:#a855ff;
+      --ru-c3:#ff3df2;
+      --ru-border: rgba(234,242,255,.10);
+    }
 
-  --ru-border: rgba(234,242,255,.12);
-  --ru-glow: 0 0 18px rgba(35,243,255,.55), 0 0 42px rgba(168,85,255,.25);
-}
+    .rankup{
+      position:fixed; inset:0; z-index:9999;
+      display:grid; place-items:center;
+      opacity:0; pointer-events:none;
+      transition: opacity .18s ease;
+    }
+    .rankup.is-open{ opacity:1; pointer-events:auto; }
 
-/* Overlay container:
-   Expect integration that toggles:
-   - .rankup.is-open (opacity/pointer-events)
-   - #rankup[data-phase="open|collapse|impact|reveal|done"] */
-.rankup{
-  position:fixed; inset:0; z-index:9999;
-  display:grid; place-items:center;
-  opacity:0; pointer-events:none;
-  transition: opacity .25s ease;
-}
-.rankup.is-open{ opacity:1; pointer-events:auto; }
+    .rankup__veil{
+      position:absolute; inset:0;
+      background: radial-gradient(900px 520px at 50% 40%, rgba(0,0,0,.35), rgba(0,0,0,.92));
+      opacity:0;
+    }
+    .rankup.is-open .rankup__veil{ opacity:1; transition: opacity .18s ease; }
 
-/* Veil + grain */
-.rankup__veil{
-  position:absolute; inset:0;
-  background: radial-gradient(900px 520px at 50% 40%, rgba(0,0,0,.35), rgba(0,0,0,.90));
-  opacity:0;
-  filter: saturate(0.9);
-}
-.rankup.is-open .rankup__veil{ animation: ruVeilIn .35s ease forwards; }
-@keyframes ruVeilIn{ to{ opacity:1; } } /* ok */
-  animation: ruVeilIn .25s ease forwards;
+    .rankup__grain{
+      position:absolute; inset:-20%;
+      opacity:.12;
+      pointer-events:none;
+      mix-blend-mode:overlay;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='.35'/%3E%3C/svg%3E");
+    }
 
-.rankup__grain{
-  position:absolute; inset:-20%;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='.35'/%3E%3C/svg%3E");
-  mix-blend-mode:overlay;
-  opacity:0;
-  pointer-events:none;
-}
-.rankup.is-open .rankup__grain{ animation: ruGrainIn .35s ease .05s forwards; }
-@keyframes ruGrainIn{ to{ opacity:.18; } }
+    .rankup__stage{
+      position:relative;
+      width:min(980px, 92vw);
+      height:min(560px, 76vh);
+      border-radius:26px;
+      overflow:hidden;
+      background:
+        radial-gradient(900px 520px at 50% 45%, rgba(35,243,255,.06), rgba(0,0,0,0) 60%),
+        radial-gradient(900px 520px at 50% 55%, rgba(168,85,255,.05), rgba(0,0,0,0) 65%),
+        rgba(7,10,18,0.55);
+      border:1px solid rgba(255,255,255,0.05);
+      box-shadow: 0 70px 200px rgba(0,0,0,0.78);
+      transform: translateY(14px) scale(.98);
+      opacity:0;
+      will-change: transform, opacity;
+    }
+    .rankup.is-open .rankup__stage{
+      animation: ruStageIn .45s cubic-bezier(.2,.9,.2,1) .05s forwards;
+    }
+    @keyframes ruStageIn{ to{ opacity:1; transform: translateY(0) scale(1); } }
 
-/* Stage */
-.rankup__stage{
-  position:relative;
-  width:min(900px, 92vw);
-  height:min(520px, 76vh);
-  border-radius:28px;
-  overflow:hidden;
-  background: radial-gradient(900px 520px at 50% 45%, rgba(35,243,255,.06), rgba(0,0,0,0) 60%),
-            radial-gradient(900px 520px at 50% 55%, rgba(168,85,255,.05), rgba(0,0,0,0) 65%),
-            rgba(7,10,18,0.55);
-  border: 1px solid rgba(255,255,255,0.05);
-  box-shadow: 0 70px 200px rgba(0,0,0,0.78);
-  transform: translateY(14px) scale(.98);
-  opacity:0;
-  will-change: transform, opacity;
-  outline: 1px solid rgba(255,255,255,0.04);
-  backdrop-filter: none;
-}
-.rankup.is-open .rankup__stage{ animation: ruStageIn .55s cubic-bezier(.2,.9,.2,1) .05s forwards; }
-@keyframes ruStageIn{
-  to{ opacity:1; transform: translateY(0) scale(1); }
-}
+    .rankup__scan{
+      position:absolute; inset:0;
+      background: repeating-linear-gradient(180deg, rgba(234,242,255,.06) 0, rgba(234,242,255,.06) 1px, transparent 1px, transparent 11px);
+      opacity:.12;
+      mix-blend-mode:overlay;
+      animation: ruScanMove 3.2s linear infinite;
+      pointer-events:none;
+    }
+    @keyframes ruScanMove{ to{ background-position: 0 140px; } }
 
-/* Background scanlines */
-.rankup__scan{
-  position:absolute; inset:0;
-  background:
-    linear-gradient(90deg, rgba(35,243,255,.08), transparent 40%),
-    repeating-linear-gradient(180deg, rgba(234,242,255,.08) 0, rgba(234,242,255,.08) 1px, transparent 1px, transparent 11px);
-  opacity:.12;
-  mix-blend-mode:overlay;
-  animation: ruScanMove 3.2s linear infinite;
-  pointer-events:none;
-}
-@keyframes ruScanMove{ to{ background-position: 220px 0, 0 140px; } }
+    .rankup__burst{
+      position:absolute; inset:-30%;
+      background:
+        radial-gradient(closest-side at 50% 50%, rgba(255,255,255,.16), transparent 60%),
+        radial-gradient(closest-side at 50% 50%, rgba(35,243,255,.14), transparent 70%),
+        radial-gradient(closest-side at 50% 50%, rgba(168,85,255,.12), transparent 75%);
+      opacity:0;
+      transform: scale(.75);
+      mix-blend-mode:screen;
+      pointer-events:none;
+      will-change: transform, opacity;
+    }
 
-/* HUD */
-.rankup__hud{
-  position:absolute; left:24px; right:24px; top:20px;
-  display:flex; align-items:flex-start; justify-content:space-between;
-  pointer-events:none;
-  opacity:.92;
-}
-.rankup__kicker{
-  font-size:14px;
-  letter-spacing:.22em;
-  text-transform:uppercase;
-  color:rgba(234,242,255,.85);
-}
-.rankup__sub{
-  margin-top:8px;
-  font-size:12px;
-  color:rgba(152,162,179,.9);
-  letter-spacing:.06em;
-}
-.rankup__hudRight{
-  text-align:right;
-  font-size:12px;
-  color:rgba(234,242,255,.72);
-  letter-spacing:.1em;
-  text-transform:uppercase;
-}
+    .rankup__flash{
+      position:absolute; inset:0;
+      background:
+        radial-gradient(closest-side at 50% 45%, rgba(255,255,255,.48), transparent 60%),
+        radial-gradient(closest-side at 50% 55%, rgba(35,243,255,.24), transparent 70%),
+        radial-gradient(closest-side at 50% 55%, rgba(168,85,255,.20), transparent 75%);
+      opacity:0;
+      mix-blend-mode:screen;
+      pointer-events:none;
+      will-change: opacity;
+    }
 
-/* Rift */
-.rankup__riftWrap{
-  position:absolute; inset:0;
-  display:grid; place-items:center;
-  pointer-events:none;
-}
-.rankup__rift{
-  position:relative;
-  width:min(420px, 66vw);
-  height:min(520px, 76vh);
-  opacity:0;
-  transform: translateY(10px) scaleX(.65) scaleY(.92) skewX(-8deg);
-  will-change: transform, opacity;
-  filter: drop-shadow(0 0 18px rgba(35,243,255,.45)) drop-shadow(0 0 40px rgba(168,85,255,.25));
-}
-.rankup__rift::before{
-  content:"";
-  position:absolute; inset:0;
-  background:
-    radial-gradient(160px 240px at 50% 50%, rgba(35,243,255,.25), transparent 60%),
-    radial-gradient(240px 280px at 50% 50%, rgba(168,85,255,.22), transparent 65%),
-    linear-gradient(90deg, transparent, rgba(255,255,255,.10), transparent);
-  border-radius:999px;
-  clip-path: polygon(46% 0, 54% 0, 58% 8%, 62% 16%, 56% 28%, 66% 40%, 54% 54%, 62% 66%, 52% 80%, 58% 92%, 54% 100%, 46% 100%, 42% 92%, 48% 80%, 38% 66%, 46% 54%, 34% 40%, 44% 28%, 38% 16%, 42% 8%);
-  transform: skewX(-6deg) scaleY(.95);
-  opacity:.95;
-}
-.rankup__rift::after{
-  content:"";
-  position:absolute; inset:-16%;
-  background: conic-gradient(from 90deg,
-    rgba(35,243,255,.0),
-    rgba(35,243,255,.55),
-    rgba(168,85,255,.0),
-    rgba(255,61,242,.35),
-    rgba(35,243,255,.0)
-  );
-  border-radius:999px;
-  filter: blur(14px);
-  opacity:.65;
-  animation: ruRiftSpin 2.8s linear infinite;
-}
-@keyframes ruRiftSpin{ to{ transform: rotate(360deg); } }
+    /* Director FX layers */
+    .rankup__beams, .rankup__chroma, .rankup__shards{
+      position:absolute; inset:0;
+      opacity:0;
+      pointer-events:none;
+      will-change: opacity, transform;
+      mix-blend-mode:screen;
+    }
+    .rankup__beams{
+      background: conic-gradient(from 180deg, transparent 0deg, rgba(35,243,255,.10) 20deg, transparent 55deg, rgba(168,85,255,.08) 110deg, transparent 360deg);
+      transform: scale(.98) rotate(0deg);
+    }
+    .rankup__chroma{
+      background:
+        radial-gradient(closest-side at 50% 50%, rgba(255,0,255,.14), transparent 62%),
+        radial-gradient(closest-side at 50% 50%, rgba(0,255,255,.12), transparent 68%);
+      transform: translate3d(0,0,0);
+    }
+    .rankup__shards{
+      background: repeating-linear-gradient(90deg, rgba(35,243,255,0) 0, rgba(35,243,255,0) 18px, rgba(35,243,255,.18) 19px, rgba(35,243,255,0) 28px);
+      transform: translate3d(0,0,0) scale(1.02);
+    }
 
-.rankup__riftEdge{
-  position:absolute; inset:-8% -18%;
-  background:
-    repeating-linear-gradient(90deg, rgba(35,243,255,.0) 0, rgba(35,243,255,.0) 18px, rgba(35,243,255,.22) 19px, rgba(35,243,255,.0) 24px),
-    repeating-linear-gradient(180deg, rgba(255,61,242,.0) 0, rgba(255,61,242,.0) 10px, rgba(255,61,242,.18) 11px, rgba(255,61,242,.0) 18px);
-  mix-blend-mode:screen;
-  opacity:0;
-  filter: blur(.4px);
-  will-change: opacity, transform;
-}
+    /* HUD */
+    .rankup__hud{
+      position:absolute; left:24px; right:24px; top:20px;
+      display:flex; justify-content:space-between;
+      pointer-events:none;
+      opacity:.92;
+      z-index: 6;
+    }
+    .rankup__kicker{
+      font-size:14px; letter-spacing:.22em; text-transform:uppercase;
+      color:rgba(234,242,255,.85);
+    }
+    .rankup__sub{ margin-top:8px; font-size:12px; color:rgba(152,162,179,.9); letter-spacing:.06em; }
+    .rankup__hudRight{ font-size:12px; color:rgba(234,242,255,.72); letter-spacing:.1em; text-transform:uppercase; }
 
-/* Emblems */
-.rankup__emblems{
-  position:absolute; inset:0;
-  display:grid; place-items:center;
-  pointer-events:none;
-}
-.rankup__emblem{
-  width:220px; height:220px;
-  border-radius:26px;
-  display:grid; place-items:center;
-  position:absolute;
-  background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
-  border:1px solid rgba(234,242,255,.14);
-  backdrop-filter: blur(6px);
-  will-change: transform, opacity, filter;
-}
-.rankup__badge{
-  width:150px; height:150px;
-  border-radius:18px;
-  background:
-    radial-gradient(70px 70px at 40% 35%, rgba(35,243,255,.25), transparent 60%),
-    radial-gradient(80px 80px at 65% 70%, rgba(168,85,255,.18), transparent 60%),
-    linear-gradient(135deg, rgba(35,243,255,.18), rgba(255,61,242,.10));
-  border:1px solid rgba(35,243,255,.22);
-  box-shadow: var(--ru-glow);
-  display:grid; place-items:center;
-  position:relative;
-  overflow:hidden;
-}
-.rankup__badge::after{
-  content:"";
-  position:absolute; inset:-60%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,.35), transparent);
-  transform: rotate(22deg) translateX(-45%);
-  opacity:.15;
-  animation: ruSheen 2.8s ease-in-out infinite;
-}
-@keyframes ruSheen{
-  0%,55%{ transform: rotate(22deg) translateX(-45%); opacity:.15;}
-  75%{ opacity:.55; }
-  100%{ transform: rotate(22deg) translateX(45%); opacity:.12;}
-}
-.rankup__badge--new{
-  border-color: rgba(168,85,255,.32);
-  box-shadow: 0 0 18px rgba(168,85,255,.35), 0 0 42px rgba(35,243,255,.20);
-}
-.rankup__label{
-  font-weight:800;
-  letter-spacing:.14em;
-  font-size:18px;
-  text-transform:uppercase;
-  text-shadow: 0 0 16px rgba(35,243,255,.35);
-}
+    /* Rift */
+    .rankup__riftWrap{ position:absolute; inset:0; display:grid; place-items:center; pointer-events:none; z-index:2; }
+    .rankup__rift{
+      position:relative;
+      width:min(420px, 66vw);
+      height:min(520px, 76vh);
+      opacity:0;
+      transform: translateY(10px) scaleX(.65) scaleY(.92) skewX(-8deg);
+      will-change: transform, opacity;
+    }
+    .rankup__rift::before{
+      content:"";
+      position:absolute; inset:0;
+      background:
+        radial-gradient(200px 280px at 50% 50%, rgba(35,243,255,.20), transparent 62%),
+        radial-gradient(260px 320px at 50% 50%, rgba(168,85,255,.16), transparent 70%);
+      border-radius:999px;
+      opacity:.95;
+    }
+    .rankup__riftEdge{
+      position:absolute; inset:-8% -18%;
+      background: repeating-linear-gradient(90deg, rgba(35,243,255,0) 0, rgba(35,243,255,0) 18px, rgba(35,243,255,.18) 19px, rgba(35,243,255,0) 26px);
+      opacity:0;
+    }
 
-/* New emblem starts hidden (revealed later) */
-.rankup__emblem--new{
-  opacity:0;
-  transform: translateY(22px) scale(.78);
-  filter: blur(.6px) drop-shadow(0 0 26px rgba(168,85,255,.25));
-}
+    /* Emblems */
+    .rankup__emblems{ position:absolute; inset:0; display:grid; place-items:center; pointer-events:none; z-index:5; }
+    .rankup__emblem{
+      width:220px; height:220px;
+      border-radius:26px;
+      display:grid; place-items:center;
+      position:absolute;
+      background: rgba(255,255,255,.04);
+      border:1px solid rgba(234,242,255,.10);
+      will-change: transform, opacity, filter;
+    }
+    .rankup__badge{
+      width:150px; height:150px;
+      border-radius:18px;
+      display:grid; place-items:center;
+      position:relative;
+    }
+    .rankup__img{ width:120px; height:120px; object-fit:contain; pointer-events:none; }
 
-/* Burst */
-.rankup__burst{
-  position:absolute; inset:-30%;
-  background:
-    radial-gradient(closest-side at 50% 50%, rgba(255,255,255,.22), transparent 60%),
-    radial-gradient(closest-side at 50% 50%, rgba(35,243,255,.18), transparent 70%),
-    radial-gradient(closest-side at 50% 50%, rgba(168,85,255,.16), transparent 75%);
-  opacity:0;
-  transform: scale(.75);
-  mix-blend-mode:screen;
-  pointer-events:none;
-  will-change: transform, opacity;
-}
-  /* Flash (impact) */
-.rankup__flash{
-  position:absolute;
-  inset:0;
-  background:
-    radial-gradient(closest-side at 50% 45%, rgba(255,255,255,.48), transparent 60%),
-    radial-gradient(closest-side at 50% 55%, rgba(35,243,255,.24), transparent 70%),
-    radial-gradient(closest-side at 50% 55%, rgba(168,85,255,.20), transparent 75%);
-  opacity:0;
-  mix-blend-mode:screen;
-  pointer-events:none;
-  will-change: opacity;
-}
-  /* =========================
-   EPIC FX LAYERS (lightweight)
-   ========================= */
+    .rankup__emblem--new{
+      opacity:0;
+      transform: translateY(22px) scale(.78);
+      filter: blur(.6px) drop-shadow(0 0 26px rgba(168,85,255,.25));
+    }
 
-.rankup__beams,
-.rankup__chroma,
-.rankup__shards{
-  position:absolute;
-  inset:0;
-  pointer-events:none;
-  opacity:0;
-  will-change: opacity, transform;
-}
+    /* CTA */
+    .rankup__cta{
+      position:absolute; left:0; right:0; bottom:22px;
+      display:flex; justify-content:center;
+      opacity:0;
+      transform: translateY(10px);
+      will-change: transform, opacity;
+      z-index:6;
+    }
+    .rankup__btn{
+      border:1px solid rgba(35,243,255,.26);
+      background: linear-gradient(180deg, rgba(35,243,255,.16), rgba(168,85,255,.12));
+      color:var(--ru-ink);
+      padding:12px 18px;
+      border-radius:16px;
+      cursor:pointer;
+      font-weight:700;
+    }
 
-/* BEAMS: depth rays */
-.rankup__beams{
-  background:
-    conic-gradient(from 180deg,
-      transparent 0deg,
-      rgba(35,243,255,.10) 20deg,
-      transparent 55deg,
-      rgba(168,85,255,.08) 110deg,
-      transparent 360deg
-    ),
-    radial-gradient(600px 340px at 50% 45%,
-      rgba(35,243,255,.10),
-      transparent 60%
-    );
-  mix-blend-mode: screen;
-  transform: scale(.98) rotate(0deg);
-}
+    /* ===== Tier Dots (3 segments) ===== */
+    #rankupNew{ position:absolute; }
+    .tierDots{
+      position:absolute;
+      left:50%;
+      top: calc(50% + 118px);
+      transform: translateX(-50%);
+      display:flex;
+      gap:10px;
+      padding:8px 12px;
+      border-radius:999px;
+      border:1px solid rgba(234,242,255,.12);
+      background: rgba(0,0,0,.18);
+      backdrop-filter: blur(6px);
+      opacity:0;
+      pointer-events:none;
+      will-change: transform, opacity;
+      z-index: 6;
+    }
+    .tierDot{
+      width:10px; height:10px; border-radius:999px;
+      background: rgba(234,242,255,.12);
+      box-shadow:none;
+      transform: translateY(0) scale(1);
+      will-change: transform, opacity, box-shadow;
+    }
+    .tierDot.is-on{
+      background: rgba(35,243,255,.65);
+      box-shadow: 0 0 10px rgba(35,243,255,.35), 0 0 22px rgba(168,85,255,.18);
+    }
+    #rankup.is-open .tierDots{
+      opacity:1;
+      transform: translateX(-50%) translateY(0);
+    }
+    #rankup.is-tierup .tierDots{ animation: tdWrapIn .55s cubic-bezier(.2,.9,.2,1) forwards; }
+    @keyframes tdWrapIn{
+      0%{ opacity:0; transform: translateX(-50%) translateY(10px) scale(.98); }
+      100%{ opacity:1; transform: translateX(-50%) translateY(0) scale(1); }
+    }
+    #rankup.is-tierup .tierDot.is-justOn{ animation: tdPing .7s cubic-bezier(.2,.95,.2,1) forwards; }
+    @keyframes tdPing{
+      0%{ transform: translateY(0) scale(.9); box-shadow:none; }
+      40%{ transform: translateY(-2px) scale(1.35); box-shadow: 0 0 12px rgba(35,243,255,.55), 0 0 26px rgba(168,85,255,.22); }
+      100%{ transform: translateY(0) scale(1); box-shadow: 0 0 10px rgba(35,243,255,.35), 0 0 22px rgba(168,85,255,.18); }
+    }
+    #rankup[data-phase="done"] .tierDot.is-on{ animation: tdBreath 2.2s ease-in-out infinite; }
+    @keyframes tdBreath{ 0%,100%{ opacity:.95; } 50%{ opacity:1; } }
+    #rankup[data-top="1"] .tierDots{ display:none !important; }
 
-/* CHROMA: RGB split glitch (impact only) */
-.rankup__chroma{
-  background:
-    radial-gradient(closest-side at 50% 50%, rgba(255,0,255,.14), transparent 62%),
-    radial-gradient(closest-side at 50% 50%, rgba(0,255,255,.12), transparent 68%),
-    radial-gradient(closest-side at 50% 50%, rgba(255,255,255,.10), transparent 72%);
-  mix-blend-mode: screen;
-  transform: translate3d(0,0,0);
-}
+    /* ===== RankUp Evolution layers ===== */
+    #rankup.is-rankup .evoHalo,
+    #rankup.is-rankup .evoSigil{
+      position:absolute;
+      left:50%; top:50%;
+      transform: translate(-50%,-50%) scale(.9);
+      width: min(520px, 78vmin);
+      height: min(520px, 78vmin);
+      border-radius: 999px;
+      pointer-events:none;
+      opacity:0;
+      will-change: transform, opacity, filter;
+      mix-blend-mode: screen;
+      z-index: 3;
+    }
+    #rankup.is-rankup .evoHalo{
+      background:
+        radial-gradient(closest-side, rgba(35,243,255,.12), transparent 62%),
+        radial-gradient(closest-side, rgba(168,85,255,.10), transparent 68%),
+        conic-gradient(from 0deg,
+          rgba(35,243,255,0) 0deg,
+          rgba(35,243,255,.22) 30deg,
+          rgba(168,85,255,0) 95deg,
+          rgba(255,61,242,.18) 140deg,
+          rgba(35,243,255,0) 220deg,
+          rgba(168,85,255,.16) 280deg,
+          rgba(35,243,255,0) 360deg
+        );
+      filter: blur(10px);
+    }
+    #rankup.is-rankup .evoSigil{
+      background:
+        radial-gradient(circle at 50% 50%, transparent 56%, rgba(234,242,255,.14) 57%, transparent 58%),
+        radial-gradient(circle at 50% 50%, transparent 66%, rgba(35,243,255,.18) 67%, transparent 68%),
+        repeating-conic-gradient(from 0deg,
+          rgba(35,243,255,0) 0 10deg,
+          rgba(35,243,255,.18) 10deg 12deg,
+          rgba(35,243,255,0) 12deg 28deg
+        );
+      filter: blur(.2px);
+    }
+    #rankup.is-rankup .evoStamp{
+      position:absolute;
+      left:50%;
+      top: calc(50% + 190px);
+      transform: translateX(-50%) translateY(10px);
+      text-align:center;
+      pointer-events:none;
+      opacity:0;
+      will-change: transform, opacity;
+      z-index: 7;
+    }
+    #rankup.is-rankup .evoStamp__top{
+      font-size:12px;
+      letter-spacing:.22em;
+      text-transform:uppercase;
+      color: rgba(234,242,255,.82);
+    }
+    #rankup.is-rankup .evoStamp__name{
+      margin-top:8px;
+      font-size:22px;
+      font-weight:900;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      color: rgba(234,242,255,.92);
+      text-shadow: 0 0 16px rgba(35,243,255,.22);
+    }
 
-/* SHARDS: thin lines flying toward rift */
-.rankup__shards{
-  background:
-    repeating-linear-gradient(90deg,
-      rgba(35,243,255,0) 0,
-      rgba(35,243,255,0) 18px,
-      rgba(35,243,255,.18) 19px,
-      rgba(35,243,255,0) 28px
-    ),
-    repeating-linear-gradient(180deg,
-      rgba(255,61,242,0) 0,
-      rgba(255,61,242,0) 12px,
-      rgba(255,61,242,.12) 13px,
-      rgba(255,61,242,0) 22px
-    );
-  mix-blend-mode: screen;
-  transform: translate3d(0,0,0) scale(1.02);
-}
+    /* ===== PHASES ===== */
 
+    /* OPEN */
+    .rankup[data-phase="open"] .rankup__rift{ animation: ruRiftOpen 1.0s cubic-bezier(.2,.9,.2,1) forwards; }
+    .rankup[data-phase="open"] .rankup__riftEdge{ animation: ruEdgeIn .7s ease .25s forwards; }
+    .rankup[data-phase="open"] .rankup__beams{ animation: ruBeamsIn 1.05s ease forwards; }
+    #rankup.is-rankup[data-phase="open"] .evoHalo{ animation: evoHaloOpen 1.0s cubic-bezier(.2,.9,.2,1) forwards; }
 
-/* CTA */
-.rankup__cta{
-  position:absolute; left:0; right:0; bottom:22px;
-  display:flex; justify-content:center;
-  pointer-events:auto;
-  opacity:0;
-  transform: translateY(10px);
-  will-change: transform, opacity;
-}
-.rankup__btn{
-  appearance:none;
-  border:1px solid rgba(35,243,255,.26);
-  background: linear-gradient(180deg, rgba(35,243,255,.16), rgba(168,85,255,.12));
-  color:var(--ru-ink);
-  padding:12px 18px;
-  border-radius:16px;
-  cursor:pointer;
-  font-weight:700;
-  box-shadow: 0 10px 30px rgba(0,0,0,.35);
-}
-.rankup__btn:hover{ border-color: rgba(35,243,255,.35); }
+    @keyframes ruRiftOpen{
+      0%{ opacity:0; transform: translateY(10px) scaleX(.65) scaleY(.92) skewX(-8deg); }
+      100%{ opacity:1; transform: translateY(0) scaleX(1) scaleY(1) skewX(-6deg); }
+    }
+    @keyframes ruEdgeIn{ to{ opacity:.55; } }
+    @keyframes ruBeamsIn{
+      0%{ opacity:0; transform: scale(.98) rotate(0deg); }
+      100%{ opacity:.65; transform: scale(1.02) rotate(10deg); }
+    }
+    @keyframes evoHaloOpen{
+      0%{ opacity:0; transform: translate(-50%,-50%) scale(.86); }
+      100%{ opacity:.25; transform: translate(-50%,-50%) scale(.96); }
+    }
 
-/* =========================
-   PHASES via [data-phase="..."]
-   ========================= */
+    /* COLLAPSE */
+    .rankup[data-phase="collapse"] .rankup__emblem--old{ animation: ruOldCollapse .7s cubic-bezier(.2,.9,.2,1) forwards; }
+    .rankup[data-phase="collapse"] .rankup__shards{ animation: ruShardsPull .70s ease forwards; }
+    #rankup.is-rankup[data-phase="collapse"] .evoHalo{ opacity:.35; transform: translate(-50%,-50%) scale(1.0); }
 
-/* OPEN: rift appears */
-.rankup[data-phase="open"] .rankup__rift{
-  animation: ruRiftOpen 1.0s cubic-bezier(.2,.9,.2,1) forwards;
-}
-  .rankup[data-phase="open"] .rankup__beams{
-  animation: ruBeamsIn 1.05s ease forwards;
-}
-@keyframes ruBeamsIn{
-  0%{ opacity:0; transform: scale(.98) rotate(0deg); }
-  100%{ opacity:.65; transform: scale(1.02) rotate(10deg); }
-}
-.rankup[data-phase="open"] .rankup__riftEdge{
-  animation: ruEdgeIn .7s ease .25s forwards;
-}
-@keyframes ruRiftOpen{
-  0%{ opacity:0; transform: translateY(10px) scaleX(.65) scaleY(.92) skewX(-8deg); }
-  100%{ opacity:1; transform: translateY(0) scaleX(1) scaleY(1) skewX(-6deg); }
-}
-@keyframes ruEdgeIn{ to{ opacity:.55; } }
+    @keyframes ruOldCollapse{
+      0%{ opacity:1; transform: translateY(0) scale(1) rotate(0deg); }
+      35%{ transform: translateY(18px) scale(.92) rotate(-3deg); }
+      70%{ transform: translateY(46px) scale(.62) rotate(-10deg) skewX(-8deg); opacity:.55; filter: blur(1px); }
+      100%{ opacity:0; transform: translateY(86px) scale(.28) rotate(-18deg) skewX(-10deg); filter: blur(2px); }
+    }
+    @keyframes ruShardsPull{
+      0%{ opacity:0; transform: translate3d(0,0,0) scale(1.02); }
+      25%{ opacity:.65; }
+      100%{ opacity:0; transform: translate3d(0,60px,0) scale(.88); }
+    }
 
-/* COLLAPSE: old emblem collapses into rift */
-.rankup[data-phase="collapse"] .rankup__emblem--old{
-  animation: ruOldCollapse .7s cubic-bezier(.2,.9,.2,1) forwards;
-}
-@keyframes ruOldCollapse{
-  0%{
-    opacity:1;
-    transform: translateY(0) scale(1) rotate(0deg);
-    filter: drop-shadow(0 0 16px rgba(35,243,255,.25));
-  }
-  35%{
-    transform: translateY(18px) scale(.92) rotate(-3deg);
-  }
-  70%{
-    transform: translateY(46px) scale(.62) rotate(-10deg) skewX(-8deg);
-    opacity:.55;
-    filter: blur(1px);
-  }
-  100%{
-    opacity:0;
-    transform: translateY(86px) scale(.28) rotate(-18deg) skewX(-10deg);
-    filter: blur(2px);
-  }
-  .rankup[data-phase="collapse"] .rankup__shards{
-  animation: ruShardsPull .70s ease forwards;
-}
-@keyframes ruShardsPull{
-  0%{ opacity:0; transform: translate3d(0,0,0) scale(1.02); }
-  25%{ opacity:.65; }
-  100%{ opacity:0; transform: translate3d(0,60px,0) scale(.88); }
-  }
-  
-}
+    /* IMPACT */
+    .rankup[data-phase="impact"] .rankup__stage{ animation: ruImpactShake .28s ease forwards; }
+    .rankup[data-phase="impact"] .rankup__burst{ animation: ruBurst .6s ease forwards; }
+    .rankup[data-phase="impact"] .rankup__flash{ animation: ruFlash .35s ease forwards; }
+    .rankup[data-phase="impact"] .rankup__chroma{ animation: ruChromaHit .22s ease forwards; }
+    #rankup.is-rankup[data-phase="impact"] .evoHalo{ animation: evoHaloImpact .55s ease forwards; }
+    #rankup.is-rankup[data-phase="impact"] .evoSigil{ animation: evoSigilImpact .55s ease forwards; }
 
-/* IMPACT: flash + shake */
-.rankup[data-phase="impact"] .rankup__stage{
-  animation: ruImpactShake .28s ease forwards;
-}
+    @keyframes ruFlash{ 0%{opacity:0;} 22%{opacity:1;} 100%{opacity:0;} }
+    @keyframes ruBurst{
+      0%{ opacity:0; transform: scale(.75); }
+      35%{ opacity:1; transform: scale(1); }
+      100%{ opacity:0; transform: scale(1.12); }
+    }
+    @keyframes ruChromaHit{
+      0%{ opacity:0; transform: translate3d(0,0,0); }
+      35%{ opacity:.75; transform: translate3d(8px,-2px,0); }
+      100%{ opacity:0; transform: translate3d(-6px,2px,0); }
+    }
+    @keyframes ruImpactShake{
+      0%{ transform: translateY(0) scale(1); }
+      20%{ transform: translateY(-2px) translateX(2px) scale(1.012); }
+      45%{ transform: translateY(2px) translateX(-2px) scale(1.010); }
+      70%{ transform: translateY(-1px) translateX(1px) scale(1.006); }
+      100%{ transform: translateY(0) translateX(0) scale(1); }
+    }
+    @keyframes evoHaloImpact{
+      0%{ opacity:.25; transform: translate(-50%,-50%) scale(.96); filter: blur(10px); }
+      35%{ opacity:.95; transform: translate(-50%,-50%) scale(1.06) rotate(8deg); filter: blur(8px); }
+      100%{ opacity:.35; transform: translate(-50%,-50%) scale(1.02) rotate(0deg); filter: blur(10px); }
+    }
+    @keyframes evoSigilImpact{
+      0%{ opacity:0; transform: translate(-50%,-50%) scale(.92); }
+      35%{ opacity:.85; transform: translate(-50%,-50%) scale(1.03); }
+      100%{ opacity:.18; transform: translate(-50%,-50%) scale(1.02); }
+    }
 
-.rankup[data-phase="impact"] .rankup__burst{
-  animation: ruBurst .6s ease forwards;
-}
+    /* REVEAL */
+    .rankup[data-phase="reveal"] .rankup__emblem--new{ animation: evoNewEmblem 1.15s cubic-bezier(.12,.95,.18,1) forwards; }
+    .rankup[data-phase="reveal"] .rankup__beams{ opacity:.55; transform: scale(1.03) rotate(14deg); }
+    #rankup.is-rankup[data-phase="reveal"] .evoStamp{ animation: evoStampIn .8s cubic-bezier(.2,.9,.2,1) .15s forwards; }
 
-.rankup[data-phase="impact"] .rankup__flash{
-  animation: ruFlash .35s ease forwards;
-}
+    @keyframes evoNewEmblem{
+      0%{ opacity:0; transform: translateY(90px) scale(.55); filter: blur(1px) drop-shadow(0 0 30px rgba(168,85,255,.35)); }
+      45%{ opacity:1; transform: translateY(-10px) scale(1.08); filter: blur(0) drop-shadow(0 0 28px rgba(35,243,255,.28)); }
+      100%{ opacity:1; transform: translateY(0) scale(1); filter: blur(0) drop-shadow(0 0 20px rgba(35,243,255,.20)); }
+    }
+    @keyframes evoStampIn{
+      0%{ opacity:0; transform: translateX(-50%) translateY(14px); }
+      100%{ opacity:1; transform: translateX(-50%) translateY(0); }
+    }
 
-@keyframes ruFlash{
-  0%{ opacity:0; }
-  22%{ opacity:1; }
-  100%{ opacity:0; }
-}
+    /* DONE */
+    .rankup[data-phase="done"] .rankup__cta{ animation: ruCtaIn .55s cubic-bezier(.2,.9,.2,1) forwards; }
+    @keyframes ruCtaIn{ to{ opacity:1; transform: translateY(0); } }
 
-@keyframes ruImpactShake{
-  0%{ transform: translateY(0) scale(1); }
-  20%{ transform: translateY(-2px) translateX(2px) scale(1.002); }
-  45%{ transform: translateY(2px) translateX(-2px) scale(1.002); }
-  70%{ transform: translateY(-1px) translateX(1px) scale(1.001); }
-  100%{ transform: translateY(0) translateX(0) scale(1); }
-}
+    .rankup[data-phase="done"] .rankup__emblem--new{ opacity:1; transform: translateY(0) scale(1); filter:none; }
+    .rankup[data-phase="done"] .rankup__emblem--old{ opacity:0; }
 
-@keyframes ruBurst{
-  0%{ opacity:0; transform: scale(.75); }
-  35%{ opacity:1; transform: scale(1); }
-  100%{ opacity:0; transform: scale(1.12); }
-}
-  .rankup[data-phase="impact"] .rankup__chroma{
-  animation: ruChromaHit .22s ease forwards;
-}
-@keyframes ruChromaHit{
-  0%{ opacity:0; transform: translate3d(0,0,0); }
-  35%{ opacity:.75; transform: translate3d(8px,-2px,0); }
-  100%{ opacity:0; transform: translate3d(-6px,2px,0); }
-}
+    /* top rank: keep rift alive */
+    #rankup[data-top="1"][data-phase="done"] .rankup__rift{ opacity: 1; }
+    #rankup[data-top="1"][data-phase="done"] .rankup__riftEdge{ opacity: .55; }
+    #rankup[data-top="1"][data-phase="done"] .rankup__burst{ opacity: .18; transform: scale(1.05); }
 
-/* Upgrade shake to include micro-zoom + brief brightness */
-@keyframes ruImpactShake{
-  0%{ transform: translateY(0) scale(1); filter: brightness(1); }
-  20%{ transform: translateY(-2px) translateX(2px) scale(1.012); filter: brightness(1.08); }
-  45%{ transform: translateY(2px) translateX(-2px) scale(1.010); filter: brightness(1.06); }
-  70%{ transform: translateY(-1px) translateX(1px) scale(1.006); filter: brightness(1.03); }
-  100%{ transform: translateY(0) translateX(0) scale(1); filter: brightness(1); }
-}
+    /* RankUp evolution: keep halo alive faintly */
+    #rankup.is-rankup[data-phase="done"] .evoHalo{ opacity:.22; transform: translate(-50%,-50%) scale(1.02); }
 
-/* REVEAL: new emblem emerges + rift edge flicker */
-.rankup[data-phase="reveal"] .rankup__emblem--new{
-  animation: ruNewReveal 1.05s cubic-bezier(.12,.95,.18,1) forwards;
-}
-.rankup[data-phase="reveal"] .rankup__riftEdge{
-  animation: ruEdgeFlicker 1s ease .15s forwards;
-}
-@keyframes ruNewReveal{
-  0%{
-    opacity:0;
-    transform: translateY(90px) scale(.55);
-    filter: blur(1px) drop-shadow(0 0 30px rgba(168,85,255,.35));
-  }
-  45%{
-    opacity:1;
-    transform: translateY(-10px) scale(1.06);
-    filter: blur(0) drop-shadow(0 0 40px rgba(35,243,255,.28));
-  }
-  100%{
-    opacity:1;
-    transform: translateY(0) scale(1);
-    filter: blur(0) drop-shadow(0 0 22px rgba(35,243,255,.26));
-  }
-  .rankup[data-phase="reveal"] .rankup__beams{
-  opacity: .55;
-  transform: scale(1.03) rotate(14deg);
-  }
-}
-@keyframes ruEdgeFlicker{
-  0%{ opacity:.55; }
-  30%{ opacity:.15; transform: translateX(2px); }
-  60%{ opacity:.45; transform: translateX(-2px); }
-  100%{ opacity:.28; transform: translateX(0); }
-}
+    /* =========================
+       TIERUP v2 overrides
+       ========================= */
+    #rankup[data-type="tier"] .rankup__riftWrap{ display:none !important; }
+    #rankup[data-type="tier"] #rankupOld{ display:none !important; }
+    #rankup[data-type="tier"] .rankup__cta{ display:none !important; }
+    #rankup[data-type="tier"] .rankup__stage{ height: min(360px, 58vh); }
 
-/* DONE: CTA in */
-.rankup[data-phase="done"] .rankup__cta{
-  animation: ruCtaIn .55s cubic-bezier(.2,.9,.2,1) forwards;
-}
-  /* DONE: keep NEW emblem visible + keep OLD hidden */
-.rankup[data-phase="done"] .rankup__emblem--new{
-  opacity: 1;
-  transform: translateY(0) scale(1);
-  filter: blur(0) drop-shadow(0 0 22px rgba(35,243,255,.26));
-}
+    #rankup[data-type="tier"][data-phase="impact"] .rankup__stage{ animation: tdStageHit .22s ease forwards; }
+    @keyframes tdStageHit{
+      0%{ transform: translateY(0) scale(1); }
+      40%{ transform: translateY(-1px) scale(1.01); }
+      100%{ transform: translateY(0) scale(1); }
+    }
+    #rankup[data-type="tier"][data-phase="reveal"] .rankup__emblem--new{
+      animation: tdNewPop .55s cubic-bezier(.2,.95,.2,1) forwards;
+    }
+    @keyframes tdNewPop{
+      0%{ opacity:0; transform: translateY(12px) scale(.92); }
+      60%{ opacity:1; transform: translateY(-2px) scale(1.06); }
+      100%{ opacity:1; transform: translateY(0) scale(1); }
+    }
 
-.rankup[data-phase="done"] .rankup__emblem--old{
-  opacity: 0;
-}
-@keyframes ruCtaIn{ to{ opacity:1; transform: translateY(0); } }
-
-/* Reduced motion */
-@media (prefers-reduced-motion: reduce){
-  .rankup__scan,.rankup__rift::after,.rankup__badge::after{ animation:none!important; }
-  .rankup[data-phase="open"] .rankup__rift,
-  .rankup[data-phase="open"] .rankup__riftEdge,
-  .rankup[data-phase="collapse"] .rankup__emblem--old,
-  .rankup[data-phase="impact"] .rankup__stage,
-  .rankup[data-phase="impact"] .rankup__burst,
-  .rankup[data-phase="reveal"] .rankup__emblem--new,
-  .rankup[data-phase="reveal"] .rankup__riftEdge,
-  .rankup[data-phase="done"] .rankup__cta{
-    animation:none!important;
-    .rankup__beams, .rankup__chroma, .rankup__shards{ display:none!important; }
-.rankup__stage{ filter:none!important; }
-  }
-  .rankup{ transition:none!important; }
-  .rankup.is-open{ opacity:1; }
-  .rankup__stage{ opacity:1; transform:none; }
-  .rankup__rift{ opacity:1; transform:none; }
-  .rankup__emblem--old{ opacity:0; }
-  .rankup__emblem--new{ opacity:1; transform:none; filter:none; }
-  .rankup__cta{ opacity:1; transform:none; }
-}
-  .rankup__img{
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  display:block;
-  pointer-events:none;
-  filter: drop-shadow(0 0 18px rgba(35,243,255,.25));
-}
-.rankup__badge{
-  display:grid;
-  place-items:center;
-}
-.rankup__badge .rankup__img{
-  width: 120px;
-  height: 120px;
-}
-  
-  /* Tier mode: no rift, no collapse */
-.rankup[data-type="tier"] .rankup__riftWrap{ display:none; }
-.rankup[data-type="tier"] .rankup__emblem--old{ display:none; }
-.rankup[data-type="tier"] .rankup__hudRight{ opacity:.85; }
-  /* Tier mode: make stage smaller + snappier */
-.rankup[data-type="tier"] .rankup__stage{
-  height: min(380px, 62vh);
-}
-.rankup[data-type="tier"] .rankup__cta{ display:none; }
-
-  /* Top rank: keep rift alive in DONE (afterglow stays) */
-.rankup[data-top="1"][data-phase="done"] .rankup__rift{
-  opacity: 1;
-}
-.rankup[data-top="1"][data-phase="done"] .rankup__riftEdge{
-  opacity: .55;
-}
-.rankup[data-top="1"][data-phase="done"] .rankup__burst{
-  opacity: .18;
-  transform: scale(1.05);
-}
-  .rankup[data-phase="done"] .rankup__badge--new{
-  animation: ruAfterglowBreath 2.2s ease-in-out infinite;
-}
-
-@keyframes ruAfterglowBreath{
-  0%,100%{ box-shadow: 0 0 18px rgba(168,85,255,.35), 0 0 42px rgba(35,243,255,.18); }
-  50%{ box-shadow: 0 0 26px rgba(168,85,255,.45), 0 0 70px rgba(35,243,255,.26); }
-}
-  /* TEMP FIX: hide legacy cinematic leftovers (cin-*) */
-.cin-wrap, .cin-card, .cin-top, .cin-main,
-.cin-rankText, .cin-hint, .cin-key,
-.cin-fx, .cin-rays, .cin-burst, .cin-scan,
-.cin-badgeWrap, .cin-badgeImg, .cin-badgeRing,
-.cinematic-bg, .cinematic {
-  display: none !important;
-}
-
-  /* ===== Tier Dots (3 segments) ===== */
-#rankupNew{ position: absolute; } /* ensure anchor exists (safe) */
-
-.tierDots{
-  position:absolute;
-  left:50%;
-  top: calc(50% + 118px); /* under 150px badge inside 220px emblem */
-  transform: translateX(-50%);
-  display:flex;
-  gap:10px;
-  padding:8px 12px;
-  border-radius:999px;
-  border:1px solid rgba(234,242,255,.12);
-  background: rgba(0,0,0,.18);
-  backdrop-filter: blur(6px);
-  opacity:0;
-  pointer-events:none;
-  will-change: transform, opacity;
-}
-
-/* dot base */
-.tierDot{
-  width:10px;
-  height:10px;
-  border-radius:999px;
-  background: rgba(234,242,255,.12);
-  box-shadow: none;
-  transform: translateY(0) scale(1);
-  will-change: transform, opacity, box-shadow;
-}
-
-/* active dot */
-.tierDot.is-on{
-  background: rgba(35,243,255,.65);
-  box-shadow:
-    0 0 10px rgba(35,243,255,.35),
-    0 0 22px rgba(168,85,255,.18);
-}
-
-/* show in reveal/done (rank) and always for tier mode when open */
-#rankup.is-open .tierDots{
-  opacity:1;
-  transform: translateX(-50%) translateY(0);
-}
-
-/* TierUp pulse */
-#rankup.is-tierup .tierDots{
-  animation: tdWrapIn .55s cubic-bezier(.2,.9,.2,1) forwards;
-}
-@keyframes tdWrapIn{
-  0%{ opacity:0; transform: translateX(-50%) translateY(10px) scale(.98); }
-  100%{ opacity:1; transform: translateX(-50%) translateY(0) scale(1); }
-}
-
-#rankup.is-tierup .tierDot.is-justOn{
-  animation: tdPing .7s cubic-bezier(.2,.95,.2,1) forwards;
-}
-@keyframes tdPing{
-  0%{ transform: translateY(0) scale(.9); box-shadow: none; }
-  40%{ transform: translateY(-2px) scale(1.35);
-       box-shadow: 0 0 12px rgba(35,243,255,.55), 0 0 26px rgba(168,85,255,.22); }
-  100%{ transform: translateY(0) scale(1);
-        box-shadow: 0 0 10px rgba(35,243,255,.35), 0 0 22px rgba(168,85,255,.18); }
-}
-
-/* subtle breathing in DONE */
-#rankup[data-phase="done"] .tierDot.is-on{
-  animation: tdBreath 2.2s ease-in-out infinite;
-}
-@keyframes tdBreath{
-  0%,100%{ opacity: .95; }
-  50%{ opacity: 1; }
-}
-
-/* NEXUS / top rank: no dots */
-#rankup[data-top="1"] .tierDots{ display:none !important; }
-
-/* Reduced motion */
-@media (prefers-reduced-motion: reduce){
-  #rankup.is-tierup .tierDots,
-  #rankup.is-tierup .tierDot.is-justOn,
-  #rankup[data-phase="done"] .tierDot.is-on{
-    animation:none !important;
-  }
-}
-
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce){
+      .rankup__beams, .rankup__chroma, .rankup__shards{ display:none!important; }
+      .evoHalo,.evoSigil,.evoStamp{ display:none!important; }
+    }
   </style>
 </head>
 <body>
@@ -713,271 +504,252 @@
     <span class="note">Preview page — does not touch matches/RR.</span>
   </div>
 
+  <!-- ===== RANKUP OVERLAY (Digital Rift Protocol / Desktop) ===== -->
   <div class="rankup" id="rankup" aria-hidden="true" data-phase="idle" data-type="rank" data-top="0">
-  <div class="rankup__veil"></div>
-  <div class="rankup__grain" aria-hidden="true"></div>
+    <div class="rankup__veil"></div>
+    <div class="rankup__grain" aria-hidden="true"></div>
 
-  <div class="rankup__stage" role="dialog" aria-label="Rank up cinematic">
-    <div class="rankup__scan" aria-hidden="true"></div>
-    <div class="rankup__burst" aria-hidden="true"></div>
-    <div class="rankup__flash" aria-hidden="true"></div>
-    <div class="rankup__beams" aria-hidden="true"></div>
-    <div class="rankup__chroma" aria-hidden="true"></div>
-    <div class="rankup__shards" aria-hidden="true"></div>
+    <div class="rankup__stage" role="dialog" aria-label="Rank up cinematic">
+      <div class="rankup__scan" aria-hidden="true"></div>
+      <div class="rankup__burst" aria-hidden="true"></div>
+      <div class="rankup__flash" aria-hidden="true"></div>
+      <div class="rankup__beams" aria-hidden="true"></div>
+      <div class="rankup__chroma" aria-hidden="true"></div>
+      <div class="rankup__shards" aria-hidden="true"></div>
 
-    <!-- Top HUD -->
-    <header class="rankup__hud">
-      <div class="rankup__hudLeft">
-        <div class="rankup__kicker">RANKED UPDATE</div>
-        <div class="rankup__sub" id="rankupSub">Protocol: Digital Rift • Opening breach…</div>
+      <!-- Evolution FX layers -->
+      <div class="evoHalo" aria-hidden="true"></div>
+      <div class="evoSigil" aria-hidden="true"></div>
+
+      <div class="evoStamp" aria-hidden="true">
+        <div class="evoStamp__top">NEW RANK</div>
+        <div class="evoStamp__name" id="evoRankName">EIDOLON</div>
       </div>
-      <div class="rankup__hudRight" id="rankupRight">NEW RANK UNLOCKED</div>
-    </header>
 
-    <!-- Rift -->
-    <div class="rankup__riftWrap" aria-hidden="true">
-      <div class="rankup__rift">
-        <div class="rankup__riftEdge"></div>
+      <!-- Top HUD -->
+      <header class="rankup__hud">
+        <div class="rankup__hudLeft">
+          <div class="rankup__kicker">RANKED UPDATE</div>
+          <div class="rankup__sub" id="rankupSub">Protocol: Digital Rift • Opening breach…</div>
+        </div>
+        <div class="rankup__hudRight" id="rankupRight">NEW RANK UNLOCKED</div>
+      </header>
+
+      <!-- Rift -->
+      <div class="rankup__riftWrap" aria-hidden="true">
+        <div class="rankup__rift">
+          <div class="rankup__riftEdge"></div>
+        </div>
       </div>
+
+      <!-- Emblems -->
+      <div class="rankup__emblems">
+        <!-- OLD -->
+        <div class="rankup__emblem rankup__emblem--old" id="rankupOld">
+          <div class="rankup__badge">
+            <img class="rankup__img" id="rankupOldImg" alt="Old rank badge" />
+          </div>
+        </div>
+
+        <!-- NEW -->
+        <div class="rankup__emblem rankup__emblem--new" id="rankupNew">
+          <div class="rankup__badge rankup__badge--new">
+            <img class="rankup__img" id="rankupNewImg" alt="New rank badge" />
+          </div>
+
+          <!-- Tier (Division) indicator: 3 segments -->
+          <div class="tierDots" id="tierDots" aria-hidden="true">
+            <span class="tierDot" data-i="0"></span>
+            <span class="tierDot" data-i="1"></span>
+            <span class="tierDot" data-i="2"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- CTA -->
+      <footer class="rankup__cta">
+        <button class="rankup__btn" id="rankupContinue" type="button">Continue</button>
+      </footer>
     </div>
-
-    <!-- Emblems -->
-    <div class="rankup__emblems">
-      <!-- OLD -->
-      <div class="rankup__emblem rankup__emblem--old" id="rankupOld">
-        <div class="rankup__badge">
-          <img class="rankup__img" id="rankupOldImg" alt="Old rank badge" />
-          <span class="rankup__label" id="rankupOldLabel">RANK 6 / T3</span>
-        </div>
-      </div>
-
-      <!-- NEW -->
-      <div class="rankup__emblem rankup__emblem--new" id="rankupNew">
-        <div class="rankup__badge rankup__badge--new">
-          <img class="rankup__img" id="rankupNewImg" alt="New rank badge" />
-          <span class="rankup__label" id="rankupNewLabel">RANK 7 / T1</span>
-        </div>
-        <!-- Tier (Division) indicator: 3 segments -->
-      <div class="tierDots" id="tierDots" aria-hidden="true">
-      <span class="tierDot" data-i="0"></span>
-      <span class="tierDot" data-i="1"></span>
-      <span class="tierDot" data-i="2"></span>
-     </div>
   </div>
-</div>
-
-    <!-- CTA -->
-    <footer class="rankup__cta">
-      <button class="rankup__btn" id="rankupContinue" type="button">Continue</button>
-    </footer>
-  </div>
-</div>
 
   <script>
+    // =============================
     // DIGITAL RIFT PROTOCOL - PUBLIC API (SAFE)
-// Always defines window.showRankUp / window.showTierUp
-// =============================
+    // =============================
 
-function _ruGetRoot() {
-  return document.getElementById("rankup");
-}
+    function _ruGetRoot() { return document.getElementById("rankup"); }
 
-function _ruSetPhase(root, phase) {
-  root.dataset.phase = phase;
-  
-}
+    function _ruSetPhase(root, phase) { root.dataset.phase = phase; }
 
-function _ruSetOpen(root, isOpen) {
-  root.classList.toggle("is-open", isOpen);
-  root.setAttribute("aria-hidden", isOpen ? "false" : "true");
-}
-
-function _ruTierKeyFromText(t) {
-  return String(t || "").trim().split(" ")[0].toLowerCase();
-}
-
-function _ruIsTopRankText(toText) {
-  const t = String(toText || "").toUpperCase();
-  return t.includes("EIDOLON");
-}
-
-function _ruFill(payload) {
-  const root = _ruGetRoot();
-  if (!root) return null;
-
-  const subEl = document.getElementById("rankupSub");
-  const rightEl = document.getElementById("rankupRight");
-  const oldLabelEl = document.getElementById("rankupOldLabel");
-  const newLabelEl = document.getElementById("rankupNewLabel");
-  const oldImg = document.getElementById("rankupOldImg");
-  const newImg = document.getElementById("rankupNewImg");
-  const btn = document.getElementById("rankupContinue");
-
-  const fromText = payload?.fromText || "";
-  const toText = payload?.toText || "";
-  const rrText = payload?.rrText || "";
-
-  if (oldLabelEl) oldLabelEl.textContent = fromText;
-  if (newLabelEl) newLabelEl.textContent = toText;
-
-  if (subEl) subEl.textContent = payload?.subText || subEl.textContent;
-  if (rightEl) rightEl.textContent = rrText;
-
-  if (oldImg) oldImg.src = "assets/ranks/" + _ruTierKeyFromText(fromText) + ".webp";
-  if (newImg) newImg.src = "assets/ranks/" + _ruTierKeyFromText(toText) + ".webp";
-  if (oldImg) oldImg.onerror = function(){ oldImg.removeAttribute("src"); };
-  if (newImg) newImg.onerror = function(){ newImg.removeAttribute("src"); };
-
-  if (btn) btn.style.display = "none";
-
-  return { root, btn, toText };
-}
-
-function _ruRunTimeline(root, steps) {
-  let i = 0;
-  function next() {
-    if (i >= steps.length) return;
-    const s = steps[i++];
-    _ruSetPhase(root, s.phase);
-    if (s.ms != null) _ruLater(next, s.ms);
-  }
-  next();
-}
-
-  var _ruTimers = [];
-
-function _ruLater(fn, ms) {
-  var id = setTimeout(fn, ms);
-  _ruTimers.push(id);
-  return id;
-}
-
-function _ruClearTimers() {
-  while (_ruTimers.length) clearTimeout(_ruTimers.pop());
-}
-  
-window.hideRankUp = function () {
-  _ruClearTimers();
-
-  // Avoid aria-hidden warning: remove focus from inside overlay before hiding
-  try { document.activeElement && document.activeElement.blur(); } catch(e) {}
-
-  const root = _ruGetRoot();
-  if (!root) return;
-
-  _ruSetOpen(root, false);
-  _ruSetPhase(root, "idle");
-  root.classList.remove("is-tierup");
-
-  const btn = document.getElementById("rankupContinue");
-  if (btn) btn.style.display = "none";
-};
-
-window.showRankUp = function (payload) {
-  window.hideRankUp();
-  // Force a clean restart on next frame
-
-  const res = _ruFill(payload);
-  if (!res) return;
-
-  const { root, btn, toText } = res;
-
-  root.dataset.type = "rank";
-  root.dataset.top = _ruIsTopRankText(toText) ? "1" : "0";
-
-  requestAnimationFrame(() => {
-  _ruSetOpen(root, true);
-  _ruRunTimeline(root, timeline);
-});
-  
-
-  const timeline = [
-    { phase: "open", ms: 1000 },
-    { phase: "collapse", ms: 700 },
-    { phase: "impact", ms: 280 },
-    { phase: "reveal", ms: 1050 },
-    { phase: "done", ms: null }
-  ];
-
-  _ruRunTimeline(root, timeline);
-
-  // show CTA near done
-  if (btn) {
-    _ruLater(() => { if (btn) btn.style.display = "inline-block"; }, 1000 + 700 + 280 + 1050 - 200);
-  }
-};
-
-window.showTierUp = function (payload) {
-  window.hideRankUp();
-
-  const res = _ruFill(payload);
-  // Tier dots logic
-  const dotsWrap = document.getElementById("tierDots");
-  if (dotsWrap) {
-    const dots = dotsWrap.querySelectorAll(".tierDot");
-
-    // reset classes
-    for (let i = 0; i < dots.length; i++) {
-      dots[i].classList.remove("is-on", "is-justOn");
+    function _ruSetOpen(root, isOpen) {
+      root.classList.toggle("is-open", isOpen);
+      root.setAttribute("aria-hidden", isOpen ? "false" : "true");
     }
 
-    const di = (payload && payload.divIndex !== undefined && payload.divIndex !== null) ? Number(payload.divIndex) : 0;
-    const onCount = Math.max(0, Math.min(3, di + 1)); // 0->1,1->2,2->3
-
-    for (let i = 0; i < onCount; i++) dots[i].classList.add("is-on");
-
-    // ping newly lit dot (promotion only)
-    if (payload && payload.rrText && String(payload.rrText).toUpperCase().includes("UPGRADED")) {
-      const justOnIndex = Math.max(0, Math.min(2, di));
-      dots[justOnIndex].classList.add("is-justOn");
-      // remove ping class after animation
-      _ruLater(() => dots[justOnIndex].classList.remove("is-justOn"), 720);
+    function _ruTierKeyFromText(t) {
+      return String(t || "").trim().split(" ")[0].toLowerCase();
     }
 
-    // mark overlay as tierup for CSS
-    res.root.classList.add("is-tierup");
-    _ruLater(() => res.root.classList.remove("is-tierup"), 1400);
-  }
-  if (!res) return;
-  const { root } = res;
+    function _ruIsTopRankText(toText) {
+      const t = String(toText || "").toUpperCase();
+      return t.includes("EIDOLON");
+    }
 
-  root.dataset.type = "tier";
-  root.dataset.top = "0";
+    function _ruFill(payload) {
+      const root = _ruGetRoot();
+      if (!root) return null;
 
-  requestAnimationFrame(() => {
-  _ruSetOpen(root, true);
-  _ruRunTimeline(root, timeline);
-});
-  
+      const subEl = document.getElementById("rankupSub");
+      const rightEl = document.getElementById("rankupRight");
+      const oldImg = document.getElementById("rankupOldImg");
+      const newImg = document.getElementById("rankupNewImg");
+      const btn = document.getElementById("rankupContinue");
 
-  const timeline = [
-    { phase: "impact", ms: 220 },
-    { phase: "reveal", ms: 650 },
-    { phase: "done", ms: 350 }
-  ];
+      const fromText = payload?.fromText || "";
+      const toText = payload?.toText || "";
+      const rrText = payload?.rrText || "";
 
-  _ruRunTimeline(root, timeline);
+      if (subEl) subEl.textContent = payload?.subText || subEl.textContent;
+      if (rightEl) rightEl.textContent = rrText;
 
-  // auto close tier-up
-  _ruLater(() => window.hideRankUp(), 1400);
-};
+      if (oldImg) oldImg.src = "assets/ranks/" + _ruTierKeyFromText(fromText) + ".webp";
+      if (newImg) newImg.src = "assets/ranks/" + _ruTierKeyFromText(toText) + ".webp";
 
-// Close UX
-document.addEventListener("keydown", function (e) {
-  if (e.key === "Escape") window.hideRankUp();
-});
+      if (btn) btn.style.display = "none";
 
-document.addEventListener("click", function (e) {
-  const t = e.target;
-  if (t && t.id === "rankupContinue") window.hideRankUp();
-});
+      // Update evo stamp name
+      const evoName = document.getElementById("evoRankName");
+      if (evoName) evoName.textContent = _ruTierKeyFromText(toText).toUpperCase();
+
+      return { root, btn, toText, fromText, toTextRaw: toText };
+    }
+
+    var _ruTimers = [];
+    function _ruLater(fn, ms) {
+      var id = setTimeout(fn, ms);
+      _ruTimers.push(id);
+      return id;
+    }
+    function _ruClearTimers() {
+      while (_ruTimers.length) clearTimeout(_ruTimers.pop());
+    }
+
+    function _ruRunTimeline(root, steps) {
+      let i = 0;
+      function next() {
+        if (i >= steps.length) return;
+        const s = steps[i++];
+        _ruSetPhase(root, s.phase);
+        if (s.ms != null) _ruLater(next, s.ms);
+      }
+      next();
+    }
+
+    window.hideRankUp = function () {
+      _ruClearTimers();
+      try { document.activeElement && document.activeElement.blur(); } catch(e) {}
+
+      const root = _ruGetRoot();
+      if (!root) return;
+
+      root.classList.remove("is-tierup");
+      root.classList.remove("is-rankup");
+      _ruSetOpen(root, false);
+      _ruSetPhase(root, "idle");
+
+      const btn = document.getElementById("rankupContinue");
+      if (btn) btn.style.display = "none";
+    };
+
+    window.showRankUp = function (payload) {
+      window.hideRankUp();
+      _ruClearTimers();
+
+      const res = _ruFill(payload);
+      if (!res) return;
+
+      const { root, btn, toTextRaw } = res;
+
+      root.dataset.type = "rank";
+      root.dataset.top = _ruIsTopRankText(toTextRaw) ? "1" : "0";
+      root.classList.add("is-rankup");
+
+      _ruSetOpen(root, true);
+
+      const timeline = [
+        { phase: "open", ms: 1000 },
+        { phase: "collapse", ms: 700 },
+        { phase: "impact", ms: 280 },
+        { phase: "reveal", ms: 1050 },
+        { phase: "done", ms: null }
+      ];
+
+      _ruRunTimeline(root, timeline);
+
+      if (btn) {
+        _ruLater(() => { btn.style.display = "inline-block"; }, 1000 + 700 + 280 + 1050 - 200);
+      }
+    };
+
+    window.showTierUp = function (payload) {
+      window.hideRankUp();
+      _ruClearTimers();
+
+      const res = _ruFill(payload);
+      if (!res) return;
+
+      const { root } = res;
+
+      root.dataset.type = "tier";
+      root.dataset.top = "0";
+      root.classList.remove("is-rankup");
+
+      _ruSetOpen(root, true);
+
+      // Tier dots logic
+      const dotsWrap = document.getElementById("tierDots");
+      if (dotsWrap) {
+        const dots = dotsWrap.querySelectorAll(".tierDot");
+        for (let i = 0; i < dots.length; i++) dots[i].classList.remove("is-on", "is-justOn");
+
+        const di = (payload && payload.divIndex !== undefined && payload.divIndex !== null) ? Number(payload.divIndex) : 0;
+        const onCount = Math.max(0, Math.min(3, di + 1));
+        for (let i = 0; i < onCount; i++) dots[i].classList.add("is-on");
+
+        // Ping when upgraded
+        if (payload && payload.rrText && String(payload.rrText).toUpperCase().includes("UPGRADED")) {
+          const justOnIndex = Math.max(0, Math.min(2, di));
+          dots[justOnIndex].classList.add("is-justOn");
+          _ruLater(() => dots[justOnIndex].classList.remove("is-justOn"), 720);
+        }
+
+        root.classList.add("is-tierup");
+        _ruLater(() => root.classList.remove("is-tierup"), 1400);
+      }
+
+      const timeline = [
+        { phase: "impact", ms: 220 },
+        { phase: "reveal", ms: 650 },
+        { phase: "done", ms: 350 }
+      ];
+
+      _ruRunTimeline(root, timeline);
+
+      _ruLater(() => window.hideRankUp(), 1400);
+    };
+
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") window.hideRankUp();
+    });
+
+    document.addEventListener("click", function (e) {
+      const t = e.target;
+      if (t && t.id === "rankupContinue") window.hideRankUp();
+    });
 
     // ===== Preview buttons =====
     document.getElementById("btnRankUp").addEventListener("click", () => {
-      if (typeof window.showRankUp !== "function") {
-        alert("showRankUp not found. Paste SAFE API into this file.");
-        return;
-      }
       window.showRankUp({
         fromText: "OUTCAST I",
         toText: "THRALL III",
@@ -986,10 +758,6 @@ document.addEventListener("click", function (e) {
     });
 
     document.getElementById("btnTierUp").addEventListener("click", () => {
-      if (typeof window.showTierUp !== "function") {
-        alert("showTierUp not found. Paste SAFE API into this file.");
-        return;
-      }
       window.showTierUp({
         fromText: "ARCHON III",
         toText: "ARCHON II",
@@ -999,10 +767,8 @@ document.addEventListener("click", function (e) {
     });
 
     document.getElementById("btnHide").addEventListener("click", () => {
-      if (typeof window.hideRankUp !== "function") return;
       window.hideRankUp();
     });
   </script>
-
 </body>
 </html>
