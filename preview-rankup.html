@@ -505,6 +505,36 @@
   filter: drop-shadow(0 0 18px rgba(35,243,255,.18))
           drop-shadow(0 0 34px rgba(168,85,255,.14));
 }
+    /* ===== FORCE EVO TIMELINE (preview) ===== */
+#rankup.is-rankup .evoHalo,
+#rankup.is-rankup .evoSigil,
+#rankup.is-rankup .evoStamp{
+  opacity: 0 !important;
+}
+
+/* OPEN */
+#rankup.is-rankup[data-phase="open"] .evoHalo{
+  opacity: .25 !important;
+  transform: translate(-50%,-50%) scale(.96) !important;
+}
+
+/* IMPACT */
+#rankup.is-rankup[data-phase="impact"] .evoHalo{
+  opacity: .95 !important;
+}
+#rankup.is-rankup[data-phase="impact"] .evoSigil{
+  opacity: .85 !important;
+}
+
+/* REVEAL */
+#rankup.is-rankup[data-phase="reveal"] .evoStamp{
+  opacity: 1 !important;
+}
+
+/* DONE */
+#rankup.is-rankup[data-phase="done"] .evoHalo{
+  opacity: .22 !important;
+}
     
   </style>
 </head>
