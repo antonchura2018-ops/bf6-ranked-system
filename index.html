@@ -3395,9 +3395,9 @@ window.showTierUp = function(payload){
   const isDown = String(payload?.rrText || "").toUpperCase().includes("DOWN");
 
   const accentColor =
-    (typeof rankTiers !== "undefined" && rankTiers.find(t => t.name === rankKey.toUpperCase())?.color) ||
-    ACCENT_BY_RANK[rankKey] ||
-    "#01a7ef";
+  ACCENT_BY_RANK[rankKey] ||
+  (typeof rankTiers !== "undefined" && rankTiers.find(t => t.name === rankKey.toUpperCase())?.color) ||
+  "#01a7ef";
 
   if (isDown) playTierDown({ rankName: rankKey.toUpperCase(), iconSrc, divIndex, accentColor });
   else playTierUp({ rankName: rankKey.toUpperCase(), iconSrc, divIndex, accentColor });
@@ -3412,9 +3412,9 @@ window.showRankUp = function(payload){
   const isDown = String(payload?.rrText || "").toUpperCase().includes("DOWN");
 
   const accentColor =
-    (typeof rankTiers !== "undefined" && rankTiers.find(t => t.name === rankKey.toUpperCase())?.color) ||
-    ACCENT_BY_RANK[rankKey] ||
-    "#23f3ff";
+  ACCENT_BY_RANK[rankKey] ||
+  (typeof rankTiers !== "undefined" && rankTiers.find(t => t.name === rankKey.toUpperCase())?.color) ||
+  "#23f3ff";
 
   if (isDown) playRankDown({ rankName: rankKey.toUpperCase(), iconSrc, accentColor });
   else playRankUp({ rankName: rankKey.toUpperCase(), iconSrc, isTop, accentColor });
