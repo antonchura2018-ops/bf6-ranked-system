@@ -614,6 +614,19 @@
     const labelName = document.getElementById('labelName');
 
     let timers = [];
+    const ACCENT_BY_RANK = {
+  eidolon:"#d61830",
+  seraph:"#d9f9e8",
+  monarch:"#c7336c",
+  overlord:"#8c4826",
+  archon:"#01a7ef",
+  reaper:"#9bb1f6",
+  harbinger:"#a6b1b9",
+  marauder:"#fef525",
+  thrall:"#60eb89",
+  outcast:"#0f0f13",
+      
+};
     const clearTimers = ()=>{ timers.forEach(t=>clearTimeout(t)); timers=[]; };
 
     // Tiny SFX (no external files) — works after click
@@ -698,7 +711,7 @@
       timers.push(setTimeout(closeOverlay, 1050 + 1500)); // auto-close after done
     }
 
-    function playRankUp({rankName, iconSrc, isTop=false}){
+    function playRankUp({rankName, iconSrc, isTop=false, accentColor="#23f3ff"}){
       openOverlay('rankUp');
       award.style.setProperty('--accent', accentColor);
       award.classList.toggle('is-top', !!isTop);
@@ -732,32 +745,36 @@
     }
 
     // Buttons
-    let divIndex = 0;
-    document.getElementById('btnTierUp').addEventListener('click', ()=>{
-      divIndex = Math.min(2, divIndex + 1);
-      playTierUp({
-        rankName: 'REAPER',
-        iconSrc: 'assets/ranks/reaper.webp', // change to your real path
-        divIndex
-      });
-    });
+let divIndex = 0;
 
-    document.getElementById('btnRankUp').addEventListener('click', ()=>{
-      divIndex = 0;
-      playRankUp({
-        rankName: 'ARCHON',
-        iconSrc: 'assets/ranks/archon.webp', // change to your real path
-        isTop: false
-      });
-    });
+document.getElementById('btnTierUp').addEventListener('click', ()=>{
+  divIndex = Math.min(2, divIndex + 1);
+  playTierUp({
+    rankName: 'REAPER',
+    iconSrc: 'assets/ranks/reaper.webp',
+    divIndex,
+    accentColor: ACCENT_BY_RANK.reaper
+  });
+});
 
-    document.getElementById('btnTop').addEventListener('click', ()=>{
-      playRankUp({
-        rankName: 'EIDOLON',
-        iconSrc: 'assets/ranks/eidolon.webp', // change to your real path
-        isTop: true
-      });
-    });
+document.getElementById('btnRankUp').addEventListener('click', ()=>{
+  divIndex = 0;
+  playRankUp({
+    rankName: 'ARCHON',
+    iconSrc: 'assets/ranks/archon.webp',
+    isTop: false,
+    accentColor: ACCENT_BY_RANK.archon
+  });
+});
+
+document.getElementById('btnTop').addEventListener('click', ()=>{
+  playRankUp({
+    rankName: 'EIDOLON',
+    iconSrc: 'assets/ranks/eidolon.webp',
+    isTop: true,
+    accentColor: ACCENT_BY_RANK.eidolon
+  });
+});
 
     document.getElementById('btnClose').addEventListener('click', closeOverlay);
 
