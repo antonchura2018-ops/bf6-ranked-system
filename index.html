@@ -1254,6 +1254,20 @@ margin: 32px auto 20px;
 #award[data-tier="1"] .falling{ opacity:.50 !important; }
 #award[data-tier="2"] .falling{ opacity:.62 !important; }
 
+  /* =========================
+   DOWN STYLE (light + FPS-safe)
+   ========================= */
+#award.is-down .rankBadge{ animation: downShake 260ms ease forwards; }
+@keyframes downShake{
+  0%{ transform: translateY(0) scale(1); }
+  25%{ transform: translateY(2px) scale(.995); }
+  55%{ transform: translateY(-1px) scale(.992); }
+  100%{ transform: translateY(0) scale(1); }
+}
+#award.is-down .center::before{ opacity:.65; }
+#award.is-down .rankBadge__halo{ opacity:.12 !important; }
+#award.is-down .wingWave,
+#award.is-down .creationGlow{ display:none !important; }
   
 </style>
   <!-- ===== END OF CSS ===== -->
