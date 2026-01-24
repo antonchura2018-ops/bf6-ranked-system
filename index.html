@@ -795,491 +795,666 @@ margin: 32px auto 20px;
   opacity: 0.7;
 }
   
-  
-  * =========================================================
-       FULLSCREEN OVERLAY (FPS-SAFE)
-       ========================================================= */
-    #award{
-      position:fixed; inset:0; z-index:9999;
-      display:grid; place-items:center;
-      opacity:0; pointer-events:none;
-      transition: opacity .18s ease;
-    }
-    #award.is-open{ opacity:1; pointer-events:auto; }
+  /* ===== Digital Rift Protocol (Desktop) ===== */
+:root{
+  --ru-bg:#070A12;
+  --ru-ink:#EAF2FF;
+  --ru-muted:#98A2B3;
 
-    .veil{
-      position:absolute; inset:0;
-      background:
-        radial-gradient(900px 520px at 50% 42%,
-          color-mix(in srgb, var(--accent) 18%, transparent),
-          rgba(0,0,0,.88)
-        ),
-        radial-gradient(1200px 720px at 50% 10%,
-          color-mix(in srgb, var(--accent) 10%, transparent),
-          transparent 60%
-        ),
-        linear-gradient(180deg, rgba(0,0,0,.78), rgba(0,0,0,.92));
-      opacity:0;
-    }
-    #award.is-open .veil{ animation: veilIn .26s ease forwards; }
-    @keyframes veilIn{ to{ opacity:1; } }
+  --ru-c1:#23f3ff;   /* cyan */
+  --ru-c2:#a855ff;   /* purple */
+  --ru-c3:#ff3df2;   /* magenta */
 
-    /* Minimal HUD (optional) */
-    .hud{
-      position:absolute; left:34px; right:34px; top:22px;
-      display:flex; justify-content:space-between; gap:14px;
-      pointer-events:none;
-      opacity:.92;
-    }
-    .hud .left .kicker{
-      font-size:12px; letter-spacing:.22em; text-transform:uppercase;
-      color: rgba(234,242,255,.78);
-    }
-    .hud .left .sub{
-      margin-top:8px;
-      font-size:12px;
-      color: rgba(152,162,179,.9);
-      letter-spacing:.06em;
-      max-width:560px;
-    }
-    .hud .right{
-      font-size:12px;
-      letter-spacing:.12em;
-      text-transform:uppercase;
-      color: rgba(234,242,255,.66);
-    }
-
-    /* Center */
-    .center{
-      position:relative;
-      width: min(920px, 96vw);
-      height: min(820px, 86vh);
-      display:grid;
-      place-items:center;
-      pointer-events:none;
-      will-change: transform;
-    }
-
-    /* Backlight (NO blur) */
-    .center::before{
-      content:"";
-      position:absolute;
-      inset:-95%;
-      background: radial-gradient(circle at 50% 50%,
-        color-mix(in srgb, var(--accent) 18%, transparent),
-        transparent 64%
-      );
-      opacity:1;
-      filter:none;
-      pointer-events:none;
-    }
-
-    /* Stack = badge + label centered together */
-    .stack{
-      position:relative;
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      justify-content:center;
-      gap: 22px;
-    }
-
-    /* =========================================================
-       FX LAYERS (FPS-SAFE): opacity + transform only
-       ========================================================= */
-
-    .impactFlash{
-      position:absolute; inset:-30%;
-      background:
-        radial-gradient(closest-side at 50% 50%, rgba(255,255,255,.18), transparent 60%),
-        radial-gradient(closest-side at 50% 50%, color-mix(in srgb, var(--accent) 18%, transparent), transparent 72%);
-      opacity:0;
-      transform: scale(.78);
-      pointer-events:none;
-      will-change: opacity, transform;
-    }
-    #award[data-phase="impact"] .impactFlash{
-      animation: flash 520ms ease forwards;
-    }
-    @keyframes flash{
-      0%{ opacity:0; transform: scale(.78); }
-      35%{ opacity:1; transform: scale(1); }
-      100%{ opacity:0; transform: scale(1.12); }
-    }
-
-    /* Core flash (Apex-like) */
-    .coreFlash{
-      position:absolute;
-      width: 22vmin;
-      height: 22vmin;
-      border-radius:999px;
-      opacity:0;
-      pointer-events:none;
-      background: radial-gradient(circle,
-        rgba(255,255,255,.20),
-        color-mix(in srgb, var(--accent) 22%, transparent),
-        transparent 70%
-      );
-      transform: scale(.6);
-      will-change: transform, opacity;
-    }
-    #award[data-phase="impact"] .coreFlash{
-      animation: corePop 360ms ease forwards;
-    }
-    @keyframes corePop{
-      0%{opacity:0; transform: scale(.55);}
-      35%{opacity:1; transform: scale(1.05);}
-      100%{opacity:0; transform: scale(1.35);}
-    }
-
-    /* Creation glow burst */
-    .creationGlow{
-      position:absolute;
-      inset:-140%;
-      border-radius:999px;
-      pointer-events:none;
-      opacity:0;
-      transform: scale(.18);
-      will-change: transform, opacity;
-      background:
-        radial-gradient(circle at 50% 50%,
-          rgba(255,255,255,.12) 0%,
-          color-mix(in srgb, var(--accent) 22%, transparent) 20%,
-          color-mix(in srgb, var(--accent) 12%, transparent) 40%,
-          transparent 64%
-        );
-    }
-    #award[data-phase="reveal"] .creationGlow{
-      animation: cgPop 1150ms cubic-bezier(.12,.95,.18,1) forwards;
-    }
-    @keyframes cgPop{
-      0%   { opacity:0; transform: scale(.18); }
-      18%  { opacity:1; transform: scale(.52); }
-      100% { opacity:0; transform: scale(1.55); }
-    }
-
-    /* Wing creation: two side glows expanding outward */
-    .wingWave{
-      position:absolute;
-      inset:-110%;
-      border-radius:999px;
-      pointer-events:none;
-      opacity:0;
-      transform: scale(.55);
-      will-change: transform, opacity;
-      background:
-        radial-gradient(circle at 18% 52%,
-          color-mix(in srgb, var(--accent) 40%, transparent) 0%,
-          transparent 40%
-        ),
-        radial-gradient(circle at 82% 52%,
-          color-mix(in srgb, var(--accent) 40%, transparent) 0%,
-          transparent 40%
-        );
-    }
-    #award[data-phase="reveal"] .wingWave{
-      animation: wwPop 1050ms cubic-bezier(.12,.95,.18,1) forwards;
-    }
-    @keyframes wwPop{
-      0%   { opacity:0; transform: scale(.52); }
-      20%  { opacity:.95; transform: scale(.82); }
-      100% { opacity:0; transform: scale(1.40); }
-    }
-
-    /* Sparks (no blur) */
-    .sparks{
-      position:absolute;
-      inset:-35%;
-      opacity:0;
-      pointer-events:none;
-      background:
-        radial-gradient(circle at 20% 30%, color-mix(in srgb, var(--accent) 18%, transparent), transparent 38%),
-        radial-gradient(circle at 70% 55%, color-mix(in srgb, var(--accent) 14%, transparent), transparent 40%),
-        radial-gradient(circle at 55% 25%, rgba(255,255,255,.08), transparent 34%),
-        radial-gradient(circle at 35% 70%, color-mix(in srgb, var(--accent) 12%, transparent), transparent 42%);
-      transform: scale(.98);
-      will-change: opacity, transform;
-    }
-    #award[data-phase="open"] .sparks{ animation: sparksOpen 900ms ease forwards; }
-    #award[data-phase="reveal"] .sparks{ animation: sparksReveal 1200ms ease forwards; }
-    @keyframes sparksOpen{
-      0%{ opacity:0; transform: scale(.96); }
-      35%{ opacity:.55; }
-      100%{ opacity:.08; transform: scale(1.06); }
-    }
-    @keyframes sparksReveal{
-      0%{ opacity:.06; transform: scale(1.00); }
-      35%{ opacity:.45; transform: scale(1.10); }
-      100%{ opacity:0; transform: scale(1.16); }
-    }
-
-    /* Falling particles (no blur) */
-    .falling{
-      position:absolute;
-      inset:-20%;
-      opacity:0;
-      pointer-events:none;
-      background:
-        radial-gradient(circle, rgba(255,255,255,.10) 1px, transparent 2px) 0 0/ 90px 90px,
-        radial-gradient(circle, color-mix(in srgb, var(--accent) 16%, transparent) 1px, transparent 2px) 20px 30px/ 120px 120px,
-        radial-gradient(circle, color-mix(in srgb, var(--accent) 12%, transparent) 1px, transparent 2px) 40px 10px/ 150px 150px;
-      transform: translateY(-40px);
-      will-change: transform, opacity;
-    }
-    #award[data-phase="open"] .falling,
-    #award[data-phase="impact"] .falling,
-    #award[data-phase="reveal"] .falling,
-    #award[data-phase="done"] .falling{
-      opacity:.50;
-      animation: fallingMove 2.8s linear infinite;
-    }
-    @keyframes fallingMove{
-      from{ transform: translateY(-40px); }
-      to{ transform: translateY(140px); }
-    }
-
-    /* Micro zoom on impact (short) */
-    #award[data-phase="impact"] .center{
-      animation: microZoom 300ms ease forwards;
-    }
-    @keyframes microZoom{
-      0%{ transform: scale(1); }
-      30%{ transform: scale(1.015); }
-      100%{ transform: scale(1); }
-    }
-
-    /* =========================================================
-       BADGE (ONE IMAGE + slices)
-       ========================================================= */
-    .rankBadge{
-      position:relative;
-      width: min(760px, 92vw);
-      height: min(760px, 92vw);
-      display:grid;
-      place-items:center;
-      transform: translateY(0) scale(1);
-      opacity: 1;
-      will-change: transform, opacity;
-      --badge-url: url("assets/ranks/eidolon.webp");
-    }
-
-    .rankBadge__img{
-      width: min(600px, 82vw);
-      height: min(600px, 82vw);
-      background: var(--badge-url) center/contain no-repeat;
-      filter: drop-shadow(0 0 18px rgba(0,0,0,.35));
-      opacity:0; /* visible after assembly */
-    }
-
-    /* 4 slices */
-    .slice{
-      position:absolute;
-      inset: 8%;
-      background: var(--badge-url) center/contain no-repeat;
-      opacity:0;
-      will-change: transform, opacity;
-    }
-    .slice.s1{ clip-path: polygon(0 0, 50% 0, 50% 50%, 0 50%); }
-    .slice.s2{ clip-path: polygon(50% 0, 100% 0, 100% 50%, 50% 50%); }
-    .slice.s3{ clip-path: polygon(0 50%, 50% 50%, 50% 100%, 0 100%); }
-    .slice.s4{ clip-path: polygon(50% 50%, 100% 50%, 100% 100%, 50% 100%); }
-
-    #award[data-phase="open"] .slice{ animation: sliceIn 900ms cubic-bezier(.2,.9,.2,1) forwards; }
-    #award[data-phase="open"] .slice.s1{ transform: translate(-70px,-70px) scale(.92); }
-    #award[data-phase="open"] .slice.s2{ transform: translate(70px,-70px) scale(.92); }
-    #award[data-phase="open"] .slice.s3{ transform: translate(-70px,70px) scale(.92); }
-    #award[data-phase="open"] .slice.s4{ transform: translate(70px,70px) scale(.92); }
-
-    @keyframes sliceIn{
-      0%{ opacity:0; }
-      35%{ opacity:1; }
-      100%{ opacity:1; transform: translate(0,0) scale(1); }
-    }
-
-    /* Show final image from impact to end; hide slices after impact */
-    #award[data-phase="impact"] .rankBadge__img,
-    #award[data-phase="reveal"] .rankBadge__img,
-    #award[data-phase="done"] .rankBadge__img{ opacity:1; }
-
-    #award[data-phase="impact"] .slice,
-    #award[data-phase="reveal"] .slice,
-    #award[data-phase="done"] .slice{ opacity:0; transition: opacity 120ms ease; }
-
-    /* Halo (no blur) */
-    .rankBadge__halo{
-      position:absolute;
-      inset:-28%;
-      border-radius:999px;
-      pointer-events:none;
-      opacity:.18;
-      transform: scale(1.02);
-      will-change: transform, opacity;
-      background:
-        radial-gradient(closest-side, rgba(255,255,255,.06), transparent 62%),
-        radial-gradient(closest-side, color-mix(in srgb, var(--accent) 16%, transparent), transparent 68%),
-        conic-gradient(from 0deg,
-          rgba(255,255,255,0) 0deg,
-          color-mix(in srgb, var(--accent) 16%, transparent) 36deg,
-          rgba(255,255,255,0) 120deg,
-          color-mix(in srgb, var(--accent) 10%, transparent) 200deg,
-          rgba(255,255,255,0) 360deg
-        );
-    }
-
-    /* Tier strength */
-    .rankBadge.tier-0 .rankBadge__halo{ opacity:.14; transform: scale(.98); }
-    .rankBadge.tier-1 .rankBadge__halo{ opacity:.22; transform: scale(1.01); }
-    .rankBadge.tier-2 .rankBadge__halo{ opacity:.32; transform: scale(1.04); }
-    .rankBadge.is-top .rankBadge__halo{ opacity:.40; transform: scale(1.06); }
-
-    /* Impact halo burst */
-    #award[data-phase="impact"] .rankBadge__halo{
-      animation: haloBurst 560ms ease forwards;
-    }
-    @keyframes haloBurst{
-      0%{ opacity: .22; transform: scale(1.02); }
-      35%{ opacity: .85; transform: scale(1.10) rotate(8deg); }
-      100%{ opacity: .28; transform: scale(1.05) rotate(0deg); }
-    }
-
-    /* Idle glow in done */
-    #award[data-phase="done"] .rankBadge__halo{
-      animation: haloIdle 1.9s ease-in-out infinite;
-    }
-    @keyframes haloIdle{
-      0%,100%{ opacity:.24; transform: scale(1.03); }
-      50%{ opacity:.42; transform: scale(1.08); }
-    }
-
-    /* Badge pop */
-    .rankBadge.anim-up{ animation: badgePop 820ms cubic-bezier(.12,.95,.18,1) forwards; }
-    @keyframes badgePop{
-      0%{ transform: translateY(6px) scale(.98); }
-      35%{ transform: translateY(-8px) scale(1.07); }
-      100%{ transform: translateY(0) scale(1); }
-    }
-
-    /* =========================================================
-       LABEL (centered in stack)
-       ========================================================= */
-    .label{
-      opacity:0;
-      text-align:center;
-      width: min(900px, 92vw);
-    }
-    .labelTop{
-      font-size:13px;
-      letter-spacing:.22em;
-      text-transform:uppercase;
-      color: rgba(234,242,255,.78);
-    }
-    .labelName{
-      margin-top:8px;
-      font-size:34px;
-      font-weight:900;
-      letter-spacing:.20em;
-      text-transform:uppercase;
-      color: rgba(234,242,255,.92);
-      text-shadow: 0 0 16px rgba(255,255,255,.10);
-    }
-
-    #award.is-tierup .label{ display:none; }
-
-    #award.is-rankup[data-phase="reveal"] .label,
-    #award.is-rankup[data-phase="done"] .label{
-      opacity:1;
-      animation: labelIn 620ms cubic-bezier(.2,.9,.2,1) forwards;
-    }
-    @keyframes labelIn{
-      from{ opacity:0; transform: translateY(8px); }
-      to{ opacity:1; transform: translateY(0); }
-    }
-
-    /* Reduced motion */
-    @media (prefers-reduced-motion: reduce){
-      #award[data-phase="impact"] .impactFlash,
-      #award[data-phase="impact"] .coreFlash,
-      #award[data-phase="impact"] .center,
-      #award[data-phase="reveal"] .creationGlow,
-      #award[data-phase="reveal"] .wingWave,
-      #award[data-phase="open"] .slice,
-      #award[data-phase="open"] .sparks,
-      #award[data-phase="reveal"] .sparks,
-      #award[data-phase="open"] .falling,
-      #award[data-phase="impact"] .falling,
-      #award[data-phase="reveal"] .falling,
-      #award[data-phase="done"] .falling,
-      #award[data-phase="done"] .rankBadge__halo,
-      .rankBadge.anim-up{
-        animation:none !important;
-      }
-      .label{ opacity:1; }
-    }
-
-    /* =========================
-   TIER INTENSITY (FPS-safe)
-   tier-0 = III, tier-1 = II, tier-2 = I
-   ========================= */
-
-/* Base (tier-0) already OK. Make it slightly calmer */
-.rankBadge.tier-0 .rankBadge__halo{ opacity:.12; transform: scale(.98); }
-#award.is-tierup[data-phase="reveal"] .rankBadge.tier-0 ~ .label{}
-
-/* Tier-1: medium */
-.rankBadge.tier-1 .rankBadge__halo{ opacity:.22; transform: scale(1.01); }
-#award.is-tierup[data-phase="reveal"] .rankBadge.tier-1{
-  filter: drop-shadow(0 0 10px rgba(255,255,255,.05));
+  --ru-border: rgba(234,242,255,.12);
+  --ru-glow: 0 0 18px rgba(35,243,255,.55), 0 0 42px rgba(168,85,255,.25);
 }
 
-/* Tier-2: strongest (I) */
-.rankBadge.tier-2 .rankBadge__halo{ opacity:.34; transform: scale(1.05); }
+/* Overlay container:
+   Expect integration that toggles:
+   - .rankup.is-open (opacity/pointer-events)
+   - #rankup[data-phase="open|collapse|impact|reveal|done"] */
+.rankup{
+  position:fixed; inset:0; z-index:9999;
+  display:grid; place-items:center;
+  opacity:0; pointer-events:none;
+  transition: opacity .25s ease;
+}
+.rankup.is-open{ opacity:1; pointer-events:auto; }
 
-/* Make wingWave / creationGlow scale with tier during reveal */
-#award.is-tierup[data-phase="reveal"] .creationGlow{ opacity:0; } /* default uses animation; we scale via keyframes below */
-#award.is-tierup[data-phase="reveal"] .rankBadge.tier-0 ~ .label{}
+/* Veil + grain */
+.rankup__veil{
+  position:absolute; inset:0;
+  background: radial-gradient(900px 520px at 50% 40%, rgba(0,0,0,.35), rgba(0,0,0,.90));
+  opacity:0;
+  filter: saturate(0.9);
+}
+.rankup.is-open .rankup__veil{ animation: ruVeilIn .35s ease forwards; }
+@keyframes ruVeilIn{ to{ opacity:1; } } /* ok */
+  animation: ruVeilIn .25s ease forwards;
 
-/* Tier-based multiplier using small overrides */
-#award.is-tierup[data-phase="reveal"] .rankBadge.tier-0 ~ .label{}
+.rankup__grain{
+  position:absolute; inset:-20%;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='.35'/%3E%3C/svg%3E");
+  mix-blend-mode:overlay;
+  opacity:0;
+  pointer-events:none;
+}
+.rankup.is-open .rankup__grain{ animation: ruGrainIn .35s ease .05s forwards; }
+@keyframes ruGrainIn{ to{ opacity:.18; } }
 
-/* Quick hack: tier-2 gets a slightly longer/stronger burst */
-#award.is-tierup[data-phase="reveal"] .rankBadge.tier-2 ~ .label{}
+/* Stage */
+.rankup__stage{
+  position:relative;
+  width:min(900px, 92vw);
+  height:min(520px, 76vh);
+  border-radius:28px;
+  overflow:hidden;
+  background: radial-gradient(900px 520px at 50% 45%, rgba(35,243,255,.06), rgba(0,0,0,0) 60%),
+            radial-gradient(900px 520px at 50% 55%, rgba(168,85,255,.05), rgba(0,0,0,0) 65%),
+            rgba(7,10,18,0.55);
+  border: 1px solid rgba(255,255,255,0.05);
+  box-shadow: 0 70px 200px rgba(0,0,0,0.78);
+  transform: translateY(14px) scale(.98);
+  opacity:0;
+  will-change: transform, opacity;
+  outline: 1px solid rgba(255,255,255,0.04);
+  backdrop-filter: none;
+}
+.rankup.is-open .rankup__stage{ animation: ruStageIn .55s cubic-bezier(.2,.9,.2,1) .05s forwards; }
+@keyframes ruStageIn{
+  to{ opacity:1; transform: translateY(0) scale(1); }
+}
 
-/* NOTE: Since creationGlow/wingWave are siblings, we use a data attr on #award instead (JS sets it). */
-    /* FX intensity driven by award[data-tier] to avoid complex selectors */
-#award[data-tier="0"][data-phase="reveal"] .creationGlow{ animation-duration: 950ms; }
-#award[data-tier="1"][data-phase="reveal"] .creationGlow{ animation-duration: 1100ms; }
-#award[data-tier="2"][data-phase="reveal"] .creationGlow{ animation-duration: 1250ms; }
+/* Background scanlines */
+.rankup__scan{
+  position:absolute; inset:0;
+  background:
+    linear-gradient(90deg, rgba(35,243,255,.08), transparent 40%),
+    repeating-linear-gradient(180deg, rgba(234,242,255,.08) 0, rgba(234,242,255,.08) 1px, transparent 1px, transparent 11px);
+  opacity:.12;
+  mix-blend-mode:overlay;
+  animation: ruScanMove 3.2s linear infinite;
+  pointer-events:none;
+}
+@keyframes ruScanMove{ to{ background-position: 220px 0, 0 140px; } }
 
-#award[data-tier="0"][data-phase="reveal"] .wingWave{ animation-duration: 900ms; opacity:0; }
-#award[data-tier="1"][data-phase="reveal"] .wingWave{ animation-duration: 1050ms; }
-#award[data-tier="2"][data-phase="reveal"] .wingWave{ animation-duration: 1200ms; }
+/* HUD */
+.rankup__hud{
+  position:absolute; left:24px; right:24px; top:20px;
+  display:flex; align-items:flex-start; justify-content:space-between;
+  pointer-events:none;
+  opacity:.92;
+}
+.rankup__kicker{
+  font-size:14px;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  color:rgba(234,242,255,.85);
+}
+.rankup__sub{
+  margin-top:8px;
+  font-size:12px;
+  color:rgba(152,162,179,.9);
+  letter-spacing:.06em;
+}
+.rankup__hudRight{
+  text-align:right;
+  font-size:12px;
+  color:rgba(234,242,255,.72);
+  letter-spacing:.1em;
+  text-transform:uppercase;
+}
 
-#award[data-tier="0"] .falling{ opacity:.35 !important; }
-#award[data-tier="1"] .falling{ opacity:.50 !important; }
-#award[data-tier="2"] .falling{ opacity:.62 !important; }
+/* Rift */
+.rankup__riftWrap{
+  position:absolute; inset:0;
+  display:grid; place-items:center;
+  pointer-events:none;
+}
+.rankup__rift{
+  position:relative;
+  width:min(420px, 66vw);
+  height:min(520px, 76vh);
+  opacity:0;
+  transform: translateY(10px) scaleX(.65) scaleY(.92) skewX(-8deg);
+  will-change: transform, opacity;
+  filter: drop-shadow(0 0 18px rgba(35,243,255,.45)) drop-shadow(0 0 40px rgba(168,85,255,.25));
+}
+.rankup__rift::before{
+  content:"";
+  position:absolute; inset:0;
+  background:
+    radial-gradient(160px 240px at 50% 50%, rgba(35,243,255,.25), transparent 60%),
+    radial-gradient(240px 280px at 50% 50%, rgba(168,85,255,.22), transparent 65%),
+    linear-gradient(90deg, transparent, rgba(255,255,255,.10), transparent);
+  border-radius:999px;
+  clip-path: polygon(46% 0, 54% 0, 58% 8%, 62% 16%, 56% 28%, 66% 40%, 54% 54%, 62% 66%, 52% 80%, 58% 92%, 54% 100%, 46% 100%, 42% 92%, 48% 80%, 38% 66%, 46% 54%, 34% 40%, 44% 28%, 38% 16%, 42% 8%);
+  transform: skewX(-6deg) scaleY(.95);
+  opacity:.95;
+}
+.rankup__rift::after{
+  content:"";
+  position:absolute; inset:-16%;
+  background: conic-gradient(from 90deg,
+    rgba(35,243,255,.0),
+    rgba(35,243,255,.55),
+    rgba(168,85,255,.0),
+    rgba(255,61,242,.35),
+    rgba(35,243,255,.0)
+  );
+  border-radius:999px;
+  filter: blur(14px);
+  opacity:.65;
+  animation: ruRiftSpin 2.8s linear infinite;
+}
+@keyframes ruRiftSpin{ to{ transform: rotate(360deg); } }
 
-    /* =========================
-   DOWN STYLE (light + FPS-safe)
+.rankup__riftEdge{
+  position:absolute; inset:-8% -18%;
+  background:
+    repeating-linear-gradient(90deg, rgba(35,243,255,.0) 0, rgba(35,243,255,.0) 18px, rgba(35,243,255,.22) 19px, rgba(35,243,255,.0) 24px),
+    repeating-linear-gradient(180deg, rgba(255,61,242,.0) 0, rgba(255,61,242,.0) 10px, rgba(255,61,242,.18) 11px, rgba(255,61,242,.0) 18px);
+  mix-blend-mode:screen;
+  opacity:0;
+  filter: blur(.4px);
+  will-change: opacity, transform;
+}
+
+/* Emblems */
+.rankup__emblems{
+  position:absolute; inset:0;
+  display:grid; place-items:center;
+  pointer-events:none;
+}
+.rankup__emblem{
+  width:220px; height:220px;
+  border-radius:26px;
+  display:grid; place-items:center;
+  position:absolute;
+  background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+  border:1px solid rgba(234,242,255,.14);
+  backdrop-filter: blur(6px);
+  will-change: transform, opacity, filter;
+}
+.rankup__badge{
+  width:150px; height:150px;
+  border-radius:18px;
+  background:
+    radial-gradient(70px 70px at 40% 35%, rgba(35,243,255,.25), transparent 60%),
+    radial-gradient(80px 80px at 65% 70%, rgba(168,85,255,.18), transparent 60%),
+    linear-gradient(135deg, rgba(35,243,255,.18), rgba(255,61,242,.10));
+  border:1px solid rgba(35,243,255,.22);
+  box-shadow: var(--ru-glow);
+  display:grid; place-items:center;
+  position:relative;
+  overflow:hidden;
+}
+.rankup__badge::after{
+  content:"";
+  position:absolute; inset:-60%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.35), transparent);
+  transform: rotate(22deg) translateX(-45%);
+  opacity:.15;
+  animation: ruSheen 2.8s ease-in-out infinite;
+}
+@keyframes ruSheen{
+  0%,55%{ transform: rotate(22deg) translateX(-45%); opacity:.15;}
+  75%{ opacity:.55; }
+  100%{ transform: rotate(22deg) translateX(45%); opacity:.12;}
+}
+.rankup__badge--new{
+  border-color: rgba(168,85,255,.32);
+  box-shadow: 0 0 18px rgba(168,85,255,.35), 0 0 42px rgba(35,243,255,.20);
+}
+.rankup__label{
+  font-weight:800;
+  letter-spacing:.14em;
+  font-size:18px;
+  text-transform:uppercase;
+  text-shadow: 0 0 16px rgba(35,243,255,.35);
+}
+
+/* New emblem starts hidden (revealed later) */
+.rankup__emblem--new{
+  opacity:0;
+  transform: translateY(22px) scale(.78);
+  filter: blur(.6px) drop-shadow(0 0 26px rgba(168,85,255,.25));
+}
+
+/* Burst */
+.rankup__burst{
+  position:absolute; inset:-30%;
+  background:
+    radial-gradient(closest-side at 50% 50%, rgba(255,255,255,.22), transparent 60%),
+    radial-gradient(closest-side at 50% 50%, rgba(35,243,255,.18), transparent 70%),
+    radial-gradient(closest-side at 50% 50%, rgba(168,85,255,.16), transparent 75%);
+  opacity:0;
+  transform: scale(.75);
+  mix-blend-mode:screen;
+  pointer-events:none;
+  will-change: transform, opacity;
+}
+  /* Flash (impact) */
+.rankup__flash{
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(closest-side at 50% 45%, rgba(255,255,255,.48), transparent 60%),
+    radial-gradient(closest-side at 50% 55%, rgba(35,243,255,.24), transparent 70%),
+    radial-gradient(closest-side at 50% 55%, rgba(168,85,255,.20), transparent 75%);
+  opacity:0;
+  mix-blend-mode:screen;
+  pointer-events:none;
+  will-change: opacity;
+}
+  /* =========================
+   EPIC FX LAYERS (lightweight)
    ========================= */
-#award.is-down .rankBadge{ animation: downShake 260ms ease forwards; }
-@keyframes downShake{
+
+.rankup__beams,
+.rankup__chroma,
+.rankup__shards{
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  opacity:0;
+  will-change: opacity, transform;
+}
+
+/* BEAMS: depth rays */
+.rankup__beams{
+  background:
+    conic-gradient(from 180deg,
+      transparent 0deg,
+      rgba(35,243,255,.10) 20deg,
+      transparent 55deg,
+      rgba(168,85,255,.08) 110deg,
+      transparent 360deg
+    ),
+    radial-gradient(600px 340px at 50% 45%,
+      rgba(35,243,255,.10),
+      transparent 60%
+    );
+  mix-blend-mode: screen;
+  transform: scale(.98) rotate(0deg);
+}
+
+/* CHROMA: RGB split glitch (impact only) */
+.rankup__chroma{
+  background:
+    radial-gradient(closest-side at 50% 50%, rgba(255,0,255,.14), transparent 62%),
+    radial-gradient(closest-side at 50% 50%, rgba(0,255,255,.12), transparent 68%),
+    radial-gradient(closest-side at 50% 50%, rgba(255,255,255,.10), transparent 72%);
+  mix-blend-mode: screen;
+  transform: translate3d(0,0,0);
+}
+
+/* SHARDS: thin lines flying toward rift */
+.rankup__shards{
+  background:
+    repeating-linear-gradient(90deg,
+      rgba(35,243,255,0) 0,
+      rgba(35,243,255,0) 18px,
+      rgba(35,243,255,.18) 19px,
+      rgba(35,243,255,0) 28px
+    ),
+    repeating-linear-gradient(180deg,
+      rgba(255,61,242,0) 0,
+      rgba(255,61,242,0) 12px,
+      rgba(255,61,242,.12) 13px,
+      rgba(255,61,242,0) 22px
+    );
+  mix-blend-mode: screen;
+  transform: translate3d(0,0,0) scale(1.02);
+}
+
+
+/* CTA */
+.rankup__cta{
+  position:absolute; left:0; right:0; bottom:22px;
+  display:flex; justify-content:center;
+  pointer-events:auto;
+  opacity:0;
+  transform: translateY(10px);
+  will-change: transform, opacity;
+}
+.rankup__btn{
+  appearance:none;
+  border:1px solid rgba(35,243,255,.26);
+  background: linear-gradient(180deg, rgba(35,243,255,.16), rgba(168,85,255,.12));
+  color:var(--ru-ink);
+  padding:12px 18px;
+  border-radius:16px;
+  cursor:pointer;
+  font-weight:700;
+  box-shadow: 0 10px 30px rgba(0,0,0,.35);
+}
+.rankup__btn:hover{ border-color: rgba(35,243,255,.35); }
+
+/* =========================
+   PHASES via [data-phase="..."]
+   ========================= */
+
+/* OPEN: rift appears */
+.rankup[data-phase="open"] .rankup__rift{
+  animation: ruRiftOpen 1.0s cubic-bezier(.2,.9,.2,1) forwards;
+}
+  .rankup[data-phase="open"] .rankup__beams{
+  animation: ruBeamsIn 1.05s ease forwards;
+}
+@keyframes ruBeamsIn{
+  0%{ opacity:0; transform: scale(.98) rotate(0deg); }
+  100%{ opacity:.65; transform: scale(1.02) rotate(10deg); }
+}
+.rankup[data-phase="open"] .rankup__riftEdge{
+  animation: ruEdgeIn .7s ease .25s forwards;
+}
+@keyframes ruRiftOpen{
+  0%{ opacity:0; transform: translateY(10px) scaleX(.65) scaleY(.92) skewX(-8deg); }
+  100%{ opacity:1; transform: translateY(0) scaleX(1) scaleY(1) skewX(-6deg); }
+}
+@keyframes ruEdgeIn{ to{ opacity:.55; } }
+
+/* COLLAPSE: old emblem collapses into rift */
+.rankup[data-phase="collapse"] .rankup__emblem--old{
+  animation: ruOldCollapse .7s cubic-bezier(.2,.9,.2,1) forwards;
+}
+@keyframes ruOldCollapse{
+  0%{
+    opacity:1;
+    transform: translateY(0) scale(1) rotate(0deg);
+    filter: drop-shadow(0 0 16px rgba(35,243,255,.25));
+  }
+  35%{
+    transform: translateY(18px) scale(.92) rotate(-3deg);
+  }
+  70%{
+    transform: translateY(46px) scale(.62) rotate(-10deg) skewX(-8deg);
+    opacity:.55;
+    filter: blur(1px);
+  }
+  100%{
+    opacity:0;
+    transform: translateY(86px) scale(.28) rotate(-18deg) skewX(-10deg);
+    filter: blur(2px);
+  }
+  .rankup[data-phase="collapse"] .rankup__shards{
+  animation: ruShardsPull .70s ease forwards;
+}
+@keyframes ruShardsPull{
+  0%{ opacity:0; transform: translate3d(0,0,0) scale(1.02); }
+  25%{ opacity:.65; }
+  100%{ opacity:0; transform: translate3d(0,60px,0) scale(.88); }
+  }
+  
+}
+
+/* IMPACT: flash + shake */
+.rankup[data-phase="impact"] .rankup__stage{
+  animation: ruImpactShake .28s ease forwards;
+}
+
+.rankup[data-phase="impact"] .rankup__burst{
+  animation: ruBurst .6s ease forwards;
+}
+
+.rankup[data-phase="impact"] .rankup__flash{
+  animation: ruFlash .35s ease forwards;
+}
+
+@keyframes ruFlash{
+  0%{ opacity:0; }
+  22%{ opacity:1; }
+  100%{ opacity:0; }
+}
+
+@keyframes ruImpactShake{
   0%{ transform: translateY(0) scale(1); }
-  25%{ transform: translateY(2px) scale(.995); }
-  55%{ transform: translateY(-1px) scale(.992); }
-  100%{ transform: translateY(0) scale(1); }
+  20%{ transform: translateY(-2px) translateX(2px) scale(1.002); }
+  45%{ transform: translateY(2px) translateX(-2px) scale(1.002); }
+  70%{ transform: translateY(-1px) translateX(1px) scale(1.001); }
+  100%{ transform: translateY(0) translateX(0) scale(1); }
 }
-#award.is-down .center::before{
-  opacity:.65; /* dim backlight */
+
+@keyframes ruBurst{
+  0%{ opacity:0; transform: scale(.75); }
+  35%{ opacity:1; transform: scale(1); }
+  100%{ opacity:0; transform: scale(1.12); }
 }
-#award.is-down .rankBadge__halo{
-  opacity:.12 !important; /* reduce glory */
+  .rankup[data-phase="impact"] .rankup__chroma{
+  animation: ruChromaHit .22s ease forwards;
 }
-#award.is-down .wingWave,
-#award.is-down .creationGlow{
-  display:none !important; /* no “wings” for down */
+@keyframes ruChromaHit{
+  0%{ opacity:0; transform: translate3d(0,0,0); }
+  35%{ opacity:.75; transform: translate3d(8px,-2px,0); }
+  100%{ opacity:0; transform: translate3d(-6px,2px,0); }
 }
-</style>
+
+/* Upgrade shake to include micro-zoom + brief brightness */
+@keyframes ruImpactShake{
+  0%{ transform: translateY(0) scale(1); filter: brightness(1); }
+  20%{ transform: translateY(-2px) translateX(2px) scale(1.012); filter: brightness(1.08); }
+  45%{ transform: translateY(2px) translateX(-2px) scale(1.010); filter: brightness(1.06); }
+  70%{ transform: translateY(-1px) translateX(1px) scale(1.006); filter: brightness(1.03); }
+  100%{ transform: translateY(0) translateX(0) scale(1); filter: brightness(1); }
+}
+
+/* REVEAL: new emblem emerges + rift edge flicker */
+.rankup[data-phase="reveal"] .rankup__emblem--new{
+  animation: ruNewReveal 1.05s cubic-bezier(.12,.95,.18,1) forwards;
+}
+.rankup[data-phase="reveal"] .rankup__riftEdge{
+  animation: ruEdgeFlicker 1s ease .15s forwards;
+}
+@keyframes ruNewReveal{
+  0%{
+    opacity:0;
+    transform: translateY(90px) scale(.55);
+    filter: blur(1px) drop-shadow(0 0 30px rgba(168,85,255,.35));
+  }
+  45%{
+    opacity:1;
+    transform: translateY(-10px) scale(1.06);
+    filter: blur(0) drop-shadow(0 0 40px rgba(35,243,255,.28));
+  }
+  100%{
+    opacity:1;
+    transform: translateY(0) scale(1);
+    filter: blur(0) drop-shadow(0 0 22px rgba(35,243,255,.26));
+  }
+  .rankup[data-phase="reveal"] .rankup__beams{
+  opacity: .55;
+  transform: scale(1.03) rotate(14deg);
+  }
+}
+@keyframes ruEdgeFlicker{
+  0%{ opacity:.55; }
+  30%{ opacity:.15; transform: translateX(2px); }
+  60%{ opacity:.45; transform: translateX(-2px); }
+  100%{ opacity:.28; transform: translateX(0); }
+}
+
+/* DONE: CTA in */
+.rankup[data-phase="done"] .rankup__cta{
+  animation: ruCtaIn .55s cubic-bezier(.2,.9,.2,1) forwards;
+}
+  /* DONE: keep NEW emblem visible + keep OLD hidden */
+.rankup[data-phase="done"] .rankup__emblem--new{
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  filter: blur(0) drop-shadow(0 0 22px rgba(35,243,255,.26));
+}
+
+.rankup[data-phase="done"] .rankup__emblem--old{
+  opacity: 0;
+}
+@keyframes ruCtaIn{ to{ opacity:1; transform: translateY(0); } }
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce){
+  .rankup__scan,.rankup__rift::after,.rankup__badge::after{ animation:none!important; }
+  .rankup[data-phase="open"] .rankup__rift,
+  .rankup[data-phase="open"] .rankup__riftEdge,
+  .rankup[data-phase="collapse"] .rankup__emblem--old,
+  .rankup[data-phase="impact"] .rankup__stage,
+  .rankup[data-phase="impact"] .rankup__burst,
+  .rankup[data-phase="reveal"] .rankup__emblem--new,
+  .rankup[data-phase="reveal"] .rankup__riftEdge,
+  .rankup[data-phase="done"] .rankup__cta{
+    animation:none!important;
+    .rankup__beams, .rankup__chroma, .rankup__shards{ display:none!important; }
+.rankup__stage{ filter:none!important; }
+  }
+  .rankup{ transition:none!important; }
+  .rankup.is-open{ opacity:1; }
+  .rankup__stage{ opacity:1; transform:none; }
+  .rankup__rift{ opacity:1; transform:none; }
+  .rankup__emblem--old{ opacity:0; }
+  .rankup__emblem--new{ opacity:1; transform:none; filter:none; }
+  .rankup__cta{ opacity:1; transform:none; }
+}
+  .rankup__img{
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display:block;
+  pointer-events:none;
+  filter: drop-shadow(0 0 18px rgba(35,243,255,.25));
+}
+.rankup__badge{
+  display:grid;
+  place-items:center;
+}
+.rankup__badge .rankup__img{
+  width: 120px;
+  height: 120px;
+}
   
+  /* Tier mode: no rift, no collapse */
+.rankup[data-type="tier"] .rankup__riftWrap{ display:none; }
+.rankup[data-type="tier"] .rankup__emblem--old{ display:none; }
+.rankup[data-type="tier"] .rankup__hudRight{ opacity:.85; }
+  /* Tier mode: make stage smaller + snappier */
+.rankup[data-type="tier"] .rankup__stage{
+  height: min(380px, 62vh);
+}
+.rankup[data-type="tier"] .rankup__cta{ display:none; }
+
+  /* Top rank: keep rift alive in DONE (afterglow stays) */
+.rankup[data-top="1"][data-phase="done"] .rankup__rift{
+  opacity: 1;
+}
+.rankup[data-top="1"][data-phase="done"] .rankup__riftEdge{
+  opacity: .55;
+}
+.rankup[data-top="1"][data-phase="done"] .rankup__burst{
+  opacity: .18;
+  transform: scale(1.05);
+}
+  .rankup[data-phase="done"] .rankup__badge--new{
+  animation: ruAfterglowBreath 2.2s ease-in-out infinite;
+}
+
+@keyframes ruAfterglowBreath{
+  0%,100%{ box-shadow: 0 0 18px rgba(168,85,255,.35), 0 0 42px rgba(35,243,255,.18); }
+  50%{ box-shadow: 0 0 26px rgba(168,85,255,.45), 0 0 70px rgba(35,243,255,.26); }
+}
+  /* TEMP FIX: hide legacy cinematic leftovers (cin-*) */
+.cin-wrap, .cin-card, .cin-top, .cin-main,
+.cin-rankText, .cin-hint, .cin-key,
+.cin-fx, .cin-rays, .cin-burst, .cin-scan,
+.cin-badgeWrap, .cin-badgeImg, .cin-badgeRing,
+.cinematic-bg, .cinematic {
+  display: none !important;
+}
+
+  /* ===== Tier Dots (3 segments) ===== */
+#rankupNew{ position: absolute; } /* ensure anchor exists (safe) */
+
+.tierDots{
+  position:absolute;
+  left:50%;
+  top: calc(50% + 118px); /* under 150px badge inside 220px emblem */
+  transform: translateX(-50%);
+  display:flex;
+  gap:10px;
+  padding:8px 12px;
+  border-radius:999px;
+  border:1px solid rgba(234,242,255,.12);
+  background: rgba(0,0,0,.18);
+  backdrop-filter: blur(6px);
+  opacity:0;
+  pointer-events:none;
+  will-change: transform, opacity;
+}
+
+/* dot base */
+.tierDot{
+  width:10px;
+  height:10px;
+  border-radius:999px;
+  background: rgba(234,242,255,.12);
+  box-shadow: none;
+  transform: translateY(0) scale(1);
+  will-change: transform, opacity, box-shadow;
+}
+
+/* active dot */
+.tierDot.is-on{
+  background: rgba(35,243,255,.65);
+  box-shadow:
+    0 0 10px rgba(35,243,255,.35),
+    0 0 22px rgba(168,85,255,.18);
+}
+
+/* show in reveal/done (rank) and always for tier mode when open */
+#rankup.is-open .tierDots{
+  opacity:1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* TierUp pulse */
+#rankup.is-tierup .tierDots{
+  animation: tdWrapIn .55s cubic-bezier(.2,.9,.2,1) forwards;
+}
+@keyframes tdWrapIn{
+  0%{ opacity:0; transform: translateX(-50%) translateY(10px) scale(.98); }
+  100%{ opacity:1; transform: translateX(-50%) translateY(0) scale(1); }
+}
+
+#rankup.is-tierup .tierDot.is-justOn{
+  animation: tdPing .7s cubic-bezier(.2,.95,.2,1) forwards;
+}
+@keyframes tdPing{
+  0%{ transform: translateY(0) scale(.9); box-shadow: none; }
+  40%{ transform: translateY(-2px) scale(1.35);
+       box-shadow: 0 0 12px rgba(35,243,255,.55), 0 0 26px rgba(168,85,255,.22); }
+  100%{ transform: translateY(0) scale(1);
+        box-shadow: 0 0 10px rgba(35,243,255,.35), 0 0 22px rgba(168,85,255,.18); }
+}
+
+/* subtle breathing in DONE */
+#rankup[data-phase="done"] .tierDot.is-on{
+  animation: tdBreath 2.2s ease-in-out infinite;
+}
+@keyframes tdBreath{
+  0%,100%{ opacity: .95; }
+  50%{ opacity: 1; }
+}
+
+/* NEXUS / top rank: no dots */
+#rankup[data-top="1"] .tierDots{ display:none !important; }
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce){
+  #rankup.is-tierup .tierDots,
+  #rankup.is-tierup .tierDot.is-justOn,
+  #rankup[data-phase="done"] .tierDot.is-on{
+    animation:none !important;
+  }
+}
+  
+</style>
   <!-- ===== END OF CSS ===== -->
 </head>
   
@@ -3159,272 +3334,206 @@ if (t && t.getAttribute && t.getAttribute("data-edit-id")) {
   
   preloadRankBadges();
   // =============================
-// AWARD ENGINE (Apex-style) — production
-// Auto-close, no preview buttons
+
+
+  // =============================
+// DIGITAL RIFT PROTOCOL - PUBLIC API (SAFE)
+// Always defines window.showRankUp / window.showTierUp
 // =============================
 
-function getAwardEls(){
-  return {
-    award: document.getElementById('award'),
-    badge: document.getElementById('badge'),
-    subText: document.getElementById('subText'),
-    rightText: document.getElementById('rightText'),
-    labelTop: document.getElementById('labelTop'),
-    labelName: document.getElementById('labelName')
-  };
+function _ruGetRoot() {
+  return document.getElementById("rankup");
 }
 
-let timers = [];
-function clearTimers(){ timers.forEach(t=>clearTimeout(t)); timers=[]; }
-
-// Accent fallback table (optional)
-const ACCENT_BY_RANK = {
-  eidolon:"#d61830",
-  seraph:"#d9f9e8",
-  monarch:"#c7336c",
-  overlord:"#8c4826",
-  archon:"#01a7ef",
-  reaper:"#9bb1f6",
-  harbinger:"#a6b1b9",
-  marauder:"#fef525",
-  thrall:"#60eb89",
-  outcast:"#0f0f13",
-};
-
-// Tiny SFX (WebAudio)
-let audioCtx = null;
-function ensureAudio(){
-  if(!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-  return audioCtx;
-}
-function playTone({freqFrom, freqTo, dur=0.18, gain=0.08, type='sine'}){
-  const ctx = ensureAudio();
-  const t0 = ctx.currentTime;
-
-  const o = ctx.createOscillator();
-  const g = ctx.createGain();
-
-  o.type = type;
-  o.frequency.setValueAtTime(freqFrom, t0);
-  o.frequency.exponentialRampToValueAtTime(freqTo, t0 + Math.max(0.01, dur*0.45));
-
-  g.gain.setValueAtTime(0.0001, t0);
-  g.gain.exponentialRampToValueAtTime(gain, t0 + 0.02);
-  g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
-
-  o.connect(g);
-  g.connect(ctx.destination);
-
-  o.start(t0);
-  o.stop(t0 + dur + 0.02);
+function _ruSetPhase(root, phase) {
+  root.dataset.phase = phase;
+  
 }
 
-function sfxTier(){
-  playTone({freqFrom:520, freqTo:860, dur:0.14, gain:0.06, type:'sine'});
-  setTimeout(()=>playTone({freqFrom:900, freqTo:1200, dur:0.10, gain:0.03, type:'triangle'}), 70);
-}
-function sfxRankRiser(){
-  playTone({freqFrom:180, freqTo:520, dur:0.30, gain:0.05, type:'sine'});
-  setTimeout(()=>playTone({freqFrom:260, freqTo:740, dur:0.34, gain:0.04, type:'triangle'}), 120);
-}
-function sfxRankImpact(){ playTone({freqFrom:220, freqTo:680, dur:0.12, gain:0.10, type:'sine'}); }
-function sfxRankHero(){
-  playTone({freqFrom:520, freqTo:780, dur:0.18, gain:0.05, type:'triangle'});
-  setTimeout(()=>playTone({freqFrom:390, freqTo:620, dur:0.18, gain:0.04, type:'triangle'}), 20);
+function _ruSetOpen(root, isOpen) {
+  root.classList.toggle("is-open", isOpen);
+  root.setAttribute("aria-hidden", isOpen ? "false" : "true");
 }
 
-function openOverlay(mode){
-  const els = getAwardEls();
-  const award = els.award;
-  const badge = els.badge;
-  if(!award || !badge) return;
-
-  clearTimers();
-  award.classList.add('is-open');
-  award.setAttribute('aria-hidden','false');
-
-  award.classList.toggle('is-tierup', mode === 'tierUp');
-  award.classList.toggle('is-rankup', mode === 'rankUp');
-  award.classList.remove('is-top','is-down');
-  award.dataset.phase = 'open';
-
-  badge.classList.remove('anim-up');
-  void badge.offsetWidth;
-}
-
-function closeOverlay(){
-  const els = getAwardEls();
-  const award = els.award;
-  if(!award) return;
-
-  clearTimers();
-  award.classList.remove('is-open','is-tierup','is-rankup','is-top','is-down');
-  award.removeAttribute('data-phase');
-  award.removeAttribute('data-tier');
-  award.setAttribute('aria-hidden','true');
-
-  try { document.activeElement && document.activeElement.blur(); } catch(e) {}
-}
-
-function setTierClass(divIndex){
-  const els = getAwardEls();
-  const badge = els.badge;
-  if(!badge) return;
-
-  badge.classList.remove('tier-0','tier-1','tier-2');
-  badge.classList.add(`tier-${Math.max(0, Math.min(2, divIndex))}`);
-}
-
-function setBadge(iconSrc){
-  const els = getAwardEls();
-  const badge = els.badge;
-  if(!badge) return;
-
-  if(iconSrc) badge.style.setProperty('--badge-url', `url("${iconSrc}")`);
-}
-
-function playTierUp({rankName, iconSrc, divIndex, accentColor="#01a7ef"}){
-  const els = getAwardEls();
-  if(!els.award || !els.badge) return;
-
-  openOverlay('tierUp');
-  els.award.style.setProperty('--accent', accentColor);
-
-  if(els.subText) els.subText.textContent = 'Division upgrade • Apex-style evolution.';
-  if(els.rightText) els.rightText.textContent = 'AUTO';
-  if(els.labelTop) els.labelTop.textContent = 'DIVISION UP';
-  if(els.labelName) els.labelName.textContent = rankName;
-
-  setBadge(iconSrc);
-  setTierClass(divIndex);
-  els.award.dataset.tier = String(divIndex);
-
-  els.badge.classList.add('anim-up');
-
-  timers.push(setTimeout(()=>{ els.award.dataset.phase='impact'; sfxTier(); }, 900));
-  timers.push(setTimeout(()=>{ els.award.dataset.phase='reveal'; }, 1350)); // removed beep()
-  timers.push(setTimeout(()=>{ els.award.dataset.phase='done'; }, 3000));
-  timers.push(setTimeout(closeOverlay, 3000 + 2000));
-}
-
-function playTierDown({rankName, iconSrc, divIndex, accentColor="#01a7ef"}){
-  const els = getAwardEls();
-  if(!els.award || !els.badge) return;
-
-  openOverlay('tierUp');
-  els.award.classList.add('is-down');
-  els.award.style.setProperty('--accent', accentColor);
-  els.award.dataset.tier = String(divIndex);
-
-  if(els.subText) els.subText.textContent = 'Division decreased • Syncing…';
-  if(els.rightText) els.rightText.textContent = 'AUTO';
-  if(els.labelTop) els.labelTop.textContent = 'DIVISION DOWN';
-  if(els.labelName) els.labelName.textContent = rankName;
-
-  setBadge(iconSrc);
-  setTierClass(divIndex);
-
-  timers.push(setTimeout(()=>{ els.award.dataset.phase='impact'; }, 650));
-  timers.push(setTimeout(()=>{ els.award.dataset.phase='done'; }, 1500));
-  timers.push(setTimeout(()=>{ els.award.classList.remove('is-down'); closeOverlay(); }, 1500 + 1400));
-}
-
-function playRankUp({rankName, iconSrc, isTop=false, accentColor="#23f3ff"}){
-  const els = getAwardEls();
-  if(!els.award || !els.badge) return;
-
-  openOverlay('rankUp');
-  els.award.style.setProperty('--accent', accentColor);
-  els.award.classList.toggle('is-top', !!isTop);
-
-  if(els.subText) els.subText.textContent = isTop ? 'Top rank achieved • Reward state active.' : 'Promotion confirmed • Award unlocked.';
-  if(els.rightText) els.rightText.textContent = 'AUTO';
-  if(els.labelTop) els.labelTop.textContent = 'NEW RANK';
-  if(els.labelName) els.labelName.textContent = rankName;
-
-  setBadge(iconSrc);
-  setTierClass(0);
-
-  els.badge.classList.add('anim-up');
-  sfxRankRiser();
-
-  timers.push(setTimeout(()=>{ els.award.dataset.phase='impact'; sfxRankImpact(); }, 1050));
-  timers.push(setTimeout(()=>{ els.award.dataset.phase='reveal'; sfxRankHero(); }, 1300));
-  timers.push(setTimeout(()=>{ els.award.dataset.phase='done'; }, 2150));
-
-  const hold = isTop ? 3200 : 2600;
-  timers.push(setTimeout(closeOverlay, 2150 + hold));
-}
-
-function playRankDown({rankName, iconSrc, accentColor="#23f3ff"}){
-  const els = getAwardEls();
-  if(!els.award || !els.badge) return;
-
-  openOverlay('rankUp');
-  els.award.classList.add('is-down');
-  els.award.style.setProperty('--accent', accentColor);
-
-  if(els.subText) els.subText.textContent = 'Rank decreased • Syncing…';
-  if(els.rightText) els.rightText.textContent = 'AUTO';
-  if(els.labelTop) els.labelTop.textContent = 'RANK DOWN';
-  if(els.labelName) els.labelName.textContent = rankName;
-
-  setBadge(iconSrc);
-  setTierClass(0);
-
-  timers.push(setTimeout(()=>{ els.award.dataset.phase='impact'; }, 900));
-  timers.push(setTimeout(()=>{ els.award.dataset.phase='done'; }, 2000));
-  timers.push(setTimeout(()=>{ els.award.classList.remove('is-down'); closeOverlay(); }, 2000 + 1800));
-}
-
-// ESC closes if open
-window.addEventListener('keydown', (e)=>{
-  const els = getAwardEls();
-  if(e.key === 'Escape' && els.award && els.award.classList.contains('is-open')) closeOverlay();
-});
-
-  function _rankKeyFromText(t){
+function _ruTierKeyFromText(t) {
   return String(t || "").trim().split(" ")[0].toLowerCase();
 }
-function _isTopRankName(name){
-  return String(name || "").toUpperCase() === "EIDOLON";
+
+function _ruIsTopRankText(toText) {
+  const t = String(toText || "").toUpperCase();
+  return t.includes("EIDOLON");
 }
 
-window.hideRankUp = function(){ closeOverlay(); };
+function _ruFill(payload) {
+  const root = _ruGetRoot();
+  if (!root) return null;
 
-window.showTierUp = function(payload){
+  const subEl = document.getElementById("rankupSub");
+  const rightEl = document.getElementById("rankupRight");
+  const oldLabelEl = document.getElementById("rankupOldLabel");
+  const newLabelEl = document.getElementById("rankupNewLabel");
+  const oldImg = document.getElementById("rankupOldImg");
+  const newImg = document.getElementById("rankupNewImg");
+  const btn = document.getElementById("rankupContinue");
+
+  const fromText = payload?.fromText || "";
   const toText = payload?.toText || "";
-  const rankKey = _rankKeyFromText(toText);
-  const iconSrc = `assets/ranks/${rankKey}.webp`;
-  const divIndex = (payload?.divIndex != null) ? Number(payload.divIndex) : 0;
+  const rrText = payload?.rrText || "";
 
-  const isDown = String(payload?.rrText || "").toUpperCase().includes("DOWN");
+  if (oldLabelEl) oldLabelEl.textContent = fromText;
+  if (newLabelEl) newLabelEl.textContent = toText;
 
-  const accentColor =
-    (typeof rankTiers !== "undefined" && rankTiers.find(t => t.name === rankKey.toUpperCase())?.color) ||
-    ACCENT_BY_RANK[rankKey] ||
-    "#01a7ef";
+  if (subEl) subEl.textContent = payload?.subText || subEl.textContent;
+  if (rightEl) rightEl.textContent = rrText;
 
-  if (isDown) playTierDown({ rankName: rankKey.toUpperCase(), iconSrc, divIndex, accentColor });
-  else playTierUp({ rankName: rankKey.toUpperCase(), iconSrc, divIndex, accentColor });
+  if (oldImg) oldImg.src = "assets/ranks/" + _ruTierKeyFromText(fromText) + ".webp";
+  if (newImg) newImg.src = "assets/ranks/" + _ruTierKeyFromText(toText) + ".webp";
+  if (oldImg) oldImg.onerror = function(){ oldImg.removeAttribute("src"); };
+  if (newImg) newImg.onerror = function(){ newImg.removeAttribute("src"); };
+
+  if (btn) btn.style.display = "none";
+
+  return { root, btn, toText };
+}
+
+function _ruRunTimeline(root, steps) {
+  let i = 0;
+  function next() {
+    if (i >= steps.length) return;
+    const s = steps[i++];
+    _ruSetPhase(root, s.phase);
+    if (s.ms != null) _ruLater(next, s.ms);
+  }
+  next();
+}
+
+  var _ruTimers = [];
+
+function _ruLater(fn, ms) {
+  var id = setTimeout(fn, ms);
+  _ruTimers.push(id);
+  return id;
+}
+
+function _ruClearTimers() {
+  while (_ruTimers.length) clearTimeout(_ruTimers.pop());
+}
+  
+window.hideRankUp = function () {
+  _ruClearTimers();
+
+  // Avoid aria-hidden warning: remove focus from inside overlay before hiding
+  try { document.activeElement && document.activeElement.blur(); } catch(e) {}
+
+  const root = _ruGetRoot();
+  if (!root) return;
+
+  _ruSetOpen(root, false);
+  _ruSetPhase(root, "idle");
+  root.classList.remove("is-tierup");
+
+  const btn = document.getElementById("rankupContinue");
+  if (btn) btn.style.display = "none";
 };
 
-window.showRankUp = function(payload){
-  const toText = payload?.toText || "";
-  const rankKey = _rankKeyFromText(toText);
-  const iconSrc = `assets/ranks/${rankKey}.webp`;
+window.showRankUp = function (payload) {
+  window.hideRankUp();
+  // Force a clean restart on next frame
 
-  const isTop = _isTopRankName(rankKey.toUpperCase());
-  const isDown = String(payload?.rrText || "").toUpperCase().includes("DOWN");
+  const res = _ruFill(payload);
+  if (!res) return;
 
-  const accentColor =
-    (typeof rankTiers !== "undefined" && rankTiers.find(t => t.name === rankKey.toUpperCase())?.color) ||
-    ACCENT_BY_RANK[rankKey] ||
-    "#23f3ff";
+  const { root, btn, toText } = res;
 
-  if (isDown) playRankDown({ rankName: rankKey.toUpperCase(), iconSrc, accentColor });
-  else playRankUp({ rankName: rankKey.toUpperCase(), iconSrc, isTop, accentColor });
+  root.dataset.type = "rank";
+  root.dataset.top = _ruIsTopRankText(toText) ? "1" : "0";
+
+  requestAnimationFrame(() => {
+  _ruSetOpen(root, true);
+  _ruRunTimeline(root, timeline);
+});
+  
+
+  const timeline = [
+    { phase: "open", ms: 1000 },
+    { phase: "collapse", ms: 700 },
+    { phase: "impact", ms: 280 },
+    { phase: "reveal", ms: 1050 },
+    { phase: "done", ms: null }
+  ];
+
+  _ruRunTimeline(root, timeline);
+
+  // show CTA near done
+  if (btn) {
+    _ruLater(() => { if (btn) btn.style.display = "inline-block"; }, 1000 + 700 + 280 + 1050 - 200);
+  }
 };
+
+window.showTierUp = function (payload) {
+  window.hideRankUp();
+
+  const res = _ruFill(payload);
+  // Tier dots logic
+  const dotsWrap = document.getElementById("tierDots");
+  if (dotsWrap) {
+    const dots = dotsWrap.querySelectorAll(".tierDot");
+
+    // reset classes
+    for (let i = 0; i < dots.length; i++) {
+      dots[i].classList.remove("is-on", "is-justOn");
+    }
+
+    const di = (payload && payload.divIndex !== undefined && payload.divIndex !== null) ? Number(payload.divIndex) : 0;
+    const onCount = Math.max(0, Math.min(3, di + 1)); // 0->1,1->2,2->3
+
+    for (let i = 0; i < onCount; i++) dots[i].classList.add("is-on");
+
+    // ping newly lit dot (promotion only)
+    if (payload && payload.rrText && String(payload.rrText).toUpperCase().includes("UPGRADED")) {
+      const justOnIndex = Math.max(0, Math.min(2, di));
+      dots[justOnIndex].classList.add("is-justOn");
+      // remove ping class after animation
+      _ruLater(() => dots[justOnIndex].classList.remove("is-justOn"), 720);
+    }
+
+    // mark overlay as tierup for CSS
+    res.root.classList.add("is-tierup");
+    _ruLater(() => res.root.classList.remove("is-tierup"), 1400);
+  }
+  if (!res) return;
+  const { root } = res;
+
+  root.dataset.type = "tier";
+  root.dataset.top = "0";
+
+  requestAnimationFrame(() => {
+  _ruSetOpen(root, true);
+  _ruRunTimeline(root, timeline);
+});
+  
+
+  const timeline = [
+    { phase: "impact", ms: 220 },
+    { phase: "reveal", ms: 650 },
+    { phase: "done", ms: 350 }
+  ];
+
+  _ruRunTimeline(root, timeline);
+
+  // auto close tier-up
+  _ruLater(() => window.hideRankUp(), 1400);
+};
+
+// Close UX
+document.addEventListener("keydown", function (e) {
+  if (e.key === "Escape") window.hideRankUp();
+});
+
+document.addEventListener("click", function (e) {
+  const t = e.target;
+  if (t && t.id === "rankupContinue") window.hideRankUp();
+});
   
 /* ===== INIT ===== */
 renderHistoryFromStorage();
@@ -3437,45 +3546,6 @@ renderHistoryFromStorage();
     <footer class="rankup__cta">
       <button class="rankup__btn" id="rankupContinue" type="button">Continue</button>
     </footer>
-  </div>
-</div>
-  <!-- ===== Award Overlay (Apex-style) ===== -->
-<div id="award" aria-hidden="true">
-  <div class="veil"></div>
-
-  <div class="hud">
-    <div class="left">
-      <div class="kicker">RANKED UPDATE</div>
-      <div class="sub" id="subText">Apex-style evolution • Confirmed.</div>
-    </div>
-    <div class="right" id="rightText">AUTO</div>
-  </div>
-
-  <div class="center">
-    <div class="impactFlash" aria-hidden="true"></div>
-    <div class="coreFlash" aria-hidden="true"></div>
-    <div class="creationGlow" aria-hidden="true"></div>
-    <div class="wingWave" aria-hidden="true"></div>
-    <div class="sparks" aria-hidden="true"></div>
-    <div class="falling" aria-hidden="true"></div>
-
-    <div class="stack">
-      <div class="rankBadge tier-0 animated" id="badge">
-        <div class="rankBadge__img" id="rankIcon" aria-hidden="true"></div>
-
-        <div class="slice s1" aria-hidden="true"></div>
-        <div class="slice s2" aria-hidden="true"></div>
-        <div class="slice s3" aria-hidden="true"></div>
-        <div class="slice s4" aria-hidden="true"></div>
-
-        <span class="rankBadge__halo" aria-hidden="true"></span>
-      </div>
-
-      <div class="label" aria-hidden="true">
-        <div class="labelTop" id="labelTop">NEW RANK</div>
-        <div class="labelName" id="labelName">EIDOLON</div>
-      </div>
-    </div>
   </div>
 </div>
   
