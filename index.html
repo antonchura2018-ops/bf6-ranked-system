@@ -1255,19 +1255,34 @@ margin: 32px auto 20px;
 #award[data-tier="2"] .falling{ opacity:.62 !important; }
 
   /* =========================
-   DOWN STYLE (light + FPS-safe)
+   DOWN STYLE (stronger, still FPS-safe)
    ========================= */
-#award.is-down .rankBadge{ animation: downShake 260ms ease forwards; }
+#award.is-down .rankBadge{
+  animation: downShake 280ms ease forwards;
+}
 @keyframes downShake{
   0%{ transform: translateY(0) scale(1); }
-  25%{ transform: translateY(2px) scale(.995); }
-  55%{ transform: translateY(-1px) scale(.992); }
+  25%{ transform: translateY(4px) scale(.992); }
+  55%{ transform: translateY(-2px) scale(.988); }
   100%{ transform: translateY(0) scale(1); }
 }
-#award.is-down .center::before{ opacity:.65; }
-#award.is-down .rankBadge__halo{ opacity:.12 !important; }
+
+/* dim backlight + reduce glory */
+#award.is-down .center::before{ opacity:.45; }
+#award.is-down .rankBadge__halo{
+  opacity:.10 !important;
+  filter: none !important;
+}
+
+/* less “wings” and “creation” on down */
 #award.is-down .wingWave,
-#award.is-down .creationGlow{ display:none !important; }
+#award.is-down .creationGlow{
+  display:none !important;
+}
+
+/* smaller impact flash on down */
+#award.is-down[data-phase="impact"] .impactFlash{ opacity:.35; transform: scale(.92); }
+#award.is-down[data-phase="impact"] .coreFlash{ opacity:.35; }
   
 </style>
   <!-- ===== END OF CSS ===== -->
