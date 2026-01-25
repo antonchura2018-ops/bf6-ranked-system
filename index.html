@@ -1212,47 +1212,31 @@ margin: 32px auto 20px;
       .label{ opacity:1; }
     }
 
-    /* =========================
-   TIER INTENSITY (FPS-safe)
-   tier-0 = III, tier-1 = II, tier-2 = I
+  /* =========================
+   TIER INTENSITY BOOST (more visible)
    ========================= */
 
-/* Base (tier-0) already OK. Make it slightly calmer */
-.rankBadge.tier-0 .rankBadge__halo{ opacity:.12; transform: scale(.98); }
-#award.is-tierup[data-phase="reveal"] .rankBadge.tier-0 ~ .label{}
+/* halo strength */
+.rankBadge.tier-0 .rankBadge__halo{ opacity:.14; transform: scale(.98); }
+.rankBadge.tier-1 .rankBadge__halo{ opacity:.28; transform: scale(1.03); }
+.rankBadge.tier-2 .rankBadge__halo{ opacity:.44; transform: scale(1.08); }
 
-/* Tier-1: medium */
-.rankBadge.tier-1 .rankBadge__halo{ opacity:.22; transform: scale(1.01); }
-#award.is-tierup[data-phase="reveal"] .rankBadge.tier-1{
-  filter: drop-shadow(0 0 10px rgba(255,255,255,.05));
-}
-
-/* Tier-2: strongest (I) */
-.rankBadge.tier-2 .rankBadge__halo{ opacity:.34; transform: scale(1.05); }
-
-/* Make wingWave / creationGlow scale with tier during reveal */
-#award.is-tierup[data-phase="reveal"] .creationGlow{ opacity:0; } /* default uses animation; we scale via keyframes below */
-#award.is-tierup[data-phase="reveal"] .rankBadge.tier-0 ~ .label{}
-
-/* Tier-based multiplier using small overrides */
-#award.is-tierup[data-phase="reveal"] .rankBadge.tier-0 ~ .label{}
-
-/* Quick hack: tier-2 gets a slightly longer/stronger burst */
-#award.is-tierup[data-phase="reveal"] .rankBadge.tier-2 ~ .label{}
-
-/* NOTE: Since creationGlow/wingWave are siblings, we use a data attr on #award instead (JS sets it). */
-    /* FX intensity driven by award[data-tier] to avoid complex selectors */
-#award[data-tier="0"][data-phase="reveal"] .creationGlow{ animation-duration: 950ms; }
+/* reveal FX length + intensity */
+#award[data-tier="0"][data-phase="reveal"] .creationGlow{ animation-duration: 900ms; }
 #award[data-tier="1"][data-phase="reveal"] .creationGlow{ animation-duration: 1100ms; }
-#award[data-tier="2"][data-phase="reveal"] .creationGlow{ animation-duration: 1250ms; }
+#award[data-tier="2"][data-phase="reveal"] .creationGlow{ animation-duration: 1300ms; }
 
-#award[data-tier="0"][data-phase="reveal"] .wingWave{ animation-duration: 900ms; opacity:0; }
+#award[data-tier="0"][data-phase="reveal"] .wingWave{ animation-duration: 850ms; opacity:0; }
 #award[data-tier="1"][data-phase="reveal"] .wingWave{ animation-duration: 1050ms; }
-#award[data-tier="2"][data-phase="reveal"] .wingWave{ animation-duration: 1200ms; }
+#award[data-tier="2"][data-phase="reveal"] .wingWave{ animation-duration: 1250ms; }
 
-#award[data-tier="0"] .falling{ opacity:.35 !important; }
+/* falling particles density/brightness */
+#award[data-tier="0"] .falling{ opacity:.28 !important; }
 #award[data-tier="1"] .falling{ opacity:.50 !important; }
-#award[data-tier="2"] .falling{ opacity:.62 !important; }
+#award[data-tier="2"] .falling{ opacity:.70 !important; }
+
+/* sparks stronger on higher tier */
+#award[data-tier="2"][data-phase="reveal"] .sparks{ opacity:.55 !important; }
 
   /* =========================
    DOWN STYLE (stronger, still FPS-safe)
