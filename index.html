@@ -1267,6 +1267,55 @@ margin: 32px auto 20px;
 /* smaller impact flash on down */
 #award.is-down[data-phase="impact"] .impactFlash{ opacity:.35; transform: scale(.92); }
 #award.is-down[data-phase="impact"] .coreFlash{ opacity:.35; }
+  /* =========================================================
+   FORCE VISIBILITY: DOWN + TIER INTENSITY (DEBUG/FINAL)
+   Put at VERY END of <style>
+   ========================================================= */
+
+/* -------------- DOWN -------------- */
+#award.is-down .rankBadge{
+  animation: downShake 320ms ease forwards !important;
+}
+@keyframes downShake{
+  0%{ transform: translateY(0) scale(1); }
+  25%{ transform: translateY(6px) scale(.985); }
+  55%{ transform: translateY(-3px) scale(.980); }
+  100%{ transform: translateY(0) scale(1); }
+}
+
+/* Make DOWN clearly darker */
+#award.is-down .veil{
+  opacity: 1 !important;
+  filter: saturate(.85) brightness(.92);
+}
+
+/* DOWN removes “wings” and reduces glow */
+#award.is-down .wingWave,
+#award.is-down .creationGlow{ display:none !important; }
+
+#award.is-down .rankBadge__halo{
+  opacity: .08 !important;
+  transform: scale(.96) !important;
+}
+
+/* -------------- TIER INTENSITY (obvious) -------------- */
+#award[data-tier="0"] .rankBadge__halo{ opacity: .14 !important; transform: scale(.98) !important; }
+#award[data-tier="1"] .rankBadge__halo{ opacity: .30 !important; transform: scale(1.06) !important; }
+#award[data-tier="2"] .rankBadge__halo{ opacity: .50 !important; transform: scale(1.14) !important; }
+
+/* Tier differences in particles */
+#award[data-tier="0"] .falling{ opacity: .22 !important; }
+#award[data-tier="1"] .falling{ opacity: .45 !important; }
+#award[data-tier="2"] .falling{ opacity: .70 !important; }
+
+/* Tier differences in reveal FX duration (more noticeable) */
+#award[data-tier="0"][data-phase="reveal"] .creationGlow{ animation-duration: 900ms !important; }
+#award[data-tier="1"][data-phase="reveal"] .creationGlow{ animation-duration: 1150ms !important; }
+#award[data-tier="2"][data-phase="reveal"] .creationGlow{ animation-duration: 1450ms !important; }
+
+#award[data-tier="0"][data-phase="reveal"] .wingWave{ animation-duration: 850ms !important; opacity:0 !important; }
+#award[data-tier="1"][data-phase="reveal"] .wingWave{ animation-duration: 1100ms !important; }
+#award[data-tier="2"][data-phase="reveal"] .wingWave{ animation-duration: 1350ms !important; }
   
 </style>
   <!-- ===== END OF CSS ===== -->
