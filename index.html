@@ -3531,11 +3531,15 @@ function playRankUp({rankName, iconSrc, isTop=false, accentColor="#23f3ff"}){
   // 🎧 Riser starts immediately (open phase)
   playSFX('rankUpRiser');
 
-  timers.push(setTimeout(()=>{ 
-    els.award.dataset.phase='impact';
-    // 🎧 Big impact exactly on impact frame
-    playSFX('rankUpImpact');
-  }, 1050));
+ timers.push(setTimeout(()=>{ 
+  els.award.dataset.phase='impact';
+  playSFX('rankUpImpact');
+
+  // glitch exactly on impact
+  els.award.classList.add('is-finisher');
+  setTimeout(()=>els.award.classList.remove('is-finisher'), 500);
+
+}, 1050));
 
   timers.push(setTimeout(()=>{ els.award.dataset.phase='reveal'; }, 1300));
 
