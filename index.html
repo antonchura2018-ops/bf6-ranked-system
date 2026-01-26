@@ -3320,47 +3320,6 @@ const ACCENT_BY_RANK = {
 };
 
 // Tiny SFX (WebAudio)
-let audioCtx = null;
-function ensureAudio(){
-  if(!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-  return audioCtx;
-}
-function playTone({freqFrom, freqTo, dur=0.18, gain=0.08, type='sine'}){
-  const ctx = ensureAudio();
-  const t0 = ctx.currentTime;
-
-  const o = ctx.createOscillator();
-  const g = ctx.createGain();
-
-  o.type = type;
-  o.frequency.setValueAtTime(freqFrom, t0);
-  o.frequency.exponentialRampToValueAtTime(freqTo, t0 + Math.max(0.01, dur*0.45));
-
-  g.gain.setValueAtTime(0.0001, t0);
-  g.gain.exponentialRampToValueAtTime(gain, t0 + 0.02);
-  g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
-
-  o.connect(g);
-  g.connect(ctx.destination);
-
-  o.start(t0);
-  o.stop(t0 + dur + 0.02);
-}
-
-function sfxTier(){
-  playTone({freqFrom:520, freqTo:860, dur:0.14, gain:0.06, type:'sine'});
-  setTimeout(()=>playTone({freqFrom:900, freqTo:1200, dur:0.10, gain:0.03, type:'triangle'}), 70);
-}
-function sfxRankRiser(){
-  playTone({freqFrom:180, freqTo:520, dur:0.30, gain:0.05, type:'sine'});
-  setTimeout(()=>playTone({freqFrom:260, freqTo:740, dur:0.34, gain:0.04, type:'triangle'}), 120);
-}
-function sfxRankImpact(){ playTone({freqFrom:220, freqTo:680, dur:0.12, gain:0.10, type:'sine'}); }
-function sfxRankHero(){
-  playTone({freqFrom:520, freqTo:780, dur:0.18, gain:0.05, type:'triangle'});
-  setTimeout(()=>playTone({freqFrom:390, freqTo:620, dur:0.18, gain:0.04, type:'triangle'}), 20);
-}
-
 function openOverlay(mode){
   const els = getAwardEls();
   const award = els.award;
