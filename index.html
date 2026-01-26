@@ -1402,16 +1402,17 @@ margin: 32px auto 20px;
 }
 
 #award.is-finisher #rankIcon{
-  animation: iconGlitch 520ms steps(2,end) forwards;
+  animation: iconGlitch 420ms steps(1,end) forwards;
 }
 
 @keyframes iconGlitch{
-  0%   { transform: translate3d(0,0,0) scale(1); filter: none; }
-  15%  { transform: translate3d(-2px,0,0) scale(1.01); filter: hue-rotate(10deg) saturate(1.2); }
-  35%  { transform: translate3d(2px,0,0) scale(1.01);  filter: hue-rotate(-12deg) saturate(1.2); }
-  55%  { transform: translate3d(-1px,0,0) scale(1.01); filter: contrast(1.15); }
-  75%  { transform: translate3d(1px,0,0) scale(1.01);  filter: contrast(1.10); }
-  100% { transform: translate3d(0,0,0) scale(1); filter: none; }
+  0%   { transform: translate3d(0,0,0) scale(1); filter: none; opacity:1; }
+  10%  { transform: translate3d(-6px,-1px,0) scale(1.02); filter: hue-rotate(18deg) saturate(1.35) contrast(1.12); }
+  25%  { transform: translate3d(7px,1px,0)  scale(1.03); filter: hue-rotate(-22deg) saturate(1.45) contrast(1.18); }
+  40%  { transform: translate3d(-4px,0px,0) scale(1.02); filter: contrast(1.25); }
+  55%  { transform: translate3d(5px,0px,0)  scale(1.02); filter: hue-rotate(10deg) contrast(1.18); }
+  70%  { transform: translate3d(-3px,1px,0) scale(1.01); filter: contrast(1.10); }
+  100% { transform: translate3d(0,0,0) scale(1); filter: none; opacity:1; }
 }
 
 /* Vibration on badge container (subtle) */
