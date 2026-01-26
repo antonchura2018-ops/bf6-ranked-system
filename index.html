@@ -1190,6 +1190,7 @@ margin: 32px auto 20px;
       from{ opacity:0; transform: translateY(8px); }
       to{ opacity:1; transform: translateY(0); }
     }
+  
 
     /* Reduced motion */
     @media (prefers-reduced-motion: reduce){
@@ -1226,6 +1227,15 @@ margin: 32px auto 20px;
 .tierHUD__dot.is-on{
   background: color-mix(in srgb, var(--rank-accent, #22d3ee) 65%, white);
   box-shadow: 0 0 10px color-mix(in srgb, var(--rank-accent, #22d3ee) 35%, transparent);
+}
+
+  #award.is-rankup[data-phase="done"] .rankBadge{
+  animation: heroHold 900ms ease-out forwards;
+}
+@keyframes heroHold{
+  0%{ transform: scale(1); }
+  40%{ transform: scale(1.015); }
+  100%{ transform: scale(1); }
 }
 
   /* =========================
@@ -3433,7 +3443,7 @@ function playTierUp({rankName, iconSrc, divIndex, accentColor="#01a7ef"}){
 
   els.badge.classList.add('anim-up');
 
-  timers.push(setTimeout(()=>{ els.award.dataset.phase='impact'; playSFX('tierUp'); }, 900));
+  timers.push(setTimeout(()=>{ els.award.dataset.phase='impact'; playSFX('tierUp'); }, 820));
   timers.push(setTimeout(()=>{ els.award.dataset.phase='reveal'; }, 1350));
   timers.push(setTimeout(()=>{ els.award.dataset.phase='done'; }, 3000));
   timers.push(setTimeout(closeOverlay, 3000 + 2000));
@@ -3517,7 +3527,7 @@ function playRankDown({rankName, iconSrc, accentColor="#23f3ff"}){
   timers.push(setTimeout(()=>{ 
   els.award.dataset.phase='impact'; 
   playSFX('down');
-}, 900));
+}, 450));
   timers.push(setTimeout(()=>{ els.award.dataset.phase='done'; }, 2000));
   timers.push(setTimeout(()=>{ els.award.classList.remove('is-down'); closeOverlay(); }, 2000 + 1800));
 }
