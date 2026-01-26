@@ -3586,7 +3586,7 @@ function playRankDown({rankName, iconSrc, accentColor="#23f3ff"}){
   timers.push(setTimeout(()=>{ 
   els.award.dataset.phase='impact'; 
   playSFX('down');
-}, 400));
+}, 350));
   timers.push(setTimeout(()=>{ els.award.dataset.phase='done'; }, 2000));
   timers.push(setTimeout(()=>{ els.award.classList.remove('is-down'); closeOverlay(); }, 2000 + 1800));
 }
