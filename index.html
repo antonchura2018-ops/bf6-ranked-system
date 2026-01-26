@@ -1394,57 +1394,42 @@ margin: 32px auto 20px;
 #award[data-tier="2"][data-phase="reveal"] .wingWave{ animation-duration: 1550ms !important; }
   
   /* =========================
-   HERO FINISHER (RankUp tail)
+   ICON GLITCH (local, no frame)
    ========================= */
-
-.rankBadge{ position: relative; } /* ensure pseudo attaches */
-
-.rankBadge::after{
-  content:"";
-  position:absolute;
-  inset:-6%;
-  pointer-events:none;
-  opacity:0;
-  background:
-    repeating-linear-gradient(
-      to bottom,
-      rgba(255,255,255,0.0) 0px,
-      rgba(255,255,255,0.0) 7px,
-      color-mix(in srgb, var(--accent) 22%, transparent) 8px,
-      rgba(255,255,255,0.0) 10px
-    );
-  transform: translate3d(0,0,0);
-  will-change: transform, opacity;
-  mix-blend-mode: screen;
+#rankIcon{
+  position: relative;
+  will-change: transform, filter;
 }
 
-/* When finisher is active, show glitch lines */
-#award.is-rankup.is-finisher .rankBadge::after{
-  opacity: .45;
-  animation: awardGlitch 420ms steps(2,end) forwards;
+#award.is-finisher #rankIcon{
+  animation: iconGlitch 520ms steps(2,end) forwards;
 }
 
-@keyframes awardGlitch{
-  0%{ opacity:0; transform: translate3d(0,0,0); }
-  20%{ opacity:.55; transform: translate3d(-6px,0,0); }
-  45%{ opacity:.35; transform: translate3d(6px,0,0); }
-  70%{ opacity:.50; transform: translate3d(-3px,0,0); }
-  100%{ opacity:0; transform: translate3d(0,0,0); }
+@keyframes iconGlitch{
+  0%   { transform: translate3d(0,0,0) scale(1); filter: none; }
+  15%  { transform: translate3d(-2px,0,0) scale(1.01); filter: hue-rotate(10deg) saturate(1.2); }
+  35%  { transform: translate3d(2px,0,0) scale(1.01);  filter: hue-rotate(-12deg) saturate(1.2); }
+  55%  { transform: translate3d(-1px,0,0) scale(1.01); filter: contrast(1.15); }
+  75%  { transform: translate3d(1px,0,0) scale(1.01);  filter: contrast(1.10); }
+  100% { transform: translate3d(0,0,0) scale(1); filter: none; }
 }
 
-/* Badge punch + shake (transform only) */
-#award.is-rankup.is-finisher .rankBadge{
-  animation: finisherPunch 520ms cubic-bezier(.12,.95,.18,1) forwards;
+/* Vibration on badge container (subtle) */
+#award.is-finisher .rankBadge{
+  animation: finisherVibe 520ms ease forwards;
 }
 
-@keyframes finisherPunch{
+@keyframes finisherVibe{
   0%{ transform: translateY(0) scale(1); }
-  25%{ transform: translateY(-2px) scale(1.05); }
-  45%{ transform: translateY(0) scale(1.02); }
-  60%{ transform: translateX(-6px) scale(1.02); }
-  75%{ transform: translateX(6px) scale(1.02); }
-  90%{ transform: translateX(-3px) scale(1.01); }
+  20%{ transform: translateY(-2px) scale(1.03); }
+  40%{ transform: translateX(-4px) scale(1.03); }
+  60%{ transform: translateX(4px) scale(1.03); }
+  80%{ transform: translateX(-2px) scale(1.02); }
   100%{ transform: translateY(0) scale(1); }
+}
+  /* Hero hold: slightly bigger for a few seconds */
+#award.is-rankup.is-heroHold .rankBadge{
+  transform: scale(1.06) !important;
 }
   
 </style>
@@ -3408,7 +3393,7 @@ function closeOverlay(){
   if(!award) return;
 
   clearTimers();
-  award.classList.remove('is-open','is-tierup','is-rankup','is-top','is-down','is-finisher');
+  award.classList.remove('is-open','is-tierup','is-rankup','is-top','is-down','is-finisher','is-heroHold');
   award.removeAttribute('data-phase');
   award.removeAttribute('data-tier');
   award.setAttribute('aria-hidden','true');
@@ -3555,17 +3540,28 @@ function playRankUp({rankName, iconSrc, isTop=false, accentColor="#23f3ff"}){
   }, 1050));
 
   timers.push(setTimeout(()=>{ els.award.dataset.phase='reveal'; }, 1300));
-  timers.push(setTimeout(()=>{ els.award.dataset.phase='done'; }, 2150));
-  // HERO FINISHER near the end (sync with tail)
+
+timers.push(setTimeout(()=>{ 
+  els.award.dataset.phase='done'; 
+}, 2150));
+
+timers.push(setTimeout(()=>{ 
+  els.award.classList.add('is-heroHold'); 
+}, 2150));
+
+// HERO FINISHER near the end (sync with tail)
 timers.push(setTimeout(()=>{
-  // add class for CSS finisher
   els.award.classList.add('is-finisher');
-  // remove after animation
   setTimeout(()=>els.award.classList.remove('is-finisher'), 600);
 }, 2150 + (isTop ? 1700 : 1200)));
-  const hold = isTop ? 3200 : 2600;
-  timers.push(setTimeout(closeOverlay, 2150 + hold));
-}
+
+const hold = isTop ? 3200 : 2600;
+
+timers.push(setTimeout(()=>{ 
+  els.award.classList.remove('is-heroHold'); 
+}, 2150 + hold - 50));
+
+timers.push(setTimeout(closeOverlay, 2150 + hold));
 
 function playRankDown({rankName, iconSrc, accentColor="#23f3ff"}){
   const els = getAwardEls();
