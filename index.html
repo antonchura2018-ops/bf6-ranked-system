@@ -1212,6 +1212,22 @@ margin: 32px auto 20px;
       .label{ opacity:1; }
     }
 
+  .tierHUD{
+  display:flex;
+  gap:10px;
+  justify-content:center;
+  margin-top:12px;
+  opacity:.9;
+}
+.tierHUD__dot{
+  width:10px; height:10px; border-radius:999px;
+  background: rgba(255,255,255,.14);
+}
+.tierHUD__dot.is-on{
+  background: color-mix(in srgb, var(--rank-accent, #22d3ee) 65%, white);
+  box-shadow: 0 0 10px color-mix(in srgb, var(--rank-accent, #22d3ee) 35%, transparent);
+}
+
   /* =========================
    TIER INTENSITY BOOST (more visible)
    ========================= */
@@ -1420,6 +1436,12 @@ margin: 32px auto 20px;
       <h2 id="rankCardTitle">PHANTOM II</h2>
       <span class="rank-rp" id="rankCardRP">RP: 1250 / 1500</span>
       <div class="chip" id="rankCardChip">NEON ASCENSION</div>
+      
+      <div class="tierHUD" id="rankTierHUD" aria-hidden="true">
+  <span class="tierHUD__dot"></span>
+  <span class="tierHUD__dot"></span>
+  <span class="tierHUD__dot"></span>
+</div>
 
       <div class="rp-bar">
         <div class="rp-fill" id="rankCardFill" style="width: 83%;"></div>
@@ -2315,6 +2337,19 @@ function updateRankUI(matchesAll) {
   if (totalRP < MIN_RP) totalRP = MIN_RP;
 
   var rank = getRank(totalRP);
+
+  var hud = document.getElementById("rankTierHUD");
+if (hud) {
+  var dots = hud.querySelectorAll(".tierHUD__dot");
+  dots.forEach(d => d.classList.remove("is-on"));
+  if (rank.tierName === "EIDOLON") {
+    hud.style.display = "none";
+  } else {
+    hud.style.display = "flex";
+    var onCount = (rank.divIndex != null) ? (rank.divIndex + 1) : 0; // 0->1,1->2,2->3
+    for (var i=0;i<onCount && i<dots.length;i++) dots[i].classList.add("is-on");
+  }
+}
 
   // Rank card elements (IDs preferred)
   var rankTitle = document.getElementById("rankCardTitle") || document.querySelector("#rank .rank-info h2");
