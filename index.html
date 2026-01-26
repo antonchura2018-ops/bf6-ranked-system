@@ -3410,7 +3410,52 @@ function setBadge(iconSrc){
 
   if(iconSrc) badge.style.setProperty('--badge-url', `url("${iconSrc}")`);
 }
+/* =========================
+   CINEMATIC AUDIO ENGINE (MP3)
+   ========================= */
 
+const SFX = {
+  rankUpRiser: new Audio('assets/sounds/rank-up-riser.mp3'),
+  rankUpImpact: new Audio('assets/sounds/rank-up-impact.mp3'),
+  tierUp: new Audio('assets/sounds/tier-up.mp3'),
+  down: new Audio('assets/sounds/down.mp3'),
+};
+
+// preload + safe defaults
+Object.values(SFX).forEach(a=>{
+  a.preload = 'auto';
+  a.volume = 0.85;
+});
+
+// Autoplay unlock (browser policy): unlock on first user interaction
+let __audioUnlocked = false;
+function unlockAudioOnce(){
+  if (__audioUnlocked) return;
+  __audioUnlocked = true;
+
+  // try a silent play-pause to unlock
+  Object.values(SFX).forEach(a=>{
+    try{
+      a.muted = true;
+      a.play().then(()=>{
+        a.pause();
+        a.currentTime = 0;
+        a.muted = false;
+      }).catch(()=>{ a.muted = false; });
+    }catch(e){}
+  });
+}
+document.addEventListener('pointerdown', unlockAudioOnce, { once:true });
+
+function playSFX(name){
+  const a = SFX[name];
+  if(!a) return;
+  try{
+    a.currentTime = 0;
+    a.play().catch(()=>{});
+  }catch(e){}
+}
+  
 function playTierUp({rankName, iconSrc, divIndex, accentColor="#01a7ef"}){
   const els = getAwardEls();
   if(!els.award || !els.badge) return;
@@ -3429,8 +3474,8 @@ function playTierUp({rankName, iconSrc, divIndex, accentColor="#01a7ef"}){
 
   els.badge.classList.add('anim-up');
 
-  timers.push(setTimeout(()=>{ els.award.dataset.phase='impact'; sfxTier(); }, 900));
-  timers.push(setTimeout(()=>{ els.award.dataset.phase='reveal'; }, 1350)); // removed beep()
+  timers.push(setTimeout(()=>{ els.award.dataset.phase='impact'; playSFX('tierUp'); }, 900));
+  timers.push(setTimeout(()=>{ els.award.dataset.phase='reveal'; }, 1350));
   timers.push(setTimeout(()=>{ els.award.dataset.phase='done'; }, 3000));
   timers.push(setTimeout(closeOverlay, 3000 + 2000));
 }
@@ -3452,7 +3497,10 @@ function playTierDown({rankName, iconSrc, divIndex, accentColor="#01a7ef"}){
   setBadge(iconSrc);
   setTierClass(divIndex);
 
-  timers.push(setTimeout(()=>{ els.award.dataset.phase='impact'; }, 650));
+  timers.push(setTimeout(()=>{ 
+  els.award.dataset.phase='impact'; 
+  playSFX('down');
+}, 650));
   timers.push(setTimeout(()=>{ els.award.dataset.phase='done'; }, 1500));
   timers.push(setTimeout(()=>{ els.award.classList.remove('is-down'); closeOverlay(); }, 1500 + 1400));
 }
@@ -3474,10 +3522,17 @@ function playRankUp({rankName, iconSrc, isTop=false, accentColor="#23f3ff"}){
   setTierClass(0);
 
   els.badge.classList.add('anim-up');
-  sfxRankRiser();
 
-  timers.push(setTimeout(()=>{ els.award.dataset.phase='impact'; sfxRankImpact(); }, 1050));
-  timers.push(setTimeout(()=>{ els.award.dataset.phase='reveal'; sfxRankHero(); }, 1300));
+  // 🎧 Riser starts immediately (open phase)
+  playSFX('rankUpRiser');
+
+  timers.push(setTimeout(()=>{ 
+    els.award.dataset.phase='impact';
+    // 🎧 Big impact exactly on impact frame
+    playSFX('rankUpImpact');
+  }, 1050));
+
+  timers.push(setTimeout(()=>{ els.award.dataset.phase='reveal'; }, 1300));
   timers.push(setTimeout(()=>{ els.award.dataset.phase='done'; }, 2150));
 
   const hold = isTop ? 3200 : 2600;
@@ -3500,7 +3555,10 @@ function playRankDown({rankName, iconSrc, accentColor="#23f3ff"}){
   setBadge(iconSrc);
   setTierClass(0);
 
-  timers.push(setTimeout(()=>{ els.award.dataset.phase='impact'; }, 900));
+  timers.push(setTimeout(()=>{ 
+  els.award.dataset.phase='impact'; 
+  playSFX('down');
+}, 900));
   timers.push(setTimeout(()=>{ els.award.dataset.phase='done'; }, 2000));
   timers.push(setTimeout(()=>{ els.award.classList.remove('is-down'); closeOverlay(); }, 2000 + 1800));
 }
