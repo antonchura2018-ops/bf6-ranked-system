@@ -3583,10 +3583,15 @@ function playRankDown({rankName, iconSrc, accentColor="#23f3ff"}){
   setBadge(iconSrc);
   setTierClass(0);
 
-  timers.push(setTimeout(()=>{ 
-  els.award.dataset.phase='impact'; 
+  // Start whoosh earlier (it has a soft attack)
+timers.push(setTimeout(()=>{ 
   playSFX('down');
-}, 300));
+}, 120));
+
+// Impact visual later (keeps timing)
+timers.push(setTimeout(()=>{ 
+  els.award.dataset.phase='impact';
+}, 650));
   timers.push(setTimeout(()=>{ els.award.dataset.phase='done'; }, 2000));
   timers.push(setTimeout(()=>{ els.award.classList.remove('is-down'); closeOverlay(); }, 2000 + 1800));
 }
