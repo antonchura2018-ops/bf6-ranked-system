@@ -1427,10 +1427,7 @@ margin: 32px auto 20px;
   80%{ transform: translateX(-2px) scale(1.02); }
   100%{ transform: translateY(0) scale(1); }
 }
-  /* Hero hold: slightly bigger for a few seconds */
-#award.is-rankup.is-heroHold .rankBadge{
-  transform: scale(1.06) !important;
-}
+  
   
 </style>
   <!-- ===== END OF CSS ===== -->
@@ -3393,7 +3390,7 @@ function closeOverlay(){
   if(!award) return;
 
   clearTimers();
-  award.classList.remove('is-open','is-tierup','is-rankup','is-top','is-down','is-finisher','is-heroHold');
+  award.classList.remove('is-open','is-tierup','is-rankup','is-top','is-down','is-finisher');
   award.removeAttribute('data-phase');
   award.removeAttribute('data-tier');
   award.setAttribute('aria-hidden','true');
@@ -3545,9 +3542,6 @@ timers.push(setTimeout(()=>{
   els.award.dataset.phase='done'; 
 }, 2150));
 
-timers.push(setTimeout(()=>{ 
-  els.award.classList.add('is-heroHold'); 
-}, 2150));
 
 // HERO FINISHER near the end (sync with tail)
 timers.push(setTimeout(()=>{
@@ -3557,9 +3551,6 @@ timers.push(setTimeout(()=>{
 
 const hold = isTop ? 3200 : 2600;
 
-timers.push(setTimeout(()=>{ 
-  els.award.classList.remove('is-heroHold'); 
-}, 2150 + hold - 50));
 
 timers.push(setTimeout(closeOverlay, 2150 + hold));
 }
