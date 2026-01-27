@@ -3663,6 +3663,7 @@ function playTierUp({rankName, iconSrc, divIndex, accentColor="#01a7ef"}){
   if(els.labelName) els.labelName.textContent = rankName;
   if (els.apexBannerTitle) {
   els.apexBannerTitle.textContent = "DIVISION UPGRADED — STATUS CONFIRMED";
+}
 
   setBadge(iconSrc);
   setTierClass(divIndex);
@@ -3691,6 +3692,7 @@ function playTierDown({rankName, iconSrc, divIndex, accentColor="#01a7ef"}){
   if(els.labelName) els.labelName.textContent = rankName;
   if (els.apexBannerTitle) {
   els.apexBannerTitle.textContent = "DIVISION DECREASED — SYNCING";
+}
 
   setBadge(iconSrc);
   setTierClass(divIndex);
@@ -3726,6 +3728,7 @@ if(els.labelName)
 
 if (els.apexBannerTitle)
   els.apexBannerTitle.textContent = "CONGRATULATIONS — NEW RANK UNLOCKED";
+}
 
   setBadge(iconSrc);
   setTierClass(0);
@@ -3775,6 +3778,7 @@ function playRankDown({rankName, iconSrc, accentColor="#23f3ff"}){
   if(els.labelName) els.labelName.textContent = rankName;
   if (els.apexBannerTitle) {
   els.apexBannerTitle.textContent = "RANK DECREASED — SYNCING STATUS";
+}
 
   setBadge(iconSrc);
   setTierClass(0);
