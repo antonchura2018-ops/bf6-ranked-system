@@ -1511,6 +1511,94 @@ margin: 32px auto 20px;
   0%{ opacity:0; transform: translateY(14px); }
   100%{ opacity:1; transform: translateY(0); }
 }
+  /* =========================================================
+   APEX-STYLE TOP BANNER (FPS-safe)
+   ========================================================= */
+
+.apexBanner{
+  position:absolute;
+  top:18px;
+  left:50%;
+  transform: translateX(-50%);
+  width: min(720px, 92vw);
+  pointer-events:none;
+  opacity:0;
+  z-index: 80;
+}
+
+.apexBanner__plate{
+  position:relative;
+  padding: 14px 22px;
+  border-radius: 14px;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.04)),
+    linear-gradient(90deg, rgba(255,255,255,.06), rgba(0,0,0,0) 45%, rgba(255,255,255,.06));
+  border: 1px solid rgba(255,255,255,.14);
+  box-shadow: 0 22px 60px rgba(0,0,0,.45);
+  overflow:hidden;
+}
+
+/* angled “wings” like Apex */
+.apexBanner__plate::before,
+.apexBanner__plate::after{
+  content:"";
+  position:absolute;
+  top:50%;
+  width: 80px;
+  height: 56px;
+  transform: translateY(-50%) skewX(-22deg);
+  background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.03));
+  border: 1px solid rgba(255,255,255,.10);
+  opacity:.85;
+}
+.apexBanner__plate::before{ left:-34px; }
+.apexBanner__plate::after{ right:-34px; transform: translateY(-50%) skewX(22deg); }
+
+/* shimmer line */
+.apexBanner__plate .shimmerLine{
+  position:absolute;
+  inset:-40% -80%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.25), transparent);
+  transform: rotate(12deg) translateX(-40%);
+  opacity:.0;
+  pointer-events:none;
+}
+
+/* title text */
+.apexBanner__title{
+  text-align:center;
+  font-weight: 900;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  font-size: clamp(14px, 2.2vw, 20px);
+  color: rgba(234,242,255,.92);
+  text-shadow: 0 0 14px color-mix(in srgb, var(--accent) 18%, transparent);
+}
+
+/* show banner from OPEN and keep until DONE */
+#award.is-open .apexBanner{
+  opacity:1;
+}
+
+/* entrance animation */
+#award[data-phase="open"] .apexBanner{
+  animation: apexBannerIn 520ms cubic-bezier(.2,.9,.2,1) forwards;
+}
+
+@keyframes apexBannerIn{
+  0%{ opacity:0; transform: translateX(-50%) translateY(-16px) scale(.98); }
+  100%{ opacity:1; transform: translateX(-50%) translateY(0) scale(1); }
+}
+
+/* impact pulse (subtle) */
+#award[data-phase="impact"] .apexBanner__plate{
+  animation: apexBannerPulse 240ms ease forwards;
+}
+@keyframes apexBannerPulse{
+  0%{ transform: scale(1); }
+  45%{ transform: scale(1.01); }
+  100%{ transform: scale(1); }
+}
   
 </style>
   <!-- ===== END OF CSS ===== -->
@@ -3426,7 +3514,8 @@ function getAwardEls(){
     subText: document.getElementById('subText'),
     rightText: document.getElementById('rightText'),
     labelTop: document.getElementById('labelTop'),
-    labelName: document.getElementById('labelName')
+    labelName: document.getElementById('labelName'),
+    apexBannerTitle: document.getElementById("apexBannerTitle"),
   };
 }
 
@@ -3572,6 +3661,8 @@ function playTierUp({rankName, iconSrc, divIndex, accentColor="#01a7ef"}){
   if(els.rightText) els.rightText.textContent = 'AUTO';
   if(els.labelTop) els.labelTop.textContent = "DIVISION UP";
   if(els.labelName) els.labelName.textContent = rankName;
+  if (els.apexBannerTitle) {
+  els.apexBannerTitle.textContent = "DIVISION UPGRADED — STATUS CONFIRMED";
 
   setBadge(iconSrc);
   setTierClass(divIndex);
@@ -3598,6 +3689,8 @@ function playTierDown({rankName, iconSrc, divIndex, accentColor="#01a7ef"}){
   if(els.rightText) els.rightText.textContent = 'AUTO';
   if(els.labelTop) els.labelTop.textContent = "DIVISION DOWN";
   if(els.labelName) els.labelName.textContent = rankName;
+  if (els.apexBannerTitle) {
+  els.apexBannerTitle.textContent = "DIVISION DECREASED — SYNCING";
 
   setBadge(iconSrc);
   setTierClass(divIndex);
@@ -3622,13 +3715,17 @@ function playRankUp({rankName, iconSrc, isTop=false, accentColor="#23f3ff"}){
 
   if(els.rightText) els.rightText.textContent = 'AUTO';
 // TOP message (Apex Mobile vibe)
-if(els.subText) els.subText.textContent = isTop
-  ? "TOP RANK ACHIEVED — WELCOME TO EIDOLON"
-  : "CONGRATULATIONS — NEW RANK UNLOCKED";
+if(els.subText)
+  els.subText.textContent = 'Promotion confirmed • Award unlocked.';
 
-// Bottom label
-if(els.labelTop) els.labelTop.textContent = "NEW RANK";
-if(els.labelName) els.labelName.textContent = rankName;
+if(els.labelTop)
+  els.labelTop.textContent = 'NEW RANK';
+
+if(els.labelName)
+  els.labelName.textContent = rankName;
+
+if (els.apexBannerTitle)
+  els.apexBannerTitle.textContent = "CONGRATULATIONS — NEW RANK UNLOCKED";
 
   setBadge(iconSrc);
   setTierClass(0);
@@ -3676,6 +3773,8 @@ function playRankDown({rankName, iconSrc, accentColor="#23f3ff"}){
   if(els.rightText) els.rightText.textContent = 'AUTO';
   if(els.labelTop) els.labelTop.textContent = "RANK DOWN";
   if(els.labelName) els.labelName.textContent = rankName;
+  if (els.apexBannerTitle) {
+  els.apexBannerTitle.textContent = "RANK DECREASED — SYNCING STATUS";
 
   setBadge(iconSrc);
   setTierClass(0);
@@ -3754,6 +3853,12 @@ renderHistoryFromStorage();
 <!-- ===== Award Overlay (Apex-style) ===== -->
 <div id="award" aria-hidden="true">
   <div class="veil"></div>
+  <!-- Apex-style top banner -->
+  <div class="apexBanner" id="apexBanner" aria-hidden="true">
+    <div class="apexBanner__plate">
+      <div class="apexBanner__title" id="apexBannerTitle">CONGRATULATIONS — NEW RANK UNLOCKED</div>
+    </div>
+  </div>
 
   <div class="hud">
     <div class="left">
