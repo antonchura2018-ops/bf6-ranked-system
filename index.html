@@ -3460,6 +3460,11 @@ function playSFX(name){
     a.play().catch(()=>{});
   }catch(e){}
 }
+  function stopSFX(name){
+  const a = SFX[name];
+  if(!a) return;
+  try { a.pause(); a.currentTime = 0; } catch(e){}
+}
   
 function playTierUp({rankName, iconSrc, divIndex, accentColor="#01a7ef"}){
   const els = getAwardEls();
@@ -3532,8 +3537,10 @@ function playRankUp({rankName, iconSrc, isTop=false, accentColor="#23f3ff"}){
   playSFX('rankUpRiser');
 
  timers.push(setTimeout(()=>{ 
-  els.award.dataset.phase='impact';
+  els.award.dataset.phase = 'impact';
+
   playSFX('rankUpImpact');
+  setTimeout(()=>stopSFX('rankUpImpact'), 420); // підрізаємо хвіст
 
   // glitch exactly on impact
   els.award.classList.add('is-finisher');
@@ -3548,11 +3555,6 @@ timers.push(setTimeout(()=>{
 }, 2150));
 
 
-// HERO FINISHER near the end (sync with tail)
-timers.push(setTimeout(()=>{
-  els.award.classList.add('is-finisher');
-  setTimeout(()=>els.award.classList.remove('is-finisher'), 600);
-}, 2150 + (isTop ? 1700 : 1200)));
 
 const hold = isTop ? 3200 : 2600;
 
