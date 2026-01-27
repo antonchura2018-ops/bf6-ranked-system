@@ -1179,13 +1179,19 @@ margin: 32px auto 20px;
       text-shadow: 0 0 16px rgba(255,255,255,.10);
     }
 
-    #award.is-tierup .label{ display:none; }
+    #award.is-tierup .label{ display:block; }
 
     #award.is-rankup[data-phase="reveal"] .label,
     #award.is-rankup[data-phase="done"] .label{
       opacity:1;
       animation: labelIn 620ms cubic-bezier(.2,.9,.2,1) forwards;
     }
+  #award.is-tierup[data-phase="reveal"] .label,
+#award.is-tierup[data-phase="done"] .label{
+  opacity:1;
+  animation: labelIn 520ms cubic-bezier(.2,.9,.2,1) forwards;
+}
+  
     @keyframes labelIn{
       from{ opacity:0; transform: translateY(8px); }
       to{ opacity:1; transform: translateY(0); }
@@ -1429,6 +1435,39 @@ margin: 32px auto 20px;
   100%{ transform: translateY(0) scale(1); }
 }
   
+  /* =========================
+   HUD MESSAGE (Apex Mobile style)
+   ========================= */
+
+/* base */
+#award .hud .sub{
+  opacity: 0;
+  transform: translateY(-6px);
+  will-change: transform, opacity;
+}
+
+/* show on reveal+done */
+#award[data-phase="reveal"] .hud .sub,
+#award[data-phase="done"] .hud .sub{
+  animation: hudMsgIn 520ms cubic-bezier(.2,.9,.2,1) forwards;
+}
+
+@keyframes hudMsgIn{
+  0%{ opacity:0; transform: translateY(-8px); }
+  60%{ opacity:1; transform: translateY(0); }
+  100%{ opacity:.92; transform: translateY(0); }
+}
+
+/* different tone for DOWN */
+#award.is-down .hud .sub{
+  color: rgba(152,162,179,.92);
+}
+
+/* optional: punchy for UP */
+#award.is-up .hud .sub{
+  color: rgba(234,242,255,.88);
+  text-shadow: 0 0 14px color-mix(in srgb, var(--accent) 18%, transparent);
+}
   
 </style>
   <!-- ===== END OF CSS ===== -->
@@ -3466,6 +3505,17 @@ function playSFX(name){
   try { a.pause(); a.currentTime = 0; } catch(e){}
 }
   
+  function formatDivisionFromLabel(toText){
+  // expects "ARCHON II" or "ARCHON I"
+  const parts = String(toText || "").trim().split(/\s+/);
+  const tier = parts[0] ? parts[0].toUpperCase() : "";
+  const div = parts[1] ? parts[1].toUpperCase() : "";
+  return div ? (tier + " " + div) : tier;
+}
+function formatTierNameFromText(toText){
+  return String(toText || "").trim().split(/\s+/)[0].toUpperCase();
+}
+  
 function playTierUp({rankName, iconSrc, divIndex, accentColor="#01a7ef"}){
   const els = getAwardEls();
   if(!els.award || !els.badge) return;
@@ -3473,9 +3523,9 @@ function playTierUp({rankName, iconSrc, divIndex, accentColor="#01a7ef"}){
   openOverlay('tierUp');
   els.award.style.setProperty('--accent', accentColor);
 
-  if(els.subText) els.subText.textContent = 'Division upgrade • Apex-style evolution.';
+  if(els.subText) els.subText.textContent = "DIVISION UPGRADED — STATUS CONFIRMED";
   if(els.rightText) els.rightText.textContent = 'AUTO';
-  if(els.labelTop) els.labelTop.textContent = 'DIVISION UP';
+  if(els.labelTop) els.labelTop.textContent = "DIVISION UP";
   if(els.labelName) els.labelName.textContent = rankName;
 
   setBadge(iconSrc);
@@ -3499,9 +3549,9 @@ function playTierDown({rankName, iconSrc, divIndex, accentColor="#01a7ef"}){
   els.award.style.setProperty('--accent', accentColor);
   els.award.dataset.tier = String(divIndex);
 
-  if(els.subText) els.subText.textContent = 'Division decreased • Syncing…';
+  if(els.subText) els.subText.textContent = "DIVISION DECREASED — SYNCING";
   if(els.rightText) els.rightText.textContent = 'AUTO';
-  if(els.labelTop) els.labelTop.textContent = 'DIVISION DOWN';
+  if(els.labelTop) els.labelTop.textContent = "DIVISION DOWN";
   if(els.labelName) els.labelName.textContent = rankName;
 
   setBadge(iconSrc);
@@ -3523,10 +3573,16 @@ function playRankUp({rankName, iconSrc, isTop=false, accentColor="#23f3ff"}){
   els.award.style.setProperty('--accent', accentColor);
   els.award.classList.toggle('is-top', !!isTop);
 
-  if(els.subText) els.subText.textContent = isTop ? 'Top rank achieved • Reward state active.' : 'Promotion confirmed • Award unlocked.';
+
   if(els.rightText) els.rightText.textContent = 'AUTO';
-  if(els.labelTop) els.labelTop.textContent = 'NEW RANK';
-  if(els.labelName) els.labelName.textContent = rankName;
+// TOP message (Apex Mobile vibe)
+if(els.subText) els.subText.textContent = isTop
+  ? "TOP RANK ACHIEVED — WELCOME TO EIDOLON"
+  : "CONGRATULATIONS — NEW RANK UNLOCKED";
+
+// Bottom label
+if(els.labelTop) els.labelTop.textContent = "NEW RANK";
+if(els.labelName) els.labelName.textContent = rankName;
 
   setBadge(iconSrc);
   setTierClass(0);
@@ -3570,9 +3626,9 @@ function playRankDown({rankName, iconSrc, accentColor="#23f3ff"}){
   els.award.classList.add('is-down');
   els.award.style.setProperty('--accent', accentColor);
 
-  if(els.subText) els.subText.textContent = 'Rank decreased • Syncing…';
+  if(els.subText) els.subText.textContent = "RANK DECREASED — SYNCING STATUS";
   if(els.rightText) els.rightText.textContent = 'AUTO';
-  if(els.labelTop) els.labelTop.textContent = 'RANK DOWN';
+  if(els.labelTop) els.labelTop.textContent = "RANK DOWN";
   if(els.labelName) els.labelName.textContent = rankName;
 
   setBadge(iconSrc);
@@ -3607,6 +3663,7 @@ function _isTopRankName(name){
 window.hideRankUp = function(){ closeOverlay(); };
 
 window.showTierUp = function(payload){
+  const fullLabel = String(payload?.toText || "").toUpperCase();
   const toText = payload?.toText || "";
   const rankKey = _rankKeyFromText(toText);
   const iconSrc = `assets/ranks/${rankKey}.webp`;
@@ -3619,8 +3676,10 @@ window.showTierUp = function(payload){
   (typeof rankTiers !== "undefined" && rankTiers.find(t => t.name === rankKey.toUpperCase())?.color) ||
   "#01a7ef";
 
-  if (isDown) playTierDown({ rankName: rankKey.toUpperCase(), iconSrc, divIndex, accentColor });
-  else playTierUp({ rankName: rankKey.toUpperCase(), iconSrc, divIndex, accentColor });
+  if (isDown)
+  playTierDown({ rankName: fullLabel, iconSrc, divIndex, accentColor });
+else
+  playTierUp({ rankName: fullLabel, iconSrc, divIndex, accentColor });
 };
 
 window.showRankUp = function(payload){
