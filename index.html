@@ -1468,6 +1468,49 @@ margin: 32px auto 20px;
   color: rgba(234,242,255,.88);
   text-shadow: 0 0 14px color-mix(in srgb, var(--accent) 18%, transparent);
 }
+  /* =========================
+   HUD TEXT (Apex Mobile style) — show earlier
+   Put at VERY END of <style>
+   ========================= */
+
+#award .hud{ z-index: 60; }
+
+/* base hidden */
+#award #subText{
+  opacity: 0;
+  transform: translateY(-8px);
+  will-change: opacity, transform;
+}
+
+/* show from OPEN and keep through DONE */
+#award[data-phase="open"] #subText,
+#award[data-phase="impact"] #subText,
+#award[data-phase="reveal"] #subText,
+#award[data-phase="done"] #subText{
+  animation: awardHudIn 520ms cubic-bezier(.2,.9,.2,1) forwards;
+}
+
+@keyframes awardHudIn{
+  0%{ opacity:0; transform: translateY(-10px); }
+  100%{ opacity:.92; transform: translateY(0); }
+}
+  /* Bottom label (rank name) */
+#award .label{
+  opacity: 0;
+  transform: translateY(10px);
+  will-change: opacity, transform;
+}
+
+/* show starting from REVEAL */
+#award[data-phase="reveal"] .label,
+#award[data-phase="done"] .label{
+  animation: awardLabelIn 620ms cubic-bezier(.2,.9,.2,1) forwards;
+}
+
+@keyframes awardLabelIn{
+  0%{ opacity:0; transform: translateY(14px); }
+  100%{ opacity:1; transform: translateY(0); }
+}
   
 </style>
   <!-- ===== END OF CSS ===== -->
