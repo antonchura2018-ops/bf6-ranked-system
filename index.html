@@ -1156,38 +1156,54 @@ margin: 32px auto 20px;
     }
 
     /* =========================================================
-       LABEL (centered in stack)
-       ========================================================= */
-   /* ===== RANK NAME under badge ===== */
-.label{
-  position: relative;          /* НЕ absolute */
-  margin-top: 32px;            /* відступ від іконки */
-  text-align: center;
-  width: 100%;
+       /* =========================================================
+   LABEL (FINAL): always visible on top, centered under badge
+   ========================================================= */
 
-  opacity: 0;                  /* з'являється по фазі */
+/* place label under badge, above ALL fx */
+#award .label{
+  position: relative;
+  margin-top: 32px;
+  width: 100%;
+  text-align: center;
+
+  opacity: 0;
   pointer-events: none;
-  z-index: 50;
+
+  /* ✅ force on top of fx layers */
+  z-index: 999;
   isolation: isolate;
 }
-  
-    .labelTop{
-      font-size:13px;
-      letter-spacing:.22em;
-      text-transform:uppercase;
-      color: rgba(234,242,255,.78);
-    }
-  
-    .labelName{
-  font-size: 56px;             /* 🔥 БІЛЬШИЙ текст */
+
+/* show ONLY at reveal/done */
+#award[data-phase="reveal"] .label,
+#award[data-phase="done"] .label{
+  opacity: 1 !important;
+  animation: labelIn 320ms cubic-bezier(.2,.9,.2,1) forwards;
+}
+
+@keyframes labelIn{
+  from{ opacity:0; transform: translate3d(0,10px,0); }
+  to  { opacity:1; transform: translate3d(0,0,0); }
+}
+
+#award .labelTop{
+  font-size: 12px;
+  letter-spacing: .28em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.60);
+}
+
+#award .labelName{
+  margin-top: 10px;
+  font-size: 56px;          /* big */
   font-weight: 900;
   letter-spacing: .22em;
   text-transform: uppercase;
 
-  color: #ffffff;              /* ✅ БІЛИЙ */
-  text-shadow: none !important;/* ❌ БЕЗ світіння */
-
-  line-height: 1.1;
+  color: #ffffff;           /* white */
+  text-shadow: none !important; /* no glow */
+  line-height: 1.05;
 }
 
     #award.is-tierup .label{ display:block; }
@@ -1584,14 +1600,6 @@ margin: 32px auto 20px;
   100%{ transform: scale(1); }
 }
   
-  /* ✅ Show bottom label for BOTH up and down */
-#award.is-up[data-phase="reveal"] .label,
-#award.is-up[data-phase="done"] .label,
-#award.is-down[data-phase="reveal"] .label,
-#award.is-down[data-phase="done"] .label{
-  opacity: 1;
-  animation: awardLabelIn 520ms cubic-bezier(.2,.9,.2,1) forwards;
-}
   /* ✅ Banner tint: guaranteed visible (even for dark ranks like outcast) */
 .apexBanner__plate{
   box-shadow:
