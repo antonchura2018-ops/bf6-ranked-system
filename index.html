@@ -1555,7 +1555,7 @@ margin: 32px auto 20px;
   0%{ transform: scale(1); }
   45%{ transform: scale(1.01); }
   100%{ transform: scale(1); }
-
+}
   
 </style>
   <!-- ===== END OF CSS ===== -->
@@ -3742,6 +3742,7 @@ timers.push(setTimeout(()=>{
   timers.push(setTimeout(()=>{ els.award.dataset.phase='reveal'; }, 420));
   timers.push(setTimeout(()=>{ els.award.dataset.phase='done'; }, 2000));
   timers.push(setTimeout(()=>{ els.award.classList.remove('is-down'); closeOverlay(); }, 2000 + 1800));
+}
 
 // ESC closes if open
 window.addEventListener('keydown', (e)=>{
