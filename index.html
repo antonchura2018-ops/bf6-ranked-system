@@ -1167,6 +1167,8 @@ margin: 32px auto 20px;
 
   opacity: 0;                  /* з'являється по фазі */
   pointer-events: none;
+  z-index: 50;
+  isolation: isolate;
 }
   
     .labelTop{
@@ -1177,7 +1179,7 @@ margin: 32px auto 20px;
     }
   
     .labelName{
-  font-size: 48px;             /* 🔥 БІЛЬШИЙ текст */
+  font-size: 56px;             /* 🔥 БІЛЬШИЙ текст */
   font-weight: 900;
   letter-spacing: .22em;
   text-transform: uppercase;
@@ -1410,28 +1412,7 @@ margin: 32px auto 20px;
   0%{ opacity:0; transform: translateY(-10px); }
   100%{ opacity:.92; transform: translateY(0); }
 }
-  /* ===== Bottom Rank Name (NO transform conflicts) ===== */
-.label{
-  position:absolute;
-  left: 50%;
-  bottom: -52px;
-  transform: translateX(-50%);
-  width: min(900px, 92vw);
-  pointer-events:none;
-  z-index: 90;
-}
-
-/* Animate inner only */
-.labelInner{
-  opacity: 0;
-  transform: translate3d(0,14px,0);
-  will-change: opacity, transform;
-}
-
-@keyframes awardLabelIn{
-  0%{ opacity:0; transform: translate3d(0,14px,0); }
-  100%{ opacity:1; transform: translate3d(0,0,0); }
-}
+  
   /* =========================================================
    TOP BANNER (Apex-style, symmetric, rank-tinted, FPS-safe)
    Requires: .shimmerLine inside .apexBanner__plate
@@ -1452,10 +1433,10 @@ margin: 32px auto 20px;
 }
 
 /* Keep banner visible after open (no re-trigger flicker) */
-#award[data-phase="open"]  .apexBanner,
-#award[data-phase="impact"].apexBanner,
-#award[data-phase="reveal"].apexBanner,
-#award[data-phase="done"]  .apexBanner,
+#award[data-phase="open"] .apexBanner,
+#award[data-phase="impact"] .apexBanner,
+#award[data-phase="reveal"] .apexBanner,
+#award[data-phase="done"] .apexBanner,
 #award[data-phase="impact"] .apexBanner,
 #award[data-phase="reveal"] .apexBanner,
 #award[data-phase="done"] .apexBanner{
@@ -1642,11 +1623,11 @@ margin: 32px auto 20px;
   text-shadow: none !important;   /* ✅ без світіння */
 }
   
-  /* ✅ Show rank name only when it should be visible */
-#award[data-phase="reveal"] .label,
+  #award[data-phase="reveal"] .label,
 #award[data-phase="done"] .label{
   opacity: 1;
   animation: labelIn 420ms cubic-bezier(.2,.9,.2,1) forwards;
+}
   
 </style>
   <!-- ===== END OF CSS ===== -->
