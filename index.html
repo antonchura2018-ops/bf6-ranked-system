@@ -1377,12 +1377,24 @@ margin: 32px auto 20px;
   will-change: opacity, transform;
 }
 
-/* show from OPEN and keep through DONE */
-#award[data-phase="open"] #subText,
+/* base hidden */
+#award #subText{
+  opacity: 0;
+  transform: translate3d(0,-8px,0);
+  will-change: opacity, transform;
+}
+
+/* animate ONCE on OPEN */
+#award[data-phase="open"] #subText{
+  animation: awardHudIn 420ms cubic-bezier(.2,.9,.2,1) forwards;
+}
+
+/* keep visible after (no restart => no flicker) */
 #award[data-phase="impact"] #subText,
 #award[data-phase="reveal"] #subText,
 #award[data-phase="done"] #subText{
-  animation: awardHudIn 520ms cubic-bezier(.2,.9,.2,1) forwards;
+  opacity: .92;
+  transform: translate3d(0,0,0);
 }
 
 @keyframes awardHudIn{
@@ -1396,10 +1408,11 @@ margin: 32px auto 20px;
   will-change: opacity, transform;
 }
 
-/* show starting from REVEAL */
+#award[data-phase="open"] .label,
+#award[data-phase="impact"] .label,
 #award[data-phase="reveal"] .label,
 #award[data-phase="done"] .label{
-  animation: awardLabelIn 620ms cubic-bezier(.2,.9,.2,1) forwards;
+  animation: awardLabelIn 420ms cubic-bezier(.2,.9,.2,1) forwards;
 }
 
 @keyframes awardLabelIn{
@@ -1407,17 +1420,16 @@ margin: 32px auto 20px;
   100%{ opacity:1; transform: translateY(0); }
 }
   /* =========================================================
-   APEX-STYLE TOP BANNER (FPS-safe)
+   TOP BANNER (Apex screenshot style)
    ========================================================= */
-
 .apexBanner{
   position:absolute;
-  top:18px;
+  top:16px;
   left:50%;
-  transform: translate3d(-50%,-16px,0);
-  width: min(720px, 92vw);
-  pointer-events:none;
+  width: min(860px, 94vw);
+  transform: translate3d(-50%,-14px,0);
   opacity:0;
+  pointer-events:none;
   z-index: 80;
   contain: layout paint style;
   will-change: transform, opacity;
@@ -1425,79 +1437,82 @@ margin: 32px auto 20px;
 
 .apexBanner__plate{
   position:relative;
-  padding: 14px 22px;
-  border-radius: 14px;
-  background:
-    linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.04)),
-    linear-gradient(90deg, rgba(255,255,255,.06), rgba(0,0,0,0) 45%, rgba(255,255,255,.06));
-  border: 1px solid rgba(255,255,255,.14);
-  box-shadow: 0 22px 60px rgba(0,0,0,.45);
+  height: 46px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
   overflow:hidden;
+
+  /* flat metal */
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.22), rgba(255,255,255,.08)),
+    linear-gradient(90deg, rgba(255,255,255,.10), rgba(0,0,0,0) 40%, rgba(255,255,255,.10));
+  border: 1px solid rgba(255,255,255,.16);
+  box-shadow: 0 18px 46px rgba(0,0,0,.35);
+
+  /* Apex-like cut ends */
+  clip-path: polygon(56px 0%, calc(100% - 56px) 0%, 100% 50%, calc(100% - 56px) 100%, 56px 100%, 0% 50%);
+
   will-change: transform;
   transform: translate3d(0,0,0);
 }
 
-/* angled “wings” like Apex */
-.apexBanner__plate::before,
+/* left+right inner trims */
+.apexBanner__plate::before{
+  content:"";
+  position:absolute;
+  inset: 7px 70px;
+  border-top: 1px solid rgba(255,255,255,.18);
+  border-bottom: 1px solid rgba(0,0,0,.20);
+  opacity:.55;
+}
+
+/* right slashes (like screenshot) */
 .apexBanner__plate::after{
   content:"";
   position:absolute;
-  top:50%;
-  width: 80px;
-  height: 56px;
-  transform: translateY(-50%) skewX(-22deg);
-  background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.03));
-  border: 1px solid rgba(255,255,255,.10);
-  opacity:.85;
+  right: 18px;
+  top: 50%;
+  width: 74px;
+  height: 18px;
+  transform: translateY(-50%);
+  background:
+    linear-gradient(135deg, rgba(255,255,255,.38) 0 0) left/18px 100% no-repeat,
+    linear-gradient(135deg, rgba(255,255,255,.22) 0 0) center/18px 100% no-repeat,
+    linear-gradient(135deg, rgba(255,255,255,.14) 0 0) right/18px 100% no-repeat;
+  opacity:.65;
 }
-.apexBanner__plate::before{ left:-34px; }
-.apexBanner__plate::after{ right:-34px; transform: translateY(-50%) skewX(22deg); }
 
-/* shimmer line */
+/* shimmer line (your HTML MUST contain <div class="shimmerLine"> ) */
 .apexBanner__plate .shimmerLine{
   position:absolute;
-  inset:-40% -80%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,.25), transparent);
-  transform: translate3d(-45%,0,0) rotate(12deg);
+  inset:-60% -80%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.32), transparent);
+  transform: translate3d(-55%,0,0) skewX(-18deg);
   opacity:0;
   pointer-events:none;
   will-change: transform, opacity;
 }
 
-#award[data-phase="impact"] .apexBanner__plate .shimmerLine{
-  opacity: .9;
-  transform: translate3d(55%,0,0) rotate(12deg);
-  transition: transform 420ms ease, opacity 160ms ease;
-}
-
 .apexBanner__title{
   text-align:center;
   font-weight: 900;
-  letter-spacing: .08em;
+  letter-spacing: .06em;
   text-transform: uppercase;
-  font-size: clamp(14px, 2.2vw, 20px);
-  color: rgba(234,242,255,.92);
-  text-shadow: 0 0 14px color-mix(in srgb, var(--accent) 18%, transparent);
+  font-size: 15px;
+  color: rgba(245,248,255,.92);
+  text-shadow: 0 0 12px rgba(255,255,255,.10);
 
-  /* ✅ ADD */
+  /* start hidden, but reveal EARLY */
   opacity: 0;
-  transform: translate3d(0,8px,0);
+  transform: translate3d(0,6px,0);
   will-change: transform, opacity;
 }
-  
-#award[data-phase="reveal"] .apexBanner__title,
-#award[data-phase="done"] .apexBanner__title{
-  opacity: 1;
-  transform: translate3d(0,0,0);
-  transition: transform 220ms cubic-bezier(.2,.9,.2,1), opacity 180ms ease;
-}
-#award[data-phase="open"] .apexBanner{
-  opacity:1;
-  transform: translate3d(-50%,0,0);
-  transition: transform 240ms cubic-bezier(.2,.9,.2,1), opacity 160ms ease;
-}
 
-/* ✅ keep visible after open (impact/reveal/done) */
+/* ===== phases ===== */
+
+/* show banner on open and keep visible after */
+#award[data-phase="open"] .apexBanner,
 #award[data-phase="impact"] .apexBanner,
 #award[data-phase="reveal"] .apexBanner,
 #award[data-phase="done"] .apexBanner{
@@ -1505,10 +1520,37 @@ margin: 32px auto 20px;
   transform: translate3d(-50%,0,0);
 }
 
-/* impact pulse (subtle) */
+/* entrance only once (open) */
+#award[data-phase="open"] .apexBanner{
+  transition: transform 220ms cubic-bezier(.2,.9,.2,1), opacity 160ms ease;
+}
+
+/* ✅ text appears EARLY (open), not halfway through */
+#award[data-phase="open"] .apexBanner__title{
+  opacity: 1;
+  transform: translate3d(0,0,0);
+  transition: transform 180ms cubic-bezier(.2,.9,.2,1), opacity 140ms ease;
+  transition-delay: 120ms; /* tiny delay like Apex */
+}
+
+/* still visible in reveal/done (no restart) */
+#award[data-phase="impact"] .apexBanner__title,
+#award[data-phase="reveal"] .apexBanner__title,
+#award[data-phase="done"] .apexBanner__title{
+  opacity: 1;
+  transform: translate3d(0,0,0);
+}
+
+/* impact: pulse + shimmer wipe */
 #award[data-phase="impact"] .apexBanner__plate{
   animation: apexBannerPulse 240ms ease forwards;
 }
+#award[data-phase="impact"] .apexBanner__plate .shimmerLine{
+  opacity: .9;
+  transform: translate3d(65%,0,0) skewX(-18deg);
+  transition: transform 420ms ease, opacity 160ms ease;
+}
+
 @keyframes apexBannerPulse{
   0%{ transform: scale(1); }
   45%{ transform: scale(1.01); }
@@ -3661,7 +3703,7 @@ function playRankUp({rankName, iconSrc, isTop=false, accentColor="#23f3ff"}){
 
   }, 1050));
 
-  timers.push(setTimeout(()=>{ els.award.dataset.phase='reveal'; }, 1300));
+  timers.push(setTimeout(()=>{ els.award.dataset.phase='reveal'; }, 1120));
   timers.push(setTimeout(()=>{ els.award.dataset.phase='done'; }, 2150));
 
   const hold = isTop ? 3200 : 2600;
@@ -3677,12 +3719,11 @@ function playRankDown({rankName, iconSrc, accentColor="#23f3ff"}){
   els.award.classList.add('is-down');
   els.award.style.setProperty('--accent', accentColor);
 
-  if(els.subText) els.subText.textContent = "RANK DECREASED — SYNCING STATUS";
+  if(els.subText) els.subText.textContent = "RANK DECREASED — UPDATING RECORD";
   if(els.rightText) els.rightText.textContent = 'AUTO';
   if(els.labelTop) els.labelTop.textContent = "RANK DOWN";
   if(els.labelName) els.labelName.textContent = rankName;
-  if (els.apexBannerTitle) {
-  els.apexBannerTitle.textContent = "RANK DECREASED — SYNCING STATUS";
+  if (els.apexBannerTitle) els.apexBannerTitle.textContent = "RANK DECREASED";
 }
 
   setBadge(iconSrc);
