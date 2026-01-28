@@ -1158,17 +1158,19 @@ margin: 32px auto 20px;
     /* =========================================================
        LABEL (centered in stack)
        ========================================================= */
-    .stack{
-  position:relative;
-}
-
+    /* ===== LABEL under badge (always in flow) ===== */
 .label{
-  position:absolute;
-  left: 50%;
-  bottom: -52px;          /* підрегулюй: -40..-80 */
-  transform: translateX(-50%);
+  position: relative;          /* ✅ НЕ absolute */
+  left: auto;
+  bottom: auto;
+  transform: none;             /* ✅ прибрали translateX */
   width: min(900px, 92vw);
+  text-align: center;
+  opacity: 0;                  /* hidden until reveal */
+  margin-top: 10px;            /* трохи відступу під іконкою */
+  pointer-events: none;
 }
+  
     .labelTop{
       font-size:13px;
       letter-spacing:.22em;
@@ -1203,7 +1205,13 @@ margin: 32px auto 20px;
       to{ opacity:1; transform: translateY(0); }
     }
   
-
+/* ✅ Show label for ANY mode (rank up / tier up / down) */
+#award[data-phase="reveal"] .label,
+#award[data-phase="done"] .label{
+  opacity: 1;
+  animation: labelIn 420ms cubic-bezier(.2,.9,.2,1) forwards;
+}
+  
     /* Reduced motion */
     @media (prefers-reduced-motion: reduce){
       #award[data-phase="impact"] .impactFlash,
@@ -1419,12 +1427,6 @@ margin: 32px auto 20px;
   will-change: opacity, transform;
 }
 
-/* Show from REVEAL (and keep in DONE) */
-#award[data-phase="reveal"] .labelInner,
-#award[data-phase="done"] .labelInner{
-  animation: awardLabelIn 420ms cubic-bezier(.2,.9,.2,1) forwards;
-}
-
 @keyframes awardLabelIn{
   0%{ opacity:0; transform: translate3d(0,14px,0); }
   100%{ opacity:1; transform: translate3d(0,0,0); }
@@ -1618,11 +1620,25 @@ margin: 32px auto 20px;
     inset 0 -1px rgba(0,0,0,.18) !important;
   border-color: rgba(255,255,255,.16) !important;
 }
+  /* ✅ Plate tinted by rank color */
+.apexBanner__plate{
+  background:
+    linear-gradient(180deg,
+      color-mix(in srgb, var(--accent) 22%, rgba(255,255,255,.18)),
+      color-mix(in srgb, var(--accent) 10%, rgba(0,0,0,.10))
+    );
+  border: 1px solid var(--accent);
+  box-shadow:
+    0 18px 46px rgba(0,0,0,.35),
+    0 0 0 2px var(--accent),
+    0 0 22px var(--accent),
+    inset 0 1px rgba(255,255,255,.14),
+    inset 0 -1px rgba(0,0,0,.18);
+}
 
 .apexBanner__title{
-  text-shadow:
-    0 0 14px var(--accent),
-    0 0 10px rgba(255,255,255,.10) !important;
+  color: #ffffff;
+  text-shadow: none !important;   /* ✅ без світіння */
 }
   
 </style>
