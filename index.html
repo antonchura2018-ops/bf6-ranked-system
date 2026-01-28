@@ -1401,23 +1401,33 @@ margin: 32px auto 20px;
   0%{ opacity:0; transform: translateY(-10px); }
   100%{ opacity:.92; transform: translateY(0); }
 }
-  /* Bottom label (rank name) */
-#award .label{
+  /* ===== Bottom Rank Name (NO transform conflicts) ===== */
+.label{
+  position:absolute;
+  left: 50%;
+  bottom: -52px;
+  transform: translateX(-50%);
+  width: min(900px, 92vw);
+  pointer-events:none;
+  z-index: 90;
+}
+
+/* Animate inner only */
+.labelInner{
   opacity: 0;
-  transform: translateY(10px);
+  transform: translate3d(0,14px,0);
   will-change: opacity, transform;
 }
 
-#award[data-phase="open"] .label,
-#award[data-phase="impact"] .label,
-#award[data-phase="reveal"] .label,
-#award[data-phase="done"] .label{
+/* Show from REVEAL (and keep in DONE) */
+#award[data-phase="reveal"] .labelInner,
+#award[data-phase="done"] .labelInner{
   animation: awardLabelIn 420ms cubic-bezier(.2,.9,.2,1) forwards;
 }
 
 @keyframes awardLabelIn{
-  0%{ opacity:0; transform: translateY(14px); }
-  100%{ opacity:1; transform: translateY(0); }
+  0%{ opacity:0; transform: translate3d(0,14px,0); }
+  100%{ opacity:1; transform: translate3d(0,0,0); }
 }
   /* =========================================================
    TOP BANNER (Apex-style, symmetric, rank-tinted, FPS-safe)
@@ -1598,14 +1608,21 @@ margin: 32px auto 20px;
   opacity: 1;
   animation: awardLabelIn 520ms cubic-bezier(.2,.9,.2,1) forwards;
 }
-  /* ✅ make tint visible even for very dark accents */
+  /* ✅ Banner tint: guaranteed visible (even for dark ranks like outcast) */
 .apexBanner__plate{
-  border: 1px solid color-mix(in srgb, var(--accent) 55%, rgba(255,255,255,.18));
   box-shadow:
     0 18px 46px rgba(0,0,0,.35),
-    0 0 28px color-mix(in srgb, var(--accent) 28%, rgba(255,255,255,.10)),
+    0 0 0 2px var(--accent),
+    0 0 26px var(--accent),
     inset 0 1px rgba(255,255,255,.14),
-    inset 0 -1px rgba(0,0,0,.18);
+    inset 0 -1px rgba(0,0,0,.18) !important;
+  border-color: rgba(255,255,255,.16) !important;
+}
+
+.apexBanner__title{
+  text-shadow:
+    0 0 14px var(--accent),
+    0 0 10px rgba(255,255,255,.10) !important;
 }
   
 </style>
@@ -3541,7 +3558,7 @@ const ACCENT_BY_RANK = {
   harbinger:"#a6b1b9",
   marauder:"#fef525",
   thrall:"#60eb89",
-  outcast:"#0f0f13",
+  outcast:"#2b2f3a",
 };
 
 // Tiny SFX (WebAudio)
@@ -3786,10 +3803,12 @@ function playRankDown({rankName, iconSrc, accentColor="#23f3ff"}) {
 
   // Impact visual later (keeps timing)
   timers.push(setTimeout(() => { 
-    els.award.dataset.phase = 'impact';
-  }, 650));
+  els.award.dataset.phase = 'reveal';
+}, 420));
 
-  timers.push(setTimeout(() => { els.award.dataset.phase='reveal'; }, 420));
+timers.push(setTimeout(() => { 
+  els.award.dataset.phase = 'impact';
+}, 650));
   timers.push(setTimeout(() => { els.award.dataset.phase='done'; }, 2000));
   timers.push(setTimeout(() => {
     els.award.classList.remove('is-down');
@@ -3896,6 +3915,7 @@ renderHistoryFromStorage();
       </div>
 
       <div class="label" aria-hidden="true">
+        <div class="labelInner">
         <div class="labelTop" id="labelTop">NEW RANK</div>
         <div class="labelName" id="labelName">EIDOLON</div>
       </div>
