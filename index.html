@@ -1599,100 +1599,6 @@ margin: 32px auto 20px;
   45%{ transform: scale(1.01); }
   100%{ transform: scale(1); }
 }
-  /* ===== Apex Top Banner (matches your HTML) ===== */
-#apexBanner{
-  position: absolute;
-  left: 50%;
-  top: 18px;
-  transform: translate3d(-50%,-14px,0);
-  opacity: 0;
-  pointer-events: none;
-  z-index: 60;
-  contain: layout paint style;
-  will-change: transform, opacity;
-}
-
-/* plate: тонка “скляна” плашка як в Apex */
-#apexBanner .apexBanner__plate{
-  position: relative;
-  padding: 8px 16px;
-  background: rgba(0,0,0,0.35);
-  border: 1px solid rgba(255,255,255,0.16);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-
-  /* angled ends */
-  clip-path: polygon(12px 0%, calc(100% - 12px) 0%, 100% 50%, calc(100% - 12px) 100%, 12px 100%, 0% 50%);
-
-  transform: translate3d(0,-10px,0) scale(0.94);
-  opacity: 0;
-  filter: blur(10px);
-  will-change: transform, opacity, filter;
-}
-
-/* title: з’являється у reveal */
-#apexBannerTitle{
-  font-weight: 700;
-  letter-spacing: .08em;
-  text-transform: uppercase;
-  font-size: 11px;
-  line-height: 1;
-  opacity: 0;
-  transform: translate3d(0,6px,0);
-  will-change: transform, opacity;
-}
-
-/* shine wipe (саме на impact) */
-#apexBanner .apexBanner__plate::after{
-  content:"";
-  position:absolute;
-  inset:-40% -60%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.65), transparent);
-  transform: translate3d(-60%,0,0) skewX(-18deg);
-  opacity: 0;
-  will-change: transform, opacity;
-}
-
-/* ===== PHASES ===== */
-
-/* OPEN: плашка заходить зверху, blur зникає */
-#award[data-phase="open"] #apexBanner{
-  opacity: 1;
-  transform: translate3d(-50%,0,0);
-  transition: transform 240ms cubic-bezier(.2,.9,.2,1), opacity 160ms ease;
-}
-#award[data-phase="open"] #apexBanner .apexBanner__plate{
-  opacity: 1;
-  filter: blur(0px);
-  transform: translate3d(0,0,0) scale(1);
-  transition: transform 240ms cubic-bezier(.2,.9,.2,1),
-              opacity 200ms ease,
-              filter 180ms ease;
-}
-
-/* REVEAL: текст “додається” */
-#award[data-phase="reveal"] #apexBannerTitle{
-  opacity: 1;
-  transform: translate3d(0,0,0);
-  transition: transform 220ms cubic-bezier(.2,.9,.2,1), opacity 180ms ease;
-}
-
-/* IMPACT: micro-jolt + shine wipe */
-#award[data-phase="impact"] #apexBanner .apexBanner__plate{
-  transform: translate3d(0,0,0) scale(1.02);
-  transition: transform 110ms ease;
-}
-#award[data-phase="impact"] #apexBanner .apexBanner__plate::after{
-  opacity: .9;
-  transform: translate3d(72%,0,0) skewX(-18deg);
-  transition: transform 420ms ease, opacity 160ms ease;
-}
-
-/* DONE: згасання */
-#award[data-phase="done"] #apexBanner{
-  opacity: 0;
-  transition: opacity 180ms ease;
-}
   
 </style>
   <!-- ===== END OF CSS ===== -->
@@ -3804,7 +3710,6 @@ function playRankUp({rankName, iconSrc, isTop=false, accentColor="#23f3ff"}){
   if(!els.award || !els.badge) return;
 
   openOverlay('rankUp');
-  els.award.dataset.phase = 'open';
   els.award.classList.remove('is-up','is-down');
   els.award.classList.add('is-up');
 
@@ -3852,7 +3757,6 @@ function playRankDown({rankName, iconSrc, accentColor="#23f3ff"}){
   if(!els.award || !els.badge) return;
 
   openOverlay('rankUp');
-  els.award.dataset.phase = 'open';
   els.award.classList.add('is-down');
   els.award.style.setProperty('--accent', accentColor);
 
@@ -3872,17 +3776,13 @@ timers.push(setTimeout(()=>{
   playSFX('down');
 }, 120));
 
-timers.push(setTimeout(()=>{ 
-  els.award.dataset.phase='reveal';  // ✅ ADD
-}, 420));
-
+// Impact visual later (keeps timing)
 timers.push(setTimeout(()=>{ 
   els.award.dataset.phase='impact';
 }, 650));
-
-timers.push(setTimeout(()=>{ 
-  els.award.dataset.phase='done';
-}, 2000));
+  
+  timers.push(setTimeout(()=>{ els.award.dataset.phase='done'; }, 2000));
+  timers.push(setTimeout(()=>{ els.award.classList.remove('is-down'); closeOverlay(); }, 2000 + 1800));
 }
 
 // ESC closes if open
