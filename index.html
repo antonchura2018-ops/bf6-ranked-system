@@ -1158,16 +1158,14 @@ margin: 32px auto 20px;
     /* =========================================================
        LABEL (centered in stack)
        ========================================================= */
-    /* ===== LABEL under badge (always in flow) ===== */
+   /* ===== RANK NAME under badge ===== */
 .label{
-  position: relative;          /* ✅ НЕ absolute */
-  left: auto;
-  bottom: auto;
-  transform: none;             /* ✅ прибрали translateX */
-  width: min(900px, 92vw);
+  position: relative;          /* НЕ absolute */
+  margin-top: 32px;            /* відступ від іконки */
   text-align: center;
-  opacity: 0;                  /* hidden until reveal */
-  margin-top: 10px;            /* трохи відступу під іконкою */
+  width: 100%;
+
+  opacity: 0;                  /* з'являється по фазі */
   pointer-events: none;
 }
   
@@ -1177,15 +1175,18 @@ margin: 32px auto 20px;
       text-transform:uppercase;
       color: rgba(234,242,255,.78);
     }
+  
     .labelName{
-      margin-top:8px;
-      font-size:34px;
-      font-weight:900;
-      letter-spacing:.20em;
-      text-transform:uppercase;
-      color: rgba(234,242,255,.92);
-      text-shadow: 0 0 16px rgba(255,255,255,.10);
-    }
+  font-size: 48px;             /* 🔥 БІЛЬШИЙ текст */
+  font-weight: 900;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+
+  color: #ffffff;              /* ✅ БІЛИЙ */
+  text-shadow: none !important;/* ❌ БЕЗ світіння */
+
+  line-height: 1.1;
+}
 
     #award.is-tierup .label{ display:block; }
 
@@ -1640,6 +1641,12 @@ margin: 32px auto 20px;
   color: #ffffff;
   text-shadow: none !important;   /* ✅ без світіння */
 }
+  
+  /* ✅ Show rank name only when it should be visible */
+#award[data-phase="reveal"] .label,
+#award[data-phase="done"] .label{
+  opacity: 1;
+  animation: labelIn 420ms cubic-bezier(.2,.9,.2,1) forwards;
   
 </style>
   <!-- ===== END OF CSS ===== -->
