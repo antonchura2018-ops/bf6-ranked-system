@@ -1155,9 +1155,8 @@ margin: 32px auto 20px;
       100%{ transform: translateY(0) scale(1); }
     }
 
-    /* =========================================================
-       /* =========================================================
-   LABEL (FINAL): always visible on top, centered under badge
+   /* =========================================================
+   LABEL (FINAL): always visible under badge
    ========================================================= */
 
 /* place label under badge, above ALL fx */
@@ -1682,6 +1681,58 @@ margin: 32px auto 20px;
   visibility: visible !important;
   position: relative !important;
   z-index: 2147483646 !important;
+}
+  /* =========================
+   FINAL RANK LABEL (Apex-style)
+   ========================= */
+
+#award .label{
+  position: absolute;
+  top: calc(50% + 380px); /* ⬅️ під іконкою */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  text-align: center;
+
+  pointer-events: none;
+  z-index: 100;
+  opacity: 0;
+}
+
+/* show on reveal / done */
+#award[data-phase="reveal"] .label,
+#award[data-phase="done"] .label{
+  opacity: 1;
+  animation: labelRise 420ms cubic-bezier(.16,.9,.2,1) forwards;
+}
+
+@keyframes labelRise{
+  from{
+    opacity: 0;
+    transform: translateX(-50%) translateY(14px) scale(.96);
+  }
+  to{
+    opacity: 1;
+    transform: translateX(-50%) translateY(0) scale(1);
+  }
+}
+
+#labelTop{
+  font-size: 12px;
+  letter-spacing: .28em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.55);
+  margin-bottom: 10px;
+}
+
+#labelName{
+  font-size: 56px;
+  font-weight: 900;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: #ffffff;
+  line-height: 1.05;
+  text-shadow: none;
 }
   
 </style>
