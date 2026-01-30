@@ -1636,6 +1636,38 @@ margin: 32px auto 20px;
   opacity: 1;
   animation: labelIn 420ms cubic-bezier(.2,.9,.2,1) forwards;
 }
+  /* =========================================================
+   DEBUG FORCE LABEL (put at VERY END)
+   If you see THRALL after this → CSS layering was the issue
+   ========================================================= */
+#award.is-open .label{
+  position: relative !important;
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+
+  z-index: 99999 !important;
+  isolation: isolate !important;
+
+  margin-top: 32px !important;
+  width: 100% !important;
+  text-align: center !important;
+  pointer-events: none !important;
+}
+
+#award.is-open #labelName{
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+
+  font-size: 56px !important;
+  font-weight: 900 !important;
+  letter-spacing: .22em !important;
+  text-transform: uppercase !important;
+
+  color: #fff !important;
+  text-shadow: none !important;
+}
   
 </style>
   <!-- ===== END OF CSS ===== -->
