@@ -1183,11 +1183,6 @@ margin: 32px auto 20px;
   animation: labelIn 320ms cubic-bezier(.2,.9,.2,1) forwards;
 }
 
-@keyframes labelIn{
-  from{ opacity:0; transform: translate3d(0,10px,0); }
-  to  { opacity:1; transform: translate3d(0,0,0); }
-}
-
 #award .labelTop{
   font-size: 12px;
   letter-spacing: .28em;
@@ -1648,186 +1643,51 @@ margin: 32px auto 20px;
   opacity: 1;
   animation: labelIn 420ms cubic-bezier(.2,.9,.2,1) forwards;
 }
-  /* =========================================================
-   ULTRA FORCE: show rank name (ID-based, unbeatable)
-   Put at VERY END of <style>
-   ========================================================= */
-
-#award.is-open #labelName{
-  display: block !important;
-  opacity: 1 !important;
-  visibility: visible !important;
-
-  position: relative !important;
-  left: auto !important;
-  top: auto !important;
-  transform: none !important;
-
-  z-index: 2147483647 !important;
-  text-align: center !important;
-
-  font-size: 56px !important;
-  font-weight: 900 !important;
-  letter-spacing: .22em !important;
-  text-transform: uppercase !important;
-
-  color: #ffffff !important;
-  text-shadow: none !important;
-  line-height: 1.05 !important;
-}
-
-/* in case parent blocks it */
-#award.is-open .label{
-  display: block !important;
-  opacity: 1 !important;
-  visibility: visible !important;
-  position: relative !important;
-  z-index: 2147483646 !important;
-}
+  
   /* =========================
-   FINAL RANK LABEL (Apex-style)
+   RANK LABEL (BOTTOM) — CLEAN
    ========================= */
 
-#award .label{
-  position: absolute;
-  top: calc(50% + 380px); /* ⬅️ під іконкою */
+#rankLabel{
+  position: fixed;
   left: 50%;
+  top: calc(50% + 360px);  /* якщо треба нижче/вище — скажеш, підкрутимо */
   transform: translateX(-50%);
-  width: 100%;
+  width: min(920px, 96vw);
   text-align: center;
-
+  z-index: 200;            /* вище veil і FX */
   pointer-events: none;
-  z-index: 100;
   opacity: 0;
+  will-change: transform, opacity;
 }
 
-/* show on reveal / done */
-#award[data-phase="reveal"] .label,
-#award[data-phase="done"] .label{
+/* show only on reveal/done */
+#award[data-phase="reveal"] #rankLabel,
+#award[data-phase="done"] #rankLabel{
   opacity: 1;
-  animation: labelRise 420ms cubic-bezier(.16,.9,.2,1) forwards;
+  animation: rankLabelIn 420ms cubic-bezier(.16,.9,.2,1) forwards;
 }
 
-@keyframes labelRise{
-  from{
-    opacity: 0;
-    transform: translateX(-50%) translateY(14px) scale(.96);
-  }
-  to{
-    opacity: 1;
-    transform: translateX(-50%) translateY(0) scale(1);
-  }
+@keyframes rankLabelIn{
+  from{ opacity:0; transform: translateX(-50%) translateY(14px) scale(.98); }
+  to  { opacity:1; transform: translateX(-50%) translateY(0) scale(1); }
 }
 
-#labelTop{
+#rankLabel #labelTop{
   font-size: 12px;
   letter-spacing: .28em;
   text-transform: uppercase;
-  color: rgba(255,255,255,.55);
+  color: rgba(255,255,255,.60);
   margin-bottom: 10px;
 }
 
-#labelName{
+#rankLabel #labelName{
   font-size: 56px;
   font-weight: 900;
   letter-spacing: .22em;
   text-transform: uppercase;
   color: #ffffff;
   line-height: 1.05;
-  text-shadow: none;
-}
-  /* =========================================================
-   FINAL RANK LABEL (ALWAYS VISIBLE ABOVE FX)
-   Put at VERY END of <style>
-   ========================================================= */
-
-#rankLabel{
-  position: fixed !important;
-  left: 50% !important;
-  top: calc(50% + 420px) !important; /* ⬅️ під іконкою */
-  transform: translateX(-50%) !important;
-
-  width: min(920px, 96vw) !important; /* matches .center width */
-  text-align: center !important;
-
-  z-index: 2147483647 !important;
-  pointer-events: none !important;
-
-  opacity: 0 !important;
-}
-
-/* show only on reveal/done */
-#award[data-phase="reveal"] #rankLabel,
-#award[data-phase="done"] #rankLabel{
-  opacity: 1 !important;
-  animation: labelPopIn 420ms cubic-bezier(.16,.9,.2,1) forwards !important;
-}
-
-@keyframes labelPopIn{
-  from{
-    opacity: 0;
-    transform: translateX(-50%) translateY(14px) scale(.96);
-  }
-  to{
-    opacity: 1;
-    transform: translateX(-50%) translateY(0) scale(1);
-  }
-}
-
-#rankLabel #labelTop{
-  font-size: 12px !important;
-  letter-spacing: .28em !important;
-  text-transform: uppercase !important;
-  color: rgba(255,255,255,.55) !important;
-  margin-bottom: 10px !important;
-}
-
-#rankLabel #labelName{
-  font-size: 56px !important;
-  font-weight: 900 !important;
-  letter-spacing: .22em !important;
-  text-transform: uppercase !important;
-
-  color: #ffffff !important;
-  text-shadow: none !important;
-  line-height: 1.05 !important;
-}
-  /* =========================================================
-   FINAL FORCE: RANK LABEL VISIBLE (put at VERY END)
-   ========================================================= */
-
-#rankLabel{
-  position: fixed !important;
-  left: 50% !important;
-  top: calc(50% + 420px) !important;  /* під іконкою */
-  transform: translateX(-50%) !important;
-
-  width: min(920px, 96vw) !important;
-  text-align: center !important;
-
-  z-index: 2147483647 !important;     /* вище veil та всіх FX */
-  pointer-events: none !important;
-
-  display: block !important;
-  visibility: visible !important;
-
-  /* IMPORTANT: не ховаємо на старті, щоб точно побачити */
-  opacity: 1 !important;
-}
-
-#rankLabel #labelName{
-  display: block !important;
-  opacity: 1 !important;
-  visibility: visible !important;
-
-  font-size: 56px !important;
-  font-weight: 900 !important;
-  letter-spacing: .22em !important;
-  text-transform: uppercase !important;
-
-  color: #ffffff !important;
-  text-shadow: none !important;
-  line-height: 1.05 !important;
 }
   
 </style>
