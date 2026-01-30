@@ -3954,24 +3954,34 @@ renderHistoryFromStorage();
   </div>
 
   <div class="center">
-    <div class="impactFlash" aria-hidden="true"></div>
-    <div class="coreFlash" aria-hidden="true"></div>
-    <div class="creationGlow" aria-hidden="true"></div>
-    <div class="wingWave" aria-hidden="true"></div>
-    <div class="sparks" aria-hidden="true"></div>
-    <div class="falling" aria-hidden="true"></div>
 
-    <div class="stack">
-      <div class="rankBadge tier-0 animated" id="badge">
-        <div class="rankBadge__img" id="rankIcon" aria-hidden="true"></div>
+  <!-- FX layers -->
+  <div class="impactFlash"></div>
+  <div class="coreFlash"></div>
+  <div class="creationGlow"></div>
+  <div class="wingWave"></div>
+  <div class="sparks"></div>
+  <div class="falling"></div>
 
-        <div class="slice s1" aria-hidden="true"></div>
-        <div class="slice s2" aria-hidden="true"></div>
-        <div class="slice s3" aria-hidden="true"></div>
-        <div class="slice s4" aria-hidden="true"></div>
+  <!-- BADGE ONLY -->
+  <div class="stack">
+    <div class="rankBadge tier-0 animated" id="badge">
+      <div class="rankBadge__img" id="rankIcon"></div>
+      <div class="slice s1"></div>
+      <div class="slice s2"></div>
+      <div class="slice s3"></div>
+      <div class="slice s4"></div>
+      <span class="rankBadge__halo"></span>
+    </div>
+  </div>
 
-        <span class="rankBadge__halo" aria-hidden="true"></span>
-      </div>
+  <!-- ✅ LABEL ОКРЕМО -->
+  <div class="label" id="rankLabel">
+    <div class="labelTop" id="labelTop">NEW RANK</div>
+    <div class="labelName" id="labelName">EIDOLON</div>
+  </div>
+
+</div>
 
       <div class="label" aria-hidden="true">
         <div class="labelInner">
