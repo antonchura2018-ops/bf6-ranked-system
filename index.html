@@ -1694,6 +1694,46 @@ margin: 32px auto 20px;
 #award[data-phase="done"] #rankLabel{
   opacity: 1 !important;
 }
+  /* =========================
+   FORCE SHOW BOTTOM RANK LABEL
+   Put at VERY END of <style>
+   ========================= */
+
+#rankLabel{
+  display:block !important;
+  position: fixed !important;
+  left: 50% !important;
+  top: calc(50% + 360px) !important;
+  transform: translateX(-50%) !important;
+  width: min(920px, 96vw) !important;
+  text-align: center !important;
+  z-index: 99999 !important;
+  pointer-events: none !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+#rankLabel #labelTop{
+  display:block !important;
+  opacity: 1 !important;
+  color: rgba(255,255,255,.65) !important;
+  font-size: 12px !important;
+  letter-spacing: .28em !important;
+  text-transform: uppercase !important;
+  margin-bottom: 10px !important;
+}
+
+#rankLabel #labelName{
+  display:block !important;
+  opacity: 1 !important;
+  color: #fff !important;
+  font-size: 56px !important;
+  font-weight: 900 !important;
+  letter-spacing: .22em !important;
+  text-transform: uppercase !important;
+  line-height: 1.05 !important;
+}
+
   
 </style>
   <!-- ===== END OF CSS ===== -->
