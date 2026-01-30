@@ -1163,7 +1163,7 @@ margin: 32px auto 20px;
 /* place label under badge, above ALL fx */
 #award .label{
   position: relative;
-  margin-top: 32px;
+  margin-top: 44px;
   width: 100%;
   text-align: center;
 
@@ -1195,15 +1195,18 @@ margin: 32px auto 20px;
 }
 
 #award .labelName{
-  margin-top: 10px;
-  font-size: 56px;          /* big */
+  margin-top: 0;
+  font-size: 56px;
   font-weight: 900;
-  letter-spacing: .22em;
+  letter-spacing: .28em;
   text-transform: uppercase;
 
-  color: #ffffff;           /* white */
-  text-shadow: none !important; /* no glow */
+  color: #fff;
+  text-shadow: none;     /* без світіння */
   line-height: 1.05;
+
+  /* більш “AAA” вигляд: */
+  opacity: .96;
 }
 
     #award.is-tierup .label{ display:block; }
@@ -1646,10 +1649,10 @@ margin: 32px auto 20px;
   opacity: 1 !important;
   visibility: visible !important;
 
-  position: fixed !important;
-  left: 50% !important;
-  top: 72% !important;
-  transform: translateX(-50%) !important;
+  position: relative !important;
+  left: auto !important;
+  top: auto !important;
+  transform: none !important;
 
   z-index: 2147483647 !important;
   text-align: center !important;
