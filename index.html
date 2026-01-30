@@ -1734,6 +1734,62 @@ margin: 32px auto 20px;
   line-height: 1.05;
   text-shadow: none;
 }
+  /* =========================================================
+   FINAL RANK LABEL (ALWAYS VISIBLE ABOVE FX)
+   Put at VERY END of <style>
+   ========================================================= */
+
+#rankLabel{
+  position: fixed !important;
+  left: 50% !important;
+  top: calc(50% + 420px) !important;   /* ⬅ під іконкою */
+  transform: translateX(-50%) !important;
+
+  width: 100% !important;
+  text-align: center !important;
+
+  z-index: 2147483647 !important;      /* ⬅ вище ВСЬОГО */
+  pointer-events: none !important;
+
+  opacity: 0 !important;
+}
+
+/* show only on reveal/done */
+#award[data-phase="reveal"] #rankLabel,
+#award[data-phase="done"] #rankLabel{
+  opacity: 1 !important;
+  animation: labelPopIn 420ms cubic-bezier(.16,.9,.2,1) forwards !important;
+}
+
+@keyframes labelPopIn{
+  from{
+    opacity: 0;
+    transform: translateX(-50%) translateY(14px) scale(.96);
+  }
+  to{
+    opacity: 1;
+    transform: translateX(-50%) translateY(0) scale(1);
+  }
+}
+
+#rankLabel #labelTop{
+  font-size: 12px !important;
+  letter-spacing: .28em !important;
+  text-transform: uppercase !important;
+  color: rgba(255,255,255,.55) !important;
+  margin-bottom: 10px !important;
+}
+
+#rankLabel #labelName{
+  font-size: 56px !important;
+  font-weight: 900 !important;
+  letter-spacing: .22em !important;
+  text-transform: uppercase !important;
+
+  color: #ffffff !important;
+  text-shadow: none !important;
+  line-height: 1.05 !important;
+}
   
 </style>
   <!-- ===== END OF CSS ===== -->
