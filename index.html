@@ -1637,42 +1637,38 @@ margin: 32px auto 20px;
   animation: labelIn 420ms cubic-bezier(.2,.9,.2,1) forwards;
 }
   /* =========================================================
-   DEBUG FORCE LABEL (put at VERY END)
-   If you see THRALL after this → CSS layering was the issue
+   ULTRA FORCE: show rank name (ID-based, unbeatable)
+   Put at VERY END of <style>
    ========================================================= */
-#award.is-open .label{
-  position: relative !important;
-  display: block !important;
-  opacity: 1 !important;
-  visibility: visible !important;
-
-  z-index: 99999 !important;
-  isolation: isolate !important;
-
-  margin-top: 32px !important;
-  width: 100% !important;
-  text-align: center !important;
-  pointer-events: none !important;
-}
 
 #award.is-open #labelName{
   display: block !important;
   opacity: 1 !important;
   visibility: visible !important;
 
+  position: relative !important;
+  z-index: 2147483647 !important;
+
+  margin-top: 32px !important;
+  text-align: center !important;
+
   font-size: 56px !important;
   font-weight: 900 !important;
   letter-spacing: .22em !important;
   text-transform: uppercase !important;
 
-  color: #fff !important;
+  color: #ffffff !important;
   text-shadow: none !important;
+  line-height: 1.05 !important;
 }
-  /* ensure stack is above fx layers */
-#award.is-open .stack{
+
+/* in case parent blocks it */
+#award.is-open .label{
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
   position: relative !important;
-  z-index: 99998 !important;
-  isolation: isolate !important;
+  z-index: 2147483646 !important;
 }
   
 </style>
