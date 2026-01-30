@@ -1668,6 +1668,12 @@ margin: 32px auto 20px;
   color: #fff !important;
   text-shadow: none !important;
 }
+  /* ensure stack is above fx layers */
+#award.is-open .stack{
+  position: relative !important;
+  z-index: 99998 !important;
+  isolation: isolate !important;
+}
   
 </style>
   <!-- ===== END OF CSS ===== -->
