@@ -1790,6 +1790,43 @@ margin: 32px auto 20px;
   text-shadow: none !important;
   line-height: 1.05 !important;
 }
+  /* =========================================================
+   FINAL FORCE: RANK LABEL VISIBLE (put at VERY END)
+   ========================================================= */
+
+#rankLabel{
+  position: fixed !important;
+  left: 50% !important;
+  top: calc(50% + 420px) !important;  /* під іконкою */
+  transform: translateX(-50%) !important;
+
+  width: min(920px, 96vw) !important;
+  text-align: center !important;
+
+  z-index: 2147483647 !important;     /* вище veil та всіх FX */
+  pointer-events: none !important;
+
+  display: block !important;
+  visibility: visible !important;
+
+  /* IMPORTANT: не ховаємо на старті, щоб точно побачити */
+  opacity: 1 !important;
+}
+
+#rankLabel #labelName{
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+
+  font-size: 56px !important;
+  font-weight: 900 !important;
+  letter-spacing: .22em !important;
+  text-transform: uppercase !important;
+
+  color: #ffffff !important;
+  text-shadow: none !important;
+  line-height: 1.05 !important;
+}
   
 </style>
   <!-- ===== END OF CSS ===== -->
