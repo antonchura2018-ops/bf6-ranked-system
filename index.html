@@ -3626,37 +3626,39 @@ const ACCENT_BY_RANK = {
   outcast:"#2b2f3a",
 };
 
-// Tiny SFX (WebAudio)
 function openOverlay(mode){
   const els = getAwardEls();
-  const award = els.award;
-  const badge = els.badge;
-  if(!award || !badge) return;
+  if(!els.award || !els.badge) return;
 
   clearTimers();
-  award.classList.add('is-open');
-  award.setAttribute('aria-hidden','false');
 
-  award.classList.toggle('is-tierup', mode === 'tierUp');
-  award.classList.toggle('is-rankup', mode === 'rankUp');
-  els.award.classList.remove('is-up','is-down');
-  award.classList.remove('is-top','is-down');
-  award.dataset.phase = 'open';
+  els.award.classList.add('is-open');
+  els.award.setAttribute('aria-hidden','false');
 
-  badge.classList.remove('anim-up');
-  void badge.offsetWidth;
+  els.award.classList.toggle('is-tierup', mode === 'tierUp');
+  els.award.classList.toggle('is-rankup', mode === 'rankUp');
+
+  // reset mode flags
+  els.award.classList.remove('is-top','is-finisher','is-up','is-down');
+
+  // ✅ CRITICAL: phase machine start
+  els.award.setAttribute('data-phase','open');
+
+  // reset badge animation
+  els.badge.classList.remove('anim-up');
+  void els.badge.offsetWidth;
 }
 
 function closeOverlay(){
   const els = getAwardEls();
-  const award = els.award;
-  if(!award) return;
+  if(!els.award) return;
 
   clearTimers();
-  award.classList.remove('is-open','is-tierup','is-rankup','is-top','is-down','is-finisher');
-  award.removeAttribute('data-phase');
-  award.removeAttribute('data-tier');
-  award.setAttribute('aria-hidden','true');
+
+  els.award.classList.remove('is-open','is-tierup','is-rankup','is-top','is-finisher','is-up','is-down');
+  els.award.removeAttribute('data-phase');
+  els.award.removeAttribute('data-tier');
+  els.award.setAttribute('aria-hidden','true');
 
   try { document.activeElement && document.activeElement.blur(); } catch(e) {}
 }
