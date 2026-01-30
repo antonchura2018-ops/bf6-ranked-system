@@ -1742,13 +1742,13 @@ margin: 32px auto 20px;
 #rankLabel{
   position: fixed !important;
   left: 50% !important;
-  top: calc(50% + 420px) !important;   /* ⬅ під іконкою */
+  top: calc(50% + 420px) !important; /* ⬅️ під іконкою */
   transform: translateX(-50%) !important;
 
-  width: 100% !important;
+  width: min(920px, 96vw) !important; /* matches .center width */
   text-align: center !important;
 
-  z-index: 2147483647 !important;      /* ⬅ вище ВСЬОГО */
+  z-index: 2147483647 !important;
   pointer-events: none !important;
 
   opacity: 0 !important;
@@ -4043,15 +4043,20 @@ renderHistoryFromStorage();
   
 <!-- ===== Award Overlay (Apex-style) ===== -->
 <div id="award" aria-hidden="true">
+
   <div class="veil"></div>
+
   <!-- Apex-style top banner -->
   <div class="apexBanner" id="apexBanner" aria-hidden="true">
     <div class="apexBanner__plate">
-  <div class="shimmerLine" aria-hidden="true"></div>  <!-- ✅ ADD -->
-  <div class="apexBanner__title" id="apexBannerTitle">CONGRATULATIONS — NEW RANK UNLOCKED</div>
- </div>
-</div>
+      <div class="shimmerLine" aria-hidden="true"></div>
+      <div class="apexBanner__title" id="apexBannerTitle">
+        CONGRATULATIONS — NEW RANK UNLOCKED
+      </div>
+    </div>
+  </div>
 
+  <!-- HUD -->
   <div class="hud">
     <div class="left">
       <div class="kicker">RANKED UPDATE</div>
@@ -4060,44 +4065,40 @@ renderHistoryFromStorage();
     <div class="right" id="rightText">AUTO</div>
   </div>
 
+  <!-- CENTER = FX + BADGE ONLY -->
   <div class="center">
 
-  <!-- FX layers -->
-  <div class="impactFlash"></div>
-  <div class="coreFlash"></div>
-  <div class="creationGlow"></div>
-  <div class="wingWave"></div>
-  <div class="sparks"></div>
-  <div class="falling"></div>
+    <!-- FX layers -->
+    <div class="impactFlash"></div>
+    <div class="coreFlash"></div>
+    <div class="creationGlow"></div>
+    <div class="wingWave"></div>
+    <div class="sparks"></div>
+    <div class="falling"></div>
 
-  <!-- BADGE ONLY -->
-  <div class="stack">
-    <div class="rankBadge tier-0 animated" id="badge">
-      <div class="rankBadge__img" id="rankIcon"></div>
-      <div class="slice s1"></div>
-      <div class="slice s2"></div>
-      <div class="slice s3"></div>
-      <div class="slice s4"></div>
-      <span class="rankBadge__halo"></span>
+    <!-- BADGE -->
+    <div class="stack">
+      <div class="rankBadge tier-0 animated" id="badge">
+        <div class="rankBadge__img" id="rankIcon"></div>
+
+        <div class="slice s1"></div>
+        <div class="slice s2"></div>
+        <div class="slice s3"></div>
+        <div class="slice s4"></div>
+
+        <span class="rankBadge__halo"></span>
+      </div>
     </div>
-  </div>
 
-  <!-- ✅ LABEL ОКРЕМО -->
-  <div class="label" id="rankLabel">
+  </div><!-- /center -->
+
+  <!-- ✅ RANK LABEL (OUTSIDE .center) -->
+  <div class="label" id="rankLabel" aria-hidden="true">
     <div class="labelTop" id="labelTop">NEW RANK</div>
     <div class="labelName" id="labelName">EIDOLON</div>
   </div>
 
-</div>
-
-      <div class="label" aria-hidden="true">
-        <div class="labelInner">
-        <div class="labelTop" id="labelTop">NEW RANK</div>
-        <div class="labelName" id="labelName">EIDOLON</div>
-      </div>
-    </div>
-  </div>
-</div>
+</div><!-- /award -->
   
 </body>
 </html>
