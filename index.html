@@ -1684,97 +1684,83 @@ margin: 32px auto 20px;
   color: #ffffff;
   line-height: 1.05;
 }
-  
- /* =========================================================
-   APEX BOTTOM RANK NAME (CLEAN, no hard-fix)
+  /* =========================
+   FINAL BOTTOM LABEL (RESPONSIVE, ALWAYS VISIBLE)
    Put at VERY END of <style>
-   ========================================================= */
+   ========================= */
 
 #rankLabel{
-  position: fixed;
-  left: 50%;
-  bottom: 60px; /* нижче/вище тут */
-  transform: translateX(-50%) translateY(14px);
-  width: min(920px, 96vw);
-  text-align: center;
-  pointer-events: none;
-  z-index: 220;
-  opacity: 0;
-  will-change: transform, opacity;
-}
+  position: fixed !important;
+  left: 50% !important;
+  bottom: 90px !important;      /* ← завжди видно */
+  transform: translateX(-50%) !important;
+  width: min(920px, 96vw) !important;
+  text-align: center !important;
+  pointer-events: none !important;
+  z-index: 99999 !important;
 
-/* hide NEW RANK completely */
-#labelTop{ display: none !important; }
-
-/* plate behind rank name */
-#labelName{
-  display: inline-block;
-  padding: 14px 34px;
-  border-radius: 14px;
-
-  /* “metal plate” like Apex */
-  background:
-    linear-gradient(180deg, rgba(255,255,255,.24), rgba(255,255,255,.10)),
-    linear-gradient(90deg, rgba(255,255,255,.10), rgba(0,0,0,0) 45%, rgba(255,255,255,.10));
-
-  border: 1px solid rgba(255,255,255,.18);
-  box-shadow: 0 18px 46px rgba(0,0,0,.35);
-
-  font-size: 52px;
-  font-weight: 900;
-  letter-spacing: .22em;
-  text-transform: uppercase;
-  color: rgba(255,255,255,.96);
-  line-height: 1.0;
-
-  /* start hidden */
-  opacity: 0;
-  transform: translateY(10px) scale(.98);
+  opacity: 0 !important;
+  visibility: hidden !important;
   will-change: transform, opacity;
 }
 
 /* show on reveal/done */
-#award.is-open[data-phase="reveal"] #rankLabel,
-#award.is-open[data-phase="done"] #rankLabel{
-  opacity: 1;
-  transform: translateX(-50%) translateY(0);
-  transition: opacity 220ms ease, transform 280ms cubic-bezier(.16,.9,.2,1);
+#award[data-phase="reveal"] #rankLabel,
+#award[data-phase="done"] #rankLabel{
+  opacity: 1 !important;
+  visibility: visible !important;
+  animation: rankLabelIn 420ms cubic-bezier(.16,.9,.2,1) forwards;
 }
 
-#award.is-open[data-phase="reveal"] #labelName,
-#award.is-open[data-phase="done"] #labelName{
-  opacity: 1;
-  transform: translateY(0) scale(1);
-  transition: opacity 220ms ease, transform 320ms cubic-bezier(.16,.9,.2,1);
+@keyframes rankLabelIn{
+  from{ opacity:0; transform: translateX(-50%) translateY(14px) scale(.98); }
+  to  { opacity:1; transform: translateX(-50%) translateY(0) scale(1); }
 }
-  /* =========================
-   FINAL: show bottom rank plate on reveal/done
+
+#rankLabel #labelTop{
+  font-size: 12px !important;
+  letter-spacing: .28em !important;
+  text-transform: uppercase !important;
+  color: rgba(255,255,255,.60) !important;
+  margin-bottom: 10px !important;
+}
+
+#rankLabel #labelName{
+  font-size: 56px !important;
+  font-weight: 900 !important;
+  letter-spacing: .22em !important;
+  text-transform: uppercase !important;
+  color: #ffffff !important;
+  line-height: 1.05 !important;
+}
+  /* =========================================================
+   HARD FIX: SHOW rankLabel on REVEAL/DONE + keep in viewport
    Put at VERY END of <style>
-   ========================= */
+   ========================================================= */
 
+#rankLabel{
+  position: fixed !important;
+  left: 50% !important;
+  bottom: 90px !important;
+  top: auto !important;              /* critical: remove top positioning */
+  transform: translateX(-50%) !important;
+
+  width: min(920px, 96vw) !important;
+  text-align: center !important;
+  pointer-events: none !important;
+  z-index: 999999 !important;
+
+  opacity: 0 !important;
+  visibility: hidden !important;
+  display: block !important;
+}
+
+/* Force show on reveal/done (strong selector wins) */
 #award.is-open[data-phase="reveal"] #rankLabel,
 #award.is-open[data-phase="done"] #rankLabel{
   opacity: 1 !important;
   visibility: visible !important;
-  display: block !important;
-  transform: translateX(-50%) translateY(0) !important;
 }
-
-#award.is-open[data-phase="reveal"] #labelName,
-#award.is-open[data-phase="done"] #labelName{
-  opacity: 1 !important;
-  transform: translateY(0) scale(1) !important;
-}
-  /* =========================
-   LAYERING FIX (award stack)
-   Put at VERY END of <style>
-   ========================= */
-
-#award{ position: fixed; inset:0; z-index:9999; }
-#award .veil{ position:absolute; inset:0; z-index:0; }
-#award .center{ position:relative; z-index:1; }
-#award .apexBanner{ position:absolute; z-index:2; }
-#rankLabel{ position:fixed; z-index:3 !important; }
   
 </style>
   <!-- ===== END OF CSS ===== -->
@@ -3837,6 +3823,7 @@ function playTierUp({rankName, iconSrc, divIndex, accentColor="#01a7ef"}){
 
   if(els.subText) els.subText.textContent = "DIVISION UPGRADED — STATUS CONFIRMED";
   if(els.rightText) els.rightText.textContent = 'AUTO';
+  if(els.labelTop) els.labelTop.textContent = "DIVISION UP";
   if(els.labelName) els.labelName.textContent = rankName;
   if (els.apexBannerTitle) {
   els.apexBannerTitle.textContent = "DIVISION UPGRADED — STATUS CONFIRMED";
@@ -3865,6 +3852,7 @@ function playTierDown({rankName, iconSrc, divIndex, accentColor="#01a7ef"}){
 
   if(els.subText) els.subText.textContent = "DIVISION DECREASED — SYNCING";
   if(els.rightText) els.rightText.textContent = 'AUTO';
+  if(els.labelTop) els.labelTop.textContent = "DIVISION DOWN";
   if(els.labelName) els.labelName.textContent = rankName;
   if (els.apexBannerTitle) {
   els.apexBannerTitle.textContent = "DIVISION DECREASED — SYNCING";
@@ -3894,6 +3882,8 @@ function playRankUp({rankName, iconSrc, isTop=false, accentColor="#23f3ff"}){
   // texts
   if(els.rightText) els.rightText.textContent = 'AUTO';
   if(els.apexBannerTitle) els.apexBannerTitle.textContent = "CONGRATULATIONS — NEW RANK UNLOCKED";
+
+  if(els.labelTop) els.labelTop.textContent = 'NEW RANK';
   if(els.labelName) els.labelName.textContent = rankName;
 
   setBadge(iconSrc);
