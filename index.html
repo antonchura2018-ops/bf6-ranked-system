@@ -1891,6 +1891,75 @@ margin: 32px auto 20px;
   transform: translate3d(70%,0,0) skewX(-18deg);
   transition: transform 420ms ease, opacity 180ms ease;
 }
+  /* =========================================================
+   FINAL OVERRIDE: Bottom Rank Name (NO PLATE + NO FLICKER)
+   Put this at the VERY END of <style>
+   ========================================================= */
+
+/* 1) Place the label lower */
+#rankLabel{
+  position: fixed !important;
+  left: 50% !important;
+  bottom: 45px !important;      /* LOWER */
+  top: auto !important;
+  transform: translateX(-50%) !important;
+  width: min(920px, 96vw) !important;
+  text-align: center !important;
+  pointer-events: none !important;
+  z-index: 999999 !important;
+}
+
+/* 2) Hide ANY "NEW RANK" / "RANK DOWN" line */
+#labelTop{ display: none !important; }
+
+/* 3) NO PLATE (remove banner background) */
+#labelName{
+  display: inline-block !important;
+
+  /* kill plate */
+  padding: 0 !important;
+  background: none !important;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  outline: none !important;
+
+  /* AAA text */
+  font-family: "Bahnschrift", "Segoe UI", system-ui, sans-serif !important;
+  font-size: 60px !important;
+  font-weight: 950 !important;
+  letter-spacing: .30em !important;
+  text-transform: uppercase !important;
+  color: rgba(255,255,255,.96) !important;
+  line-height: 1.02 !important;
+  text-shadow: 0 0 18px rgba(0,0,0,.38) !important;
+
+  /* start hidden */
+  opacity: 0 !important;
+  transform: translateY(18px) scale(.96) !important;
+  will-change: transform, opacity;
+}
+
+/* 4) Animate ONCE on reveal => prevents flicker */
+#award.is-open[data-phase="reveal"] #labelName{
+  opacity: 1 !important;
+  transform: translateY(0) scale(1) !important;
+  animation: rankNamePop 520ms cubic-bezier(.16,.9,.2,1) forwards !important;
+}
+
+/* 5) HOLD on done => no new animation => no flicker */
+#award.is-open[data-phase="done"] #labelName{
+  opacity: 1 !important;
+  transform: translateY(0) scale(1) !important;
+  animation: none !important;
+}
+
+/* pop keyframes */
+@keyframes rankNamePop{
+  0%{ opacity:0; transform: translateY(18px) scale(.96); }
+  55%{ opacity:1; transform: translateY(-2px) scale(1.02); }
+  100%{ opacity:1; transform: translateY(0) scale(1); }
+}
   
 </style>
   <!-- ===== END OF CSS ===== -->
