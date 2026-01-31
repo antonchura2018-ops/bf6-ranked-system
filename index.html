@@ -1960,6 +1960,60 @@ margin: 32px auto 20px;
   55%{ opacity:1; transform: translateY(-2px) scale(1.02); }
   100%{ opacity:1; transform: translateY(0) scale(1); }
 }
+  /* =========================
+   ARCHON TEXT UPGRADE (AAA, FPS-safe)
+   Put AFTER your FINAL OVERRIDE block
+   ========================= */
+
+#labelName{
+  /* stronger AAA typography */
+  font-family: "Bahnschrift", "Segoe UI", system-ui, sans-serif !important;
+  font-weight: 950 !important;
+  letter-spacing: .34em !important;  /* більш “ігрово” */
+  color: rgba(255,255,255,.96) !important;
+
+  /* depth */
+  text-shadow:
+    0 10px 30px rgba(0,0,0,.45),
+    0 0 16px color-mix(in srgb, var(--accent) 12%, transparent);
+}
+
+/* small underline glow (Apex vibe) */
+#labelName::after{
+  content:"";
+  display:block;
+  margin: 14px auto 0;
+  width: 52%;
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(90deg,
+    transparent,
+    color-mix(in srgb, var(--accent) 28%, rgba(255,255,255,.35)),
+    transparent
+  );
+  opacity: .65;
+}
+
+/* reveal animation: pop + settle + micro shimmer */
+#award.is-open[data-phase="reveal"] #labelName{
+  animation: namePop 520ms cubic-bezier(.16,.9,.2,1) forwards;
+}
+
+@keyframes namePop{
+  0%   { opacity:0; transform: translateY(18px) scale(.96); letter-spacing: .44em; }
+  55%  { opacity:1; transform: translateY(-2px) scale(1.02); letter-spacing: .34em; }
+  100% { opacity:1; transform: translateY(0) scale(1); letter-spacing: .34em; }
+}
+
+/* done: subtle breathing without flicker */
+#award.is-open[data-phase="done"] #labelName{
+  animation: nameBreath 2.2s ease-in-out infinite;
+}
+
+@keyframes nameBreath{
+  0%,100%{ filter: none; opacity: .94; }
+  50%{ filter: drop-shadow(0 0 18px color-mix(in srgb, var(--accent) 18%, transparent)); opacity: 1; }
+}
   
 </style>
   <!-- ===== END OF CSS ===== -->
@@ -3902,6 +3956,9 @@ function openOverlay(mode){
   if(!els.award || !els.badge) return;
 
   clearTimers();
+  
+  award.removeAttribute('data-phase');
+  award.dataset.phase='open';
 
   els.award.classList.add('is-open');
   els.award.setAttribute('aria-hidden','false');
@@ -4141,14 +4198,17 @@ function playRankDown({rankName, iconSrc, accentColor="#23f3ff"}) {
   els.award.dataset.phase = 'reveal';
 }, 420));
 
-timers.push(setTimeout(() => { 
+   timers.push(setTimeout(() => { 
   els.award.dataset.phase = 'impact';
 }, 650));
-  timers.push(setTimeout(() => { els.award.dataset.phase='done'; }, 2000));
-  timers.push(setTimeout(() => {
-    els.award.classList.remove('is-down');
-    closeOverlay();
-  }, 2000 + 1800));
+   timers.push(setTimeout(()=>{
+   els.award.setAttribute('data-phase','done');
+}, 2000));
+
+   timers.push(setTimeout(()=>{
+     els.award.classList.remove('is-down');
+      closeOverlay();
+   }, 3800));
 }
 
 
