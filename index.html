@@ -1733,6 +1733,34 @@ margin: 32px auto 20px;
   color: #ffffff !important;
   line-height: 1.05 !important;
 }
+  /* =========================================================
+   HARD FIX: SHOW rankLabel on REVEAL/DONE + keep in viewport
+   Put at VERY END of <style>
+   ========================================================= */
+
+#rankLabel{
+  position: fixed !important;
+  left: 50% !important;
+  bottom: 90px !important;
+  top: auto !important;              /* critical: remove top positioning */
+  transform: translateX(-50%) !important;
+
+  width: min(920px, 96vw) !important;
+  text-align: center !important;
+  pointer-events: none !important;
+  z-index: 999999 !important;
+
+  opacity: 0 !important;
+  visibility: hidden !important;
+  display: block !important;
+}
+
+/* Force show on reveal/done (strong selector wins) */
+#award.is-open[data-phase="reveal"] #rankLabel,
+#award.is-open[data-phase="done"] #rankLabel{
+  opacity: 1 !important;
+  visibility: visible !important;
+}
   
 </style>
   <!-- ===== END OF CSS ===== -->
