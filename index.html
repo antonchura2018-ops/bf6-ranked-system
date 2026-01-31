@@ -1777,6 +1777,26 @@ margin: 32px auto 20px;
   45%{ opacity: .9; transform: scaleX(1.02); }
   100%{ opacity: .65; transform: scaleX(1); }
 }
+  /* Up: slightly more heroic */
+#award.is-up[data-phase="reveal"] #labelName{
+  animation: namePopUp 520ms cubic-bezier(.16,.9,.2,1) forwards;
+}
+
+@keyframes namePopUp{
+  0%{ opacity:0; transform: translateY(18px) scale(.96); }
+  55%{ opacity:1; transform: translateY(-4px) scale(1.03); }
+  100%{ opacity:1; transform: translateY(0) scale(1); }
+}
+
+/* Down: calmer */
+#award.is-down[data-phase="reveal"] #labelName{
+  animation: namePopDown 420ms cubic-bezier(.16,.9,.2,1) forwards;
+}
+
+@keyframes namePopDown{
+  0%{ opacity:0; transform: translateY(12px) scale(.98); }
+  100%{ opacity:1; transform: translateY(0) scale(1); }
+}
   
 </style>
   <!-- ===== END OF CSS ===== -->
