@@ -1692,7 +1692,7 @@ margin: 32px auto 20px;
 #rankLabel{
   position: fixed !important;
   left: 50% !important;
-  bottom: 90px !important;      /* ← завжди видно */
+  bottom: 70px !important;      /* ← завжди видно */
   transform: translateX(-50%) !important;
   width: min(920px, 96vw) !important;
   text-align: center !important;
@@ -1806,6 +1806,74 @@ margin: 32px auto 20px;
 #award.is-open[data-phase="done"] #labelName{
   opacity: 1;
   transform: translateY(0) scale(1);
+}
+  /* =========================
+   RANK NAME (AAA style)
+   ========================= */
+
+#labelName{
+  font-family: "Segoe UI", "Bahnschrift", "Orbitron", system-ui, sans-serif;
+  font-weight: 950;
+  letter-spacing: .26em;          /* більш “Apex” */
+  text-transform: uppercase;
+
+  /* plate */
+  padding: 16px 44px;
+  border-radius: 16px;
+
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.22), rgba(255,255,255,.10)),
+    linear-gradient(90deg, rgba(255,255,255,.10), rgba(0,0,0,0) 45%, rgba(255,255,255,.10));
+  border: 1px solid rgba(255,255,255,.18);
+  box-shadow: 0 18px 46px rgba(0,0,0,.38);
+
+  /* subtle edge */
+  outline: 1px solid rgba(255,255,255,.06);
+}
+  /* Show only on reveal/done */
+#award.is-open[data-phase="reveal"] #labelName{
+  animation: rankNamePop 520ms cubic-bezier(.16,.9,.2,1) forwards;
+}
+
+#award.is-open[data-phase="done"] #labelName{
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* pop + settle */
+@keyframes rankNamePop{
+  0%{ opacity:0; transform: translateY(18px) scale(.96); }
+  55%{ opacity:1; transform: translateY(-2px) scale(1.02); }
+  100%{ opacity:1; transform: translateY(0) scale(1); }
+}
+
+/* subtle breathing glow in done */
+#award.is-open[data-phase="done"] #labelName{
+  animation: rankNameGlow 2.2s ease-in-out infinite;
+}
+
+@keyframes rankNameGlow{
+  0%,100%{ box-shadow: 0 18px 46px rgba(0,0,0,.38), 0 0 0 rgba(0,0,0,0); }
+  50%{ box-shadow: 0 18px 46px rgba(0,0,0,.38), 0 0 22px color-mix(in srgb, var(--accent) 18%, transparent); }
+}
+  /* =========================
+   TOP BANNER FX (Apex-style)
+   ========================= */
+
+#award[data-phase="impact"] .apexBanner__plate{
+  animation: topPlatePulse 240ms ease forwards;
+}
+@keyframes topPlatePulse{
+  0%{ transform: scale(1); }
+  45%{ transform: scale(1.01); }
+  100%{ transform: scale(1); }
+}
+
+/* shimmer wipe */
+#award[data-phase="impact"] .apexBanner__plate .shimmerLine{
+  opacity: .95;
+  transform: translate3d(70%,0,0) skewX(-18deg);
+  transition: transform 420ms ease, opacity 180ms ease;
 }
   
 </style>
