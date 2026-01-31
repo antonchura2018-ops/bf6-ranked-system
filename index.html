@@ -1750,9 +1750,9 @@ margin: 32px auto 20px;
 }
 
 @keyframes namePop{
-  0%{ opacity:0; transform: translateY(18px) scale(.96); letter-spacing: .44em; }
-  55%{ opacity:1; transform: translateY(-2px) scale(1.02); letter-spacing: .34em; }
-  100%{ opacity:1; transform: translateY(0) scale(1); letter-spacing: .34em; }
+  0%{ opacity:0; transform: translateY(18px) scale(.96); }
+  55%{ opacity:1; transform: translateY(-2px) scale(1.02); }
+  100%{ opacity:1; transform: translateY(0) scale(1); }
 }
 
 @keyframes nameBreath{
@@ -1766,6 +1766,16 @@ margin: 32px auto 20px;
    ========================================================= */
 #award[data-rankkey="overlord"] #rankLabel{
   bottom: 18px;
+}
+  /* underline glint on reveal */
+#award.is-open[data-phase="reveal"] #labelName::after{
+  animation: underlineGlint 520ms ease forwards;
+}
+
+@keyframes underlineGlint{
+  0%{ opacity: .15; transform: scaleX(.55); }
+  45%{ opacity: .9; transform: scaleX(1.02); }
+  100%{ opacity: .65; transform: scaleX(1); }
 }
   
 </style>
