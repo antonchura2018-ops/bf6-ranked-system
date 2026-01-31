@@ -1747,6 +1747,24 @@ margin: 32px auto 20px;
   transform: translateY(0) scale(1);
   transition: opacity 220ms ease, transform 320ms cubic-bezier(.16,.9,.2,1);
 }
+  /* =========================
+   FINAL: show bottom rank plate on reveal/done
+   Put at VERY END of <style>
+   ========================= */
+
+#award.is-open[data-phase="reveal"] #rankLabel,
+#award.is-open[data-phase="done"] #rankLabel{
+  opacity: 1 !important;
+  visibility: visible !important;
+  display: block !important;
+  transform: translateX(-50%) translateY(0) !important;
+}
+
+#award.is-open[data-phase="reveal"] #labelName,
+#award.is-open[data-phase="done"] #labelName{
+  opacity: 1 !important;
+  transform: translateY(0) scale(1) !important;
+}
   
 </style>
   <!-- ===== END OF CSS ===== -->
