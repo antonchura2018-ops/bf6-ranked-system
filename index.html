@@ -2014,6 +2014,62 @@ margin: 32px auto 20px;
   0%,100%{ filter: none; opacity: .94; }
   50%{ filter: drop-shadow(0 0 18px color-mix(in srgb, var(--accent) 18%, transparent)); opacity: 1; }
 }
+  /* =========================
+   TEXT POP (stable for up + down)
+   ========================= */
+
+/* only animate once on reveal */
+#award.is-open[data-phase="reveal"] #labelName{
+  animation: namePop 520ms cubic-bezier(.16,.9,.2,1) forwards;
+}
+
+/* hold on done, never restart */
+#award.is-open[data-phase="done"] #labelName{
+  animation: none !important;
+  opacity: 1 !important;
+  transform: translateY(0) scale(1) !important;
+}
+
+/* down: slightly dim, no flicker */
+#award.is-down[data-phase="done"] #labelName{
+  opacity: .92 !important;
+  filter: none !important;
+}
+
+/* keyframes */
+@keyframes namePop{
+  0%{ opacity:0; transform: translateY(18px) scale(.96); }
+  55%{ opacity:1; transform: translateY(-2px) scale(1.02); }
+  100%{ opacity:1; transform: translateY(0) scale(1); }
+}
+  /* =========================
+   TEXT SHIMMER (Apex vibe, cheap)
+   ========================= */
+
+#labelName{
+  position: relative;
+  overflow: hidden;
+}
+
+#labelName::before{
+  content:"";
+  position:absolute;
+  inset:-40% -60%;
+  background: linear-gradient(90deg,
+    transparent,
+    rgba(255,255,255,.32),
+    transparent
+  );
+  transform: translateX(-60%) skewX(-18deg);
+  opacity: 0;
+  pointer-events:none;
+}
+
+#award.is-open[data-phase="reveal"] #labelName::before{
+  opacity: .6;
+  transform: translateX(70%) skewX(-18deg);
+  transition: transform 520ms ease, opacity 220ms ease;
+}
   
 </style>
   <!-- ===== END OF CSS ===== -->
@@ -3957,8 +4013,12 @@ function openOverlay(mode){
 
   clearTimers();
   
+ // prevent double-open flicker
+if (award.classList.contains('is-open')) {
+  award.classList.remove('is-open');
   award.removeAttribute('data-phase');
-  award.dataset.phase='open';
+  void award.offsetWidth; // force reflow
+}
 
   els.award.classList.add('is-open');
   els.award.setAttribute('aria-hidden','false');
@@ -4188,27 +4248,24 @@ function playRankDown({rankName, iconSrc, accentColor="#23f3ff"}) {
   setBadge(iconSrc);
   setTierClass(0);
 
-  // Start whoosh earlier (it has a soft attack)
-  timers.push(setTimeout(() => { 
-    playSFX('down');
-  }, 120));
+   // phases for RankDown: open -> impact -> reveal -> done
+  timers.push(setTimeout(()=>{ 
+    els.award.setAttribute('data-phase','impact');
+    playSFX('down');                 // звук на impact
+  }, 850));
 
-  // Impact visual later (keeps timing)
-  timers.push(setTimeout(() => { 
-  els.award.dataset.phase = 'reveal';
-}, 420));
+  timers.push(setTimeout(()=>{ 
+    els.award.setAttribute('data-phase','reveal');
+  }, 1100));
 
-   timers.push(setTimeout(() => { 
-  els.award.dataset.phase = 'impact';
-}, 650));
-   timers.push(setTimeout(()=>{
-   els.award.setAttribute('data-phase','done');
-}, 2000));
+  timers.push(setTimeout(()=>{ 
+    els.award.setAttribute('data-phase','done');
+  }, 1850));
 
-   timers.push(setTimeout(()=>{
-     els.award.classList.remove('is-down');
-      closeOverlay();
-   }, 3800));
+  timers.push(setTimeout(()=>{ 
+    els.award.classList.remove('is-down');
+    closeOverlay();
+  }, 1850 + 2000));
 }
 
 
