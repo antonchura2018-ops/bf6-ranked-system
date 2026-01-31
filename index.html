@@ -1692,7 +1692,7 @@ margin: 32px auto 20px;
 #rankLabel{
   position: fixed !important;
   left: 50% !important;
-  bottom: 70px !important;      /* ← завжди видно */
+  bottom: 55px !important;      /* ← завжди видно */
   transform: translateX(-50%) !important;
   width: min(920px, 96vw) !important;
   text-align: center !important;
@@ -1782,34 +1782,50 @@ margin: 32px auto 20px;
 
 #labelName{
   display: inline-block;
-  padding: 0;                  /* без plate поки */
-  font-size: 56px;
-  font-weight: 900;
-  letter-spacing: .22em;
+
+  /* NO PLATE */
+  padding: 0;
+  border-radius: 0;
+  background: none;
+  border: none;
+  box-shadow: none;
+  outline: none;
+
+  /* AAA text */
+  font-family: "Bahnschrift", "Segoe UI", system-ui, sans-serif;
+  font-size: 58px;
+  font-weight: 950;
+  letter-spacing: .30em;
   text-transform: uppercase;
-  color: #fff;
-  line-height: 1.05;
+  color: rgba(255,255,255,.96);
+  line-height: 1.02;
+  text-shadow: 0 0 18px rgba(0,0,0,.35);
 
   opacity: 0;
   transform: translateY(14px) scale(.98);
   will-change: transform, opacity;
 }
 
-/* SHOW ON REVEAL (animation runs once) */
+//* Animate ONCE on reveal (prevents flicker) */
 #award.is-open[data-phase="reveal"] #labelName{
   opacity: 1;
   transform: translateY(0) scale(1);
-  transition: opacity 220ms ease, transform 320ms cubic-bezier(.16,.9,.2,1);
+  animation: rankNamePop 520ms cubic-bezier(.16,.9,.2,1) forwards;
 }
 
-/* HOLD ON DONE (no re-animation => no flicker) */
+/* HOLD on done: no animation, no flicker */
 #award.is-open[data-phase="done"] #labelName{
   opacity: 1;
   transform: translateY(0) scale(1);
+  animation: none !important;
 }
-  /* =========================
-   RANK NAME (AAA style)
-   ========================= */
+
+/* pop-in */
+@keyframes rankNamePop{
+  0%{ opacity:0; transform: translateY(18px) scale(.96); }
+  55%{ opacity:1; transform: translateY(-2px) scale(1.02); }
+  100%{ opacity:1; transform: translateY(0) scale(1); }
+}
 
 #labelName{
   font-family: "Segoe UI", "Bahnschrift", "Orbitron", system-ui, sans-serif;
