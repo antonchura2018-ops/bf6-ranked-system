@@ -1765,6 +1765,16 @@ margin: 32px auto 20px;
   opacity: 1 !important;
   transform: translateY(0) scale(1) !important;
 }
+  /* =========================
+   LAYERING FIX (award stack)
+   Put at VERY END of <style>
+   ========================= */
+
+#award{ position: fixed; inset:0; z-index:9999; }
+#award .veil{ position:absolute; inset:0; z-index:0; }
+#award .center{ position:relative; z-index:1; }
+#award .apexBanner{ position:absolute; z-index:2; }
+#rankLabel{ position:fixed; z-index:3 !important; }
   
 </style>
   <!-- ===== END OF CSS ===== -->
