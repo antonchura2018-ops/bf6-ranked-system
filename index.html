@@ -1644,341 +1644,59 @@ margin: 32px auto 20px;
   animation: labelIn 420ms cubic-bezier(.2,.9,.2,1) forwards;
 }
   
-  /* =========================
-   BOTTOM RANK LABEL (Apex-style)
-   ========================= */
-#rankLabel{
-  position: fixed;
-  left: 50%;
-  top: calc(50% + 360px);
-  transform: translateX(-50%) translateY(14px) scale(.98);
-  width: min(920px, 96vw);
-  text-align: center;
-  pointer-events: none;
-  z-index: 200;
-  opacity: 0;
-  will-change: transform, opacity;
-}
-
-/* show only on reveal + done */
-#award[data-phase="reveal"] #rankLabel,
-#award[data-phase="done"] #rankLabel{
-  opacity: 1;
-  transform: translateX(-50%) translateY(0) scale(1);
-  transition: opacity 220ms ease, transform 260ms cubic-bezier(.16,.9,.2,1);
-}
-
-#labelTop{
-  font-size: 12px;
-  letter-spacing: .28em;
-  text-transform: uppercase;
-  color: rgba(255,255,255,.60);
-  margin-bottom: 10px;
-}
-
-#labelName{
-  font-size: 56px;
-  font-weight: 900;
-  letter-spacing: .22em;
-  text-transform: uppercase;
-  color: #ffffff;
-  line-height: 1.05;
-}
-  /* =========================
-   FINAL BOTTOM LABEL (RESPONSIVE, ALWAYS VISIBLE)
-   Put at VERY END of <style>
-   ========================= */
-
-#rankLabel{
-  position: fixed !important;
-  left: 50% !important;
-  bottom: 55px !important;      /* ← завжди видно */
-  transform: translateX(-50%) !important;
-  width: min(920px, 96vw) !important;
-  text-align: center !important;
-  pointer-events: none !important;
-  z-index: 99999 !important;
-
-  opacity: 0 !important;
-  visibility: hidden !important;
-  will-change: transform, opacity;
-}
-
-/* show on reveal/done */
-#award[data-phase="reveal"] #rankLabel,
-#award[data-phase="done"] #rankLabel{
-  opacity: 1 !important;
-  visibility: visible !important;
-  animation: rankLabelIn 420ms cubic-bezier(.16,.9,.2,1) forwards;
-}
-
-@keyframes rankLabelIn{
-  from{ opacity:0; transform: translateX(-50%) translateY(14px) scale(.98); }
-  to  { opacity:1; transform: translateX(-50%) translateY(0) scale(1); }
-}
-
-#rankLabel #labelTop{
-  font-size: 12px !important;
-  letter-spacing: .28em !important;
-  text-transform: uppercase !important;
-  color: rgba(255,255,255,.60) !important;
-  margin-bottom: 10px !important;
-}
-
-#rankLabel #labelName{
-  font-size: 56px !important;
-  font-weight: 900 !important;
-  letter-spacing: .22em !important;
-  text-transform: uppercase !important;
-  color: #ffffff !important;
-  line-height: 1.05 !important;
-}
   /* =========================================================
-   HARD FIX: SHOW rankLabel on REVEAL/DONE + keep in viewport
-   Put at VERY END of <style>
+   FINAL: RANK NAME (clean, no duplicates)
+   Works for RankUp + RankDown + TierUp + TierDown
    ========================================================= */
 
-#rankLabel{
-  position: fixed !important;
-  left: 50% !important;
-  bottom: 90px !important;
-  top: auto !important;              /* critical: remove top positioning */
-  transform: translateX(-50%) !important;
-
-  width: min(920px, 96vw) !important;
-  text-align: center !important;
-  pointer-events: none !important;
-  z-index: 999999 !important;
-
-  opacity: 0 !important;
-  visibility: hidden !important;
-  display: block !important;
-}
-
-/* Force show on reveal/done (strong selector wins) */
-#award.is-open[data-phase="reveal"] #rankLabel,
-#award.is-open[data-phase="done"] #rankLabel{
-  opacity: 1 !important;
-  visibility: visible !important;
-}
-  * =========================
-   RANK NAME (no flicker, Apex-style)
-   Put at VERY END of <style>
-   ========================= */
-
+/* position label */
 #rankLabel{
   position: fixed;
   left: 50%;
-  bottom: 90px;                /* нижче іконки */
+  bottom: 45px;                  /* base */
   transform: translateX(-50%);
   width: min(920px, 96vw);
   text-align: center;
   pointer-events: none;
-  z-index: 99999;
+  z-index: 999999;
+  opacity: 0;
+  visibility: hidden;
 }
 
-/* hide labelTop always (removes "RANK DOWN") */
+/* ONLY show during reveal/done */
+#award.is-open[data-phase="reveal"] #rankLabel,
+#award.is-open[data-phase="done"] #rankLabel{
+  opacity: 1;
+  visibility: visible;
+}
+
+/* hide top label line always */
 #labelTop{ display: none !important; }
 
+/* AAA rank name */
 #labelName{
   display: inline-block;
+  position: relative;
+  overflow: hidden;
 
-  /* NO PLATE */
-  padding: 0;
-  border-radius: 0;
-  background: none;
-  border: none;
-  box-shadow: none;
-  outline: none;
-
-  /* AAA text */
   font-family: "Bahnschrift", "Segoe UI", system-ui, sans-serif;
-  font-size: 58px;
+  font-size: 60px;
   font-weight: 950;
-  letter-spacing: .30em;
+  letter-spacing: .34em;
   text-transform: uppercase;
   color: rgba(255,255,255,.96);
   line-height: 1.02;
-  text-shadow: 0 0 18px rgba(0,0,0,.35);
 
-  opacity: 0;
-  transform: translateY(14px) scale(.98);
-  will-change: transform, opacity;
-}
-
-//* Animate ONCE on reveal (prevents flicker) */
-#award.is-open[data-phase="reveal"] #labelName{
-  opacity: 1;
-  transform: translateY(0) scale(1);
-  animation: rankNamePop 520ms cubic-bezier(.16,.9,.2,1) forwards;
-}
-
-/* HOLD on done: no animation, no flicker */
-#award.is-open[data-phase="done"] #labelName{
-  opacity: 1;
-  transform: translateY(0) scale(1);
-  animation: none !important;
-}
-
-/* pop-in */
-@keyframes rankNamePop{
-  0%{ opacity:0; transform: translateY(18px) scale(.96); }
-  55%{ opacity:1; transform: translateY(-2px) scale(1.02); }
-  100%{ opacity:1; transform: translateY(0) scale(1); }
-}
-
-#labelName{
-  font-family: "Segoe UI", "Bahnschrift", "Orbitron", system-ui, sans-serif;
-  font-weight: 950;
-  letter-spacing: .26em;          /* більш “Apex” */
-  text-transform: uppercase;
-
-  /* plate */
-  padding: 16px 44px;
-  border-radius: 16px;
-
-  background:
-    linear-gradient(180deg, rgba(255,255,255,.22), rgba(255,255,255,.10)),
-    linear-gradient(90deg, rgba(255,255,255,.10), rgba(0,0,0,0) 45%, rgba(255,255,255,.10));
-  border: 1px solid rgba(255,255,255,.18);
-  box-shadow: 0 18px 46px rgba(0,0,0,.38);
-
-  /* subtle edge */
-  outline: 1px solid rgba(255,255,255,.06);
-}
-  /* Show only on reveal/done */
-#award.is-open[data-phase="reveal"] #labelName{
-  animation: rankNamePop 520ms cubic-bezier(.16,.9,.2,1) forwards;
-}
-
-#award.is-open[data-phase="done"] #labelName{
-  opacity: 1;
-  transform: translateY(0) scale(1);
-}
-
-/* pop + settle */
-@keyframes rankNamePop{
-  0%{ opacity:0; transform: translateY(18px) scale(.96); }
-  55%{ opacity:1; transform: translateY(-2px) scale(1.02); }
-  100%{ opacity:1; transform: translateY(0) scale(1); }
-}
-
-/* subtle breathing glow in done */
-#award.is-open[data-phase="done"] #labelName{
-  animation: rankNameGlow 2.2s ease-in-out infinite;
-}
-
-@keyframes rankNameGlow{
-  0%,100%{ box-shadow: 0 18px 46px rgba(0,0,0,.38), 0 0 0 rgba(0,0,0,0); }
-  50%{ box-shadow: 0 18px 46px rgba(0,0,0,.38), 0 0 22px color-mix(in srgb, var(--accent) 18%, transparent); }
-}
-  /* =========================
-   TOP BANNER FX (Apex-style)
-   ========================= */
-
-#award[data-phase="impact"] .apexBanner__plate{
-  animation: topPlatePulse 240ms ease forwards;
-}
-@keyframes topPlatePulse{
-  0%{ transform: scale(1); }
-  45%{ transform: scale(1.01); }
-  100%{ transform: scale(1); }
-}
-
-/* shimmer wipe */
-#award[data-phase="impact"] .apexBanner__plate .shimmerLine{
-  opacity: .95;
-  transform: translate3d(70%,0,0) skewX(-18deg);
-  transition: transform 420ms ease, opacity 180ms ease;
-}
-  /* =========================================================
-   FINAL OVERRIDE: Bottom Rank Name (NO PLATE + NO FLICKER)
-   Put this at the VERY END of <style>
-   ========================================================= */
-
-/* 1) Place the label lower */
-#rankLabel{
-  position: fixed !important;
-  left: 50% !important;
-  bottom: 45px !important;      /* LOWER */
-  top: auto !important;
-  transform: translateX(-50%) !important;
-  width: min(920px, 96vw) !important;
-  text-align: center !important;
-  pointer-events: none !important;
-  z-index: 999999 !important;
-}
-
-/* 2) Hide ANY "NEW RANK" / "RANK DOWN" line */
-#labelTop{ display: none !important; }
-
-/* 3) NO PLATE (remove banner background) */
-#labelName{
-  display: inline-block !important;
-
-  /* kill plate */
-  padding: 0 !important;
-  background: none !important;
-  border: none !important;
-  border-radius: 0 !important;
-  box-shadow: none !important;
-  outline: none !important;
-
-  /* AAA text */
-  font-family: "Bahnschrift", "Segoe UI", system-ui, sans-serif !important;
-  font-size: 60px !important;
-  font-weight: 950 !important;
-  letter-spacing: .30em !important;
-  text-transform: uppercase !important;
-  color: rgba(255,255,255,.96) !important;
-  line-height: 1.02 !important;
-  text-shadow: 0 0 18px rgba(0,0,0,.38) !important;
-
-  /* start hidden */
-  opacity: 0 !important;
-  transform: translateY(18px) scale(.96) !important;
-  will-change: transform, opacity;
-}
-
-/* 4) Animate ONCE on reveal => prevents flicker */
-#award.is-open[data-phase="reveal"] #labelName{
-  opacity: 1 !important;
-  transform: translateY(0) scale(1) !important;
-  animation: rankNamePop 520ms cubic-bezier(.16,.9,.2,1) forwards !important;
-}
-
-/* 5) HOLD on done => no new animation => no flicker */
-#award.is-open[data-phase="done"] #labelName{
-  opacity: 1 !important;
-  transform: translateY(0) scale(1) !important;
-  animation: none !important;
-}
-
-/* pop keyframes */
-@keyframes rankNamePop{
-  0%{ opacity:0; transform: translateY(18px) scale(.96); }
-  55%{ opacity:1; transform: translateY(-2px) scale(1.02); }
-  100%{ opacity:1; transform: translateY(0) scale(1); }
-}
-  /* =========================
-   ARCHON TEXT UPGRADE (AAA, FPS-safe)
-   Put AFTER your FINAL OVERRIDE block
-   ========================= */
-
-#labelName{
-  /* stronger AAA typography */
-  font-family: "Bahnschrift", "Segoe UI", system-ui, sans-serif !important;
-  font-weight: 950 !important;
-  letter-spacing: .34em !important;  /* більш “ігрово” */
-  color: rgba(255,255,255,.96) !important;
-
-  /* depth */
   text-shadow:
     0 10px 30px rgba(0,0,0,.45),
     0 0 16px color-mix(in srgb, var(--accent) 12%, transparent);
+
+  opacity: 0;
+  transform: translateY(18px) scale(.96);
+  will-change: transform, opacity;
 }
 
-/* small underline glow (Apex vibe) */
+/* underline */
 #labelName::after{
   content:"";
   display:block;
@@ -1994,81 +1712,60 @@ margin: 32px auto 20px;
   opacity: .65;
 }
 
-/* reveal animation: pop + settle + micro shimmer */
-#award.is-open[data-phase="reveal"] #labelName{
-  animation: namePop 520ms cubic-bezier(.16,.9,.2,1) forwards;
-}
-
-@keyframes namePop{
-  0%   { opacity:0; transform: translateY(18px) scale(.96); letter-spacing: .44em; }
-  55%  { opacity:1; transform: translateY(-2px) scale(1.02); letter-spacing: .34em; }
-  100% { opacity:1; transform: translateY(0) scale(1); letter-spacing: .34em; }
-}
-
-/* done: subtle breathing without flicker */
-#award.is-open[data-phase="done"] #labelName{
-  animation: nameBreath 2.2s ease-in-out infinite;
-}
-
-@keyframes nameBreath{
-  0%,100%{ filter: none; opacity: .94; }
-  50%{ filter: drop-shadow(0 0 18px color-mix(in srgb, var(--accent) 18%, transparent)); opacity: 1; }
-}
-  /* =========================
-   TEXT POP (stable for up + down)
-   ========================= */
-
-/* only animate once on reveal */
-#award.is-open[data-phase="reveal"] #labelName{
-  animation: namePop 520ms cubic-bezier(.16,.9,.2,1) forwards;
-}
-
-/* hold on done, never restart */
-#award.is-open[data-phase="done"] #labelName{
-  animation: none !important;
-  opacity: 1 !important;
-  transform: translateY(0) scale(1) !important;
-}
-
-/* down: slightly dim, no flicker */
-#award.is-down[data-phase="done"] #labelName{
-  opacity: .92 !important;
-  filter: none !important;
-}
-
-/* keyframes */
-@keyframes namePop{
-  0%{ opacity:0; transform: translateY(18px) scale(.96); }
-  55%{ opacity:1; transform: translateY(-2px) scale(1.02); }
-  100%{ opacity:1; transform: translateY(0) scale(1); }
-}
-  /* =========================
-   TEXT SHIMMER (Apex vibe, cheap)
-   ========================= */
-
-#labelName{
-  position: relative;
-  overflow: hidden;
-}
-
+/* shimmer wipe */
 #labelName::before{
   content:"";
   position:absolute;
   inset:-40% -60%;
-  background: linear-gradient(90deg,
-    transparent,
-    rgba(255,255,255,.32),
-    transparent
-  );
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.32), transparent);
   transform: translateX(-60%) skewX(-18deg);
   opacity: 0;
   pointer-events:none;
+}
+
+/* animate ONCE on reveal */
+#award.is-open[data-phase="reveal"] #labelName{
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  animation: namePop 520ms cubic-bezier(.16,.9,.2,1) forwards;
 }
 
 #award.is-open[data-phase="reveal"] #labelName::before{
   opacity: .6;
   transform: translateX(70%) skewX(-18deg);
   transition: transform 520ms ease, opacity 220ms ease;
+}
+
+/* HOLD on done (no restart => no flicker) */
+#award.is-open[data-phase="done"] #labelName{
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  animation: nameBreath 2.2s ease-in-out infinite;
+}
+
+/* down mode: slightly dim, no flicker */
+#award.is-down[data-phase="done"] #labelName{
+  opacity: .92;
+  filter: none;
+}
+
+@keyframes namePop{
+  0%{ opacity:0; transform: translateY(18px) scale(.96); letter-spacing: .44em; }
+  55%{ opacity:1; transform: translateY(-2px) scale(1.02); letter-spacing: .34em; }
+  100%{ opacity:1; transform: translateY(0) scale(1); letter-spacing: .34em; }
+}
+
+@keyframes nameBreath{
+  0%,100%{ opacity: .94; }
+  50%{ opacity: 1; }
+}
+
+/* =========================================================
+   OVERLORD ONLY: push label a bit lower
+   (we set this attribute from JS)
+   ========================================================= */
+#award[data-rankkey="overlord"] #rankLabel{
+  bottom: 18px;
 }
   
 </style>
