@@ -2804,7 +2804,18 @@ function updateLadderUI(currentTierIndex) {
   }
 }
 
-/* ===== UI UPDATES ===== */
+
+  var sum = 0;
+  for (var i = 0; i < matchesAll.length; i++) sum += Number(matchesAll[i].rp || 0);
+
+  var totalRP = START_RP + sum;
+  if (totalRP < MIN_RP) totalRP = MIN_RP;
+
+  var rank = getRank(totalRP);
+  if (!rank) {
+  console.warn("Rank calc failed. totalRP=", totalRP);
+  return;
+}
 function updateRankUI(matchesAll) {
   // Backfill breakdown for old matches
   for (var bi = 0; bi < matchesAll.length; bi++) {
@@ -2812,7 +2823,21 @@ function updateRankUI(matchesAll) {
       matchesAll[bi].breakdown = calcRPBreakdown(matchesAll[bi]);
       matchesAll[bi].rp = matchesAll[bi].breakdown.total;
     }
-    // ===== Player Hub (AAA) bindings =====
+  }
+
+  var sum = 0;
+  for (var i = 0; i < matchesAll.length; i++) sum += Number(matchesAll[i].rp || 0);
+
+  var totalRP = START_RP + sum;
+  if (totalRP < MIN_RP) totalRP = MIN_RP;
+
+  var rank = getRank(totalRP);
+  if (!rank) {
+    console.warn("Rank calc failed. totalRP=", totalRP);
+    return;
+  }
+
+  // ===== Player Hub (AAA) bindings =====
   var hub = document.querySelector("#dashboard.hub");
   if (hub) hub.style.setProperty("--hub-accent", rank.color);
 
@@ -2843,16 +2868,7 @@ function updateRankUI(matchesAll) {
     if (rank.tierName === "EIDOLON") phMotivation.textContent = "Goal: maintain the peak.";
     else phMotivation.textContent = "Goal: reach the next division — then push for tier-up.";
   }
-}
-
-  var sum = 0;
-  for (var i = 0; i < matchesAll.length; i++) sum += Number(matchesAll[i].rp || 0);
-
-  var totalRP = START_RP + sum;
-  if (totalRP < MIN_RP) totalRP = MIN_RP;
-
-  var rank = getRank(totalRP);
-
+  
   var hud = document.getElementById("rankTierHUD");
 if (hud) {
   var dots = hud.querySelectorAll(".tierHUD__dot");
