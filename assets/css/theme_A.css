@@ -1,1 +1,51 @@
+/* theme_A.css — Neon Ops (Apex-like, non-military) */
+:root{
+  /* fonts */
+  --font-ui: "Rajdhani", system-ui, -apple-system, Segoe UI, sans-serif;
+  --font-body: "Inter", system-ui, -apple-system, Segoe UI, sans-serif;
 
+  /* background */
+  --bg-0:#05070D;
+  --bg-1:#070B14;
+
+  /* surfaces */
+  --surface-0: rgba(12,18,32,.72);
+  --surface-1: rgba(16,31,56,.72);
+  --surface-solid:#0E1A2E;
+
+  /* borders */
+  --border-soft: rgba(255,255,255,.08);
+  --border-strong: rgba(32,211,238,.22);
+
+  /* accents */
+  --accent:#20D3EE;
+  --accent-2:#8B5CF6;
+  --danger:#FF3B5C;
+  --success:#22C55E;
+  --warning:#FBBF24;
+
+  /* text */
+  --text-strong:#EAF0FF;
+  --text: rgba(234,240,255,.86);
+  --text-muted: rgba(159,176,208,.78);
+  --text-faint: rgba(159,176,208,.55);
+
+  /* radii */
+  --r-sm: 10px;
+  --r-md: 14px;
+  --r-lg: 18px;
+  --r-xl: 22px;
+
+  /* spacing scale */
+  --s1:4px; --s2:8px; --s3:12px; --s4:16px; --s5:20px;
+  --s6:24px; --s7:32px; --s8:40px; --s9:48px; --s10:64px;
+}
+
+/* page background */
+body{
+  background:
+    radial-gradient(1200px circle at 20% 10%, rgba(32,211,238,.10), transparent 60%),
+    radial-gradient(900px circle at 80% 20%, rgba(139,92,246,.10), transparent 55%),
+    radial-gradient(circle at top, var(--bg-1), var(--bg-0));
+  color: var(--text);
+}
