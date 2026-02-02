@@ -1852,7 +1852,7 @@ margin: 32px auto 20px;
       </div>
     </div>
 
-    <!-- SIDE: Quick stats -->
+   <!-- SIDE: Quick stats -->
     <div class="card pad">
       <div class="kicker">Session</div>
 
@@ -1868,11 +1868,17 @@ margin: 32px auto 20px;
           <div class="v" id="phStreak">0</div>
           <div class="sub">Top-3 streak</div>
         </div>
+
+        <div class="tile">
+          <div class="k">Average RR</div>
+          <div class="v" id="phAvg">0</div>
+          <div class="sub">Avg RR / match</div>
+        </div>
       </div>
     </div>
-  </div>
+  </div><!-- /grid-hero -->
 
-  <!-- Tiles row -->
+  <!-- TILES -->
   <div class="tiles">
     <div class="tile">
       <div class="k">Best Match</div>
@@ -1885,19 +1891,28 @@ margin: 32px auto 20px;
       <div class="sub">Lowest RR loss</div>
     </div>
     <div class="tile">
-      <div class="k">Average</div>
-      <div class="v" id="phAvg">0</div>
-      <div class="sub">Avg RR / match</div>
+      <div class="k">Matches</div>
+      <div class="v" id="phMatches2">0</div>
+      <div class="sub">This season total</div>
     </div>
   </div>
 
+  <!-- RECENT -->
   <div style="margin-top: var(--s8);" class="card pad">
     <div class="kicker">Recent Matches</div>
     <div class="muted" style="margin-top:6px;">Preview (full list in Match History)</div>
-    <div id="phRecent" style="margin-top:14px; display:grid; gap:10px;"></div>
-  </div>
-</div>
 
+    <div id="phRecent" style="margin-top:14px; display:grid; gap:10px;"></div>
+
+    <div class="linkRow">
+      <button class="linkBtn" type="button"
+        onclick="showTab('history', document.querySelectorAll('.nav-btn')[2])">
+        View full history →
+      </button>
+    </div>
+  </div>
+</div><!-- /dashboard -->
+  
 <!-- RANK -->
 <div id="rank" class="section">
   <h1>Competitive Rank</h1>
@@ -2818,6 +2833,26 @@ function updateRankUI(matchesAll) {
   if (totalRP < MIN_RP) totalRP = MIN_RP;
 
   var rank = getRank(totalRP);
+   // ===== Player Hub header bindings (safe) =====
+  var hub = document.querySelector("#dashboard");
+  if (hub) hub.style.setProperty("--hub-accent", rank.color);
+
+  var phRankLabel = document.getElementById("phRankLabel");
+  var phRRText = document.getElementById("phRRText");
+  var phProgressFill = document.getElementById("phProgressFill");
+
+  if (phRankLabel) phRankLabel.textContent = rank.label;
+
+  if (phRRText) {
+    phRRText.textContent = (rank.tierName === "EIDOLON")
+      ? ("RR: " + totalRP + " (MAX)")
+      : ("RR: " + totalRP + " / " + rank.nextMin);
+  }
+
+  if (phProgressFill) {
+    var pctPH = Math.round((rank.rr / (DIV_RR - 1)) * 100);
+    phProgressFill.style.width = pctPH + "%";
+  }
 
   var hud = document.getElementById("rankTierHUD");
 if (hud) {
@@ -3061,6 +3096,67 @@ if (summaryEl) {
   if (changed) saveMatches(matchesAll);
 
   updateRankUI(activeMatchesAll);
+  // ===== Player Hub snapshot (ACTIVE season) =====
+  var statsHub = computeSeasonStats(activeMatchesAll);
+
+  var elMatches = document.getElementById("phMatches");
+  var elMatches2 = document.getElementById("phMatches2");
+  var elStreak = document.getElementById("phStreak");
+  var elAvg = document.getElementById("phAvg");
+  var elBest = document.getElementById("phBest");
+  var elWorst = document.getElementById("phWorst");
+
+  if (elMatches) elMatches.textContent = String(statsHub.matchesCount);
+  if (elMatches2) elMatches2.textContent = String(statsHub.matchesCount);
+
+  if (elAvg) elAvg.textContent = String(statsHub.avgRR);
+  if (elBest) elBest.textContent = (statsHub.bestRR >= 0 ? ("+" + statsHub.bestRR) : String(statsHub.bestRR));
+  if (elWorst) elWorst.textContent = String(statsHub.worstRR);
+
+  // streak = Top-3 streak (newest backwards)
+  var sortedActiveHub = activeMatchesAll.slice().sort(function(a,b){
+    return Number(b.ts || 0) - Number(a.ts || 0);
+  });
+  var streakHub = 0;
+  for (var si=0; si<sortedActiveHub.length; si++){
+    if (Number(sortedActiveHub[si].place || 99) <= 3) streakHub++;
+    else break;
+  }
+  if (elStreak) elStreak.textContent = String(streakHub);
+
+  // recent matches feed
+  var phRecent = document.getElementById("phRecent");
+  if (phRecent){
+    phRecent.innerHTML = "";
+    var top = sortedActiveHub.slice(0, 5);
+
+    if (top.length === 0){
+      var empty = document.createElement("div");
+      empty.className = "muted";
+      empty.textContent = "No matches yet — add your first match to start tracking.";
+      phRecent.appendChild(empty);
+    } else {
+      for (var j=0; j<top.length; j++){
+        var m = top[j];
+        var row = document.createElement("div");
+        row.className = "feedRow";
+
+        var delta = Number(m.rp || 0);
+        var deltaClass = (delta >= 0) ? "pos" : "neg";
+        var deltaText = (delta >= 0) ? ("+" + delta) : String(delta);
+
+        row.innerHTML =
+          "<div class='feedLeft'>" +
+            "<div class='feedTop'>Match • Place " + m.place + " / 25</div>" +
+            "<div class='feedSub'>K/A/D: " + m.kills + "/" + m.assists + "/" + m.deaths +
+              " • " + new Date(Number(m.ts||0)).toLocaleString() + "</div>" +
+          "</div>" +
+          "<div class='feedDelta " + deltaClass + "'>" + deltaText + "</div>";
+
+        phRecent.appendChild(row);
+      }
+    }
+  }
 
   // Display list: newest first, last 20
   var matches = selectedMatchesAll.slice();
