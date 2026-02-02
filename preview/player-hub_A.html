@@ -2985,6 +2985,36 @@ function updateRankUI(matchesAll) {
     var pctPH = Math.round((rank.rr / (DIV_RR - 1)) * 100);
     phProgressFill.style.width = pctPH + "%";
   }
+  
+  // ===== Hub state (promo/risk/stable) =====
+  var phTier = document.getElementById("phTier");
+  var phNext = document.getElementById("phNext");
+  var phState = document.getElementById("phState");
+  var phStatePill = document.getElementById("phStatePill");
+
+  if (phTier) phTier.textContent = (rank.div ? rank.div : "MAX");
+  if (phNext) phNext.textContent = (rank.nextMin != null ? String(rank.nextMin) : "MAX");
+
+  if (phState && phStatePill) {
+    phStatePill.classList.remove("is-promo", "is-risk");
+
+    if (rank.tierName === "EIDOLON") {
+      phState.textContent = "PEAK";
+    } else {
+      var dist = (rank.nextMin != null) ? (rank.nextMin - totalRP) : 9999;
+
+      if (dist <= 20) {
+        phState.textContent = "PROMO";
+        phStatePill.classList.add("is-promo");
+      } else if (rank.rr <= 10) {
+        phState.textContent = "RISK";
+        phStatePill.classList.add("is-risk");
+      } else {
+        phState.textContent = "STABLE";
+      }
+    }
+  }
+  
 
   var hud = document.getElementById("rankTierHUD");
 if (hud) {
