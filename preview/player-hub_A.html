@@ -1824,6 +1824,35 @@ margin: 32px auto 20px;
 .section.active{
   display:block !important;
 }
+  /* ===== FIX: parent container (.app/body) is 0x0 ===== */
+html, body{
+  width: 100% !important;
+  min-height: 100vh !important;
+}
+
+body{
+  margin: 0 !important;
+}
+
+.app{
+  display: block !important;
+  width: 100% !important;
+  min-height: 100vh !important;
+  height: auto !important;
+  overflow: visible !important;
+}
+
+/* keep tab behavior */
+.section{ display:none !important; }
+.section.active{ display:block !important; }
+
+/* ensure active section has real size */
+.section.active{
+  width: 100% !important;
+  min-height: 60vh !important;
+  padding: 50px !important;
+  box-sizing: border-box !important;
+}
   
 </style>
   <!-- ===== END OF CSS ===== -->
