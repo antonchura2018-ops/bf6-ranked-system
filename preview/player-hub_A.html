@@ -2942,8 +2942,57 @@ function updateRankUI(matchesAll) {
   if (totalRP < MIN_RP) totalRP = MIN_RP;
 
   var rank = getRank(totalRP);
+  // ===== KROK 6.2: Hub platform tuning for ALL 10 ranks =====
+var hub = document.querySelector("#dashboard");
+if (hub && rank) {
+  var t = String(rank.tierName || "").toUpperCase();
+
+  // defaults (mid tier)
+  var glow = "46px";
+  var ringOpacity = ".80";
+  var spin = "14s";
+  var afterOpacity = ".55";
+
+  switch (t) {
+    case "OUTCAST":
+      glow = "18px"; ringOpacity = ".28"; spin = "18s"; afterOpacity = ".25";
+      break;
+    case "THRALL":
+      glow = "24px"; ringOpacity = ".38"; spin = "17s"; afterOpacity = ".30";
+      break;
+    case "MARAUDER":
+      glow = "30px"; ringOpacity = ".48"; spin = "16s"; afterOpacity = ".36";
+      break;
+    case "HARBINGER":
+      glow = "36px"; ringOpacity = ".58"; spin = "15s"; afterOpacity = ".42";
+      break;
+    case "REAPER":
+      glow = "44px"; ringOpacity = ".70"; spin = "14s"; afterOpacity = ".50";
+      break;
+    case "ARCHON":
+      glow = "54px"; ringOpacity = ".82"; spin = "12s"; afterOpacity = ".62";
+      break;
+    case "OVERLORD":
+      glow = "64px"; ringOpacity = ".92"; spin = "10s"; afterOpacity = ".72";
+      break;
+    case "MONARCH":
+      glow = "78px"; ringOpacity = "1"; spin = "9s"; afterOpacity = ".82";
+      break;
+    case "SERAPH":
+      glow = "92px"; ringOpacity = "1"; spin = "8s"; afterOpacity = ".90";
+      break;
+    case "EIDOLON":
+      glow = "120px"; ringOpacity = "1"; spin = "6s"; afterOpacity = "1";
+      break;
+  }
+
+  hub.style.setProperty("--hub-glow", glow);
+  hub.style.setProperty("--hub-ring-opacity", ringOpacity);
+  hub.style.setProperty("--hub-spin", spin);
+  hub.style.setProperty("--hub-after-opacity", afterOpacity);
+}
+
    // ===== Player Hub header bindings (safe) =====
-  var hub = document.querySelector("#dashboard");
   if (hub) hub.style.setProperty("--hub-accent", rank.color);
 
   var phRankLabel = document.getElementById("phRankLabel");
