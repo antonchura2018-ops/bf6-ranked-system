@@ -495,3 +495,11 @@ body{ margin:0; font-family: var(--font-body); }
 #award{ pointer-events: none; }
 #award.is-open{ pointer-events: auto; }
 
+/* ===== Emblem layering fix (icon always visible) ===== */
+.hubEmblem{ position: relative; }
+.hubEmblem::before{ z-index: 0; }
+.hubEmblem img{ position: relative; z-index: 2; }
+
+/* If something draws above the icon, kill it */
+.hubEmblem::after{ content:none !important; }
+
