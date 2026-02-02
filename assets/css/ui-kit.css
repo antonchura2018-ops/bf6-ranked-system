@@ -454,4 +454,13 @@ body{ margin:0; font-family: var(--font-body); }
 .section{ display:none !important; }
 .section.active{ display:block !important; }
 
+/* ===== FIX: sections layout ===== */
+.section{
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 50px;
+}
+@media (max-width: 980px){
+  .section{ padding: 26px; }
+}
 
