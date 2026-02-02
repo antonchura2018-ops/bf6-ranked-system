@@ -481,7 +481,7 @@ body{ margin:0; font-family: var(--font-body); }
     inset 0 0 40px rgba(255,255,255,.04),
     inset 0 -22px 60px rgba(0,0,0,.62),
     0 22px 90px rgba(0,0,0,.60),
-    0 0 46px color-mix(in srgb, var(--hub-accent) 12%, transparent);
+    0 0 var(--hub-glow, 46px) color-mix(in srgb, var(--hub-accent) 12%, transparent);
 
   transform: translateZ(0);
   transition: transform .22s cubic-bezier(.2,.9,.2,1);
@@ -512,8 +512,8 @@ body{ margin:0; font-family: var(--font-body); }
     color-mix(in srgb, var(--hub-accent) 22%, transparent) 250deg,
     transparent 360deg
   );
-  opacity:.80;
-  animation: hubSpin 14s linear infinite;
+  opacity: var(--hub-ring-opacity, .80);
+  animation: hubSpin var(--hub-spin, 14s) linear infinite;
   pointer-events:none;
   z-index: 0;
 }
@@ -529,7 +529,7 @@ body{ margin:0; font-family: var(--font-body); }
     transparent 70%
   );
   filter: blur(18px);
-  opacity:.55;
+  opacity: var(--hub-after-opacity, .55);
   pointer-events:none;
   z-index: 0;
 }
