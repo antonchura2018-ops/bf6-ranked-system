@@ -478,3 +478,15 @@ body{ margin:0; font-family: var(--font-body); }
 @media (max-width: 980px){
   .section { padding: 26px !important; }
 }
+/* ===== FIX: navbar must always be clickable ===== */
+.navbar{
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 9999 !important;
+  pointer-events: auto !important;
+}
+
+.nav-btn{ pointer-events: auto !important; }
+
+/* Prevent other layers from stealing clicks */
+.app, .section, .card{ position: relative; z-index: 1; }
