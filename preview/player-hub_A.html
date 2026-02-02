@@ -1824,81 +1824,55 @@ margin: 32px auto 20px;
 <div class="app">
   
 <!-- PLAYER HUB -->
-<div id="dashboard" class="section active hub">
+<div id="dashboard" class="section active">
   <div class="page-title">Player Hub</div>
   <div class="page-subtitle">Your ranked progression at a glance.</div>
 
   <div class="grid-hero">
-    <!-- HERO -->
+    <!-- HERO: Rank summary -->
     <div class="card pad interactive">
-      <div class="cardHead">
-        <div class="left">
-          <div class="kicker">Current Status</div>
-          <div class="muted">Live summary based on active season matches</div>
+      <div class="kicker">Current Status</div>
+
+      <div style="display:flex; align-items:center; justify-content:space-between; gap:16px; margin-top:14px; flex-wrap:wrap;">
+        <div>
+          <div style="font-family:var(--font-ui); font-size:32px; font-weight:900; letter-spacing:.06em; color:var(--text-strong);" id="phRankLabel">PHANTOM II</div>
+          <div class="muted" style="margin-top:6px;" id="phRRText">RR: 1250 / 1500</div>
         </div>
 
         <div style="display:flex; gap:10px; flex-wrap:wrap;">
-          <button class="btn primary" type="button"
-            onclick="showTab('rank', document.querySelectorAll('.nav-btn')[1])">View Rank</button>
-          <button class="btn" type="button"
-            onclick="showTab('add', document.querySelectorAll('.nav-btn')[3])">Add Match</button>
+          <button class="btn primary" type="button" onclick="showTab('rank', document.querySelectorAll('.nav-btn')[1])">View Rank</button>
+          <button class="btn" type="button" onclick="showTab('add', document.querySelectorAll('.nav-btn')[3])">Add Match</button>
           <button class="btn danger" type="button" onclick="startNewSeason()">New Season</button>
         </div>
       </div>
 
-      <div class="rankHero">
-        <div>
-          <div style="font-family:var(--font-ui); font-size:38px; font-weight:950; letter-spacing:.12em; text-transform:uppercase; color:var(--text-strong);"
-               id="phRankLabel">PHANTOM II</div>
-
-          <div class="muted" style="margin-top:8px;" id="phRRText">RR: 1250 / 1500</div>
-
-          <div class="rankLine">
-            <span class="pill">Season <strong id="phSeasonId">S1</strong></span>
-            <span class="pill">Matches <strong id="phMatches">0</strong></span>
-            <span class="pill">Streak <strong id="phStreak">0</strong></span>
-          </div>
-
-          <div class="progress" style="margin-top:18px;">
-            <div id="phProgressFill" style="width:83%"></div>
-          </div>
-          <div class="progressTicks">
-            <span>III</span><span>II</span><span>I</span>
-          </div>
-
-          <div class="muted" style="margin-top:12px;" id="phMotivation">
-            Goal: hit next division — then push for tier-up.
-          </div>
-        </div>
-
-        <div class="emblem">
-          <img id="phBadgeImg" src="assets/ranks/harbinger.webp" alt="Rank emblem">
-        </div>
+      <div class="progress"><div id="phProgressFill" style="width:83%"></div></div>
+      <div class="muted" style="margin-top:10px;">
+        Goal: reach next division / tier — keep the streak alive.
       </div>
     </div>
 
-    <!-- SIDE -->
+    <!-- SIDE: Quick stats -->
     <div class="card pad">
-      <div class="kicker">Performance</div>
-      <div class="muted" style="margin-top:6px;">Active season snapshot</div>
+      <div class="kicker">Session</div>
 
       <div style="margin-top:14px; display:grid; gap:12px;">
         <div class="tile">
-          <div class="k">Average RR</div>
-          <div class="v" id="phAvg">0</div>
-          <div class="sub">Avg RR / match</div>
+          <div class="k">Matches</div>
+          <div class="v" id="phMatches">0</div>
+          <div class="sub">This season total</div>
         </div>
 
         <div class="tile">
-          <div class="k">Best / Worst</div>
-          <div class="v" style="font-size:22px;" id="phBestWorst">+0 / 0</div>
-          <div class="sub">Peak gain vs biggest loss</div>
+          <div class="k">Win Streak</div>
+          <div class="v" id="phStreak">0</div>
+          <div class="sub">Top-3 streak</div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- TILES -->
+  <!-- Tiles row -->
   <div class="tiles">
     <div class="tile">
       <div class="k">Best Match</div>
@@ -1911,27 +1885,50 @@ margin: 32px auto 20px;
       <div class="sub">Lowest RR loss</div>
     </div>
     <div class="tile">
-      <div class="k">Matches</div>
-      <div class="v" id="phMatches2">0</div>
-      <div class="sub">This season total</div>
+      <div class="k">Average</div>
+      <div class="v" id="phAvg">0</div>
+      <div class="sub">Avg RR / match</div>
     </div>
   </div>
 
-  <!-- RECENT -->
   <div style="margin-top: var(--s8);" class="card pad">
     <div class="kicker">Recent Matches</div>
     <div class="muted" style="margin-top:6px;">Preview (full list in Match History)</div>
-
     <div id="phRecent" style="margin-top:14px; display:grid; gap:10px;"></div>
-
-    <div class="linkRow">
-      <button class="linkBtn" type="button"
-        onclick="showTab('history', document.querySelectorAll('.nav-btn')[2])">
-        View full history →
-      </button>
-    </div>
   </div>
 </div>
+
+<!-- RANK -->
+<div id="rank" class="section">
+  <h1>Competitive Rank</h1>
+  <p>Your current competitive standing.</p>
+
+  <!-- RANK CARD -->
+  <div class="rank-card">
+    <div class="rank-bg"></div>
+    <div class="rank-noise"></div>
+
+    <div class="rank-icon" id="rankCardIcon">
+  <img id="rankBadgeImg" src="" alt="Rank badge">
+  <div class="rank-glow"></div>
+    </div>
+
+    <div class="rank-info">
+      <h2 id="rankCardTitle">PHANTOM II</h2>
+      <span class="rank-rp" id="rankCardRP">RP: 1250 / 1500</span>
+      <div class="chip" id="rankCardChip">NEON ASCENSION</div>
+      
+      <div class="tierHUD" id="rankTierHUD" aria-hidden="true">
+  <span class="tierHUD__dot"></span>
+  <span class="tierHUD__dot"></span>
+  <span class="tierHUD__dot"></span>
+</div>
+
+      <div class="rp-bar">
+        <div class="rp-fill" id="rankCardFill" style="width: 83%;"></div>
+      </div>
+    </div>
+  </div>
 
   <!-- RANK LADDER (OUTSIDE rank-card) -->
   <div class="ladder">
@@ -2804,18 +2801,7 @@ function updateLadderUI(currentTierIndex) {
   }
 }
 
-
-  var sum = 0;
-  for (var i = 0; i < matchesAll.length; i++) sum += Number(matchesAll[i].rp || 0);
-
-  var totalRP = START_RP + sum;
-  if (totalRP < MIN_RP) totalRP = MIN_RP;
-
-  var rank = getRank(totalRP);
-  if (!rank) {
-  console.warn("Rank calc failed. totalRP=", totalRP);
-  return;
-}
+/* ===== UI UPDATES ===== */
 function updateRankUI(matchesAll) {
   // Backfill breakdown for old matches
   for (var bi = 0; bi < matchesAll.length; bi++) {
@@ -2832,43 +2818,7 @@ function updateRankUI(matchesAll) {
   if (totalRP < MIN_RP) totalRP = MIN_RP;
 
   var rank = getRank(totalRP);
-  if (!rank) {
-    console.warn("Rank calc failed. totalRP=", totalRP);
-    return;
-  }
 
-  // ===== Player Hub (AAA) bindings =====
-  var hub = document.querySelector("#dashboard.hub");
-  if (hub) hub.style.setProperty("--hub-accent", rank.color);
-
-  var phRankLabel = document.getElementById("phRankLabel");
-  var phRRText = document.getElementById("phRRText");
-  var phProgressFill = document.getElementById("phProgressFill");
-  var phBadgeImg = document.getElementById("phBadgeImg");
-  var phMotivation = document.getElementById("phMotivation");
-
-  if (phRankLabel) phRankLabel.textContent = rank.label;
-
-  if (phRRText) {
-    phRRText.textContent = (rank.tierName === "EIDOLON")
-      ? ("RR: " + totalRP + " (MAX)")
-      : ("RR: " + totalRP + " / " + rank.nextMin);
-  }
-
-  if (phProgressFill) {
-    var pctPH = Math.round((rank.rr / (DIV_RR - 1)) * 100);
-    phProgressFill.style.width = pctPH + "%";
-  }
-
-  if (phBadgeImg && rank.tierName) {
-    phBadgeImg.src = "assets/ranks/" + rank.tierName.toLowerCase() + ".webp";
-  }
-
-  if (phMotivation) {
-    if (rank.tierName === "EIDOLON") phMotivation.textContent = "Goal: maintain the peak.";
-    else phMotivation.textContent = "Goal: reach the next division — then push for tier-up.";
-  }
-  
   var hud = document.getElementById("rankTierHUD");
 if (hud) {
   var dots = hud.querySelectorAll(".tierHUD__dot");
@@ -3111,79 +3061,6 @@ if (summaryEl) {
   if (changed) saveMatches(matchesAll);
 
   updateRankUI(activeMatchesAll);
-
-  // ===== Player Hub snapshot (ACTIVE season) =====
-  var activeIdHub = getActiveSeasonId();
-
-  var elSeason = document.getElementById("phSeasonId");
-  if (elSeason) elSeason.textContent = activeIdHub || "S1";
-
-  var statsHub = computeSeasonStats(activeMatchesAll);
-
-  var elMatches = document.getElementById("phMatches");
-  var elMatches2 = document.getElementById("phMatches2");
-  if (elMatches) elMatches.textContent = String(statsHub.matchesCount);
-  if (elMatches2) elMatches2.textContent = String(statsHub.matchesCount);
-
-  var elBest = document.getElementById("phBest");
-  var elWorst = document.getElementById("phWorst");
-  var elAvg = document.getElementById("phAvg");
-  var elBestWorst = document.getElementById("phBestWorst");
-
-  if (elBest) elBest.textContent = (statsHub.bestRR >= 0 ? "+" + statsHub.bestRR : String(statsHub.bestRR));
-  if (elWorst) elWorst.textContent = String(statsHub.worstRR);
-  if (elAvg) elAvg.textContent = String(statsHub.avgRR);
-  if (elBestWorst) {
-    var bTxt = (statsHub.bestRR >= 0 ? "+" + statsHub.bestRR : String(statsHub.bestRR));
-    var wTxt = String(statsHub.worstRR);
-    elBestWorst.textContent = bTxt + " / " + wTxt;
-  }
-
-  // top-3 streak (newest backward)
-  var sortedActiveHub = activeMatchesAll.slice().sort(function(a,b){
-    return Number(b.ts || 0) - Number(a.ts || 0);
-  });
-  var streakHub = 0;
-  for (var si=0; si<sortedActiveHub.length; si++){
-    if (Number(sortedActiveHub[si].place || 99) <= 3) streakHub++;
-    else break;
-  }
-  var elStreak = document.getElementById("phStreak");
-  if (elStreak) elStreak.textContent = String(streakHub);
-
-  // recent matches feed (top 5)
-  var phRecent = document.getElementById("phRecent");
-  if (phRecent){
-    phRecent.innerHTML = "";
-    var top = sortedActiveHub.slice(0, 5);
-
-    if (top.length === 0){
-      var empty = document.createElement("div");
-      empty.className = "muted";
-      empty.textContent = "No matches yet — add your first match to start tracking.";
-      phRecent.appendChild(empty);
-    } else {
-      for (var j=0; j<top.length; j++){
-        var m = top[j];
-        var row = document.createElement("div");
-        row.className = "feedRow";
-
-        var deltaClass = (Number(m.rp || 0) >= 0) ? "pos" : "neg";
-        var deltaText = (Number(m.rp || 0) >= 0) ? ("+" + m.rp) : String(m.rp);
-
-        row.innerHTML =
-          "<div class='feedLeft'>" +
-            "<div class='feedTop'>Match • Place " + m.place + " / 25</div>" +
-            "<div class='feedSub'>K/A/D: " + m.kills + "/" + m.assists + "/" + m.deaths +
-              " • " + new Date(Number(m.ts||0)).toLocaleString() + "</div>" +
-          "</div>" +
-          "<div class='feedDelta " + deltaClass + "'>" + deltaText + "</div>";
-
-        phRecent.appendChild(row);
-      }
-    }
-  }
-  
 
   // Display list: newest first, last 20
   var matches = selectedMatchesAll.slice();
