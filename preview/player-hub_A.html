@@ -2849,6 +2849,32 @@ function updateRankUI(matchesAll) {
   var phRankLabel = document.getElementById("phRankLabel");
   var phRRText = document.getElementById("phRRText");
   var phProgressFill = document.getElementById("phProgressFill");
+  // ===== Player Hub emblem (webp main + png fallback) =====
+  var phBadgeImg = document.getElementById("phBadgeImg");
+
+  if (phBadgeImg && rank.tierName) {
+    var key = String(rank.tierName).toLowerCase(); // "overlord", "monarch", etc
+
+    // MAIN: webp
+    phBadgeImg.src = "assets/ranks/" + key + ".webp";
+
+    // Fallback: png (only if webp fails)
+    phBadgeImg.onerror = function () {
+      this.onerror = null; // prevent loop
+      this.src = "assets/master/" + key + ".png";
+    };
+
+    // Normalize scale per rank (so icons don't "jump")
+    var hub = document.querySelector("#dashboard");
+    if (hub) {
+      var scale = 0.78; // base
+      if (key === "monarch") scale = 0.82;
+      if (key === "seraph") scale = 0.76;
+      if (key === "eidolon") scale = 0.80;
+      if (key === "outcast") scale = 0.74;
+      hub.style.setProperty("--icon-scale", String(scale));
+    }
+  }
 
   if (phRankLabel) phRankLabel.textContent = rank.label;
 
