@@ -2198,24 +2198,58 @@ function playSfx(mode) {
   }
 }
   
-/* ===== NAV ===== */
 function showTab(tabId, btn) {
+  // 1) hide all sections
   var sections = document.querySelectorAll(".section");
-  for (var i = 0; i < sections.length; i++) sections[i].classList.remove("active");
+  for (var i = 0; i < sections.length; i++) {
+    sections[i].classList.remove("active");
+  }
 
+  // 2) deactivate all nav buttons
   var buttons = document.querySelectorAll(".nav-btn");
-  for (var j = 0; j < buttons.length; j++) buttons[j].classList.remove("active");
+  for (var j = 0; j < buttons.length; j++) {
+    buttons[j].classList.remove("active");
+  }
 
+  // 3) show target section
   var target = document.getElementById(tabId);
-  if (target) target.classList.add("active");
-  // Lock RP: when going to ADD MATCH, always switch viewing to ACTIVE season
+  if (target) {
+    target.classList.add("active");
+  } else {
+    console.warn("showTab: missing section id =", tabId);
+  }
+
+  // 4) season lock for ADD tab
   if (tabId === "add") {
     ensureSeasonSystem();
     var activeId = getActiveSeasonId();
     if (activeId) setSelectedSeasonId(activeId);
   }
-  if (btn) btn.classList.add("active");
+
+  // 5) activate clicked button
+  if (btn && btn.classList) btn.classList.add("active");
 }
+  // Safety: ensure navbar always switches tabs even if inline onclick glitches
+(function bindNavClicks(){
+  var map = {
+    "PLAYER HUB": "dashboard",
+    "RANK": "rank",
+    "MATCH HISTORY": "history",
+    "ADD MATCH": "add"
+  };
+
+  var btns = document.querySelectorAll(".nav-btn");
+  for (var i = 0; i < btns.length; i++) {
+    (function(b){
+      b.addEventListener("click", function(){
+        var key = (b.textContent || "").trim().toUpperCase();
+        var id = map[key];
+        if (id) showTab(id, b);
+      });
+    })(btns[i]);
+  }
+})();
+  
 
 /* ===== STORAGE ===== */
 var STORAGE_KEY = "bf6_ranked_matches_v1";
