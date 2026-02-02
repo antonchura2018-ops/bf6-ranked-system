@@ -450,8 +450,8 @@ body{ margin:0; font-family: var(--font-body); }
   object-fit: contain;
   filter: drop-shadow(0 0 18px rgba(255,255,255,.20));
 }
-/* ===== Ensure tab sections always work ===== */
-.section{ display:none; }
-.section.active{ display:block; }
+/* ===== FIX: tabs visibility ===== */
+.section{ display:none !important; }
+.section.active{ display:block !important; }
 
 
