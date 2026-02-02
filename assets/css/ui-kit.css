@@ -490,3 +490,8 @@ body{ margin:0; font-family: var(--font-body); }
 
 /* Prevent other layers from stealing clicks */
 .app, .section, .card{ position: relative; z-index: 1; }
+
+/* safety: award overlay should not block UI when closed */
+#award{ pointer-events: none; }
+#award.is-open{ pointer-events: auto; }
+
