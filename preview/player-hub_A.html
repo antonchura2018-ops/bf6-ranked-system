@@ -2950,23 +2950,21 @@ function updateRankUI(matchesAll) {
   // ===== Player Hub emblem (webp main + png fallback) =====
   var phBadgeImg = document.getElementById("phBadgeImg");
 
-  if (phBadgeImg && rank.tierName) {
-    var key = String(rank.tierName).toLowerCase(); // "overlord", "monarch", etc
+  if (phBadgeImg && rank && rank.tierName) {
+    var key = String(rank.tierName).toLowerCase(); // "monarch", "overlord", etc
 
-    // MAIN: webp
     phBadgeImg.src = "assets/ranks/" + key + ".webp";
 
-    // Fallback: png (only if webp fails)
+    // fallback to PNG if webp missing
     phBadgeImg.onerror = function () {
-      this.onerror = null; // prevent loop
+      this.onerror = null;
       this.src = "assets/master/" + key + ".png";
     };
 
-    // Normalize scale per rank (so icons don't "jump")
-    var hub = document.querySelector("#dashboard");
+    // normalize icon scale so silhouettes feel same size
     if (hub) {
       var scale = 0.78; // base
-      if (key === "monarch") scale = 0.82;
+      if (key === "monarch") scale = 0.84;
       if (key === "seraph") scale = 0.76;
       if (key === "eidolon") scale = 0.80;
       if (key === "outcast") scale = 0.74;
