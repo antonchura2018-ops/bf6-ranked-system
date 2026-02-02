@@ -1885,65 +1885,67 @@ body{
   <div class="page-subtitle">Your ranked progression at a glance.</div>
 
   <div class="grid-hero">
-    <!-- HERO: Rank summary -->
-    <div class="card pad interactive">
-      <div class="kicker">Current Status</div>
+  <!-- HERO: Rank summary -->
+  <div class="card pad interactive">
+    <div class="kicker">Current Status</div>
 
-      <div style="display:flex; align-items:center; justify-content:space-between; gap:16px; margin-top:14px; flex-wrap:wrap;">
-        <div>
-          <div style="font-family:var(--font-ui); font-size:32px; font-weight:900; letter-spacing:.06em; color:var(--text-strong);" id="phRankLabel">PHANTOM II</div>
-          <div class="muted" style="margin-top:6px;" id="phRRText">RR: 1250 / 1500</div>
-        </div>
-
-        <div style="display:flex; gap:10px; flex-wrap:wrap;">
-          <button class="btn primary" type="button" onclick="showTab('rank', document.querySelectorAll('.nav-btn')[1])">View Rank</button>
-          <button class="btn" type="button" onclick="showTab('add', document.querySelectorAll('.nav-btn')[3])">Add Match</button>
-          <button class="btn danger" type="button" onclick="startNewSeason()">New Season</button>
-        </div>
+    <div style="display:flex; align-items:center; justify-content:space-between; gap:16px; margin-top:14px; flex-wrap:wrap;">
+      <div>
+        <div style="font-family:var(--font-ui); font-size:32px; font-weight:900; letter-spacing:.06em; color:var(--text-strong);" id="phRankLabel">PHANTOM II</div>
+        <div class="muted" style="margin-top:6px;" id="phRRText">RR: 1250 / 1500</div>
       </div>
 
-      <div class="progress"><div id="phProgressFill" style="width:83%"></div></div>
-      <div class="muted" style="margin-top:10px;">
-        Goal: reach next division / tier — keep the streak alive.
-</div>
-      
-      <div class="hubHeroBottom">
-  <div class="hubStatusPills">
-    <span class="pill">Tier <strong id="phTier">I</strong></span>
-    <span class="pill">Next <strong id="phNext">2100</strong></span>
-    <span class="pill" id="phStatePill">Status <strong id="phState">Stable</strong></span>
-  </div>
-
-  <div class="hubEmblem">
-    <img id="phBadgeImg" src="assets/ranks/overlord.webp" alt="Rank emblem">
-  </div>
-</div>
-
-   <!-- SIDE: Quick stats -->
-    <div class="card pad">
-      <div class="kicker">Session</div>
-
-      <div style="margin-top:14px; display:grid; gap:12px;">
-        <div class="tile">
-          <div class="k">Matches</div>
-          <div class="v" id="phMatches">0</div>
-          <div class="sub">This season total</div>
-        </div>
-
-        <div class="tile">
-          <div class="k">Win Streak</div>
-          <div class="v" id="phStreak">0</div>
-          <div class="sub">Top-3 streak</div>
-        </div>
-
-        <div class="tile">
-          <div class="k">Average RR</div>
-          <div class="v" id="phAvg">0</div>
-          <div class="sub">Avg RR / match</div>
-        </div>
+      <div style="display:flex; gap:10px; flex-wrap:wrap;">
+        <button class="btn primary" type="button" onclick="showTab('rank', document.querySelectorAll('.nav-btn')[1])">View Rank</button>
+        <button class="btn" type="button" onclick="showTab('add', document.querySelectorAll('.nav-btn')[3])">Add Match</button>
+        <button class="btn danger" type="button" onclick="startNewSeason()">New Season</button>
       </div>
     </div>
-  </div><!-- /grid-hero -->
+
+    <div class="progress"><div id="phProgressFill" style="width:83%"></div></div>
+
+    <div class="muted" style="margin-top:10px;">
+      Goal: reach next division / tier — keep the streak alive.
+    </div>
+
+    <div class="hubHeroBottom">
+      <div class="hubStatusPills">
+        <span class="pill">Tier <strong id="phTier">I</strong></span>
+        <span class="pill">Next <strong id="phNext">2100</strong></span>
+        <span class="pill" id="phStatePill">Status <strong id="phState">Stable</strong></span>
+      </div>
+
+      <div class="hubEmblem">
+        <img id="phBadgeImg" src="assets/ranks/overlord.webp" alt="Rank emblem">
+      </div>
+    </div>
+  </div><!-- /HERO card -->
+
+  <!-- SIDE: Quick stats -->
+  <div class="card pad">
+    <div class="kicker">Session</div>
+
+    <div style="margin-top:14px; display:grid; gap:12px;">
+      <div class="tile">
+        <div class="k">Matches</div>
+        <div class="v" id="phMatches">0</div>
+        <div class="sub">This season total</div>
+      </div>
+
+      <div class="tile">
+        <div class="k">Win Streak</div>
+        <div class="v" id="phStreak">0</div>
+        <div class="sub">Top-3 streak</div>
+      </div>
+
+      <div class="tile">
+        <div class="k">Average RR</div>
+        <div class="v" id="phAvg">0</div>
+        <div class="sub">Avg RR / match</div>
+      </div>
+    </div>
+   </div>
+</div><!-- /grid-hero -->
 
   <!-- TILES -->
   <div class="tiles">
