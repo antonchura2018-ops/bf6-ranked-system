@@ -557,3 +557,88 @@ body{ margin:0; font-family: var(--font-body); }
   outline-offset: 6px;
   border-radius: 999px;
 }
+/* =========================================
+   Emblem Platform v2 — premium glass/metal
+   ========================================= */
+
+.hubEmblem{
+  /* тонша рамка і більш преміум градієнт */
+  border-color: color-mix(in srgb, var(--hub-accent) 20%, rgba(255,255,255,.10));
+  background:
+    radial-gradient(circle at 35% 30%,
+      rgba(255,255,255,.08),
+      rgba(255,255,255,.02) 45%,
+      transparent 70%),
+    radial-gradient(circle at 50% 60%,
+      color-mix(in srgb, var(--hub-accent) 14%, transparent),
+      transparent 70%),
+    linear-gradient(180deg,
+      rgba(255,255,255,.06),
+      rgba(0,0,0,.18));
+}
+
+/* внутрішнє кільце (тонке) */
+.hubEmblem{
+  outline: 1px solid rgba(255,255,255,.06);
+  outline-offset: -10px;
+}
+
+/* glint sweep (дуже легкий, раз в кілька секунд) */
+.hubEmblem::after{
+  content:"";
+  position:absolute;
+  inset:-40%;
+  background: linear-gradient(90deg,
+    transparent,
+    rgba(255,255,255,.10),
+    transparent
+  );
+  transform: translateX(-60%) skewX(-18deg);
+  opacity: .0;
+  pointer-events:none;
+  animation: emblemGlint 6.5s ease-in-out infinite;
+}
+
+@keyframes emblemGlint{
+  0%,70%{ opacity:0; transform: translateX(-60%) skewX(-18deg); }
+  78%{ opacity:.45; }
+  90%{ opacity:0; transform: translateX(70%) skewX(-18deg); }
+  100%{ opacity:0; }
+}
+
+/* зменшуємо “важкість” конічного кільця */
+.hubEmblem::before{
+  opacity: .42 !important;
+}
+/* =========================================
+   Status pill — state colors
+   ========================================= */
+#phStatePill{
+  transition: border-color .2s ease, box-shadow .2s ease, background .2s ease;
+}
+
+#phStatePill.is-promo{
+  border-color: rgba(34,197,94,.45) !important;
+  box-shadow: 0 0 16px rgba(34,197,94,.14);
+}
+
+#phStatePill.is-risk{
+  border-color: rgba(255,59,92,.45) !important;
+  box-shadow: 0 0 16px rgba(255,59,92,.12);
+}
+
+#phStatePill.is-promo strong{
+  color: rgba(34,197,94,.95);
+}
+#phStatePill.is-risk strong{
+  color: rgba(255,59,92,.95);
+}
+
+/* promo pulse — дуже акуратно */
+#phStatePill.is-promo{
+  animation: promoPulse 2.2s ease-in-out infinite;
+}
+@keyframes promoPulse{
+  0%,100%{ box-shadow: 0 0 14px rgba(34,197,94,.10); }
+  50%{ box-shadow: 0 0 24px rgba(34,197,94,.18); }
+}
