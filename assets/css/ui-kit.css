@@ -464,3 +464,17 @@ body{ margin:0; font-family: var(--font-body); }
   .section{ padding: 26px; }
 }
 
+/* ===== HARD FIX: tabs visibility on top of mixed CSS ===== */
+.section { display: none !important; }
+.section.active { display: block !important; }
+
+/* ensure sections have space under sticky nav */
+.section {
+  max-width: 1240px !important;
+  margin: 0 auto !important;
+  padding: 50px !important;
+  min-height: calc(100vh - 120px) !important;
+}
+@media (max-width: 980px){
+  .section { padding: 26px !important; }
+}
