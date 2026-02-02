@@ -439,7 +439,7 @@ body{ margin:0; font-family: var(--font-body); }
     color-mix(in srgb, var(--hub-accent) 14%, transparent) 230deg,
     transparent 360deg
   );
-  opacity:.9;
+  opacity:.55;
   animation: emblemSpin 10s linear infinite;
 }
 
@@ -503,3 +503,57 @@ body{ margin:0; font-family: var(--font-body); }
 /* If something draws above the icon, kill it */
 .hubEmblem::after{ content:none !important; }
 
+/* =========================================
+   Player Hub Emblem — AAA polish (idle/hover)
+   ========================================= */
+
+.hubEmblem{
+  /* soften & premium */
+  transform: translateZ(0);
+  transition: transform .22s cubic-bezier(.2,.9,.2,1),
+              box-shadow .22s ease,
+              border-color .22s ease;
+}
+
+/* subtle idle "breathing" (AAA-like) */
+.hubEmblem::before{
+  transform-origin: 50% 50%;
+  animation: emblemSpin 10s linear infinite, emblemBreath 3.6s ease-in-out infinite;
+}
+
+@keyframes emblemBreath{
+  0%,100%{ opacity:.70; transform: scale(1); }
+  50%{ opacity:.95; transform: scale(1.04); }
+}
+
+/* make icon feel "alive", not static */
+.hubEmblem img{
+  transition: transform .22s cubic-bezier(.2,.9,.2,1),
+              filter .22s ease,
+              opacity .22s ease;
+  opacity: .98;
+}
+
+/* hover: slight lift + stronger glow (controlled) */
+.hubEmblem:hover{
+  transform: translateY(-2px) scale(1.015);
+  border-color: color-mix(in srgb, var(--hub-accent) 38%, rgba(255,255,255,.12));
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,.06),
+    0 0 52px color-mix(in srgb, var(--hub-accent) 18%, transparent),
+    0 26px 90px rgba(0,0,0,.52);
+}
+
+.hubEmblem:hover img{
+  transform: translateZ(0) scale(calc(var(--icon-scale, .78) * 1.06));
+  filter:
+    drop-shadow(0 0 22px rgba(0,0,0,.40))
+    drop-shadow(0 0 18px color-mix(in srgb, var(--hub-accent) 22%, transparent));
+}
+
+/* focus style (keyboard accessibility) */
+.hubEmblem:focus-within{
+  outline: 2px solid color-mix(in srgb, var(--hub-accent) 45%, transparent);
+  outline-offset: 6px;
+  border-radius: 999px;
+}
