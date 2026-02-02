@@ -49,3 +49,8 @@ body{
     radial-gradient(circle at top, var(--bg-1), var(--bg-0));
   color: var(--text);
 }
+.hubEmblem img{
+  transform: translateZ(0) scale(var(--icon-scale, .78));
+  object-fit: contain;
+}
+
