@@ -1853,6 +1853,12 @@ body{
   padding: 50px !important;
   box-sizing: border-box !important;
 }
+  /* ===== FIX: section collapses to 0x0 due to contain/content-visibility/etc ===== */
+.section{
+  contain: none !important;
+  content-visibility: visible !important;
+  contain-intrinsic-size: auto !important;
+}
   
 </style>
   <!-- ===== END OF CSS ===== -->
