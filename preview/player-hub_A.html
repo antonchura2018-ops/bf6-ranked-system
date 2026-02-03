@@ -2509,6 +2509,78 @@ var MIN_RP = 0;
 var DIV_RR = 100;
 var DIVS_PER_TIER = 3;
 
+  /* ===========================
+   DEBUG RANK SWITCHER (TEMP)
+   =========================== */
+const DEBUG_RANK = true; // <- постав false коли не треба
+
+// порядок 10 рангів (ВАЖЛИВО: має збігатися з назвами tierName у getRank())
+const DEBUG_TIERS = [
+  "OUTCAST","THRALL","MARAUDER","HARBINGER","REAPER",
+  "ARCHON","OVERLORD","MONARCH","SERAPH","EIDOLON"
+];
+
+// бере середину тиру (щоб точно попало у цей ранг)
+function debugRPForTier(tierName){
+  // ВАЖЛИВО: тут ми використовуємо твою таблицю рангу.
+  // getRank(totalRP) у тебе вже існує, тому робимо підбір RP перебором.
+  // Знайдемо мінімальний RP, який дає потрібний tierName, і візьмемо +DIV_RR/2.
+  for (let rp = MIN_RP; rp <= 999999; rp += 1) {
+    const r = getRank(rp);
+    if (r && String(r.tierName).toUpperCase() === String(tierName).toUpperCase()) {
+      // середина тиру
+      return rp + Math.floor(DIV_RR * 0.5);
+    }
+    // safety stop (щоб не зависло якщо щось не так)
+    if (rp > 200000) break;
+  }
+  return START_RP;
+}
+
+function debugSetTier(tierName){
+  const targetTotal = debugRPForTier(tierName);
+
+  // тимчасово підміняємо totalRP через "фейкові матчі"
+  // зробимо 1 матч з rp так, щоб START_RP + sum = targetTotal
+  const need = targetTotal - START_RP;
+  const fake = [{ rp: need, breakdown: { total: need } }];
+
+  updateRankUI(fake);
+
+  // маленький лог щоб тобі легко було мені скидати
+  console.log("[DEBUG] tier =", tierName, "totalRP =", targetTotal);
+}
+
+function debugStep(dir){
+  const currentLabel = (document.getElementById("phRankLabel")?.textContent || "").toUpperCase();
+  // знаходимо поточний tier по тексту (перший токен)
+  const currentTier = DEBUG_TIERS.find(t => currentLabel.includes(t)) || DEBUG_TIERS[0];
+  let idx = DEBUG_TIERS.indexOf(currentTier);
+  idx = (idx + dir + DEBUG_TIERS.length) % DEBUG_TIERS.length;
+  debugSetTier(DEBUG_TIERS[idx]);
+}
+
+if (DEBUG_RANK){
+  window.addEventListener("keydown", (e)=>{
+    // ігноруємо коли пишеш у input/textarea
+    const tag = (document.activeElement?.tagName || "").toLowerCase();
+    if (tag === "input" || tag === "textarea") return;
+
+    // 1..9 = 1..9 ранг, 0 = 10-й (EIDOLON)
+    if (e.key >= "1" && e.key <= "9") {
+      const idx = Number(e.key) - 1;
+      debugSetTier(DEBUG_TIERS[idx]);
+    }
+    if (e.key === "0") debugSetTier(DEBUG_TIERS[9]);
+
+    // швидке листання
+    if (e.key === "[" ) debugStep(-1);
+    if (e.key === "]" ) debugStep(+1);
+  });
+
+  console.log("[DEBUG] Rank switcher ON: keys 1-0, [ ]");
+}
+
 /*
 IMPORTANT:
 To have exactly 3 divisions per tier (III/II/I), each tier should span 300 RR.
