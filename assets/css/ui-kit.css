@@ -539,6 +539,7 @@ body{ margin:0; font-family: var(--font-body); }
   position:absolute;
   inset:-20px;
   border-radius:999px;
+
   background: conic-gradient(
     from 0deg,
     transparent 0deg,
@@ -547,12 +548,17 @@ body{ margin:0; font-family: var(--font-body); }
     color-mix(in srgb, var(--hub-accent) 22%, transparent) 250deg,
     transparent 360deg
   );
+
   opacity: calc(var(--aura, .5) + .2);
-  animation: hubSpin var(--spin-speed, 14s) linear infinite;
   pointer-events:none;
   z-index: 0;
   filter: blur(var(--ring-blur, 0px));
   transform-origin: 50% 50%;
+
+  /* ✅ ОДИН animation — без дублів */
+  animation:
+    hubSpin var(--spin-speed, 14s) linear infinite,
+    hubBreath var(--breath-speed, 3.8s) ease-in-out infinite;
 }
 
 /* outer glow */
