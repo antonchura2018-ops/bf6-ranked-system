@@ -534,7 +534,6 @@ body{ margin:0; font-family: var(--font-body); }
 }
 
 
-/* energy ring */
 .hubEmblem::before{
   content:"";
   position:absolute;
@@ -548,15 +547,16 @@ body{ margin:0; font-family: var(--font-body); }
     color-mix(in srgb, var(--hub-accent) 22%, transparent) 250deg,
     transparent 360deg
   );
+
   opacity: calc(var(--aura, .5) + .2);
-  animation: hubSpin var(--spin-speed, 14s) linear infinite;
   pointer-events:none;
   z-index: 0;
+
   filter: blur(var(--ring-blur, 0px));
   transform-origin: 50% 50%;
   animation:
-  hubSpin var(--spin-speed, 14s) linear infinite,
-  hubBreath var(--breath-speed, 3.8s) ease-in-out infinite;
+    hubSpin var(--spin-speed, 14s) linear infinite,
+    hubBreath var(--breath-speed, 3.8s) ease-in-out infinite;
 }
 
 /* outer glow */
@@ -599,7 +599,8 @@ body{ margin:0; font-family: var(--font-body); }
   from{ transform: rotate(0deg); }
   to{ transform: rotate(360deg); }
 }
-@keyframes hubBreath{
+
+  @keyframes hubBreath{
   0%,100%{ transform: scale(1); }
   50%{ transform: scale(calc(1 + var(--breath, .03))); }
 }
