@@ -509,6 +509,30 @@ body{ margin:0; font-family: var(--font-body); }
   pointer-events:none;
   z-index: 1;
 }
+/* glint sweep (premium light pass) */
+.hubEmblem .ring::after{
+  content:"";
+  position:absolute;
+  inset:-40%;
+  border-radius:999px;
+  background: linear-gradient(90deg,
+    transparent,
+    rgba(255,255,255,.12),
+    transparent
+  );
+  transform: translateX(-65%) skewX(-18deg);
+  opacity: 0;
+  pointer-events:none;
+  animation: hubGlint var(--glint-speed, 7.5s) ease-in-out infinite;
+}
+
+@keyframes hubGlint{
+  0%,72%{ opacity:0; transform: translateX(-65%) skewX(-18deg); }
+  80%{ opacity: var(--glint, .35); }
+  92%{ opacity:0; transform: translateX(75%) skewX(-18deg); }
+  100%{ opacity:0; }
+}
+
 
 /* energy ring */
 .hubEmblem::before{
@@ -528,6 +552,11 @@ body{ margin:0; font-family: var(--font-body); }
   animation: hubSpin var(--spin-speed, 14s) linear infinite;
   pointer-events:none;
   z-index: 0;
+  filter: blur(var(--ring-blur, 0px));
+  transform-origin: 50% 50%;
+  animation:
+  hubSpin var(--spin-speed, 14s) linear infinite,
+  hubBreath var(--breath-speed, 3.8s) ease-in-out infinite;
 }
 
 /* outer glow */
@@ -569,6 +598,10 @@ body{ margin:0; font-family: var(--font-body); }
 @keyframes hubSpin{
   from{ transform: rotate(0deg); }
   to{ transform: rotate(360deg); }
+}
+@keyframes hubBreath{
+  0%,100%{ transform: scale(1); }
+  50%{ transform: scale(calc(1 + var(--breath, .03))); }
 }
 
 /* =========================================
