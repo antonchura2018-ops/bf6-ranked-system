@@ -3084,16 +3084,22 @@ if (hub && rank) {
       this.src = "assets/master/" + key + ".png";
     };
 
-    // normalize icon scale so silhouettes feel same size
+    // normalize icon scale so silhouettes feel same size (10 ranks)
     if (hub) {
       var scale = 0.78; // base
-      if (key === "monarch") scale = 0.84;
-      if (key === "seraph") scale = 0.76;
-      if (key === "eidolon") scale = 0.80;
-      if (key === "outcast") scale = 0.74;
+      if (key === "outcast")   scale = 0.74;
+      if (key === "thrall")    scale = 0.76;
+      if (key === "marauder")  scale = 0.78;
+      if (key === "harbinger") scale = 0.79;
+      if (key === "reaper")    scale = 0.80;
+      if (key === "archon")    scale = 0.80;
+      if (key === "overlord")  scale = 0.82;
+      if (key === "monarch")   scale = 0.84;
+      if (key === "seraph")    scale = 0.78;
+      if (key === "eidolon")   scale = 0.82;
       hub.style.setProperty("--icon-scale", String(scale));
     }
-  }
+}
 
   if (phRankLabel) phRankLabel.textContent = rank.label;
 
