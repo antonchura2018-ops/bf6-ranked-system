@@ -3083,6 +3083,13 @@ if (hub && rank) {
       this.onerror = null;
       this.src = "assets/master/" + key + ".png";
     };
+    
+    if (hub && rank.profile) {
+  hub.style.setProperty("--icon-scale", rank.profile.iconScale);
+  hub.style.setProperty("--spin-speed", rank.profile.spinSpeed + "s");
+  hub.style.setProperty("--aura", rank.profile.auraStrength);
+}
+    
 
     // normalize icon scale so silhouettes feel same size (10 ranks)
     if (hub) {
