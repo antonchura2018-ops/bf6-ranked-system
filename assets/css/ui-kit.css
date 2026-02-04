@@ -555,8 +555,7 @@ body{ margin:0; font-family: var(--font-body); }
   filter: blur(var(--ring-blur, 0px));
   transform-origin: 50% 50%;
   animation:
-    hubSpin var(--spin-speed, 14s) linear infinite,
-    hubBreath var(--breath-speed, 3.8s) ease-in-out infinite;
+  animation: hubSpin var(--spin-speed, 14s) linear infinite;
 }
 
 /* outer glow */
@@ -573,6 +572,7 @@ body{ margin:0; font-family: var(--font-body); }
   opacity: var(--hub-after-opacity, .55);
   pointer-events:none;
   z-index: 0;
+  animation: hubGlowBreath var(--breath-speed, 3.8s) ease-in-out infinite;
 }
 
 .hubEmblem img{
@@ -600,9 +600,9 @@ body{ margin:0; font-family: var(--font-body); }
   to{ transform: rotate(360deg); }
 }
 
-  @keyframes hubBreath{
-  0%,100%{ transform: scale(1); }
-  50%{ transform: scale(calc(1 + var(--breath, .03))); }
+  @keyframes hubGlowBreath{
+  0%,100%{ opacity: calc(var(--hub-after-opacity, .55) * .85); }
+  50%{ opacity: calc(var(--hub-after-opacity, .55) * 1.15); }
 }
 
 /* =========================================
