@@ -549,10 +549,13 @@ body{ margin:0; font-family: var(--font-body); }
     transparent 360deg
   );
 
- opacity: calc(var(--aura, .5) + .2);
+  opacity: calc(var(--aura, .5) + .2);
+  pointer-events:none;
+  z-index: 0;
   filter: blur(var(--ring-blur, 0px));
   transform-origin: 50% 50%;
 
+  /* ✅ ОДИН animation — без дублів */
   animation:
     hubSpin var(--spin-speed, 14s) linear infinite,
     hubBreath var(--breath-speed, 3.8s) ease-in-out infinite;
