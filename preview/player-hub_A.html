@@ -3064,30 +3064,32 @@ if (hub && rank) {
   hub.style.setProperty("--hub-after-opacity", afterOpacity);
 }
 
-  // ===== HUB EMBLEM FX PROFILE (10 ranks) =====
+   // ===== Player Hub header bindings (safe) =====
+  if (hub) hub.style.setProperty("--hub-accent", rank.color);
+  // ===== Hub Emblem FX tuning (10 ranks) =====
 if (hub && rank && rank.tierName) {
-  var k = String(rank.tierName).toLowerCase();
+  var keyFx = String(rank.tierName).toLowerCase();
 
   // defaults (mid tiers)
-  var spin = "14s";
-  var aura = "0.50";
-  var glint = "0.30";
+  var spin = "14s";     // ring rotation
+  var aura = "0.50";    // ring opacity driver
+  var glint = "0.30";   // glint strength
   var glintSpeed = "7.5s";
-  var breath = "0.030";
+  var breath = "0.03";  // scale pulse amount
   var breathSpeed = "3.8s";
   var ringBlur = "0px";
-  var hubGlow = "46px";
 
-  if (k === "outcast")   { spin="18s"; aura="0.26"; glint="0.16"; glintSpeed="9s";   breath="0.014"; breathSpeed="4.8s"; ringBlur="0px"; hubGlow="26px"; }
-  if (k === "thrall")    { spin="17s"; aura="0.30"; glint="0.18"; glintSpeed="8.8s"; breath="0.016"; breathSpeed="4.6s"; ringBlur="0px"; hubGlow="30px"; }
-  if (k === "marauder")  { spin="16s"; aura="0.36"; glint="0.20"; glintSpeed="8.4s"; breath="0.020"; breathSpeed="4.3s"; ringBlur="0px"; hubGlow="34px"; }
-  if (k === "harbinger") { spin="15s"; aura="0.42"; glint="0.24"; glintSpeed="8.0s"; breath="0.024"; breathSpeed="4.0s"; ringBlur="0px"; hubGlow="38px"; }
-  if (k === "reaper")    { spin="14s"; aura="0.50"; glint="0.28"; glintSpeed="7.4s"; breath="0.028"; breathSpeed="3.8s"; ringBlur="0px"; hubGlow="42px"; }
-  if (k === "archon")    { spin="13s"; aura="0.56"; glint="0.32"; glintSpeed="7.0s"; breath="0.032"; breathSpeed="3.6s"; ringBlur="0px"; hubGlow="48px"; }
-  if (k === "overlord")  { spin="12s"; aura="0.62"; glint="0.36"; glintSpeed="6.6s"; breath="0.036"; breathSpeed="3.4s"; ringBlur="0px"; hubGlow="54px"; }
-  if (k === "monarch")   { spin="11s"; aura="0.68"; glint="0.40"; glintSpeed="6.2s"; breath="0.040"; breathSpeed="3.2s"; ringBlur="0px"; hubGlow="60px"; }
-  if (k === "seraph")    { spin="10s"; aura="0.74"; glint="0.44"; glintSpeed="5.8s"; breath="0.046"; breathSpeed="3.0s"; ringBlur="0px"; hubGlow="68px"; }
-  if (k === "eidolon")   { spin="9s";  aura="0.82"; glint="0.52"; glintSpeed="5.0s"; breath="0.056"; breathSpeed="2.6s"; ringBlur="1px"; hubGlow="78px"; }
+  // 10 ranks: outcast, thrall, marauder, harbinger, reaper, archon, overlord, monarch, seraph, eidolon
+  if (keyFx === "outcast")   { spin="18s"; aura="0.28"; glint="0.18"; glintSpeed="9s";   breath="0.015"; breathSpeed="4.6s"; ringBlur="0px"; }
+  if (keyFx === "thrall")    { spin="17s"; aura="0.32"; glint="0.20"; glintSpeed="8.8s"; breath="0.018"; breathSpeed="4.4s"; ringBlur="0px"; }
+  if (keyFx === "marauder")  { spin="16s"; aura="0.38"; glint="0.22"; glintSpeed="8.4s"; breath="0.022"; breathSpeed="4.1s"; ringBlur="0px"; }
+  if (keyFx === "harbinger") { spin="15s"; aura="0.44"; glint="0.26"; glintSpeed="8.0s"; breath="0.026"; breathSpeed="3.9s"; ringBlur="0px"; }
+  if (keyFx === "reaper")    { spin="14s"; aura="0.52"; glint="0.30"; glintSpeed="7.4s"; breath="0.030"; breathSpeed="3.7s"; ringBlur="0px"; }
+  if (keyFx === "archon")    { spin="13s"; aura="0.58"; glint="0.34"; glintSpeed="7.0s"; breath="0.034"; breathSpeed="3.6s"; ringBlur="0px"; }
+  if (keyFx === "overlord")  { spin="12s"; aura="0.64"; glint="0.38"; glintSpeed="6.6s"; breath="0.038"; breathSpeed="3.4s"; ringBlur="0px"; }
+  if (keyFx === "monarch")   { spin="11s"; aura="0.70"; glint="0.42"; glintSpeed="6.2s"; breath="0.042"; breathSpeed="3.2s"; ringBlur="0px"; }
+  if (keyFx === "seraph")    { spin="10s"; aura="0.76"; glint="0.46"; glintSpeed="5.8s"; breath="0.048"; breathSpeed="3.0s"; ringBlur="0px"; }
+  if (keyFx === "eidolon")   { spin="9s";  aura="0.86"; glint="0.55"; glintSpeed="5.0s"; breath="0.060"; breathSpeed="2.6s"; ringBlur="1px"; }
 
   hub.style.setProperty("--spin-speed", spin);
   hub.style.setProperty("--aura", aura);
@@ -3096,7 +3098,6 @@ if (hub && rank && rank.tierName) {
   hub.style.setProperty("--breath", breath);
   hub.style.setProperty("--breath-speed", breathSpeed);
   hub.style.setProperty("--ring-blur", ringBlur);
-  hub.style.setProperty("--hub-glow", hubGlow);
 }
 
   var phRankLabel = document.getElementById("phRankLabel");
