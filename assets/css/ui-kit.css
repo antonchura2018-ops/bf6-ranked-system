@@ -554,7 +554,6 @@ body{ margin:0; font-family: var(--font-body); }
 
   filter: blur(var(--ring-blur, 0px));
   transform-origin: 50% 50%;
-  animation:
   animation: hubSpin var(--spin-speed, 14s) linear infinite;
 }
 
