@@ -3102,6 +3102,47 @@ if (hub && rank && rank.tierName) {
   var phRankLabel = document.getElementById("phRankLabel");
   var phRRText = document.getElementById("phRRText");
   var phProgressFill = document.getElementById("phProgressFill");
+  // ===== Player Hub state: STABLE / PROMO / RISK =====
+  var phTier = document.getElementById("phTier");
+  var phNext = document.getElementById("phNext");
+  var phState = document.getElementById("phState");
+  var phStatePill = document.getElementById("phStatePill");
+
+  // thresholds (tune later if needed)
+  var PROMO_WINDOW = 25; // last 25 RR before next threshold
+  var RISK_WINDOW  = 20; // first 20 RR after a threshold (near drop)
+
+  // defaults
+  var stateLabel = "Stable";
+  var pillClassPromo = "is-promo";
+  var pillClassRisk  = "is-risk";
+
+  // compute tier/next text
+  if (phTier) {
+    phTier.textContent = (rank.tierName === "EIDOLON") ? "MAX" : (["I","II","III"][rank.divIndex] || "I");
+  }
+  if (phNext) {
+    phNext.textContent = (rank.tierName === "EIDOLON") ? "MAX" : String(rank.nextMin);
+  }
+
+  // state logic
+  if (rank.tierName === "EIDOLON") {
+    stateLabel = "PEAK";
+  } else {
+    // rank.rr is 0..(DIV_RR-1)
+    if (rank.rr >= (DIV_RR - 1 - PROMO_WINDOW)) stateLabel = "Promo";
+    else if (rank.rr <= RISK_WINDOW) stateLabel = "Risk";
+    else stateLabel = "Stable";
+  }
+
+  if (phState) phState.textContent = stateLabel.toUpperCase();
+
+  if (phStatePill) {
+    phStatePill.classList.remove(pillClassPromo, pillClassRisk);
+    if (stateLabel === "Promo") phStatePill.classList.add(pillClassPromo);
+    if (stateLabel === "Risk") phStatePill.classList.add(pillClassRisk);
+  }
+  
   // ===== Player Hub emblem (webp main + png fallback) =====
   var phBadgeImg = document.getElementById("phBadgeImg");
 
