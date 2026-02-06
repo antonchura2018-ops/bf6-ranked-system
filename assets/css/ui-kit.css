@@ -533,6 +533,34 @@ body{ margin:0; font-family: var(--font-body); }
   100%{ opacity:0; }
 }
 
+.hubEmblem .hubAuraSpin{
+  position:absolute;
+  inset:-20px;
+  border-radius:999px;
+
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    color-mix(in srgb, var(--hub-accent) 38%, transparent) 70deg,
+    transparent 150deg,
+    color-mix(in srgb, var(--hub-accent) 22%, transparent) 250deg,
+    transparent 360deg
+  );
+
+  opacity: calc(var(--aura, .5) + .2);
+  pointer-events:none;
+  z-index: 0;
+
+  filter: blur(var(--ring-blur, 0px));
+  transform-origin: 50% 50%;
+  animation-name: hubSpin;
+  animation-duration: var(--spin-speed, 14s);
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+
+  will-change: transform;
+  transform: translateZ(0);
+}
 
 .hubEmblem::before{
   content:"";
