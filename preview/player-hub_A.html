@@ -1911,7 +1911,7 @@ body{
           <div class="rankProgressBar">
             <div class="rankProgressFill" style="width:62%"></div>
           </div>
-          <div class="rankProgressText">Next Rank: <strong>1,580 RP</strong> to IMMORTAL</div>
+          <div class="rankProgressText" id="homeNext">Next Rank: <strong>—</strong> to THRALL</div>
         </div>
       </div>
     </div>
@@ -2513,6 +2513,7 @@ function debugSetTier(tierName){
   const fake = [{ rp: need, breakdown: { total: need } }];
 
   updateRankUI(fake);
+  applyHomeTier(tierName, targetTotal);
 
   // маленький лог щоб тобі легко було мені скидати
   console.log("[DEBUG] tier =", tierName, "totalRP =", targetTotal);
@@ -2547,6 +2548,34 @@ if (DEBUG_RANK){
 
   console.log("[DEBUG] Rank switcher ON: keys 1-0, [ ]");
 }
+  function applyHomeTier(tierName, totalRP){
+  const rank = String(tierName || "").toLowerCase();
+
+  // 1) rank-atmosphere (CSS theme)
+  document.body.dataset.rank = rank;
+
+  // 2) HOME: rank name text
+  const nameEl = document.getElementById("homeRankName");
+  if(nameEl) nameEl.textContent = String(tierName || "").toUpperCase();
+
+  // 3) HOME: RP text
+  const rpEl = document.getElementById("homeRP");
+  if(rpEl && typeof totalRP === "number"){
+    rpEl.textContent = totalRP.toLocaleString("en-US");
+  }
+
+  // 4) HOME: icon swap (webp + png fallback)
+  const webp = document.getElementById("homeIconWebp");
+  const png  = document.getElementById("homeIconPng");
+
+  if(webp) webp.srcset = `../assets/ranks/${rank}.webp`;
+  if(png)  png.src     = `../assets/master/${rank}.png`;
+
+  // (optional) if you use a single img instead of picture:
+  const img = document.getElementById("homeIcon");
+  if(img) img.src = `../assets/ranks/${rank}.webp`;
+}
+  
 
 /*
 IMPORTANT:
