@@ -1880,77 +1880,78 @@ body{
   
 <div class="app">
   
-<!-- PLAYER HUB -->
 <div id="dashboard" class="section active">
-  <div class="page-title">Player Hub</div>
-  <div class="page-subtitle">Your ranked progression at a glance.</div>
+  <div class="home">
+    <!-- TOP LIGHT BAR -->
+    <div class="homeTopBar">
+      <div class="homeWelcome">Welcome, Commander</div>
+    </div>
 
-  <div class="grid-hero">
-    <!-- HERO -->
-    <div class="card pad interactive">
-      <div class="kicker">Current Status</div>
+    <!-- RANK CORE -->
+    <div class="rankCore">
+      <div class="rankRing">
+        <!-- ring layers (visual only) -->
+        <div class="ring ringOuter"></div>
+        <div class="ring ringInner"></div>
 
-      <div style="display:flex; align-items:center; justify-content:space-between; gap:16px; margin-top:14px; flex-wrap:wrap;">
-        <div>
-          <div style="font-family:var(--font-ui); font-size:32px; font-weight:900; letter-spacing:.06em; color:var(--text-strong);" id="phRankLabel">PHANTOM II</div>
-          <div class="muted" style="margin-top:6px;" id="phRRText">RR: 0 / 0</div>
+        <!-- emblem -->
+        <div class="rankEmblem">
+          <!-- Replace src with your emblem asset later -->
+          <img src="../assets/img/emblems/ascendant.png" alt="Rank Emblem" />
+        </div>
+      </div>
+
+      <div class="rankMeta">
+        <div class="rankName">ASCENDANT</div>
+        <div class="rankRP"><span class="rpValue">6,420</span> <span class="rpUnit">RP</span></div>
+
+        <div class="rankProgress">
+          <div class="rankProgressBar">
+            <div class="rankProgressFill" style="width:62%"></div>
+          </div>
+          <div class="rankProgressText">Next Rank: <strong>1,580 RP</strong> to IMMORTAL</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SEASON SNAPSHOT -->
+    <div class="snapshot">
+      <div class="snapshotTitle">SEASON SNAPSHOT</div>
+
+      <div class="pulse">
+        <div class="pulseItem">
+          <div class="pulseValue">65%</div>
+          <div class="pulseLabel">WIN RATE</div>
         </div>
 
-        <div style="display:flex; gap:10px; flex-wrap:wrap;">
-          <button class="btn primary" type="button" onclick="showTab('rank', document.querySelectorAll('.nav-btn')[1])">View Rank</button>
-          <button class="btn" type="button" onclick="showTab('add', document.querySelectorAll('.nav-btn')[3])">Add Match</button>
-          <button class="btn danger" type="button" onclick="startNewSeason()">New Season</button>
+        <div class="pulseItem">
+          <div class="pulseValue">147</div>
+          <div class="pulseLabel">MATCHES PLAYED</div>
+        </div>
+
+        <div class="pulseItem pulseItemWide">
+          <div class="pulseKicker">CURRENT STREAK</div>
+          <div class="pulseValue">6 WINS</div>
+        </div>
+
+        <div class="pulseItem">
+          <div class="pulseValue">1.92</div>
+          <div class="pulseLabel">KDA RATIO</div>
+        </div>
+
+        <div class="pulseItem">
+          <div class="pulseValue">4'4×</div>
+          <div class="pulseLabel">RP SP</div>
         </div>
       </div>
 
-      <div class="progress" style="margin-top:16px;">
-        <div id="phProgressFill" style="width:0%"></div>
+      <div class="snapshotFooter">
+        <div class="footItem">MVPs <strong>32</strong></div>
+        <div class="footItem">AVG SCORE <strong>8,450</strong></div>
       </div>
-
-      <div class="muted" style="margin-top:10px;">
-        Goal: reach next division / tier — keep the streak alive.
-      </div>
-
-      <div class="hubHeroBottom">
-        <div class="hubStatusPills">
-          <span class="pill">Tier <strong id="phTier">I</strong></span>
-          <span class="pill">Next <strong id="phNext">0</strong></span>
-          <span class="pill" id="phStatePill">Status <strong id="phState">Stable</strong></span>
-        </div>
-
-        <div class="hubEmblem">
-          <span class="hubAuraSpin" aria-hidden="true"></span>
-          <span class="ring" aria-hidden="true"></span>
-          <img id="phBadgeImg" src="assets/ranks/overlord.webp" alt="Rank emblem">
-        </div>
-      </div>
-    </div><!-- /HERO card -->
-
-    <!-- SIDE -->
-    <div class="card pad">
-      <div class="kicker">Session</div>
-
-      <div style="margin-top:14px; display:grid; gap:12px;">
-        <div class="tile">
-          <div class="k">Matches</div>
-          <div class="v" id="phMatches">0</div>
-          <div class="sub">This season total</div>
-        </div>
-
-        <div class="tile">
-          <div class="k">Win Streak</div>
-          <div class="v" id="phStreak">0</div>
-          <div class="sub">Top-3 streak</div>
-        </div>
-
-        <div class="tile">
-          <div class="k">Average RR</div>
-          <div class="v" id="phAvg">0</div>
-          <div class="sub">Avg RR / match</div>
-        </div>
-      </div>
-    </div><!-- /SIDE card -->
-  </div><!-- /grid-hero -->
+    </div>
+  </div>
+</div>
 
   <!-- TILES -->
   <div class="tiles">
@@ -4610,5 +4611,36 @@ renderHistoryFromStorage();
 </div><!-- /award -->
   
 </div>
+
+  <!-- ========================= -->
+<!-- BACKUP: OLD DASHBOARD UI -->
+<!-- =========================
+
+<div id="dashboard" class="section active">
+  <div class="page-title">Player Hub</div>
+  <div class="page-subtitle">Your ranked progression at a glance.</div>
+
+  <div class="grid-hero">
+    [HERO]
+
+    <div class="card pad interactive">
+      <div class="kicker">Current Status</div>
+
+      <div style="display:flex; align-items:center; justify-content:space-between; gap:16px; margin-top:14px; flex-wrap:wrap;">
+        <div>
+          <div style="font-family:var(--font-ui); font-size:32px; font-weight:900; letter-spacing:.06em; color:var(--text-strong);" id="phRankLabel">
+            PHANTOM II
+          </div>
+          <div class="muted" style="margin-top:6px;" id="phRRText">
+            RR: 0 / 0
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+============================= -->
 </body>
 </html>
