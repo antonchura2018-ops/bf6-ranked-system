@@ -44,8 +44,8 @@
 /* page background */
 body{
   background:
-    radial-gradient(1200px circle at 20% 10%, rgba(32,211,238,.10), transparent 60%),
-    radial-gradient(900px circle at 80% 20%, rgba(139,92,246,.10), transparent 55%),
+    radial-gradient(1200px circle at 20% 10%, var(--glow2), transparent 60%),
+    radial-gradient(900px circle at 80% 20%, var(--glow2), transparent 55%),
     radial-gradient(circle at top, var(--bg-1), var(--bg-0));
   color: var(--text);
 }
@@ -75,20 +75,19 @@ body{
   --glow2: rgba(168,85,247,.22);
 }
 
-/* Rank-based atmosphere (change data-rank on <body>) */
-body[data-rank="DIAMOND"]{
+body[data-rank="diamond"]{
   --accent:#41B3FF;
   --glow: rgba(65,179,255,.55);
   --glow2: rgba(65,179,255,.22);
 }
 
-body[data-rank="ASCENDANT"]{
+body[data-rank="ascendant"]{
   --accent:#B86BFF;
   --glow: rgba(184,107,255,.55);
   --glow2: rgba(184,107,255,.22);
 }
 
-body[data-rank="MASTER"]{
+body[data-rank="master"]{
   --accent:#FFCC66;
   --glow: rgba(255,204,102,.55);
   --glow2: rgba(255,204,102,.22);
