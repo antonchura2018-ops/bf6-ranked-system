@@ -1909,7 +1909,7 @@ body{
 
         <div class="rankProgress">
           <div class="rankProgressBar">
-            <div class="rankProgressFill" style="width:62%"></div>
+            <div class="rankProgressFill" id="homeFill" style="width:0%"></div>
           </div>
           <div class="rankProgressText" id="homeNext">Next Rank: <strong>—</strong> to THRALL</div>
         </div>
@@ -4544,6 +4544,27 @@ window.showRankUp = function(payload){
 // ==============================
 window.applyHomeTier = function(tierName, totalRP){
   const rank = String(tierName || "").toLowerCase();
+  
+  // 5) NEXT RANK + progress (based on your DEBUG_TIERS + rankTiers mins)
+  const order = ["outcast","thrall","marauder","harbinger","reaper","archon","overlord","monarch","seraph","eidolon"];
+  const i = order.indexOf(rank);
+  const next = order[Math.min(i + 1, order.length - 1)];
+
+  // Next label
+  const nextEl = document.getElementById("homeNext");
+  if(nextEl){
+    nextEl.innerHTML = `Next Rank: <strong>—</strong> to ${next.toUpperCase()}`;
+  }
+
+  // Progress fill inside current tier (uses your rankTiers mins and DIV_RR)
+  // rankTiers are uppercase names in your array; map to find mins
+  const curObj = (window.rankTiers || []).find(x => String(x.name).toLowerCase() === rank);
+  const min = curObj ? Number(curObj.min) : 0;
+  const span = (typeof window.DIV_RR === "number" ? window.DIV_RR : 300);
+  const pct = Math.max(0, Math.min(1, (totalRP - min) / span));
+
+  const fill = document.getElementById("homeFill");
+  if(fill) fill.style.width = `${Math.round(pct * 100)}%`;
 
   // 1) rank atmosphere (theme_A.css)
   document.body.dataset.rank = rank;
