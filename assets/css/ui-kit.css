@@ -664,3 +664,231 @@ body{ margin:0; font-family: var(--font-body); }
   0%,100%{ box-shadow: 0 0 14px rgba(34,197,94,.10); }
   50%{ box-shadow: 0 0 24px rgba(34,197,94,.18); }
 }
+/* ============================= */
+/* HOME: Rank Status Core (A)    */
+/* ============================= */
+
+.home{
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 26px 22px 28px;
+  color: var(--text);
+}
+
+.homeTopBar{
+  position: relative;
+  height: 68px;
+  border: 1px solid var(--stroke);
+  border-radius: 16px;
+  background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+  box-shadow: 0 0 0 1px rgba(0,0,0,.35) inset, 0 18px 60px rgba(0,0,0,.55);
+  overflow: hidden;
+}
+
+.homeTopBar::before{
+  content:"";
+  position:absolute; inset:-2px;
+  background: radial-gradient(60% 120% at 50% 0%, var(--glow2), transparent 60%);
+  pointer-events:none;
+}
+
+.homeTopBar::after{
+  content:"";
+  position:absolute; left:10%; right:10%; top:10px; height:6px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  filter: blur(1px);
+  opacity:.75;
+}
+
+.homeWelcome{
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size: 22px;
+  letter-spacing: .4px;
+  color: rgba(234,240,255,.95);
+  text-shadow: 0 0 18px var(--glow2);
+}
+
+.rankCore{
+  margin-top: 22px;
+  padding: 26px 18px 18px;
+  border: 1px solid var(--stroke);
+  border-radius: 18px;
+  background: radial-gradient(80% 140% at 50% 0%, rgba(255,255,255,.06), rgba(10,14,28,.40) 45%, rgba(10,14,28,.18));
+  box-shadow:
+    0 0 0 1px rgba(0,0,0,.35) inset,
+    0 22px 80px rgba(0,0,0,.60),
+    0 0 60px var(--glow2);
+  text-align:center;
+  position: relative;
+  overflow:hidden;
+}
+
+.rankCore::before{
+  content:"";
+  position:absolute; inset:-2px;
+  background: radial-gradient(55% 65% at 50% 35%, var(--glow2), transparent 62%);
+  pointer-events:none;
+}
+
+.rankRing{
+  position: relative;
+  width: 360px;
+  height: 360px;
+  margin: 0 auto;
+}
+
+.ring{
+  position:absolute; inset:0;
+  border-radius: 999px;
+}
+
+.ringOuter{
+  border: 2px solid rgba(255,255,255,.10);
+  box-shadow: 0 0 70px var(--glow2);
+}
+
+.ringInner{
+  inset: 18px;
+  border: 2px solid rgba(255,255,255,.14);
+  box-shadow:
+    0 0 0 1px rgba(0,0,0,.45) inset,
+    0 0 90px var(--glow2);
+}
+
+.rankEmblem{
+  position:absolute; inset: 54px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  filter: drop-shadow(0 0 28px var(--glow));
+}
+
+.rankEmblem img{
+  width: 220px;
+  height: 220px;
+  object-fit: contain;
+}
+
+.rankMeta{
+  margin-top: 10px;
+}
+
+.rankName{
+  font-size: 34px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  text-shadow: 0 0 22px var(--glow2);
+}
+
+.rankRP{
+  margin-top: 6px;
+  font-size: 26px;
+  color: rgba(234,240,255,.95);
+}
+
+.rpUnit{
+  font-size: 16px;
+  opacity:.85;
+  letter-spacing: 2px;
+}
+
+.rankProgress{
+  margin: 14px auto 0;
+  max-width: 560px;
+}
+
+.rankProgressBar{
+  height: 10px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.10);
+  border: 1px solid rgba(255,255,255,.12);
+  overflow:hidden;
+  box-shadow: 0 0 0 1px rgba(0,0,0,.35) inset;
+}
+
+.rankProgressFill{
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), rgba(255,255,255,.35));
+  box-shadow: 0 0 18px var(--glow);
+}
+
+.rankProgressText{
+  margin-top: 10px;
+  font-size: 13px;
+  color: var(--muted);
+  letter-spacing: .2px;
+}
+
+.snapshot{
+  margin-top: 18px;
+  padding: 18px 18px 14px;
+  border: 1px solid var(--stroke);
+  border-radius: 18px;
+  background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(10,14,28,.25));
+  box-shadow: 0 0 0 1px rgba(0,0,0,.35) inset, 0 18px 70px rgba(0,0,0,.55);
+}
+
+.snapshotTitle{
+  text-align:center;
+  font-size: 14px;
+  letter-spacing: 3px;
+  opacity:.9;
+  margin-bottom: 12px;
+}
+
+.pulse{
+  display:grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 14px;
+  align-items: stretch;
+}
+
+.pulseItem{
+  padding: 14px 12px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,.10);
+  background: rgba(10,14,28,.35);
+  box-shadow: 0 0 0 1px rgba(0,0,0,.35) inset;
+  text-align:center;
+}
+
+.pulseItemWide{
+  grid-column: span 1;
+}
+
+.pulseKicker{
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: var(--muted);
+}
+
+.pulseValue{
+  margin-top: 4px;
+  font-size: 26px;
+  text-shadow: 0 0 16px var(--glow2);
+}
+
+.pulseLabel{
+  margin-top: 6px;
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: var(--muted);
+}
+
+.snapshotFooter{
+  display:flex;
+  justify-content:space-between;
+  gap: 12px;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255,255,255,.08);
+  color: var(--muted);
+  font-size: 12px;
+  letter-spacing: .3px;
+}
+
+.footItem strong{ color: rgba(234,240,255,.95); }
