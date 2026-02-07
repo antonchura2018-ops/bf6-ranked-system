@@ -4538,6 +4538,35 @@ window.showRankUp = function(payload){
   if (isDown) playRankDown({ rankName: rankKey.toUpperCase(), iconSrc, accentColor });
   else playRankUp({ rankName: rankKey.toUpperCase(), iconSrc, isTop, accentColor });
 };
+
+  // ==============================
+// HOME UPDATE (Rank / Icon / RP)
+// ==============================
+window.applyHomeTier = function(tierName, totalRP){
+  const rank = String(tierName || "").toLowerCase();
+
+  // 1) rank atmosphere (theme_A.css)
+  document.body.dataset.rank = rank;
+
+  // 2) HOME: name
+  const nameEl = document.getElementById("homeRankName");
+  if(nameEl) nameEl.textContent = String(tierName || "").toUpperCase();
+
+  // 3) HOME: RP
+  const rpEl = document.getElementById("homeRP");
+  if(rpEl && typeof totalRP === "number"){
+    rpEl.textContent = totalRP.toLocaleString("en-US");
+  }
+
+  // 4) HOME: icon (webp + png fallback)
+  const webp = document.getElementById("homeIconWebp");
+  const png  = document.getElementById("homeIconPng");
+  if(webp) webp.srcset = `../assets/ranks/${rank}.webp`;
+  if(png)  png.src     = `../assets/master/${rank}.png`;
+
+  console.log("[HOME] updated:", tierName, totalRP);
+};
+  
   
   
 /* ===== INIT ===== */
