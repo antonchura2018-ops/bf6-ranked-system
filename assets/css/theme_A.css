@@ -54,3 +54,42 @@ body{
   object-fit: contain;
 }
 
+/* ============================= */
+/* THEME TOKENS: Rank Atmosphere */
+/* ============================= */
+
+:root{
+  --bg0:#070A12;
+  --bg1:#0A1020;
+
+  --panel: rgba(10,14,28,.55);
+  --panel2: rgba(10,14,28,.35);
+  --stroke: rgba(255,255,255,.10);
+
+  --text:#EAF0FF;
+  --muted: rgba(234,240,255,.70);
+
+  /* default accent */
+  --accent: #A855F7; /* purple */
+  --glow: rgba(168,85,247,.55);
+  --glow2: rgba(168,85,247,.22);
+}
+
+/* Rank-based atmosphere (change data-rank on <body>) */
+body[data-rank="DIAMOND"]{
+  --accent:#41B3FF;
+  --glow: rgba(65,179,255,.55);
+  --glow2: rgba(65,179,255,.22);
+}
+
+body[data-rank="ASCENDANT"]{
+  --accent:#B86BFF;
+  --glow: rgba(184,107,255,.55);
+  --glow2: rgba(184,107,255,.22);
+}
+
+body[data-rank="MASTER"]{
+  --accent:#FFCC66;
+  --glow: rgba(255,204,102,.55);
+  --glow2: rgba(255,204,102,.22);
+}
