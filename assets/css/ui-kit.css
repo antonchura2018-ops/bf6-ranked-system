@@ -1281,13 +1281,6 @@ body{ margin:0; font-family: var(--font-body); }
   100% { transform: translateZ(0) translateY(0px); }
 }
 
-/* ============================= */
-/* END: HOME STYLES              */
-/* ============================= */
-/* ============================= */
-/* HOME: progress bar energy sweep */
-/* (GPU-friendly)                  */
-/* ============================= */
 
 .home .rankProgressBar{
   position: relative;
@@ -1322,4 +1315,37 @@ body{ margin:0; font-family: var(--font-body); }
   50%  { opacity: .18; }
   90%  { opacity: .45; }
   100% { transform: translate3d(55%,0,0) skewX(-18deg); opacity: 0; }
+}
+
+/* ============================= */
+/* HOME: ring flare pulse (safe) */
+/* ============================= */
+
+.home .ringFlare{
+  will-change: transform, opacity;
+  transform: translateZ(0) translateY(-1px) scaleX(1);
+  opacity: .60;
+  animation: homeFlarePulse 7.8s ease-in-out infinite;
+}
+
+@keyframes homeFlarePulse{
+  0%   { opacity: .45; transform: translateZ(0) translateY(-1px) scaleX(0.92); }
+  50%  { opacity: .92; transform: translateZ(0) translateY(-1px) scaleX(1.06); }
+  100% { opacity: .45; transform: translateZ(0) translateY(-1px) scaleX(0.92); }
+}
+
+/* ============================= */
+/* HOME: inner ring pulse (safe) */
+/* ============================= */
+
+.home .ringInner{
+  will-change: transform, opacity;
+  transform: translateZ(0) scale(1);
+  animation: homeInnerPulse 7.5s ease-in-out infinite;
+}
+
+@keyframes homeInnerPulse{
+  0%   { opacity: .55; transform: translateZ(0) scale(0.995); }
+  50%  { opacity: .80; transform: translateZ(0) scale(1.01); }
+  100% { opacity: .55; transform: translateZ(0) scale(0.995); }
 }
