@@ -1284,3 +1284,42 @@ body{ margin:0; font-family: var(--font-body); }
 /* ============================= */
 /* END: HOME STYLES              */
 /* ============================= */
+/* ============================= */
+/* HOME: progress bar energy sweep */
+/* (GPU-friendly)                  */
+/* ============================= */
+
+.home .rankProgressBar{
+  position: relative;
+  overflow: hidden;
+}
+
+.home .rankProgressBar::after{
+  content:"";
+  position:absolute;
+  inset:-2px -40%;
+  pointer-events:none;
+
+  /* thin diagonal highlight */
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255,255,255,.05) 35%,
+    rgba(255,255,255,.18) 50%,
+    rgba(255,255,255,.05) 65%,
+    transparent 100%
+  );
+
+  transform: translate3d(-55%,0,0) skewX(-18deg);
+  opacity: .0;
+  will-change: transform, opacity;
+  animation: homeSweep 6.8s ease-in-out infinite;
+}
+
+@keyframes homeSweep{
+  0%   { transform: translate3d(-55%,0,0) skewX(-18deg); opacity: 0; }
+  10%  { opacity: .45; }
+  50%  { opacity: .18; }
+  90%  { opacity: .45; }
+  100% { transform: translate3d(55%,0,0) skewX(-18deg); opacity: 0; }
+}
