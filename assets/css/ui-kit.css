@@ -1551,3 +1551,5 @@ body[data-rank] .home .rankName::after{
   0%   { left:-30%; }
   100% { left:110%; }
 }
+/* TEMP DEBUG: should be obvious */
+.ringTicks{ outline: 3px solid red !important; }
