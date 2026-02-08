@@ -127,58 +127,31 @@ body[data-rank="seraph"]{
 body[data-rank="eidolon"]{
   --accent:#A7F3D0; --glow: rgba(167,243,208,.45); --glow2: rgba(167,243,208,.18);
 }
+
 /* =========================================================
-   FINAL HOME — IMMORTAL / ASCENDANT (REFERENCE 1:1)
-   Place THIS BLOCK at the VERY END of theme_A.css
+   HOME (PLAYER HUB) — IMMORTAL / ASCENDANT STYLE (CLEAN FINAL)
+   Paste ONCE at the VERY END of theme_A.css
    ========================================================= */
 
-/* --- scope ONLY home (so other tabs won't break) --- */
 #dashboard .home{
   max-width: 1180px;
   margin: 0 auto;
-  padding: 24px 24px 40px;
+  padding: 18px 24px 40px;
 }
 
-/* Top welcome bar (thin accent line) */
-#dashboard .home .homeTopBar{
-  margin: 14px auto 22px;
-  padding: 16px 22px;
-  border-radius: 18px;
-  background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.022));
-  border: 1px solid rgba(255,255,255,.08);
-  box-shadow: 0 18px 60px rgba(0,0,0,.55);
-  position: relative;
-  overflow: hidden;
-}
-
-#dashboard .home .homeTopBar::before{
-  content:"";
-  position:absolute;
-  left: 16px; right: 16px; top: 0;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, var(--accent), transparent);
-  opacity: .55;
-  filter: blur(.2px);
-}
-
-#dashboard .home .homeWelcome{
-  font-family: var(--font-ui);
-  letter-spacing: .06em;
-  font-size: 22px;
-  text-align: center;
-  color: rgba(234,240,255,.92);
-}
+/* remove welcome bar */
+#dashboard .home .homeTopBar{ display:none !important; }
 
 /* HERO CARD */
 #dashboard .home .rankCore{
   max-width: 980px;
-  margin: 18px auto 0;
-  padding: 40px 28px 26px;
+  margin: 10px auto 0;
+  padding: 42px 28px 26px;
   border-radius: 22px;
   background:
-    radial-gradient(120% 90% at 50% 25%, rgba(255,255,255,.06), transparent 60%),
-    radial-gradient(80% 70% at 50% 40%, rgba(255,255,255,.03), transparent 65%),
-    rgba(8,10,18,.55);
+    radial-gradient(120% 90% at 50% 22%, rgba(255,255,255,.07), transparent 58%),
+    radial-gradient(85% 70% at 50% 40%, color-mix(in srgb, var(--accent) 18%, transparent), transparent 65%),
+    rgba(8,10,18,.56);
   border: 1px solid rgba(255,255,255,.08);
   box-shadow:
     0 24px 70px rgba(0,0,0,.55),
@@ -187,34 +160,31 @@ body[data-rank="eidolon"]{
   overflow: hidden;
 }
 
-/* Nebula wash + “space dust” inside card */
+/* nebula / dust inside card (stable, still “wow”) */
 #dashboard .home .rankCore::before{
   content:"";
   position:absolute;
   inset:-28%;
   pointer-events:none;
   background:
-    radial-gradient(900px 520px at 50% 35%, rgba(0,0,0,0) 0%, rgba(0,0,0,.28) 55%, rgba(0,0,0,.72) 100%),
-    radial-gradient(820px 520px at 50% 35%, color-mix(in srgb, var(--accent) 26%, transparent) 0%, transparent 62%),
-    radial-gradient(900px 520px at 15% 20%, rgba(255,255,255,.06) 0%, transparent 55%),
-    radial-gradient(900px 520px at 85% 30%, rgba(255,255,255,.05) 0%, transparent 55%);
+    radial-gradient(900px 560px at 50% 34%, rgba(0,0,0,0) 0%, rgba(0,0,0,.30) 55%, rgba(0,0,0,.72) 100%),
+    radial-gradient(860px 560px at 50% 36%, color-mix(in srgb, var(--accent) 34%, transparent) 0%, transparent 62%),
+    radial-gradient(900px 560px at 15% 18%, rgba(255,255,255,.06) 0%, transparent 55%),
+    radial-gradient(900px 560px at 85% 28%, rgba(255,255,255,.05) 0%, transparent 55%);
   opacity: .95;
-  mix-blend-mode: screen;
 }
 
-/* faint starfield (very subtle) */
 #dashboard .home .rankCore::after{
   content:"";
   position:absolute;
   inset:-10%;
   pointer-events:none;
   background-image:
-    radial-gradient(rgba(255,255,255,.10) 1px, transparent 1px),
-    radial-gradient(rgba(255,255,255,.07) 1px, transparent 1px),
-    radial-gradient(rgba(255,255,255,.05) 1px, transparent 1px);
-  background-size: 140px 140px, 220px 220px, 320px 320px;
-  background-position: 0 0, 40px 60px, 80px 120px;
-  opacity: .18;
+    radial-gradient(rgba(255,255,255,.09) 1px, transparent 1px),
+    radial-gradient(rgba(255,255,255,.06) 1px, transparent 1px);
+  background-size: 180px 180px, 320px 320px;
+  background-position: 0 0, 70px 120px;
+  opacity: .12;
   filter: blur(.2px);
 }
 
@@ -229,29 +199,27 @@ body[data-rank="eidolon"]{
   isolation: isolate;
 }
 
-/* Main aura glow (the “wow” halo) */
+/* main aura halo */
 #dashboard .home .ringGlow{
   position:absolute;
-  inset:-10%;
+  inset:-18%;
   border-radius: 999px;
   background:
     radial-gradient(circle at 50% 45%,
-      color-mix(in srgb, var(--accent) 55%, transparent) 0%,
-      color-mix(in srgb, var(--accent) 20%, transparent) 46%,
+      color-mix(in srgb, var(--accent) 60%, transparent) 0%,
+      color-mix(in srgb, var(--accent) 22%, transparent) 46%,
       transparent 72%);
   filter: blur(18px);
-  opacity: .78;
-  mix-blend-mode: screen;
+  opacity: .86;
   animation: glowBreath 9.5s ease-in-out infinite;
-  will-change: transform, opacity;
 }
 
 @keyframes glowBreath{
-  0%,100%{ transform: scale(.985); opacity: .62; }
-  50%{ transform: scale(1.035); opacity: .90; }
+  0%,100%{ transform: scale(.985); opacity: .72; }
+  50%{ transform: scale(1.035); opacity: .92; }
 }
 
-/* ring base */
+/* base ring */
 #dashboard .home .ring{
   position:absolute;
   inset: 0;
@@ -260,10 +228,10 @@ body[data-rank="eidolon"]{
   pointer-events:none;
 }
 
-/* OUTER ENERGY RING (conic gradient, slow spin) */
+/* OUTER ENERGY RING */
 #dashboard .home .ringOuter{
   inset: 36px;
-  opacity: .96;
+  opacity: .98;
   background-image: conic-gradient(
     from 180deg,
     rgba(255,255,255,0) 0deg,
@@ -276,30 +244,53 @@ body[data-rank="eidolon"]{
   );
   -webkit-mask: radial-gradient(circle, transparent 62%, #000 63%, #000 66%, transparent 67%);
           mask: radial-gradient(circle, transparent 62%, #000 63%, #000 66%, transparent 67%);
-  filter: blur(.22px);
+  filter: blur(.24px);
   animation: ringSpin 22s linear infinite;
-  will-change: transform;
+}
+
+/* second soft aura ring (cheap, but makes it “reference”) */
+#dashboard .home .ringOuter::before{
+  content:"";
+  position:absolute;
+  inset:-10px;
+  border-radius: inherit;
+  background-image: conic-gradient(
+    from 180deg,
+    rgba(255,255,255,0) 0deg,
+    color-mix(in srgb, var(--accent) 55%, transparent) 70deg,
+    rgba(255,255,255,.16) 110deg,
+    rgba(255,255,255,0) 180deg,
+    color-mix(in srgb, var(--accent) 50%, transparent) 260deg,
+    rgba(255,255,255,0) 360deg
+  );
+  -webkit-mask: radial-gradient(circle, transparent 60%, #000 62%, #000 67%, transparent 69%);
+          mask: radial-gradient(circle, transparent 60%, #000 62%, #000 67%, transparent 69%);
+  opacity: .26;
+  filter: blur(6px);
+  animation: ringSpin2 34s linear infinite reverse;
+  pointer-events:none;
 }
 
 @keyframes ringSpin{ to { transform: rotate(360deg); } }
+@keyframes ringSpin2{ to { transform: rotate(360deg); } }
 
 /* INNER PRECISION RING */
 #dashboard .home .ringInner{
   inset: 74px;
-  opacity: .65;
+  opacity: .66;
   border: 1px solid rgba(255,255,255,.10);
   -webkit-mask: radial-gradient(circle, transparent 64%, #000 65%, #000 65.8%, transparent 66.8%);
           mask: radial-gradient(circle, transparent 64%, #000 65%, #000 65.8%, transparent 66.8%);
   box-shadow: 0 0 0 1px rgba(255,255,255,.03) inset;
 }
 
-/* TECH TICKS (marks) */
+/* TECH TICKS */
 #dashboard .home .ringTicks{
   position:absolute;
   inset: 14px;
   border-radius: 999px;
   z-index: 2;
-  opacity: .22;
+  opacity: .20;
   background: repeating-conic-gradient(
     from 0deg,
     rgba(255,255,255,0) 0deg 6deg,
@@ -309,7 +300,7 @@ body[data-rank="eidolon"]{
           mask: radial-gradient(circle, transparent 66%, #000 67%, #000 70%, transparent 71%);
 }
 
-/* LENS FLARE line */
+/* LENS FLARE */
 #dashboard .home .ringFlare{
   position:absolute;
   left: 8%;
@@ -324,12 +315,11 @@ body[data-rank="eidolon"]{
     rgba(255,255,255,.22) 50%,
     color-mix(in srgb, var(--accent) 65%, white) 80%,
     transparent 100%);
-  opacity: .40;
+  opacity: .52;
   filter: blur(.2px);
-  mix-blend-mode: screen;
 }
 
-/* --- HIDE EMBLEM on HOME only (as you requested) --- */
+/* hide emblem (HOME only) */
 #dashboard .home .rankEmblem,
 #dashboard .home .rankIcon,
 #dashboard .home .rankEmblem picture,
@@ -338,7 +328,7 @@ body[data-rank="eidolon"]{
   display:none !important;
 }
 
-/* TEXT + PROGRESS (reference typography) */
+/* TEXT + PROGRESS */
 #dashboard .home .rankMeta{
   margin-top: -6px;
   text-align:center;
@@ -362,173 +352,9 @@ body[data-rank="eidolon"]{
   color: rgba(255,255,255,.78);
 }
 
-#dashboard .home .rankRP .rpValue{
-  font-size: 18px;
-  font-weight: 700;
-}
-#dashboard .home .rankRP .rpUnit{
-  font-size: 12px;
-  opacity: .75;
-  margin-left: 2px;
-}
-
-#dashboard .home .rankProgress{
-  margin-top: 18px;
-  max-width: 620px;
-  margin-left:auto;
-  margin-right:auto;
-}
-
-#dashboard .home .rankProgressBar{
-  height: 8px;
-  border-radius: 999px;
-  background: rgba(255,255,255,.08);
-  border: 1px solid rgba(255,255,255,.10);
-  overflow: hidden;
-}
-
-#dashboard .home .rankProgressFill{
-  height: 100%;
-  width: 0%;
-  background: linear-gradient(90deg,
-    rgba(255,255,255,.20),
-    var(--accent),
-    rgba(255,255,255,.10)
-  );
-  box-shadow: 0 0 22px rgba(255,255,255,.06), 0 0 22px color-mix(in srgb, var(--accent) 35%, transparent);
-  border-radius: 999px;
-  transition: width .55s ease;
-}
-
-#dashboard .home .rankProgressText{
-  margin-top: 10px;
-  font-size: 12px;
-  letter-spacing: .06em;
-  color: rgba(255,255,255,.62);
-}
-
-/* Keep your snapshot (only align width like ref) */
+/* keep snapshot block same, only align width */
 #dashboard .home .snapshot{
   max-width: 980px;
   margin: 22px auto 0;
 }
 
-
-/* ===== HOME ONLY: TEMP HIDE EMBLEM ===== */
-#dashboard .home .rankEmblem,
-#dashboard .home .rankIcon,
-#dashboard .home .rankEmblem picture,
-#dashboard .home .rankEmblem img,
-#dashboard .home .rankEmblem source{
-  display:none !important;
-}
-/* ===== HOME: remove Welcome bar ===== */
-#dashboard .home .homeTopBar{
-  display:none !important;
-}
-
-/* compensate spacing since top bar is gone */
-#dashboard .home .rankCore{
-  margin-top: 10px !important;
-}
-/* =========================================================
-   HOME: REFERENCE BOOST (more like IMMORTAL / ASCENDANT)
-   Paste at VERY END of theme_A.css
-   ========================================================= */
-
-/* stronger cosmic wash inside the card */
-#dashboard .home .rankCore::before{
-  opacity: 1 !important;
-}
-
-/* bigger / brighter aura */
-#dashboard .home .ringGlow{
-  inset:-22% !important;
-  filter: blur(26px) !important;
-  opacity: .92 !important;
-}
-
-/* make the energy ring glow like reference */
-#dashboard .home .ringOuter{
-  filter:
-    blur(.28px)
-    drop-shadow(0 0 18px color-mix(in srgb, var(--accent) 55%, transparent))
-    drop-shadow(0 0 46px color-mix(in srgb, var(--accent) 25%, transparent)) !important;
-}
-
-/* add second “soft aura ring” layer (this is what your screenshot is missing) */
-#dashboard .home .ringOuter::before{
-  content:"";
-  position:absolute;
-  inset:-10px;
-  border-radius: inherit;
-
-  background-image: conic-gradient(
-    from 180deg,
-    rgba(255,255,255,0) 0deg,
-    color-mix(in srgb, var(--accent) 60%, transparent) 70deg,
-    rgba(255,255,255,.18) 110deg,
-    rgba(255,255,255,0) 180deg,
-    color-mix(in srgb, var(--accent) 55%, transparent) 260deg,
-    rgba(255,255,255,0) 360deg
-  );
-
-  -webkit-mask: radial-gradient(circle, transparent 60%, #000 62%, #000 67%, transparent 69%);
-          mask: radial-gradient(circle, transparent 60%, #000 62%, #000 67%, transparent 69%);
-
-  opacity: .35;
-  filter: blur(10px);
-  animation: ringSpin2 34s linear infinite reverse;
-  pointer-events:none;
-}
-
-@keyframes ringSpin2{
-  to { transform: rotate(360deg); }
-}
-
-/* lens flare slightly stronger (reference vibe) */
-#dashboard .home .ringFlare{
-  opacity: .55 !important;
-}
-/* =========================================================
-   HOME: PERFORMANCE SAFE MODE (keeps look, removes lag)
-   Paste at VERY END of theme_A.css
-   ========================================================= */
-
-/* 1) Never blur huge layers (major lag source) */
-#dashboard .home .ringGlow{
-  filter: blur(14px) !important;   /* was 26px */
-  opacity: .80 !important;
-}
-
-/* 2) Remove heavy drop-shadow stack (big GPU cost) */
-#dashboard .home .ringOuter{
-  filter: blur(.22px) !important;  /* keep crisp */
-}
-
-/* 3) Limit pseudo aura to smaller blur */
-#dashboard .home .ringOuter::before{
-  filter: blur(6px) !important;    /* was 10px */
-  opacity: .26 !important;
-}
-
-/* 4) Turn off mix-blend-mode on huge layers (expensive) */
-#dashboard .home .ringGlow,
-#dashboard .home .rankCore::before,
-#dashboard .home .rankCore::after,
-#dashboard .home .ringFlare{
-  mix-blend-mode: normal !important;
-}
-
-/* 5) Reduce giant starfield cost */
-#dashboard .home .rankCore::after{
-  opacity: .12 !important;
-  filter: none !important;
-}
-
-/* 6) Make animations cheaper */
-#dashboard .home .ringOuter,
-#dashboard .home .ringOuter::before,
-#dashboard .home .ringGlow{
-  will-change: auto !important;
-}
