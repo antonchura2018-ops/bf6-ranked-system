@@ -1037,7 +1037,7 @@ body{ margin:0; font-family: var(--font-body); }
   display: grid;
   place-items: center;
   z-index: 5;
-  transform: translateY(6px);
+  transform: translateY(10px);
 }
 
 .home .rankIcon{
@@ -1087,7 +1087,7 @@ body{ margin:0; font-family: var(--font-body); }
       var(--glow2) 12%,
       rgba(255,255,255,.00) 30%,
       rgba(255,255,255,.00) 100%);
-  opacity: .9;
+  opacity: .65;
 }
 
 /* ticks */
@@ -1104,7 +1104,7 @@ body{ margin:0; font-family: var(--font-body); }
       rgba(255,255,255,.16) 0 1deg,
       rgba(255,255,255,0) 1deg 8deg
     );
-  opacity:.22;
+  opacity:.14;
 }
 
 /* flare */
