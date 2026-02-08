@@ -422,3 +422,71 @@ body[data-rank="eidolon"]{
 #dashboard .home .rankEmblem source{
   display:none !important;
 }
+/* ===== HOME: remove Welcome bar ===== */
+#dashboard .home .homeTopBar{
+  display:none !important;
+}
+
+/* compensate spacing since top bar is gone */
+#dashboard .home .rankCore{
+  margin-top: 10px !important;
+}
+/* =========================================================
+   HOME: REFERENCE BOOST (more like IMMORTAL / ASCENDANT)
+   Paste at VERY END of theme_A.css
+   ========================================================= */
+
+/* stronger cosmic wash inside the card */
+#dashboard .home .rankCore::before{
+  opacity: 1 !important;
+}
+
+/* bigger / brighter aura */
+#dashboard .home .ringGlow{
+  inset:-22% !important;
+  filter: blur(26px) !important;
+  opacity: .92 !important;
+}
+
+/* make the energy ring glow like reference */
+#dashboard .home .ringOuter{
+  filter:
+    blur(.28px)
+    drop-shadow(0 0 18px color-mix(in srgb, var(--accent) 55%, transparent))
+    drop-shadow(0 0 46px color-mix(in srgb, var(--accent) 25%, transparent)) !important;
+}
+
+/* add second “soft aura ring” layer (this is what your screenshot is missing) */
+#dashboard .home .ringOuter::before{
+  content:"";
+  position:absolute;
+  inset:-10px;
+  border-radius: inherit;
+
+  background-image: conic-gradient(
+    from 180deg,
+    rgba(255,255,255,0) 0deg,
+    color-mix(in srgb, var(--accent) 60%, transparent) 70deg,
+    rgba(255,255,255,.18) 110deg,
+    rgba(255,255,255,0) 180deg,
+    color-mix(in srgb, var(--accent) 55%, transparent) 260deg,
+    rgba(255,255,255,0) 360deg
+  );
+
+  -webkit-mask: radial-gradient(circle, transparent 60%, #000 62%, #000 67%, transparent 69%);
+          mask: radial-gradient(circle, transparent 60%, #000 62%, #000 67%, transparent 69%);
+
+  opacity: .35;
+  filter: blur(10px);
+  animation: ringSpin2 34s linear infinite reverse;
+  pointer-events:none;
+}
+
+@keyframes ringSpin2{
+  to { transform: rotate(360deg); }
+}
+
+/* lens flare slightly stronger (reference vibe) */
+#dashboard .home .ringFlare{
+  opacity: .55 !important;
+}
