@@ -1378,3 +1378,28 @@ body[data-rank] .home .rankName::after{
   );
   opacity:.35;
 }
+/* ============================= */
+/* SAFE FIX: Home Rank Name Glow */
+/* ============================= */
+
+#homeRankName{
+  position: relative;
+  color: #EAF0FF;
+  letter-spacing: .18em;
+  text-shadow:
+    0 0 10px rgba(255,255,255,.06),
+    0 0 26px var(--glow2),
+    0 0 46px var(--glow);
+}
+
+#homeRankName::after{
+  content:"";
+  position:absolute;
+  left:50%;
+  top:calc(100% + 10px);
+  width:180px;
+  height:2px;
+  transform: translateX(-50%);
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  opacity:.35;
+}
