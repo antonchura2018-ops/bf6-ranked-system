@@ -357,4 +357,79 @@ body[data-rank="eidolon"]{
   max-width: 980px;
   margin: 22px auto 0;
 }
+/* =========================================================
+   HOME — MATCH REF (remove “solid disc”, add big aura)
+   Paste at VERY END of theme_A.css
+   ========================================================= */
+
+/* 1) прибираємо відчуття “залитого фіолетового круга” */
+#dashboard .home .rankCore::before{
+  background:
+    /* яскравий туман біля кільця */
+    radial-gradient(620px 520px at 50% 38%,
+      color-mix(in srgb, var(--accent) 38%, transparent) 0%,
+      transparent 64%),
+    /* м'який білий серпанок */
+    radial-gradient(1000px 640px at 50% 40%,
+      rgba(255,255,255,.055) 0%,
+      transparent 72%),
+    /* віньєтка */
+    radial-gradient(1400px 900px at 50% 10%,
+      rgba(0,0,0,.70) 0%,
+      transparent 62%) !important;
+  opacity: 1 !important;
+}
+
+/* 2) робимо halo так, щоб він НЕ заливав центр */
+#dashboard .home .ringGlow{
+  inset: -26% !important;
+  filter: blur(20px) !important;
+  opacity: .92 !important;
+  background:
+    radial-gradient(circle at 50% 45%,
+      /* важливо: перша зона НЕ має бути дуже яскравою */
+      color-mix(in srgb, var(--accent) 22%, transparent) 0%,
+      color-mix(in srgb, var(--accent) 35%, transparent) 38%,
+      color-mix(in srgb, var(--accent) 18%, transparent) 56%,
+      transparent 74%) !important;
+}
+
+/* 3) додаємо “великий зовнішній енергетичний ореол” як у референсі */
+#dashboard .home .rankRing::after{
+  content:"";
+  position:absolute;
+  inset:-34%;
+  border-radius:999px;
+  pointer-events:none;
+  background:
+    radial-gradient(circle at 50% 50%,
+      transparent 52%,
+      color-mix(in srgb, var(--accent) 22%, transparent) 62%,
+      color-mix(in srgb, var(--accent) 10%, transparent) 72%,
+      transparent 82%);
+  filter: blur(22px);
+  opacity: .85;
+  animation: bigAura 10.5s ease-in-out infinite;
+}
+
+@keyframes bigAura{
+  0%,100%{ transform: scale(.98); opacity: .68; }
+  50%{ transform: scale(1.04); opacity: .92; }
+}
+
+/* 4) робимо енергокільце менш “суцільним” і більш “плазмовим” */
+#dashboard .home .ringOuter{
+  filter: blur(.22px) !important;
+  opacity: .98 !important;
+}
+
+#dashboard .home .ringOuter::before{
+  opacity: .32 !important;
+  filter: blur(7px) !important;
+}
+
+/* 5) трохи підсилюємо лінзу-лінію як у референсі */
+#dashboard .home .ringFlare{
+  opacity: .62 !important;
+}
 
