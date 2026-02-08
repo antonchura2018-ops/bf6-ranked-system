@@ -1403,3 +1403,47 @@ body[data-rank] .home .rankName::after{
   background: linear-gradient(90deg, transparent, var(--accent), transparent);
   opacity:.35;
 }
+/* ============================= */
+/* HOME: Power Core Glow (FAST)  */
+/* ============================= */
+
+.rankRing{
+  position: relative;
+  display: grid;
+  place-items: center;
+  isolation: isolate; /* щоб glow не ліз по всій сторінці */
+}
+
+.ringGlow{
+  position: absolute;
+  inset: -18%;
+  border-radius: 999px;
+  z-index: 0;
+  pointer-events: none;
+
+  /* головна “енергія” */
+  background:
+    radial-gradient(circle at 50% 45%,
+      var(--glow) 0%,
+      rgba(0,0,0,0) 62%
+    );
+
+  /* soft bloom (дешево по продуктивності) */
+  opacity: .72;
+
+  /* GPU-friendly breathing */
+  transform: translateZ(0) scale(0.98);
+  filter: blur(10px);
+  animation: coreBreath 5.5s ease-in-out infinite;
+}
+
+/* емблема вище glow */
+.rankEmblem, .ring, .ringTicks, .ringFlare{
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes coreBreath{
+  0%,100% { transform: translateZ(0) scale(0.98); opacity: .62; }
+  50%     { transform: translateZ(0) scale(1.02); opacity: .84; }
+}
