@@ -1262,10 +1262,10 @@ body{ margin:0; font-family: var(--font-body); }
   animation: homeGlowBreath 7.5s ease-in-out infinite;
 }
 
-@keyframes homeEmblemFloat{
-  0%   { transform: translateZ(0) translateY(0px) scale(1); }
-  50%  { transform: translateZ(0) translateY(-2px) scale(1.006); }
-  100% { transform: translateZ(0) translateY(0px) scale(1); }
+@keyframes homeGlowBreath{
+  0%   { opacity: .62; transform: translateZ(0) scale(0.975); }
+  50%  { opacity: 1.00; transform: translateZ(0) scale(1.05); }
+  100% { opacity: .62; transform: translateZ(0) scale(0.975); }
 }
 
 /* optional micro-life for emblem (ultra subtle) */
