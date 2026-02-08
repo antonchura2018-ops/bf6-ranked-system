@@ -523,3 +523,36 @@ body[data-rank="eidolon"]{
     0 0 12px color-mix(in srgb, var(--accent) 45%, transparent),
     inset 0 0 6px rgba(255,255,255,.12) !important;
 }
+/* FIX: remove giant halo/bucket */
+#dashboard .home .rankRing::after{ content:none !important; }
+/* FIX: aura must hug the ring (not the whole card) */
+#dashboard .home .ringGlow{
+  inset: -6% !important;
+  opacity: .70 !important;
+  filter: blur(18px) !important;
+  mix-blend-mode: screen !important;
+
+  background:
+    radial-gradient(circle at 50% 50%,
+      color-mix(in srgb, var(--accent) 55%, transparent) 0%,
+      color-mix(in srgb, var(--accent) 22%, transparent) 42%,
+      transparent 68%) !important;
+}
+/* FIX: make energy ring sharper + hot sectors */
+#dashboard .home .ringOuter{
+  opacity: .96 !important;
+  filter: blur(.20px) !important;
+
+  background-image: conic-gradient(
+    from 180deg,
+    rgba(255,255,255,0) 0deg,
+    rgba(255,255,255,.08) 30deg,
+    var(--accent) 70deg,
+    rgba(255,255,255,.20) 84deg,
+    rgba(255,255,255,.04) 120deg,
+    rgba(255,255,255,0) 175deg,
+    var(--accent) 250deg,
+    rgba(255,255,255,.18) 264deg,
+    rgba(255,255,255,0) 360deg
+  ) !important;
+}
