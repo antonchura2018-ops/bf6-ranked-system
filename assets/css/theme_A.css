@@ -776,3 +776,11 @@ body[data-rank="eidolon"]{
   filter: blur(.2px);
   mix-blend-mode: screen;
 }
+/* ===== TEMP: HIDE EMBLEM (NO DELETE) ===== */
+.rankEmblem,
+.rankIcon,
+.rankEmblem picture,
+.rankEmblem img,
+.rankEmblem source{
+  display: none !important;
+}
