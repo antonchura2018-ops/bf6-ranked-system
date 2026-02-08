@@ -1447,3 +1447,107 @@ body[data-rank] .home .rankName::after{
   0%,100% { transform: translateZ(0) scale(0.98); opacity: .62; }
   50%     { transform: translateZ(0) scale(1.02); opacity: .84; }
 }
+/* ============================= */
+/* HOME: Energy Ring (outer/inner) */
+/* ============================= */
+
+.ring{
+  position:absolute;
+  border-radius:999px;
+  inset: 14%;
+  pointer-events:none;
+  z-index: 1;
+}
+
+.ringOuter{
+  inset: 10%;
+  border: 1px solid rgba(255,255,255,.10);
+  box-shadow:
+    0 0 0 1px rgba(0,0,0,.35) inset,
+    0 0 18px var(--glow2);
+}
+
+.ringInner{
+  inset: 18%;
+  border: 1px solid rgba(255,255,255,.08);
+  box-shadow:
+    0 0 0 1px rgba(0,0,0,.25) inset,
+    0 0 14px rgba(255,255,255,.05);
+}
+
+/* акцентна “нитка” по кільцю (ледь помітна) */
+.ringOuter::after{
+  content:"";
+  position:absolute;
+  inset:-2px;
+  border-radius:999px;
+  border: 1px solid color-mix(in srgb, var(--accent) 55%, transparent);
+  opacity: .18;
+  filter: blur(.2px);
+}
+/* ============================= */
+/* HOME: Ring Ticks              */
+/* ============================= */
+
+.ringTicks{
+  position:absolute;
+  inset: 6%;
+  border-radius:999px;
+  pointer-events:none;
+  z-index: 1;
+  opacity: .45;
+
+  background:
+    repeating-conic-gradient(
+      from 0deg,
+      rgba(255,255,255,.10) 0deg 1deg,
+      transparent 1deg 10deg
+    );
+
+  -webkit-mask: radial-gradient(circle, transparent 58%, #000 60%);
+          mask: radial-gradient(circle, transparent 58%, #000 60%);
+  filter: drop-shadow(0 0 10px var(--glow2));
+}
+/* ============================= */
+/* HOME: Progress bar + Shine    */
+/* ============================= */
+
+.rankProgressBar{
+  position: relative;
+  height: 8px;
+  border-radius: 999px;
+  overflow: hidden;
+  background: rgba(255,255,255,.08);
+  box-shadow: 0 0 0 1px rgba(0,0,0,.35) inset;
+}
+
+.rankProgressFill{
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg,
+    color-mix(in srgb, var(--accent) 90%, #fff 10%),
+    color-mix(in srgb, var(--accent) 55%, #fff 45%)
+  );
+  box-shadow: 0 0 18px var(--glow2);
+  position: relative;
+  overflow: hidden;
+}
+
+/* легкий “пробіг” блиску — без лагів */
+.rankProgressFill::after{
+  content:"";
+  position:absolute;
+  top:-60%;
+  left:-30%;
+  width: 30%;
+  height: 220%;
+  transform: rotate(20deg);
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.35), transparent);
+  opacity: .35;
+  animation: barShine 3.8s linear infinite;
+}
+
+@keyframes barShine{
+  0%   { left:-30%; }
+  100% { left:110%; }
+}
