@@ -397,3 +397,277 @@ body[data-rank="eidolon"]{
 .snapshot{
   margin-top: 26px;
 }
+
+/* =========================================================
+   HOME HERO — "IMMORTAL / ASCENDANT" STYLE (override block)
+   Paste at END of theme_A.css
+   ========================================================= */
+
+/* panel + layout */
+.home{
+  padding: 28px 0 34px;
+}
+
+.rankCore{
+  max-width: 980px;
+  margin: 22px auto 0;
+  padding: 42px 28px 28px;
+  border-radius: 22px;
+  background:
+    radial-gradient(120% 90% at 50% 25%, rgba(255,255,255,.06), transparent 60%),
+    radial-gradient(80% 70% at 50% 40%, var(--glow2), transparent 65%),
+    rgba(8, 10, 18, .55);
+  border: 1px solid rgba(255,255,255,.08);
+  box-shadow:
+    0 24px 70px rgba(0,0,0,.55),
+    inset 0 0 0 1px rgba(255,255,255,.04);
+}
+
+/* the ring stage */
+.rankRing{
+  position: relative;
+  width: 560px;
+  height: 560px;
+  margin: 0 auto;
+  display: grid;
+  place-items: center;
+  isolation: isolate;
+}
+
+/* subtle nebula wash behind ring (inside the card) */
+.rankRing::before{
+  content:"";
+  position:absolute;
+  inset: -28%;
+  background:
+    radial-gradient(40% 35% at 30% 25%, rgba(255,255,255,.08), transparent 60%),
+    radial-gradient(55% 50% at 70% 30%, var(--glow2), transparent 65%),
+    radial-gradient(70% 65% at 50% 55%, rgba(0,0,0,.55), transparent 70%);
+  filter: blur(10px);
+  opacity: .85;
+  z-index: 0;
+}
+
+/* center emblem (your image) */
+.rankEmblem{
+  position: relative;
+  z-index: 6;
+  width: 230px;
+  height: 230px;
+  display: grid;
+  place-items: center;
+  transform: translateZ(0);
+}
+
+.rankIcon, .rankIcon img{
+  width: 230px;
+  height: 230px;
+  object-fit: contain;
+  display:block;
+}
+
+/* glow breathing that is VISIBLE but still very safe */
+.rankEmblem{
+  animation: emblemBreath 7.5s ease-in-out infinite;
+  will-change: transform, filter;
+}
+.rankIcon img{
+  filter: drop-shadow(0 18px 28px rgba(0,0,0,.55))
+          drop-shadow(0 0 22px var(--glow2));
+}
+
+@keyframes emblemBreath{
+  0%   { transform: translateZ(0) scale(1);    filter: drop-shadow(0 0 0 rgba(0,0,0,0)); }
+  50%  { transform: translateZ(0) scale(1.025);filter: drop-shadow(0 0 18px var(--glow2)); }
+  100% { transform: translateZ(0) scale(1);    filter: drop-shadow(0 0 0 rgba(0,0,0,0)); }
+}
+
+/* =========================================================
+   ENERGY AURA (outer) — the "wow" ring from the reference
+   ========================================================= */
+
+.ringGlow{
+  position:absolute;
+  inset:-22%;
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at 50% 50%, var(--glow) 0%, rgba(0,0,0,0) 58%),
+    radial-gradient(circle at 50% 50%, rgba(255,255,255,.12) 0%, rgba(0,0,0,0) 62%);
+  filter: blur(18px);
+  opacity: .9;
+  z-index: 1;
+  mix-blend-mode: screen;
+  animation: auraPulse 6.8s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+@keyframes auraPulse{
+  0%   { transform: scale(1.00); opacity: .72; }
+  50%  { transform: scale(1.03); opacity: .95; }
+  100% { transform: scale(1.00); opacity: .72; }
+}
+
+/* base ring circles */
+.ring{
+  position:absolute;
+  inset: 0;
+  border-radius: 999px;
+  z-index: 3;
+  pointer-events:none;
+}
+
+.ringOuter{
+  inset: 36px;
+  opacity: .95;
+}
+
+.ringInner{
+  inset: 74px;
+  opacity: .65;
+}
+
+/* conic-energy + masked to be a ring */
+.ringOuter{
+  background:
+    conic-gradient(
+      from 180deg,
+      rgba(255,255,255,.00) 0deg,
+      rgba(255,255,255,.10) 40deg,
+      var(--accent) 85deg,
+      rgba(255,255,255,.18) 120deg,
+      rgba(255,255,255,.00) 190deg,
+      var(--accent) 260deg,
+      rgba(255,255,255,.00) 360deg
+    );
+  -webkit-mask: radial-gradient(circle, transparent 62%, #000 63%, #000 66%, transparent 67%);
+          mask: radial-gradient(circle, transparent 62%, #000 63%, #000 66%, transparent 67%);
+  filter: blur(.25px);
+  animation: ringSpin 22s linear infinite;
+  will-change: transform;
+}
+
+@keyframes ringSpin{
+  to { transform: rotate(360deg); }
+}
+
+/* inner clean ring */
+.ringInner{
+  border: 1px solid rgba(255,255,255,.10);
+  -webkit-mask: radial-gradient(circle, transparent 64%, #000 65%, #000 65.8%, transparent 66.8%);
+          mask: radial-gradient(circle, transparent 64%, #000 65%, #000 65.8%, transparent 66.8%);
+  box-shadow: 0 0 0 1px rgba(255,255,255,.03) inset;
+}
+
+/* =========================================================
+   TECH TICKS (subtle marks around the ring)
+   ========================================================= */
+.ringTicks{
+  position:absolute;
+  inset: 14px;
+  border-radius: 999px;
+  z-index: 2;
+  opacity: .22; /* slightly stronger so you actually feel it */
+  background:
+    repeating-conic-gradient(
+      from 0deg,
+      rgba(255,255,255,.0) 0deg 6deg,
+      rgba(255,255,255,.22) 6deg 6.6deg
+    );
+  -webkit-mask: radial-gradient(circle, transparent 66%, #000 67%, #000 70%, transparent 71%);
+          mask: radial-gradient(circle, transparent 66%, #000 67%, #000 70%, transparent 71%);
+}
+
+/* =========================================================
+   LENS FLARE LINE (horizontal line through the ring)
+   ========================================================= */
+.ringFlare{
+  position:absolute;
+  left: 50%;
+  top: 50%;
+  width: 86%;
+  height: 2px;
+  transform: translate(-50%, -50%);
+  z-index: 4;
+  background:
+    linear-gradient(90deg,
+      rgba(255,255,255,0) 0%,
+      rgba(255,255,255,.10) 18%,
+      rgba(255,255,255,.26) 50%,
+      rgba(255,255,255,.10) 82%,
+      rgba(255,255,255,0) 100%
+    );
+  opacity: .55;
+  filter: blur(.2px);
+}
+
+/* =========================================================
+   TEXT + PROGRESS — match the reference typography vibe
+   ========================================================= */
+.rankMeta{
+  margin-top: -6px;
+  text-align:center;
+}
+
+.rankName{
+  font-family: var(--font-ui);
+  font-weight: 800;
+  letter-spacing: .22em;
+  font-size: 34px;
+  color: rgba(255,255,255,.92);
+  text-transform: uppercase;
+}
+
+.rankRP{
+  margin-top: 6px;
+  font-family: var(--font-body);
+  letter-spacing: .02em;
+  color: rgba(255,255,255,.78);
+}
+
+.rankRP .rpValue{
+  font-size: 18px;
+  font-weight: 700;
+}
+.rankRP .rpUnit{
+  font-size: 12px;
+  opacity: .75;
+  margin-left: 2px;
+}
+
+/* progress bar */
+.rankProgress{
+  margin-top: 18px;
+}
+.rankProgressBar{
+  height: 8px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.08);
+  border: 1px solid rgba(255,255,255,.10);
+  overflow: hidden;
+}
+.rankProgressFill{
+  height: 100%;
+  width: 0%;
+  background:
+    linear-gradient(90deg,
+      rgba(255,255,255,.20),
+      var(--accent),
+      rgba(255,255,255,.10)
+    );
+  box-shadow: 0 0 22px var(--glow2);
+  border-radius: 999px;
+  transition: width .55s ease;
+}
+
+.rankProgressText{
+  margin-top: 10px;
+  font-size: 12px;
+  letter-spacing: .06em;
+  color: rgba(255,255,255,.62);
+}
+
+/* keep your snapshot block as-is (we won't redesign it now) */
+.snapshot{
+  max-width: 980px;
+  margin: 22px auto 0;
+}
