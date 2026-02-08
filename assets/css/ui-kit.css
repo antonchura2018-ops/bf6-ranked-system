@@ -1551,5 +1551,50 @@ body[data-rank] .home .rankName::after{
   0%   { left:-30%; }
   100% { left:110%; }
 }
-/* TEMP DEBUG: should be obvious */
-.ringTicks{ outline: 3px solid red !important; }
+/* ================================
+   HOME RING: TICKS BOOST (SAFE)
+   Paste at END of ui-kit.css
+   ================================ */
+
+.rankRing { position: relative; }
+
+/* зробити ticks читабельнішими */
+.rankRing .ringTicks{
+  opacity: .38 !important;              /* було ~0.14 */
+  filter: drop-shadow(0 0 10px rgba(0,0,0,.35));
+  transform: translateZ(0);
+}
+
+/* якщо у тебе ringTicks робиться через фон/маску - це ок, просто підсилюємо */
+.rankRing .ringTicks::before,
+.rankRing .ringTicks::after{
+  opacity: 1 !important;
+}
+/* soft aura behind emblem (rank-based color from --glow) */
+.rankRing .ringGlow{
+  position:absolute;
+  inset:-40px;
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at 50% 45%,
+      var(--glow) 0%,
+      rgba(0,0,0,0) 62%);
+  opacity:.55;
+  pointer-events:none;
+  transform: translateZ(0);
+}
+/* ultra-slow breathing, GPU safe */
+@keyframes emblemBreath {
+  0%, 100% { transform: translateZ(0) scale(1); filter: drop-shadow(0 0 0 rgba(0,0,0,0)); }
+  50%      { transform: translateZ(0) scale(1.015); filter: drop-shadow(0 0 16px var(--glow)); }
+}
+
+/* apply to the actual image */
+.rankEmblem img,
+.rankEmblem source{
+  will-change: transform, filter;
+}
+
+.rankEmblem img{
+  animation: emblemBreath 7.5s ease-in-out infinite;
+}
