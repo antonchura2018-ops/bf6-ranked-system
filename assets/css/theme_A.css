@@ -671,3 +671,28 @@ body[data-rank="eidolon"]{
   max-width: 980px;
   margin: 22px auto 0;
 }
+/* ===== FORCE OVERRIDE: ringOuter must be ENERGY (conic) ===== */
+.home .rankRing .ringOuter{
+  background-image: conic-gradient(
+    from 180deg,
+    rgba(255,255,255,0) 0deg,
+    rgba(255,255,255,.10) 40deg,
+    var(--accent) 85deg,
+    rgba(255,255,255,.18) 120deg,
+    rgba(255,255,255,0) 190deg,
+    var(--accent) 260deg,
+    rgba(255,255,255,0) 360deg
+  ) !important;
+
+  -webkit-mask: radial-gradient(circle, transparent 62%, #000 63%, #000 66%, transparent 67%) !important;
+          mask: radial-gradient(circle, transparent 62%, #000 63%, #000 66%, transparent 67%) !important;
+
+  opacity: .95 !important;
+  filter: blur(.25px) !important;
+  animation: ringSpin 22s linear infinite !important;
+  will-change: transform;
+}
+
+@keyframes ringSpin{
+  to { transform: rotate(360deg); }
+}
