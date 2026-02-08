@@ -1242,6 +1242,44 @@ body{ margin:0; font-family: var(--font-body); }
   font-size: 12px;
   letter-spacing: .08em;
 }
+/* ============================= */
+/* HOME: subtle breathing glow    */
+/* (GPU-friendly, no lag)         */
+/* ============================= */
+
+@media (prefers-reduced-motion: reduce){
+  .home .ringGlow,
+  .home .rankIcon img{
+    animation: none !important;
+  }
+}
+
+.home .ringGlow{
+  /* важливо: тільки opacity + transform */
+  transform: translateZ(0) scale(1);
+  transform-origin: center;
+  will-change: transform, opacity;
+  animation: homeGlowBreath 7.5s ease-in-out infinite;
+}
+
+@keyframes homeGlowBreath{
+  0%   { opacity: .82; transform: translateZ(0) scale(0.99); }
+  50%  { opacity: 1.00; transform: translateZ(0) scale(1.02); }
+  100% { opacity: .82; transform: translateZ(0) scale(0.99); }
+}
+
+/* optional micro-life for emblem (ultra subtle) */
+.home .rankIcon img{
+  transform: translateZ(0);
+  will-change: transform;
+  animation: homeEmblemFloat 7.5s ease-in-out infinite;
+}
+
+@keyframes homeEmblemFloat{
+  0%   { transform: translateZ(0) translateY(0px); }
+  50%  { transform: translateZ(0) translateY(-1px); }
+  100% { transform: translateZ(0) translateY(0px); }
+}
 
 /* ============================= */
 /* END: HOME STYLES              */
