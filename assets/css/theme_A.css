@@ -696,3 +696,40 @@ body[data-rank="eidolon"]{
 @keyframes ringSpin{
   to { transform: rotate(360deg); }
 }
+/* ===== REFERENCE BACKDROP (cosmic) for HOME card ===== */
+.home .rankCore{
+  position: relative;
+  overflow: hidden;
+}
+
+/* nebula / dust */
+.home .rankCore::before{
+  content:"";
+  position:absolute;
+  inset:-25%;
+  pointer-events:none;
+  background:
+    radial-gradient(900px 520px at 50% 35%, rgba(0,0,0,0) 0%, rgba(0,0,0,.25) 55%, rgba(0,0,0,.70) 100%),
+    radial-gradient(700px 420px at 50% 35%, color-mix(in srgb, var(--accent) 26%, transparent) 0%, transparent 62%),
+    radial-gradient(900px 520px at 15% 20%, rgba(255,255,255,.06) 0%, transparent 55%),
+    radial-gradient(900px 520px at 85% 30%, rgba(255,255,255,.05) 0%, transparent 55%);
+  filter: blur(0px);
+  opacity: .95;
+  mix-blend-mode: screen;
+}
+
+/* faint starfield */
+.home .rankCore::after{
+  content:"";
+  position:absolute;
+  inset:-10%;
+  pointer-events:none;
+  background-image:
+    radial-gradient(rgba(255,255,255,.10) 1px, transparent 1px),
+    radial-gradient(rgba(255,255,255,.07) 1px, transparent 1px),
+    radial-gradient(rgba(255,255,255,.05) 1px, transparent 1px);
+  background-size: 140px 140px, 220px 220px, 320px 320px;
+  background-position: 0 0, 40px 60px, 80px 120px;
+  opacity: .20;
+  filter: blur(.2px);
+}
