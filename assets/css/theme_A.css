@@ -484,3 +484,42 @@ body[data-rank="eidolon"]{
       rgba(0,0,0,.74) 0%,
       transparent 62%) !important;
 }
+/* === AURA: asymmetric, cinematic === */
+#dashboard .home .rankRing::after{
+  background:
+    radial-gradient(ellipse 60% 85% at 48% 50%,
+      transparent 54%,
+      color-mix(in srgb, var(--accent) 24%, transparent) 64%,
+      transparent 78%),
+    radial-gradient(ellipse 75% 100% at 52% 50%,
+      transparent 60%,
+      color-mix(in srgb, var(--accent) 14%, transparent) 72%,
+      transparent 88%) !important;
+
+  opacity: .42 !important;
+}
+/* === ENERGY RING: hot sectors === */
+#dashboard .home .ringOuter{
+  background-image: conic-gradient(
+    from 180deg,
+    rgba(255,255,255,0) 0deg,
+    rgba(255,255,255,.08) 30deg,
+
+    var(--accent) 68deg,
+    rgba(255,255,255,.22) 82deg,
+
+    rgba(255,255,255,.04) 120deg,
+    rgba(255,255,255,0) 170deg,
+
+    var(--accent) 248deg,
+    rgba(255,255,255,.20) 262deg,
+
+    rgba(255,255,255,0) 360deg
+  ) !important;
+}
+/* === PROGRESS BAR: elite glow === */
+#dashboard .home .rankProgressFill{
+  box-shadow:
+    0 0 12px color-mix(in srgb, var(--accent) 45%, transparent),
+    inset 0 0 6px rgba(255,255,255,.12) !important;
+}
