@@ -664,8 +664,9 @@ body{ margin:0; font-family: var(--font-body); }
   0%,100%{ box-shadow: 0 0 14px rgba(34,197,94,.10); }
   50%{ box-shadow: 0 0 24px rgba(34,197,94,.18); }
 }
+
 /* ============================= */
-/* HOME: Rank Status Core (A)    */
+/* START: HOME STYLES            */
 /* ============================= */
 
 .home{
@@ -892,196 +893,7 @@ body{ margin:0; font-family: var(--font-body); }
 }
 
 .footItem strong{ color: rgba(234,240,255,.95); }
-/* ============================= */
-/* HOME: RANK CORE (SAFE FIX)    */
-/* ============================= */
 
-.home .rankCore{
-  position: relative;
-  border: 1px solid rgba(255,255,255,.08);
-  border-radius: 22px;
-  background: rgba(10,14,28,.35);
-  box-shadow:
-    0 30px 80px rgba(0,0,0,.55),
-    inset 0 1px 0 rgba(255,255,255,.06);
-  overflow: hidden;
-
-  /* важливо: робимо стабільний layout */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 18px;
-
-  padding: 34px 26px 26px;
-}
-
-.home .rankCore::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  pointer-events:none;
-  background:
-    radial-gradient(700px circle at 50% 35%, rgba(0,0,0,0), rgba(0,0,0,.55) 70%),
-    radial-gradient(900px circle at 50% 30%, var(--glow2), transparent 60%);
-  opacity:.9;
-  z-index: 0;
-}
-
-/* піднімаємо контент над ::before */
-.home .rankCore > *{
-  position: relative;
-  z-index: 1;
-}
-
-/* === RING: 100% circle (no oval) === */
-.home .rankRing{
-  position: relative;
-  width: min(520px, 62vw);
-  height: min(520px, 62vw); /* важливо: height = width */
-  max-width: 520px;
-  max-height: 520px;
-
-  display: grid;
-  place-items: center;
-  margin: 0 auto;
-}
-
-.home .rankEmblem{
-  position: relative;
-  z-index: 5;
-  display: grid;
-  place-items: center;
-  width: 100%;
-  height: 100%;
-  transform: translateY(6px); /* <-- піднімає/опускає іконку */
-}
-
-.home .rankIcon img{
-  width: 220px;
-  height: 220px;
-  object-fit: contain;
-  filter: drop-shadow(0 18px 42px rgba(0,0,0,.55)) drop-shadow(0 0 22px var(--glow2));
-  transform: translateZ(0);
-}
-
-/* glow wash behind ring */
-.home .ringGlow{
-  position:absolute;
-  inset:-10%;
-  border-radius:50%;
-  background:
-    radial-gradient(circle at 50% 50%, var(--glow2), transparent 55%),
-    radial-gradient(circle at 50% 50%, rgba(255,255,255,.06), transparent 60%);
-  filter: blur(10px);
-  opacity: .9;
-  z-index:1;
-}
-
-.home .ring{
-  position:absolute;
-  border-radius:50%;
-  z-index:2;
-}
-
-.home .ringOuter{
-  inset: 8%;
-  background:
-    radial-gradient(circle at 50% 50%, transparent 64%, rgba(255,255,255,.08) 65%, transparent 66%),
-    radial-gradient(circle at 50% 50%, transparent 66%, rgba(255,255,255,.06) 67%, transparent 68%);
-  box-shadow:
-    inset 0 0 0 1px rgba(255,255,255,.08),
-    0 0 0 1px rgba(0,0,0,.35),
-    0 0 36px var(--glow2);
-}
-
-.home .ringInner{
-  inset: 16%;
-  box-shadow:
-    inset 0 0 0 1px rgba(255,255,255,.10),
-    0 0 26px var(--glow2);
-  background:
-    conic-gradient(from 270deg,
-      rgba(255,255,255,.00) 0%,
-      var(--glow2) 12%,
-      rgba(255,255,255,.00) 30%,
-      rgba(255,255,255,.00) 100%);
-  opacity: .9;
-}
-
-.home .ringTicks{
-  position:absolute;
-  inset: 6%;
-  border-radius:50%;
-  z-index:3;
-  -webkit-mask: radial-gradient(circle at 50% 50%, transparent 63%, #000 64%);
-  mask: radial-gradient(circle at 50% 50%, transparent 63%, #000 64%);
-  background:
-    repeating-conic-gradient(
-      from 0deg,
-      rgba(255,255,255,.14) 0 1deg,
-      rgba(255,255,255,0) 1deg 8deg
-    );
-  opacity:.25;
-}
-
-.home .ringFlare{
-  position:absolute;
-  left: 8%;
-  right: 8%;
-  top: 50%;
-  height: 2px;
-  transform: translateY(-1px);
-  z-index:4;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,.16), var(--glow2), rgba(255,255,255,.16), transparent);
-  box-shadow: 0 0 18px var(--glow2);
-  opacity:.8;
-}
-
-/* rank meta spacing */
-.home .rankMeta{
-  width: 100%;
-  text-align: center;
-  margin-top: -6px;
-}
-
-.home .rankMeta .rankName{
-  letter-spacing: .18em;
-  font-weight: 700;
-  font-size: 34px;
-}
-
-.home .rankMeta .rankRP{
-  margin-top: 6px;
-  font-size: 22px;
-  color: rgba(234,240,255,.90);
-}
-
-.home .rankMeta .rpUnit{
-  opacity:.65;
-  font-size: 14px;
-  letter-spacing:.14em;
-}
-
-/* progress */
-.home .rankProgress{
-  margin-top: 14px;
-}
-
-.home .rankProgressBar{
-  height: 10px;
-  border-radius: 999px;
-  background: rgba(255,255,255,.08);
-  border: 1px solid rgba(255,255,255,.10);
-  overflow:hidden;
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.06);
-}
-
-.home .rankProgressFill{
-  height:100%;
-  border-radius: 999px;
-  background: linear-gradient(90deg, var(--accent), rgba(255,255,255,.25));
-  box-shadow: 0 0 22px var(--glow2);
-}
 /* ============================= */
 /* HOME: TOP BAR (AAA)           */
 /* ============================= */
@@ -1124,3 +936,313 @@ body{ margin:0; font-family: var(--font-body); }
   width: min(980px, 92vw);
   margin: 0 auto;
 }
+/* ============================= */
+/* HOME: FINAL CORE (REFERENCE)  */
+/* ============================= */
+
+/* page width like concept */
+.home{
+  width: min(980px, 92vw);
+  margin: 0 auto;
+}
+
+/* top bar */
+.home .homeTopBar{
+  width: 100%;
+  margin: 26px auto 18px;
+  padding: 18px 22px;
+  border-radius: 18px;
+  background: rgba(10,14,28,.30);
+  border: 1px solid rgba(255,255,255,.08);
+  box-shadow: 0 18px 60px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.06);
+  position: relative;
+  overflow: hidden;
+}
+
+.home .homeTopBar::before{
+  content:"";
+  position:absolute;
+  left: 14%;
+  right: 14%;
+  top: 10px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.12), var(--glow2), rgba(255,255,255,.12), transparent);
+  box-shadow: 0 0 18px var(--glow2);
+  opacity: .85;
+}
+
+.home .homeWelcome{
+  text-align: center;
+  font-size: 22px;
+  letter-spacing: .08em;
+  color: rgba(234,240,255,.92);
+}
+
+/* === Rank Core card (double frame like ref) === */
+.home .rankCore{
+  position: relative;
+  margin: 18px auto 18px;
+  padding: 34px 26px 22px;
+  border-radius: 22px;
+  background: rgba(10,14,28,.28);
+  border: 1px solid rgba(255,255,255,.08);
+  box-shadow: 0 30px 90px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.06);
+  overflow: hidden;
+}
+
+/* inner frame */
+.home .rankCore::after{
+  content:"";
+  position:absolute;
+  inset: 14px;
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,.06);
+  pointer-events:none;
+  box-shadow: inset 0 0 0 1px rgba(0,0,0,.35);
+  opacity: .9;
+}
+
+/* atmosphere wash */
+.home .rankCore::before{
+  content:"";
+  position:absolute;
+  inset:-10%;
+  pointer-events:none;
+  background:
+    radial-gradient(640px circle at 50% 32%, var(--glow2), transparent 60%),
+    radial-gradient(720px circle at 50% 40%, rgba(0,0,0,0), rgba(0,0,0,.62) 70%);
+  opacity: .95;
+  z-index:0;
+}
+
+/* keep content above */
+.home .rankCore > *{ position: relative; z-index: 1; }
+
+/* === Ring geometry: always perfect circle === */
+.home .rankRing{
+  position: relative;
+  width: min(520px, 62vw);
+  height: min(520px, 62vw);
+  max-width: 520px;
+  max-height: 520px;
+  display: grid;
+  place-items: center;
+  margin: 6px auto 0;
+}
+
+/* emblem absolute center */
+.home .rankEmblem{
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  z-index: 5;
+  transform: translateY(6px);
+}
+
+.home .rankIcon{
+  display: grid;
+  place-items: center;
+  line-height: 0;
+}
+
+.home .rankIcon img{
+  display:block;
+  width: 220px;
+  height: 220px;
+  object-fit: contain;
+  filter: drop-shadow(0 18px 42px rgba(0,0,0,.55)) drop-shadow(0 0 22px var(--glow2));
+}
+
+/* glow wash */
+.home .ringGlow{
+  position:absolute;
+  inset:-12%;
+  border-radius:50%;
+  background:
+    radial-gradient(circle at 50% 50%, var(--glow2), transparent 55%),
+    radial-gradient(circle at 50% 50%, rgba(255,255,255,.06), transparent 60%);
+  filter: blur(10px);
+  opacity: .95;
+  z-index:1;
+}
+
+/* rings */
+.home .ring{ position:absolute; border-radius:50%; z-index:2; }
+
+.home .ringOuter{
+  inset: 10%;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.08), 0 0 36px var(--glow2);
+  background:
+    radial-gradient(circle at 50% 50%, transparent 64%, rgba(255,255,255,.10) 65%, transparent 66%);
+  opacity:.9;
+}
+
+.home .ringInner{
+  inset: 18%;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.10), 0 0 26px var(--glow2);
+  background:
+    conic-gradient(from 270deg,
+      rgba(255,255,255,.00) 0%,
+      var(--glow2) 12%,
+      rgba(255,255,255,.00) 30%,
+      rgba(255,255,255,.00) 100%);
+  opacity: .9;
+}
+
+/* ticks */
+.home .ringTicks{
+  position:absolute;
+  inset: 7%;
+  border-radius:50%;
+  z-index:3;
+  -webkit-mask: radial-gradient(circle at 50% 50%, transparent 63%, #000 64%);
+  mask: radial-gradient(circle at 50% 50%, transparent 63%, #000 64%);
+  background:
+    repeating-conic-gradient(
+      from 0deg,
+      rgba(255,255,255,.16) 0 1deg,
+      rgba(255,255,255,0) 1deg 8deg
+    );
+  opacity:.22;
+}
+
+/* flare */
+.home .ringFlare{
+  position:absolute;
+  left: 10%;
+  right: 10%;
+  top: 50%;
+  height: 2px;
+  transform: translateY(-1px);
+  z-index:4;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.14), var(--glow2), rgba(255,255,255,.14), transparent);
+  box-shadow: 0 0 18px var(--glow2);
+  opacity:.75;
+}
+
+/* meta */
+.home .rankMeta{
+  width: 100%;
+  text-align: center;
+  margin-top: -10px;
+}
+
+.home .rankMeta .rankName{
+  letter-spacing: .18em;
+  font-weight: 700;
+  font-size: 34px;
+}
+
+.home .rankMeta .rankRP{
+  margin-top: 6px;
+  font-size: 22px;
+  color: rgba(234,240,255,.90);
+}
+
+.home .rankMeta .rpUnit{
+  opacity:.65;
+  font-size: 14px;
+  letter-spacing:.14em;
+}
+
+/* progress */
+.home .rankProgress{ margin-top: 14px; }
+
+.home .rankProgressBar{
+  height: 10px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.08);
+  border: 1px solid rgba(255,255,255,.10);
+  overflow:hidden;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.06);
+}
+
+.home .rankProgressFill{
+  height:100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--accent), rgba(255,255,255,.25));
+  box-shadow: 0 0 22px var(--glow2);
+}
+
+/* snapshot (keep your html, just style) */
+.home .snapshot{
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 22px;
+  background: rgba(10,14,28,.30);
+  box-shadow: 0 26px 70px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.06);
+  overflow: hidden;
+  padding: 20px 20px 16px;
+}
+
+.home .snapshotTitle{
+  text-align: center;
+  letter-spacing: .22em;
+  font-size: 13px;
+  color: rgba(234,240,255,.70);
+  margin-bottom: 14px;
+  position: relative;
+}
+
+.home .snapshotTitle::before{
+  content:"";
+  position:absolute;
+  left: 18%;
+  right: 18%;
+  top: -6px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.10), var(--glow2), rgba(255,255,255,.10), transparent);
+  box-shadow: 0 0 18px var(--glow2);
+  opacity: .8;
+}
+
+.home .pulse{
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 14px;
+}
+
+.home .pulseItem{
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 16px;
+  background: rgba(8,12,22,.30);
+  padding: 14px 14px 12px;
+  text-align: center;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.05);
+}
+
+.home .pulseKicker{
+  font-size: 11px;
+  letter-spacing: .18em;
+  color: rgba(234,240,255,.55);
+  margin-bottom: 6px;
+}
+
+.home .pulseValue{
+  font-size: 28px;
+  font-weight: 700;
+  color: rgba(234,240,255,.95);
+}
+
+.home .pulseLabel{
+  font-size: 11px;
+  letter-spacing: .18em;
+  color: rgba(234,240,255,.55);
+  margin-top: 6px;
+}
+
+.home .snapshotFooter{
+  display:flex;
+  justify-content: space-between;
+  gap: 14px;
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255,255,255,.08);
+  color: rgba(234,240,255,.75);
+  font-size: 12px;
+  letter-spacing: .08em;
+}
+
+/* ============================= */
+/* END: HOME STYLES              */
+/* ============================= */
