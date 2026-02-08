@@ -490,3 +490,45 @@ body[data-rank="eidolon"]{
 #dashboard .home .ringFlare{
   opacity: .55 !important;
 }
+/* =========================================================
+   HOME: PERFORMANCE SAFE MODE (keeps look, removes lag)
+   Paste at VERY END of theme_A.css
+   ========================================================= */
+
+/* 1) Never blur huge layers (major lag source) */
+#dashboard .home .ringGlow{
+  filter: blur(14px) !important;   /* was 26px */
+  opacity: .80 !important;
+}
+
+/* 2) Remove heavy drop-shadow stack (big GPU cost) */
+#dashboard .home .ringOuter{
+  filter: blur(.22px) !important;  /* keep crisp */
+}
+
+/* 3) Limit pseudo aura to smaller blur */
+#dashboard .home .ringOuter::before{
+  filter: blur(6px) !important;    /* was 10px */
+  opacity: .26 !important;
+}
+
+/* 4) Turn off mix-blend-mode on huge layers (expensive) */
+#dashboard .home .ringGlow,
+#dashboard .home .rankCore::before,
+#dashboard .home .rankCore::after,
+#dashboard .home .ringFlare{
+  mix-blend-mode: normal !important;
+}
+
+/* 5) Reduce giant starfield cost */
+#dashboard .home .rankCore::after{
+  opacity: .12 !important;
+  filter: none !important;
+}
+
+/* 6) Make animations cheaper */
+#dashboard .home .ringOuter,
+#dashboard .home .ringOuter::before,
+#dashboard .home .ringGlow{
+  will-change: auto !important;
+}
