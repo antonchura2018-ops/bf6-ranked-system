@@ -433,3 +433,54 @@ body[data-rank="eidolon"]{
   opacity: .62 !important;
 }
 
+/* =========================================================
+   HOME — FIX “PURPLE DISC” (make aura hollow like reference)
+   Paste at VERY END of theme_A.css
+   ========================================================= */
+
+/* 1) BIG OUTER AURA: make it weaker + hollow (no center fill) */
+#dashboard .home .rankRing::after{
+  opacity: .48 !important;      /* was ~1 */
+  filter: blur(18px) !important;
+  inset: -30% !important;
+  background:
+    radial-gradient(circle at 50% 50%,
+      transparent 56%,
+      color-mix(in srgb, var(--accent) 22%, transparent) 66%,
+      color-mix(in srgb, var(--accent) 10%, transparent) 74%,
+      transparent 84%) !important;
+
+  /* IMPORTANT: cut the center so it never becomes a “disc” */
+  -webkit-mask: radial-gradient(circle, transparent 0 56%, #000 62%, transparent 86%);
+          mask: radial-gradient(circle, transparent 0 56%, #000 62%, transparent 86%);
+}
+
+/* 2) MAIN HALO: convert to ring glow (hollow center) */
+#dashboard .home .ringGlow{
+  opacity: .72 !important;       /* was ~0.90 */
+  filter: blur(16px) !important;
+
+  background:
+    radial-gradient(circle at 50% 45%,
+      transparent 52%,
+      color-mix(in srgb, var(--accent) 26%, transparent) 62%,
+      color-mix(in srgb, var(--accent) 14%, transparent) 70%,
+      transparent 80%) !important;
+
+  -webkit-mask: radial-gradient(circle, transparent 0 52%, #000 60%, transparent 82%);
+          mask: radial-gradient(circle, transparent 0 52%, #000 60%, transparent 82%);
+}
+
+/* 3) Keep the inner space darker (reference has depth, not glow fill) */
+#dashboard .home .rankCore::before{
+  background:
+    radial-gradient(520px 420px at 50% 38%,
+      color-mix(in srgb, var(--accent) 22%, transparent) 0%,
+      transparent 62%),
+    radial-gradient(1000px 640px at 50% 40%,
+      rgba(255,255,255,.05) 0%,
+      transparent 72%),
+    radial-gradient(1400px 900px at 50% 10%,
+      rgba(0,0,0,.74) 0%,
+      transparent 62%) !important;
+}
