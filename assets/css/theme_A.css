@@ -127,3 +127,273 @@ body[data-rank="seraph"]{
 body[data-rank="eidolon"]{
   --accent:#A7F3D0; --glow: rgba(167,243,208,.45); --glow2: rgba(167,243,208,.18);
 }
+
+/* ===========================================================
+   HOME HERO — COSMIC RING (REFERENCE MATCH)  [SAFE OVERRIDE]
+   Paste at END of theme_A.css
+   =========================================================== */
+
+/* layout */
+.home{
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 26px 24px 40px;
+}
+
+.homeTopBar{
+  margin: 14px auto 22px;
+  padding: 16px 22px;
+  border-radius: 18px;
+  background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.025));
+  border: 1px solid rgba(255,255,255,.08);
+  box-shadow: 0 18px 60px rgba(0,0,0,.55);
+  position: relative;
+  overflow: hidden;
+}
+
+/* thin accent line like reference */
+.homeTopBar::before{
+  content:"";
+  position:absolute;
+  left: 16px; right: 16px; top: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  opacity: .55;
+  filter: blur(.2px);
+}
+
+.homeWelcome{
+  font-family: var(--font-ui);
+  letter-spacing: .06em;
+  font-size: 22px;
+  text-align: center;
+  color: rgba(234,240,255,.92);
+}
+
+/* big hero panel */
+.rankCore{
+  border-radius: 22px;
+  border: 1px solid rgba(255,255,255,.09);
+  background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));
+  box-shadow:
+    0 30px 120px rgba(0,0,0,.68),
+    inset 0 0 0 1px rgba(255,255,255,.03);
+  overflow: hidden;
+  padding: 56px 24px 44px;
+  position: relative;
+}
+
+/* cosmic wash behind ring like screenshots */
+.rankCore::before{
+  content:"";
+  position:absolute;
+  inset:-40px;
+  background:
+    radial-gradient(520px circle at 50% 42%, var(--glow2), transparent 62%),
+    radial-gradient(840px circle at 50% 45%, rgba(255,255,255,.05), transparent 70%),
+    radial-gradient(1200px circle at 50% 0%, rgba(0,0,0,.55), transparent 60%);
+  opacity: .95;
+  pointer-events:none;
+}
+
+.rankRing{
+  position: relative;
+  width: min(680px, 92vw);
+  height: 520px; /* keeps vertical proportion similar to reference */
+  margin: 0 auto;
+  display: grid;
+  place-items: center;
+}
+
+/* glow wash */
+.ringGlow{
+  position:absolute;
+  inset: 0;
+  border-radius: 24px;
+  background:
+    radial-gradient(420px circle at 50% 46%, var(--glow), transparent 62%),
+    radial-gradient(700px circle at 50% 52%, rgba(0,0,0,.55), transparent 70%);
+  opacity: .42;
+  filter: blur(0.2px);
+  pointer-events:none;
+}
+
+/* OUTER aura ring — “living energy” but super stable */
+.ringOuter{
+  position:absolute;
+  width: 410px;
+  height: 410px;
+  border-radius: 999px;
+  background:
+    conic-gradient(
+      from 90deg,
+      transparent 0deg,
+      rgba(255,255,255,.14) 40deg,
+      var(--glow) 90deg,
+      rgba(255,255,255,.10) 140deg,
+      transparent 220deg,
+      var(--glow2) 290deg,
+      rgba(255,255,255,.10) 340deg,
+      transparent 360deg
+    );
+  -webkit-mask: radial-gradient(circle, transparent 63%, #000 64%);
+          mask: radial-gradient(circle, transparent 63%, #000 64%);
+  filter: blur(1.2px);
+  opacity: .85;
+  animation: ringBreath 6.5s ease-in-out infinite;
+  will-change: transform, opacity;
+  pointer-events:none;
+}
+
+/* INNER precision ring */
+.ringInner{
+  position:absolute;
+  width: 360px;
+  height: 360px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.12);
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,.04) inset,
+    0 0 40px rgba(0,0,0,.45) inset;
+  opacity: .72;
+  pointer-events:none;
+}
+
+/* Tech ticks like reference */
+.ringTicks{
+  position:absolute;
+  width: 458px;
+  height: 458px;
+  border-radius: 999px;
+  background: repeating-conic-gradient(
+    from 0deg,
+    rgba(255,255,255,.18) 0deg,
+    rgba(255,255,255,.18) 1deg,
+    transparent 1deg,
+    transparent 10deg
+  );
+  -webkit-mask: radial-gradient(circle, transparent 70%, #000 71%);
+          mask: radial-gradient(circle, transparent 70%, #000 71%);
+  opacity: .16; /* visible but subtle */
+  filter: blur(.2px);
+  pointer-events:none;
+}
+
+/* Emblem holder (fix "icon shifted") */
+.rankEmblem{
+  position:absolute;
+  width: 220px;
+  height: 220px;
+  left: 50%;
+  top: 46%;
+  transform: translate(-50%, -50%);
+  display:grid;
+  place-items:center;
+  pointer-events:none;
+}
+
+.rankIcon{
+  display:block;
+  width: 220px;
+  height: 220px;
+}
+
+.rankIcon img{
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transform: translateZ(0) scale(var(--icon-scale, .90));
+  filter:
+    drop-shadow(0 10px 28px rgba(0,0,0,.65))
+    drop-shadow(0 0 18px var(--glow2));
+  animation: emblemBreath 4.8s ease-in-out infinite;
+  will-change: transform, filter;
+}
+
+/* Lens flare line (horizontal) */
+.ringFlare{
+  position:absolute;
+  width: 520px;
+  height: 2px;
+  left: 50%;
+  top: 46%;
+  transform: translate(-50%, -50%);
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.22), var(--glow), rgba(255,255,255,.18), transparent);
+  opacity: .25;
+  filter: blur(.3px);
+  pointer-events:none;
+}
+
+/* Meta area */
+.rankMeta{
+  margin-top: 300px; /* aligns text block under emblem like reference */
+  text-align:center;
+  position: relative;
+  z-index: 2;
+}
+
+.rankName{
+  font-family: var(--font-ui);
+  font-weight: 800;
+  letter-spacing: .18em;
+  font-size: 32px;
+  color: rgba(234,240,255,.95);
+}
+
+.rankRP{
+  margin-top: 6px;
+  font-family: var(--font-ui);
+  letter-spacing: .08em;
+  color: rgba(234,240,255,.75);
+}
+
+.rpValue{
+  font-size: 26px;
+  font-weight: 800;
+  color: rgba(234,240,255,.92);
+}
+
+.rankProgress{
+  margin-top: 22px;
+  max-width: 620px;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+.rankProgressBar{
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.10);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.06);
+  overflow:hidden;
+}
+
+.rankProgressFill{
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--accent), rgba(255,255,255,.18));
+  box-shadow: 0 0 18px var(--glow2);
+}
+
+.rankProgressText{
+  margin-top: 10px;
+  font-size: 12px;
+  letter-spacing: .08em;
+  color: rgba(234,240,255,.62);
+}
+
+/* Animations — subtle but visible (no jitter) */
+@keyframes ringBreath{
+  0%,100% { transform: translateZ(0) scale(1.00); opacity: .78; }
+  50%     { transform: translateZ(0) scale(1.015); opacity: .92; }
+}
+
+@keyframes emblemBreath{
+  0%,100% { transform: translateZ(0) scale(var(--icon-scale, .90)); filter: drop-shadow(0 10px 28px rgba(0,0,0,.65)) drop-shadow(0 0 14px var(--glow2)); }
+  50%     { transform: translateZ(0) scale(calc(var(--icon-scale, .90) + .02)); filter: drop-shadow(0 12px 32px rgba(0,0,0,.68)) drop-shadow(0 0 20px var(--glow)); }
+}
+
+/* Snapshot stays same, just ensure spacing fits like ref */
+.snapshot{
+  margin-top: 26px;
+}
