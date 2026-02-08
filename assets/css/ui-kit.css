@@ -892,7 +892,7 @@ body{ margin:0; font-family: var(--font-body); }
 }
 
 .footItem strong{ color: rgba(234,240,255,.95); }
-
+/*
 /* ============================= */
 /* HOME: AAA RANK CORE (concept) */
 /* ============================= */
@@ -1039,3 +1039,4 @@ body{ margin:0; font-family: var(--font-body); }
   background: linear-gradient(90deg, var(--accent), rgba(255,255,255,.25));
   box-shadow: 0 0 22px var(--glow2);
 }
+*/
