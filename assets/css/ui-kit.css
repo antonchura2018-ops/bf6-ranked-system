@@ -1349,3 +1349,32 @@ body{ margin:0; font-family: var(--font-body); }
   50%  { opacity: .80; transform: translateZ(0) scale(1.01); }
   100% { opacity: .55; transform: translateZ(0) scale(0.995); }
 }
+/* ============================= */
+/* HOME: rank name accent glow   */
+/* ============================= */
+
+.home .rankName{
+  position: relative;
+  color: var(--text-strong);
+  letter-spacing: .18em;
+  text-shadow:
+    0 0 12px rgba(255,255,255,.04),
+    0 0 22px var(--glow2);
+}
+
+body[data-rank] .home .rankName::after{
+  content:"";
+  position:absolute;
+  left:50%;
+  top:100%;
+  width:160px;
+  height:2px;
+  transform: translateX(-50%);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--accent),
+    transparent
+  );
+  opacity:.35;
+}
