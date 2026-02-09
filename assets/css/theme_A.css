@@ -116,7 +116,7 @@ body[data-rank="archon"]{
   --accent:#EC4899; --glow: rgba(236,72,153,.55); --glow2: rgba(236,72,153,.22);
 }
 body[data-rank="overlord"]{
-  --accent:#F97316; --glow: rgba(249,115,22,.55); --glow2: rgba(249,115,22,.22);
+  --accent:#FF2A1A; --glow: rgba(255,42,26,.55); --glow2: rgba(255,42,26,.22);
 }
 body[data-rank="monarch"]{
   --accent:#FACC15; --glow: rgba(250,204,21,.55); --glow2: rgba(250,204,21,.22);
