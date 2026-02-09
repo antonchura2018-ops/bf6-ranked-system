@@ -402,3 +402,75 @@ body[data-rank="eidolon"]{
     rgba(0,0,0,.95) 100%);
   pointer-events:none;
 }
+/* =========================
+   IMMORTAL REF — PLASMA LAYER
+   paste at VERY END
+   ========================= */
+
+#dashboard .home .rankRing{
+  position:relative;
+}
+
+/* plasma/turbulence halo like reference */
+#dashboard .home .ringPlasma{
+  position:absolute;
+  inset:-22%;
+  border-radius:999px;
+  pointer-events:none;
+  opacity:.85;
+  mix-blend-mode: screen;
+  filter: blur(10px) saturate(1.25);
+
+  /* 2 layers: hot cloud + broken ring */
+  background:
+    radial-gradient(circle at 50% 50%,
+      transparent 52%,
+      color-mix(in srgb, var(--accent) 40%, transparent) 60%,
+      color-mix(in srgb, var(--accent) 18%, transparent) 70%,
+      transparent 84%),
+
+    conic-gradient(
+      from 180deg,
+      transparent 0deg,
+      color-mix(in srgb, var(--accent) 75%, transparent) 24deg,
+      transparent 60deg,
+      color-mix(in srgb, var(--accent) 55%, transparent) 130deg,
+      transparent 190deg,
+      color-mix(in srgb, var(--accent) 70%, transparent) 260deg,
+      transparent 360deg
+    );
+
+  -webkit-mask: radial-gradient(circle, transparent 0 54%, #000 62%, transparent 88%);
+          mask: radial-gradient(circle, transparent 0 54%, #000 62%, transparent 88%);
+}
+
+/* add “nebula” inside the card (reference background feel) */
+#dashboard .home .rankCore::before{
+  opacity:.95 !important;
+  background:
+    radial-gradient(900px 600px at 50% 28%,
+      color-mix(in srgb, var(--accent) 35%, transparent) 0%,
+      transparent 58%),
+    radial-gradient(1200px 820px at 50% 46%,
+      color-mix(in srgb, var(--accent) 16%, transparent) 0%,
+      transparent 68%),
+    radial-gradient(1100px 760px at 18% 26%,
+      rgba(255,255,255,.06) 0%,
+      transparent 62%),
+    radial-gradient(1100px 760px at 84% 26%,
+      rgba(255,255,255,.05) 0%,
+      transparent 62%),
+    radial-gradient(1400px 900px at 50% 10%,
+      rgba(0,0,0,.74) 0%,
+      transparent 60%) !important;
+}
+
+/* add thin helper ring like ref */
+#dashboard .home .ringInner{
+  opacity:.42 !important;
+  border-color: rgba(255,255,255,.12) !important;
+}
+
+#dashboard .home .ringOuter{
+  filter: blur(.12px) drop-shadow(0 0 24px color-mix(in srgb, var(--accent) 55%, transparent)) !important;
+}
