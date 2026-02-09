@@ -314,7 +314,5 @@ body[data-rank="eidolon"]{
 #dashboard .home .rankEmblem source{
   display:none !important;
 }
-#dashboard .home .ringTicks{ z-index: 2; }
-#dashboard .home .ringFlare{ z-index: 5; }
-#dashboard .home .ringInner{ z-index: 3; }
+
 
