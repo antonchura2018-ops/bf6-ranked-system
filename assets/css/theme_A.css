@@ -191,68 +191,70 @@ body[data-rank="eidolon"]{
   isolation: isolate;
 }
 
-/* BIG OUTER AURA (must be hollow, like reference) */
-#dashboard .home .rankRing::after{
-  content:"";
-  position:absolute;
-  inset:-28%;
-  border-radius: 999px;
-  pointer-events:none;
-  background: radial-gradient(circle at 50% 50%,
-    transparent 52%,
-    color-mix(in srgb, var(--accent) 26%, transparent) 64%,
-    color-mix(in srgb, var(--accent) 11%, transparent) 74%,
-    transparent 86%);
-  filter: blur(18px);
-  opacity: .62;
 
-  /* hollow center – never becomes a “disc” */
-  -webkit-mask: radial-gradient(circle, transparent 0 54%, #000 60%, transparent 88%);
-          mask: radial-gradient(circle, transparent 0 54%, #000 60%, transparent 88%);
-}
-
-/* INNER HALO (hug near ring, hollow) */
+/* MAIN IMMORTAL HALO — SINGLE, TIGHT */
 #dashboard .home .ringGlow{
   position:absolute;
-  inset:-12%;
-  border-radius: 999px;
-  background: radial-gradient(circle at 50% 50%,
-    transparent 56%,
-    color-mix(in srgb, var(--accent) 30%, transparent) 64%,
-    color-mix(in srgb, var(--accent) 14%, transparent) 72%,
+  inset:-10%;
+  border-radius:999px;
+
+  background:
+    radial-gradient(circle at 50% 50%,
+      transparent 58%,
+      color-mix(in srgb, var(--accent) 32%, transparent) 64%,
+      color-mix(in srgb, var(--accent) 14%, transparent) 70%,
+      transparent 80%);
+
+  filter: blur(14px);
+  opacity: .65;
+
+  -webkit-mask: radial-gradient(circle,
+    transparent 0 60%,
+    #000 64%,
     transparent 82%);
-  filter: blur(16px);
-  opacity: .78;
-  mix-blend-mode: screen;
+          mask: radial-gradient(circle,
+    transparent 0 60%,
+    #000 64%,
+    transparent 82%);
 
-  -webkit-mask: radial-gradient(circle, transparent 0 58%, #000 64%, transparent 82%);
-          mask: radial-gradient(circle, transparent 0 58%, #000 64%, transparent 82%);
+  pointer-events:none;
 }
-
 /* ring base */
 #dashboard .home .ring{ position:absolute; inset:0; border-radius:999px; pointer-events:none; }
 
-/* OUTER ENERGY RING (hot arcs like ref) */
 #dashboard .home .ringOuter{
   position:absolute;
-  inset: 34px;
-  border-radius: 999px;
-  opacity: .96;
+  inset:34px;
+  border-radius:999px;
+
   background-image: conic-gradient(
-    from 200deg,
+    from 210deg,
     rgba(255,255,255,0) 0deg,
-    rgba(255,255,255,.10) 28deg,
-    var(--accent) 74deg,
-    rgba(255,255,255,.22) 92deg,
-    rgba(255,255,255,.05) 132deg,
-    rgba(255,255,255,0) 188deg,
-    var(--accent) 262deg,
-    rgba(255,255,255,.20) 280deg,
+    rgba(255,255,255,.06) 30deg,
+    var(--accent) 80deg,
+    rgba(255,80,60,.85) 92deg,
+    rgba(255,255,255,.18) 110deg,
+    rgba(255,255,255,0) 170deg,
+    var(--accent) 260deg,
+    rgba(255,80,60,.75) 276deg,
     rgba(255,255,255,0) 360deg
   );
-  -webkit-mask: radial-gradient(circle, transparent 62%, #000 63%, #000 66%, transparent 67%);
-          mask: radial-gradient(circle, transparent 62%, #000 63%, #000 66%, transparent 67%);
-  filter: blur(.18px) drop-shadow(0 0 24px color-mix(in srgb, var(--accent) 42%, transparent));
+
+  -webkit-mask: radial-gradient(circle,
+    transparent 62%,
+    #000 63%,
+    #000 66%,
+    transparent 67%);
+          mask: radial-gradient(circle,
+    transparent 62%,
+    #000 63%,
+    #000 66%,
+    transparent 67%);
+
+  filter:
+    blur(.15px)
+    drop-shadow(0 0 18px color-mix(in srgb, var(--accent) 55%, transparent));
+
   animation: ringSpin 22s linear infinite;
 }
 
@@ -387,4 +389,16 @@ body[data-rank="eidolon"]{
 
   -webkit-mask: radial-gradient(circle, transparent 0 58%, #000 66%, transparent 84%) !important;
           mask: radial-gradient(circle, transparent 0 58%, #000 66%, transparent 84%) !important;
+}
+/* CENTER DEPTH — subtle, not glow */
+#dashboard .home .rankRing::before{
+  content:"";
+  position:absolute;
+  inset:22%;
+  border-radius:999px;
+  background: radial-gradient(circle,
+    rgba(0,0,0,.55) 0%,
+    rgba(0,0,0,.85) 70%,
+    rgba(0,0,0,.95) 100%);
+  pointer-events:none;
 }
