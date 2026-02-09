@@ -129,8 +129,7 @@ body[data-rank="eidolon"]{
 }
 
 /* =========================================================
-   HOME — IMMORTAL (REFERENCE 1:1 LOOK)
-   Test rank: OVERLORD (uses IMMORTAL red)
+   HOME — IMMORTAL (REFERENCE 1:1 LOOK)  ✅ SINGLE CLEAN BLOCK
    Paste ONCE at VERY END of theme_A.css
    ========================================================= */
 
@@ -156,10 +155,10 @@ body[data-rank="eidolon"]{
   pointer-events:none;
   background:
     radial-gradient(900px 680px at 50% 30%,
-      color-mix(in srgb, var(--accent) 42%, transparent) 0%,
+      color-mix(in srgb, var(--accent) 34%, transparent) 0%,
       transparent 62%),
     radial-gradient(1200px 820px at 50% 42%,
-      color-mix(in srgb, var(--accent) 18%, transparent) 0%,
+      color-mix(in srgb, var(--accent) 14%, transparent) 0%,
       transparent 70%),
     radial-gradient(1100px 760px at 20% 30%,
       rgba(255,255,255,.06) 0%,
@@ -196,40 +195,42 @@ body[data-rank="eidolon"]{
   isolation: isolate;
 }
 
-/* BIG OUTER AURA (ref: strong but hollow, not a filled disc) */
+/* BIG OUTER AURA (must be hollow, like reference) */
 #dashboard .home .rankRing::after{
   content:"";
   position:absolute;
   inset:-28%;
   border-radius: 999px;
   pointer-events:none;
-  background:
-    radial-gradient(circle at 50% 50%,
-      transparent 52%,
-      color-mix(in srgb, var(--accent) 28%, transparent) 64%,
-      color-mix(in srgb, var(--accent) 12%, transparent) 74%,
-      transparent 86%);
+  background: radial-gradient(circle at 50% 50%,
+    transparent 52%,
+    color-mix(in srgb, var(--accent) 26%, transparent) 64%,
+    color-mix(in srgb, var(--accent) 11%, transparent) 74%,
+    transparent 86%);
   filter: blur(18px);
   opacity: .62;
+
+  /* hollow center – never becomes a “disc” */
   -webkit-mask: radial-gradient(circle, transparent 0 54%, #000 60%, transparent 88%);
           mask: radial-gradient(circle, transparent 0 54%, #000 60%, transparent 88%);
 }
 
-/* aura hug near ring (inner halo) */
+/* INNER HALO (hug near ring, hollow) */
 #dashboard .home .ringGlow{
   position:absolute;
-  inset:-14%;
+  inset:-12%;
   border-radius: 999px;
-  background:
-    radial-gradient(circle at 50% 50%,
-      transparent 50%,
-      color-mix(in srgb, var(--accent) 30%, transparent) 60%,
-      color-mix(in srgb, var(--accent) 14%, transparent) 70%,
-      transparent 82%);
-  filter: blur(14px);
+  background: radial-gradient(circle at 50% 50%,
+    transparent 56%,
+    color-mix(in srgb, var(--accent) 30%, transparent) 64%,
+    color-mix(in srgb, var(--accent) 14%, transparent) 72%,
+    transparent 82%);
+  filter: blur(16px);
   opacity: .78;
-  -webkit-mask: radial-gradient(circle, transparent 0 52%, #000 58%, transparent 84%);
-          mask: radial-gradient(circle, transparent 0 52%, #000 58%, transparent 84%);
+  mix-blend-mode: screen;
+
+  -webkit-mask: radial-gradient(circle, transparent 0 58%, #000 64%, transparent 82%);
+          mask: radial-gradient(circle, transparent 0 58%, #000 64%, transparent 82%);
 }
 
 /* ring base */
@@ -259,7 +260,7 @@ body[data-rank="eidolon"]{
   animation: ringSpin 22s linear infinite;
 }
 
-/* soft energetic “outer smear” (ref glow trail) */
+/* soft energetic “outer smear” */
 #dashboard .home .ringOuter::before{
   content:"";
   position:absolute;
@@ -322,52 +323,12 @@ body[data-rank="eidolon"]{
     transparent 100%);
   opacity: .52;
   filter: blur(.2px);
+  mix-blend-mode: screen;
 }
 
-/* hide emblem (HOME only) */
+/* hide emblem (HOME only) — keep if you want “ring only” now */
 #dashboard .home .rankEmblem,
 #dashboard .home .rankIcon,
 #dashboard .home .rankEmblem picture,
 #dashboard .home .rankEmblem img,
 #dashboard .home .rankEmblem source{ display:none !important; }
-
-/* ===== IMMORTAL HALO FIX (1:1 behavior) — paste at VERY END ===== */
-
-/* 1) main halo (ringGlow) must be HOLLOW (no center fill) */
-#dashboard .home .ringGlow{
-  inset: -12% !important;            /* ближче до кільця */
-  opacity: .78 !important;
-  filter: blur(18px) !important;
-  mix-blend-mode: screen !important;
-
-  /* halo як КІЛЬЦЕ, а не диск */
-  background: radial-gradient(circle at 50% 50%,
-    transparent 56%,
-    color-mix(in srgb, var(--accent) 32%, transparent) 64%,
-    color-mix(in srgb, var(--accent) 14%, transparent) 72%,
-    transparent 82%) !important;
-
-  /* вирізаємо центр, щоб не було “заливки” */
-  -webkit-mask: radial-gradient(circle, transparent 0 58%, #000 64%, transparent 82%) !important;
-          mask: radial-gradient(circle, transparent 0 58%, #000 64%, transparent 82%) !important;
-}
-
-/* 2) remove ANY giant halo pseudo layers */
-#dashboard .home .rankRing::before,
-#dashboard .home .rankRing::after{
-  content: none !important;
-}
-/* 3) card fog must NOT flood the center */
-#dashboard .home .rankCore::before{
-  opacity: .85 !important;
-  background:
-    radial-gradient(900px 520px at 50% 26%,
-      rgba(255,255,255,.06) 0%,
-      transparent 58%),
-    radial-gradient(1100px 760px at 50% 38%,
-      color-mix(in srgb, var(--accent) 18%, transparent) 0%,
-      transparent 64%),
-    radial-gradient(1400px 900px at 50% 10%,
-      rgba(0,0,0,.72) 0%,
-      transparent 60%) !important;
-}
