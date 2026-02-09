@@ -332,3 +332,63 @@ body[data-rank="eidolon"]{
 #dashboard .home .rankEmblem picture,
 #dashboard .home .rankEmblem img,
 #dashboard .home .rankEmblem source{ display:none !important; }
+
+/* =========================================================
+   HOME — IMMORTAL FIX OVERRIDE (NO DISC + CORRECT LAYERS)
+   Paste at VERY END of theme_A.css
+   ========================================================= */
+
+/* 0) KILL any ring background that creates a filled disc */
+#dashboard .home .rankRing{
+  background: none !important;
+}
+
+/* 1) Correct stacking (like reference) */
+#dashboard .home .rankRing{ position:relative; }
+#dashboard .home .rankRing::after{ z-index: 0 !important; }
+#dashboard .home .ringGlow{ z-index: 1 !important; }
+#dashboard .home .ringTicks{ z-index: 2 !important; }
+#dashboard .home .ringOuter{ z-index: 3 !important; }
+#dashboard .home .ringInner{ z-index: 4 !important; }
+#dashboard .home .ringFlare{ z-index: 5 !important; }
+#dashboard .home .rankEmblem{ z-index: 6 !important; position:relative; }
+
+/* 2) Ensure all ring layers are truly absolute */
+#dashboard .home .ringGlow,
+#dashboard .home .ringTicks,
+#dashboard .home .ringOuter,
+#dashboard .home .ringInner,
+#dashboard .home .ringFlare{
+  position: absolute !important;
+}
+
+/* 3) Big aura must be hollow (never a disc) */
+#dashboard .home .rankRing::after{
+  opacity: .55 !important;
+  filter: blur(18px) !important;
+
+  background: radial-gradient(circle at 50% 50%,
+    transparent 54%,
+    color-mix(in srgb, var(--accent) 26%, transparent) 66%,
+    color-mix(in srgb, var(--accent) 10%, transparent) 75%,
+    transparent 88%) !important;
+
+  -webkit-mask: radial-gradient(circle, transparent 0 56%, #000 64%, transparent 90%) !important;
+          mask: radial-gradient(circle, transparent 0 56%, #000 64%, transparent 90%) !important;
+}
+
+/* 4) Inner halo must also be hollow (hug the ring) */
+#dashboard .home .ringGlow{
+  inset: -12% !important;
+  opacity: .70 !important;
+  filter: blur(16px) !important;
+
+  background: radial-gradient(circle at 50% 50%,
+    transparent 56%,
+    color-mix(in srgb, var(--accent) 28%, transparent) 64%,
+    color-mix(in srgb, var(--accent) 12%, transparent) 72%,
+    transparent 82%) !important;
+
+  -webkit-mask: radial-gradient(circle, transparent 0 58%, #000 66%, transparent 84%) !important;
+          mask: radial-gradient(circle, transparent 0 58%, #000 66%, transparent 84%) !important;
+}
