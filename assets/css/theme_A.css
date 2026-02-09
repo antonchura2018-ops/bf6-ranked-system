@@ -160,17 +160,21 @@ body[data-rank="eidolon"]{
   overflow: hidden;
 }
 
-/* nebula / dust inside card (stable, still “wow”) */
 #dashboard .home .rankCore::before{
   content:"";
   position:absolute;
-  inset:-28%;
+  inset:-22%;
   pointer-events:none;
   background:
-    radial-gradient(900px 560px at 50% 34%, rgba(0,0,0,0) 0%, rgba(0,0,0,.30) 55%, rgba(0,0,0,.72) 100%),
-    radial-gradient(860px 560px at 50% 36%, color-mix(in srgb, var(--accent) 34%, transparent) 0%, transparent 62%),
-    radial-gradient(900px 560px at 15% 18%, rgba(255,255,255,.06) 0%, transparent 55%),
-    radial-gradient(900px 560px at 85% 28%, rgba(255,255,255,.05) 0%, transparent 55%);
+    radial-gradient(800px 520px at 50% 32%,
+      rgba(255,255,255,.10) 0%,
+      transparent 55%),
+    radial-gradient(1000px 680px at 50% 45%,
+      color-mix(in srgb, var(--accent) 30%, transparent) 0%,
+      transparent 60%),
+    radial-gradient(1200px 900px at 50% 15%,
+      rgba(0,0,0,.75) 0%,
+      transparent 58%);
   opacity: .95;
 }
 
@@ -230,18 +234,21 @@ body[data-rank="eidolon"]{
 
 /* OUTER ENERGY RING */
 #dashboard .home .ringOuter{
+  position: relative;
   inset: 36px;
   opacity: .98;
   background-image: conic-gradient(
     from 180deg,
     rgba(255,255,255,0) 0deg,
-    rgba(255,255,255,.10) 40deg,
-    var(--accent) 85deg,
-    rgba(255,255,255,.18) 120deg,
-    rgba(255,255,255,0) 190deg,
-    var(--accent) 260deg,
+    rgba(255,255,255,.06) 20deg,
+    var(--accent) 48deg,
+    rgba(255,200,120,.35) 70deg,
+    rgba(255,255,255,.12) 92deg,
+    rgba(255,255,255,0) 150deg,
+    var(--accent) 235deg,
+    rgba(255,220,160,.28) 258deg,
     rgba(255,255,255,0) 360deg
-  );
+);
   -webkit-mask: radial-gradient(circle, transparent 62%, #000 63%, #000 66%, transparent 67%);
           mask: radial-gradient(circle, transparent 62%, #000 63%, #000 66%, transparent 67%);
   filter: blur(.24px);
@@ -303,20 +310,19 @@ body[data-rank="eidolon"]{
 /* LENS FLARE */
 #dashboard .home .ringFlare{
   position:absolute;
-  left: 8%;
-  right: 8%;
+  left: 6%;
+  right: 6%;
   top: 50%;
   height: 2px;
   transform: translateY(-50%);
-  z-index: 4;
   background: linear-gradient(90deg,
     transparent 0%,
-    color-mix(in srgb, var(--accent) 65%, white) 20%,
-    rgba(255,255,255,.22) 50%,
-    color-mix(in srgb, var(--accent) 65%, white) 80%,
+    color-mix(in srgb, var(--accent) 75%, white) 18%,
+    rgba(255,255,255,.45) 50%,
+    color-mix(in srgb, var(--accent) 75%, white) 82%,
     transparent 100%);
-  opacity: .52;
-  filter: blur(.2px);
+  opacity: .65;
+  filter: blur(.3px);
 }
 
 /* hide emblem (HOME only) */
