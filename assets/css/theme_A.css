@@ -199,19 +199,20 @@ body[data-rank="eidolon"]{
 /* aura hugging the ring */
 #dashboard .home .ringGlow{
   position:absolute;
-  inset:-10%;
+  inset:-6%;                 /* було занадто велике */
   border-radius: 999px;
   background:
     radial-gradient(circle at 50% 50%,
-      transparent 52%,
-      color-mix(in srgb, var(--accent) 26%, transparent) 62%,
-      color-mix(in srgb, var(--accent) 14%, transparent) 70%,
-      transparent 82%);
-  -webkit-mask: radial-gradient(circle, transparent 0 52%, #000 60%, transparent 82%);
-          mask: radial-gradient(circle, transparent 0 52%, #000 60%, transparent 82%);
-  filter: blur(16px);
-  opacity: .80;
+      transparent 54%,
+      color-mix(in srgb, var(--accent) 22%, transparent) 64%,
+      color-mix(in srgb, var(--accent) 12%, transparent) 72%,
+      transparent 84%);
+  -webkit-mask: radial-gradient(circle, transparent 0 54%, #000 62%, transparent 86%);
+          mask: radial-gradient(circle, transparent 0 54%, #000 62%, transparent 86%);
+  filter: blur(14px);
+  opacity: .55;              /* ↓ щоб не “заливало” */
   animation: glowBreath 9.5s ease-in-out infinite;
+  z-index: 1;
 }
 
 @keyframes glowBreath{
@@ -226,9 +227,7 @@ body[data-rank="eidolon"]{
   pointer-events:none;
 }
 
-/* outer energy ring */
 #dashboard .home .ringOuter{
-  position: relative;
   inset: 36px;
   opacity: .96;
   background-image: conic-gradient(
@@ -247,6 +246,7 @@ body[data-rank="eidolon"]{
           mask: radial-gradient(circle, transparent 62%, #000 63%, #000 66%, transparent 67%);
   filter: blur(.20px);
   animation: ringSpin 22s linear infinite;
+  z-index: 4;
 }
 
 /* soft second layer (reference feel) */
@@ -314,3 +314,7 @@ body[data-rank="eidolon"]{
 #dashboard .home .rankEmblem source{
   display:none !important;
 }
+#dashboard .home .ringTicks{ z-index: 2; }
+#dashboard .home .ringFlare{ z-index: 5; }
+#dashboard .home .ringInner{ z-index: 3; }
+
