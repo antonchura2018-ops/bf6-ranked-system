@@ -158,10 +158,19 @@ body[data-rank="eidolon"]{
   position:absolute;
   inset:-18%;
   pointer-events:none;
+
+  /* чистий “space wash” без прямокутних плям */
   background:
-    radial-gradient(900px 560px at 50% 30%, rgba(255,255,255,.07) 0%, transparent 55%),
-    radial-gradient(1100px 720px at 50% 40%, color-mix(in srgb, var(--accent) 26%, transparent) 0%, transparent 62%),
-    radial-gradient(1400px 900px at 50% 10%, rgba(0,0,0,.72) 0%, transparent 60%);
+    radial-gradient(900px 560px at 50% 32%,
+      rgba(255,255,255,.07) 0%,
+      transparent 58%),
+    radial-gradient(980px 640px at 50% 44%,
+      color-mix(in srgb, var(--accent) 18%, transparent) 0%,
+      transparent 64%),
+    radial-gradient(1400px 900px at 50% 10%,
+      rgba(0,0,0,.72) 0%,
+      transparent 62%);
+
   opacity: .95;
 }
 
@@ -196,21 +205,24 @@ body[data-rank="eidolon"]{
   background: radial-gradient(circle at 50% 52%, rgba(0,0,0,.10), rgba(0,0,0,.58) 72%, rgba(0,0,0,0) 100%);
 }
 
-/* aura hugging the ring */
 #dashboard .home .ringGlow{
   position:absolute;
-  inset:-6%;                 /* було занадто велике */
+  inset:-8%;
   border-radius: 999px;
+
+  /* hollow halo — світиться КІЛЬЦЕМ, а не заливає центр */
   background:
     radial-gradient(circle at 50% 50%,
-      transparent 54%,
-      color-mix(in srgb, var(--accent) 22%, transparent) 64%,
-      color-mix(in srgb, var(--accent) 12%, transparent) 72%,
-      transparent 84%);
-  -webkit-mask: radial-gradient(circle, transparent 0 54%, #000 62%, transparent 86%);
-          mask: radial-gradient(circle, transparent 0 54%, #000 62%, transparent 86%);
+      transparent 56%,
+      color-mix(in srgb, var(--accent) 22%, transparent) 66%,
+      color-mix(in srgb, var(--accent) 10%, transparent) 74%,
+      transparent 86%);
+
+  -webkit-mask: radial-gradient(circle, transparent 0 56%, #000 64%, transparent 90%);
+          mask: radial-gradient(circle, transparent 0 56%, #000 64%, transparent 90%);
+
   filter: blur(14px);
-  opacity: .55;              /* ↓ щоб не “заливало” */
+  opacity: .55;
   animation: glowBreath 9.5s ease-in-out infinite;
   z-index: 1;
 }
@@ -314,5 +326,23 @@ body[data-rank="eidolon"]{
 #dashboard .home .rankEmblem source{
   display:none !important;
 }
+/* =========================================================
+   HOME — LAYER ORDER FIX (CRITICAL)
+   controls visual stacking like reference
+   ========================================================= */
 
+#dashboard .home .ringTicks{
+  z-index: 2;
+}
 
+#dashboard .home .ringInner{
+  z-index: 3;
+}
+
+#dashboard .home .ringOuter{
+  z-index: 4;
+}
+
+#dashboard .home .ringFlare{
+  z-index: 5;
+}
