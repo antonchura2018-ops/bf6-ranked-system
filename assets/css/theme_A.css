@@ -156,22 +156,23 @@ body[data-rank="eidolon"]{
 #dashboard .home .rankCore::before{
   content:"";
   position:absolute;
-  inset:-18%;
+  inset:-22%;
   pointer-events:none;
 
-  /* чистий “space wash” без прямокутних плям */
+  /* більш “фото-космос”, без прямокутної оранжевої плашки */
   background:
-    radial-gradient(900px 560px at 50% 32%,
-      rgba(255,255,255,.07) 0%,
+    radial-gradient(900px 560px at 50% 30%,
+      rgba(255,255,255,.06) 0%,
       transparent 58%),
-    radial-gradient(980px 640px at 50% 44%,
-      color-mix(in srgb, var(--accent) 18%, transparent) 0%,
+    radial-gradient(1100px 720px at 50% 40%,
+      color-mix(in srgb, var(--accent) 20%, transparent) 0%,
       transparent 64%),
     radial-gradient(1400px 900px at 50% 10%,
       rgba(0,0,0,.72) 0%,
-      transparent 62%);
+      transparent 60%);
 
   opacity: .95;
+  mix-blend-mode: normal; /* <-- важливо */
 }
 
 /* subtle stars */
@@ -207,21 +208,18 @@ body[data-rank="eidolon"]{
 
 #dashboard .home .ringGlow{
   position:absolute;
-  inset:-8%;
-  border-radius: 999px;
+  inset:-10%;
+  border-radius:999px;
+  pointer-events:none;
 
-  /* hollow halo — світиться КІЛЬЦЕМ, а не заливає центр */
-  background:
-    radial-gradient(circle at 50% 50%,
-      transparent 56%,
-      color-mix(in srgb, var(--accent) 22%, transparent) 66%,
-      color-mix(in srgb, var(--accent) 10%, transparent) 74%,
-      transparent 86%);
+  /* hollow aura (кільце), а не “заливка” */
+  background: radial-gradient(circle at 50% 50%,
+    transparent 55%,
+    color-mix(in srgb, var(--accent) 26%, transparent) 64%,
+    color-mix(in srgb, var(--accent) 12%, transparent) 74%,
+    transparent 84%);
 
-  -webkit-mask: radial-gradient(circle, transparent 0 56%, #000 64%, transparent 90%);
-          mask: radial-gradient(circle, transparent 0 56%, #000 64%, transparent 90%);
-
-  filter: blur(14px);
+  filter: blur(16px);
   opacity: .55;
   animation: glowBreath 9.5s ease-in-out infinite;
   z-index: 1;
