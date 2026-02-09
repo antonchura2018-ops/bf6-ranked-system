@@ -233,26 +233,31 @@ body[data-rank="eidolon"]{
   pointer-events:none;
 }
 
+/* ===== FIX 3: hot arcs energy ring (reference feel) ===== */
 #dashboard .home .ringOuter{
-  inset: 36px;
-  opacity: .96;
+  opacity: .97 !important;
+  filter: blur(.18px) !important;
+
   background-image: conic-gradient(
-    from 180deg,
+    from 190deg,
     rgba(255,255,255,0) 0deg,
-    rgba(255,255,255,.08) 26deg,
-    var(--accent) 64deg,
+    rgba(255,255,255,.08) 24deg,
+
+    var(--accent) 62deg,
     rgba(255,255,255,.22) 82deg,
-    rgba(255,255,255,.06) 120deg,
-    rgba(255,255,255,0) 175deg,
+
+    rgba(255,255,255,.05) 118deg,
+    rgba(255,255,255,0) 170deg,
+
     var(--accent) 248deg,
     rgba(255,255,255,.20) 266deg,
+
     rgba(255,255,255,0) 360deg
-  );
-  -webkit-mask: radial-gradient(circle, transparent 62%, #000 63%, #000 66%, transparent 67%);
-          mask: radial-gradient(circle, transparent 62%, #000 63%, #000 66%, transparent 67%);
-  filter: blur(.20px);
-  animation: ringSpin 22s linear infinite;
-  z-index: 4;
+  ) !important;
+
+  /* зробити кільце трохи “товстішим” */
+  -webkit-mask: radial-gradient(circle, transparent 59%, #000 60.2%, #000 66.8%, transparent 68%);
+          mask: radial-gradient(circle, transparent 59%, #000 60.2%, #000 66.8%, transparent 68%);
 }
 
 /* soft second layer (reference feel) */
@@ -372,3 +377,37 @@ body[data-rank="eidolon"]{
 #dashboard .home .ringTicks{ z-index: 2; }
 #dashboard .home .ringOuter{ z-index: 4; }
 #dashboard .home .ringFlare{ z-index: 5; }
+
+/* ===== FIX 1: remove side “smoke columns” from the card ===== */
+#dashboard .home .rankCore::before{
+  /* прибираємо бокові “штори” і робимо м'який центр як у рефі */
+  background:
+    radial-gradient(720px 520px at 50% 34%,
+      color-mix(in srgb, var(--accent) 26%, transparent) 0%,
+      transparent 62%),
+    radial-gradient(1100px 760px at 50% 40%,
+      rgba(255,255,255,.06) 0%,
+      transparent 72%),
+    radial-gradient(1400px 900px at 50% 12%,
+      rgba(0,0,0,.72) 0%,
+      transparent 60%) !important;
+
+  opacity: .92 !important;
+  mix-blend-mode: normal !important;
+}
+/* ===== FIX 2: halo must be hollow and hug the ring ===== */
+#dashboard .home .ringGlow{
+  inset: -14% !important;
+  opacity: .72 !important;
+  filter: blur(16px) !important;
+
+  /* hollow halo */
+  background: radial-gradient(circle at 50% 50%,
+    transparent 54%,
+    color-mix(in srgb, var(--accent) 28%, transparent) 62%,
+    color-mix(in srgb, var(--accent) 14%, transparent) 70%,
+    transparent 80%) !important;
+
+  -webkit-mask: radial-gradient(circle, transparent 0 54%, #000 61%, transparent 82%);
+          mask: radial-gradient(circle, transparent 0 54%, #000 61%, transparent 82%);
+}
