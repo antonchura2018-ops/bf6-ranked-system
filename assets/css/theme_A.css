@@ -509,8 +509,7 @@ body[data-rank="azure"]{    --accent:#3aa7ff; --accent2:#9ad5ff; }
   transform: none;
 }
 
-/* Вимикаємо внутрішній фон, бо тепер фон на body */
-.rankHome__bg{ display: none; }
+
 
 .app, .section, #dashboard{
   max-width: none !important;
@@ -524,18 +523,17 @@ body[data-rank="azure"]{    --accent:#3aa7ff; --accent2:#9ad5ff; }
   pointer-events:none;
   z-index: 1;
 
-  /* Менше чорного внизу, більше "краї" */
+  /* верх під navbar */
   background:
-    /* верхнє затемнення під navbar */
-    linear-gradient(180deg, rgba(0,0,0,.55), rgba(0,0,0,0) 35%),
+    linear-gradient(180deg, rgba(0,0,0,.55), rgba(0,0,0,0) 32%),
 
-    /* бокова віньєтка */
-    radial-gradient(1200px 800px at 50% 45%,
-      rgba(0,0,0,0) 45%,
-      rgba(0,0,0,.50) 80%),
+    /* бокова віньєтка (краї), але центр читається */
+    radial-gradient(1400px 900px at 50% 45%,
+      rgba(0,0,0,0) 46%,
+      rgba(0,0,0,.46) 82%),
 
-    /* легке затемнення низу (НЕ в нуль) */
-    linear-gradient(0deg, rgba(0,0,0,.35), rgba(0,0,0,0) 45%);
+    /* низ: легкий, НЕ в нуль */
+    linear-gradient(0deg, rgba(0,0,0,.28), rgba(0,0,0,0) 50%);
 }
 
 .rankHome__center{
@@ -791,12 +789,7 @@ body[data-rank="azure"]{    --accent:#3aa7ff; --accent2:#9ad5ff; }
   margin-right: calc(50% - 50vw);
 }
 
-/* ===== STEP C: REDUCE VIGNETTE DARKNESS ===== */
-.rankHome__vignette{
-  background:
-    radial-gradient(900px 540px at 50% 42%, rgba(0,0,0,.04), rgba(0,0,0,.58)),
-    radial-gradient(1400px 1000px at 50% 50%, transparent 42%, rgba(0,0,0,.40));
-}
+
 /* ===== FIX: rankHome truly fullscreen (no bottom empty area) ===== */
 html, body { margin:0; padding:0; height:100%; }
 body { background:#05060a; } /* запасний колір */
@@ -907,5 +900,36 @@ body { background:#05060a; } /* запасний колір */
     radial-gradient(1200px 520px at 50% 70%,
       rgba(255,255,255,.03),
       transparent 70%);
+}
+/* ===== FINAL LOCK (single source of truth) ===== */
+html, body { margin:0; padding:0; height:100%; }
+body{ background:#05060a; }
+
+.app, .section, #dashboard{
+  width:100%;
+  max-width:none !important;
+  margin:0 !important;
+  padding:0 !important;
+  background: transparent !important;
+}
+
+.rankHome{
+  width:100vw;
+  min-height:100vh;
+  margin-left:calc(50% - 50vw);
+  margin-right:calc(50% - 50vw);
+  overflow:hidden;
+  background: transparent;
+}
+
+/* ensure bg visible */
+.rankHome__bg{
+  display:block !important;
+  position:absolute; inset:0;
+  background-image:url("/assets/img/bg/cosmos.png");
+  background-size:cover;
+  background-position:center;
+  background-repeat:no-repeat;
+  z-index:0;
 }
 
