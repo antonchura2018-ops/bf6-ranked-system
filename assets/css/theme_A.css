@@ -474,3 +474,267 @@ body[data-rank="eidolon"]{
 #dashboard .home .ringOuter{
   filter: blur(.12px) drop-shadow(0 0 24px color-mix(in srgb, var(--accent) 55%, transparent)) !important;
 }
+/* =========================
+   RANK HOME (1:1 REF STYLE)
+   ========================= */
+
+:root{
+  --accent: #ff3b1f;
+  --accent2: #ff8a4a;
+}
+
+body[data-rank="immortal"]{ --accent:#ff3b1f; --accent2:#ff8a4a; }
+body[data-rank="emerald"]{  --accent:#00ff77; --accent2:#7dffb2; }
+body[data-rank="azure"]{    --accent:#3aa7ff; --accent2:#9ad5ff; }
+
+.rankHome{
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+  background: #05060a;
+  color: rgba(255,255,255,.92);
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+}
+
+.rankHome__bg{
+  position:absolute; inset:0;
+  background-image: url("../img/bg/cosmos.png");
+  background-size: cover;
+  background-position: center;
+  filter: saturate(1.12) contrast(1.12);
+  transform: scale(1.02);
+}
+
+.rankHome__vignette{
+  position:absolute; inset:0;
+  background:
+    radial-gradient(900px 540px at 50% 42%, rgba(0,0,0,.08), rgba(0,0,0,.78)),
+    radial-gradient(1400px 1000px at 50% 50%, transparent 35%, rgba(0,0,0,.55));
+  pointer-events:none;
+}
+
+.rankHome__center{
+  position: relative;
+  width: min(1100px, 92vw);
+  margin: 0 auto;
+  padding: 72px 0 64px;
+  display: grid;
+  place-items: center;
+  text-align: center;
+}
+
+/* локальна “хмара” біля емблеми (дає AAA відчуття) */
+.rankHome__center::before{
+  content:"";
+  position:absolute;
+  width: 860px;
+  height: 560px;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background:
+    radial-gradient(circle at 50% 40%, color-mix(in srgb, var(--accent) 35%, transparent), transparent 60%),
+    radial-gradient(circle at 55% 55%, color-mix(in srgb, var(--accent) 22%, transparent), transparent 62%),
+    radial-gradient(circle at 45% 55%, rgba(255,255,255,.03), transparent 65%);
+  filter: blur(0.5px);
+  opacity: .95;
+  pointer-events:none;
+  z-index: 0;
+}
+
+/* RINGS */
+.rankRing{
+  position:absolute;
+  width: 520px;
+  aspect-ratio: 1/1;
+  border-radius: 999px;
+  pointer-events:none;
+  z-index: 1;
+}
+
+.rankRing--aura{
+  background:
+    conic-gradient(from 90deg,
+      transparent 0 8%,
+      rgba(255,255,255,.04) 10%,
+      rgba(255,255,255,.02) 18%,
+      transparent 24% 38%,
+      rgba(255,255,255,.05) 42%,
+      transparent 46% 100%),
+    radial-gradient(circle at 50% 50%,
+      color-mix(in srgb, var(--accent) 35%, transparent),
+      transparent 62%);
+  filter: blur(1px) drop-shadow(0 0 26px color-mix(in srgb, var(--accent) 45%, transparent));
+  opacity: .95;
+  animation: ringSpin 18s linear infinite;
+}
+
+.rankRing--precision{
+  width: 460px;
+  background:
+    radial-gradient(circle at 50% 50%,
+      transparent 58%,
+      rgba(255,255,255,.12) 60%,
+      transparent 62%),
+    conic-gradient(from 30deg,
+      rgba(255,255,255,.00),
+      rgba(255,255,255,.05),
+      rgba(255,255,255,.00) 22%,
+      rgba(255,255,255,.08) 28%,
+      rgba(255,255,255,.00) 40%,
+      rgba(255,255,255,.07) 58%,
+      rgba(255,255,255,.00) 72%,
+      rgba(255,255,255,.05) 84%,
+      rgba(255,255,255,.00));
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,.06) inset,
+    0 0 26px color-mix(in srgb, var(--accent) 30%, transparent);
+  opacity: .90;
+  animation: ringSpin2 26s linear infinite;
+}
+
+/* Легка оптимізація */
+.rankRing{ will-change: transform; transform: translateZ(0); }
+
+@keyframes ringSpin{  from{transform: rotate(0deg);} to{transform: rotate(360deg);} }
+@keyframes ringSpin2{ from{transform: rotate(360deg);} to{transform: rotate(0deg);} }
+
+/* якщо лаги/або користувач просить менше руху */
+@media (prefers-reduced-motion: reduce){
+  .rankRing{ animation: none !important; }
+}
+
+/* TEMP emblem placeholder (зараз схований) */
+.rankEmblem{
+  width: 240px;
+  height: 240px;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(255,255,255,.08), rgba(255,255,255,.02), transparent 65%);
+  filter: drop-shadow(0 16px 34px rgba(0,0,0,.70));
+  z-index: 2;
+}
+.rankEmblem.is-hidden{ opacity: 0; }
+
+/* Text */
+.rankTitle{
+  margin-top: 18px;
+  font-size: 46px;
+  letter-spacing: .12em;
+  font-weight: 700;
+  text-transform: uppercase;
+  z-index: 2;
+}
+.rankRP{
+  margin-top: 6px;
+  font-size: 30px;
+  letter-spacing: .06em;
+  opacity: .92;
+  z-index: 2;
+}
+.rankRP span{ font-size: 14px; letter-spacing: .18em; opacity: .75; margin-left: 6px; }
+
+/* Progress */
+.rankProgress{ width: min(680px, 86vw); margin-top: 18px; z-index: 2; }
+.rankProgress__label{
+  font-size: 14px;
+  letter-spacing: .14em;
+  opacity: .78;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.rankProgress__track{
+  position: relative;
+  height: 2px;
+  background: rgba(255,255,255,.14);
+  box-shadow: 0 0 18px color-mix(in srgb, var(--accent) 15%, transparent);
+}
+.rankProgress__fill{
+  height: 100%;
+  background: linear-gradient(90deg,
+    color-mix(in srgb, var(--accent) 90%, white 0%),
+    color-mix(in srgb, var(--accent2) 55%, transparent));
+  box-shadow: 0 0 20px color-mix(in srgb, var(--accent) 30%, transparent);
+}
+.rankProgress__spark{
+  position:absolute;
+  left: 0;
+  top: 50%;
+  width: 26px;
+  height: 6px;
+  transform: translateY(-50%);
+  background: radial-gradient(circle, var(--accent), transparent 70%);
+}
+
+/* Pulse header */
+.pulseHeader{
+  width: min(980px, 92vw);
+  margin-top: 34px;
+  position: relative;
+  padding: 16px 0;
+  letter-spacing: .28em;
+  text-transform: uppercase;
+  font-size: 13px;
+  opacity: .82;
+  z-index: 2;
+}
+.pulseHeader::before,
+.pulseHeader::after{
+  content:"";
+  position:absolute;
+  left:0; right:0;
+  height:1px;
+  background: linear-gradient(90deg,
+    transparent, rgba(255,255,255,.08),
+    color-mix(in srgb, var(--accent) 55%, transparent),
+    rgba(255,255,255,.08), transparent);
+}
+.pulseHeader::before{ top:0; }
+.pulseHeader::after{ bottom:0; }
+.pulseHeader span{ padding: 0 18px; }
+
+/* Metrics */
+.pulseGrid{
+  width: min(980px, 92vw);
+  margin-top: 18px;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  z-index: 2;
+}
+.metric{
+  padding: 18px 22px 22px;
+  position: relative;
+}
+.metric:not(:last-child)::after{
+  content:"";
+  position:absolute;
+  top: 16px; bottom: 16px;
+  right: 0;
+  width: 1px;
+  background: linear-gradient(180deg, transparent, rgba(255,255,255,.10),
+    color-mix(in srgb, var(--accent) 35%, transparent),
+    rgba(255,255,255,.10), transparent);
+}
+.metric .k{
+  font-size: 12px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  opacity: .72;
+  margin-bottom: 10px;
+}
+.metric .v{
+  font-size: 44px;
+  font-weight: 700;
+  letter-spacing: .02em;
+  text-shadow: 0 0 22px color-mix(in srgb, var(--accent) 12%, transparent);
+}
+.metric .v > span{ font-size: 18px; opacity: .78; margin-left: 6px; }
+
+.pulseMark{
+  width: 32px;
+  height: 10px;
+  margin-top: 18px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  clip-path: polygon(0 50%, 40% 0, 60% 0, 100% 50%, 60% 100%, 40% 100%);
+  box-shadow: 0 0 18px color-mix(in srgb, var(--accent) 35%, transparent);
+  z-index: 2;
+}
