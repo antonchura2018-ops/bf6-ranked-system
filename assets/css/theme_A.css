@@ -493,18 +493,7 @@ body[data-rank="azure"]{    --accent:#3aa7ff; --accent2:#9ad5ff; }
   font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
 }
 
-.rankHome__bg{
-  position:absolute; inset:0;
-  background-image: url("/assets/img/bg/cosmos.png");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  z-index: 0;
-
-  /* легке підсилення, без мила */
-  filter: none;
-  transform: none;
-}
+.rankHome__bg{ display:none !important; }
 
 
 
