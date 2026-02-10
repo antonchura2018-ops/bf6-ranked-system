@@ -809,134 +809,6 @@ body { background:#05060a; } /* запасний колір */
   margin-right: calc(50% - 50vw);
   background: transparent;
 }
-/* =========================
-   NAVBAR — REFERENCE STYLE
-   (tabs like your 2nd screenshot)
-   Paste at VERY END
-   ========================= */
-
-:root{ --navH: 74px; }
-
-.navbar{
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  height: var(--navH);
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap: 14px;
-
-  padding: 0 22px;
-
-  /* прибираємо синій фон: робимо темний, як у рефі */
-  background: linear-gradient(180deg, rgba(9,11,18,.92), rgba(6,8,12,.62));
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-
-  border-bottom: 1px solid rgba(255,255,255,.06);
-  box-shadow: 0 18px 60px rgba(0,0,0,.55);
-
-  /* легка “верхня неонова лінія” як в рефі */
-  overflow: hidden;
-}
-.navbar::before{
-  content:"";
-  position:absolute;
-  left: 14%;
-  right: 14%;
-  top: 8px;
-  height: 3px;
-  border-radius: 999px;
-  background: linear-gradient(90deg,
-    transparent,
-    color-mix(in srgb, var(--accent) 55%, transparent),
-    rgba(255,255,255,.10),
-    color-mix(in srgb, var(--accent) 55%, transparent),
-    transparent);
-  opacity: .55;
-  pointer-events:none;
-  filter: blur(.2px);
-}
-
-.nav-btn{
-  position: relative;
-
-  height: 42px;
-  min-width: 150px;
-  padding: 10px 18px;
-
-  border: 1px solid rgba(255,255,255,.10);
-  border-radius: 8px;
-
-  /* “панель” як у рефі */
-  background:
-    linear-gradient(180deg, rgba(26,30,46,.78), rgba(10,12,20,.52));
-  box-shadow:
-    0 10px 26px rgba(0,0,0,.45),
-    inset 0 0 0 1px rgba(0,0,0,.25);
-
-  color: rgba(255,255,255,.78);
-  font-family: var(--font-ui);
-  font-weight: 800;
-  font-size: 12px;
-  letter-spacing: .16em;
-  text-transform: uppercase;
-
-  transition: transform .12s ease, color .12s ease, border-color .12s ease, box-shadow .12s ease, background .12s ease;
-}
-
-.nav-btn:hover{
-  transform: translateY(-1px);
-  color: rgba(255,255,255,.92);
-  border-color: rgba(255,255,255,.16);
-}
-
-/* активна вкладка — як у рефі (підсвічування + нижня лінія) */
-.nav-btn.active{
-  color: rgba(255,255,255,.96);
-  border-color: color-mix(in srgb, var(--accent) 45%, rgba(255,255,255,.18));
-  background:
-    radial-gradient(120px 60px at 50% 0%,
-      color-mix(in srgb, var(--accent) 20%, transparent),
-      transparent 60%),
-    linear-gradient(180deg, rgba(26,30,46,.82), rgba(10,12,20,.55));
-
-  box-shadow:
-    0 14px 30px rgba(0,0,0,.55),
-    0 0 28px color-mix(in srgb, var(--accent) 22%, transparent);
-}
-
-.nav-btn.active::after{
-  content:"";
-  position:absolute;
-  left: 14px;
-  right: 14px;
-  bottom: 6px;
-  height: 2px;
-  border-radius: 999px;
-  background: linear-gradient(90deg, transparent, var(--accent), transparent);
-  opacity: .95;
-}
-
-/* маленький “індикатор” під активною вкладкою, як у рефі */
-.nav-btn.active::before{
-  content:"";
-  position:absolute;
-  left:50%;
-  bottom: 2px;
-  width: 5px;
-  height: 5px;
-  transform: translateX(-50%);
-  border-radius: 99px;
-  background: var(--accent);
-  box-shadow: 0 0 16px color-mix(in srgb, var(--accent) 70%, transparent);
-  opacity: .9;
-}
-
-/* прибираємо можливі сині фони з ui-kit (на всяк випадок) */
-.navbar, .nav-btn{ background-clip: padding-box; }
 
 /* ===== FINAL LOCK (single source of truth) ===== */
 html, body { margin:0; padding:0; height:100%; }
@@ -988,179 +860,44 @@ body{ background:#05060a; }
 .navbar{
   background: linear-gradient(180deg, rgba(9,11,18,.82), rgba(6,8,12,.50)) !important;
 }
-/* =========================
-   NAVBAR — SKIN v3 (blend + neon tabs)
-   Paste at VERY END of theme_A.css
-   ========================= */
-
-:root{ --navH: 74px; }
-
-/* 1) Navbar більше НЕ окремий прямокутник — зливається з космосом */
-.navbar{
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  height: var(--navH);
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap: 14px;
-  padding: 0 22px;
-
-  /* ключ: прозорий верх + плавний fade вниз */
-  background:
-    linear-gradient(180deg,
-      rgba(0,0,0,.55) 0%,
-      rgba(0,0,0,.18) 55%,
-      rgba(0,0,0,0) 100%) !important;
-
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-
-  border: 0 !important;
-  box-shadow: none !important;
-
-  /* щоб не було видимого краю */
-  overflow: hidden;
-}
-
-/* м’яке підсвічення зверху (як у рефі), але дуже тонке */
-.navbar::before{
-  content:"";
-  position:absolute;
-  left: 18%;
-  right: 18%;
-  top: 10px;
-  height: 2px;
-  border-radius: 999px;
-  background: linear-gradient(90deg,
-    transparent,
-    rgba(255,80,140,.30),
-    rgba(255,255,255,.10),
-    rgba(255,80,140,.30),
-    transparent);
-  opacity: .35;
-  pointer-events:none;
-}
-
-/* 2) Tabs як у прикладі: темна панель + неон */
-.nav-btn{
-  position: relative;
-
-  height: 42px;
-  min-width: 150px;
-  padding: 10px 18px;
-
-  border-radius: 9px;
-  border: 1px solid rgba(255,255,255,.10);
-
-  background:
-    radial-gradient(140px 70px at 50% 0%,
-      rgba(255,120,200,.10),
-      transparent 55%),
-    linear-gradient(180deg,
-      rgba(40,20,55,.50),
-      rgba(10,10,16,.58));
-
-  box-shadow:
-    0 10px 24px rgba(0,0,0,.45),
-    inset 0 0 0 1px rgba(0,0,0,.25);
-
-  color: rgba(255,255,255,.72);
-  font-family: var(--font-ui);
-  font-weight: 800;
-  font-size: 12px;
-  letter-spacing: .16em;
-  text-transform: uppercase;
-
-  transition: transform .12s ease, color .12s ease, border-color .12s ease, box-shadow .12s ease, background .12s ease;
-}
-
-.nav-btn:hover{
-  transform: translateY(-1px);
-  color: rgba(255,255,255,.90);
-  border-color: rgba(255,255,255,.16);
-}
-
-/* Active — під твій дизайн: accent + “фіолет/червоний” неон */
-.nav-btn.active{
-  color: rgba(255,255,255,.96);
-  border-color: color-mix(in srgb, var(--accent) 40%, rgba(255,120,200,.28)) !important;
-
-  background:
-    radial-gradient(160px 80px at 50% 0%,
-      color-mix(in srgb, var(--accent) 20%, rgba(255,120,200,.20)),
-      transparent 60%),
-    linear-gradient(180deg,
-      rgba(48,22,64,.62),
-      rgba(10,10,16,.62));
-
-  box-shadow:
-    0 14px 30px rgba(0,0,0,.55),
-    0 0 28px color-mix(in srgb, var(--accent) 18%, rgba(255,120,200,.18));
-}
-
-/* нижня неонова смуга на активній */
-.nav-btn.active::after{
-  content:"";
-  position:absolute;
-  left: 14px;
-  right: 14px;
-  bottom: 6px;
-  height: 2px;
-  border-radius: 999px;
-  background: linear-gradient(90deg,
-    transparent,
-    color-mix(in srgb, var(--accent) 85%, rgba(255,120,200,.65)),
-    transparent);
-  opacity: .95;
-}
-
-/* маленька “крапка” під активною */
-.nav-btn.active::before{
-  content:"";
-  position:absolute;
-  left:50%;
-  bottom: 2px;
-  width: 5px;
-  height: 5px;
-  transform: translateX(-50%);
-  border-radius: 999px;
-  background: color-mix(in srgb, var(--accent) 80%, rgba(255,120,200,.80));
-  box-shadow: 0 0 14px color-mix(in srgb, var(--accent) 55%, rgba(255,120,200,.35));
-  opacity: .9;
-}
-
-/* ==========================================
-   NAVBAR — CHEVRON / RED OPS (like screenshot)
-   Paste at VERY END of theme_A.css
-   ========================================== */
+/* ==========================================================
+   NAVBAR — EXACT CHEVRON RAIL (1:1 vibe)
+   Paste as the LAST block in theme_A.css
+   ========================================================== */
 
 :root{
-  --navH: 72px;
-  --navRed: #ff2a1a;        /* основний червоний */
-  --navRed2:#ff6a3a;        /* теплий відблиск */
-  --navSteel1: rgba(35,35,40,.88);
-  --navSteel2: rgba(12,12,16,.86);
-  --navLine: rgba(255,255,255,.10);
+  --navH: 78px;
+  --railW: min(980px, 92vw);
+  --railH: 46px;
+
+  --navRed: #ff2a1a;
+  --navRed2:#ff6a3a;
+
+  --steelA: rgba(40,40,46,.86);
+  --steelB: rgba(12,12,16,.90);
+  --line: rgba(255,255,255,.10);
 }
 
-/* navbar — вузький металевий бар по центру */
-.navbar{
+/* IMPORTANT: remove any “blue bar” coming from old nav styles */
+.navbar,
+.navbar *{
+  box-sizing: border-box;
+}
+
+/* rail container */
+.navbar.navRail{
   position: sticky;
   top: 0;
-  z-index: 100;
-  height: var(--navH);
+  z-index: 200;
 
+  height: var(--navH);
   display:flex;
   align-items:center;
   justify-content:center;
-  gap: 10px;
 
-  padding: 0 16px;
+  gap: 0;               /* кнопки злипаються як у рефі */
+  padding: 0 18px;
 
-  /* прибираємо будь-які старі “сині панелі” */
   background: transparent !important;
   border: 0 !important;
   box-shadow: none !important;
@@ -1168,20 +905,20 @@ body{ background:#05060a; }
   -webkit-backdrop-filter: none !important;
 }
 
-/* центральна “металева шина” під кнопками */
-.navbar::before{
+/* central metal rail behind buttons */
+.navbar.navRail::before{
   content:"";
   position:absolute;
-  left: 50%;
-  top: 50%;
+  left:50%;
+  top:50%;
   transform: translate(-50%, -50%);
-  width: min(980px, 92vw);
-  height: 46px;
+  width: var(--railW);
+  height: var(--railH);
   border-radius: 10px;
 
   background:
     linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,0) 40%),
-    linear-gradient(180deg, var(--navSteel1), var(--navSteel2));
+    linear-gradient(180deg, var(--steelA), var(--steelB));
 
   border: 1px solid rgba(255,255,255,.08);
   box-shadow:
@@ -1191,40 +928,75 @@ body{ background:#05060a; }
   pointer-events:none;
 }
 
-/* тонка червона лінія по центру (як у рефі) */
-.navbar::after{
+/* thin red scan line across rail */
+.navbar.navRail::after{
   content:"";
   position:absolute;
-  left: 50%;
-  top: 50%;
+  left:50%;
+  top:50%;
   transform: translate(-50%, -50%);
-  width: min(940px, 88vw);
+  width: calc(var(--railW) - 24px);
   height: 2px;
   border-radius: 999px;
   background: linear-gradient(90deg,
     transparent,
     rgba(255,255,255,.08),
-    color-mix(in srgb, var(--navRed) 55%, transparent),
+    color-mix(in srgb, var(--navRed) 60%, transparent),
     rgba(255,255,255,.08),
     transparent);
-  opacity: .55;
+  opacity: .65;
   pointer-events:none;
 }
 
-/* кнопка = “chevron / стрілка” */
-.nav-btn{
+/* end caps (left/right arrows) */
+.navCap{
   position: relative;
   z-index: 2;
+  height: 38px;
+  width: 52px;
+  flex: 0 0 52px;
+  margin: 0 -6px;  /* злипання з кнопками */
+
+  background:
+    radial-gradient(70px 40px at 50% 50%, rgba(255,60,30,.18), transparent 60%),
+    linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,0) 45%),
+    linear-gradient(180deg, rgba(52,22,18,.55), rgba(12,10,10,.82));
+
+  border: 1px solid rgba(255,255,255,.10);
+  box-shadow:
+    0 12px 24px rgba(0,0,0,.45),
+    inset 0 0 0 1px rgba(0,0,0,.35);
+}
+
+.navCap--L{
+  clip-path: polygon(0 50%, 18px 0, 100% 0, 100% 100%, 18px 100%);
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+
+.navCap--R{
+  clip-path: polygon(0 0, calc(100% - 18px) 0, 100% 50%, calc(100% - 18px) 100%, 0 100%);
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+/* buttons — chevron shape */
+.navbar.navRail .nav-btn{
+  position: relative;
+  z-index: 3;
 
   height: 38px;
   min-width: 170px;
   padding: 0 18px;
+  margin: 0 -6px; /* злипання */
 
   border: 1px solid rgba(255,255,255,.10);
   color: rgba(255,255,255,.82);
+
   background:
-    linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,0) 42%),
-    linear-gradient(180deg, rgba(40,40,46,.60), rgba(12,12,16,.78));
+    linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,0) 45%),
+    linear-gradient(180deg, rgba(40,40,46,.55), rgba(12,12,16,.82));
+
   box-shadow:
     0 10px 22px rgba(0,0,0,.45),
     inset 0 0 0 1px rgba(0,0,0,.35);
@@ -1238,99 +1010,82 @@ body{ background:#05060a; }
   cursor: pointer;
   outline: none;
 
-  /* форма (стрілка з обох боків) */
   clip-path: polygon(
-    10px 0%,
-    calc(100% - 18px) 0%,
+    0 50%,
+    18px 0,
+    calc(100% - 18px) 0,
     100% 50%,
     calc(100% - 18px) 100%,
-    10px 100%,
-    0% 50%
+    18px 100%
   );
 
   transition: transform .12s ease, color .12s ease, border-color .12s ease, box-shadow .12s ease, filter .12s ease;
 }
 
-/* перша — стрілка тільки вправо (як у твоєму прикладі зліва) */
-.nav-btn:first-child{
-  clip-path: polygon(
-    10px 0%,
-    calc(100% - 18px) 0%,
-    100% 50%,
-    calc(100% - 18px) 100%,
-    10px 100%,
-    0% 50%
-  );
+.navbar.navRail .nav-btn span{
+  position: relative;
+  display:inline-block;
+  transform: translateY(0.5px);
 }
 
-/* hover — легкий “підйом” */
-.nav-btn:hover{
-  transform: translateY(-1px);
-  color: rgba(255,255,255,.95);
-  border-color: rgba(255,255,255,.16);
-}
-
-/* тонкі “шви” по краях кнопки */
-.nav-btn::before{
+/* subtle inner seam */
+.navbar.navRail .nav-btn::before{
   content:"";
   position:absolute;
   inset: 2px;
   clip-path: inherit;
   border: 1px solid rgba(255,255,255,.08);
-  opacity: .65;
+  opacity: .55;
   pointer-events:none;
 }
 
-/* маленькі червоні “іскри” на кутах */
-.nav-btn::after{
-  content:"";
-  position:absolute;
-  left: 12px;
-  right: 12px;
-  bottom: 5px;
-  height: 2px;
-  border-radius: 999px;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,.08), transparent);
-  opacity: .35;
-  pointer-events:none;
+/* hover */
+.navbar.navRail .nav-btn:hover{
+  transform: translateY(-1px);
+  color: rgba(255,255,255,.94);
+  border-color: rgba(255,255,255,.16);
 }
 
-/* ACTIVE — червоний, як у рефі */
-.nav-btn.active{
+/* active — RED like screenshot */
+.navbar.navRail .nav-btn.active{
   color: rgba(255,255,255,.97);
-  border-color: color-mix(in srgb, var(--navRed) 60%, rgba(255,255,255,.18));
+  border-color: color-mix(in srgb, var(--navRed) 65%, rgba(255,255,255,.18));
 
   background:
-    radial-gradient(120px 60px at 50% 30%,
-      rgba(255,80,60,.35),
-      transparent 60%),
+    radial-gradient(140px 70px at 50% 50%, rgba(255,60,30,.28), transparent 62%),
     linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,0) 45%),
-    linear-gradient(180deg, rgba(70,22,18,.70), rgba(18,10,10,.86));
+    linear-gradient(180deg, rgba(70,22,18,.70), rgba(12,10,10,.88));
 
   box-shadow:
     0 16px 34px rgba(0,0,0,.60),
-    0 0 38px rgba(255,40,25,.25),
+    0 0 42px rgba(255,40,25,.22),
     inset 0 0 0 1px rgba(0,0,0,.35);
 }
 
-/* ACTIVE — яскрава нижня лінія + “пульс” */
-.nav-btn.active::after{
-  opacity: 1;
+/* active bottom glow line + dot */
+.navbar.navRail .nav-btn.active::after{
+  content:"";
+  position:absolute;
+  left: 22px;
+  right: 22px;
+  bottom: 5px;
   height: 2px;
-  background: linear-gradient(90deg,
-    transparent,
-    color-mix(in srgb, var(--navRed) 88%, var(--navRed2)),
-    transparent);
+  border-radius: 999px;
+  background: linear-gradient(90deg, transparent, var(--navRed), transparent);
   box-shadow: 0 0 18px rgba(255,40,25,.35);
+  opacity: 1;
 }
 
-/* ACTIVE — маленька крапка під центром */
-.nav-btn.active span{ position:relative; } /* якщо буде span (не обов’язково) */
-.nav-btn.active{
-  filter: saturate(1.05);
-}
-
-/* якщо кнопки виглядають занадто широкими на малих екранах */
-@media (max-width: 900px){
-  .nav-btn{ min-width: 140px; padding: 0 14px; }
+.navbar.navRail .nav-btn.active span::after{
+  content:"";
+  position:absolute;
+  left:50%;
+  bottom: -10px;
+  width: 5px;
+  height: 5px;
+  transform: translateX(-50%);
+  border-radius: 999px;
+  background: var(--navRed);
+  box-shadow: 0 0 16px rgba(255,40,25,.45);
+  opacity: .9;
 }
