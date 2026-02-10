@@ -1882,11 +1882,47 @@ body{
 <div class="app">
   
 <div id="dashboard" class="section active">
-  <div class="home">
-    <!-- TOP LIGHT BAR -->
-    <div class="homeTopBar">
-      <div class="homeWelcome">Welcome, Commander</div>
+
+  <section class="rankHome" aria-label="Rank Home">
+    <div class="rankHome__bg"></div>
+    <div class="rankHome__vignette"></div>
+
+    <div class="rankHome__center">
+
+      <!-- RINGS (навколо твоєї емблеми; емблему поки ховаємо) -->
+      <div class="rankRing rankRing--aura"></div>
+      <div class="rankRing rankRing--precision"></div>
+
+      <!-- TEMP: placeholder замість емблеми (потім замінимо на твою) -->
+      <div class="rankEmblem is-hidden" aria-hidden="true"></div>
+
+      <div class="rankTitle">IMMORTAL</div>
+      <div class="rankRP">12,450 <span>RP</span></div>
+
+      <div class="rankProgress">
+        <div class="rankProgress__label">Next Rank : <b>14,000 RP</b></div>
+        <div class="rankProgress__track">
+          <div class="rankProgress__fill" style="width:62%"></div>
+          <div class="rankProgress__spark"></div>
+        </div>
+      </div>
+
+      <div class="pulseHeader"><span>PERFORMANCE PULSE</span></div>
+
+      <!-- Метрики можна робити 4/5/6 — дизайн тримається -->
+      <div class="pulseGrid">
+        <div class="metric"><div class="k">WIN RATE</div><div class="v">72<span>%</span></div></div>
+        <div class="metric"><div class="k">TOTAL MATCHES</div><div class="v">320</div></div>
+        <div class="metric"><div class="k">KDA</div><div class="v">3.1</div></div>
+        <div class="metric"><div class="k">AVG KILLS</div><div class="v">6.4</div></div>
+        <div class="metric"><div class="k">MVP</div><div class="v">18<span>%</span></div></div>
+      </div>
+
+      <div class="pulseMark"></div>
     </div>
+  </section>
+
+</div>
 
     <!-- RANK CORE -->
     <div class="rankCore">
