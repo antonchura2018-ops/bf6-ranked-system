@@ -875,4 +875,7 @@ body { background:#05060a; } /* запасний колір */
   background: linear-gradient(90deg, transparent, var(--accent), transparent);
   opacity: .95;
 }
+/* якщо якийсь контейнер дає зайву висоту */
+.app{ min-height: 100vh; background: transparent !important; }
+.section{ background: transparent !important; }
 
