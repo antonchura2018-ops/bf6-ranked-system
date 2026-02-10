@@ -20,9 +20,9 @@ body{ margin:0; font-family: var(--font-body); }
   justify-content:center;
   gap: 28px;
   padding: 18px 14px;
-  background: linear-gradient(180deg, rgba(6,10,18,.92), rgba(5,7,13,.82));
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid rgba(255,255,255,.06);
+  background: transparent;
+  backdrop-filter: none;
+  border-bottom: 0;
 }
 
 .nav-btn{
