@@ -1089,3 +1089,12 @@ body{ background:#05060a; }
   box-shadow: 0 0 16px rgba(255,40,25,.45);
   opacity: .9;
 }
+/* ===== FIX: remove top vignette band behind navbar ===== */
+.rankHome__vignette{
+  /* прибираємо верхній linear-gradient який робив смугу */
+  background:
+    radial-gradient(1200px 800px at 50% 45%,
+      rgba(0,0,0,0) 45%,
+      rgba(0,0,0,.50) 82%),
+    linear-gradient(0deg, rgba(0,0,0,.28), rgba(0,0,0,0) 48%) !important;
+}
