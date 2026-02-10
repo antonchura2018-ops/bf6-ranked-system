@@ -879,3 +879,5 @@ body { background:#05060a; } /* запасний колір */
 .app{ min-height: 100vh; background: transparent !important; }
 .section{ background: transparent !important; }
 
+/* TEMP DEBUG: turn off vignette to check background */
+.rankHome__vignette{ opacity: 0 !important; }
