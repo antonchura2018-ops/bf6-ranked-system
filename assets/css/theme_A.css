@@ -498,19 +498,14 @@ body[data-rank="azure"]{    --accent:#3aa7ff; --accent2:#9ad5ff; }
 
 .rankHome__bg{
   position:absolute; inset:0;
-  background-image: url("../img/bg/cosmos.png");
+  background-image: url("/assets/img/bg/cosmos.png");
   background-size: cover;
   background-position: center;
-  filter: saturate(1.12) contrast(1.12);
-  transform: scale(1.02);
-}
-/* ===== STEP A: BODY FULLSCREEN COSMOS ===== */
-html, body { height: 100%; margin: 0; }
+  background-repeat: no-repeat;
 
-/* ВАЖЛИВО: шлях для theme_a.css */
-body{
-  background: url("../img/bg/cosmos.png") center/cover no-repeat fixed;
-  background-color: #05060a;
+  /* прибираємо мило */
+  filter: none;
+  transform: none;
 }
 
 /* Вимикаємо внутрішній фон, бо тепер фон на body */
@@ -783,8 +778,34 @@ body{
   margin-left: calc(50% - 50vw);
   margin-right: calc(50% - 50vw);
 }
-/* ===== STEP B: NEW TAB NAV (like reference) ===== */
-:root{ --navH: 68px; }
+
+/* ===== STEP C: REDUCE VIGNETTE DARKNESS ===== */
+.rankHome__vignette{
+  background:
+    radial-gradient(900px 540px at 50% 42%, rgba(0,0,0,.04), rgba(0,0,0,.58)),
+    radial-gradient(1400px 1000px at 50% 50%, transparent 42%, rgba(0,0,0,.40));
+}
+/* ===== FIX: rankHome truly fullscreen (no bottom empty area) ===== */
+html, body { margin:0; padding:0; height:100%; }
+body { background:#05060a; } /* запасний колір */
+
+.app, .section, #dashboard{
+  width: 100%;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* важливо: якщо десь стоїть fixed navbar, то просто 100vh */
+.rankHome{
+  width: 100vw;
+  min-height: 100vh;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  background: transparent;
+}
+/* ===== NAV v2: closer to your reference ===== */
+:root{ --navH: 70px; }
 
 .navbar{
   position: sticky;
@@ -794,10 +815,10 @@ body{
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  gap: 12px;
   padding: 0 18px;
 
-  background: linear-gradient(180deg, rgba(8,10,16,.92), rgba(6,8,12,.68));
+  background: linear-gradient(180deg, rgba(10,12,18,.92), rgba(7,9,14,.62));
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
 
@@ -806,17 +827,17 @@ body{
 }
 
 .nav-btn{
-  position: relative;
-  border: 1px solid rgba(255,255,255,.08);
+  border: 1px solid rgba(255,255,255,.10);
   background:
-    radial-gradient(120px 60px at 50% 10%, rgba(255,255,255,.08), transparent 60%),
-    linear-gradient(180deg, rgba(22,26,40,.85), rgba(10,12,20,.55));
+    radial-gradient(120px 60px at 50% 0%, rgba(255,255,255,.08), transparent 55%),
+    linear-gradient(180deg, rgba(26,30,46,.80), rgba(10,12,20,.55));
   color: rgba(255,255,255,.78);
 
+  height: 42px;
   padding: 10px 18px;
   min-width: 140px;
-  height: 42px;
 
+  border-radius: 8px; /* як панелі */
   font-weight: 800;
   letter-spacing: .16em;
   text-transform: uppercase;
@@ -826,39 +847,32 @@ body{
     0 10px 26px rgba(0,0,0,.45),
     0 0 0 1px rgba(0,0,0,.25) inset;
 
-  clip-path: polygon(10px 0, calc(100% - 10px) 0, 100% 50%, calc(100% - 10px) 100%, 10px 100%, 0 50%);
   transition: transform .12s ease, color .12s ease, border-color .12s ease, box-shadow .12s ease;
 }
 
 .nav-btn:hover{
   transform: translateY(-1px);
   color: rgba(255,255,255,.92);
-  border-color: rgba(255,255,255,.14);
+  border-color: rgba(255,255,255,.16);
 }
 
 .nav-btn.active{
   color: rgba(255,255,255,.95);
-  border-color: color-mix(in srgb, var(--accent) 45%, rgba(255,255,255,.14));
+  border-color: color-mix(in srgb, var(--accent) 45%, rgba(255,255,255,.18));
   box-shadow:
     0 14px 30px rgba(0,0,0,.55),
-    0 0 28px color-mix(in srgb, var(--accent) 25%, transparent);
+    0 0 30px color-mix(in srgb, var(--accent) 22%, transparent);
 }
 
 .nav-btn.active::after{
   content:"";
   position:absolute;
-  left: 18px;
-  right: 18px;
+  left: 14px;
+  right: 14px;
   bottom: 6px;
   height: 2px;
-  background: linear-gradient(90deg, transparent, var(--accent), transparent);
   border-radius: 99px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
   opacity: .95;
-}
-/* ===== STEP C: REDUCE VIGNETTE DARKNESS ===== */
-.rankHome__vignette{
-  background:
-    radial-gradient(900px 540px at 50% 42%, rgba(0,0,0,.04), rgba(0,0,0,.58)),
-    radial-gradient(1400px 1000px at 50% 50%, transparent 42%, rgba(0,0,0,.40));
 }
 
