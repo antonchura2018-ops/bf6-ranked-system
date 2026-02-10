@@ -502,9 +502,10 @@ body[data-rank="azure"]{    --accent:#3aa7ff; --accent2:#9ad5ff; }
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  z-index: 0;
 
-  /* прибираємо мило */
-  filter: none;
+  /* легке підсилення, без мила */
+  filter: saturate(1.08) contrast(1.06);
   transform: none;
 }
 
@@ -520,10 +521,21 @@ body[data-rank="azure"]{    --accent:#3aa7ff; --accent2:#9ad5ff; }
 
 .rankHome__vignette{
   position:absolute; inset:0;
-  background:
-    radial-gradient(900px 540px at 50% 42%, rgba(0,0,0,.08), rgba(0,0,0,.78)),
-    radial-gradient(1400px 1000px at 50% 50%, transparent 35%, rgba(0,0,0,.55));
   pointer-events:none;
+  z-index: 1;
+
+  /* Менше чорного внизу, більше "краї" */
+  background:
+    /* верхнє затемнення під navbar */
+    linear-gradient(180deg, rgba(0,0,0,.55), rgba(0,0,0,0) 35%),
+
+    /* бокова віньєтка */
+    radial-gradient(1200px 800px at 50% 45%,
+      rgba(0,0,0,0) 45%,
+      rgba(0,0,0,.50) 80%),
+
+    /* легке затемнення низу (НЕ в нуль) */
+    linear-gradient(0deg, rgba(0,0,0,.35), rgba(0,0,0,0) 45%);
 }
 
 .rankHome__center{
@@ -879,5 +891,21 @@ body { background:#05060a; } /* запасний колір */
 .app{ min-height: 100vh; background: transparent !important; }
 .section{ background: transparent !important; }
 
-/* TEMP DEBUG: turn off vignette to check background */
-.rankHome__vignette{ opacity: 0 !important; }
+/* Bottom nebula lift (subtle, like ref) */
+.rankHome::after{
+  content:"";
+  position:absolute;
+  left:0; right:0; bottom:-120px;
+  height: 520px;
+  pointer-events:none;
+  z-index: 0;
+
+  background:
+    radial-gradient(900px 360px at 50% 40%,
+      color-mix(in srgb, var(--accent) 14%, transparent),
+      transparent 70%),
+    radial-gradient(1200px 520px at 50% 70%,
+      rgba(255,255,255,.03),
+      transparent 70%);
+}
+
