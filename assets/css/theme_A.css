@@ -1217,3 +1217,162 @@ body::before{
 .rankHome{
   background: transparent !important;
 }
+/* =========================================================
+   NAVBAR: NO FULL-WIDTH STRIP (ONLY THE RAIL IS VISIBLE)
+   Paste AFTER the GLOBAL COSMOS BACKGROUND block
+   ========================================================= */
+
+/* прибиваємо старий фон з ui-kit.css */
+.navbar.navRail{
+  background: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border: 0 !important;
+  box-shadow: none !important;
+
+  /* важливо: щоб не було високої темної “шапки” */
+  height: auto !important;
+  padding: 18px 18px 10px !important;
+}
+
+/* якщо ui-kit.css додає щось типу line/border — прибиваємо */
+.navbar.navRail::marker{ content:""; }
+.navbar.navRail::before,
+.navbar.navRail::after{
+  /* ці псевдо-елементи ми хочемо бачити (це твій rail),
+     але НЕ хочемо, щоб вони розтягувались/робили смуги.
+     Тому не міняємо їх background тут.
+     Важливо лише, що сам navbar прозорий. */
+}
+
+/* прибрати будь-які “верхні лінії” від інших правил */
+.navbar{ outline: none !important; }
+
+/* =========================================================
+   HOME METRICS — MATCH SCREENSHOT 1 (DIM + LINES + TYPE)
+   Paste at VERY END
+   ========================================================= */
+
+.rankHome__center{
+  /* трохи менше “порожнього” повітря */
+  padding-top: 86px !important;
+}
+
+/* темна підкладка під метрики (щоб не “вилазили” на космосі) */
+.pulseHeader,
+.pulseGrid,
+.rankProgress{
+  position: relative;
+  z-index: 2;
+}
+
+.pulseGrid{
+  margin-top: 18px !important;
+}
+
+/* “скляний” затемнений бенд під метрики (як у рефі) */
+.pulseGrid::before{
+  content:"";
+  position:absolute;
+  left: -24px;
+  right: -24px;
+  top: -18px;
+  bottom: -22px;
+  background: linear-gradient(180deg,
+    rgba(0,0,0,.28),
+    rgba(0,0,0,.18) 40%,
+    rgba(0,0,0,.28));
+  border: 1px solid rgba(255,255,255,.04);
+  box-shadow: 0 20px 60px rgba(0,0,0,.35);
+  opacity: .75;
+  pointer-events:none;
+  z-index: -1;
+}
+
+/* Ранг + RP — як реф (Rajdhani, тонше, світіння м’яке) */
+.rankTitle{
+  font-family: var(--font-ui) !important;
+  font-weight: 700 !important;
+  letter-spacing: .14em !important;
+  font-size: 56px !important;
+  text-shadow: 0 0 22px rgba(255,60,30,.12);
+}
+.rankRP{
+  font-family: var(--font-ui) !important;
+  font-weight: 500 !important;
+  font-size: 30px !important;
+  letter-spacing: .06em !important;
+  opacity: .90 !important;
+}
+
+/* Next Rank line — тонше, з червоними “іскрами” */
+.rankProgress__track{
+  height: 2px !important;
+  background: rgba(255,255,255,.12) !important;
+  box-shadow: none !important;
+}
+.rankProgress__fill{
+  background: linear-gradient(90deg, rgba(255,60,30,.95), rgba(255,140,80,.35)) !important;
+  box-shadow: 0 0 22px rgba(255,60,30,.18) !important;
+}
+.rankProgress__spark{
+  width: 38px !important;
+  height: 8px !important;
+  background: radial-gradient(circle, rgba(255,60,30,1), transparent 70%) !important;
+  filter: blur(.2px);
+  opacity: .9;
+}
+
+/* PERFORMANCE PULSE header line — як у рефі (тонкі лінії) */
+.pulseHeader{
+  font-family: var(--font-ui) !important;
+  font-size: 12px !important;
+  letter-spacing: .32em !important;
+  opacity: .78 !important;
+}
+
+.pulseHeader::before,
+.pulseHeader::after{
+  background: linear-gradient(90deg,
+    transparent,
+    rgba(255,255,255,.06),
+    rgba(255,60,30,.35),
+    rgba(255,255,255,.06),
+    transparent) !important;
+  opacity: .8 !important;
+}
+
+/* Метрики — БЕЗ “рамок”, більш м’який текст */
+.metric{
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.metric .k{
+  font-family: var(--font-ui) !important;
+  font-size: 11px !important;
+  letter-spacing: .20em !important;
+  opacity: .65 !important;
+}
+
+.metric .v{
+  font-family: var(--font-ui) !important;
+  font-weight: 700 !important;
+  font-size: 46px !important;
+  color: rgba(255,255,255,.92) !important;
+  text-shadow: 0 0 18px rgba(255,60,30,.10) !important;
+}
+
+/* вертикальні розділювачі — тонкі + легкий червоний акцент */
+.metric:not(:last-child)::after{
+  background: linear-gradient(180deg,
+    transparent,
+    rgba(255,255,255,.08),
+    rgba(255,60,30,.22),
+    rgba(255,255,255,.08),
+    transparent) !important;
+  opacity: .85 !important;
+}
+
+/* прибираємо твій “маркер” внизу (в рефі інший) */
+.pulseMark{ display:none !important; }
