@@ -1366,3 +1366,18 @@ body::before{
   background: transparent !important;
   box-shadow: none !important;
 }
+/* ===== FIX: remove top "lighter rectangle" on scroll ===== */
+/* Make vignette overlay fixed to viewport (not tied to page scroll) */
+.rankHome__vignette{
+  position: fixed !important;
+  inset: 0 !important;
+  left: 0 !important;
+  top: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+}
+
+/* Safety: prevent any other top-layer from painting a band */
+.rankHome__bg{ display:none !important; }
+.rankHome{ background: transparent !important; }
+.app, .section, #dashboard{ background: transparent !important; }
