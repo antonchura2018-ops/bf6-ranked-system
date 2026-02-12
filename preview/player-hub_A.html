@@ -1900,27 +1900,26 @@ body{
       <!-- TEMP: placeholder замість емблеми (потім замінимо на твою) -->
       <div class="rankEmblem is-hidden" aria-hidden="true"></div>
 
-      <div class="rankTitle">IMMORTAL</div>
-      <div class="rankRP">12,450 <span>RP</span></div>
+      <div class="rankTitle" id="uiRankName">OVERLORD</div>
+ <div class="rankRP" id="uiRP">0 <span>RP</span></div>
 
-      <div class="rankProgress">
-        <div class="rankProgress__label">Next Rank : <b>14,000 RP</b></div>
-        <div class="rankProgress__track">
-          <div class="rankProgress__fill" style="width:62%"></div>
-          <div class="rankProgress__spark"></div>
-        </div>
-      </div>
+   <div class="rankProgress">
+     <div class="rankProgress__label">Next Rank : <b id="uiNextRP">0 RP</b></div>
+     <div class="rankProgress__track">
+       <div class="rankProgress__fill" id="uiProgFill" style="width:0%"></div>
+       <div class="rankProgress__spark"></div>
+     </div>
+   </div>
 
-      <div class="pulseHeader"><span>PLAYER ASCENSION</span></div>
+   <div class="pulseHeader"><span>PLAYER ASCENSION</span></div>
 
-      <!-- Метрики можна робити 4/5/6 — дизайн тримається -->
-      <div class="pulseGrid">
-        <div class="metric"><div class="k">WIN RATE</div><div class="v">72<span>%</span></div></div>
-        <div class="metric"><div class="k">TOTAL MATCHES</div><div class="v">320</div></div>
-        <div class="metric"><div class="k">KDA</div><div class="v">3.1</div></div>
-        <div class="metric"><div class="k">AVG KILLS</div><div class="v">6.4</div></div>
-        <div class="metric"><div class="k">MVP</div><div class="v">18<span>%</span></div></div>
-      </div>
+   <div class="pulseGrid">
+     <div class="metric"><div class="k">WIN RATE</div><div class="v" id="mWinRate">0<span>%</span></div></div>
+     <div class="metric"><div class="k">TOTAL MATCHES</div><div class="v" id="mTotal">0</div></div>
+     <div class="metric"><div class="k">KDA</div><div class="v" id="mKDA">0.0</div></div>
+     <div class="metric"><div class="k">AVG KILLS</div><div class="v" id="mAvgKills">0.0</div></div>
+     <div class="metric"><div class="k">MVP</div><div class="v" id="mMVP">0<span>%</span></div></div>
+   </div>
 
       <div class="pulseMark"></div>
     </div>
