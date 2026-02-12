@@ -1376,3 +1376,8 @@ body::before{
 
 /* прибираємо твій “маркер” внизу (в рефі інший) */
 .pulseMark{ display:none !important; }
+/* last resort: absolutely no top band */
+.navbar.navRail{
+  background: transparent !important;
+  box-shadow: none !important;
+}
