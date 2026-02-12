@@ -1472,3 +1472,8 @@ body::before{
   right: calc(50% - 220px);
   transform: scaleX(-1);
 }
+.ascensionRow{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
