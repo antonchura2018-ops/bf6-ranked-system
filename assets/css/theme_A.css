@@ -529,23 +529,8 @@ body[data-rank="azure"]{    --accent:#3aa7ff; --accent2:#9ad5ff; }
   text-align: center;
 }
 
-/* локальна “хмара” біля емблеми (дає AAA відчуття) */
 .rankHome__center::before{
-  content:"";
-  position:absolute;
-  width: 860px;
-  height: 560px;
-  top: 10px;
-  left: 50%;
-  transform: translateX(-50%);
-  background:
-    radial-gradient(circle at 50% 40%, color-mix(in srgb, var(--accent) 35%, transparent), transparent 60%),
-    radial-gradient(circle at 55% 55%, color-mix(in srgb, var(--accent) 22%, transparent), transparent 62%),
-    radial-gradient(circle at 45% 55%, rgba(255,255,255,.03), transparent 65%);
-  filter: blur(0.5px);
-  opacity: .95;
-  pointer-events:none;
-  z-index: 0;
+  display:none !important;
 }
 
 /* RINGS */
