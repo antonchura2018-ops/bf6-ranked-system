@@ -1189,3 +1189,31 @@ body::after{
 .navbar.navRail::after{
   outline: 0 !important;
 }
+/* =========================================================
+   GLOBAL COSMOS BACKGROUND (ONE SOURCE, NO DUPLICATION)
+   Paste at VERY END of theme_A.css
+   ========================================================= */
+
+html, body { height:100%; }
+body{
+  margin:0;
+  /* прибираємо будь-які “сині” градієнти як фон */
+  background: #05060a !important;
+}
+
+/* один-єдиний космос на весь сайт */
+body::before{
+  content:"";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: url("/assets/img/bg/cosmos.png") center/cover no-repeat;
+  /* якщо здається “мутний” — трохи підкручуємо, без blur */
+  filter: saturate(1.08) contrast(1.06);
+  transform: translateZ(0);
+}
+
+/* rankHome більше не малює фон — лише контент */
+.rankHome{
+  background: transparent !important;
+}
