@@ -1178,3 +1178,14 @@ body::after{
 .rankHome__bg{ display:none !important; }
 .rankHome{ background: transparent !important; }
 
+/* remove any top hairline above nav */
+.navbar.navRail{
+  border-top: 0 !important;
+  outline: 0 !important;
+}
+
+/* sometimes line is created by pseudo elements */
+.navbar.navRail::before,
+.navbar.navRail::after{
+  outline: 0 !important;
+}
