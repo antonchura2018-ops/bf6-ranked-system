@@ -2543,4 +2543,132 @@ body::before{
   box-shadow: none !important;
   filter: none !important;
 }
+/* ==========================================================
+   FIX: Rank Halo Ring (REFERENCE STYLE) + Restore Layout
+   Paste at VERY END of theme_A.css
+   ========================================================== */
+
+/* center must be the positioning context */
+.rankHome__center{
+  position: relative !important;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+
+  /* IMPORTANT: reset any previous transforms that lift content */
+  transform: none !important;
+  top: auto !important;
+}
+
+/* keep text/content above halo */
+.rankHome__center > *:not(.rankHalo){
+  position: relative;
+  z-index: 3;
+}
+
+/* halo must NEVER affect layout */
+.rankHalo{
+  position: absolute !important;
+  left: 50% !important;
+  top: 120px !important;          /* піджене кільце під твій заголовок (можеш 110–140) */
+  transform: translateX(-50%) !important;
+
+  width: 520px !important;
+  height: 520px !important;
+
+  pointer-events: none !important;
+  z-index: 1 !important;
+
+  /* remove any old backgrounds that caused big “segments” */
+  background: none !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  filter: none !important;
+  opacity: 1 !important;
+}
+
+/* ==== Energy ring layers ==== */
+.rankHalo::before,
+.rankHalo::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius: 50%;
+  pointer-events:none;
+}
+
+/* Outer fiery swirl (the “energy” look) */
+.rankHalo::before{
+  /* glow + swirl */
+  background:
+    radial-gradient(circle at 50% 50%,
+      rgba(255,120,70,.00) 52%,
+      rgba(255,90,40,.22) 62%,
+      rgba(255,40,15,.12) 70%,
+      rgba(255,20,10,.00) 78%),
+
+    conic-gradient(from 18deg,
+      rgba(255,70,25,.00) 0deg,
+      rgba(255,70,25,.55) 22deg,
+      rgba(255,70,25,.00) 55deg,
+      rgba(255,140,70,.42) 95deg,
+      rgba(255,70,25,.00) 140deg,
+      rgba(255,70,25,.55) 190deg,
+      rgba(255,70,25,.00) 240deg,
+      rgba(255,140,70,.38) 300deg,
+      rgba(255,70,25,.00) 360deg);
+
+  /* keep only a ring area */
+  -webkit-mask: radial-gradient(circle,
+    transparent 0 56%,
+    #000 60% 74%,
+    transparent 78% 100%);
+          mask: radial-gradient(circle,
+    transparent 0 56%,
+    #000 60% 74%,
+    transparent 78% 100%);
+
+  filter: blur(6px) saturate(1.25);
+  opacity: .95;
+  mix-blend-mode: screen;
+}
+
+/* Inner crisp double-rings (thin bright circles) */
+.rankHalo::after{
+  background:
+    radial-gradient(circle,
+      transparent 0 61%,
+      rgba(255,150,90,.55) 61.7%,
+      transparent 62.4%),
+
+    radial-gradient(circle,
+      transparent 0 66%,
+      rgba(255,80,35,.40) 66.6%,
+      transparent 67.3%),
+
+    radial-gradient(circle,
+      transparent 0 71%,
+      rgba(255,200,160,.18) 71.6%,
+      transparent 72.3%);
+
+  filter: blur(.2px);
+  opacity: .9;
+}
+
+/* optional subtle rotation for “alive” feeling */
+@media (prefers-reduced-motion: no-preference){
+  .rankHalo::before{ animation: haloSpin 18s linear infinite; }
+  .rankHalo::after{ animation: haloSpin 42s linear infinite reverse; }
+}
+@keyframes haloSpin{ to{ transform: rotate(360deg); } }
+
+/* ===== Restore spacing so metrics are not подняты ===== */
+.rankTitle{ margin-top: 140px !important; }   /* тримає текст нижче кільця */
+.rankRP{ margin-top: 6px !important; }
+.rankProgress{ margin-top: 16px !important; }
+.pulseHeader{ margin-top: 18px !important; }
+.pulseGrid{ margin-top: 14px !important; }
 
