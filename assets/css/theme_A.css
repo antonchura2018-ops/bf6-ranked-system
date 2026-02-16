@@ -1653,21 +1653,20 @@ body::before{
 .rankHalo{
   position:absolute !important;
   left:50% !important;
-  top:320px !important;                 /* тепер по центру блоку */
+  top:50% !important;                  /* було px — через це з'їжджало */
   transform:translate(-50%,-50%) !important;
 
-  width:580px !important;
-  height:580px !important;
+  width:520px !important;              /* 580 завелике для твого layout */
+  height:520px !important;
   border-radius:50% !important;
 
   pointer-events:none !important;
-  z-index:20 !important;                /* піднімаємо над віньєткою */
-  opacity:1 !important;
-
-  background:none !important;
-  border:0 !important;
-  box-shadow:none !important;
-  filter:none !important;
+  z-index:2 !important;  
+  /* під текстом */
+}
+.rankTitle, .rankRP, .rankProgress, .pulseHeader, .pulseGrid{
+  position:relative;
+  z-index:5;
 }
 
 /* ЗОВНІШНЄ КІЛЬЦЕ + GLOW */
@@ -1678,20 +1677,13 @@ body::before{
   border-radius:50% !important;
 
   background: radial-gradient(circle,
-    transparent 71%,
-    rgba(255,120,80,.10) 72%,
-    rgba(255,120,80,.55) 73%,
-    rgba(255,120,80,.14) 74%,
-    transparent 76%
+    transparent 74.5%,
+    rgba(255,160,120,.55) 75%,
+    transparent 75.6%
   ) !important;
 
-  box-shadow:
-    0 0 18px rgba(255,80,50,.20),
-    0 0 60px rgba(255,50,30,.12),
-    inset 0 0 22px rgba(255,100,70,.10) !important;
-
   mix-blend-mode: screen !important;
-  opacity:.95 !important;
+  opacity:.9 !important;
 }
 
 /* ЕНЕРГО-ДУГИ (саме це має виглядати як у рефі) */
@@ -1716,25 +1708,22 @@ body::before{
     transparent 360deg
   ) !important;
 
-  /* ВИРІЗАЄМО В ТОВЩИНУ КІЛЬЦЯ */
   -webkit-mask: radial-gradient(circle,
-    transparent 64%,
-    #000 68%,
-    #000 84%,
-    transparent 88%
-  ) !important;
-  mask: radial-gradient(circle,
-    transparent 64%,
-    #000 68%,
-    #000 84%,
-    transparent 88%
-  ) !important;
+  transparent 72%,
+  #000 74%,
+  #000 76%,
+  transparent 78%
+) !important;
 
-  filter: blur(2.2px) !important;
-  opacity:.92 !important;
-  mix-blend-mode: screen !important;
+mask: radial-gradient(circle,
+  transparent 72%,
+  #000 74%,
+  #000 76%,
+  transparent 78%
+) !important;
 
-  animation: haloRotate 16s linear infinite !important;
+filter: blur(1.2px) !important;
+opacity: .75 !important;
 }
 
 /* ЛЕГКЕ ВНУТРІШНЄ СВІТІННЯ */
