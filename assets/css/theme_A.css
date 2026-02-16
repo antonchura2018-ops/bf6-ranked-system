@@ -1832,3 +1832,83 @@ body::before{
   position:relative;
   z-index:3;
 }
+/* =========================================
+   RANK HALO — CLEAN REFERENCE RING (v1)
+   Put this block at the VERY END of theme_A.css
+========================================= */
+
+.rankHome__center{
+  position: relative; /* anchor for absolute halo */
+}
+
+.rankHalo{
+  position: absolute !important;
+  left: 50% !important;
+  top: 140px !important;              /* під OUTCAST як у тебе зараз */
+  transform: translateX(-50%) !important;
+  width: 520px !important;
+  height: 520px !important;
+  pointer-events: none !important;
+  z-index: 1 !important;              /* позаду тексту, але над фоном */
+  opacity: 1 !important;
+  display: block !important;
+  visibility: visible !important;
+
+  /* зносимо ВСЕ старе */
+  background: none !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  filter: none !important;
+}
+
+.rankHalo::before,
+.rankHalo::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:50%;
+  pointer-events:none;
+}
+
+/* тонке основне кільце + легкий glow як на референсі */
+.rankHalo::before{
+  border: 2px solid rgba(255,110,80,.55);
+  box-shadow:
+    0 0 26px rgba(255,80,60,.22),
+    0 0 60px rgba(255,60,40,.10);
+}
+
+/* енергетичні дуги/спалахи (дуже схоже на приклад) */
+.rankHalo::after{
+  /* робимо 3 дуги: одна зверху, одна справа, одна зліва-знизу */
+  background:
+    conic-gradient(
+      from -15deg,
+      rgba(255,120,90,0) 0deg,
+      rgba(255,120,90,.55) 18deg,
+      rgba(255,120,90,0) 42deg,
+
+      rgba(255,120,90,0) 120deg,
+      rgba(255,120,90,.35) 150deg,
+      rgba(255,120,90,0) 175deg,
+
+      rgba(255,120,90,0) 250deg,
+      rgba(255,120,90,.28) 285deg,
+      rgba(255,120,90,0) 312deg
+    );
+  filter: blur(1.1px);
+  opacity: .85;
+
+  /* важливо: робимо дуги ТІЛЬКИ по ободу, не заливати круг */
+  -webkit-mask: radial-gradient(closest-side, transparent 72%, #000 74%, #000 79%, transparent 81%);
+          mask: radial-gradient(closest-side, transparent 72%, #000 74%, #000 79%, transparent 81%);
+}
+
+/* Друге внутрішнє тонке кільце (як у референсі) */
+.rankHalo{
+  /* додаємо ще одне кільце через inset-shadow */
+  box-shadow:
+    inset 0 0 0 1px rgba(255,170,150,.16),
+    inset 0 0 0 14px rgba(255,80,60,.03) !important;
+}
+
