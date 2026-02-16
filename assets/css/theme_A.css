@@ -1663,11 +1663,11 @@ body::before{
   pointer-events:none !important;
   z-index:2 !important;  
   /* під текстом */
-}
-.rankTitle, .rankRP, .rankProgress, .pulseHeader, .pulseGrid{
+  .rankTitle, .rankRP, .rankProgress, .pulseHeader, .pulseGrid{
   position:relative;
   z-index:5;
 }
+
 
 /* ЗОВНІШНЄ КІЛЬЦЕ + GLOW */
 .rankHalo::before{
