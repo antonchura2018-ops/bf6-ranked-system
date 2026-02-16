@@ -128,6 +128,64 @@
     setText("mKDA", fmt1(kda));
     setText("mAvgKills", fmt1(avgKills));
     setText("mMVP", mvpPct);
+
+     // ==============================
+    // RP + RANK + NEXT + PROGRESS
+    // ==============================
+
+    // Copy of your tier settings (keep in sync with index.html)
+    var START_RP = 0;
+
+    var rankTiers = [
+      { name: "OUTCAST",   color: "#ffb86b", min: 0   },
+      { name: "THRALL",    color: "#22d3ee", min: 300 },
+      { name: "MARAUDER",  color: "#38bdf8", min: 600 },
+      { name: "HARBINGER", color: "#a78bfa", min: 900 },
+      { name: "REAPER",    color: "#fb7185", min: 1200 },
+      { name: "ARCHON",    color: "#fbbf24", min: 1500 },
+      { name: "OVERLORD",  color: "#2dd4bf", min: 1800 },
+      { name: "MONARCH",   color: "#60a5fa", min: 2100 },
+      { name: "SERAPH",    color: "#e5e7eb", min: 2400 },
+      { name: "EIDOLON",   color: "#ff3b3b", min: 2700 }
+    ];
+
+    // Sum RR from matches in this season
+    var sumRR = 0;
+    for (var r = 0; r < matches.length; r++) {
+      sumRR += safeNum(matches[r].rp, 0);
+    }
+    var rr = START_RP + sumRR;
+    if (!isFinite(rr)) rr = 0;
+    if (rr < 0) rr = 0;
+
+    // find current tier
+    var tierIndex = 0;
+    for (var t = 0; t < rankTiers.length; t++) {
+      if (rr >= rankTiers[t].min) tierIndex = t;
+    }
+    var cur = rankTiers[tierIndex];
+    var next = (tierIndex < rankTiers.length - 1) ? rankTiers[tierIndex + 1] : null;
+
+    // progress within tier
+    var prog = 1;
+    if (next) {
+      var span = Math.max(1, (next.min - cur.min));
+      prog = (rr - cur.min) / span;
+      prog = Math.max(0, Math.min(1, prog));
+    }
+
+    // render
+    setText("uiRankName", cur.name);
+    setText("uiRR", Math.round(rr));
+    setText("uiNextRR", next ? next.min : cur.min);
+
+    var fillEl = document.getElementById("uiProgFill");
+    if (fillEl) fillEl.style.width = Math.round(prog * 100) + "%";
+
+    // set theme color by rank on body (for accent glow system)
+    // map to your custom rank ids: outcast..eidolon
+    var rankId = cur.name.toLowerCase(); // outcast, thrall...
+    document.body.setAttribute("data-rank", rankId);
   }
 
   function boot() {
