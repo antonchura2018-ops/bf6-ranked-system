@@ -1760,3 +1760,98 @@ body::before{
     transform: rotate(360deg);
   }
 }
+.rankHome__center,
+.pulseGrid,
+.rankProgress,
+.rankProgress__track{
+  outline: none !important;
+}
+
+.rankHome__center{
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+.rankHome__center{
+  position: relative !important;
+  z-index: 1 !important;
+}
+
+/* Текст і UI — поверх кільця */
+.rankTitle, .rankRP, .rankProgress, .pulseHeader, .pulseGrid, .pulseMark{
+  position: relative !important;
+  z-index: 5 !important;
+}
+
+/* Кільце — за текстом, але над фоном */
+.rankHalo{
+  position: absolute !important;
+  left: 50% !important;
+  top: 210px !important;              /* <-- якщо треба: 190-240 під твою композицію */
+  transform: translateX(-50%) !important;
+  width: 560px !important;
+  height: 560px !important;
+  border-radius: 50% !important;
+  pointer-events: none !important;
+  z-index: 2 !important;
+  background: none !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  filter: none !important;
+  opacity: 1 !important;
+}
+.rankHalo::before{
+  content:"" !important;
+  position:absolute !important;
+  inset: 0 !important;
+  border-radius: 50% !important;
+
+  /* ТОНКЕ кільце як у референсі */
+  border: 2px solid rgba(255,120,80,.55) !important;
+
+  /* М’яке світіння */
+  box-shadow:
+    0 0 18px rgba(255,90,60,.18),
+    0 0 60px rgba(255,60,40,.12),
+    inset 0 0 26px rgba(255,90,60,.06) !important;
+
+  opacity: .95 !important;
+  mix-blend-mode: screen !important;
+}
+
+.rankHalo::after{
+  content:"" !important;
+  position:absolute !important;
+  inset: -18px !important;         /* дуги трохи більші за кільце */
+  border-radius: 50% !important;
+
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    rgba(255,130,90,.85) 16deg,
+    transparent 40deg,
+
+    transparent 110deg,
+    rgba(255,120,80,.55) 145deg,
+    transparent 175deg,
+
+    transparent 235deg,
+    rgba(255,110,70,.45) 280deg,
+    transparent 320deg
+  ) !important;
+
+  /* Вирізаємо дуги в “кільце” (щоб не було суцільної заливки) */
+  -webkit-mask: radial-gradient(circle, transparent 69%, #000 72%, #000 82%, transparent 86%) !important;
+          mask: radial-gradient(circle, transparent 69%, #000 72%, #000 82%, transparent 86%) !important;
+
+  filter: blur(1.4px) !important;
+  opacity: .85 !important;
+  mix-blend-mode: screen !important;
+
+  animation: haloRotate 16s linear infinite !important;
+}
+
+@keyframes haloRotate{
+  from{ transform: rotate(0deg); }
+  to  { transform: rotate(360deg); }
+}
