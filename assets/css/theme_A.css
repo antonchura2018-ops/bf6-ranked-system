@@ -127,7 +127,7 @@ body[data-rank="eidolon"]{
 =========================================================
 HOME — IMMORTAL (REFERENCE 1:1 LOOK)  ✅ SINGLE CLEAN BLOCK
 Paste ONCE at VERY END of theme_A.css
-========================================================= */
+=========================================================
 
 #dashboard .home{ max-width:1180px; margin:0 auto; padding:24px 24px 44px; }
 #dashboard .home .homeTopBar{ display:none !important; }
@@ -145,21 +145,21 @@ Paste ONCE at VERY END of theme_A.css
   overflow: hidden;
 }
 
-/* IMMORTAL CARD BACKDROP — DARK CENTER (REFERENCE FIX) */
+/* IMMORTAL CARD BACKDROP — DARK CENTER (REFERENCE FIX) 
 #dashboard .home .rankCore::before{
   content:"";
   position:absolute;
   inset:-18%;
   pointer-events:none;
 
-  /* 🔑 КЛЮЧ: центр ТЕМНИЙ */
+  /* 🔑 КЛЮЧ: центр ТЕМНИЙ 
   background:
     radial-gradient(900px 620px at 50% 36%,
       rgba(0,0,0,.85) 0%,
       rgba(0,0,0,.65) 48%,
       transparent 70%),
 
-    /* дуже слабкий ambient, не в центр */
+    /* дуже слабкий ambient, не в центр 
     radial-gradient(1200px 900px at 50% 10%,
       color-mix(in srgb, var(--accent) 12%, transparent) 0%,
       transparent 65%);
@@ -167,7 +167,7 @@ Paste ONCE at VERY END of theme_A.css
   opacity: 1;
 }
 
-/* subtle star dust */
+/* subtle star dust 
 #dashboard .home .rankCore::after{
   content:"";
   position:absolute; inset:-10%;
@@ -180,7 +180,7 @@ Paste ONCE at VERY END of theme_A.css
   opacity: .12;
 }
 
-/* ring stage */
+/* ring stage 
 #dashboard .home .rankRing{
   position: relative;
   width: 560px; height: 560px;
@@ -191,7 +191,7 @@ Paste ONCE at VERY END of theme_A.css
 }
 
 
-/* MAIN IMMORTAL HALO — SINGLE, TIGHT */
+/* MAIN IMMORTAL HALO — SINGLE, TIGHT 
 #dashboard .home .ringGlow{
   position:absolute;
   inset:-10%;
@@ -218,7 +218,7 @@ Paste ONCE at VERY END of theme_A.css
 
   pointer-events:none;
 }
-/* ring base */
+/* ring base 
 #dashboard .home .ring{ position:absolute; inset:0; border-radius:999px; pointer-events:none; }
 
 #dashboard .home .ringOuter{
@@ -257,7 +257,7 @@ Paste ONCE at VERY END of theme_A.css
   animation: ringSpin 22s linear infinite;
 }
 
-/* soft energetic “outer smear” */
+/* soft energetic “outer smear” 
 #dashboard .home .ringOuter::before{
   content:"";
   position:absolute;
@@ -283,7 +283,7 @@ Paste ONCE at VERY END of theme_A.css
 @keyframes ringSpin{ to { transform: rotate(360deg); } }
 @keyframes ringSpin2{ to { transform: rotate(360deg); } }
 
-/* inner precision ring */
+/* inner precision ring 
 #dashboard .home .ringInner{
   position:absolute;
   inset: 78px;
@@ -294,7 +294,7 @@ Paste ONCE at VERY END of theme_A.css
           mask: radial-gradient(circle, transparent 64%, #000 65%, #000 65.8%, transparent 66.8%);
 }
 
-/* tech ticks */
+/* tech ticks 
 #dashboard .home .ringTicks{
   position:absolute;
   inset: 14px;
@@ -305,7 +305,7 @@ Paste ONCE at VERY END of theme_A.css
           mask: radial-gradient(circle, transparent 66%, #000 67%, #000 70%, transparent 71%);
 }
 
-/* lens flare line */
+/* lens flare line 
 #dashboard .home .ringFlare{
   position:absolute;
   left: 8%; right: 8%;
@@ -323,7 +323,7 @@ Paste ONCE at VERY END of theme_A.css
   mix-blend-mode: screen;
 }
 
-/* hide emblem (HOME only) — keep if you want “ring only” now */
+/* hide emblem (HOME only) — keep if you want “ring only” now 
 #dashboard .home .rankEmblem,
 #dashboard .home .rankIcon,
 #dashboard .home .rankEmblem picture,
@@ -335,12 +335,12 @@ Paste ONCE at VERY END of theme_A.css
    Paste at VERY END of theme_A.css
    ========================================================= */
 
-/* 0) KILL any ring background that creates a filled disc */
+/* 0) KILL any ring background that creates a filled disc /
 #dashboard .home .rankRing{
   background: none !important;
 }
 
-/* 1) Correct stacking (like reference) */
+/* 1) Correct stacking (like reference) 
 #dashboard .home .rankRing{ position:relative; }
 #dashboard .home .rankRing::after{ z-index: 0 !important; }
 #dashboard .home .ringGlow{ z-index: 1 !important; }
@@ -350,7 +350,7 @@ Paste ONCE at VERY END of theme_A.css
 #dashboard .home .ringFlare{ z-index: 5 !important; }
 #dashboard .home .rankEmblem{ z-index: 6 !important; position:relative; }
 
-/* 2) Ensure all ring layers are truly absolute */
+/* 2) Ensure all ring layers are truly absolute 
 #dashboard .home .ringGlow,
 #dashboard .home .ringTicks,
 #dashboard .home .ringOuter,
@@ -359,7 +359,7 @@ Paste ONCE at VERY END of theme_A.css
   position: absolute !important;
 }
 
-/* 3) Big aura must be hollow (never a disc) */
+/* 3) Big aura must be hollow (never a disc) 
 #dashboard .home .rankRing::after{
   opacity: .55 !important;
   filter: blur(18px) !important;
@@ -374,7 +374,7 @@ Paste ONCE at VERY END of theme_A.css
           mask: radial-gradient(circle, transparent 0 56%, #000 64%, transparent 90%) !important;
 }
 
-/* 4) Inner halo must also be hollow (hug the ring) */
+/* 4) Inner halo must also be hollow (hug the ring) 
 #dashboard .home .ringGlow{
   inset: -12% !important;
   opacity: .70 !important;
@@ -389,7 +389,7 @@ Paste ONCE at VERY END of theme_A.css
   -webkit-mask: radial-gradient(circle, transparent 0 58%, #000 66%, transparent 84%) !important;
           mask: radial-gradient(circle, transparent 0 58%, #000 66%, transparent 84%) !important;
 }
-/* CENTER DEPTH — subtle, not glow */
+/* CENTER DEPTH — subtle, not glow 
 #dashboard .home .rankRing::before{
   content:"";
   position:absolute;
@@ -404,13 +404,13 @@ Paste ONCE at VERY END of theme_A.css
 /* =========================
    IMMORTAL REF — PLASMA LAYER
    paste at VERY END
-   ========================= */
+   ========================= 
 
 #dashboard .home .rankRing{
   position:relative;
 }
 
-/* plasma/turbulence halo like reference */
+/* plasma/turbulence halo like reference 
 #dashboard .home .ringPlasma{
   position:absolute;
   inset:-22%;
@@ -420,7 +420,7 @@ Paste ONCE at VERY END of theme_A.css
   mix-blend-mode: screen;
   filter: blur(10px) saturate(1.25);
 
-  /* 2 layers: hot cloud + broken ring */
+  /* 2 layers: hot cloud + broken ring 
   background:
     radial-gradient(circle at 50% 50%,
       transparent 52%,
@@ -443,7 +443,7 @@ Paste ONCE at VERY END of theme_A.css
           mask: radial-gradient(circle, transparent 0 54%, #000 62%, transparent 88%);
 }
 
-/* add “nebula” inside the card (reference background feel) */
+/* add “nebula” inside the card (reference background feel) 
 #dashboard .home .rankCore::before{
   opacity:.95 !important;
   background:
@@ -464,7 +464,7 @@ Paste ONCE at VERY END of theme_A.css
       transparent 60%) !important;
 }
 
-/* add thin helper ring like ref */
+/* add thin helper ring like ref 
 #dashboard .home .ringInner{
   opacity:.42 !important;
   border-color: rgba(255,255,255,.12) !important;
