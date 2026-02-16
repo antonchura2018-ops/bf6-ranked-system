@@ -1646,62 +1646,56 @@ body::before{
   background: linear-gradient(90deg, transparent, rgba(255,255,255,.12), transparent);
   opacity: .8;
 }
-/* =========================
-   HALO — FINAL (IMMORTAL-ish)
-   ========================= */
+.rankHome__center{ position: relative !important; }
 
 .rankHalo{
   position:absolute !important;
   left:50% !important;
-  top:50% !important;                  /* було px — через це з'їжджало */
-  transform:translate(-50%,-50%) !important;
+  top:140px !important;                 /* залиш як підігнав */
+  transform:translateX(-50%) !important;
 
-  width:520px !important;              /* 580 завелике для твого layout */
+  width:520px !important;
   height:520px !important;
   border-radius:50% !important;
 
   pointer-events:none !important;
-  z-index:2 !important;  
-  /* під текстом */
-  .rankTitle, .rankRP, .rankProgress, .pulseHeader, .pulseGrid{
+  z-index:2 !important;                 /* під текстом */
+  opacity:1 !important;
+}
+
+.rankTitle, .rankRP, .rankProgress, .pulseHeader, .pulseGrid{
   position:relative;
   z-index:5;
 }
 
-
-/* ЗОВНІШНЄ КІЛЬЦЕ + GLOW */
+/* тонкий контур */
 .rankHalo::before{
-  content:"" !important;
-  position:absolute !important;
-  inset:0 !important;
-  border-radius:50% !important;
-
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:50%;
   background: radial-gradient(circle,
     transparent 74.5%,
     rgba(255,160,120,.55) 75%,
     transparent 75.6%
-  ) !important;
-
-  mix-blend-mode: screen !important;
-  opacity:.9 !important;
+  );
+  mix-blend-mode: screen;
+  opacity:.9;
 }
 
-/* ЕНЕРГО-ДУГИ (саме це має виглядати як у рефі) */
+/* плазмові дуги */
 .rankHalo__fx{
   position:absolute !important;
   inset:-18px !important;
   border-radius:50% !important;
 
-  background: conic-gradient(
-    from 15deg,
+  background: conic-gradient(from 15deg,
     transparent 0deg,
     rgba(255,170,120,.95) 18deg,
     transparent 40deg,
-
     transparent 110deg,
     rgba(255,140,95,.55) 145deg,
     transparent 175deg,
-
     transparent 230deg,
     rgba(255,120,85,.45) 280deg,
     transparent 320deg,
@@ -1709,42 +1703,20 @@ body::before{
   ) !important;
 
   -webkit-mask: radial-gradient(circle,
-  transparent 72%,
-  #000 74%,
-  #000 76%,
-  transparent 78%
-) !important;
-
-mask: radial-gradient(circle,
-  transparent 72%,
-  #000 74%,
-  #000 76%,
-  transparent 78%
-) !important;
-
-filter: blur(1.2px) !important;
-opacity: .75 !important;
-}
-
-/* ЛЕГКЕ ВНУТРІШНЄ СВІТІННЯ */
-.rankHalo::after{
-  content:"" !important;
-  position:absolute !important;
-  inset:55px !important;
-  border-radius:50% !important;
-
-  background: radial-gradient(circle,
-    rgba(255,70,40,.10) 0%,
-    rgba(255,70,40,.05) 34%,
-    transparent 70%
+    transparent 72%,
+    #000 74%,
+    #000 76%,
+    transparent 78%
+  ) !important;
+  mask: radial-gradient(circle,
+    transparent 72%,
+    #000 74%,
+    #000 76%,
+    transparent 78%
   ) !important;
 
+  filter: blur(1.2px) !important;
+  opacity: .75 !important;
   mix-blend-mode: screen !important;
-  filter: blur(2.5px) !important;
-  opacity:.7 !important;
-}
-
-@keyframes haloRotate{
-  from{ transform: rotate(0deg); }
-  to{ transform: rotate(360deg); }
+  animation: haloRotate 16s linear infinite !important;
 }
