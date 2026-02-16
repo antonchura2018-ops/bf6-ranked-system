@@ -2272,3 +2272,160 @@ body::before{
 
 @keyframes haloSpin{ from{ transform: rotate(0deg);} to{ transform: rotate(360deg);} }
 @keyframes haloSpin2{ from{ transform: rotate(360deg);} to{ transform: rotate(0deg);} }
+
+/* ===== HARD KILL: any old circular overlays / segments ===== */
+.rankHome__center::before,
+.rankHome__center::after{
+  content:none !important;
+  display:none !important;
+}
+
+.rankRing,
+.rankRing--aura,
+.rankRing--precision{
+  display:none !important;
+}
+
+/* kill any legacy halo that draws blocks */
+.rankHalo{
+  background: none !important;
+  box-shadow: none !important;
+  filter: none !important;
+  mix-blend-mode: normal !important;
+}
+
+.rankHalo::before,
+.rankHalo::after{
+  content: "" !important; /* we will redefine below */
+  background: none !important;
+  box-shadow: none !important;
+  filter: none !important;
+}
+/* ===== LOCK LAYOUT: keep center stack stable ===== */
+.rankHome__center{
+  position: relative !important;
+  z-index: 2 !important;
+  transform: none !important;
+  padding-top: 140px !important;  /* місце під кільце */
+  padding-bottom: 70px !important;
+}
+
+.pulseHeader{ margin-top: 18px !important; }
+.pulseGrid{ margin-top: 14px !important; }
+
+:root{
+  --haloSize: 520px;
+}
+
+/* ring container */
+.rankHalo{
+  position:absolute !important;
+  left:50%;
+  top: 120px;                 /* стабільно, не через translate */
+  transform: translateX(-50%) !important;
+  width: var(--haloSize);
+  height: var(--haloSize);
+  border-radius: 999px;
+  pointer-events:none;
+  z-index: 1;                 /* behind text */
+}
+
+/* thin inner rings */
+.rankHalo::before{
+  content:"";
+  position:absolute;
+  inset: 0;
+  border-radius: inherit;
+  background:
+    radial-gradient(circle,
+      transparent 58.6%,
+      rgba(255,255,255,.20) 59.2%,
+      transparent 60.0%),
+    radial-gradient(circle,
+      transparent 65.6%,
+      rgba(255,255,255,.10) 66.1%,
+      transparent 66.9%),
+    radial-gradient(circle,
+      transparent 72.6%,
+      rgba(255,255,255,.08) 73.1%,
+      transparent 73.9%);
+  opacity: .85;
+  filter:
+    drop-shadow(0 0 10px rgba(255,70,40,.25))
+    drop-shadow(0 0 32px rgba(255,70,40,.14));
+}
+
+/* plasma arcs */
+.rankHalo::after{
+  content:"";
+  position:absolute;
+  inset: -26px;
+  border-radius: inherit;
+
+  background:
+    conic-gradient(from 210deg,
+      transparent 0 18deg,
+      rgba(255,70,40,.55) 18deg 42deg,
+      rgba(255,190,140,.25) 42deg 50deg,
+      transparent 50deg 118deg,
+      rgba(255,70,40,.38) 118deg 152deg,
+      transparent 152deg 220deg,
+      rgba(255,120,75,.32) 220deg 252deg,
+      transparent 252deg 360deg);
+
+  -webkit-mask: radial-gradient(circle,
+    transparent 57%,
+    #000 60%,
+    #000 74%,
+    transparent 78%);
+  mask: radial-gradient(circle,
+    transparent 57%,
+    #000 60%,
+    #000 74%,
+    transparent 78%);
+
+  mix-blend-mode: screen;
+  filter:
+    blur(.45px)
+    drop-shadow(0 0 18px rgba(255,70,40,.30))
+    drop-shadow(0 0 60px rgba(255,70,40,.16));
+
+  opacity: .98;
+  animation: haloSpin 14s linear infinite;
+}
+
+/* extra spark layer (needs your <span class="rankHalo__fx"></span>) */
+.rankHalo__fx{
+  position:absolute;
+  inset:-34px;
+  border-radius: inherit;
+
+  background:
+    radial-gradient(circle at 24% 40%, rgba(255,160,120,.14), transparent 46%),
+    radial-gradient(circle at 74% 30%, rgba(255,120,80,.10), transparent 48%),
+    conic-gradient(from 160deg,
+      transparent 0 40deg,
+      rgba(255,90,55,.12) 40deg 58deg,
+      transparent 58deg 190deg,
+      rgba(255,170,120,.10) 190deg 208deg,
+      transparent 208deg 360deg);
+
+  -webkit-mask: radial-gradient(circle,
+    transparent 52%,
+    #000 60%,
+    #000 80%,
+    transparent 86%);
+  mask: radial-gradient(circle,
+    transparent 52%,
+    #000 60%,
+    #000 80%,
+    transparent 86%);
+
+  mix-blend-mode: screen;
+  filter: blur(.9px) drop-shadow(0 0 14px rgba(255,70,40,.14));
+  opacity: .85;
+  animation: haloSpin2 22s linear infinite;
+}
+
+@keyframes haloSpin{ from{ transform: rotate(0deg);} to{ transform: rotate(360deg);} }
+@keyframes haloSpin2{ from{ transform: rotate(360deg);} to{ transform: rotate(0deg);} }
