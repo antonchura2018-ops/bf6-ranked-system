@@ -1983,3 +1983,153 @@ body::before{
   from{ transform: rotate(360deg); }
   to{ transform: rotate(0deg); }
 }
+/* ===== KILL OLD RINGS COMPLETELY ===== */
+.rankRing,
+.rankRing--aura,
+.rankRing--precision,
+.rankEmblem{
+  display:none !important;
+}
+/* ==========================================================
+   PLASMA HALO (reference-like)
+   ========================================================== */
+
+:root{
+  --haloSize: 520px;      /* можна підганяти */
+  --haloLift: -54%;       /* підняти/опустити */
+}
+
+.rankHome__center{ position:relative; }
+
+/* container */
+.rankHalo{
+  position:absolute;
+  left:50%;
+  top:50%;
+  transform: translate(-50%, var(--haloLift));
+  width: var(--haloSize);
+  height: var(--haloSize);
+  border-radius: 999px;
+  pointer-events:none;
+  z-index: 2;
+  opacity: 1;
+}
+
+/* thin inner rings */
+.rankHalo::before{
+  content:"";
+  position:absolute;
+  inset: 0;
+  border-radius: inherit;
+
+  background:
+    radial-gradient(circle,
+      transparent 58.6%,
+      rgba(255,255,255,.20) 59.1%,
+      transparent 59.8%),
+    radial-gradient(circle,
+      transparent 64.6%,
+      rgba(255,255,255,.12) 65.0%,
+      transparent 65.7%),
+    radial-gradient(circle,
+      transparent 70.6%,
+      rgba(255,255,255,.10) 71.0%,
+      transparent 71.7%);
+
+  filter:
+    drop-shadow(0 0 10px rgba(255,70,40,.22))
+    drop-shadow(0 0 28px rgba(255,70,40,.12));
+
+  opacity: .9;
+}
+
+/* plasma arcs */
+.rankHalo::after{
+  content:"";
+  position:absolute;
+  inset: -26px;
+  border-radius: inherit;
+
+  background:
+    conic-gradient(from 210deg,
+      transparent 0 16deg,
+      rgba(255,70,40,.55) 16deg 36deg,
+      rgba(255,190,140,.30) 36deg 44deg,
+      transparent 44deg 120deg,
+      rgba(255,70,40,.40) 120deg 150deg,
+      transparent 150deg 220deg,
+      rgba(255,120,75,.35) 220deg 248deg,
+      transparent 248deg 360deg),
+    conic-gradient(from 30deg,
+      transparent 0 250deg,
+      rgba(255,255,255,.18) 250deg 258deg,
+      rgba(255,150,105,.40) 258deg 270deg,
+      transparent 270deg 360deg);
+
+  /* make it a ring (not a disk) */
+  -webkit-mask: radial-gradient(circle,
+    transparent 57%,
+    #000 60%,
+    #000 73%,
+    transparent 76%);
+  mask: radial-gradient(circle,
+    transparent 57%,
+    #000 60%,
+    #000 73%,
+    transparent 76%);
+
+  mix-blend-mode: screen;
+  filter:
+    blur(.35px)
+    drop-shadow(0 0 18px rgba(255,70,40,.28))
+    drop-shadow(0 0 55px rgba(255,70,40,.16));
+
+  opacity: .98;
+  animation: haloSpin 12s linear infinite;
+}
+
+/* extra spark/noise layer */
+.rankHalo__fx{
+  position:absolute;
+  inset:-34px;
+  border-radius: inherit;
+  pointer-events:none;
+
+  background:
+    radial-gradient(circle at 22% 40%, rgba(255,160,120,.16), transparent 44%),
+    radial-gradient(circle at 72% 30%, rgba(255,120,80,.12), transparent 46%),
+    radial-gradient(circle at 78% 64%, rgba(255,160,120,.10), transparent 52%),
+    conic-gradient(from 160deg,
+      transparent 0 36deg,
+      rgba(255,90,55,.14) 36deg 54deg,
+      transparent 54deg 180deg,
+      rgba(255,170,120,.12) 180deg 198deg,
+      transparent 198deg 360deg);
+
+  -webkit-mask: radial-gradient(circle,
+    transparent 52%,
+    #000 60%,
+    #000 78%,
+    transparent 84%);
+  mask: radial-gradient(circle,
+    transparent 52%,
+    #000 60%,
+    #000 78%,
+    transparent 84%);
+
+  mix-blend-mode: screen;
+  filter: blur(.8px) drop-shadow(0 0 14px rgba(255,70,40,.12));
+  opacity: .85;
+  animation: haloSpin2 20s linear infinite;
+}
+
+/* keep text above halo */
+.rankTitle, .rankRP, .rankProgress, .pulseHeader, .pulseGrid{
+  position:relative;
+  z-index: 3;
+}
+
+@keyframes haloSpin{ from{ transform: rotate(0deg);} to{ transform: rotate(360deg);} }
+@keyframes haloSpin2{ from{ transform: rotate(360deg);} to{ transform: rotate(0deg);} }
+
+
