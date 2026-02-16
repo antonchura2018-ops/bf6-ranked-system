@@ -2672,3 +2672,17 @@ body::before{
 .pulseHeader{ margin-top: 18px !important; }
 .pulseGrid{ margin-top: 14px !important; }
 
+/* DEBUG: force-visible halo */
+.rankHalo::before{
+  content:"" !important;
+  position:absolute !important;
+  inset:0 !important;
+  border-radius:50% !important;
+  background: conic-gradient(from 0deg, rgba(255,80,30,.9), rgba(255,80,30,0) 35%, rgba(255,80,30,.9) 70%, rgba(255,80,30,0)) !important;
+  opacity: 1 !important;
+  filter: blur(2px) !important;
+  -webkit-mask: none !important;
+          mask: none !important;
+  mix-blend-mode: screen !important;
+}
+.rankHalo::after{ content:none !important; }
