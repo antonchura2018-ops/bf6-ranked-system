@@ -2429,3 +2429,118 @@ body::before{
 
 @keyframes haloSpin{ from{ transform: rotate(0deg);} to{ transform: rotate(360deg);} }
 @keyframes haloSpin2{ from{ transform: rotate(360deg);} to{ transform: rotate(0deg);} }
+
+/* KILL old ring systems (if any) */
+.rankRing,
+.rankRing--aura,
+.rankRing--precision{
+  display:none !important;
+}
+/* ==========================================================
+   RANK HALO — reference-like plasma ring (NO big HUD segments)
+   Paste as LAST block in theme_a.css
+   ========================================================== */
+
+.rankHome__center{
+  position: relative; /* needed for absolute halo */
+}
+
+/* main halo wrapper */
+.rankHalo{
+  position:absolute;
+  left:50%;
+  top: 92px;                 /* <-- якщо треба: підніми/опусти кільце */
+  transform: translateX(-50%);
+  width: 420px;              /* <-- базовий розмір кільця */
+  height: 420px;
+  pointer-events:none;
+  z-index: 0;                /* позаду тексту */
+  filter: saturate(1.15);
+  opacity: .98;
+}
+
+/* two clean inner rings (тонкі лінії як в рефі) */
+.rankHalo::before{
+  content:"";
+  position:absolute;
+  inset: 44px;               /* товщина/відступ внутрішнього кільця */
+  border-radius: 999px;
+
+  background:
+    radial-gradient(circle at 50% 50%,
+      rgba(255,255,255,.00) 56%,
+      rgba(255,255,255,.10) 57%,
+      rgba(255,255,255,.00) 58%),
+    radial-gradient(circle at 50% 50%,
+      rgba(255,255,255,.00) 66%,
+      rgba(255,120,90,.22) 67%,
+      rgba(255,255,255,.00) 68%);
+
+  opacity: .65;
+  filter: blur(.2px);
+}
+
+/* plasma / energy ring (зовнішній “вогонь” з розривами) */
+.rankHalo::after{
+  content:"";
+  position:absolute;
+  inset: 0;
+  border-radius: 999px;
+
+  /* робимо “обідок” маскою, щоб був тільки по краю */
+  -webkit-mask:
+    radial-gradient(circle, transparent 58%, #000 60%, #000 67%, transparent 69%);
+  mask:
+    radial-gradient(circle, transparent 58%, #000 60%, #000 67%, transparent 69%);
+
+  background:
+    /* гаряча світлова основа */
+    radial-gradient(circle at 50% 50%,
+      rgba(255,80,40,.10) 0%,
+      rgba(255,80,40,.08) 45%,
+      rgba(255,80,40,.00) 70%),
+
+    /* “плазма” нерівномірними спалахами по колу */
+    conic-gradient(from 210deg,
+      rgba(255,120,80,0) 0%,
+      rgba(255,90,40,.55) 6%,
+      rgba(255,210,160,.18) 10%,
+      rgba(255,120,80,0) 16%,
+
+      rgba(255,120,80,0) 28%,
+      rgba(255,90,40,.62) 35%,
+      rgba(255,210,160,.22) 38%,
+      rgba(255,120,80,0) 45%,
+
+      rgba(255,120,80,0) 62%,
+      rgba(255,90,40,.60) 70%,
+      rgba(255,210,160,.20) 74%,
+      rgba(255,120,80,0) 82%,
+
+      rgba(255,120,80,0) 100%);
+
+  box-shadow:
+    0 0 26px rgba(255,60,25,.22),
+    0 0 60px rgba(255,40,20,.16);
+
+  filter: blur(.7px) saturate(1.35);
+  opacity: .95;
+}
+
+/* ensure text/UI sits above ring */
+.rankTitle,
+.rankRP,
+.rankProgress,
+.pulseHeader,
+.pulseGrid,
+.pulseMark{
+  position: relative;
+  z-index: 2;
+}
+
+/* IMPORTANT: remove any “rank glow” that was darkening the center */
+.rankHome__center{
+  box-shadow: none !important;
+  filter: none !important;
+}
+
