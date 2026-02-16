@@ -2852,3 +2852,79 @@ body::before{
   filter: blur(2px) !important;
   mix-blend-mode: normal !important;
 }
+/* ============================= */
+/* CINEMATIC HALO – FINAL       */
+/* ============================= */
+
+.rankHalo{
+  position:absolute !important;
+  left:50% !important;
+  top:130px !important;
+  transform:translateX(-50%) !important;
+  width:520px !important;
+  height:520px !important;
+  pointer-events:none !important;
+  z-index:2 !important; /* під текстом, над фоном */
+}
+
+/* energetic arcs + thin ring */
+.rankHalo::before{
+  content:"" !important;
+  position:absolute !important;
+  inset:0 !important;
+  border-radius:50% !important;
+
+  background:
+    conic-gradient(
+      from 12deg,
+      rgba(255,90,40,0) 0deg,
+      rgba(255,90,40,.85) 18deg,
+      rgba(255,90,40,0) 52deg,
+
+      rgba(255,170,110,.55) 92deg,
+      rgba(255,90,40,0) 135deg,
+
+      rgba(255,90,40,.85) 205deg,
+      rgba(255,90,40,0) 248deg,
+
+      rgba(255,170,110,.55) 300deg,
+      rgba(255,90,40,0) 360deg
+    );
+
+  /* тонке кільце */
+  -webkit-mask: radial-gradient(circle,
+    transparent 0 58%,
+    #000 60%,
+    #000 66%,
+    transparent 68%
+  ) !important;
+
+  mask: radial-gradient(circle,
+    transparent 0 58%,
+    #000 60%,
+    #000 66%,
+    transparent 68%
+  ) !important;
+
+  filter: blur(6px) brightness(1.2) saturate(1.25) !important;
+  opacity: .95 !important;
+  mix-blend-mode: screen !important;
+}
+
+/* outer soft glow */
+.rankHalo::after{
+  content:"" !important;
+  position:absolute !important;
+  inset:-10px !important;
+  border-radius:50% !important;
+
+  background: radial-gradient(circle,
+    transparent 62%,
+    rgba(255,120,60,.22) 64%,
+    transparent 70%
+  ) !important;
+
+  filter: blur(10px) !important;
+  opacity: .85 !important;
+  mix-blend-mode: screen !important;
+}
