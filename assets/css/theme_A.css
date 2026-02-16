@@ -43,7 +43,7 @@
 
 /* page background */
 body{ color: var(--text); }
-}
+
 .hubEmblem img{
   transform: translateZ(0) scale(var(--icon-scale, .78));
   object-fit: contain;
@@ -123,10 +123,11 @@ body[data-rank="eidolon"]{
   --accent:#A7F3D0; --glow: rgba(167,243,208,.45); --glow2: rgba(167,243,208,.18);
 }
 
-/* =========================================================
-   HOME — IMMORTAL (REFERENCE 1:1 LOOK)  ✅ SINGLE CLEAN BLOCK
-   Paste ONCE at VERY END of theme_A.css
-   ========================================================= */
+/* DISABLED OLD HOME SYSTEM
+=========================================================
+HOME — IMMORTAL (REFERENCE 1:1 LOOK)  ✅ SINGLE CLEAN BLOCK
+Paste ONCE at VERY END of theme_A.css
+========================================================= */
 
 #dashboard .home{ max-width:1180px; margin:0 auto; padding:24px 24px 44px; }
 #dashboard .home .homeTopBar{ display:none !important; }
@@ -472,9 +473,7 @@ body[data-rank="eidolon"]{
 #dashboard .home .ringOuter{
   filter: blur(.12px) drop-shadow(0 0 24px color-mix(in srgb, var(--accent) 55%, transparent)) !important;
 }
-/* =========================
-   RANK HOME (1:1 REF STYLE)
-   ========================= */
+END DISABLED */
 
 :root{
   --accent: #ff3b1f;
