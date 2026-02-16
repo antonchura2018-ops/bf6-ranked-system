@@ -1700,3 +1700,116 @@ body::before{
   background: linear-gradient(90deg, transparent, rgba(255,255,255,.12), transparent);
   opacity: .8;
 }
+/* ===== DISABLE OLD RINGS COMPLETELY ===== */
+.rankRing,
+.rankRing--aura,
+.rankRing--precision{
+  display:none !important;
+}
+/* ==========================================================
+   RANK HALO (NEW) — clean cinematic ring, no black glow
+   ========================================================== */
+
+.rankHome__center{
+  position: relative;
+}
+
+/* основний колір кільця (можеш потім робити залежним від рангу) */
+:root{
+  --ringAccent: #ff3b2a; /* червоно-оранжевий як у рефі */
+}
+
+/* сам контейнер кільця */
+.rankHalo{
+  position:absolute;
+  left:50%;
+  top:50%;
+  transform: translate(-50%, -56%); /* трохи вище центру як у твоєму лейауті */
+  width: 420px;
+  height: 420px;
+  border-radius: 999px;
+  pointer-events:none;
+  z-index: 2;
+  opacity: .92;
+
+  /* НІЯКОГО чорного світіння */
+  filter: none;
+  box-shadow: none;
+  background: none;
+}
+
+/* тонке зовнішнє кільце + легкі “сегменти” */
+.rankHalo::before{
+  content:"";
+  position:absolute;
+  inset: 0;
+  border-radius: inherit;
+
+  /* сегменти/скани */
+  background:
+    conic-gradient(from 210deg,
+      transparent 0 18deg,
+      rgba(255,255,255,.08) 18deg 22deg,
+      transparent 22deg 68deg,
+      color-mix(in srgb, var(--ringAccent) 55%, transparent) 68deg 76deg,
+      transparent 76deg 140deg,
+      rgba(255,255,255,.06) 140deg 144deg,
+      transparent 144deg 360deg),
+    radial-gradient(circle at 50% 50%,
+      transparent 62%,
+      rgba(255,255,255,.10) 62.4%,
+      rgba(255,255,255,0) 63.6%);
+
+  /* зробити його ТОНКИМ (маска) */
+  -webkit-mask: radial-gradient(circle,
+    transparent 61.7%,
+    #000 62.2%,
+    #000 63.4%,
+    transparent 63.9%);
+  mask: radial-gradient(circle,
+    transparent 61.7%,
+    #000 62.2%,
+    #000 63.4%,
+    transparent 63.9%);
+
+  opacity: .95;
+
+  /* світіння тільки світле/червоне (без чорного) */
+  filter:
+    drop-shadow(0 0 10px rgba(255,60,40,.18))
+    drop-shadow(0 0 26px rgba(255,60,40,.10));
+}
+
+/* внутрішній тонкий “precision ring” */
+.rankHalo::after{
+  content:"";
+  position:absolute;
+  inset: 34px;
+  border-radius: inherit;
+
+  background:
+    radial-gradient(circle,
+      transparent 69%,
+      rgba(255,255,255,.08) 69.4%,
+      rgba(255,255,255,0) 70.6%);
+
+  -webkit-mask: radial-gradient(circle,
+    transparent 68.8%,
+    #000 69.2%,
+    #000 70.2%,
+    transparent 70.6%);
+  mask: radial-gradient(circle,
+    transparent 68.8%,
+    #000 69.2%,
+    #000 70.2%,
+    transparent 70.6%);
+
+  opacity: .55;
+  filter: drop-shadow(0 0 12px rgba(255,60,40,.08));
+}
+
+/* якщо десь лишився “темний туман” у центрі — це прибирає */
+.rankHome__center::before,
+.rankHome__center::after{
+  content:none !important;
+}
