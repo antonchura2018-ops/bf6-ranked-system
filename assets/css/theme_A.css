@@ -2816,3 +2816,39 @@ body::before{
 
   opacity:.8;
 }
+/* ===== HALO FORCE TEST (TEMP) ===== */
+.rankHalo{
+  position:absolute !important;
+  left:50% !important;
+  top:130px !important;
+  transform:translateX(-50%) !important;
+  width:520px !important;
+  height:520px !important;
+  pointer-events:none !important;
+  z-index:6 !important;
+}
+
+.rankHalo::before{
+  content:"" !important;
+  position:absolute !important;
+  inset:0 !important;
+  border-radius:50% !important;
+
+  /* жирне тестове кільце, щоб точно було видно */
+  box-shadow: 0 0 0 6px rgba(255,120,60,.95) inset !important;
+  background: none !important;
+  opacity: 1 !important;
+  filter: none !important;
+  mix-blend-mode: normal !important;
+}
+
+.rankHalo::after{
+  content:"" !important;
+  position:absolute !important;
+  inset:-20px !important;
+  border-radius:50% !important;
+  box-shadow: 0 0 80px rgba(255,120,60,.35) !important;
+  opacity: 1 !important;
+  filter: blur(2px) !important;
+  mix-blend-mode: normal !important;
+}
