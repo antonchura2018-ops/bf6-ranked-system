@@ -1677,28 +1677,20 @@ body::before{
   filter: blur(.15px);
 }
 
-/* OPTIONAL: your rotating arcs (keep subtle) */
-.rankHalo__fx{
+/.rankHalo__fx{
   position:absolute !important;
-  inset:-26px !important;
+  inset:-34px !important;
   border-radius:50% !important;
 
-  background: conic-gradient(from 330deg,
-    transparent 0deg,
-    rgba(255,255,255,.14) 18deg,
-    rgba(255,170,120,.55) 32deg,
-    rgba(255,90,50,.75) 52deg,
-    transparent 82deg,
-    transparent 360deg
-  );
+  background: url("/assets/img/ui/halo_plasma.png") center/contain no-repeat !important;
 
-  -webkit-mask: radial-gradient(circle, transparent 66%, #000 69%, #000 77%, transparent 80%);
-          mask: radial-gradient(circle, transparent 66%, #000 69%, #000 77%, transparent 80%);
+  filter: blur(.3px) brightness(1.2) saturate(1.3)
+          drop-shadow(0 0 22px rgba(255,80,40,.45))
+          drop-shadow(0 0 60px rgba(255,40,20,.25));
 
-  mix-blend-mode: screen;
-  opacity: .55;
-  filter: blur(1.2px) saturate(1.2);
-  animation: haloSpin2 34s linear infinite reverse;
+  opacity:1 !important;
+
+  animation: haloRotate 18s linear infinite !important;
 }
 
 /* keep UI above halo */
