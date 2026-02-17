@@ -1616,7 +1616,7 @@ body::before{
 }
 
 /* =========================================================
-   HALO — CLEAN FINAL (plasma + broken arcs + tech rings)
+   HALO — REFERENCE CONTRAST FIX (no black disc, more detail)
    Paste at VERY END of theme_A.css
    ========================================================= */
 
@@ -1638,99 +1638,115 @@ body::before{
   opacity: 1 !important;
 }
 
-/* NO black disc — only soft center falloff */
+/* 1) CONTRAST PAD behind the ring (KEY FIX)
+   darkens the background behind halo so plasma becomes visible
+   but keeps center transparent (NO black disc) */
 .rankHalo::before{
   content:"";
   position:absolute;
-  inset: 170px;                /* центр невеликий */
+  inset:-18px;
   border-radius:50%;
-  background: radial-gradient(circle,
+
+  /* center stays mostly clear, mid area slightly dim, edges more dim */
+  background: radial-gradient(circle at 50% 50%,
     rgba(0,0,0,0.00) 0%,
-    rgba(0,0,0,0.10) 45%,
-    rgba(0,0,0,0.26) 75%,
-    rgba(0,0,0,0.40) 100%);
-  opacity:.95;
-  filter: blur(.6px);
+    rgba(0,0,0,0.06) 34%,
+    rgba(0,0,0,0.22) 58%,
+    rgba(0,0,0,0.34) 72%,
+    rgba(0,0,0,0.18) 86%,
+    rgba(0,0,0,0.00) 100%);
+
+  /* makes dimming affect background only */
+  mix-blend-mode: multiply;
+  opacity: .92;
+  filter: blur(6px);
 }
 
-/* big outer aura (hollow) */
+/* 2) Big outer aura (hollow) */
 .rankHalo::after{
   content:"";
   position:absolute;
-  inset:-44px;
+  inset:-52px;
   border-radius:50%;
+
   background: radial-gradient(circle,
     transparent 62%,
-    rgba(255,130,85,.20) 70%,
+    rgba(255,150,100,.20) 70%,
     rgba(255,90,55,.12) 78%,
     transparent 86%);
+
   -webkit-mask: radial-gradient(circle, transparent 0 66%, #000 70%, #000 83%, transparent 87%);
           mask: radial-gradient(circle, transparent 0 66%, #000 70%, #000 83%, transparent 87%);
-  filter: blur(12px) saturate(1.2);
+
+  filter: blur(10px) saturate(1.25) contrast(1.15);
   opacity:.95;
   mix-blend-mode: screen;
 }
 
-/* plasma + broken arcs + hot segment */
+/* 3) plasma + broken arcs (make it NORMAL for contrast) */
 .rankHalo__fx{
   position:absolute !important;
   inset:-34px !important;
   border-radius:50% !important;
+  display:block !important;
 
   background:
     /* HOT SEGMENT (right-bottom) */
-    conic-gradient(from 305deg,
+    conic-gradient(from 304deg,
       transparent 0deg,
-      rgba(255,255,255,.18) 14deg,
-      rgba(255,190,140,.75) 26deg,
-      rgba(255,90,50,.95) 44deg,
-      rgba(255,190,140,.40) 64deg,
-      transparent 88deg,
+      rgba(255,255,255,.22) 10deg,
+      rgba(255,210,170,.70) 24deg,
+      rgba(255,95,55,1.00) 46deg,
+      rgba(255,210,170,.38) 68deg,
+      transparent 92deg,
       transparent 360deg),
 
     /* broken bright arcs */
-    conic-gradient(from 340deg,
+    conic-gradient(from 336deg,
       transparent 0deg,
-      rgba(255,230,210,.95) 18deg,
-      rgba(255,120,70,.90) 26deg,
-      transparent 44deg,
-      transparent 120deg,
-      rgba(255,140,90,.72) 148deg,
-      transparent 170deg,
-      transparent 228deg,
-      rgba(255,110,70,.62) 270deg,
-      transparent 300deg,
+      rgba(255,240,225,.95) 16deg,
+      rgba(255,140,85,.92) 26deg,
+      transparent 46deg,
+      transparent 118deg,
+      rgba(255,165,110,.78) 150deg,
+      transparent 172deg,
+      transparent 226deg,
+      rgba(255,130,90,.68) 270deg,
+      transparent 304deg,
       transparent 360deg),
 
-    /* smoky plasma halo */
+    /* smoky plasma */
     radial-gradient(circle at 50% 50%,
       transparent 58%,
-      rgba(255,90,45,.26) 67%,
-      rgba(255,60,30,.14) 76%,
+      rgba(255,95,55,.28) 67%,
+      rgba(255,50,25,.16) 76%,
       transparent 86%);
 
   -webkit-mask: radial-gradient(circle, transparent 66%, #000 69%, #000 79%, transparent 82%);
           mask: radial-gradient(circle, transparent 66%, #000 69%, #000 79%, transparent 82%);
 
-  mix-blend-mode: screen;
-  filter: blur(2.2px) saturate(1.55) brightness(1.12)
-          drop-shadow(0 0 22px rgba(255,80,40,.22))
-          drop-shadow(0 0 46px rgba(255,40,20,.12));
-  opacity:.98;
+  /* IMPORTANT: use normal, not screen (screen was washing out on bright bg) */
+  mix-blend-mode: normal;
 
+  /* sharper, more “electric” */
+  filter: blur(1.25px) saturate(1.65) contrast(1.35) brightness(1.10)
+          drop-shadow(0 0 18px rgba(255,95,55,.28))
+          drop-shadow(0 0 46px rgba(255,40,20,.14));
+
+  opacity:.98;
   animation: haloRotate 18s linear infinite;
 }
 
-/* 2 thin tech rings */
+/* 4) 2 thin tech rings */
 .rankHalo__fx::before{
   content:"";
   position:absolute;
   inset: 64px;
   border-radius:50%;
-  border:1px solid rgba(255,255,255,.11);
-  -webkit-mask: radial-gradient(circle, transparent 64%, #000 65%, #000 65.7%, transparent 66.7%);
-          mask: radial-gradient(circle, transparent 64%, #000 65%, #000 65.7%, transparent 66.7%);
-  opacity:.60;
+  border:1px solid rgba(255,255,255,.12);
+  -webkit-mask: radial-gradient(circle, transparent 64%, #000 65%, #000 65.8%, transparent 66.8%);
+          mask: radial-gradient(circle, transparent 64%, #000 65%, #000 65.8%, transparent 66.8%);
+  opacity:.62;
 }
 
 .rankHalo__fx::after{
@@ -1738,10 +1754,10 @@ body::before{
   position:absolute;
   inset: 96px;
   border-radius:50%;
-  border:1px solid rgba(255,255,255,.08);
-  -webkit-mask: radial-gradient(circle, transparent 66.5%, #000 67.5%, #000 68.2%, transparent 69.2%);
-          mask: radial-gradient(circle, transparent 66.5%, #000 67.5%, #000 68.2%, transparent 69.2%);
-  opacity:.46;
+  border:1px solid rgba(255,255,255,.09);
+  -webkit-mask: radial-gradient(circle, transparent 66.5%, #000 67.6%, #000 68.3%, transparent 69.3%);
+          mask: radial-gradient(circle, transparent 66.5%, #000 67.6%, #000 68.3%, transparent 69.3%);
+  opacity:.48;
 }
 
 @keyframes haloRotate{ to{ transform: rotate(360deg); } }
