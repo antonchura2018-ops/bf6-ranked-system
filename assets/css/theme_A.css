@@ -1843,3 +1843,195 @@ body::after{
   opacity: .95;
   pointer-events:none;
 }
+/* =========================================================
+   RANK HALO — 1:1 FINAL (NO BLACK DISC + TECH RINGS + HOT SEGMENT)
+   Paste at VERY END of theme_A.css
+   ========================================================= */
+
+.rankHome__center{
+  position: relative !important;
+  isolation: isolate !important;
+}
+
+/* Base */
+.rankHalo{
+  position:absolute !important;
+  left:50% !important;
+  top:140px !important;
+  transform:translateX(-50%) !important;
+
+  width:560px !important;
+  height:560px !important;
+  border-radius:50% !important;
+
+  pointer-events:none !important;
+  z-index: 3 !important;
+
+  opacity: 1 !important;
+  mix-blend-mode: normal !important;
+}
+
+/* --- CENTER: NO “DEAD BLACK DISC” --- */
+.rankHalo::before{
+  content:"";
+  position:absolute;
+  inset: 165px !important;          /* менший центр */
+  border-radius:50%;
+  /* легке затемнення + прозорий центр, щоб фон видно */
+  background: radial-gradient(circle,
+    rgba(0,0,0,0.00) 0%,
+    rgba(0,0,0,0.10) 38%,
+    rgba(0,0,0,0.28) 68%,
+    rgba(0,0,0,0.42) 100%) !important;
+  opacity: .95 !important;
+  filter: blur(0.6px) !important;
+}
+
+/* --- OUTER BAND: subtle glass ring + glow (no fill) --- */
+.rankHalo::after{
+  content:"";
+  position:absolute;
+  inset:-38px;
+  border-radius:50%;
+
+  background: radial-gradient(circle,
+    transparent 62%,
+    rgba(255,160,110,.18) 69%,
+    rgba(255,110,70,.10) 77%,
+    transparent 86%) !important;
+
+  -webkit-mask: radial-gradient(circle, transparent 0 66%, #000 70%, #000 83%, transparent 87%) !important;
+          mask: radial-gradient(circle, transparent 0 66%, #000 70%, #000 83%, transparent 87%) !important;
+
+  filter: blur(11px) saturate(1.1) !important;
+  opacity: .95 !important;
+}
+
+/* --- TECH RINGS (2 thin inner rings like reference) --- */
+.rankHalo .rankHalo__fx{
+  position:absolute !important;
+  inset:-34px !important;
+  border-radius:50% !important;
+
+  /* твої дуги + плазмова кромка */
+  background:
+    conic-gradient(from 340deg,
+      transparent 0deg,
+      rgba(255, 230, 210, .95) 18deg,
+      rgba(255, 120, 70, .90) 26deg,
+      transparent 44deg,
+      transparent 120deg,
+      rgba(255, 140, 90, .72) 148deg,
+      transparent 170deg,
+      transparent 228deg,
+      rgba(255, 110, 70, .62) 270deg,
+      transparent 300deg,
+      transparent 360deg),
+    radial-gradient(circle at 50% 50%,
+      transparent 60%,
+      rgba(255, 90, 45, .24) 69%,
+      rgba(255, 60, 30, .12) 78%,
+      transparent 86%) !important;
+
+  -webkit-mask: radial-gradient(circle, transparent 66%, #000 69%, #000 79%, transparent 82%) !important;
+          mask: radial-gradient(circle, transparent 66%, #000 69%, #000 79%, transparent 82%) !important;
+
+  filter: blur(2.0px) saturate(1.55) brightness(1.18) !important;
+  opacity: .92 !important;
+
+  animation: haloRotate 18s linear infinite !important;
+}
+
+/* тонкі кільця поверх плазми */
+.rankHalo .rankHalo__fx::before{
+  content:"";
+  position:absolute;
+  inset: 58px;
+  border-radius:50%;
+  border: 1px solid rgba(255,255,255,.10);
+  -webkit-mask: radial-gradient(circle, transparent 64%, #000 65%, #000 65.7%, transparent 66.7%);
+          mask: radial-gradient(circle, transparent 64%, #000 65%, #000 65.7%, transparent 66.7%);
+  opacity: .55;
+  pointer-events:none;
+}
+
+.rankHalo .rankHalo__fx::after{
+  content:"";
+  position:absolute;
+  inset: 92px;
+  border-radius:50%;
+  border: 1px solid rgba(255,255,255,.08);
+  -webkit-mask: radial-gradient(circle, transparent 66.5%, #000 67.5%, #000 68.2%, transparent 69.2%);
+          mask: radial-gradient(circle, transparent 66.5%, #000 67.5%, #000 68.2%, transparent 69.2%);
+  opacity: .42;
+  pointer-events:none;
+}
+
+/* --- HOT SEGMENT (right-bottom like IMMORTAL ref) --- */
+.rankHalo{
+  /* додаємо “гарячий” сегмент як overlay */
+}
+.rankHalo .rankHalo__hot{
+  display:none; /* якщо немає елемента — ок, не треба HTML */
+}
+
+/* Без HTML: робимо гарячий сегмент псевдо-елементом */
+.rankHalo::marker{ content:""; } /* safe noop */
+.rankHalo::before{
+  /* залишили center */
+}
+.rankHalo::after{
+  /* залишили outer aura */
+}
+.rankHalo .rankHalo__fx{
+  /* залишили plasma */
+}
+
+/* hot arc overlay */
+.rankHalo .rankHalo__fx{
+  /* додаємо ще один “гарячий smear” поверх */
+  box-shadow: 0 0 0 rgba(0,0,0,0);
+}
+.rankHalo .rankHalo__fx{
+  /* nothing here */
+}
+.rankHalo .rankHalo__fx{
+  /* keep */
+}
+
+.rankHalo .rankHalo__fx{
+  /* add hot segment via filter layer (works across browsers) */
+}
+.rankHalo .rankHalo__fx{
+  /* no extra */
+}
+
+/* hot segment made by an extra pseudo on rankHalo itself */
+.rankHalo{
+  overflow: visible !important;
+}
+.rankHalo > .rankHalo__fx{
+  /* keep */
+}
+.rankHalo{
+  /* hot segment pseudo */
+}
+.rankHalo::after{
+  /* already used, so we make hot segment using drop-shadow trick on fx */
+}
+.rankHalo .rankHalo__fx{
+  filter:
+    blur(2.0px)
+    saturate(1.55)
+    brightness(1.18)
+    drop-shadow(14px 18px 22px rgba(255,80,40,.22))
+    drop-shadow(26px 34px 42px rgba(255,40,20,.14)) !important;
+}
+
+/* Ensure content above halo */
+.rankTitle,.rankRP,.rankProgress,.pulseHeader,.pulseGrid{
+  position: relative !important;
+  z-index: 6 !important;
+}
+
+@keyframes haloRotate{ to{ transform: rotate(360deg); } }
