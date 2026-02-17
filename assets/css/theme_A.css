@@ -1645,38 +1645,37 @@ body::before{
   background: linear-gradient(90deg, transparent, rgba(255,255,255,.12), transparent);
   opacity: .8;
 }
-/* ===========================
-   RANK HALO — FINAL (VISIBLE)
-   =========================== */
 
-.rankHome{ position:relative; isolation:isolate; }
-.rankHome__center{ position:relative !important; overflow: visible !important; }
+/* =========================
+   RANK HALO — ULTRA VISIBLE (DEBUG BASELINE)
+   Paste at VERY END of theme_A.css
+   ========================= */
 
-/* текст зверху */
-.rankTitle,.rankRP,.rankProgress,.pulseHeader,.pulseGrid{
-  position:relative !important;
-  z-index:20 !important;
+/* важливо: щоб mix-blend-mode не з’їдав ефект */
+.rankHome__center{
+  position: relative !important;
+  isolation: isolate !important; /* 🔑 окремий compositing контекст */
 }
 
-/* контейнер halo */
 .rankHalo{
   position:absolute !important;
   left:50% !important;
   top:140px !important;
   transform:translateX(-50%) !important;
 
-  width:580px !important;      /* трішки більше — як реф */
-  height:580px !important;
+  width:560px !important;
+  height:560px !important;
   border-radius:50% !important;
 
   pointer-events:none !important;
-  background:transparent !important;
+  z-index: 3 !important;
 
-  z-index:10 !important;       /* нижче тексту, вище віньєтки */
-  opacity:1 !important;
+  /* 🔥 ключ: без blend, щоб було видно на будь-якому фоні */
+  mix-blend-mode: normal !important;
+  opacity: 1 !important;
 }
 
-/* ЯСКРАВИЙ тонкий контур */
+/* тонкий чіткий контур + світіння */
 .rankHalo::before{
   content:"";
   position:absolute;
@@ -1684,95 +1683,66 @@ body::before{
   border-radius:50%;
 
   background: radial-gradient(circle,
-   transparent 74.3%,
-   rgba(255,210,175,.95) 74.75%,
-   transparent 75.15%
- );
+    transparent 73.9%,
+    rgba(255,220,190,.95) 74.6%,
+    transparent 75.2%
+  );
 
-  mix-blend-mode: screen;
   filter:
-    drop-shadow(0 0 10px rgba(255,170,120,.45))
-    drop-shadow(0 0 26px rgba(255,90,60,.18));
-  opacity:.85;
+    drop-shadow(0 0 14px rgba(255,170,120,.55))
+    drop-shadow(0 0 34px rgba(255,120,80,.25));
+  opacity: 1 !important;
 }
 
-/* М’який великий ореол — ТІЛЬКИ КІЛЬЦЕ (без диска) */
+/* великий ореол (hollow), теж без blend */
 .rankHalo::after{
   content:"";
   position:absolute;
-  inset:-34px;
+  inset:-38px;
   border-radius:50%;
 
-  /* світиться тільки біля краю */
   background: radial-gradient(circle,
     transparent 0%,
-    transparent 62%,
-    rgba(255,120,80,.22) 70%,
-    rgba(255,90,60,.10) 78%,
+    transparent 63%,
+    rgba(255,150,110,.18) 70%,
+    rgba(255,110,80,.10) 78%,
     transparent 86%,
     transparent 100%
   );
 
-  /* 🔑 ключ: маска робить ореол порожнім */
-  -webkit-mask: radial-gradient(circle,
-    transparent 0 66%,
-    #000 70%,
-    #000 82%,
-    transparent 86%
-  );
-  mask: radial-gradient(circle,
-    transparent 0 66%,
-    #000 70%,
-    #000 82%,
-    transparent 86%
-  );
+  -webkit-mask: radial-gradient(circle, transparent 0 66%, #000 71%, #000 83%, transparent 87%);
+          mask: radial-gradient(circle, transparent 0 66%, #000 71%, #000 83%, transparent 87%);
 
-  filter: blur(14px) saturate(1.2);
-  mix-blend-mode: screen;
-  opacity:.75; /* трохи нижче, щоб не “молочило” */
+  filter: blur(12px);
+  opacity: 1 !important;
 }
 
-/* Дуги / плазма */
+/* дуги */
 .rankHalo__fx{
   position:absolute !important;
-  inset:-30px !important;
+  inset:-26px !important;
   border-radius:50% !important;
 
-  background: conic-gradient(from 10deg,
+  background: conic-gradient(from 8deg,
     transparent 0deg,
-    rgba(255,230,200,1) 12deg,
-    transparent 28deg,
-
-    transparent 95deg,
-    rgba(255,170,120,.85) 130deg,
+    rgba(255,230,200,.95) 14deg,
+    transparent 34deg,
+    transparent 105deg,
+    rgba(255,170,120,.75) 138deg,
     transparent 160deg,
-
-    transparent 210deg,
-    rgba(255,120,85,.70) 258deg,
-    transparent 290deg,
+    transparent 220deg,
+    rgba(255,130,95,.65) 265deg,
+    transparent 295deg,
     transparent 360deg
   ) !important;
 
-  -webkit-mask: radial-gradient(circle,
-   transparent 70%,
-   #000 72%,
-   #000 78%,
-   transparent 80%
- ) !important;
-mask: radial-gradient(circle,
-   transparent 70%,
-   #000 72%,
-   #000 78%,
-   transparent 80%
-) !important;
+  -webkit-mask: radial-gradient(circle, transparent 69%, #000 72%, #000 79%, transparent 82%) !important;
+          mask: radial-gradient(circle, transparent 69%, #000 72%, #000 79%, transparent 82%) !important;
 
-  opacity: .9 !important;
-  mix-blend-mode: screen !important;
-  filter: blur(1.4px) saturate(1.35) brightness(1.18) !important;
-
-  box-shadow:
-    0 0 18px rgba(255,190,140,.40),
-    0 0 46px rgba(255,110,80,.22) !important;
+  /* тут можна screen, але тільки якщо ізоляція є */
+  mix-blend-mode: normal !important;
+  filter: blur(1.1px) saturate(1.25) brightness(1.15) !important;
+  opacity: 1 !important;
 
   animation: haloRotate 16s linear infinite !important;
 }
