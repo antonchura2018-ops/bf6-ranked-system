@@ -1615,137 +1615,182 @@ body::before{
   opacity: .8;
 }
 
-/* =========================
-   RANK HALO — ULTRA VISIBLE (DEBUG BASELINE)
-   Paste at VERY END of theme_A.css
-   ========================= */
+/* ==========================================================
+   FINAL OVERRIDE — IMMORTAL RING (MATCH REFERENCE)
+   Paste THIS as the VERY LAST block in theme_A.css
+   ========================================================== */
 
-/* важливо: щоб mix-blend-mode не з’їдав ефект */
-.rankHome__center{
-  position: relative !important;
-  isolation: isolate !important; /* 🔑 окремий compositing контекст */
+/* 0) One cosmos source only (avoid double bg layers) */
+.rankHome__bg{ display:none !important; }
+body{
+  background:#05060a !important;
 }
-
-.rankHalo{
-  position:absolute !important;
-  left:50% !important;
-  top:140px !important;
-  transform:translateX(-50%) !important;
-
-  width:560px !important;
-  height:560px !important;
-  border-radius:50% !important;
-
-  pointer-events:none !important;
-  z-index: 3 !important;
-
-  /* 🔥 ключ: без blend, щоб було видно на будь-якому фоні */
-  mix-blend-mode: normal !important;
-  opacity: 1 !important;
-}
-
-/* тонкий чіткий контур + світіння */
-.rankHalo::before{
+body::before{
   content:"";
-  position:absolute;
-  inset:0;
-  border-radius:50%;
-
-  background: radial-gradient(circle,
-    transparent 73.9%,
-    rgba(255,220,190,.95) 74.6%,
-    transparent 75.2%
-  );
-
-  filter:
-    drop-shadow(0 0 14px rgba(255,170,120,.55))
-    drop-shadow(0 0 34px rgba(255,120,80,.25));
-  opacity: 1 !important;
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  pointer-events:none;
+  background: url("/assets/img/bg/cosmos.png") center/cover no-repeat;
+  filter: saturate(1.08) contrast(1.06);
+  transform: translateZ(0);
 }
 
-/* великий ореол (hollow), теж без blend */
-.rankHalo::after{
+/* light global vignette like reference */
+body::after{
   content:"";
-  position:absolute;
-  inset:-38px;
-  border-radius:50%;
-
-  background: radial-gradient(circle,
-    transparent 0%,
-    transparent 63%,
-    rgba(255,150,110,.18) 70%,
-    rgba(255,110,80,.10) 78%,
-    transparent 86%,
-    transparent 100%
-  );
-
-  -webkit-mask: radial-gradient(circle, transparent 0 66%, #000 71%, #000 83%, transparent 87%);
-          mask: radial-gradient(circle, transparent 0 66%, #000 71%, #000 83%, transparent 87%);
-
-  filter: blur(12px);
-  opacity: 1 !important;
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events:none;
+  background: radial-gradient(1400px 900px at 50% 45%,
+    rgba(0,0,0,0) 54%,
+    rgba(0,0,0,.38) 88%,
+    rgba(0,0,0,.62) 100%);
 }
 
-/* дуги */
-.rankHalo__fx{
-  position:absolute !important;
-  inset:-26px !important;
-  border-radius:50% !important;
-
-  background: conic-gradient(from 8deg,
-    transparent 0deg,
-    rgba(255,230,200,.95) 14deg,
-    transparent 34deg,
-    transparent 105deg,
-    rgba(255,170,120,.75) 138deg,
-    transparent 160deg,
-    transparent 220deg,
-    rgba(255,130,95,.65) 265deg,
-    transparent 295deg,
-    transparent 360deg
-  ) !important;
-
-  -webkit-mask: radial-gradient(circle, transparent 69%, #000 72%, #000 79%, transparent 82%) !important;
-          mask: radial-gradient(circle, transparent 69%, #000 72%, #000 79%, transparent 82%) !important;
-
-  /* тут можна screen, але тільки якщо ізоляція є */
-  mix-blend-mode: normal !important;
-  filter: blur(1.1px) saturate(1.25) brightness(1.15) !important;
-  opacity: 1 !important;
-
-  animation: haloRotate 16s linear infinite !important;
-}
-
-@keyframes haloRotate{ to{ transform: rotate(360deg); } }
-/* === HALO (CLEAN) === */
-.rankHalo{
-  position: absolute !important;
-  left: 50% !important;
-  top: 140px !important;
-  transform: translateX(-50%) !important;
-
-  width: 560px !important;
-  height: 560px !important;
-  border-radius: 50% !important;
-
-  pointer-events: none !important;
-  z-index: 3 !important;
-
-  mix-blend-mode: normal !important;
-  opacity: 1 !important;
-}
-.rankHome__bg{ z-index: 0 !important; }
-.rankHome__vignette{ z-index: 1 !important; }
-
+/* 1) Keep center stacking stable */
 .rankHome__center{
   position: relative !important;
   z-index: 2 !important;
   isolation: isolate !important;
+  display:flex !important;
+  flex-direction:column !important;
+  align-items:center !important;
+  text-align:center !important;
+  padding-top: 140px !important;
 }
 
-.rankHalo{ z-index: 3 !important; }
-
+/* 2) Text above ring */
 .rankTitle,.rankRP,.rankProgress,.pulseHeader,.pulseGrid{
   position: relative !important;
   z-index: 6 !important;
+}
+
+/* 3) The Ring (size/placement like screenshot) */
+.rankHalo{
+  position:absolute !important;
+  left:50% !important;
+  top: 110px !important;
+  transform: translateX(-50%) !important;
+
+  width: 640px !important;
+  height: 640px !important;
+  border-radius: 50% !important;
+
+  pointer-events:none !important;
+  z-index: 3 !important;
+
+  /* 🔑 reference look: ring must “add light” over space */
+  mix-blend-mode: screen !important;
+  opacity: 1 !important;
+  background: transparent !important;
+}
+
+/* 3A) Dark center “void” (so ring pops, like ref) */
+.rankHalo::before{
+  content:"";
+  position:absolute;
+  inset: 82px;            /* controls inner dark disk size */
+  border-radius: 50%;
+  background: radial-gradient(circle,
+    rgba(0,0,0,.55) 0%,
+    rgba(0,0,0,.80) 60%,
+    rgba(0,0,0,.92) 100%);
+  filter: blur(.2px);
+  opacity: 1;
+}
+
+/* 3B) Main luminous ring strokes + subtle inner rings */
+.rankHalo::after{
+  content:"";
+  position:absolute;
+  inset: 0;
+  border-radius: 50%;
+
+  background:
+    /* main hot ring */
+    radial-gradient(circle,
+      transparent 71.5%,
+      rgba(255,120,60,.06) 72.2%,
+      rgba(255,90,45,.85) 73.0%,
+      rgba(255,210,180,.65) 73.4%,
+      rgba(255,80,35,.65) 73.9%,
+      transparent 74.6%),
+
+    /* thin inner rings like ref */
+    radial-gradient(circle,
+      transparent 68.6%,
+      rgba(255,210,180,.22) 69.0%,
+      transparent 69.4%),
+
+    radial-gradient(circle,
+      transparent 66.0%,
+      rgba(255,170,120,.14) 66.35%,
+      transparent 66.7%);
+
+  filter:
+    drop-shadow(0 0 18px rgba(255,90,40,.55))
+    drop-shadow(0 0 48px rgba(255,60,25,.20));
+  opacity: 1;
+}
+
+/* 4) Plasma turbulence arcs (child span) */
+.rankHalo__fx{
+  position:absolute !important;
+  inset: -34px !important;
+  border-radius: 50% !important;
+
+  background:
+    /* broken bright arcs */
+    conic-gradient(from 340deg,
+      transparent 0deg,
+      rgba(255,230,210,.95) 18deg,
+      rgba(255,120,70,.90) 26deg,
+      transparent 44deg,
+
+      transparent 120deg,
+      rgba(255,140,90,.72) 148deg,
+      transparent 170deg,
+
+      transparent 228deg,
+      rgba(255,110,70,.62) 270deg,
+      transparent 300deg,
+      transparent 360deg),
+
+    /* smoky plasma halo */
+    radial-gradient(circle at 50% 50%,
+      transparent 60%,
+      rgba(255,90,45,.24) 69%,
+      rgba(255,60,30,.12) 78%,
+      transparent 86%);
+
+  /* hollow ring band */
+  -webkit-mask: radial-gradient(circle,
+    transparent 66%,
+    #000 69%,
+    #000 79%,
+    transparent 82%) !important;
+          mask: radial-gradient(circle,
+    transparent 66%,
+    #000 69%,
+    #000 79%,
+    transparent 82%) !important;
+
+  filter: blur(1.35px) saturate(1.35) brightness(1.22) !important;
+  opacity: .95 !important;
+
+  animation: haloRotate 16s linear infinite !important;
+}
+
+@keyframes haloRotate{
+  to { transform: rotate(360deg); }
+}
+
+/* 5) Make sure vignette stays behind ring+text */
+.rankHome__vignette{
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 1 !important;
+  pointer-events:none !important;
 }
