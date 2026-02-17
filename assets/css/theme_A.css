@@ -504,35 +504,20 @@ body[data-rank="azure"]{    --accent:#3aa7ff; --accent2:#9ad5ff; }
 }
 
 
-/* ===== VIGNETTE: match reference (no heavy top band) ===== */
+/* === VIGNETTE (ONE ONLY) === */
 .rankHome__vignette{
-  position:absolute;
-  inset:0;
-  pointer-events:none;
-  z-index: 1;
+  position: fixed !important;
+  inset: 0 !important;
+  pointer-events: none !important;
+  z-index: 1 !important;
 
   background:
     radial-gradient(1400px 900px at 50% 45%,
       rgba(0,0,0,0) 52%,
       rgba(0,0,0,.35) 86%,
       rgba(0,0,0,.55) 100%),
-    linear-gradient(0deg, rgba(0,0,0,.18), rgba(0,0,0,0) 55%);
+    linear-gradient(0deg, rgba(0,0,0,.18), rgba(0,0,0,0) 55%) !important;
 }
-
-.rankHome__center{
-  position: relative;
-  width: min(1100px, 92vw);
-  margin: 0 auto;
-  padding: 72px 0 64px;
-  display: grid;
-  place-items: center;
-  text-align: center;
-}
-
-.rankHome__center::before{
-  display:none !important;
-}
-
 
 /* TEMP emblem placeholder (зараз схований) */
 .rankEmblem{
@@ -1026,10 +1011,7 @@ body::before{
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
 }
-/* ===== STOP DOUBLE OVERLAYS ABOVE NAV ===== */
-.rankHome__vignette{
-  top: 0 !important;
-}
+
 
 /* забираємо будь-який верхній “band” ефект */
 .rankHome__vignette::before,
@@ -1305,21 +1287,8 @@ body::before{
   background: transparent !important;
   box-shadow: none !important;
 }
-/* ===== FIX: remove top "lighter rectangle" on scroll ===== */
-/* Make vignette overlay fixed to viewport (not tied to page scroll) */
-.rankHome__vignette{
-  position: fixed !important;
-  inset: 0 !important;
-  left: 0 !important;
-  top: 0 !important;
-  width: 100vw !important;
-  height: 100vh !important;
-}
 
-/* Safety: prevent any other top-layer from painting a band */
-.rankHome__bg{ display:none !important; }
-.rankHome{ background: transparent !important; }
-.app, .section, #dashboard{ background: transparent !important; }
+
 
 /* =========================================
    PLAYER ASCENSION – HERO METRICS STYLE
@@ -1748,3 +1717,35 @@ body::before{
 }
 
 @keyframes haloRotate{ to{ transform: rotate(360deg); } }
+/* === HALO (CLEAN) === */
+.rankHalo{
+  position: absolute !important;
+  left: 50% !important;
+  top: 140px !important;
+  transform: translateX(-50%) !important;
+
+  width: 560px !important;
+  height: 560px !important;
+  border-radius: 50% !important;
+
+  pointer-events: none !important;
+  z-index: 3 !important;
+
+  mix-blend-mode: normal !important;
+  opacity: 1 !important;
+}
+.rankHome__bg{ z-index: 0 !important; }
+.rankHome__vignette{ z-index: 1 !important; }
+
+.rankHome__center{
+  position: relative !important;
+  z-index: 2 !important;
+  isolation: isolate !important;
+}
+
+.rankHalo{ z-index: 3 !important; }
+
+.rankTitle,.rankRP,.rankProgress,.pulseHeader,.pulseGrid{
+  position: relative !important;
+  z-index: 6 !important;
+}
