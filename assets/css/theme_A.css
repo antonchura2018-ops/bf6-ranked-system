@@ -1684,36 +1684,52 @@ body::before{
   border-radius:50%;
 
   background: radial-gradient(circle,
-    transparent 73.4%,
-    rgba(255,220,190,1) 74.0%,
-    rgba(255,170,120,.65) 74.6%,
-    transparent 75.2%
-  );
+   transparent 74.3%,
+   rgba(255,210,175,.95) 74.75%,
+   transparent 75.15%
+ );
 
   mix-blend-mode: screen;
   filter:
     drop-shadow(0 0 10px rgba(255,170,120,.45))
     drop-shadow(0 0 26px rgba(255,90,60,.18));
-  opacity:1;
+  opacity:.85;
 }
 
-/* М’який великий ореол */
+/* М’який великий ореол — ТІЛЬКИ КІЛЬЦЕ (без диска) */
 .rankHalo::after{
   content:"";
   position:absolute;
   inset:-34px;
   border-radius:50%;
 
+  /* світиться тільки біля краю */
   background: radial-gradient(circle,
-    transparent 58%,
-    rgba(255,120,80,.22) 68%,
-    rgba(255,90,60,.12) 76%,
+    transparent 0%,
+    transparent 62%,
+    rgba(255,120,80,.22) 70%,
+    rgba(255,90,60,.10) 78%,
+    transparent 86%,
+    transparent 100%
+  );
+
+  /* 🔑 ключ: маска робить ореол порожнім */
+  -webkit-mask: radial-gradient(circle,
+    transparent 0 66%,
+    #000 70%,
+    #000 82%,
+    transparent 86%
+  );
+  mask: radial-gradient(circle,
+    transparent 0 66%,
+    #000 70%,
+    #000 82%,
     transparent 86%
   );
 
   filter: blur(14px) saturate(1.2);
   mix-blend-mode: screen;
-  opacity:.95;
+  opacity:.75; /* трохи нижче, щоб не “молочило” */
 }
 
 /* Дуги / плазма */
@@ -1737,23 +1753,22 @@ body::before{
     transparent 360deg
   ) !important;
 
-  /* ЗРОБИЛИ ТОВСТІШЕ (щоб не було “ледь видно”) */
   -webkit-mask: radial-gradient(circle,
-    transparent 64%,
-    #000 66%,
-    #000 79%,
-    transparent 81%
-  ) !important;
-  mask: radial-gradient(circle,
-    transparent 64%,
-    #000 66%,
-    #000 79%,
-    transparent 81%
-  ) !important;
+   transparent 70%,
+   #000 72%,
+   #000 78%,
+   transparent 80%
+ ) !important;
+mask: radial-gradient(circle,
+   transparent 70%,
+   #000 72%,
+   #000 78%,
+   transparent 80%
+) !important;
 
-  opacity:1 !important;
+  opacity: .9 !important;
   mix-blend-mode: screen !important;
-  filter: blur(1.6px) saturate(1.35) brightness(1.25) !important;
+  filter: blur(1.4px) saturate(1.35) brightness(1.18) !important;
 
   box-shadow:
     0 0 18px rgba(255,190,140,.40),
