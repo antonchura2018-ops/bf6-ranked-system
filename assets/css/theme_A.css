@@ -1614,10 +1614,9 @@ body::before{
   background: linear-gradient(90deg, transparent, rgba(255,255,255,.12), transparent);
   opacity: .8;
 }
-
 /* =========================================================
-   HALO — REFERENCE CONTRAST FIX (no black disc, more detail)
-   Paste at VERY END of theme_A.css
+   HALO — AAA (PNG plasma layer + tech rings) ✅ FINAL
+   Put at VERY END of theme_A.css
    ========================================================= */
 
 .rankHome__center{ position:relative !important; isolation:isolate !important; }
@@ -1634,136 +1633,80 @@ body::before{
   border-radius:50% !important;
 
   pointer-events:none !important;
-  z-index: 5 !important;
-  opacity: 1 !important;
+  z-index: 6 !important;
 }
 
-/* 1) CONTRAST PAD behind the ring (KEY FIX)
-   darkens the background behind halo so plasma becomes visible
-   but keeps center transparent (NO black disc) */
+/* LAYER 1: plasma PNG (this is what makes it look like screenshot #2) */
 .rankHalo::before{
   content:"";
   position:absolute;
-  inset:-18px;
+  inset:-70px;                 /* трохи більше, щоб був “smoke spill” */
   border-radius:50%;
 
-  /* center stays mostly clear, mid area slightly dim, edges more dim */
-  background: radial-gradient(circle at 50% 50%,
-    rgba(0,0,0,0.00) 0%,
-    rgba(0,0,0,0.06) 34%,
-    rgba(0,0,0,0.22) 58%,
-    rgba(0,0,0,0.34) 72%,
-    rgba(0,0,0,0.18) 86%,
-    rgba(0,0,0,0.00) 100%);
+  background: url("/assets/img/ui/halo_plasma.png") center/contain no-repeat;
 
-  /* makes dimming affect background only */
-  mix-blend-mode: multiply;
-  opacity: .92;
-  filter: blur(6px);
+  /* головний look: світіння + “screen” */
+  mix-blend-mode: screen;
+  opacity: .95;
+
+  /* тюн під твій космос */
+  filter:
+    saturate(1.25)
+    contrast(1.08)
+    brightness(1.10)
+    drop-shadow(0 0 26px rgba(255,70,35,.22))
+    drop-shadow(0 0 60px rgba(255,35,20,.12));
+
+  transform: rotate(12deg);
+  animation: haloSpin 22s linear infinite;
 }
 
-/* 2) Big outer aura (hollow) */
+/* LAYER 2: thin bright tech rings (clean + sharp like ref) */
 .rankHalo::after{
   content:"";
   position:absolute;
-  inset:-52px;
+  inset: 22px;
   border-radius:50%;
-
-  background: radial-gradient(circle,
-    transparent 62%,
-    rgba(255,150,100,.20) 70%,
-    rgba(255,90,55,.12) 78%,
-    transparent 86%);
-
-  -webkit-mask: radial-gradient(circle, transparent 0 66%, #000 70%, #000 83%, transparent 87%);
-          mask: radial-gradient(circle, transparent 0 66%, #000 70%, #000 83%, transparent 87%);
-
-  filter: blur(10px) saturate(1.25) contrast(1.15);
-  opacity:.95;
-  mix-blend-mode: screen;
-}
-
-/* 3) plasma + broken arcs (make it NORMAL for contrast) */
-.rankHalo__fx{
-  position:absolute !important;
-  inset:-34px !important;
-  border-radius:50% !important;
-  display:block !important;
 
   background:
-    /* HOT SEGMENT (right-bottom) */
-    conic-gradient(from 304deg,
-      transparent 0deg,
-      rgba(255,255,255,.22) 10deg,
-      rgba(255,210,170,.70) 24deg,
-      rgba(255,95,55,1.00) 46deg,
-      rgba(255,210,170,.38) 68deg,
-      transparent 92deg,
-      transparent 360deg),
+    radial-gradient(circle, transparent 71.4%, rgba(255,255,255,.16) 71.9%, transparent 72.4%),
+    radial-gradient(circle, transparent 74.8%, rgba(255,255,255,.10) 75.2%, transparent 75.6%);
 
-    /* broken bright arcs */
-    conic-gradient(from 336deg,
-      transparent 0deg,
-      rgba(255,240,225,.95) 16deg,
-      rgba(255,140,85,.92) 26deg,
-      transparent 46deg,
-      transparent 118deg,
-      rgba(255,165,110,.78) 150deg,
-      transparent 172deg,
-      transparent 226deg,
-      rgba(255,130,90,.68) 270deg,
-      transparent 304deg,
-      transparent 360deg),
-
-    /* smoky plasma */
-    radial-gradient(circle at 50% 50%,
-      transparent 58%,
-      rgba(255,95,55,.28) 67%,
-      rgba(255,50,25,.16) 76%,
-      transparent 86%);
-
-  -webkit-mask: radial-gradient(circle, transparent 66%, #000 69%, #000 79%, transparent 82%);
-          mask: radial-gradient(circle, transparent 66%, #000 69%, #000 79%, transparent 82%);
-
-  /* IMPORTANT: use normal, not screen (screen was washing out on bright bg) */
-  mix-blend-mode: normal;
-
-  /* sharper, more “electric” */
-  filter: blur(1.25px) saturate(1.65) contrast(1.35) brightness(1.10)
-          drop-shadow(0 0 18px rgba(255,95,55,.28))
-          drop-shadow(0 0 46px rgba(255,40,20,.14));
-
-  opacity:.98;
-  animation: haloRotate 18s linear infinite;
+  opacity: .75;
+  mix-blend-mode: screen;
+  filter: blur(.15px);
 }
 
-/* 4) 2 thin tech rings */
-.rankHalo__fx::before{
-  content:"";
-  position:absolute;
-  inset: 64px;
-  border-radius:50%;
-  border:1px solid rgba(255,255,255,.12);
-  -webkit-mask: radial-gradient(circle, transparent 64%, #000 65%, #000 65.8%, transparent 66.8%);
-          mask: radial-gradient(circle, transparent 64%, #000 65%, #000 65.8%, transparent 66.8%);
-  opacity:.62;
+/* OPTIONAL: your rotating arcs (keep subtle) */
+.rankHalo__fx{
+  position:absolute !important;
+  inset:-26px !important;
+  border-radius:50% !important;
+
+  background: conic-gradient(from 330deg,
+    transparent 0deg,
+    rgba(255,255,255,.14) 18deg,
+    rgba(255,170,120,.55) 32deg,
+    rgba(255,90,50,.75) 52deg,
+    transparent 82deg,
+    transparent 360deg
+  );
+
+  -webkit-mask: radial-gradient(circle, transparent 66%, #000 69%, #000 77%, transparent 80%);
+          mask: radial-gradient(circle, transparent 66%, #000 69%, #000 77%, transparent 80%);
+
+  mix-blend-mode: screen;
+  opacity: .55;
+  filter: blur(1.2px) saturate(1.2);
+  animation: haloSpin2 34s linear infinite reverse;
 }
 
-.rankHalo__fx::after{
-  content:"";
-  position:absolute;
-  inset: 96px;
-  border-radius:50%;
-  border:1px solid rgba(255,255,255,.09);
-  -webkit-mask: radial-gradient(circle, transparent 66.5%, #000 67.6%, #000 68.3%, transparent 69.3%);
-          mask: radial-gradient(circle, transparent 66.5%, #000 67.6%, #000 68.3%, transparent 69.3%);
-  opacity:.48;
-}
-
-@keyframes haloRotate{ to{ transform: rotate(360deg); } }
-
-/* keep UI above */
+/* keep UI above halo */
 .rankTitle,.rankRP,.rankProgress,.pulseHeader,.pulseGrid{
   position:relative !important;
-  z-index: 10 !important;
+  z-index: 12 !important;
 }
+
+@keyframes haloSpin { to{ transform: rotate(372deg); } }
+@keyframes haloSpin2{ to{ transform: rotate(360deg); } }
+
