@@ -1794,3 +1794,52 @@ body::after{
   z-index: 1 !important;
   pointer-events:none !important;
 }
+/* =========================================
+   FIX #1 — CENTER VOID TOO BLACK/BIG
+   Paste at VERY END
+   ========================================= */
+
+/* make the center "void" smaller + translucent */
+.rankHalo::before{
+  inset: 170px !important;         /* було 82px — це і робило гігантський диск */
+  background: radial-gradient(circle,
+    rgba(0,0,0,.10) 0%,
+    rgba(0,0,0,.28) 45%,
+    rgba(0,0,0,.55) 75%,
+    rgba(0,0,0,.70) 100%) !important;
+  opacity: .92 !important;
+  filter: blur(.4px) !important;
+}
+
+/* optional: soft inner fade (keeps center readable but not dead black) */
+.rankHalo{
+  /* slight overall softening so it feels like ref */
+  filter: saturate(1.02) contrast(1.02) !important;
+}
+/* =========================================
+   FIX #2 — MORE PLASMA / HOT SMEAR
+   ========================================= */
+
+.rankHalo__fx{
+  inset: -42px !important;               /* трошки ширше “полум’я” */
+  filter: blur(2.1px) saturate(1.55) brightness(1.18) !important;
+  opacity: .92 !important;
+}
+
+/* add extra hot haze around the band (no new HTML) */
+.rankHalo__fx::after{
+  content:"";
+  position:absolute;
+  inset:-18px;
+  border-radius:50%;
+  background: radial-gradient(circle,
+    transparent 58%,
+    rgba(255,95,45,.22) 68%,
+    rgba(255,60,30,.10) 77%,
+    transparent 86%);
+  -webkit-mask: radial-gradient(circle, transparent 64%, #000 70%, #000 80%, transparent 84%);
+          mask: radial-gradient(circle, transparent 64%, #000 70%, #000 80%, transparent 84%);
+  filter: blur(10px);
+  opacity: .95;
+  pointer-events:none;
+}
