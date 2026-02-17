@@ -1615,90 +1615,52 @@ body::before{
   opacity: .8;
 }
 /* =========================================================
-   HALO — AAA (PNG plasma layer + tech rings) ✅ FINAL
-   Put at VERY END of theme_A.css
+   HALO (PNG) — FINAL (NO ROTATION, CORRECT SCALE, SUBTLE)
+   Put halo here: /assets/img/ui/halo_plasma.png
+   Paste at VERY END of theme_A.css
    ========================================================= */
 
-.rankHome__center{ position:relative !important; isolation:isolate !important; }
+.rankHome__center{
+  position: relative !important;
+  isolation: isolate !important;
+}
 
-/* container */
+/* контейнер кільця */
 .rankHalo{
-  position:absolute !important;
-  left:50% !important;
-  top:140px !important;
-  transform:translateX(-50%) !important;
+  position: absolute !important;
+  left: 50% !important;
+  top: 140px !important;
+  transform: translateX(-50%) !important;
 
-  width:560px !important;
-  height:560px !important;
-  border-radius:50% !important;
+  width: 560px !important;
+  height: 560px !important;
+  border-radius: 50% !important;
 
-  pointer-events:none !important;
-  z-index: 6 !important;
+  pointer-events: none !important;
+  z-index: 5 !important;
 }
 
-/* LAYER 1: plasma PNG (this is what makes it look like screenshot #2) */
-.rankHalo::before{
-  content:"";
-  position:absolute;
-  inset:-70px;                 /* трохи більше, щоб був “smoke spill” */
-  border-radius:50%;
-
-  background: url("/assets/img/ui/halo_plasma.png") center/contain no-repeat;
-
-  /* головний look: світіння + “screen” */
-  mix-blend-mode: screen;
-  opacity: .95;
-
-  /* тюн під твій космос */
-  filter:
-    saturate(1.25)
-    contrast(1.08)
-    brightness(1.10)
-    drop-shadow(0 0 26px rgba(255,70,35,.22))
-    drop-shadow(0 0 60px rgba(255,35,20,.12));
-
-  transform: rotate(12deg);
-  animation: haloSpin 22s linear infinite;
-}
-
-/* LAYER 2: thin bright tech rings (clean + sharp like ref) */
-.rankHalo::after{
-  content:"";
-  position:absolute;
-  inset: 22px;
-  border-radius:50%;
-
-  background:
-    radial-gradient(circle, transparent 71.4%, rgba(255,255,255,.16) 71.9%, transparent 72.4%),
-    radial-gradient(circle, transparent 74.8%, rgba(255,255,255,.10) 75.2%, transparent 75.6%);
-
-  opacity: .75;
-  mix-blend-mode: screen;
-  filter: blur(.15px);
-}
-
-/.rankHalo__fx{
-  position:absolute !important;
-  inset:-34px !important;
-  border-radius:50% !important;
+/* PNG-кільце */
+.rankHalo__fx{
+  position: absolute !important;
+  inset: -22px !important;              /* 🔧 робить кільце “більшим” без зміни контейнера */
+  border-radius: 50% !important;
 
   background: url("/assets/img/ui/halo_plasma.png") center/contain no-repeat !important;
 
-  filter: blur(.3px) brightness(1.2) saturate(1.3)
-          drop-shadow(0 0 22px rgba(255,80,40,.45))
-          drop-shadow(0 0 60px rgba(255,40,20,.25));
+  /* 🔥 не крутити */
+  animation: none !important;
 
-  opacity:1 !important;
+  /* 🔧 зробити менш помітним і більш “як в рефі” */
+  opacity: .42 !important;
+  mix-blend-mode: screen !important;
+  filter: blur(.6px) saturate(1.10) brightness(1.05) !important;
 
-  animation: haloRotate 18s linear infinite !important;
+  transform: none !important;          /* safety */
 }
 
-/* keep UI above halo */
+/* тримаємо текст вище */
 .rankTitle,.rankRP,.rankProgress,.pulseHeader,.pulseGrid{
-  position:relative !important;
-  z-index: 12 !important;
+  position: relative !important;
+  z-index: 10 !important;
 }
-
-@keyframes haloSpin { to{ transform: rotate(372deg); } }
-@keyframes haloSpin2{ to{ transform: rotate(360deg); } }
-
