@@ -2082,3 +2082,45 @@ body::before{
 .navbar.navRail .nav-btn.active span::after{
   content: none !important;
 }
+/* --- NAV: remove side caps (1:1 like your screenshot) --- */
+.navbar.navRail .navCap{
+  display: none !important;
+}
+/* tabs no longer need negative overlap with caps */
+.navbar.navRail .nav-btn{
+  margin: 0 -10px !important; /* трохи менше злипання, як у рефі */
+}
+
+/* FIRST tab: left edge straight, right edge angled */
+.navbar.navRail .nav-btn:first-of-type{
+  margin-left: 0 !important;
+  clip-path: polygon(
+    0 0,
+    calc(100% - 22px) 0,
+    100% 50%,
+    calc(100% - 22px) 100%,
+    0 100%
+  ) !important;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+
+/* LAST tab: right edge straight, left edge angled */
+.navbar.navRail .nav-btn:last-of-type{
+  margin-right: 0 !important;
+  clip-path: polygon(
+    22px 0,
+    100% 0,
+    100% 100%,
+    22px 100%,
+    0 50%
+  ) !important;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+/* make inner seam match new shapes */
+.navbar.navRail .nav-btn:first-of-type::before,
+.navbar.navRail .nav-btn:last-of-type::before{
+  clip-path: inherit !important;
+}
