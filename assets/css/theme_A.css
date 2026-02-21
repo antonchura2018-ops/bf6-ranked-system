@@ -1867,3 +1867,32 @@ body::after{
   border-top-right-radius: 12px;
   border-bottom-right-radius: 12px;
 }
+/* =========================================================
+   FIX: HERO POSITION (make it start from top, then push down)
+   Paste at VERY END of theme_A.css
+   ========================================================= */
+
+/* 1) Rank Home should be the positioning context */
+.rankHome{
+  position: relative !important;
+}
+
+/* 2) Force center container to NOT vertically center */
+.rankHome__center{
+  min-height: 100vh !important;
+  height: auto !important;
+
+  display: flex !important;
+  flex-direction: column !important;
+
+  /* ключове: не центруй по вертикалі */
+  justify-content: flex-start !important;
+
+  /* тепер padding реально зсуває вниз */
+  padding-top: 190px !important;  /* підкручуй 170-230px */
+}
+
+/* 3) (Optional) if any transform is shifting it обратно */
+.rankHome__center{
+  transform: none !important;
+}
