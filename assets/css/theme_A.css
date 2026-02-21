@@ -1896,3 +1896,12 @@ body::after{
 .rankHome__center{
   transform: none !important;
 }
+/* =========================================================
+   MOVE RING DOWN (cosmos.png contains the ring)
+   Paste at VERY END of theme_A.css
+   ========================================================= */
+
+body::before{
+  /* ЧИМ БІЛЬШЕ число — ТИМ НИЖЧЕ опуститься кільце */
+  background-position: center 28% !important;  /* пробуй 22% / 28% / 34% / 40% */
+}
