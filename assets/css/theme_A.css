@@ -1614,86 +1614,67 @@ body::before{
   background: linear-gradient(90deg, transparent, rgba(255,255,255,.12), transparent);
   opacity: .8;
 }
-/* =========================================================
-   AUTHORITATIVE HALO — Player Hub A (SINGLE SOURCE OF TRUTH)
-   Put this ONCE at the VERY END of theme_A.css
-   ========================================================= */
-
 :root{
-  --haloSize: 760px;      /* GOAL size */
-  --haloTop: 115px;       /* vertical placement */
-  --metricsOffset: 170px; /* push metrics lower */
+  --haloSize: 760px;
+  --haloTop: 115px;
+  --metricsOffset: 170px;
 }
 
-/* Make sure dashboard is the positioning context */
-#dashboard{
-  position: relative;
-}
+#dashboard{ position: relative; }
 
-/* HALO CONTAINER */
 #dashboard .rankHalo{
-  position: absolute;
-  left: 50%;
-  top: var(--haloTop);
-  transform: translateX(-50%); /* NO rotation here */
-  width: var(--haloSize);
-  height: var(--haloSize);
+  position:absolute;
+  left:50%;
+  top:var(--haloTop);
+  transform:translateX(-50%); /* no rotate */
+  width:var(--haloSize);
+  height:var(--haloSize);
+  pointer-events:none;
 
-  pointer-events: none;
-  z-index: 2;            /* above background, below text (we set text to 3) */
+  /* IMPORTANT: НЕ вбиваємо background-image */
+  background-repeat:no-repeat !important;
+  background-position:center !important;
+  background-size:contain !important;
+  background-color:transparent !important;
 
-  background: transparent !important;
-  box-shadow: none !important;
-  filter: none !important;
+  z-index: 50; /* піднімаємо над усіма оверлеями */
 }
 
-/* HALO IMAGE ITSELF */
+/* Якщо кільце через <img> */
 #dashboard .rankHalo img,
 #dashboard .rankHalo .haloImg{
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-
-  /* Kill ANY rotation / animation */
-  transform: none !important;
-  animation: none !important;
-
-  /* No black disc / no background */
-  background: transparent !important;
-  mix-blend-mode: screen;     /* makes plasma feel more "energy" on cosmos */
-  opacity: 0.95;
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  background:transparent !important;
+  transform:none !important;
+  animation:none !important;
+  mix-blend-mode:screen;
+  opacity:0.95;
 }
 
-/* Ensure no pseudo-elements create a dark disc */
+/* Забороняємо псевдо-диски */
 #dashboard .rankHalo::before,
 #dashboard .rankHalo::after{
-  content: none !important;
+  content:none !important;
 }
 
-/* TEXT ABOVE HALO */
+/* Текст завжди поверх */
 #dashboard .rankName,
 #dashboard .rankTitle,
 #dashboard .rankCenter,
 #dashboard .rankBlock,
 #dashboard .rankInfo{
-  position: relative;
-  z-index: 3;
+  position:relative;
+  z-index: 60;
 }
 
-/* METRICS LOWER */
+/* Метрики нижче */
 #dashboard .metrics,
 #dashboard .metricsRow,
 #dashboard .rankMetrics,
 #dashboard .playerMetrics{
-  position: relative;
-  margin-top: var(--metricsOffset);
-  z-index: 3;
-}
-
-/* Responsive: keep it epic on smaller widths */
-@media (max-width: 1100px){
-  :root{ --haloSize: 680px; --haloTop: 110px; --metricsOffset: 140px; }
-}
-@media (max-width: 900px){
-  :root{ --haloSize: 600px; --haloTop: 105px; --metricsOffset: 120px; }
+  position:relative;
+  margin-top:var(--metricsOffset);
+  z-index:60;
 }
