@@ -1493,5 +1493,113 @@ body { background:#05060a; } /* запасний колір */
 body::before{
   filter: saturate(1.08) contrast(1.06) !important; /* тільки це, БЕЗ blur */
 }
+/* =========================================================
+   BF6 — PLAYER HUB A — CLEAN RESET + FINAL LAYOUT
+   PASTE THIS AS THE VERY LAST BLOCK IN theme_A.css
+   ========================================================= */
+
+/* 1) GLOBAL COSMOS (ONE SOURCE) */
+html, body{
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body{
+  background: #05060a !important;   /* fallback */
+  overflow-x: hidden;
+}
+
+/* Cosmos image (your file already contains ring baked in) */
+body::before{
+  content:"";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+
+  background: url("/assets/img/bg/cosmos.png") center/cover no-repeat;
+  filter: saturate(1.08) contrast(1.06);  /* NO BLUR */
+  transform: translateZ(0);
+}
+
+/* 2) Remove any local background layers (avoid duplication / blur look) */
+.rankHome__bg{ display:none !important; }
+.rankHome__vignette{ background: none !important; }
+
+/* 3) Hard disable halo element (we use baked ring in cosmos.png) */
+.rankHalo, .rankHalo__fx{ display:none !important; }
+
+/* 4) Make home truly full-bleed */
+.app, .section, #dashboard{
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  background: transparent !important;
+}
+
+#dashboard{
+  position: relative;
+  min-height: 100vh;
+}
+
+.rankHome{
+  position: relative;
+  width: 100vw;
+  min-height: 100vh;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  background: transparent !important;
+  overflow: hidden;
+}
+
+/* 5) FINAL LAYOUT CONTROLS (tune these 2 numbers only) */
+:root{
+  --centerPadTop: 260px;     /* moves OUTCAST/RP/NextRank down into the ring */
+  --pulseGap: 110px;         /* distance from progress -> PLAYER ASCENSION */
+}
+
+/* center stack */
+.rankHome__center{
+  position: relative !important;
+  z-index: 2 !important;
+
+  width: 100%;
+  min-height: 100vh;
+
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+
+  padding-top: var(--centerPadTop) !important;
+}
+
+/* keep content above background */
+.rankTitle,
+.rankRP,
+.rankProgress,
+.pulseHeader,
+.pulseGrid,
+.pulseMark{
+  position: relative !important;
+  z-index: 3 !important;
+}
+
+/* spacing to match reference */
+.rankProgress{ margin-top: 18px !important; }
+.pulseHeader{ margin-top: var(--pulseGap) !important; }
+.pulseGrid{ margin-top: 18px !important; }
+
+/* 6) SAFETY: kill blur/backdrop filters that can “wash” the cosmos */
+.rankHome,
+.rankHome__center,
+.rankHome__vignette,
+.pulseGrid::before,
+.pulseHeader::before,
+.pulseHeader::after{
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
 
 
