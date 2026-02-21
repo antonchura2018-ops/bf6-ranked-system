@@ -2124,3 +2124,149 @@ body::before{
 .navbar.navRail .nav-btn:last-of-type::before{
   clip-path: inherit !important;
 }
+/* ==========================================================
+   NAV TABS — RECT (match reference) ✅ paste VERY END
+   ========================================================== */
+
+/* прибрати "рейку" та синю/сірі смуги, залишити тільки кнопки */
+.navbar.navRail{
+  position: sticky;
+  top: 0;
+  z-index: 9999;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 14px;
+  padding: 18px 14px 10px !important;
+  height: auto !important;
+
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+/* ВАЖЛИВО: прибираємо твої псевдо-елементи "metal rail" */
+.navbar.navRail::before,
+.navbar.navRail::after{
+  content: none !important;
+  display: none !important;
+}
+
+/* прибираємо бокові "капси" (ті штуки які ти показував стрілками) */
+.navbar.navRail .navCap{
+  display: none !important;
+}
+
+/* базова кнопка (прямокутна як у рефі) */
+.navbar.navRail .nav-btn{
+  position: relative;
+  z-index: 2;
+
+  height: 44px;
+  min-width: 170px;
+  padding: 0 22px;
+  margin: 0 !important;
+
+  border: 1px solid rgba(255, 80, 60, .22);
+  color: rgba(255,255,255,.78);
+
+  background:
+    linear-gradient(180deg, rgba(0,0,0,.52), rgba(0,0,0,.20));
+
+  box-shadow:
+    0 10px 26px rgba(0,0,0,.45),
+    inset 0 0 0 1px rgba(255,255,255,.06);
+
+  font-family: var(--font-ui);
+  font-weight: 800;
+  font-size: 12px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+
+  cursor: pointer;
+  outline: none;
+
+  /* прямокутник + легкі зрізи кутів як у рефі */
+  clip-path: polygon(
+    10px 0,
+    calc(100% - 10px) 0,
+    100% 10px,
+    100% calc(100% - 10px),
+    calc(100% - 10px) 100%,
+    10px 100%,
+    0 calc(100% - 10px),
+    0 10px
+  );
+
+  transition: transform .12s ease, border-color .12s ease, color .12s ease, box-shadow .12s ease, filter .12s ease;
+}
+
+.navbar.navRail .nav-btn span{
+  position: relative;
+  display: inline-block;
+  transform: translateY(0.5px);
+}
+
+/* hover */
+.navbar.navRail .nav-btn:hover{
+  color: rgba(255,255,255,.92);
+  border-color: rgba(255, 120, 90, .35);
+  filter: saturate(1.05);
+  transform: translateY(-1px);
+}
+
+/* ACTIVE — як на рефі: тепле підсвічування, тонка лінія зверху/знизу, БЕЗ точки */
+.navbar.navRail .nav-btn.active{
+  color: rgba(255,255,255,.96);
+  border-color: rgba(255, 90, 60, .55);
+
+  background:
+    radial-gradient(220px 80px at 18% 50%, rgba(255,70,35,.20), transparent 62%),
+    linear-gradient(180deg, rgba(18,12,10,.82), rgba(0,0,0,.22));
+
+  box-shadow:
+    0 14px 34px rgba(0,0,0,.55),
+    0 0 38px rgba(255,60,30,.16),
+    inset 0 0 0 1px rgba(255,255,255,.08);
+}
+
+/* прибрати твою "червону точку" під активною вкладкою */
+.navbar.navRail .nav-btn.active span::after{
+  content: none !important;
+  display: none !important;
+}
+
+/* прибрати старий нижній "блик-лінію", якщо вона ще є */
+.navbar.navRail .nav-btn.active::after{
+  content: "" !important;
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: 6px;
+  height: 2px;
+  border-radius: 999px;
+
+  /* у рефі — не одна точка, а м’який підпал по центру */
+  background: linear-gradient(90deg, transparent, rgba(255,70,35,.85), transparent);
+  box-shadow: 0 0 18px rgba(255,60,30,.22);
+  opacity: .65;
+  pointer-events: none;
+}
+
+/* тонка верхня “кромка” як у рефі */
+.navbar.navRail .nav-btn::before{
+  content: "";
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  top: 6px;
+  height: 1px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.08), transparent);
+  opacity: .65;
+  pointer-events: none;
+}
