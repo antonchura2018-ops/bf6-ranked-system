@@ -1651,15 +1651,15 @@ body::before{
 :root{
   /* HALO */
   --haloSize: 760px;
-  --haloTop: -40px;        /* ✅ підняли кільце ВГОРУ (було ~88-115) */
+  --haloTop: -120px;   /* ✅ сильно піднімає кільце вище метрик */
   --haloInset: -34px;     /* ✅ робить кільце “товстішим/більшим” */
   --haloOpacity: .95;     /* ✅ зробили яскравіше (було затемнене) */
   --haloBlur: .2px;
 
   /* LAYOUT */
   --progressGap: 18px;
-  --pulseGap: 140px;       /* ✅ сильніше опускає “PLAYER ASCENSION / PERFORMANCE PULSE” */
-  --gridGap: 60px;        /* ✅ опускає метрики */
+  --pulseGap: 180px;   /* ✅ опускає "PLAYER ASCENSION" нижче */
+  --gridGap: 90px;     /* ✅ опускає метрики ще нижче */
 }
 
 #dashboard .rankHome__center{
@@ -1697,11 +1697,10 @@ body::before{
   animation: none !important;
   transform: none !important;
 
-  opacity: var(--haloOpacity) !important;
-  mix-blend-mode: screen !important;
+  opacity: 1 !important;
+  mix-blend-mode: normal !important;
 
-  /* ✅ зробити “видимим як у рефі” */
-  filter: blur(var(--haloBlur)) saturate(1.35) brightness(1.35) contrast(1.12) !important;
+  filter: blur(.15px) saturate(1.25) brightness(1.55) contrast(1.22) !important;
 }
 
 /* kill pseudo-discs */
