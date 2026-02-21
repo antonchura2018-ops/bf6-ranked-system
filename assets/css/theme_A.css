@@ -1699,4 +1699,51 @@ body::before{
   display:block !important;
 }
 
+/* =========================================================
+   NAVBAR STRIP FIX — ONLY RAIL, NO BLUE/BLACK BAND
+   Paste as VERY LAST block in theme_A.css
+   ========================================================= */
+
+/* 1) navbar area must be fully transparent + minimal height */
+.navbar,
+.navbar.navRail{
+  background: transparent !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  border: 0 !important;
+
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+
+  /* ключ: прибираємо “велику шапку” */
+  padding: 10px 0 6px !important;
+  height: auto !important;
+}
+
+/* 2) just in case ui-kit or other theme adds something */
+.navbar::before,
+.navbar::after{
+  box-shadow: none !important;
+}
+
+/* 3) Your rail should stay visible (this is the only background in nav) */
+.navbar.navRail::before{
+  content:"" !important;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,0) 40%),
+    linear-gradient(180deg, var(--steelA), var(--steelB)) !important;
+  box-shadow:
+    0 18px 60px rgba(0,0,0,.55),
+    inset 0 0 0 1px rgba(0,0,0,.35) !important;
+  border: 1px solid rgba(255,255,255,.08) !important;
+}
+
+/* 4) If you still see a “full-width strip”, it’s usually from .app container
+      (because navbar is inside .app with max-width + padding).
+      Make navbar full-bleed. */
+.navbar{
+  width: 100vw !important;
+  margin-left: calc(50% - 50vw) !important;
+  margin-right: calc(50% - 50vw) !important;
+}
 
