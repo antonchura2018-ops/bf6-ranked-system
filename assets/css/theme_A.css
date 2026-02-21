@@ -1615,79 +1615,85 @@ body::before{
   opacity: .8;
 }
 /* =========================================================
-   HALO (PNG) — FINAL (NO ROTATION, CORRECT SCALE, SUBTLE)
-   Put halo here: /assets/img/ui/halo_plasma.png
-   Paste at VERY END of theme_A.css
+   AUTHORITATIVE HALO — Player Hub A (SINGLE SOURCE OF TRUTH)
+   Put this ONCE at the VERY END of theme_A.css
    ========================================================= */
 
-.rankHome__center{
-  position: relative !important;
-  isolation: isolate !important;
+:root{
+  --haloSize: 760px;      /* GOAL size */
+  --haloTop: 115px;       /* vertical placement */
+  --metricsOffset: 170px; /* push metrics lower */
 }
 
-/* контейнер кільця */
-.rankHalo{
-  position: absolute !important;
-  left: 50% !important;
-  top: 140px !important;
-  transform: translateX(-50%) !important;
-
-  width: 560px !important;
-  height: 560px !important;
-  border-radius: 50% !important;
-
-  pointer-events: none !important;
-  z-index: 5 !important;
+/* Make sure dashboard is the positioning context */
+#dashboard{
+  position: relative;
 }
 
-/* PNG-кільце */
-.rankHalo__fx{
-  position: absolute !important;
-  inset: -22px !important;              /* 🔧 робить кільце “більшим” без зміни контейнера */
-  border-radius: 50% !important;
+/* HALO CONTAINER */
+#dashboard .rankHalo{
+  position: absolute;
+  left: 50%;
+  top: var(--haloTop);
+  transform: translateX(-50%); /* NO rotation here */
+  width: var(--haloSize);
+  height: var(--haloSize);
 
-  background: url("/assets/img/ui/halo_plasma.png") center/contain no-repeat !important;
+  pointer-events: none;
+  z-index: 2;            /* above background, below text (we set text to 3) */
 
-  /* 🔥 не крутити */
+  background: transparent !important;
+  box-shadow: none !important;
+  filter: none !important;
+}
+
+/* HALO IMAGE ITSELF */
+#dashboard .rankHalo img,
+#dashboard .rankHalo .haloImg{
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+
+  /* Kill ANY rotation / animation */
+  transform: none !important;
   animation: none !important;
 
-  /* 🔧 зробити менш помітним і більш “як в рефі” */
-  opacity: .42 !important;
-  mix-blend-mode: screen !important;
-  filter: blur(.6px) saturate(1.10) brightness(1.05) !important;
-
-  transform: none !important;          /* safety */
+  /* No black disc / no background */
+  background: transparent !important;
+  mix-blend-mode: screen;     /* makes plasma feel more "energy" on cosmos */
+  opacity: 0.95;
 }
 
-/* тримаємо текст вище */
-.rankTitle,.rankRP,.rankProgress,.pulseHeader,.pulseGrid{
-  position: relative !important;
-  z-index: 10 !important;
-}
-/* =========================================================
-   KILL OVERRIDES — HALO SIZE + METRICS DOWN (PASTE LAST)
-   ========================================================= */
-
-#dashboard .rankHome .rankHome__center{ position: relative !important; isolation:isolate !important; }
-
-/* SUPER-specific selector to win */
-#dashboard .rankHome .rankHalo{
-  top: 92px !important;
-  width: 760px !important;
-  height: 760px !important;
-  z-index: 5 !important;
-  opacity: .62 !important;
-
-  animation: none !important;
-  transform: translateX(-50%) !important;
+/* Ensure no pseudo-elements create a dark disc */
+#dashboard .rankHalo::before,
+#dashboard .rankHalo::after{
+  content: none !important;
 }
 
-/* stop вращение на дочірньому шарі */
-#dashboard .rankHome .rankHalo__fx{
-  animation: none !important;
+/* TEXT ABOVE HALO */
+#dashboard .rankName,
+#dashboard .rankTitle,
+#dashboard .rankCenter,
+#dashboard .rankBlock,
+#dashboard .rankInfo{
+  position: relative;
+  z-index: 3;
 }
 
-/* metrics lower */
-#dashboard .rankHome .pulseHeader{ margin-top: 64px !important; }
-#dashboard .rankHome .pulseGrid{ margin-top: 26px !important; }
-#dashboard .rankHome .rankProgress{ margin-top: 28px !important; }
+/* METRICS LOWER */
+#dashboard .metrics,
+#dashboard .metricsRow,
+#dashboard .rankMetrics,
+#dashboard .playerMetrics{
+  position: relative;
+  margin-top: var(--metricsOffset);
+  z-index: 3;
+}
+
+/* Responsive: keep it epic on smaller widths */
+@media (max-width: 1100px){
+  :root{ --haloSize: 680px; --haloTop: 110px; --metricsOffset: 140px; }
+}
+@media (max-width: 900px){
+  :root{ --haloSize: 600px; --haloTop: 105px; --metricsOffset: 120px; }
+}
