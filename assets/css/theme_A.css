@@ -1797,3 +1797,73 @@ body::after{
   background: transparent !important;
 }
 .navbar{ outline: 2px solid lime !important; }
+/* =========================================================
+   HOME + NAV FIXES (Ring lower + Better caps + Remove dot)
+   Paste at VERY END of theme_A.css
+   ========================================================= */
+
+/* 1) LOWER the whole hero (ring + title + metrics) */
+.rankHome__center{
+  /* було 140px — зробимо нижче */
+  padding-top: 190px !important;
+}
+
+/* (опціонально) якщо хочеш ще нижче — збільш до 210-230px */
+
+
+/* 2) REMOVE the active red DOT (the one you pointed) */
+.navbar.navRail .nav-btn.active span::after{
+  content: none !important;
+  display: none !important;
+}
+
+/* 3) UPGRADE side caps (the бокові штуки біля PLAYER HUB / ADD MATCH) */
+.navCap{
+  position: relative;
+  z-index: 3;
+  height: 38px;
+  width: 52px;              /* трохи ширше, щоб виглядало “важче” */
+  flex: 0 0 52px;
+  margin: 0 -10px;          /* злипання з кнопками */
+
+  background:
+    /* внутрішній червоний жар */
+    radial-gradient(90px 44px at 50% 50%, rgba(255,60,30,.22), transparent 62%),
+    /* верхній хайлайт */
+    linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,0) 42%),
+    /* метал */
+    linear-gradient(180deg, rgba(34,34,40,.92), rgba(10,10,14,.92));
+
+  border: 1px solid rgba(255,255,255,.10);
+  box-shadow:
+    0 12px 26px rgba(0,0,0,.55),
+    inset 0 0 0 1px rgba(0,0,0,.42);
+
+  overflow: hidden;
+}
+
+/* додатковий “скос/ребро” як у AAA UI */
+.navCap::after{
+  content:"";
+  position:absolute;
+  inset: 0;
+  background:
+    linear-gradient(135deg,
+      transparent 0 42%,
+      rgba(255,60,30,.18) 50%,
+      transparent 58% 100%);
+  opacity: .7;
+  pointer-events:none;
+}
+
+/* sharper chevron shapes */
+.navCap--L{
+  clip-path: polygon(0 50%, 22px 0, 100% 0, 100% 100%, 22px 100%);
+  border-top-left-radius: 12px;
+  border-bottom-left-radius: 12px;
+}
+.navCap--R{
+  clip-path: polygon(0 0, calc(100% - 22px) 0, 100% 50%, calc(100% - 22px) 100%, 0 100%);
+  border-top-right-radius: 12px;
+  border-bottom-right-radius: 12px;
+}
