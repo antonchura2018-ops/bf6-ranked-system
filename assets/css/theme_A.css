@@ -1655,7 +1655,9 @@ body::before{
   --haloInset: -34px;     /* ✅ робить кільце “товстішим/більшим” */
   --haloOpacity: .95;     /* ✅ зробили яскравіше (було затемнене) */
   --haloBlur: .2px;
-
+  
+  --topStackPush: 86px;     /* опускає OUTCAST / RP / Next Rank */
+  --ascensionLift: -34px;   /* піднімає PLAYER ASCENSION ближче до метрик */
   /* LAYOUT */
   --progressGap: 18px;
   --pulseGap: 180px;   /* ✅ опускає "PLAYER ASCENSION" нижче */
@@ -1745,4 +1747,28 @@ body::before{
   background-position: center !important;
   background-repeat: no-repeat !important;
   background-size: contain !important;
+}
+/* =========================================================
+   LAYOUT: DROP TOP STACK + PULL ASCENSION TO METRICS
+   ========================================================= */
+
+/* 1) Опустити: OUTCAST + RP + Next Rank (rankProgress) */
+#dashboard .rankHome__center .rankTitle{
+  margin-top: var(--topStackPush) !important;
+}
+#dashboard .rankHome__center .rankRP{
+  margin-top: 10px !important;
+}
+#dashboard .rankHome__center .rankProgress{
+  margin-top: 12px !important;
+}
+
+/* 2) PLAYER ASCENSION ближче до метрик */
+#dashboard .rankHome__center .pulseHeader{
+  margin-top: var(--ascensionLift) !important;
+}
+
+/* 3) Метрики тримати разом під заголовком */
+#dashboard .rankHome__center .pulseGrid{
+  margin-top: 18px !important;
 }
