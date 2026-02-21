@@ -1655,5 +1655,48 @@ body::before{
 }
 /* якщо кільце вже вбудоване у фон (cosmos.png) — вимикаємо HTML halo */
 .rankHalo{ display:none !important; }
+/* =========================================================
+   NAVBAR — FORCE TRANSPARENT STRIP (KILL BLUE BAND)
+   Paste as VERY LAST block in theme_A.css
+   ========================================================= */
+
+/* 1) сам navbar — повністю прозорий, без blur */
+.navbar,
+.navbar.navRail{
+  background: transparent !important;
+  background-image: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+
+  border: 0 !important;
+  outline: 0 !important;
+  box-shadow: none !important;
+}
+
+/* 2) прибити можливі лінії/оверлеї з інших css */
+.navbar::before,
+.navbar::after{
+  background: none !important;
+  box-shadow: none !important;
+  border: 0 !important;
+  opacity: 1 !important;
+}
+
+/* 3) Повернути ТВОЇ rail-псевдоелементи (бо вони потрібні) */
+.navbar.navRail::before{
+  /* твій rail — залишаємо */
+  content:"" !important;
+  display:block !important;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,0) 40%),
+    linear-gradient(180deg, var(--steelA), var(--steelB)) !important;
+  border: 1px solid rgba(255,255,255,.08) !important;
+}
+
+.navbar.navRail::after{
+  /* твоя тонка червона лінія — залишаємо */
+  content:"" !important;
+  display:block !important;
+}
 
 
