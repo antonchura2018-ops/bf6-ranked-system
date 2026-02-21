@@ -1727,3 +1727,23 @@ body::before{
 #dashboard .rankHome__center .rankProgress{ margin-top: var(--progressGap) !important; }
 #dashboard .rankHome__center .pulseHeader{ margin-top: var(--pulseGap) !important; }
 #dashboard .rankHome__center .pulseGrid{ margin-top: var(--gridGap) !important; }
+/* EMBLEM centered inside halo */
+#dashboard .rankHome__center .rankEmblem{
+  position: absolute !important;
+  left: 50% !important;
+  top: calc(var(--haloTop) + (var(--haloSize) / 2)) !important;
+  transform: translate(-50%, -50%) !important;
+
+  width: 190px !important;
+  height: 190px !important;
+
+  z-index: 9 !important;   /* під текстом, але над кільцем */
+  pointer-events: none !important;
+}
+
+/* якщо емблема буде як background-image */
+#dashboard .rankHome__center .rankEmblem{
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  background-size: contain !important;
+}
