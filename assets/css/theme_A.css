@@ -1510,7 +1510,6 @@ body{
   overflow-x: hidden;
 }
 
-/* Cosmos image (your file already contains ring baked in) */
 body::before{
   content:"";
   position: fixed;
@@ -1518,8 +1517,16 @@ body::before{
   z-index: -1;
   pointer-events: none;
 
-  background: url("/assets/img/bg/cosmos.png") center/cover no-repeat;
-  filter: saturate(1.08) contrast(1.06);  /* NO BLUR */
+  /* ВАЖЛИВО: тут і є позиція кільця */
+  background-image: url("/assets/img/bg/cosmos.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  /* ↓ опускаємо кільце (як на рефі) */
+  background-position: center 28%;
+
+  /* без blur (ніякого мила), тільки легке підсилення */
+  filter: saturate(1.08) contrast(1.06);
   transform: translateZ(0);
 }
 
@@ -1554,10 +1561,9 @@ body::before{
   overflow: hidden;
 }
 
-/* 5) FINAL LAYOUT CONTROLS (tune these 2 numbers only) */
 :root{
-  --centerPadTop: 260px;     /* moves OUTCAST/RP/NextRank down into the ring */
-  --pulseGap: 110px;         /* distance from progress -> PLAYER ASCENSION */
+  --centerPadTop: 310px;  /* опускає OUTCAST + RP + Next Rank в кільце */
+  --pulseGap: 140px;      /* опускає PLAYER ASCENSION ближче до метрик */
 }
 
 /* center stack */
@@ -1589,7 +1595,10 @@ body::before{
 /* spacing to match reference */
 .rankProgress{ margin-top: 18px !important; }
 .pulseHeader{ margin-top: var(--pulseGap) !important; }
-.pulseGrid{ margin-top: 18px !important; }
+.pulseGrid{ margin-top: 26px !important; }
+.rankHome__center{
+  padding-bottom: 80px !important; /* щоб метрики не прилипали до низу */
+}
 
 /* 6) SAFETY: kill blur/backdrop filters that can “wash” the cosmos */
 .rankHome,
@@ -1601,5 +1610,50 @@ body::before{
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
 }
+/* =========================================================
+   HOME LAYOUT — MATCH REF (IMMORTAL)
+   Put this at VERY END of theme_A.css (after cosmos block)
+   ========================================================= */
+
+:root{
+  /* Висота від верху до старту контенту (щоб текст був під кільцем) */
+  --homePadTop: 260px;
+
+  /* Відступ від прогресу до "PLAYER ASCENSION" */
+  --homeAscensionGap: 86px;
+
+  /* Низ сторінки, щоб метрики не прилипали до краю */
+  --homePadBottom: 80px;
+}
+
+/* центр-блок як сцена */
+.rankHome__center{
+  position: relative !important;
+  z-index: 2 !important;
+
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+
+  padding-top: var(--homePadTop) !important;
+  padding-bottom: var(--homePadBottom) !important;
+}
+
+/* Тримай текст компактним як на рефі */
+.rankTitle{ margin-top: 0 !important; }
+.rankRP{ margin-top: 10px !important; }
+.rankProgress{ margin-top: 22px !important; }
+
+/* "PLAYER ASCENSION" має бути ближче до метрик і нижче прогресу */
+.pulseHeader{
+  margin-top: var(--homeAscensionGap) !important;
+}
+
+/* Метрики під заголовком */
+.pulseGrid{
+  margin-top: 18px !important;
+}
+/* якщо кільце вже вбудоване у фон (cosmos.png) — вимикаємо HTML halo */
+.rankHalo{ display:none !important; }
 
 
