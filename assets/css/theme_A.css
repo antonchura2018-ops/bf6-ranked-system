@@ -702,51 +702,7 @@ body { background:#05060a; } /* запасний колір */
   background: transparent;
 }
 
-/* ===== FINAL LOCK (single source of truth) ===== */
-html, body { margin:0; padding:0; height:100%; }
-body{ background:#05060a; }
 
-.app, .section, #dashboard{
-  width:100%;
-  max-width:none !important;
-  margin:0 !important;
-  padding:0 !important;
-  background: transparent !important;
-}
-
-.rankHome{
-  width:100vw;
-  min-height:100vh;
-  margin-left:calc(50% - 50vw);
-  margin-right:calc(50% - 50vw);
-  overflow:hidden;
-  background: transparent;
-}
-
-/* ensure bg visible */
-.rankHome__bg{
-  display:block !important;
-  position:absolute; inset:0;
-  background-image:url("/assets/img/bg/cosmos.png");
-  background-size:cover;
-  background-position:center;
-  background-repeat:no-repeat;
-  z-index:0;
-}
-/* ===== FIX: remove visible strip under navbar ===== */
-.navbar{
-  border-bottom: 0 !important;
-  box-shadow: 0 10px 40px rgba(0,0,0,.45) !important; /* слабше */
-}
-
-/* трохи м’якша верхня лінія (щоб не була жирна) */
-.navbar::before{
-  opacity: .30 !important;
-  top: 10px !important;
-  height: 2px !important;
-}
-/* ===== FIX: remove pulseMark completely ===== */
-.pulseMark{ display:none !important; }
 
 /* ==========================================================
    NAVBAR — EXACT CHEVRON RAIL (1:1 vibe)
