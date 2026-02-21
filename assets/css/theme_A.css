@@ -1749,26 +1749,96 @@ body::before{
   background-size: contain !important;
 }
 /* =========================================================
-   LAYOUT: DROP TOP STACK + PULL ASCENSION TO METRICS
+   PLAYER HUB A — REFERENCE LAYOUT (MOVE WHOLE CENTER STACK)
+   Paste ONCE at VERY END of theme_A.css
    ========================================================= */
 
-/* 1) Опустити: OUTCAST + RP + Next Rank (rankProgress) */
-#dashboard .rankHome__center .rankTitle{
-  margin-top: var(--topStackPush) !important;
-}
-#dashboard .rankHome__center .rankRP{
-  margin-top: 10px !important;
-}
-#dashboard .rankHome__center .rankProgress{
-  margin-top: 12px !important;
+:root{
+  /* HALO — big like reference */
+  --haloSize: 760px;
+  --haloTop: -120px;     /* позиція кільця */
+  --haloInset: -26px;
+
+  /* CENTER STACK (text+progress+ascension) */
+  --centerShift: 120px;  /* ✅ опускає ВЕСЬ ТЕКСТ вниз одним блоком */
+
+  /* ASCENSION + METRICS */
+  --ascensionGap: 34px;  /* відступ від прогресу до "PLAYER ASCENSION" */
+  --metricsGap: 18px;    /* відступ від ascension до метрик */
+
+  /* HALO look */
+  --haloOpacity: 1;
+  --haloFilter: blur(.15px) saturate(1.25) brightness(1.55) contrast(1.22);
 }
 
-/* 2) PLAYER ASCENSION ближче до метрик */
-#dashboard .rankHome__center .pulseHeader{
-  margin-top: var(--ascensionLift) !important;
+/* stacking context */
+#dashboard .rankHome__center{
+  position: relative !important;
+  isolation: isolate !important;
 }
 
-/* 3) Метрики тримати разом під заголовком */
+/* 1) MOVE WHOLE CONTENT STACK DOWN (prevents mixing) */
+#dashboard .rankHome__center > .rankTitle,
+#dashboard .rankHome__center > .rankRP,
+#dashboard .rankHome__center > .rankProgress,
+#dashboard .rankHome__center > .pulseHeader,
+#dashboard .rankHome__center > .pulseGrid{
+  transform: translateY(var(--centerShift)) !important;
+}
+
+/* keep spacing inside the stack nice */
+#dashboard .rankHome__center > .rankProgress{ margin-top: 18px !important; }
+#dashboard .rankHome__center > .pulseHeader{ margin-top: var(--ascensionGap) !important; }
+#dashboard .rankHome__center > .pulseGrid{ margin-top: var(--metricsGap) !important; }
+
+/* 2) HALO POSITION + SIZE (independent from text) */
+#dashboard .rankHome__center .rankHalo{
+  position: absolute !important;
+  left: 50% !important;
+  top: var(--haloTop) !important;
+  transform: translateX(-50%) !important;
+
+  width: var(--haloSize) !important;
+  height: var(--haloSize) !important;
+  border-radius: 50% !important;
+
+  pointer-events: none !important;
+  z-index: 5 !important;
+  background: transparent !important;
+}
+
+#dashboard .rankHome__center .rankHalo__fx{
+  position: absolute !important;
+  inset: var(--haloInset) !important;
+  border-radius: 50% !important;
+
+  background-image: url("/assets/img/ui/halo_plasma.png") !important;
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+  background-size: contain !important;
+
+  animation: none !important;
+  transform: none !important;
+
+  opacity: var(--haloOpacity) !important;
+  mix-blend-mode: normal !important; /* ✅ no dark “mixing” */
+  filter: var(--haloFilter) !important;
+}
+
+/* text above halo */
+#dashboard .rankHome__center .rankTitle,
+#dashboard .rankHome__center .rankRP,
+#dashboard .rankHome__center .rankProgress,
+#dashboard .rankHome__center .pulseHeader,
 #dashboard .rankHome__center .pulseGrid{
-  margin-top: 18px !important;
+  position: relative !important;
+  z-index: 10 !important;
+}
+
+/* kill pseudo discs */
+#dashboard .rankHome__center .rankHalo::before,
+#dashboard .rankHome__center .rankHalo::after,
+#dashboard .rankHome__center .rankHalo__fx::before,
+#dashboard .rankHome__center .rankHalo__fx::after{
+  content: none !important;
 }
