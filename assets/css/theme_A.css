@@ -1615,84 +1615,79 @@ body::before{
   opacity: .8;
 }
 /* =========================================================
-   AUTHORITATIVE HALO (FX SPAN VERSION) — Player Hub A
-   Put ONCE at the VERY END of theme_A.css
+   HALO (PNG) — FINAL (NO ROTATION, CORRECT SCALE, SUBTLE)
+   Put halo here: /assets/img/ui/halo_plasma.png
+   Paste at VERY END of theme_A.css
    ========================================================= */
 
-:root{
-  --haloSize: 760px;      /* target size */
-  --haloTop: 115px;       /* vertical placement */
-  --metricsOffset: 170px; /* push metrics lower */
+.rankHome__center{
+  position: relative !important;
+  isolation: isolate !important;
 }
 
-#dashboard{ position: relative; }
+/* контейнер кільця */
+.rankHalo{
+  position: absolute !important;
+  left: 50% !important;
+  top: 140px !important;
+  transform: translateX(-50%) !important;
 
-/* HALO WRAPPER (POSITION + SIZE) */
-#dashboard .rankHalo{
-  position:absolute;
-  left:50%;
-  top:var(--haloTop);
-  transform:translateX(-50%); /* NO rotation */
-  width:var(--haloSize);
-  height:var(--haloSize);
-  pointer-events:none;
-  z-index: 2;
-  background: transparent !important;
+  width: 560px !important;
+  height: 560px !important;
+  border-radius: 50% !important;
+
+  pointer-events: none !important;
+  z-index: 5 !important;
 }
 
-/* THE ACTUAL RING VISUAL LIVES HERE */
-#dashboard .rankHalo__fx{
-  position:absolute;
-  inset:0;
-  display:block;
+/* PNG-кільце */
+.rankHalo__fx{
+  position: absolute !important;
+  inset: -22px !important;              /* 🔧 робить кільце “більшим” без зміни контейнера */
+  border-radius: 50% !important;
 
-  /* If your current CSS already sets the image — we won't break it.
-     But if it doesn't, this ensures the ring exists. */
-  background-image: url("assets/img/ui/halo_plasma.png");
-  background-repeat:no-repeat;
-  background-position:center;
-  background-size:contain;
+  background: url("/assets/img/ui/halo_plasma.png") center/contain no-repeat !important;
 
-  /* Kill any rotation/animation */
-  transform:none !important;
-  animation:none !important;
+  /* 🔥 не крутити */
+  animation: none !important;
 
-  background-color: transparent !important;
-  mix-blend-mode: screen;
-  opacity: 0.95;
+  /* 🔧 зробити менш помітним і більш “як в рефі” */
+  opacity: .42 !important;
+  mix-blend-mode: screen !important;
+  filter: blur(.6px) saturate(1.10) brightness(1.05) !important;
+
+  transform: none !important;          /* safety */
 }
 
-/* Prevent black center discs coming from pseudo elements */
-#dashboard .rankHalo__fx::before,
-#dashboard .rankHalo__fx::after{
-  background: transparent !important;
-  box-shadow: none !important;
-  filter: none !important;
+/* тримаємо текст вище */
+.rankTitle,.rankRP,.rankProgress,.pulseHeader,.pulseGrid{
+  position: relative !important;
+  z-index: 10 !important;
+}
+/* =========================================================
+   KILL OVERRIDES — HALO SIZE + METRICS DOWN (PASTE LAST)
+   ========================================================= */
+
+#dashboard .rankHome .rankHome__center{ position: relative !important; isolation:isolate !important; }
+
+/* SUPER-specific selector to win */
+#dashboard .rankHome .rankHalo{
+  top: 92px !important;
+  width: 760px !important;
+  height: 760px !important;
+  z-index: 5 !important;
+  opacity: .62 !important;
+
+  animation: none !important;
+  transform: translateX(-50%) !important;
 }
 
-/* TEXT ALWAYS ABOVE HALO */
-#dashboard .rankTitle,
-#dashboard .rankRP,
-#dashboard .rankProgress{
-  position:relative;
-  z-index: 3;
+/* stop вращение на дочірньому шарі */
+#dashboard .rankHome .rankHalo__fx{
+  animation: none !important;
 }
 
-/* METRICS LOWER (common containers) */
-#dashboard .playerAscension,
-#dashboard .metrics,
-#dashboard .metricsRow,
-#dashboard .rankMetrics,
-#dashboard .playerMetrics{
-  position: relative;
-  margin-top: var(--metricsOffset);
-  z-index: 3;
-}
-
-/* Responsive */
-@media (max-width: 1100px){
-  :root{ --haloSize: 680px; --haloTop: 110px; --metricsOffset: 140px; }
-}
-@media (max-width: 900px){
-  :root{ --haloSize: 600px; --haloTop: 105px; --metricsOffset: 120px; }
-}
+/* metrics lower */
+#dashboard .rankHome .pulseHeader{ margin-top: 64px !important; }
+#dashboard .rankHome .pulseGrid{ margin-top: 26px !important; }
+#dashboard .rankHome .rankProgress{ margin-top: 28px !important; }
