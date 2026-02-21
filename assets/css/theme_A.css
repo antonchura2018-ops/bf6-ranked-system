@@ -1781,3 +1781,64 @@ body::after{
   -webkit-backdrop-filter: none !important;
 }
 body::before{ filter:none !important; }
+/* =========================================================
+   FINAL: ONE BACKGROUND + NO TOP STRIP
+   Paste as VERY LAST block in theme_A.css
+   ========================================================= */
+
+/* 0) No extra page paint */
+html, body { height:100%; margin:0; }
+body { background:#05060a !important; }
+
+/* 1) ONE cosmos layer for whole site */
+body::before{
+  content:"";
+  position: fixed;
+  inset: 0;
+  z-index: -10;
+  pointer-events: none;
+
+  background: url("/assets/img/bg/cosmos.png") center/cover no-repeat;
+  /* без blur */
+  filter: saturate(1.08) contrast(1.06);
+  transform: translateZ(0);
+}
+
+/* 2) KILL ALL vignette/overlays that can create a strip */
+body::after{
+  content: none !important;
+  display:none !important;
+  background:none !important;
+}
+
+.rankHome__vignette{
+  display:none !important;
+  background:none !important;
+  opacity:0 !important;
+}
+
+/* якщо десь є “хмара”/оверлей зверху */
+.rankHome__center::before{
+  content:none !important;
+  display:none !important;
+  background:none !important;
+}
+
+/* 3) rankHome не малює фон — тільки контент */
+.rankHome{ background: transparent !important; }
+.rankHome__bg{ display:none !important; }
+
+/* 4) Navbar wrapper must be fully transparent (no full-width band) */
+.navbar,
+.navbar.navRail{
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+/* 5) If some container paints a band behind nav */
+.app, .section, #dashboard{
+  background: transparent !important;
+}
