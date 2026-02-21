@@ -1842,3 +1842,4 @@ body::after{
 .app, .section, #dashboard{
   background: transparent !important;
 }
+.navbar{ outline: 2px solid lime !important; }
