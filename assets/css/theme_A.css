@@ -749,47 +749,14 @@ body { background:#05060a; } /* запасний колір */
   -webkit-backdrop-filter: none !important;
 }
 
-/* central metal rail behind buttons */
 .navbar.navRail::before{
-  content:"";
-  position:absolute;
-  left:50%;
-  top:50%;
-  transform: translate(-50%, -50%);
-  width: var(--railW);
-  height: var(--railH);
-  border-radius: 10px;
-
-  background:
-    linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,0) 40%),
-    linear-gradient(180deg, var(--steelA), var(--steelB));
-
-  border: 1px solid rgba(255,255,255,.08);
-  box-shadow:
-    0 18px 60px rgba(0,0,0,.55),
-    inset 0 0 0 1px rgba(0,0,0,.35);
-
-  pointer-events:none;
+  content: none !important;
+  display: none !important;
 }
-
 /* thin red scan line across rail */
 .navbar.navRail::after{
-  content:"";
-  position:absolute;
-  left:50%;
-  top:50%;
-  transform: translate(-50%, -50%);
-  width: calc(var(--railW) - 24px);
-  height: 2px;
-  border-radius: 999px;
-  background: linear-gradient(90deg,
-    transparent,
-    rgba(255,255,255,.08),
-    color-mix(in srgb, var(--navRed) 60%, transparent),
-    rgba(255,255,255,.08),
-    transparent);
-  opacity: .65;
-  pointer-events:none;
+  content: none !important;
+  display: none !important;
 }
 
 /* end caps (left/right arrows) */
@@ -1682,15 +1649,9 @@ body::before{
   opacity: 1 !important;
 }
 
-/* 3) Повернути ТВОЇ rail-псевдоелементи (бо вони потрібні) */
 .navbar.navRail::before{
-  /* твій rail — залишаємо */
-  content:"" !important;
-  display:block !important;
-  background:
-    linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,0) 40%),
-    linear-gradient(180deg, var(--steelA), var(--steelB)) !important;
-  border: 1px solid rgba(255,255,255,.08) !important;
+  content: none !important;
+  display: none !important;
 }
 
 .navbar.navRail::after{
@@ -1726,16 +1687,9 @@ body::before{
   box-shadow: none !important;
 }
 
-/* 3) Your rail should stay visible (this is the only background in nav) */
 .navbar.navRail::before{
-  content:"" !important;
-  background:
-    linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,0) 40%),
-    linear-gradient(180deg, var(--steelA), var(--steelB)) !important;
-  box-shadow:
-    0 18px 60px rgba(0,0,0,.55),
-    inset 0 0 0 1px rgba(0,0,0,.35) !important;
-  border: 1px solid rgba(255,255,255,.08) !important;
+  content: none !important;
+  display: none !important;
 }
 
 /* 4) If you still see a “full-width strip”, it’s usually from .app container
