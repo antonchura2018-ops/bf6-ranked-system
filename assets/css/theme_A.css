@@ -1664,3 +1664,30 @@ body::before{
   position: relative !important;
   z-index: 10 !important;
 }
+/* =========================================================
+   KILL OVERRIDES — HALO SIZE + METRICS DOWN (PASTE LAST)
+   ========================================================= */
+
+#dashboard .rankHome .rankHome__center{ position: relative !important; isolation:isolate !important; }
+
+/* SUPER-specific selector to win */
+#dashboard .rankHome .rankHalo{
+  top: 92px !important;
+  width: 760px !important;
+  height: 760px !important;
+  z-index: 5 !important;
+  opacity: .62 !important;
+
+  animation: none !important;
+  transform: translateX(-50%) !important;
+}
+
+/* stop вращение на дочірньому шарі */
+#dashboard .rankHome .rankHalo__fx{
+  animation: none !important;
+}
+
+/* metrics lower */
+#dashboard .rankHome .pulseHeader{ margin-top: 64px !important; }
+#dashboard .rankHome .pulseGrid{ margin-top: 26px !important; }
+#dashboard .rankHome .rankProgress{ margin-top: 28px !important; }
