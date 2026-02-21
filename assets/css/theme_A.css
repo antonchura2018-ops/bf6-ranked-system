@@ -1796,7 +1796,7 @@ body::after{
 .app, .section, #dashboard{
   background: transparent !important;
 }
-.navbar{ outline: 2px solid lime !important; }
+
 /* =========================================================
    HOME + NAV FIXES (Ring lower + Better caps + Remove dot)
    Paste at VERY END of theme_A.css
