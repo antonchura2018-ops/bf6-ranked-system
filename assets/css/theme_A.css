@@ -1903,5 +1903,5 @@ body::after{
 
 body::before{
   /* ЧИМ БІЛЬШЕ число — ТИМ НИЖЧЕ опуститься кільце */
-  background-position: center 28% !important;  /* пробуй 22% / 28% / 34% / 40% */
+  background-position: center 15% !important;  /* пробуй 22% / 28% / 34% / 40% */
 }
