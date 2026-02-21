@@ -2270,3 +2270,134 @@ body::before{
   opacity: .65;
   pointer-events: none;
 }
+/* =========================================================
+   NAV TABS — CONNECTED RECTANGLES (LIKE YOUR PNG)
+   Paste at VERY END of theme_A.css
+   ========================================================= */
+
+:root{
+  --tabW: min(920px, 92vw);
+  --tabH: 42px;
+
+  --tabBgA: rgba(6,6,10,.78);
+  --tabBgB: rgba(0,0,0,.58);
+
+  --tabLine: rgba(255,255,255,.08);
+  --tabText: rgba(255,255,255,.78);
+  --tabTextActive: rgba(255,255,255,.92);
+
+  --tabRed: rgba(255,59,31,.95);
+  --tabRedSoft: rgba(255,59,31,.22);
+}
+
+/* container row */
+.navbar.navRail{
+  position: sticky;
+  top: 0;
+  z-index: 9999;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  gap: 0 !important;                 /* ✅ з'єднати */
+  padding: 14px 14px !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+/* dark bar behind tabs (to improve readability) */
+.navbar.navRail::before{
+  content:"";
+  position:absolute;
+  left:50%;
+  transform: translateX(-50%);
+  top: 10px;
+
+  width: var(--tabW);
+  height: var(--tabH);
+  border-radius: 0 !important;       /* ✅ прямокутник */
+
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.05), transparent 45%),
+    linear-gradient(180deg, var(--tabBgA), var(--tabBgB));
+
+  border: 1px solid rgba(255,255,255,.08);
+  box-shadow: 0 18px 60px rgba(0,0,0,.55);
+  pointer-events:none;
+}
+
+/* remove old rail line if it exists */
+.navbar.navRail::after{ display:none !important; }
+
+/* buttons */
+.navbar.navRail .nav-btn{
+  position: relative;
+  z-index: 2;
+
+  height: var(--tabH);
+  min-width: 200px;
+
+  margin: 0 !important;              /* ✅ без проміжків */
+  padding: 0 22px;
+
+  border: 0 !important;
+  border-right: 1px solid rgba(255,255,255,.08); /* ✅ розділювач */
+  border-radius: 0 !important;       /* ✅ прямокутник */
+  background: transparent !important;/* фон дає планка ::before */
+
+  color: var(--tabText) !important;
+  font-family: var(--font-ui);
+  font-weight: 800;
+  font-size: 12px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+
+  box-shadow: none !important;
+  clip-path: none !important;        /* ✅ прибрати "chevron" */
+}
+
+/* no border on last tab */
+.navbar.navRail .nav-btn:last-child{
+  border-right: 0 !important;
+}
+
+.navbar.navRail .nav-btn:hover{
+  color: rgba(255,255,255,.90) !important;
+}
+
+/* ACTIVE tab — red top line + subtle glow (like PNG) */
+.navbar.navRail .nav-btn.active{
+  color: var(--tabTextActive) !important;
+}
+
+.navbar.navRail .nav-btn.active::before{
+  content:"";
+  position:absolute;
+  left: 10px;
+  right: 10px;
+  top: 6px;
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, transparent, var(--tabRed), transparent);
+  box-shadow: 0 0 18px var(--tabRedSoft);
+  opacity: .95;
+}
+
+/* optional: thin red accent on active bottom */
+.navbar.navRail .nav-btn.active::after{
+  content:"";
+  position:absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,59,31,.55), transparent);
+  opacity: .65;
+}
+
+/* ✅ прибрати твою "червону точку" (якщо вона з'являється десь span::after) */
+.navbar.navRail .nav-btn span::after{
+  display:none !important;
+}
