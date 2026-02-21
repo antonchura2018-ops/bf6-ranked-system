@@ -1651,15 +1651,15 @@ body::before{
 :root{
   /* HALO */
   --haloSize: 760px;
-  --haloTop: 52px;        /* ✅ підняли кільце ВГОРУ (було ~88-115) */
+  --haloTop: -40px;        /* ✅ підняли кільце ВГОРУ (було ~88-115) */
   --haloInset: -34px;     /* ✅ робить кільце “товстішим/більшим” */
   --haloOpacity: .95;     /* ✅ зробили яскравіше (було затемнене) */
   --haloBlur: .2px;
 
   /* LAYOUT */
   --progressGap: 18px;
-  --pulseGap: 86px;       /* ✅ сильніше опускає “PLAYER ASCENSION / PERFORMANCE PULSE” */
-  --gridGap: 34px;        /* ✅ опускає метрики */
+  --pulseGap: 140px;       /* ✅ сильніше опускає “PLAYER ASCENSION / PERFORMANCE PULSE” */
+  --gridGap: 60px;        /* ✅ опускає метрики */
 }
 
 #dashboard .rankHome__center{
