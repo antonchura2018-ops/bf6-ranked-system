@@ -977,152 +977,6 @@ body{ background:#05060a; }
   box-shadow: 0 0 16px rgba(255,40,25,.45);
   opacity: .9;
 }
-/* ===== GLOBAL COSMOS BACKGROUND (UNDER NAVBAR TOO) ===== */
-html, body{
-  height: 100%;
-}
-
-/* прибираємо будь-який “синій” body фон */
-body{
-  background: #05060a !important;
-}
-
-/* космос фоном на весь сайт, навіть під navbar */
-body::before{
-  content:"";
-  position: fixed;
-  inset: 0;
-  z-index: -1;            /* позаду всього */
-  pointer-events: none;
-
-  background-image: url("/assets/img/bg/cosmos.png");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-
-  /* легке підсилення без мила */
-  filter: saturate(1.06) contrast(1.05);
-}
-
-/* navbar прозорий, щоб було видно космос */
-.navbar,
-.navbar.navRail{
-  background: transparent !important;
-  backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;
-}
-
-
-/* забираємо будь-який верхній “band” ефект */
-.rankHome__vignette::before,
-.rankHome__vignette::after{
-  display:none !important;
-}
-
-/* якщо зверху темніє через локальну “хмару”, трохи прибираємо її з верху */
-.rankHome__center::before{
-  top: 60px !important; /* опускаємо нижче, щоб не впливало під navbar */
-  opacity: .85 !important;
-}
-/* ===== REMOVE TOP LINE ABOVE NAV ===== */
-.navbar.navRail{
-  border-top: 0 !important;
-  outline: 0 !important;
-}
-
-.navbar.navRail::before{
-  /* якщо “металева планка” має зверху світлу кромку — приглушимо */
-  box-shadow:
-    0 18px 60px rgba(0,0,0,.55),
-    inset 0 0 0 1px rgba(0,0,0,.35) !important;
-
-  background:
-    /* прибираємо верхній білий хайлайт */
-    linear-gradient(180deg, rgba(255,255,255,.00), rgba(255,255,255,0) 40%),
-    linear-gradient(180deg, var(--steelA), var(--steelB)) !important;
-}
-
-.rankHome{ background: transparent !important; }
-
-/* ================================
-   GLOBAL COSMOS (ONE SOURCE ONLY)
-   ================================ */
-html, body { height:100%; }
-body{
-  margin:0;
-  background:#05060a; /* fallback */
-  position: relative;
-  overflow-x: hidden;
-}
-
-/* ONE cosmos layer for everything (navbar + all tabs) */
-body::before{
-  content:"";
-  position: fixed;
-  inset: 0;
-  z-index: -2;
-  background: url("/assets/img/bg/cosmos.png") center/cover no-repeat;
-  filter: saturate(1.06) contrast(1.04);
-  transform: translateZ(0);
-}
-
-/* optional global vignette (light) */
-body::after{
-  content:"";
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  pointer-events:none;
-  background:
-    radial-gradient(1400px 900px at 50% 45%,
-      rgba(0,0,0,0) 55%,
-      rgba(0,0,0,.35) 88%,
-      rgba(0,0,0,.55) 100%);
-}
-
-/* ensure section doesn't paint another cosmos */
-.rankHome__bg{ display:none !important; }
-.rankHome{ background: transparent !important; }
-
-/* remove any top hairline above nav */
-.navbar.navRail{
-  border-top: 0 !important;
-  outline: 0 !important;
-}
-
-/* sometimes line is created by pseudo elements */
-.navbar.navRail::before,
-.navbar.navRail::after{
-  outline: 0 !important;
-}
-/* =========================================================
-   GLOBAL COSMOS BACKGROUND (ONE SOURCE, NO DUPLICATION)
-   Paste at VERY END of theme_A.css
-   ========================================================= */
-
-html, body { height:100%; }
-body{
-  margin:0;
-  /* прибираємо будь-які “сині” градієнти як фон */
-  background: #05060a !important;
-}
-
-/* один-єдиний космос на весь сайт */
-body::before{
-  content:"";
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  background: url("/assets/img/bg/cosmos.png") center/cover no-repeat;
-  /* якщо здається “мутний” — трохи підкручуємо, без blur */
-  filter: saturate(1.08) contrast(1.06);
-  transform: translateZ(0);
-}
-
-/* rankHome більше не малює фон — лише контент */
-.rankHome{
-  background: transparent !important;
-}
 /* =========================================================
    NAVBAR: NO FULL-WIDTH STRIP (ONLY THE RAIL IS VISIBLE)
    Paste AFTER the GLOBAL COSMOS BACKGROUND block
@@ -1287,7 +1141,6 @@ body::before{
   background: transparent !important;
   box-shadow: none !important;
 }
-
 
 
 /* =========================================
@@ -1614,5 +1467,75 @@ body::before{
   background: linear-gradient(90deg, transparent, rgba(255,255,255,.12), transparent);
   opacity: .8;
 }
-   
+ /* =========================================================
+   HOME — FINAL REFERENCE LAYOUT (MATCH SCREEN 1)
+   Paste LAST. This block overrides all previous layout noise.
+   ========================================================= */
+
+:root{
+  /* ring as background */
+  --ringImg: url("/assets/img/ui/halo_plasma.png");
+  --ringSize: 980px;     /* розмір кільця (як у рефі велике) */
+  --ringY: 34px;         /* ВАЖЛИВЕ: опускає/піднімає кільце */
+  
+  /* content placement inside ring */
+  --centerPadTop: 250px; /* опускає OUTCAST/RP/NextRank всередину кільця */
+  
+  /* spacing to metrics section (below ring) */
+  --afterProgressGap: 115px;  /* від NextRank лінії до PLAYER ASCENSION */
+  --afterAscensionGap: 18px;  /* від PLAYER ASCENSION до метрик */
+}
+
+/* ensure home stack */
+.rankHome__center{
+  position: relative !important;
+  z-index: 2 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+
+  /* ключ: текст всередині кільця */
+  padding-top: var(--centerPadTop) !important;
+  padding-bottom: 70px !important;
+}
+
+/* ring background layer (NO BLUR) */
+.rankHome__center::before{
+  content:"";
+  position: absolute;
+  left: 50%;
+  top: var(--ringY);
+  transform: translateX(-50%);
+  width: var(--ringSize);
+  height: var(--ringSize);
+  pointer-events: none;
+  z-index: 0;
+
+  background-image: var(--ringImg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+
+  /* робимо як у рефі — виразне, але не “кислотне” */
+  opacity: 1;
+  filter: saturate(1.06) contrast(1.05) brightness(1.02);
+}
+
+/* text must be above ring */
+.rankTitle,.rankRP,.rankProgress,.pulseHeader,.pulseGrid{
+  position: relative !important;
+  z-index: 2 !important;
+}
+
+/* place PLAYER ASCENSION + metrics under ring */
+.rankProgress{ margin-top: 18px !important; }
+.pulseHeader{ margin-top: var(--afterProgressGap) !important; }
+.pulseGrid{ margin-top: var(--afterAscensionGap) !important; }
+
+/* IMPORTANT: no blur anywhere on cosmos (safety) */
+body::before{
+  filter: saturate(1.08) contrast(1.06) !important; /* тільки це, БЕЗ blur */
+}
+
 
