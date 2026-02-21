@@ -1644,30 +1644,30 @@ body::before{
 #dashboard .rankHome .rankProgress{ margin-top: 28px !important; }
 
 /* =========================================================
-   PLAYER HUB A — HALO + LAYOUT (SINGLE SOURCE OF TRUTH)
+   PLAYER HUB A — FINAL PLACEMENT + BRIGHT HALO + METRICS DOWN
    Paste ONCE at VERY END of theme_A.css
    ========================================================= */
 
-/* Tunables */
 :root{
+  /* HALO */
   --haloSize: 760px;
-  --haloTop: 88px;          /* ближче до рефу */
-  --haloInset: -28px;       /* робить FX “більшим/товстішим” */
-  --haloOpacity: .78;       /* у тебе було занадто слабо */
-  --haloBlur: .35px;
+  --haloTop: 52px;        /* ✅ підняли кільце ВГОРУ (було ~88-115) */
+  --haloInset: -34px;     /* ✅ робить кільце “товстішим/більшим” */
+  --haloOpacity: .95;     /* ✅ зробили яскравіше (було затемнене) */
+  --haloBlur: .2px;
 
-  --progressGap: 22px;      /* відступи між RP/Progress */
-  --pulseGap: 54px;         /* опускає PERFORMANCE PULSE */
-  --gridGap: 18px;          /* опускає метрики */
+  /* LAYOUT */
+  --progressGap: 18px;
+  --pulseGap: 86px;       /* ✅ сильніше опускає “PLAYER ASCENSION / PERFORMANCE PULSE” */
+  --gridGap: 34px;        /* ✅ опускає метрики */
 }
 
-/* Center container must be stacking context */
 #dashboard .rankHome__center{
   position: relative !important;
   isolation: isolate !important;
 }
 
-/* HALO wrapper */
+/* HALO WRAPPER */
 #dashboard .rankHome__center .rankHalo{
   position: absolute !important;
   left: 50% !important;
@@ -1681,10 +1681,9 @@ body::before{
   pointer-events: none !important;
   z-index: 5 !important;
   background: transparent !important;
-  animation: none !important;
 }
 
-/* FX layer (actual PNG ring) */
+/* HALO FX (PNG) */
 #dashboard .rankHome__center .rankHalo__fx{
   position: absolute !important;
   inset: var(--haloInset) !important;
@@ -1701,12 +1700,11 @@ body::before{
   opacity: var(--haloOpacity) !important;
   mix-blend-mode: screen !important;
 
-  /* ближче до “IMMORTAL” — трохи яскравіше/контрастніше */
-  filter: blur(var(--haloBlur)) saturate(1.18) brightness(1.18) contrast(1.06) !important;
-  background-color: transparent !important;
+  /* ✅ зробити “видимим як у рефі” */
+  filter: blur(var(--haloBlur)) saturate(1.35) brightness(1.35) contrast(1.12) !important;
 }
 
-/* hard-kill будь-яких псевдо-дисків */
+/* kill pseudo-discs */
 #dashboard .rankHome__center .rankHalo::before,
 #dashboard .rankHome__center .rankHalo::after,
 #dashboard .rankHome__center .rankHalo__fx::before,
@@ -1714,25 +1712,18 @@ body::before{
   content: none !important;
 }
 
-/* Text above halo */
+/* TEXT ABOVE HALO */
 #dashboard .rankHome__center .rankTitle,
 #dashboard .rankHome__center .rankRP,
 #dashboard .rankHome__center .rankProgress,
 #dashboard .rankHome__center .pulseHeader,
-#dashboard .rankHome__center .pulseGrid{
+#dashboard .rankHome__center .pulseGrid,
+#dashboard .rankHome__center .rankEmblem{
   position: relative !important;
   z-index: 10 !important;
 }
 
-/* spacing tweaks to match ref proportions */
+/* spacing */
 #dashboard .rankHome__center .rankProgress{ margin-top: var(--progressGap) !important; }
 #dashboard .rankHome__center .pulseHeader{ margin-top: var(--pulseGap) !important; }
 #dashboard .rankHome__center .pulseGrid{ margin-top: var(--gridGap) !important; }
-
-/* Responsive safety */
-@media (max-width: 1100px){
-  :root{ --haloSize: 680px; --haloTop: 92px; }
-}
-@media (max-width: 900px){
-  :root{ --haloSize: 600px; --haloTop: 96px; }
-}
