@@ -1523,7 +1523,7 @@ body::before{
   background-size: cover;
 
   /* ↓ опускаємо кільце (як на рефі) */
-  background-position: center 25%;
+  background-position: center 20%;
 
   /* без blur (ніякого мила), тільки легке підсилення */
   filter: saturate(1.08) contrast(1.06);
