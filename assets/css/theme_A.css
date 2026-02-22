@@ -3077,110 +3077,259 @@ body::before{
 .navbar .nav-btn.active::after{ display:none !important; }
 .navbar .nav-btn.active span::after{ /* we use it above; if conflict occurs, our selector wins */ }
 
-/* ==========================================
-   NAV — CYBER RAIL (for .navTabs version)
-   ========================================== */
+/* =========================================================
+   NAV TABS — IMMORTAL BAR (MATCH SCREENSHOT)
+   Works with: <div class="navbar navTabs"> + .nav-btn(.active)
+   Paste at VERY END of theme_A.css
+   ========================================================= */
 
+:root{
+  --tabsW: min(980px, 94vw);
+  --tabsH: 58px;
+  --tabH: 46px;
+
+  --tabAngle: 18px;     /* скіс боків вкладки */
+  --tabGapOverlap: -14px; /* щоб вкладки “злипались” */
+
+  --tabLine: rgba(255,255,255,.10);
+  --tabEdge: rgba(255,120,70,.22);
+  --tabGlow: rgba(255,90,35,.35);
+  --tabHot: rgba(255,85,30,.95);
+
+  --tabBgTop: rgba(255,255,255,.04);
+  --tabBgA: rgba(24,24,30,.72);
+  --tabBgB: rgba(8,8,12,.86);
+}
+
+/* container only around tabs (no full-width strip) */
 .navbar.navTabs{
-  position: sticky !important;
+  position: sticky;
   top: 0;
-  z-index: 200;
+  z-index: 300;
 
   display:flex;
   justify-content:center;
   align-items:center;
-  gap: 0 !important;
 
-  padding: 18px 14px 10px !important;
+  width: var(--tabsW);
+  height: var(--tabsH);
+
+  margin: 10px auto 0;
+  padding: 0;
 
   background: transparent !important;
   border: 0 !important;
   box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+
+  /* important: allow pseudo elements */
+  isolation: isolate;
 }
 
-/* rail background */
+/* top thin line across the whole group */
 .navbar.navTabs::before{
   content:"";
   position:absolute;
-  left:50%;
-  top:50%;
-  transform:translate(-50%,-50%);
-  width:min(980px,94vw);
-  height:54px;
+  left: 6px;
+  right: 6px;
+  top: 6px;
+  height: 1px;
+  background: linear-gradient(90deg,
+    transparent,
+    rgba(255,120,70,.22),
+    rgba(255,255,255,.10),
+    rgba(255,120,70,.18),
+    transparent);
+  opacity: .65;
+  pointer-events:none;
+  z-index: 1;
+}
+
+/* bottom “rail” glow line across the whole group */
+.navbar.navTabs::after{
+  content:"";
+  position:absolute;
+  left: 10px;
+  right: 10px;
+  bottom: 6px;
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(255,120,70,.18) 14%,
+    rgba(255,90,35,.55) 50%,
+    rgba(255,120,70,.18) 86%,
+    transparent 100%);
+  box-shadow: 0 0 24px rgba(255,80,35,.18);
+  opacity: .85;
+  pointer-events:none;
+  z-index: 1;
+}
+
+/* buttons base */
+.navbar.navTabs .nav-btn{
+  position: relative;
+  z-index: 3;
+
+  height: var(--tabH);
+  min-width: 190px;
+  padding: 0 18px;
+
+  margin: 0 var(--tabGapOverlap);
+  border: 1px solid var(--tabLine);
 
   background:
-    linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,0) 45%),
-    linear-gradient(180deg, rgba(14,14,18,.88), rgba(6,6,10,.92));
+    /* light top sheen */
+    linear-gradient(180deg, var(--tabBgTop), rgba(255,255,255,0) 45%),
+    /* tech texture */
+    repeating-linear-gradient(135deg,
+      rgba(255,255,255,.04) 0px,
+      rgba(255,255,255,.04) 1px,
+      rgba(0,0,0,0) 6px,
+      rgba(0,0,0,0) 12px),
+    /* main metal */
+    linear-gradient(180deg, var(--tabBgA), var(--tabBgB));
 
-  border:1px solid rgba(255,255,255,.08);
   box-shadow:
-    0 18px 60px rgba(0,0,0,.55),
-    inset 0 0 0 1px rgba(0,0,0,.45);
+    0 14px 30px rgba(0,0,0,.55),
+    inset 0 0 0 1px rgba(0,0,0,.55);
 
+  color: rgba(255,255,255,.82);
+  font-family: var(--font-ui);
+  font-weight: 800;
+  font-size: 12px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+
+  cursor: pointer;
+  outline: none;
+
+  /* PARALLELOGRAM SHAPE */
+  clip-path: polygon(
+    var(--tabAngle) 0,
+    100% 0,
+    calc(100% - var(--tabAngle)) 100%,
+    0 100%
+  );
+
+  transition: transform .12s ease, filter .12s ease, border-color .12s ease, color .12s ease;
+}
+
+/* subtle inner frame */
+.navbar.navTabs .nav-btn::before{
+  content:"";
+  position:absolute;
+  inset: 2px;
+  clip-path: inherit;
+  border: 1px solid rgba(255,255,255,.06);
+  opacity: .7;
   pointer-events:none;
 }
 
-/* tabs */
-.navbar.navTabs .nav-btn{
-  position:relative;
-  z-index:2;
-
-  height:44px;
-  min-width:200px;
-  padding:0 18px;
-  margin:0 -10px;
-
-  border:1px solid rgba(255,255,255,.12);
-
-  background:
-    linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,0) 45%),
-    linear-gradient(180deg, rgba(28,28,34,.70), rgba(8,8,12,.88));
-
-  box-shadow:
-    0 12px 26px rgba(0,0,0,.55),
-    inset 0 0 0 1px rgba(0,0,0,.55);
-
-  color:rgba(255,255,255,.80);
-  font-weight:800;
-  font-size:12px;
-  letter-spacing:.16em;
-  text-transform:uppercase;
-
-  clip-path: polygon(10px 0, 100% 0, calc(100% - 10px) 100%, 0 100%);
-  transition:all .15s ease;
-}
-
-/* glow between tabs */
+/* hot seam between tabs (little orange seam) */
 .navbar.navTabs .nav-btn:not(:first-child)::after{
   content:"";
   position:absolute;
-  left:-8px;
-  top:50%;
-  transform:translateY(-50%);
-  width:16px;
-  height:46px;
-
+  left: -10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 18px;
+  height: 58px;
   background:
-    radial-gradient(circle at 60% 50%, rgba(255,90,35,.85), transparent 60%),
-    linear-gradient(180deg, transparent, rgba(255,90,35,.35), transparent);
-
+    radial-gradient(circle at 60% 50%, rgba(255,90,35,.75), transparent 60%),
+    linear-gradient(180deg, transparent, rgba(255,90,35,.25), transparent);
+  opacity: .9;
   pointer-events:none;
-  opacity:.9;
 }
 
-/* ACTIVE */
+/* hover */
+.navbar.navTabs .nav-btn:hover{
+  color: rgba(255,255,255,.94);
+  border-color: rgba(255,255,255,.16);
+  transform: translateY(-1px);
+}
+
+/* ACTIVE — like screenshot (glow + top/bottom highlight, no “dot”) */
 .navbar.navTabs .nav-btn.active{
-  color:rgba(255,210,170,.95);
-  border-color:rgba(255,90,35,.38);
+  color: rgba(255,210,170,.96);
+  border-color: rgba(255,120,70,.38);
 
   background:
-    radial-gradient(240px 90px at 20% 50%, rgba(255,90,35,.18), transparent 65%),
-    linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,0) 45%),
-    linear-gradient(180deg, rgba(34,24,18,.80), rgba(10,8,10,.92));
+    /* big hot glow left-bottom */
+    radial-gradient(260px 120px at 20% 60%, rgba(255,90,35,.30), transparent 62%),
+    /* hot edge line */
+    linear-gradient(90deg, rgba(255,90,35,.35), rgba(255,255,255,.06) 40%, rgba(255,90,35,.18)),
+    /* sheen */
+    linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,0) 45%),
+    /* texture */
+    repeating-linear-gradient(135deg,
+      rgba(255,160,120,.06) 0px,
+      rgba(255,160,120,.06) 1px,
+      rgba(0,0,0,0) 6px,
+      rgba(0,0,0,0) 12px),
+    /* metal base */
+    linear-gradient(180deg, rgba(32,22,18,.78), rgba(10,8,10,.92));
 
   box-shadow:
-    0 16px 34px rgba(0,0,0,.65),
-    0 0 48px rgba(255,90,35,.12),
-    inset 0 0 0 1px rgba(0,0,0,.55);
+    0 18px 36px rgba(0,0,0,.65),
+    0 0 54px rgba(255,90,35,.14),
+    inset 0 0 0 1px rgba(0,0,0,.6);
 }
 
+/* ACTIVE bottom + top lines inside the active tab (the “double highlight”) */
+.navbar.navTabs .nav-btn.active span,
+.navbar.navTabs .nav-btn.active{
+  position: relative;
+}
+.navbar.navTabs .nav-btn.active{
+  /* add inner lines */
+}
+.navbar.navTabs .nav-btn.active i{ display:none; } /* safety */
+
+.navbar.navTabs .nav-btn.active::marker{ content:""; } /* safety */
+
+/* inner top/bottom highlights */
+.navbar.navTabs .nav-btn.active{
+  --_pad: 10px;
+}
+.navbar.navTabs .nav-btn.active ._dummy{ display:none; }
+
+.navbar.navTabs .nav-btn.active::before{
+  border-color: rgba(255,170,120,.10);
+}
+
+.navbar.navTabs .nav-btn.active::after{
+  /* keep seam for non-first tabs, but active also needs a bottom glow band */
+}
+
+/* bottom glow band on active */
+.navbar.navTabs .nav-btn.active{
+  background-blend-mode: screen, normal, normal, normal, normal, normal;
+}
+.navbar.navTabs .nav-btn.active{
+  /* bottom and top thin lines */
+}
+.navbar.navTabs .nav-btn.active{
+  /* draw lines with pseudo element */
+}
+.navbar.navTabs .nav-btn.active{
+  /* nothing else */
+}
+
+/* ACTIVE extra lines (separate pseudo to avoid killing seam logic) */
+.navbar.navTabs .nav-btn.active::before{
+  /* already used as inner frame; we keep it */
+}
+.navbar.navTabs .nav-btn.active{
+  /* add two lines using a new pseudo via box-shadow trick */
+  box-shadow:
+    0 18px 36px rgba(0,0,0,.65),
+    0 0 54px rgba(255,90,35,.14),
+    inset 0 0 0 1px rgba(0,0,0,.6),
+    inset 0 1px 0 rgba(255,120,70,.28),
+    inset 0 -1px 0 rgba(255,120,70,.30);
+}
+
+/* IMPORTANT: kill the old “dot” if you had it from earlier */
+.navbar.navTabs .nav-btn.active span::after{ display:none !important; }
