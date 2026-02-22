@@ -2046,186 +2046,249 @@ body::before{
   opacity: .65;
   pointer-events: none;
 }
-/* =========================================
-   NAV TABS — ENERGY GLOW (V4 REF MATCH)
-   Paste at VERY END of theme_A.css
-========================================= */
+/* =========================================================
+   NAV TABS — HOLOGRAPHIC EDGE (V3 FINAL)
+   ONE CONTINUOUS RAIL + CONNECTED SEGMENTS
+   MUST BE LAST IN theme_A.css
+   ========================================================= */
 
-.navbar.navTabs{
-  position: relative;
-  display: flex;
-  gap: 14px;                 /* трошки ближче, але не злипається */
-  padding: 14px 16px;
-  border-radius: 22px;
-  background: rgba(6,6,8,0.55);
-  backdrop-filter: blur(8px);
-  overflow: visible;          /* ВАЖЛИВО: щоб glow не обрізався */
-  isolation: isolate;
+body .navbar.navTabs{
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 9999 !important;
+
+  width: min(980px, calc(100% - 80px)) !important;
+  margin: 18px auto 0 !important;
+
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  padding: 0 !important;
+  gap: 0 !important;
+
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+
+  height: auto !important;
+  min-height: 0 !important;
+  overflow: visible !important;
+
+  isolation: isolate !important;
 }
 
-/* зовнішня “рамка” контейнера */
-.navbar.navTabs::before{
-  content:"";
-  position:absolute;
-  inset: 0;
-  border-radius: 22px;
-  pointer-events:none;
-  border: 1px solid rgba(255,150,70,0.22);
-  box-shadow:
-    0 0 18px rgba(255,120,40,0.22),
-    0 0 46px rgba(255,60,0,0.14),
-    inset 0 0 0 1px rgba(255,150,70,0.10);
-  z-index: 0;
+/* hard-kill any “big capsule” from older styles (if they exist) */
+body .navbar.navTabs{
+  outline: none !important;
+  filter: none !important;
 }
 
-/* верхня і нижня “енерго-рейка” по всій панелі */
-.navbar.navTabs::after{
-  content:"";
-  position:absolute;
-  left: 14px;
-  right: 14px;
-  top: 10px;
-  bottom: 10px;
-  border-radius: 16px;
-  pointer-events:none;
+body .navbar.navTabs::before{
+  content:"" !important;
+  position:absolute !important;
+  inset: 0 !important;
+  border-radius: 12px !important;
+  pointer-events:none !important;
 
   background:
-    /* TOP RAIL */
+    linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.00) 45%),
+    linear-gradient(180deg, rgba(0,0,0,0.72), rgba(0,0,0,0.50)) !important;
+
+  border: 1px solid rgba(255,120,40,0.16) !important;
+
+  box-shadow:
+    0 18px 55px rgba(0,0,0,0.55),
+    inset 0 1px 0 rgba(255,255,255,0.06) !important;
+
+  z-index: 0 !important;
+}
+
+body .navbar.navTabs::after{
+  content:"" !important;
+  position:absolute !important;
+  inset:-3px !important;
+  border-radius: 14px !important;
+  pointer-events:none !important;
+
+  /* thin outer border */
+  border: 1px solid rgba(255,150,90,0.38) !important;
+
+  /* IMPORTANT: make top & bottom orange rails across full width */
+  background:
+    /* TOP rail */
     linear-gradient(90deg,
-      rgba(255,80,10,0) 0%,
-      rgba(255,160,60,0.55) 10%,
-      rgba(255,90,20,0.95) 50%,
-      rgba(255,160,60,0.55) 90%,
-      rgba(255,80,10,0) 100%
+      rgba(255,90,35,0.00),
+      rgba(255,90,35,0.70),
+      rgba(255,220,170,0.18),
+      rgba(255,90,35,0.70),
+      rgba(255,90,35,0.00)
+    ) top / 100% 2px no-repeat,
+
+    /* BOTTOM rail */
+    linear-gradient(90deg,
+      rgba(255,90,35,0.00),
+      rgba(255,90,35,0.80),
+      rgba(255,220,170,0.20),
+      rgba(255,90,35,0.80),
+      rgba(255,90,35,0.00)
+    ) bottom / 100% 2px no-repeat,
+
+    /* soft warm “holo” sheen (very subtle) */
+    linear-gradient(180deg,
+      rgba(255,200,160,0.08),
+      rgba(255,200,160,0.00) 45%,
+      rgba(255,90,35,0.08)
+    ) !important;
+
+  /* perimeter glow (this is what you miss now) */
+  box-shadow:
+    0 0 0 1px rgba(255,110,55,0.22),
+    0 0 18px rgba(255,110,55,0.28),
+    0 0 60px rgba(255,80,30,0.14) !important;
+
+  opacity: 1 !important;
+  filter: blur(0.12px) !important;
+  z-index: 3 !important;
+}
+
+/* 4 equal segments, fill the rail */
+body .navbar.navTabs > .nav-btn{
+  position: relative !important;
+  z-index: 2 !important;
+
+  flex: 1 1 0 !important;
+  min-width: 0 !important;
+
+  height: 54px !important;
+  margin: 0 !important;
+  padding: 0 18px !important;
+
+  border: 0 !important;
+  background: transparent !important;
+
+  font-family: var(--font-ui, system-ui) !important;
+  font-weight: 800 !important;
+  font-size: 12px !important;
+  letter-spacing: .16em !important;
+  text-transform: uppercase !important;
+
+  color: rgba(255,255,255,0.82) !important;
+  cursor: pointer !important;
+
+  /* kill old “trapezoid/gaps” sources */
+  clip-path: none !important;
+  transform: none !important;
+  box-shadow: none !important;
+  filter: none !important;
+
+  transition: transform .16s ease, color .16s ease, filter .16s ease !important;
+}
+
+/* IMPORTANT: force segments to touch */
+body .navbar.navTabs > .nav-btn + .nav-btn{
+  margin-left: -16px !important;
+}
+
+/* segment plate */
+body .navbar.navTabs > .nav-btn::before{
+  content:"" !important;
+  position:absolute !important;
+
+  /* less “air” inside — this fixes the look you have now */
+  inset: 6px 8px !important;
+
+  border-radius: 10px !important;
+  pointer-events:none !important;
+
+  background:
+    radial-gradient(120% 140% at 50% 0%,
+      rgba(255,255,255,0.09),
+      rgba(255,255,255,0.02) 55%,
+      rgba(0,0,0,0.10) 100%
     ),
-    /* BOTTOM RAIL */
-    linear-gradient(90deg,
-      rgba(255,80,10,0) 0%,
-      rgba(255,150,55,0.45) 14%,
-      rgba(255,70,0,0.75) 50%,
-      rgba(255,150,55,0.45) 86%,
-      rgba(255,80,10,0) 100%
-    );
+    linear-gradient(180deg,
+      rgba(18,18,22,0.72),
+      rgba(8,8,10,0.55)
+    ) !important;
 
-  background-repeat: no-repeat;
-  background-size: 100% 2px, 100% 2px;
-  background-position: 0 0, 0 100%;
-  filter: blur(10px);
-  opacity: 0.85;
-  mix-blend-mode: screen;
-  z-index: 0;
+  border: 1px solid rgba(255,140,80,0.22) !important;
+
+  clip-path: polygon(10px 0%, 100% 0%, calc(100% - 12px) 100%, 0% 100%) !important;
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.07),
+    inset 0 -1px 0 rgba(0,0,0,0.35),
+    0 0 18px rgba(255,90,35,0.06) !important;
 }
 
-/* кнопки */
-.navbar.navTabs .nav-btn{
-  position: relative;
-  flex: 1;
-  height: 68px;
-  border: 0;
-  cursor: pointer;
+body .navbar.navTabs > .nav-btn:first-child::before{
+  clip-path: polygon(14px 0%, 100% 0%, calc(100% - 12px) 100%, 0% 100%, 0% 20px) !important;
+}
+body .navbar.navTabs > .nav-btn:last-child::before{
+  clip-path: polygon(10px 0%, 100% 0%, 100% 24px, calc(100% - 10px) 100%, 0% 100%) !important;
+}
 
-  /* менш “коса”, більше сегментована */
-  clip-path: polygon(6% 0%, 100% 0%, 94% 100%, 0% 100%);
-  border-radius: 18px;
+/* subtle divider */
+body .navbar.navTabs > .nav-btn::after{
+  content:"" !important;
+  position:absolute !important;
+  left: 0 !important;
+  top: 14px !important;
+  bottom: 14px !important;
+  width: 1px !important;
+  pointer-events:none !important;
 
   background: linear-gradient(180deg,
-    rgba(255,255,255,0.06) 0%,
-    rgba(0,0,0,0.30) 45%,
-    rgba(0,0,0,0.65) 100%
-  );
+    rgba(255,120,40,0.00),
+    rgba(255,120,40,0.14),
+    rgba(255,120,40,0.00)
+  ) !important;
 
-  color: rgba(255,255,255,0.78);
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  font-weight: 800;
+  opacity: .85 !important;
+}
+body .navbar.navTabs > .nav-btn:first-child::after{
+  display:none !important;
+}
+
+/* text on top */
+body .navbar.navTabs > .nav-btn > span{
+  position: relative !important;
+  z-index: 3 !important;
+}
+
+/* hover */
+body .navbar.navTabs > .nav-btn:hover{
+  transform: translateY(-1px) !important;
+  color: rgba(255,255,255,0.95) !important;
+  filter: brightness(1.06) !important;
+}
+
+/* active */
+body .navbar.navTabs > .nav-btn.active{
+  color: rgba(255,225,200,0.98) !important;
+  text-shadow: 0 0 18px rgba(255,120,40,0.18) !important;
+}
+body .navbar.navTabs > .nav-btn.active::before{
+  border-color: rgba(255,120,40,0.38) !important;
+
+  background:
+    radial-gradient(240px 70px at 20% 50%, rgba(255,90,35,0.14), transparent 65%),
+    radial-gradient(240px 70px at 80% 50%, rgba(255,90,35,0.10), transparent 65%),
+    linear-gradient(180deg, rgba(22,16,14,0.70), rgba(8,8,10,0.62)) !important;
 
   box-shadow:
-    inset 0 0 0 1px rgba(255,150,70,0.12),
-    inset 0 -18px 22px rgba(0,0,0,0.55);
+    inset 0 1px 0 rgba(255,255,255,0.08),
+    inset 0 -1px 0 rgba(0,0,0,0.35),
+    0 0 26px rgba(255,120,40,0.14) !important;
 
-  z-index: 1;
+  outline: 1px solid rgba(255,140,80,0.32) !important;
+  filter: brightness(1.08) !important;
 }
 
-/* тонка внутрішня “окантовка” + легкий glow по краях таба */
-.navbar.navTabs .nav-btn::before{
-  content:"";
-  position:absolute;
-  inset: 0;
-  border-radius: 18px;
-  pointer-events:none;
-  box-shadow:
-    inset 0 0 0 1px rgba(255,160,80,0.14),
-    0 0 14px rgba(255,110,35,0.14);
-  opacity: 0.9;
+/* kill any old dot/underline */
+body .navbar.navTabs .nav-btn span::after,
+body .navbar.navTabs .nav-btn.active::after{
+  display:none !important;
 }
-
-/* нижня “рейка” в кожній вкладці (видима, як на референсі) */
-.navbar.navTabs .nav-btn::after{
-  content:"";
-  position:absolute;
-  left: 14px;
-  right: 14px;
-  bottom: 10px;
-  height: 2px;
-  background: linear-gradient(90deg,
-    rgba(255,80,10,0),
-    rgba(255,170,70,0.95),
-    rgba(255,80,10,0)
-  );
-  box-shadow:
-    0 0 16px rgba(255,140,55,0.75),
-    0 0 46px rgba(255,60,0,0.28);
-  opacity: 0.75;
-}
-
-/* текст */
-.navbar.navTabs .nav-btn > span{
-  position: relative;
-  z-index: 2;
-  font-size: 18px;
-}
-
-/* ACTIVE: сильний glow + flare зліва */
-.navbar.navTabs .nav-btn.active{
-  color: rgba(255,255,255,0.96);
-  background: linear-gradient(180deg,
-    rgba(255,150,70,0.20) 0%,
-    rgba(0,0,0,0.28) 48%,
-    rgba(0,0,0,0.70) 100%
-  );
-
-  box-shadow:
-    inset 0 0 0 1px rgba(255,190,110,0.30),
-    0 0 24px rgba(255,140,55,0.40),
-    0 0 70px rgba(255,60,0,0.22);
-}
-
-/* flare як у референсі (яскравий спалах зліва на active) */
-.navbar.navTabs .nav-btn.active span::before{
-  content:"";
-  position:absolute;
-  left: -28px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  background: radial-gradient(circle,
-    rgba(255,210,120,0.75) 0%,
-    rgba(255,120,40,0.40) 35%,
-    rgba(255,60,0,0.0) 70%
-  );
-  filter: blur(2px);
-  opacity: 0.95;
-  pointer-events:none;
-  z-index: -1;
-}
-
-/* active рейка яскравіша */
-.navbar.navTabs .nav-btn.active::after{
-  opacity: 0.95;
-  box-shadow:
-    0 0 18px rgba(255,160,70,0.95),
-    0 0 64px rgba(255,60,0,0.35);
-}
-
