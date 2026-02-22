@@ -2884,189 +2884,196 @@ body::before{
   .navbar.navTabs::before{ width: min(92vw, 760px); }
   .navbar.navTabs .nav-btn{ min-width: 140px; font-size: 11px !important; }
 }
-/* ================================
-   ELITE PLASMA TABS (TOP NAV)
-   ================================ */
+/* ==========================================================
+   NAV — RANKED RAIL (1:1 like screenshot)
+   Paste at VERY END of theme_A.css
+   ========================================================== */
 
-.topTabs{
-  position: relative;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 10px;
-  width: min(1120px, calc(100% - 64px));
-  margin: 18px auto 0;
-  padding: 10px;
+:root{
+  --navW: min(980px, 94vw);
+  --navH: 54px;
 
-  /* glass bar */
-  background: rgba(10, 8, 12, 0.55);
-  border: 1px solid rgba(255, 120, 60, 0.22);
-  border-radius: 14px;
-  backdrop-filter: blur(10px);
-  box-shadow:
-    0 18px 50px rgba(0,0,0,.55),
-    inset 0 1px 0 rgba(255,255,255,.06);
+  --navText: rgba(255,255,255,.80);
+  --navTextActive: rgba(255,210,170,.95);
+
+  --navBaseA: rgba(14,14,18,.88);
+  --navBaseB: rgba(6,6,10,.92);
+
+  --navStroke: rgba(255,255,255,.12);
+  --navStrokeSoft: rgba(255,255,255,.06);
+
+  --navHot: rgba(255,90,35,1);
+  --navHotSoft: rgba(255,90,35,.35);
 }
 
-/* subtle top glow line */
-.topTabs::before{
+.navbar.navRail{
+  position: sticky;
+  top: 0;
+  z-index: 200;
+
+  height: auto !important;
+  padding: 18px 14px 10px !important;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  gap: 0 !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+/* rail behind tabs */
+.navbar.navRail::before{
   content:"";
   position:absolute;
-  left: 14px; right: 14px; top: 0;
-  height: 1px;
-  background: linear-gradient(90deg,
-    transparent,
-    rgba(255,120,60,.35),
-    rgba(255,60,40,.25),
-    transparent
-  );
-  opacity: .9;
-}
+  left:50%;
+  top:50%;
+  transform: translate(-50%, -50%);
+  width: var(--navW);
+  height: var(--navH);
+  border-radius: 0; /* rail is straight */
 
-.tabBtn{
-  position: relative;
-  height: 44px;
-  border: 1px solid rgba(255, 120, 60, 0.18);
-  border-radius: 12px;
-  cursor: pointer;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,0) 45%),
+    linear-gradient(180deg, var(--navBaseA), var(--navBaseB));
 
-  /* dark metal */
-  background: linear-gradient(180deg,
-    rgba(18, 14, 22, 0.65),
-    rgba(10, 8, 12, 0.55)
-  );
-
-  color: rgba(255,255,255,0.78);
-  letter-spacing: 0.16em;
-  font-weight: 700;
-  font-size: 12px;
-  text-transform: uppercase;
-
+  border: 1px solid var(--navStrokeSoft);
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.05),
-    inset 0 -1px 0 rgba(0,0,0,.55);
-  transition: transform .15s ease, border-color .15s ease, box-shadow .15s ease, color .15s ease;
-  outline: none;
-}
+    0 18px 60px rgba(0,0,0,.55),
+    inset 0 0 0 1px rgba(0,0,0,.45);
 
-/* angled “cut” corners */
-.tabBtn::before,
-.tabBtn::after{
-  content:"";
-  position:absolute;
-  top: 9px;
-  width: 10px; height: 26px;
-  opacity: .9;
   pointer-events:none;
 }
 
-.tabBtn::before{
-  left: -1px;
-  border-left: 1px solid rgba(255,120,60,.22);
-  background: linear-gradient(135deg, rgba(255,120,60,.18), transparent 60%);
-  clip-path: polygon(0 0, 100% 25%, 100% 75%, 0 100%);
-  border-top-left-radius: 10px;
-  border-bottom-left-radius: 10px;
+/* top & bottom thin rails (orange) */
+.navbar.navRail::after{
+  content:"";
+  position:absolute;
+  left:50%;
+  top:50%;
+  transform: translate(-50%, -50%);
+  width: calc(var(--navW) - 20px);
+  height: calc(var(--navH) - 10px);
+  pointer-events:none;
+  opacity: .95;
+
+  background:
+    linear-gradient(90deg, transparent, rgba(255,90,35,.35), transparent) top / 100% 2px no-repeat,
+    linear-gradient(90deg, transparent, rgba(255,90,35,.22), transparent) bottom / 100% 2px no-repeat;
 }
 
-.tabBtn::after{
-  right: -1px;
-  border-right: 1px solid rgba(255,120,60,.22);
-  background: linear-gradient(225deg, rgba(255,120,60,.14), transparent 60%);
-  clip-path: polygon(0 25%, 100% 0, 100% 100%, 0 75%);
-  border-top-right-radius: 10px;
-  border-bottom-right-radius: 10px;
-}
-
-/* bottom energy underline */
-.tabBtn span{ position:relative; z-index:2; }
-.tabBtn{
-  overflow: hidden;
-}
-.tabBtn > * { pointer-events:none; } /* якщо всередині лише текст */
-.tabBtn::marker{ content:""; } /* no bullet safety */
-
-.tabBtn .dot,
-.tabBtn .activeDot{ display:none !important; } /* якщо у тебе була “червона точка” */
-
-/* hover = subtle glow */
-.tabBtn:hover{
-  transform: translateY(-1px);
-  border-color: rgba(255, 120, 60, 0.35);
-  color: rgba(255,255,255,0.92);
-  box-shadow:
-    0 10px 24px rgba(0,0,0,.45),
-    0 0 18px rgba(255,120,60,.10),
-    inset 0 1px 0 rgba(255,255,255,.06);
-}
-
-.tabBtn.is-active{
-  border-color: rgba(255, 120, 60, 0.65);
-  color: rgba(255,240,230,0.98);
-
-  /* active = plasma core */
-  background: linear-gradient(180deg,
-    rgba(35, 18, 18, 0.70),
-    rgba(12, 8, 10, 0.55)
-  );
-
-  box-shadow:
-    0 14px 36px rgba(0,0,0,.55),
-    0 0 22px rgba(255,120,60,.18),
-    0 0 60px rgba(255,60,40,.10),
-    inset 0 1px 0 rgba(255,255,255,.08);
-}
-
-/* active underline beam */
-.tabBtn.is-active::selection{ background: transparent; }
-.tabBtn.is-active::before,
-.tabBtn.is-active::after{
-  border-color: rgba(255,120,60,.55);
-}
-
-.tabBtn.is-active{
-  background-image:
-    radial-gradient(120px 60px at 50% 120%, rgba(255,120,60,.28), transparent 60%),
-    linear-gradient(180deg, rgba(35, 18, 18, 0.70), rgba(12, 8, 10, 0.55));
-}
-
-/* thin beam line at bottom */
-.tabBtn.is-active{
-  --beam: linear-gradient(90deg, transparent, rgba(255,120,60,.95), rgba(255,60,40,.65), transparent);
-}
-.tabBtn.is-active::placeholder{ color:inherit; }
-
-.tabBtn.is-active::before{ opacity: 1; }
-.tabBtn.is-active::after{ opacity: 1; }
-
-.tabBtn.is-active{
-  box-shadow:
-    0 14px 36px rgba(0,0,0,.55),
-    0 0 22px rgba(255,120,60,.18),
-    0 0 60px rgba(255,60,40,.10),
-    inset 0 1px 0 rgba(255,255,255,.08);
-}
-
-/* bottom beam line using an inner overlay */
-.tabBtn.is-active{
-  background-clip: padding-box;
-}
-.tabBtn.is-active{
+/* tabs */
+.navbar.navRail .nav-btn{
   position: relative;
-}
-.tabBtn.is-active::after{
-  /* keep corner cut, so we add beam with another layer below using box-shadow trick */
-}
-.tabBtn.is-active{
+  z-index: 3;
+
+  height: 44px;
+  min-width: 200px;
+  padding: 0 18px;
+  margin: 0 -10px; /* make them connect */
+
+  border: 1px solid var(--navStroke);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,0) 45%),
+    linear-gradient(180deg, rgba(28,28,34,.70), rgba(8,8,12,.88));
   box-shadow:
-    0 14px 36px rgba(0,0,0,.55),
-    0 0 22px rgba(255,120,60,.18),
-    0 0 60px rgba(255,60,40,.10),
-    inset 0 1px 0 rgba(255,255,255,.08),
-    inset 0 -2px 0 rgba(255,120,60,.75);
+    0 12px 26px rgba(0,0,0,.55),
+    inset 0 0 0 1px rgba(0,0,0,.55);
+
+  color: var(--navText);
+  font-family: var(--font-ui);
+  font-weight: 800;
+  font-size: 12px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+
+  cursor: pointer;
+  outline: none;
+
+  /* parallelogram like screenshot */
+  clip-path: polygon(10px 0, 100% 0, calc(100% - 10px) 100%, 0 100%);
+
+  transition: filter .15s ease, color .15s ease, border-color .15s ease;
 }
 
-/* Optional: make tabs sit “embedded” into the bar */
-.topTabs .tabBtn{
-  margin: 0;
+/* inner bevel line */
+.navbar.navRail .nav-btn::before{
+  content:"";
+  position:absolute;
+  inset: 2px;
+  clip-path: inherit;
+  border: 1px solid rgba(255,255,255,.08);
+  opacity: .55;
+  pointer-events:none;
 }
+
+/* separators sparks between tabs */
+.navbar.navRail .nav-btn:not(:first-child)::after{
+  content:"";
+  position:absolute;
+  left: -8px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 16px;
+  height: 46px;
+  pointer-events:none;
+  opacity: .9;
+
+  background:
+    radial-gradient(circle at 60% 50%, rgba(255,90,35,.85), transparent 60%),
+    linear-gradient(180deg, transparent, rgba(255,90,35,.35), transparent);
+  filter: blur(.2px);
+}
+
+/* hover */
+.navbar.navRail .nav-btn:hover{
+  filter: brightness(1.10);
+  color: rgba(255,255,255,.92);
+  border-color: rgba(255,255,255,.18);
+}
+
+/* ACTIVE — glow + warm text (no dot, no fat underline) */
+.navbar.navRail .nav-btn.active{
+  color: var(--navTextActive);
+  border-color: rgba(255,90,35,.38);
+
+  background:
+    radial-gradient(240px 90px at 20% 50%, rgba(255,90,35,.18), transparent 65%),
+    linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,0) 45%),
+    linear-gradient(180deg, rgba(34,24,18,.80), rgba(10,8,10,.92));
+
+  box-shadow:
+    0 16px 34px rgba(0,0,0,.65),
+    0 0 48px rgba(255,90,35,.12),
+    inset 0 0 0 1px rgba(0,0,0,.55);
+}
+
+/* active top+bottom hot lines */
+.navbar.navRail .nav-btn.active span{
+  position: relative;
+  display:inline-block;
+}
+.navbar.navRail .nav-btn.active span::before,
+.navbar.navRail .nav-btn.active span::after{
+  content:"";
+  position:absolute;
+  left: -26px;
+  right: -26px;
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, transparent, var(--navHot), transparent);
+  box-shadow: 0 0 18px var(--navHotSoft);
+  opacity: .95;
+  pointer-events:none;
+}
+.navbar.navRail .nav-btn.active span::before{ top: -12px; }
+.navbar.navRail .nav-btn.active span::after{ bottom: -12px; }
+
+/* make sure old “dot”/underline styles are killed */
+.navbar .nav-btn.active::after{ display:none !important; }
+.navbar .nav-btn.active span::after{ /* we use it above; if conflict occurs, our selector wins */ }
 
