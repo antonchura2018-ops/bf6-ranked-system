@@ -2292,3 +2292,86 @@ body .navbar.navTabs .nav-btn span::after,
 body .navbar.navTabs .nav-btn.active::after{
   display:none !important;
 }
+/* =========================================================
+   NAV TABS — APEX FIRE GLOW FRAME (outer glow + inner line)
+   Paste at VERY END of theme_A.css
+   ========================================================= */
+
+:root{
+  --apexHot: rgba(255, 90, 35, 1);
+  --apexHotSoft: rgba(255, 90, 35, .55);
+  --apexHotDeep: rgba(255, 40, 15, .35);
+  --apexInnerLine: rgba(255, 180, 120, .55);
+}
+
+/* IMPORTANT: keep navbar positioned for pseudo-elements */
+body .navbar.navTabs{
+  position: relative !important;
+  isolation: isolate !important;
+}
+
+/* OUTER: strong blurred glow frame */
+body .navbar.navTabs::after{
+  content:"" !important;
+  position:absolute !important;
+  inset: -10px !important;            /* how far the glow expands */
+  border-radius: 18px !important;
+  pointer-events:none !important;
+  z-index: 0 !important;
+
+  /* outer energy frame */
+  background:
+    linear-gradient(90deg,
+      rgba(255,90,35,0),
+      rgba(255,90,35,.55),
+      rgba(255,180,120,.22),
+      rgba(255,90,35,.55),
+      rgba(255,90,35,0)
+    );
+
+  /* strong glow */
+  filter: blur(10px) !important;
+  opacity: .95 !important;
+
+  box-shadow:
+    0 0 40px rgba(255,90,35,.55),
+    0 0 110px rgba(255,60,20,.28),
+    0 0 180px rgba(255,40,15,.18) !important;
+
+  mix-blend-mode: screen; /* gives “energy” look */
+}
+
+/* INNER: thin sharp line frame */
+body .navbar.navTabs::before{
+  content:"" !important;
+  position:absolute !important;
+  inset: -1px !important;
+  border-radius: 14px !important;
+  pointer-events:none !important;
+  z-index: 2 !important;
+
+  border: 1px solid rgba(255,180,120,.35) !important;
+
+  /* thin inner line with hot highlights */
+  box-shadow:
+    inset 0 0 0 1px rgba(0,0,0,.55),
+    0 0 0 1px rgba(255,90,35,.20),
+    0 0 18px rgba(255,90,35,.22) !important;
+}
+
+/* make sure buttons sit above the glow */
+body .navbar.navTabs > .nav-btn{
+  position: relative !important;
+  z-index: 5 !important;
+}
+
+/* NO BLUE artifacts */
+body .navbar.navTabs,
+body .navbar.navTabs *{
+  outline: none !important;
+}
+
+/* optional: stronger active glow (tab itself) */
+body .navbar.navTabs > .nav-btn.active{
+  text-shadow: 0 0 16px rgba(255,90,35,.35) !important;
+}
