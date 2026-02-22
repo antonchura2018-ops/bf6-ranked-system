@@ -3078,39 +3078,42 @@ body::before{
 .navbar .nav-btn.active span::after{ /* we use it above; if conflict occurs, our selector wins */ }
 
 /* ==========================================================
-   NAV TABS — UPGRADE to match ref (your 1st image)
+   FINAL NAV TABS — FIRE RAIL (match your reference 1:1)
    Paste as VERY LAST block in theme_A.css
-   Works with: <div class="navbar navTabs"> and .nav-btn > span
+   Needs: <div class="navbar navTabs"> .nav-btn > span
    ========================================================== */
 
 :root{
-  --navW: min(1080px, 96vw);
-  --navH: 60px;
+  --btnW: 245px;        /* ширина вкладки */
+  --btnH: 44px;         /* висота */
+  --overlap: 14px;      /* "заїзд" вкладок одна в одну */
 
-  --plateA: rgba(18,18,22,.88);
-  --plateB: rgba(6,6,10,.92);
+  --railPadX: 12px;
+  --railPadY: 10px;
+
+  --railA: rgba(18,18,22,.72);
+  --railB: rgba(6,6,10,.78);
 
   --stroke: rgba(255,255,255,.12);
-  --strokeSoft: rgba(255,255,255,.06);
+
+  --hot: rgba(255,95,40,1);
+  --hotSoft: rgba(255,95,40,.35);
 
   --text: rgba(255,255,255,.82);
   --textActive: rgba(255,210,170,.96);
-
-  --hot: rgba(255,95,40,1);
-  --hotSoft: rgba(255,95,40,.32);
 }
 
-/* контейнер: без будь-яких фонів по краях */
+/* container (sticky, but NO wide background) */
 .navbar.navTabs{
   position: sticky !important;
   top: 0 !important;
   z-index: 9999 !important;
 
   display:flex !important;
-  align-items:center !important;
   justify-content:center !important;
+  align-items:center !important;
 
-  padding: 18px 14px 12px !important;
+  padding: 14px 0 10px !important;
   gap: 0 !important;
 
   background: transparent !important;
@@ -3119,10 +3122,10 @@ body::before{
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
 
-  isolation: isolate !important; /* щоб псевдо не “лізли” */
+  isolation: isolate !important;
 }
 
-/* темна планка тільки під табами (як на рефі) */
+/* narrow rail ONLY under the tabs (no left/right black) */
 .navbar.navTabs::before{
   content:"" !important;
   position:absolute !important;
@@ -3130,23 +3133,22 @@ body::before{
   top: 50% !important;
   transform: translate(-50%, -50%) !important;
 
-  width: var(--navW) !important;
-  height: var(--navH) !important;
+  /* 4 tabs: btnW*4 minus overlaps between 3 joints */
+  width: min(calc(var(--btnW) * 4 - var(--overlap) * 3 + var(--railPadX) * 2), 96vw) !important;
+  height: calc(var(--btnH) + var(--railPadY) * 2) !important;
 
   background:
     linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,0) 45%),
-    linear-gradient(180deg, var(--plateA), var(--plateB)) !important;
+    linear-gradient(180deg, var(--railA), var(--railB)) !important;
 
-  border: 1px solid var(--strokeSoft) !important;
-  box-shadow:
-    0 18px 60px rgba(0,0,0,.55),
-    inset 0 0 0 1px rgba(0,0,0,.45) !important;
+  border: 1px solid rgba(255,255,255,.08) !important;
+  box-shadow: 0 18px 60px rgba(0,0,0,.55), inset 0 0 0 1px rgba(0,0,0,.45) !important;
 
   pointer-events:none !important;
   z-index: 0 !important;
 }
 
-/* тонкі помаранчеві лінії зверху/знизу по всій планці */
+/* top+bottom orange rail lines (as in reference) */
 .navbar.navTabs::after{
   content:"" !important;
   position:absolute !important;
@@ -3154,8 +3156,8 @@ body::before{
   top: 50% !important;
   transform: translate(-50%, -50%) !important;
 
-  width: calc(var(--navW) - 26px) !important;
-  height: calc(var(--navH) - 14px) !important;
+  width: min(calc(var(--btnW) * 4 - var(--overlap) * 3 + var(--railPadX) * 2 - 22px), 92vw) !important;
+  height: calc(var(--btnH) + var(--railPadY) * 2 - 12px) !important;
 
   background:
     linear-gradient(90deg, transparent, rgba(255,95,40,.35), transparent) top / 100% 2px no-repeat,
@@ -3166,21 +3168,22 @@ body::before{
   z-index: 1 !important;
 }
 
-/* кнопки-табки (паралелограм як на твоєму рефі) */
+/* base button (parallelogram) */
 .navbar.navTabs .nav-btn{
   position: relative !important;
   z-index: 2 !important;
 
-  height: 46px !important;
-  min-width: 210px !important;
+  width: var(--btnW) !important;
+  height: var(--btnH) !important;
 
   padding: 0 18px !important;
-  margin: 0 -12px !important;        /* з’єднати як рейл */
+  margin: 0 !important;
+
   border: 1px solid var(--stroke) !important;
 
   background:
     linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,0) 45%),
-    linear-gradient(180deg, rgba(28,28,34,.72), rgba(8,8,12,.90)) !important;
+    linear-gradient(180deg, rgba(28,28,34,.70), rgba(8,8,12,.88)) !important;
 
   box-shadow:
     0 12px 26px rgba(0,0,0,.55),
@@ -3198,13 +3201,18 @@ body::before{
   outline: none !important;
   cursor: pointer !important;
 
-  /* ключ: форма як на твоєму 1-му скріні */
+  /* shape */
   clip-path: polygon(16px 0, 100% 0, calc(100% - 16px) 100%, 0 100%) !important;
 
-  transition: filter .15s ease, color .15s ease, border-color .15s ease, box-shadow .15s ease !important;
+  transition: filter .15s ease, color .15s ease, border-color .15s ease !important;
 }
 
-/* внутрішня “кромка” (bevel) */
+/* connect tabs (overlap like reference) */
+.navbar.navTabs .nav-btn + .nav-btn{
+  margin-left: calc(var(--overlap) * -1) !important;
+}
+
+/* inner bevel line */
 .navbar.navTabs .nav-btn::before{
   content:"" !important;
   position:absolute !important;
@@ -3215,26 +3223,26 @@ body::before{
   pointer-events:none !important;
 }
 
-/* іскра/сепаратор між табами */
+/* spark between tabs */
 .navbar.navTabs .nav-btn:not(:first-child)::after{
   content:"" !important;
   position:absolute !important;
-  left: -10px !important;
+  left: calc(var(--overlap) * -1 - 2px) !important;
   top: 50% !important;
   transform: translateY(-50%) !important;
 
-  width: 20px !important;
-  height: 52px !important;
+  width: 18px !important;
+  height: 46px !important;
 
   background:
     radial-gradient(circle at 60% 50%, rgba(255,95,40,.85), transparent 62%),
     linear-gradient(180deg, transparent, rgba(255,95,40,.30), transparent) !important;
 
-  opacity: .9 !important;
+  opacity: .95 !important;
   pointer-events:none !important;
 }
 
-/* текст поверх всього */
+/* text above everything */
 .navbar.navTabs .nav-btn span{
   position: relative !important;
   z-index: 3 !important;
@@ -3247,7 +3255,7 @@ body::before{
   border-color: rgba(255,255,255,.18) !important;
 }
 
-/* ACTIVE: як на рефі — тепліший, glow + лінії зверху/знизу */
+/* ACTIVE (no red blob, just hot lines + warm tone) */
 .navbar.navTabs .nav-btn.active{
   color: var(--textActive) !important;
   border-color: rgba(255,95,40,.40) !important;
@@ -3255,7 +3263,7 @@ body::before{
   background:
     radial-gradient(240px 90px at 18% 50%, rgba(255,95,40,.18), transparent 65%),
     linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,0) 45%),
-    linear-gradient(180deg, rgba(34,24,18,.84), rgba(10,8,10,.92)) !important;
+    linear-gradient(180deg, rgba(34,24,18,.82), rgba(10,8,10,.92)) !important;
 
   box-shadow:
     0 16px 34px rgba(0,0,0,.65),
@@ -3263,13 +3271,14 @@ body::before{
     inset 0 0 0 1px rgba(0,0,0,.55) !important;
 }
 
-/* активні верх/низ “hot lines” */
+/* active top+bottom hot lines (like your ref) */
 .navbar.navTabs .nav-btn.active span::before,
 .navbar.navTabs .nav-btn.active span::after{
   content:"" !important;
   position:absolute !important;
   left: -28px !important;
   right: -28px !important;
+
   height: 2px !important;
   border-radius: 999px !important;
 
@@ -3279,10 +3288,9 @@ body::before{
   opacity: .95 !important;
   pointer-events:none !important;
 }
-
 .navbar.navTabs .nav-btn.active span::before{ top: -12px !important; }
 .navbar.navTabs .nav-btn.active span::after{ bottom: -12px !important; }
 
-/* на всякий випадок: прибити старі “точки/андерлайни”, якщо десь ще живі */
-.navbar.navTabs .nav-btn.active i,
-.navbar.navTabs .nav-btn.active em{ display:none !important; }
+/* kill any old dots/underlines from previous nav styles */
+.navbar.navTabs .nav-btn span::after{ /* we use it above for active; old rules won't win */ }
+.navbar .nav-btn.active::after{ content:none !important; display:none !important; }
