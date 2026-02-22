@@ -2403,3 +2403,91 @@ body .navbar.navTabs .nav-btn.active::after{
   color: rgba(255,235,220,.98) !important;
   text-shadow: 0 0 14px rgba(255,90,35,.28) !important;
 }
+/* =========================================================
+   HARD FIX — FORCE ACTIVE FIRE LINES (wins over old blocks)
+   Paste as VERY LAST lines of theme_A.css
+   ========================================================= */
+
+/* 0) stop clipping */
+html body .navbar.navTabs{ overflow: visible !important; position: relative !important; isolation:isolate !important; }
+html body .navbar.navTabs .nav-btn{ overflow: visible !important; position: relative !important; }
+
+/* 1) if any old rule hides pseudo elements, force them back */
+html body .navbar.navTabs .nav-btn.active::before,
+html body .navbar.navTabs .nav-btn.active::after{
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+/* 2) FIRE LINES layer (THIS is what you want) */
+html body .navbar.navTabs .nav-btn.active::after{
+  content: "" !important;
+  position: absolute !important;
+
+  left: 18px !important;
+  right: 18px !important;
+  top: 8px !important;
+  bottom: 8px !important;
+
+  z-index: 9999 !important;
+  pointer-events: none !important;
+
+  /* trapezoid so lines match the tab shape */
+  clip-path: polygon(22px 0%, 100% 0%, calc(100% - 22px) 100%, 0% 100%) !important;
+
+  background:
+    /* TOP bright line */
+    linear-gradient(90deg,
+      rgba(255,90,35,0),
+      rgba(255,90,35,1),
+      rgba(255,230,200,.22),
+      rgba(255,90,35,1),
+      rgba(255,90,35,0)
+    ) 0 6px / 100% 3px no-repeat,
+
+    /* TOP thin second line */
+    linear-gradient(90deg,
+      rgba(255,90,35,0),
+      rgba(255,190,130,.75),
+      rgba(255,90,35,0)
+    ) 0 13px / 100% 1px no-repeat,
+
+    /* BOTTOM hot line */
+    linear-gradient(90deg,
+      rgba(255,90,35,0),
+      rgba(255,90,35,1),
+      rgba(255,230,200,.24),
+      rgba(255,90,35,1),
+      rgba(255,90,35,0)
+    ) 0 calc(100% - 6px) / 100% 4px no-repeat !important;
+
+  /* glow but still lines */
+  filter:
+    drop-shadow(0 0 14px rgba(255,90,35,.75))
+    drop-shadow(0 0 36px rgba(255,60,20,.30)) !important;
+}
+
+/* 3) HOT CORNERS / edge pop (subtle but important) */
+html body .navbar.navTabs .nav-btn.active::before{
+  content: "" !important;
+  position: absolute !important;
+  inset: 6px 10px !important;
+
+  z-index: 9998 !important;
+  pointer-events: none !important;
+
+  clip-path: polygon(26px 0%, 100% 0%, calc(100% - 26px) 100%, 0% 100%) !important;
+
+  background: transparent !important;
+  box-shadow:
+    0 0 0 1px rgba(255,140,80,.26),
+    0 0 44px rgba(255,90,35,.38),
+    0 0 160px rgba(255,40,15,.16) !important;
+}
+
+/* 4) ensure text is above */
+html body .navbar.navTabs .nav-btn > span{
+  position: relative !important;
+  z-index: 10000 !important;
+}
