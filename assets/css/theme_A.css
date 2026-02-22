@@ -2689,3 +2689,198 @@ body::before{
     radial-gradient(16px 10px at 12% 50%, rgba(255,90,40,.25), transparent 70%),
     radial-gradient(16px 10px at 88% 50%, rgba(255,90,40,.25), transparent 70%) !important;
 }
+/* =========================================================
+   NAV TABS — REF 1:1 (CONNECTED, RECT, ACTIVE TOP+BOTTOM)
+   Paste as LAST block in theme_A.css
+   ========================================================= */
+
+:root{
+  --tabH: 48px;
+  --tabW: min(860px, 92vw);
+
+  --tabBg1: rgba(22,22,26,.82);
+  --tabBg2: rgba(10,10,12,.88);
+
+  --tabStroke: rgba(255,255,255,.10);
+  --tabText: rgba(255,255,255,.82);
+  --tabTextActive: rgba(255,255,255,.95);
+
+  --tabGlow: rgba(255,59,31,.55);
+  --tabGlowSoft: rgba(255,59,31,.22);
+}
+
+/* container */
+.navbar.navTabs{
+  position: sticky;
+  top: 0;
+  z-index: 9999;
+
+  display:flex;
+  justify-content:center;
+
+  padding: 18px 14px 10px;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+/* the connected rail (dark strip behind tabs) */
+.navbar.navTabs{
+  gap: 0 !important;
+}
+
+.navbar.navTabs{
+  /* center width like ref */
+}
+.navbar.navTabs{
+  width: 100%;
+}
+.navbar.navTabs > .nav-btn{
+  /* we style buttons below */
+}
+
+.navbar.navTabs{
+  /* create a subtle backing plate just around the buttons */
+}
+.navbar.navTabs::before{
+  content:"";
+  position:absolute;
+  left:50%;
+  transform: translateX(-50%);
+  top: 14px;
+
+  width: var(--tabW);
+  height: var(--tabH);
+
+  border-radius: 0; /* rectangular */
+  background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,0) 40%),
+              linear-gradient(180deg, var(--tabBg1), var(--tabBg2));
+  border: 1px solid rgba(255,255,255,.08);
+  box-shadow: 0 18px 60px rgba(0,0,0,.55), inset 0 0 0 1px rgba(0,0,0,.35);
+  pointer-events:none;
+}
+
+/* buttons — CONNECTED RECTANGLES */
+.navbar.navTabs .nav-btn{
+  position: relative;
+  z-index: 2;
+
+  height: var(--tabH) !important;
+  width: calc(var(--tabW) / 4);   /* 4 tabs */
+  max-width: 260px;
+  min-width: 170px;
+
+  margin: 0 !important;
+  border-radius: 0 !important;
+
+  border: 0 !important;          /* we draw borders ourselves */
+  background: transparent !important;
+
+  font-family: var(--font-ui) !important;
+  font-weight: 800 !important;
+  font-size: 12px !important;
+  letter-spacing: .16em !important;
+  text-transform: uppercase !important;
+
+  color: var(--tabText) !important;
+  cursor: pointer;
+  outline: none !important;
+
+  /* KILL старі "трикутники" */
+  clip-path: none !important;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+/* inner plate per button */
+.navbar.navTabs .nav-btn::before{
+  content:"";
+  position:absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,0) 48%),
+              linear-gradient(180deg, rgba(40,40,46,.50), rgba(12,12,16,.82));
+  border-top: 1px solid rgba(255,255,255,.10);
+  border-bottom: 1px solid rgba(0,0,0,.55);
+  pointer-events:none;
+}
+
+/* vertical separators (connected look) */
+.navbar.navTabs .nav-btn:not(:first-child)::after{
+  content:"";
+  position:absolute;
+  left: 0;
+  top: 10px;
+  bottom: 10px;
+  width: 1px;
+  background: rgba(255,255,255,.10);
+  opacity: .75;
+  pointer-events:none;
+}
+
+/* text always on top */
+.navbar.navTabs .nav-btn span{
+  position: relative;
+  z-index: 3;
+}
+
+/* hover — make visible */
+.navbar.navTabs .nav-btn:hover{
+  color: rgba(255,255,255,.92) !important;
+}
+.navbar.navTabs .nav-btn:hover::before{
+  filter: brightness(1.06);
+}
+
+/* ACTIVE — top + bottom glow lines like ref (NO red blob) */
+.navbar.navTabs .nav-btn.active{
+  color: var(--tabTextActive) !important;
+}
+.navbar.navTabs .nav-btn.active::before{
+  background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,0) 46%),
+              linear-gradient(180deg, rgba(48,18,14,.72), rgba(12,10,10,.90));
+  border-top-color: rgba(255,255,255,.12);
+}
+
+/* top line */
+.navbar.navTabs .nav-btn.active span::before{
+  content:"";
+  position:absolute;
+  left: -22px;
+  right: -22px;
+  top: -18px;
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, transparent, rgba(255,59,31,.95), transparent);
+  box-shadow: 0 0 18px var(--tabGlowSoft);
+  opacity: .95;
+}
+
+/* bottom line */
+.navbar.navTabs .nav-btn.active span::after{
+  content:"";
+  position:absolute;
+  left: -22px;
+  right: -22px;
+  bottom: -18px;
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, transparent, rgba(255,59,31,.95), transparent);
+  box-shadow: 0 0 18px var(--tabGlowSoft);
+  opacity: .95;
+}
+
+/* KILL стару "червону точку" / underline з попередніх стилів */
+.navbar.navTabs .nav-btn.active::after{ /* якщо десь був underline на кнопці */
+  display:none !important;
+}
+.navbar.navTabs .nav-btn span::after{ /* ми керуємо active через span::after */
+  /* не чіпаємо тут */
+}
+
+/* responsive */
+@media (max-width: 900px){
+  .navbar.navTabs::before{ width: min(92vw, 760px); }
+  .navbar.navTabs .nav-btn{ min-width: 140px; font-size: 11px !important; }
+}
