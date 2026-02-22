@@ -3077,3 +3077,6 @@ body::before{
 .navbar .nav-btn.active::after{ display:none !important; }
 .navbar .nav-btn.active span::after{ /* we use it above; if conflict occurs, our selector wins */ }
 
+/* RANKED RAIL TEST */
+.navbar.navRail { outline: 4px solid lime !important; }
+.navbar.navRail .nav-btn { outline: 2px solid cyan !important; }
