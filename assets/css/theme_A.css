@@ -2119,6 +2119,187 @@ body::before{
 .navbar.navTabs .nav-btn.active span::before{ /* keep */ }
 
 .navbar.navTabs .nav-btn.active span::marker{ display:none !important; }
+/* ==========================================================
+   NAV TABS — REF (like your PNG) ✅ LAST BLOCK IN theme_A.css
+   ========================================================== */
+
+:root{
+  --navH: 56px;
+  --navPadX: 18px;
+
+  --navBaseA: rgba(16,16,20,.88);
+  --navBaseB: rgba(6,6,10,.92);
+
+  --navStroke: rgba(255,255,255,.12);
+  --navStrokeSoft: rgba(255,255,255,.06);
+
+  --hot: rgba(255,90,35,1);
+  --hotSoft: rgba(255,90,35,.35);
+
+  --text: rgba(255,255,255,.78);
+  --textActive: rgba(255,210,170,.95);
+}
+
+/* container = tight rail (NO full-width side background) */
+.navbar.navTabs{
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 9999 !important;
+
+  display: inline-flex !important;           /* ✅ shrink to content */
+  left: 50%;
+  transform: translateX(-50%);
+  justify-content: center !important;
+  align-items: center !important;
+
+  gap: 0 !important;
+  padding: 10px var(--navPadX) !important;
+  margin: 14px auto 0 !important;
+
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,0) 45%),
+    linear-gradient(180deg, var(--navBaseA), var(--navBaseB)) !important;
+
+  border: 1px solid var(--navStrokeSoft) !important;
+  border-radius: 0 !important;
+
+  box-shadow:
+    0 18px 60px rgba(0,0,0,.55),
+    inset 0 0 0 1px rgba(0,0,0,.45) !important;
+
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+/* top & bottom thin orange rails */
+.navbar.navTabs::before{
+  content:"" !important;
+  position:absolute !important;
+  left: 12px !important;
+  right: 12px !important;
+  top: 10px !important;
+  bottom: 10px !important;
+  pointer-events:none !important;
+  opacity: .95 !important;
+
+  background:
+    linear-gradient(90deg, transparent, rgba(255,90,35,.35), transparent) top / 100% 2px no-repeat,
+    linear-gradient(90deg, transparent, rgba(255,90,35,.22), transparent) bottom / 100% 2px no-repeat !important;
+}
+
+/* buttons: parallelogram tabs */
+.navbar.navTabs .nav-btn{
+  position: relative !important;
+  z-index: 2 !important;
+
+  height: 44px !important;
+  min-width: 200px !important;
+  padding: 0 18px !important;
+  margin: 0 -10px !important; /* ✅ make them overlap/connected */
+
+  border: 1px solid var(--navStroke) !important;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,0) 45%),
+    linear-gradient(180deg, rgba(28,28,34,.70), rgba(8,8,12,.88)) !important;
+
+  box-shadow:
+    0 12px 26px rgba(0,0,0,.55),
+    inset 0 0 0 1px rgba(0,0,0,.55) !important;
+
+  color: var(--text) !important;
+  font-family: var(--font-ui) !important;
+  font-weight: 800 !important;
+  font-size: 12px !important;
+  letter-spacing: .16em !important;
+  text-transform: uppercase !important;
+
+  cursor: pointer !important;
+  outline: none !important;
+
+  border-radius: 0 !important;
+  clip-path: polygon(10px 0, 100% 0, calc(100% - 10px) 100%, 0 100%) !important; /* ✅ */
+}
+
+/* inner bevel line */
+.navbar.navTabs .nav-btn::before{
+  content:"" !important;
+  position:absolute !important;
+  inset: 2px !important;
+  clip-path: inherit !important;
+  border: 1px solid rgba(255,255,255,.08) !important;
+  opacity: .55 !important;
+  pointer-events:none !important;
+}
+
+/* sparks between tabs */
+.navbar.navTabs .nav-btn:not(:first-child)::after{
+  content:"" !important;
+  position:absolute !important;
+  left: -8px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  width: 16px !important;
+  height: 46px !important;
+  pointer-events:none !important;
+  opacity: .9 !important;
+
+  background:
+    radial-gradient(circle at 60% 50%, rgba(255,90,35,.85), transparent 60%),
+    linear-gradient(180deg, transparent, rgba(255,90,35,.35), transparent) !important;
+  filter: blur(.2px) !important;
+}
+
+.navbar.navTabs .nav-btn span{
+  position: relative !important;
+  z-index: 3 !important;
+}
+
+/* hover */
+.navbar.navTabs .nav-btn:hover{
+  filter: brightness(1.10) !important;
+  color: rgba(255,255,255,.92) !important;
+  border-color: rgba(255,255,255,.18) !important;
+}
+
+/* ACTIVE — warm + top+bottom glow lines (NO dot, NO fat underline) */
+.navbar.navTabs .nav-btn.active{
+  color: var(--textActive) !important;
+  border-color: rgba(255,90,35,.38) !important;
+
+  background:
+    radial-gradient(240px 90px at 20% 50%, rgba(255,90,35,.18), transparent 65%),
+    linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,0) 45%),
+    linear-gradient(180deg, rgba(34,24,18,.80), rgba(10,8,10,.92)) !important;
+
+  box-shadow:
+    0 16px 34px rgba(0,0,0,.65),
+    0 0 48px rgba(255,90,35,.12),
+    inset 0 0 0 1px rgba(0,0,0,.55) !important;
+}
+
+/* glow lines */
+.navbar.navTabs .nav-btn.active span::before,
+.navbar.navTabs .nav-btn.active span::after{
+  content:"" !important;
+  position:absolute !important;
+  left: -26px !important;
+  right: -26px !important;
+  height: 2px !important;
+  border-radius: 999px !important;
+  background: linear-gradient(90deg, transparent, var(--hot), transparent) !important;
+  box-shadow: 0 0 18px var(--hotSoft) !important;
+  opacity: .95 !important;
+  pointer-events:none !important;
+}
+.navbar.navTabs .nav-btn.active span::before{ top: -12px !important; }
+.navbar.navTabs .nav-btn.active span::after{ bottom: -12px !important; }
+
+/* HARD KILL old dot / underline from any previous css */
+.navbar .nav-btn.active::after,
+.navbar .nav-btn.active span::after{
+  /* span::after is used above ONLY for navTabs active, but this rule may clash
+     If you see active bottom line missing, delete this rule. */
+}
 
 
 
