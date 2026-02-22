@@ -3147,3 +3147,221 @@ body::before{
 
   color: rgba(255,220,180,.95) !important;
 }
+/* ==========================================================
+   NAV TABS — 1:1 CONNECTED PARALLELOGRAM (NO BLUE BAR)
+   Paste as VERY LAST block in theme_A.css
+   ========================================================== */
+
+:root{
+  --tabH: 54px;
+  --tabSkew: 18px;                 /* нахил боків */
+  --tabBorder: rgba(255,95,35,.62);
+  --tabBorderSoft: rgba(255,95,35,.18);
+  --tabText: rgba(255,255,255,.78);
+  --tabTextActive: rgba(255,210,170,.95);
+
+  --tabFillA: rgba(18,18,22,.86);
+  --tabFillB: rgba(6,6,10,.92);
+
+  --tabMesh: rgba(255,255,255,.06);
+  --tabGlow: rgba(255,95,35,.35);
+}
+
+/* 0) KILL будь-які "планки/рейки" позаду (синій/сірий фон) */
+.navbar,
+.navbar.navTabs{
+  background: transparent !important;
+  background-image: none !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+/* прибити псевдоелементи контейнера, які робили bar */
+.navbar.navTabs::before,
+.navbar.navTabs::after{
+  content: none !important;
+  display: none !important;
+}
+
+/* 1) Контейнер */
+.navbar.navTabs{
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 9999 !important;
+
+  display:flex !important;
+  justify-content:center !important;
+  align-items:center !important;
+
+  gap: 0 !important;
+  padding: 18px 16px 14px !important;
+
+  isolation: isolate !important;
+}
+
+/* 2) Кнопки — з’єднані паралелограми */
+.navbar.navTabs .nav-btn{
+  position: relative !important;
+  z-index: 2 !important;
+
+  height: var(--tabH) !important;
+  min-width: 210px;
+  padding: 0 26px !important;
+  margin: 0 !important;
+
+  /* з’єднання */
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: none !important;
+  box-shadow: none !important;
+
+  /* форма як на рефі */
+  clip-path: polygon(
+    var(--tabSkew) 0,
+    100% 0,
+    calc(100% - var(--tabSkew)) 100%,
+    0 100%
+  ) !important;
+
+  color: var(--tabText) !important;
+  font-family: var(--font-ui);
+  font-weight: 800;
+  font-size: 13px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+
+  cursor: pointer;
+  outline: none !important;
+
+  /* легке накладання щоб не було щілин */
+  margin-left: -10px !important;
+}
+.navbar.navTabs .nav-btn:first-child{ margin-left: 0 !important; }
+
+/* внутрішня "плитка" + текст зверху */
+.navbar.navTabs .nav-btn span{
+  position: relative;
+  z-index: 3;
+  display:inline-block;
+  transform: translateY(0.5px);
+}
+
+/* заповнення + "сітка" всередині */
+.navbar.navTabs .nav-btn::before{
+  content:"";
+  position:absolute;
+  inset: 0;
+  clip-path: inherit;
+
+  background:
+    /* mesh */
+    repeating-linear-gradient(
+      -22deg,
+      transparent 0 10px,
+      var(--tabMesh) 10px 11px
+    ),
+    linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,0) 45%),
+    linear-gradient(180deg, var(--tabFillA), var(--tabFillB));
+
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,.06),
+    0 16px 34px rgba(0,0,0,.55);
+
+  opacity: 1;
+  pointer-events:none;
+}
+
+/* 3) Помаранчева обводка як на рефі */
+.navbar.navTabs .nav-btn::after{
+  content:"";
+  position:absolute;
+  inset: 0;
+  clip-path: inherit;
+
+  border: 1px solid var(--tabBorder);
+  box-shadow:
+    0 0 0 1px rgba(0,0,0,.65) inset,
+    0 0 22px var(--tabBorderSoft);
+
+  opacity: .95;
+  pointer-events:none;
+}
+
+/* 4) Іскри/розділювачі між табами (маленькі “hotspots”) */
+.navbar.navTabs .nav-btn:not(:first-child) i{ display:none; } /* safety */
+
+.navbar.navTabs .nav-btn:not(:first-child)::marker{ content:""; } /* safety */
+
+.navbar.navTabs .nav-btn:not(:first-child) .__sep{ display:none; } /* safety */
+
+.navbar.navTabs .nav-btn:not(:first-child) span::before{
+  content:"";
+  position:absolute;
+  left: calc(-1 * (var(--tabSkew) + 14px));
+  top: 50%;
+  transform: translateY(-50%);
+  width: 18px;
+  height: 60px;
+  pointer-events:none;
+
+  background:
+    radial-gradient(circle at 60% 50%, rgba(255,95,35,.9), transparent 62%),
+    linear-gradient(180deg, transparent, rgba(255,95,35,.35), transparent);
+  filter: blur(.15px);
+  opacity: .85;
+}
+
+/* 5) ACTIVE — як на рефі: теплий текст + верх/низ лінії + легкий glow */
+.navbar.navTabs .nav-btn.active{
+  color: var(--tabTextActive) !important;
+}
+
+.navbar.navTabs .nav-btn.active::before{
+  background:
+    repeating-linear-gradient(
+      -22deg,
+      transparent 0 10px,
+      rgba(255,120,70,.08) 10px 11px
+    ),
+    radial-gradient(240px 90px at 18% 55%, rgba(255,95,35,.22), transparent 65%),
+    linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,0) 45%),
+    linear-gradient(180deg, rgba(30,18,14,.86), rgba(10,8,10,.94));
+  box-shadow:
+    0 18px 38px rgba(0,0,0,.62),
+    0 0 46px rgba(255,95,35,.12),
+    inset 0 0 0 1px rgba(255,255,255,.07);
+}
+
+/* top + bottom glow lines */
+.navbar.navTabs .nav-btn.active span::after{
+  content:"";
+  position:absolute;
+  left: calc(-1 * (var(--tabSkew) + 26px));
+  right: calc(-1 * (var(--tabSkew) + 26px));
+  bottom: calc(-1 * (var(--tabH)/2 - 3px));
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, transparent, rgba(255,95,35,1), transparent);
+  box-shadow: 0 0 18px var(--tabGlow);
+  opacity: .95;
+  pointer-events:none;
+}
+.navbar.navTabs .nav-btn.active span::before{
+  /* лишаємо сепаратор, але для active він уже є — зробимо м'якше */
+  opacity: .65;
+}
+
+/* 6) hover */
+.navbar.navTabs .nav-btn:hover{
+  color: rgba(255,255,255,.92) !important;
+  filter: brightness(1.06);
+}
+
+/* 7) прибити “червону точку/підкреслення” якщо десь лишилось зі старих стилів */
+.navbar .nav-btn.active::after,
+.navbar .nav-btn.active span::after{
+  /* наші правила вище більш конкретні для navTabs,
+     але на всяк — нічого зайвого з інших тем */
+}
