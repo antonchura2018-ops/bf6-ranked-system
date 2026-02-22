@@ -3076,3 +3076,106 @@ body::before{
 /* make sure old “dot”/underline styles are killed */
 .navbar .nav-btn.active::after{ display:none !important; }
 .navbar .nav-btn.active span::after{ /* we use it above; if conflict occurs, our selector wins */ }
+/* =========================
+   NAV TABS — CYBERPUNK (REF LIKE)
+   ========================= */
+
+/* container */
+body .navbar.navTabs{
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 9999 !important;
+
+  display: flex !important;
+  justify-content: center !important;
+  gap: 0 !important;
+
+  padding: 14px 10px !important;
+
+  background:
+    linear-gradient(180deg, rgba(0,0,0,.55), rgba(0,0,0,.20)) !important;
+  border-top: 1px solid rgba(255,120,70,.22) !important;
+  border-bottom: 1px solid rgba(255,120,70,.14) !important;
+  box-shadow: 0 20px 55px rgba(0,0,0,.60) !important;
+}
+
+/* top thin rail glow */
+body .navbar.navTabs::before{
+  content:"" !important;
+  position:absolute !important;
+  left: 8px !important;
+  right: 8px !important;
+  top: 8px !important;
+  height: 2px !important;
+  background: linear-gradient(90deg, transparent, rgba(255,90,35,.55), transparent) !important;
+  filter: blur(.2px);
+  opacity: .85 !important;
+  pointer-events:none !important;
+}
+
+/* bottom rail glow */
+body .navbar.navTabs::after{
+  content:"" !important;
+  position:absolute !important;
+  left: 8px !important;
+  right: 8px !important;
+  bottom: 8px !important;
+  height: 2px !important;
+  background: linear-gradient(90deg, transparent, rgba(255,90,35,.45), transparent) !important;
+  opacity: .70 !important;
+  pointer-events:none !important;
+}
+
+/* buttons — connected rectangles */
+body .navbar.navTabs .nav-btn{
+  position: relative !important;
+  margin: 0 !important;
+
+  border-radius: 0 !important;
+  border: 1px solid rgba(255,255,255,.10) !important;
+  border-left: 0 !important;
+
+  padding: 14px 28px !important;
+  min-height: 46px !important;
+
+  background:
+    repeating-linear-gradient(135deg, rgba(255,160,120,.06) 0 1px, transparent 1px 10px),
+    linear-gradient(180deg, rgba(25,14,12,.75), rgba(0,0,0,.60)) !important;
+
+  color: rgba(255,255,255,.82) !important;
+  letter-spacing: .16em !important;
+  text-transform: uppercase !important;
+
+  box-shadow: inset 0 0 0 1px rgba(0,0,0,.70) !important;
+}
+
+body .navbar.navTabs .nav-btn:first-of-type{
+  border-left: 1px solid rgba(255,255,255,.10) !important;
+}
+
+body .navbar.navTabs .nav-btn:hover{
+  color: rgba(255,255,255,.96) !important;
+  filter: brightness(1.08);
+}
+
+/* ACTIVE — glow TOP + BOTTOM like ref */
+body .navbar.navTabs .nav-btn.active{
+  color: rgba(255,235,220,.98) !important;
+  border-color: rgba(255,90,35,.55) !important;
+
+  background:
+    radial-gradient(260px 120px at 22% 65%, rgba(255,70,25,.42), transparent 65%),
+    repeating-linear-gradient(135deg, rgba(255,200,170,.08) 0 1px, transparent 1px 10px),
+    linear-gradient(180deg, rgba(255,120,70,.12), rgba(0,0,0,.65)) !important;
+
+  box-shadow:
+    0 0 55px rgba(255,70,25,.22),
+    inset 0 1px 0 rgba(255,160,120,.45),
+    inset 0 -1px 0 rgba(255,160,120,.40) !important;
+}
+
+/* remove any old "dot" / underline artifacts if they exist */
+body .navbar.navTabs .nav-btn span::after,
+body .navbar.navTabs .nav-btn::after{
+  content: none !important;
+}
