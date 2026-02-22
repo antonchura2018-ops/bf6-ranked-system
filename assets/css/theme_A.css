@@ -2514,3 +2514,116 @@ body::before{
 .navbar.navRail .nav-btn span::after{
   display:none !important;
 }
+/* =========================================================
+   NAV TABS — HARD OVERRIDE (VISIBLE ALWAYS)
+   Paste at VERY END of theme_A.css
+   ========================================================= */
+
+.navbar.navRail{
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 9999 !important;
+
+  display:flex !important;
+  justify-content:center !important;
+  align-items:center !important;
+  gap: 0 !important;
+
+  padding: 16px 0 10px !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+
+  isolation: isolate !important;
+}
+
+/* dark plate behind buttons */
+.navbar.navRail::before{
+  content:"" !important;
+  position:absolute !important;
+  left:50% !important;
+  top: 10px !important;
+  transform: translateX(-50%) !important;
+
+  width: min(980px, 94vw) !important;
+  height: 48px !important;
+
+  background: linear-gradient(180deg,
+      rgba(255,255,255,.05),
+      rgba(0,0,0,.0) 35%),
+    linear-gradient(180deg,
+      rgba(10,10,14,.92),
+      rgba(0,0,0,.86)) !important;
+
+  border: 1px solid rgba(255,255,255,.14) !important;
+  box-shadow: 0 20px 70px rgba(0,0,0,.75) !important;
+
+  z-index: 0 !important;
+  pointer-events:none !important;
+}
+
+/* buttons become visible rectangles */
+.navbar.navRail .nav-btn{
+  position: relative !important;
+  z-index: 1 !important;
+
+  height: 48px !important;
+  min-width: 220px !important;
+
+  padding: 0 26px !important;
+  margin: 0 !important;
+
+  background: rgba(0,0,0,.35) !important;
+  border: 1px solid rgba(255,255,255,.10) !important;
+  border-right: 1px solid rgba(255,255,255,.14) !important;
+
+  color: rgba(255,255,255,.88) !important;
+
+  font-family: var(--font-ui) !important;
+  font-weight: 800 !important;
+  font-size: 13px !important;
+  letter-spacing: .18em !important;
+  text-transform: uppercase !important;
+
+  border-radius: 0 !important; /* прямокутні */
+}
+
+/* “з’єднати” кнопки */
+.navbar.navRail .nav-btn + .nav-btn{
+  margin-left: -1px !important; /* сховати подвійні бордери */
+}
+
+/* last button no extra border */
+.navbar.navRail .nav-btn:last-child{
+  border-right: 1px solid rgba(255,255,255,.10) !important;
+}
+
+/* hover */
+.navbar.navRail .nav-btn:hover{
+  background: rgba(0,0,0,.48) !important;
+  color: #fff !important;
+}
+
+/* ACTIVE — як у твоєму рефі: тонка помаранчева лінія + легкий glow */
+.navbar.navRail .nav-btn.active{
+  background: rgba(0,0,0,.62) !important;
+  border-color: rgba(255,90,40,.35) !important;
+  box-shadow: 0 0 24px rgba(255,60,30,.12) !important;
+}
+
+.navbar.navRail .nav-btn.active::after{
+  content:"" !important;
+  position:absolute !important;
+  left: 18px !important;
+  right: 18px !important;
+  bottom: 7px !important;
+  height: 2px !important;
+  border-radius: 999px !important;
+  background: linear-gradient(90deg, transparent, #ff3b1f, transparent) !important;
+  box-shadow: 0 0 18px rgba(255,59,31,.40) !important;
+}
+
+/* прибрати будь-яку “червону точку” з попередніх стилів */
+.navbar.navRail .nav-btn span::after{
+  display:none !important;
+}
