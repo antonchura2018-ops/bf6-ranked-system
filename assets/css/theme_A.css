@@ -2293,201 +2293,103 @@ body .navbar.navTabs .nav-btn.active::after{
   display:none !important;
 }
 /* =========================================================
-   ACTIVE TAB — FIRE LINES (NO HTML CHANGES)
-   2 top lines + 1 bottom hot line + hot corners
-   Paste as VERY LAST block in theme_A.css
+   NAV TABS — ENERGY LINES (NOT aura)
+   thin inner line + strong glowing TOP/BOTTOM lines
+   Paste at VERY END of theme_A.css
    ========================================================= */
 
 :root{
-  --fire: rgba(255, 90, 35, 1);
-  --fireSoft: rgba(255, 90, 35, .55);
-  --fireDeep: rgba(255, 40, 15, .24);
-  --fireWhite: rgba(255, 230, 200, .22);
+  --E_hot: rgba(255, 90, 35, 1);
+  --E_hotSoft: rgba(255, 90, 35, .45);
+  --E_hotDeep: rgba(255, 40, 15, .22);
+  --E_inner: rgba(255, 190, 130, .30);
+  --E_white: rgba(255,255,255,.10);
 }
 
-/* kill any old dots / blue lines */
-.navbar.navTabs .nav-btn span::after,
-.navbar.navTabs .nav-btn::marker{
-  content: none !important;
-  display: none !important;
-}
-.navbar.navTabs,
-.navbar.navTabs *{
-  outline: none !important;
-}
-
-/* make sure active can render overlays */
-.navbar.navTabs .nav-btn{
+body .navbar.navTabs{
   position: relative !important;
-  overflow: visible !important;
+  isolation: isolate !important;
 }
 
-/* ---------- ACTIVE LINES LAYER ---------- */
-.navbar.navTabs .nav-btn.active::after{
+/* 1) THIN INNER FRAME (sharp line) */
+body .navbar.navTabs::before{
   content:"" !important;
   position:absolute !important;
-
-  /* area INSIDE the tab */
-  left: 18px !important;
-  right: 18px !important;
-  top: 8px !important;
-  bottom: 8px !important;
-
+  inset: 0 !important;
+  border-radius: 14px !important;
   pointer-events:none !important;
-  z-index: 50 !important;
+  z-index: 2 !important;
 
-  /* make the lines match trapezoid feel */
-  clip-path: polygon(22px 0%, 100% 0%, calc(100% - 22px) 100%, 0% 100%) !important;
+  border: 1px solid rgba(255,140,80,.22) !important;
+  box-shadow:
+    inset 0 0 0 1px rgba(0,0,0,.55),
+    inset 0 1px 0 rgba(255,255,255,.06),
+    0 0 10px rgba(255,90,35,.18) !important;
+}
+
+/* 2) ENERGY LINES LAYER (top+bottom lines + channels + hotspots) */
+body .navbar.navTabs::after{
+  content:"" !important;
+  position:absolute !important;
+  inset: -2px !important;                 /* small, so it stays like lines */
+  border-radius: 16px !important;
+  pointer-events:none !important;
+  z-index: 3 !important;
 
   background:
-    /* TOP bright line */
+    /* TOP main hot line (thin but bright) */
+    linear-gradient(90deg,
+      rgba(255,90,35,0),
+      rgba(255,90,35,.95),
+      rgba(255,230,200,.18),
+      rgba(255,90,35,.95),
+      rgba(255,90,35,0)
+    ) top / 100% 2px no-repeat,
+
+    /* TOP inner channel line */
+    linear-gradient(90deg,
+      rgba(255,90,35,0),
+      rgba(255,90,35,.26),
+      rgba(255,90,35,0)
+    ) 0 10px / 100% 1px no-repeat,
+
+    /* BOTTOM main hot line (stronger, like ref) */
     linear-gradient(90deg,
       rgba(255,90,35,0),
       rgba(255,90,35,1),
       rgba(255,230,200,.22),
       rgba(255,90,35,1),
       rgba(255,90,35,0)
-    ) 0 6px / 100% 3px no-repeat,
+    ) bottom / 100% 3px no-repeat,
 
-    /* TOP thin channel line (second line) */
+    /* BOTTOM inner channel line */
     linear-gradient(90deg,
       rgba(255,90,35,0),
-      rgba(255,90,35,.38),
-      rgba(255,90,35,0)
-    ) 0 14px / 100% 1px no-repeat,
-
-    /* BOTTOM hot line (strong) */
-    linear-gradient(90deg,
-      rgba(255,90,35,0),
-      rgba(255,90,35,1),
-      rgba(255,230,200,.24),
-      rgba(255,90,35,1),
-      rgba(255,90,35,0)
-    ) 0 calc(100% - 6px) / 100% 4px no-repeat,
-
-    /* subtle inner glow wash (keeps it “fire”, not aura) */
-    radial-gradient(380px 140px at 16% 50%,
       rgba(255,90,35,.22),
-      transparent 62%) !important;
-
-  filter:
-    drop-shadow(0 0 10px rgba(255,90,35,.70))
-    drop-shadow(0 0 26px rgba(255,60,20,.28)) !important;
-
-  opacity: 1 !important;
-}
-
-/* ---------- HOT CORNERS / EDGE POPS ---------- */
-.navbar.navTabs .nav-btn.active::before{
-  /* keep your existing plate if you have it — we only ADD glow */
-  content:"" !important;
-  position:absolute !important;
-  inset: 6px 10px !important;
-  pointer-events:none !important;
-  z-index: 40 !important;
-
-  clip-path: polygon(26px 0%, 100% 0%, calc(100% - 26px) 100%, 0% 100%) !important;
-
-  background: transparent !important;
-
-  box-shadow:
-    0 0 0 1px rgba(255,140,80,.26),
-    0 0 36px rgba(255,90,35,.32),
-    0 0 140px rgba(255,40,15,.14) !important;
-
-  opacity: 1 !important;
-}
-
-/* text a bit warmer */
-.navbar.navTabs .nav-btn.active{
-  color: rgba(255,235,220,.98) !important;
-  text-shadow: 0 0 14px rgba(255,90,35,.28) !important;
-}
-/* =========================================================
-   HARD FIX — FORCE ACTIVE FIRE LINES (wins over old blocks)
-   Paste as VERY LAST lines of theme_A.css
-   ========================================================= */
-
-/* 0) stop clipping */
-html body .navbar.navTabs{ overflow: visible !important; position: relative !important; isolation:isolate !important; }
-html body .navbar.navTabs .nav-btn{ overflow: visible !important; position: relative !important; }
-
-/* 1) if any old rule hides pseudo elements, force them back */
-html body .navbar.navTabs .nav-btn.active::before,
-html body .navbar.navTabs .nav-btn.active::after{
-  display: block !important;
-  visibility: visible !important;
-  opacity: 1 !important;
-}
-
-/* 2) FIRE LINES layer (THIS is what you want) */
-html body .navbar.navTabs .nav-btn.active::after{
-  content: "" !important;
-  position: absolute !important;
-
-  left: 18px !important;
-  right: 18px !important;
-  top: 8px !important;
-  bottom: 8px !important;
-
-  z-index: 9999 !important;
-  pointer-events: none !important;
-
-  /* trapezoid so lines match the tab shape */
-  clip-path: polygon(22px 0%, 100% 0%, calc(100% - 22px) 100%, 0% 100%) !important;
-
-  background:
-    /* TOP bright line */
-    linear-gradient(90deg,
-      rgba(255,90,35,0),
-      rgba(255,90,35,1),
-      rgba(255,230,200,.22),
-      rgba(255,90,35,1),
       rgba(255,90,35,0)
-    ) 0 6px / 100% 3px no-repeat,
+    ) 0 calc(100% - 10px) / 100% 1px no-repeat,
 
-    /* TOP thin second line */
+    /* subtle white micro highlight (adds “tech”) */
     linear-gradient(90deg,
-      rgba(255,90,35,0),
-      rgba(255,190,130,.75),
-      rgba(255,90,35,0)
-    ) 0 13px / 100% 1px no-repeat,
+      rgba(255,255,255,0),
+      rgba(255,255,255,.12),
+      rgba(255,255,255,0)
+    ) 0 3px / 100% 1px no-repeat,
 
-    /* BOTTOM hot line */
-    linear-gradient(90deg,
-      rgba(255,90,35,0),
-      rgba(255,90,35,1),
-      rgba(255,230,200,.24),
-      rgba(255,90,35,1),
-      rgba(255,90,35,0)
-    ) 0 calc(100% - 6px) / 100% 4px no-repeat !important;
+    /* EDGE HOTSPOTS like Apex */
+    radial-gradient(180px 60px at 10% 0%, rgba(255,90,35,.22), transparent 70%),
+    radial-gradient(180px 60px at 90% 0%, rgba(255,90,35,.18), transparent 70%),
+    radial-gradient(220px 80px at 92% 100%, rgba(255,90,35,.16), transparent 72%) !important;
 
-  /* glow but still lines */
-  filter:
-    drop-shadow(0 0 14px rgba(255,90,35,.75))
-    drop-shadow(0 0 36px rgba(255,60,20,.30)) !important;
+  /* glow that keeps lines as lines */
+  filter: drop-shadow(0 0 10px rgba(255,90,35,.35))
+          drop-shadow(0 0 26px rgba(255,60,20,.18)) !important;
+
+  opacity: .95 !important;
 }
 
-/* 3) HOT CORNERS / edge pop (subtle but important) */
-html body .navbar.navTabs .nav-btn.active::before{
-  content: "" !important;
-  position: absolute !important;
-  inset: 6px 10px !important;
-
-  z-index: 9998 !important;
-  pointer-events: none !important;
-
-  clip-path: polygon(26px 0%, 100% 0%, calc(100% - 26px) 100%, 0% 100%) !important;
-
-  background: transparent !important;
-  box-shadow:
-    0 0 0 1px rgba(255,140,80,.26),
-    0 0 44px rgba(255,90,35,.38),
-    0 0 160px rgba(255,40,15,.16) !important;
-}
-
-/* 4) ensure text is above */
-html body .navbar.navTabs .nav-btn > span{
+/* ensure tabs appear above lines */
+body .navbar.navTabs > .nav-btn{
   position: relative !important;
-  z-index: 10000 !important;
+  z-index: 6 !important;
 }
