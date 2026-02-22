@@ -3076,3 +3076,73 @@ body::before{
 /* make sure old “dot”/underline styles are killed */
 .navbar .nav-btn.active::after{ display:none !important; }
 .navbar .nav-btn.active span::after{ /* we use it above; if conflict occurs, our selector wins */ }
+/* ==========================================================
+   NAV TABS — FIRE BORDER UPGRADE (safe enhancement)
+   ========================================================== */
+
+/* 1️⃣ Обводка для всієї панелі */
+.navbar.navTabs{
+  border: 1px solid rgba(255, 90, 40, 0.18) !important;
+
+  box-shadow:
+    0 0 0 1px rgba(255,90,40,.08) inset,
+    0 0 35px rgba(255,90,40,.10) !important;
+
+  background:
+    linear-gradient(180deg, rgba(20,20,24,.92), rgba(6,6,10,.92)) !important;
+}
+
+/* 2️⃣ Верхня тонка “вогняна” лінія */
+.navbar.navTabs::before{
+  content:"";
+  position:absolute;
+  left: 12px;
+  right: 12px;
+  top: 0;
+  height: 2px;
+
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255,95,40,.55),
+    transparent
+  );
+
+  box-shadow: 0 0 12px rgba(255,95,40,.35);
+  opacity: .95;
+  pointer-events: none;
+}
+
+/* 3️⃣ Легка обводка вкладок */
+.navbar.navTabs .nav-btn{
+  border: 1px solid rgba(255,255,255,.08) !important;
+
+  box-shadow:
+    inset 0 0 0 1px rgba(0,0,0,.55),
+    0 0 18px rgba(0,0,0,.4) !important;
+
+  transition: all .18s ease !important;
+}
+
+/* 4️⃣ Hover — легке тепло */
+.navbar.navTabs .nav-btn:hover{
+  border-color: rgba(255,120,70,.28) !important;
+  box-shadow:
+    inset 0 0 0 1px rgba(0,0,0,.55),
+    0 0 22px rgba(255,95,40,.12) !important;
+}
+
+/* 5️⃣ ACTIVE — красивий підпал */
+.navbar.navTabs .nav-btn.active{
+  border-color: rgba(255,120,70,.45) !important;
+
+  box-shadow:
+    inset 0 0 0 1px rgba(0,0,0,.55),
+    0 0 30px rgba(255,95,40,.18),
+    0 0 60px rgba(255,95,40,.10) !important;
+
+  background:
+    linear-gradient(180deg, rgba(40,20,15,.85), rgba(10,8,8,.95)) !important;
+
+  color: rgba(255,210,170,.95) !important;
+}
