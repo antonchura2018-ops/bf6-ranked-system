@@ -2016,7 +2016,7 @@ body .navbar.navTabs{
   overflow: visible !important;
 }
 
-/* rail plate */
+/* rail plate — MINIMAL (no big background) */
 body #dashboard .navbar.navTabs::before,
 body .navbar.navTabs::before{
   content:"" !important;
@@ -2035,37 +2035,25 @@ body .navbar.navTabs::before{
     0 16px
   ) !important;
 
-  background:
-    /* inner bevel */
-    linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,0) 45%),
-    /* warm inner rim */
-    linear-gradient(180deg, rgba(255,90,35,.12), rgba(0,0,0,0) 42%, rgba(255,90,35,.10)),
-    /* subtle tech texture */
-    repeating-linear-gradient(135deg,
-      rgba(255,120,70,.06) 0 1px,
-      rgba(0,0,0,0) 1px 16px
-    ),
-    /* base */
-    linear-gradient(180deg, rgba(18,18,22,.74), rgba(6,6,10,.88)) !important;
+  /* ✅ very subtle plate only */
+  background: linear-gradient(180deg, rgba(0,0,0,.22), rgba(0,0,0,.10)) !important;
 
-  border: 1px solid rgba(255,150,90,.24) !important;
-
+  border: 1px solid rgba(255,140,80,.12) !important;
   box-shadow:
-    0 18px 60px rgba(0,0,0,.60),
-    inset 0 1px 0 rgba(255,255,255,.06),
-    inset 0 0 0 1px rgba(255,90,35,.12),
-    inset 0 0 0 2px rgba(0,0,0,.60) !important;
+    0 10px 30px rgba(0,0,0,.35),
+    inset 0 1px 0 rgba(255,255,255,.04) !important;
 
   pointer-events:none !important;
   z-index: 0 !important;
 }
 
-/* rails + glowing lines (this is what you asked for) */
+/* rail glow lines — LIKE REF */
 body #dashboard .navbar.navTabs::after,
 body .navbar.navTabs::after{
   content:"" !important;
   position:absolute !important;
   inset: -4px !important;
+  pointer-events:none !important;
 
   clip-path: polygon(
     16px 0,
@@ -2078,36 +2066,51 @@ body .navbar.navTabs::after{
     0 16px
   ) !important;
 
-  /* ✅ multiple glowing lines like reference */
   background:
-    /* TOP HOT LINE */
-    linear-gradient(90deg, rgba(255,90,35,0), rgba(255,90,35,1), rgba(255,220,170,.18), rgba(255,90,35,1), rgba(255,90,35,0))
-      top / 100% 3px no-repeat,
+    /* TOP thin line (outer) */
+    linear-gradient(90deg,
+      rgba(255,90,35,0),
+      rgba(255,120,70,.85),
+      rgba(255,220,170,.14),
+      rgba(255,120,70,.85),
+      rgba(255,90,35,0)
+    ) top / 100% 2px no-repeat,
 
-    /* INNER TOP CHANNEL */
-    linear-gradient(90deg, rgba(255,90,35,0), rgba(255,90,35,.42), rgba(255,90,35,0))
-      0 11px / 100% 1px no-repeat,
+    /* TOP thin line (inner channel) */
+    linear-gradient(90deg,
+      rgba(255,90,35,0),
+      rgba(255,90,35,.35),
+      rgba(255,90,35,0)
+    ) 0 10px / 100% 1px no-repeat,
 
-    /* INNER BOTTOM CHANNEL */
-    linear-gradient(90deg, rgba(255,90,35,0), rgba(255,90,35,.34), rgba(255,90,35,0))
-      0 calc(100% - 11px) / 100% 1px no-repeat,
+    /* BOTTOM main hot line (strong) */
+    linear-gradient(90deg,
+      rgba(255,90,35,0),
+      rgba(255,90,35,1),
+      rgba(255,220,170,.18),
+      rgba(255,90,35,1),
+      rgba(255,90,35,0)
+    ) bottom / 100% 4px no-repeat,
 
-    /* BOTTOM HOT LINE */
-    linear-gradient(90deg, rgba(255,90,35,0), rgba(255,90,35,1), rgba(255,220,170,.20), rgba(255,90,35,1), rgba(255,90,35,0))
-      bottom / 100% 3px no-repeat,
+    /* BOTTOM inner channel */
+    linear-gradient(90deg,
+      rgba(255,90,35,0),
+      rgba(255,90,35,.30),
+      rgba(255,90,35,0)
+    ) 0 calc(100% - 10px) / 100% 1px no-repeat,
 
-    /* warm sheen */
-    linear-gradient(180deg, rgba(255,200,160,.12), rgba(255,200,160,0) 45%, rgba(255,90,35,.12)) !important;
+    /* edge hotspots (left + right) like reference */
+    radial-gradient(120px 40px at 10% 0%, rgba(255,90,35,.38), transparent 70%),
+    radial-gradient(120px 40px at 90% 0%, rgba(255,90,35,.26), transparent 70%),
+    radial-gradient(140px 60px at 88% 100%, rgba(255,90,35,.28), transparent 72%) !important;
 
-  border: 1px solid rgba(255,170,110,.46) !important;
+  border: 1px solid rgba(255,160,100,.26) !important;
 
   box-shadow:
-    0 0 0 1px rgba(255,110,55,.26),
-    0 0 30px rgba(255,90,35,.42),
-    0 0 120px rgba(255,60,20,.20) !important;
+    0 0 22px rgba(255,90,35,.28),
+    0 0 90px rgba(255,60,20,.14) !important;
 
   filter: blur(.10px) !important;
-  pointer-events:none !important;
   z-index: 1 !important;
 }
 
@@ -2216,10 +2219,10 @@ body .navbar.navTabs > .nav-btn.active::before{
     linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,0) 44%),
     linear-gradient(180deg, rgba(75,28,16,.92), rgba(10,8,10,.92)) !important;
 
-  box-shadow:
-    0 0 0 1px rgba(255,110,55,.30),
-    0 0 30px rgba(255,90,35,.62),
-    0 0 120px rgba(255,60,20,.26),
+   box-shadow:
+    0 0 0 1px rgba(255,110,55,.35),
+    0 0 46px rgba(255,90,35,.72),
+    0 0 160px rgba(255,60,20,.30),
     inset 0 1px 0 rgba(255,255,255,.10),
     inset 0 -1px 0 rgba(0,0,0,.45) !important;
 
