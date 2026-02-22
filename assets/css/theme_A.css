@@ -2885,7 +2885,7 @@ body::before{
   .navbar.navTabs .nav-btn{ min-width: 140px; font-size: 11px !important; }
 }
 /* ===========================
-   NAV UPGRADE A — ENERGY EDGE
+   NAV UPGRADE B — CLEAN BAR
    Paste at END of theme_A.css
    =========================== */
 
@@ -2893,70 +2893,70 @@ body::before{
   background: transparent !important;
   border: 0 !important;
   box-shadow: none !important;
-}
-
-/* контейнер вкладок */
-.navbar{
   display:flex;
   justify-content:center;
   gap: 0 !important;
   padding: 18px 14px !important;
 }
 
-/* базова кнопка */
 .navbar .nav-btn{
   position: relative;
-  margin: 0 !important;
-  padding: 14px 34px !important;
+  padding: 14px 36px !important;
   border-radius: 0 !important;
   border: 0 !important;
 
-  color: rgba(255,255,255,.78) !important;
-  background: rgba(8,8,12,.55) !important;
+  color: rgba(255,255,255,.80) !important;
+  background: rgba(0,0,0,.42) !important;
 
-  box-shadow:
-    inset 0 0 0 1px rgba(255,255,255,.07),
-    inset 0 -18px 40px rgba(0,0,0,.55);
-
-  transition: filter .16s ease, color .16s ease, background .16s ease;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.06);
+  transition: color .16s ease, filter .16s ease;
 }
 
-/* розділювачі між вкладками */
 .navbar .nav-btn + .nav-btn{
   box-shadow:
     inset 1px 0 0 rgba(255,255,255,.06),
-    inset 0 0 0 1px rgba(255,255,255,.07),
-    inset 0 -18px 40px rgba(0,0,0,.55);
+    inset 0 0 0 1px rgba(255,255,255,.06);
 }
 
-/* hover */
 .navbar .nav-btn:hover{
   filter: brightness(1.12);
-  color: rgba(255,255,255,.92) !important;
+  color: rgba(255,255,255,.95) !important;
 }
 
-/* ACTIVE */
+/* active: сильніше виділення */
 .navbar .nav-btn.active{
-  color: rgba(255,255,255,.96) !important;
-  background: rgba(10,10,14,.72) !important;
+  color: rgba(255,255,255,.98) !important;
+  background: rgba(0,0,0,.58) !important;
 }
 
-/* верхня/нижня підсвітка як “рейки” (без червоної точки) */
-.navbar .nav-btn.active::before,
+/* головна glow-смуга (як ref), БЕЗ точки */
 .navbar .nav-btn.active::after{
   content:"";
   position:absolute;
-  left: 10px;
-  right: 10px;
-  height: 2px;
+  left: 12px;
+  right: 12px;
+  bottom: 6px;
+  height: 3px;
   border-radius: 999px;
-  background: linear-gradient(90deg, transparent, rgba(255,59,31,.95), transparent);
-  box-shadow: 0 0 18px rgba(255,59,31,.28);
+  background: linear-gradient(90deg, transparent, rgba(255,59,31,1), rgba(255,106,47,.9), rgba(255,59,31,1), transparent);
+  box-shadow: 0 0 22px rgba(255,59,31,.45);
   opacity: .95;
   pointer-events:none;
 }
-.navbar .nav-btn.active::before{ top: 6px; }
-.navbar .nav-btn.active::after{ bottom: 6px; }
 
-/* прибрати “червону точку” якщо вона була зроблена span::after */
+/* якщо треба і зверху — розкоментуй */
+/*
+.navbar .nav-btn.active::before{
+  content:"";
+  position:absolute;
+  left: 12px;
+  right: 12px;
+  top: 6px;
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, transparent, rgba(255,59,31,.75), transparent);
+  box-shadow: 0 0 16px rgba(255,59,31,.25);
+}
+*/
+
 .navbar .nav-btn span::after{ display:none !important; }
