@@ -2349,31 +2349,7 @@ body .navbar.navTabs > .nav-btn.active > span::before{
 
   opacity: 1 !important;
 }
-/* =========================================
-   V3 PATCH — END TABS CORNERS FIX (ONLY FIRST/LAST)
-========================================= */
 
-/* PLAYER HUB (first tab) — прибираємо “обрив” зліва */
-body .navbar.navTabs > .nav-btn:first-child::before{
-  clip-path: polygon(
-    0% 0%, 
-    100% 0%, 
-    calc(100% - 12px) 100%, 
-    0% 100%
-  ) !important;
-  border-radius: 12px !important;
-}
-
-/* ADD MATCH (last tab) — прибираємо “обрив” справа */
-body .navbar.navTabs > .nav-btn:last-child::before{
-  clip-path: polygon(
-    12px 0%, 
-    100% 0%, 
-    100% 100%, 
-    0% 100%
-  ) !important;
-  border-radius: 12px !important;
-}
 /* =========================================
    V3 PATCH — ACTIVE FULL ORANGE TOP/BOTTOM RAILS
 ========================================= */
@@ -2424,4 +2400,93 @@ body .navbar.navTabs > .nav-btn.active > span::after{
   opacity: 1 !important;
   mix-blend-mode: screen !important;
 }
+/* =========================================
+   V3 FINAL — ACTIVE FULL-WIDTH SOLAR RAILS
+   (top + bottom, full tab width, sun-bloom)
+   Paste at VERY END of theme_A.css
+========================================= */
 
+/* ВАЖЛИВО: не вбивай ::after у active-кнопки */
+body .navbar.navTabs .nav-btn.active::after{
+  display:block !important;
+}
+
+/* база */
+body .navbar.navTabs > .nav-btn.active{
+  position: relative !important;
+}
+
+/* TOP solar rail — на всю ширину вкладки */
+body .navbar.navTabs > .nav-btn.active > span::before{
+  content:"" !important;
+  position:absolute !important;
+  left: -18px !important;     /* щоб лінія доходила до країв сегмента */
+  right: -18px !important;
+  top: -18px !important;
+  height: 4px !important;
+  pointer-events:none !important;
+
+  /* “сонце”: гаряче ядро + м’який ореол */
+  background:
+    /* Hotspot flare (ліворуч, як у рефі) */
+    radial-gradient(120px 22px at 18% 50%,
+      rgba(255,255,255,0.55) 0%,
+      rgba(255,210,120,0.45) 22%,
+      rgba(255,120,40,0.18) 55%,
+      rgba(255,120,40,0.00) 75%
+    ),
+    /* Main hot line */
+    linear-gradient(90deg,
+      rgba(255,120,40,0.85) 0%,
+      rgba(255,160,70,1.00) 18%,
+      rgba(255,230,190,0.55) 50%,
+      rgba(255,160,70,1.00) 82%,
+      rgba(255,120,40,0.85) 100%
+    ) !important;
+
+  box-shadow:
+    0 0 10px rgba(255,170,85,0.95),
+    0 0 28px rgba(255,90,20,0.55),
+    0 0 70px rgba(255,60,0,0.28) !important;
+
+  border-radius: 6px !important;
+  filter: blur(0.25px) !important;
+  opacity: 1 !important;
+  mix-blend-mode: screen !important;
+}
+
+/* BOTTOM solar rail — на всю ширину вкладки */
+body .navbar.navTabs > .nav-btn.active > span::after{
+  content:"" !important;
+  position:absolute !important;
+  left: -18px !important;
+  right: -18px !important;
+  bottom: -18px !important;
+  height: 4px !important;
+  pointer-events:none !important;
+
+  background:
+    radial-gradient(140px 26px at 24% 50%,
+      rgba(255,255,255,0.48) 0%,
+      rgba(255,210,120,0.40) 22%,
+      rgba(255,120,40,0.18) 58%,
+      rgba(255,120,40,0.00) 78%
+    ),
+    linear-gradient(90deg,
+      rgba(255,120,40,0.90) 0%,
+      rgba(255,160,70,1.00) 18%,
+      rgba(255,230,190,0.60) 50%,
+      rgba(255,160,70,1.00) 82%,
+      rgba(255,120,40,0.90) 100%
+    ) !important;
+
+  box-shadow:
+    0 0 12px rgba(255,175,90,1.00),
+    0 0 34px rgba(255,80,15,0.60),
+    0 0 90px rgba(255,60,0,0.34) !important;
+
+  border-radius: 6px !important;
+  filter: blur(0.25px) !important;
+  opacity: 1 !important;
+  mix-blend-mode: screen !important;
+}
