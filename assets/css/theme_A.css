@@ -3148,66 +3148,72 @@ body::before{
   color: rgba(255,220,180,.95) !important;
 }
 /* =========================================================
-   NAV TABS — HOLOGRAPHIC EDGE (ONE CONTINUOUS PANEL)
-   NO BLUE GLOW • WARM ORANGE/RED ONLY • THEME_A
-   Paste at VERY END of theme_A.css
+   NAV TABS — HOLOGRAPHIC EDGE (HARD OVERRIDE)
+   MUST BE LAST IN theme_A.css
+   NO BLUE GLOW • WARM ORANGE/RED ONLY
    ========================================================= */
 
+/* container = ONE CONTINUOUS PANEL */
 .navbar.navTabs{
-  /* layout */
-  position: relative;
-  width: min(980px, calc(100% - 80px));
-  margin: 18px auto 0;
-  display: flex;
-  justify-content: center;
-  gap: 0;
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 9999 !important;
 
-  /* "one panel" body */
-  padding: 10px 12px;
-  border-radius: 14px;
+  width: min(980px, calc(100% - 80px)) !important;
+  margin: 18px auto 0 !important;
+
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  gap: 0 !important;
+
+  padding: 10px 12px !important;
+  border-radius: 14px !important;
 
   background:
     linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.01)),
-    linear-gradient(180deg, rgba(0,0,0,0.62), rgba(0,0,0,0.35));
+    linear-gradient(180deg, rgba(0,0,0,0.62), rgba(0,0,0,0.35)) !important;
 
-  border: 1px solid rgba(255,120,40,0.24);
+  border: 1px solid rgba(255,120,40,0.24) !important;
 
   box-shadow:
     0 14px 40px rgba(0,0,0,0.55),
-    inset 0 1px 0 rgba(255,255,255,0.06);
+    inset 0 1px 0 rgba(255,255,255,0.06) !important;
+
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
 }
 
-/* warm holographic edge - NO BLUE */
+/* warm holographic outer edge (NO BLUE) */
 .navbar.navTabs::before{
-  content:"";
-  position:absolute;
-  inset:-2px;
-  border-radius: 16px;
-  pointer-events:none;
+  content:"" !important;
+  position:absolute !important;
+  inset:-2px !important;
+  border-radius: 16px !important;
+  pointer-events:none !important;
 
-  background:
-    linear-gradient(90deg,
-      rgba(255,120,40,0.00),
-      rgba(255,120,40,0.22),
-      rgba(255,60,20,0.18),
-      rgba(255,120,40,0.22),
-      rgba(255,120,40,0.00)
-    );
+  background: linear-gradient(90deg,
+    rgba(255,120,40,0.00),
+    rgba(255,120,40,0.22),
+    rgba(255,60,20,0.18),
+    rgba(255,120,40,0.22),
+    rgba(255,120,40,0.00)
+  ) !important;
 
-  filter: blur(0.2px);
-  opacity: 0.9;
+  opacity: 0.95 !important;
+  filter: blur(0.2px) !important;
 }
 
-/* subtle bottom energy channel (warm) */
+/* bottom warm energy channel */
 .navbar.navTabs::after{
-  content:"";
-  position:absolute;
-  left: 14px;
-  right: 14px;
-  bottom: 6px;
-  height: 2px;
-  border-radius: 2px;
-  pointer-events:none;
+  content:"" !important;
+  position:absolute !important;
+  left: 14px !important;
+  right: 14px !important;
+  bottom: 6px !important;
+  height: 2px !important;
+  border-radius: 2px !important;
+  pointer-events:none !important;
 
   background: linear-gradient(90deg,
     rgba(255,120,40,0.0),
@@ -3215,42 +3221,52 @@ body::before{
     rgba(255,60,20,0.45),
     rgba(255,120,40,0.55),
     rgba(255,120,40,0.0)
-  );
+  ) !important;
 
-  box-shadow:
-    0 0 14px rgba(255,120,40,0.22);
-  opacity: 0.75;
+  box-shadow: 0 0 14px rgba(255,120,40,0.22) !important;
+  opacity: 0.75 !important;
 }
 
-/* ---------- buttons as segmented modules ---------- */
+/* reset any old button look */
 .navbar.navTabs .nav-btn{
-  position: relative;
-  appearance: none;
-  border: 0;
-  background: transparent;
+  position: relative !important;
+  appearance: none !important;
+  border: 0 !important;
+  outline: 0 !important;
+  background: transparent !important;
 
-  /* sizing */
-  padding: 14px 22px 13px;
-  min-width: 150px;
+  padding: 14px 22px 13px !important;
+  min-width: 150px !important;
+  margin: 0 !important;
 
-  /* typography */
-  color: rgba(255,255,255,0.78);
-  letter-spacing: 0.12em;
-  font-weight: 700;
-  text-transform: uppercase;
-  font-size: 12px;
+  font-family: var(--font-ui, system-ui) !important;
+  font-weight: 800 !important;
+  font-size: 12px !important;
+  letter-spacing: 0.14em !important;
+  text-transform: uppercase !important;
 
-  cursor: pointer;
-  transition: transform .18s ease, color .18s ease, filter .18s ease;
+  color: rgba(255,255,255,0.78) !important;
+  cursor: pointer !important;
+
+  clip-path: none !important;
+  transform: none !important;
+  box-shadow: none !important;
+
+  transition: transform .18s ease, color .18s ease, filter .18s ease !important;
 }
 
-/* the inner segment plate */
+/* make segments touch */
+.navbar.navTabs .nav-btn:not(:first-child){
+  margin-left: -10px !important;
+}
+
+/* segment plate */
 .navbar.navTabs .nav-btn::before{
-  content:"";
-  position:absolute;
-  inset: 0;
-  border-radius: 10px;
-  pointer-events:none;
+  content:"" !important;
+  position:absolute !important;
+  inset: 0 !important;
+  border-radius: 10px !important;
+  pointer-events:none !important;
 
   background:
     radial-gradient(120% 140% at 50% 0%,
@@ -3261,108 +3277,81 @@ body::before{
     linear-gradient(180deg,
       rgba(20,20,22,0.80),
       rgba(10,10,12,0.55)
-    );
+    ) !important;
+
+  border: 1px solid rgba(255,120,40,0.14) !important;
 
   box-shadow:
     inset 0 1px 0 rgba(255,255,255,0.07),
-    inset 0 -1px 0 rgba(0,0,0,0.35);
-  border: 1px solid rgba(255,120,40,0.14);
+    inset 0 -1px 0 rgba(0,0,0,0.35) !important;
+
+  /* segmented trapezoid */
+  clip-path: polygon(10px 0%, 100% 0%, calc(100% - 12px) 100%, 0% 100%) !important;
 }
 
-/* segmented shape (equal angles) */
-.navbar.navTabs .nav-btn:not(:first-child){
-  margin-left: -10px; /* pulls segments together (no gaps) */
-}
-.navbar.navTabs .nav-btn::before{
-  clip-path: polygon(10px 0%, 100% 0%, calc(100% - 12px) 100%, 0% 100%);
-}
 .navbar.navTabs .nav-btn:first-child::before{
-  clip-path: polygon(14px 0%, 100% 0%, calc(100% - 12px) 100%, 0% 100%, 0% 18px);
-}
-.navbar.navTabs .nav-btn:last-child::before{
-  clip-path: polygon(10px 0%, 100% 0%, 100% 22px, calc(100% - 10px) 100%, 0% 100%);
+  clip-path: polygon(14px 0%, 100% 0%, calc(100% - 12px) 100%, 0% 100%, 0% 18px) !important;
 }
 
-/* inner dividers (warm, subtle) */
+.navbar.navTabs .nav-btn:last-child::before{
+  clip-path: polygon(10px 0%, 100% 0%, 100% 22px, calc(100% - 10px) 100%, 0% 100%) !important;
+}
+
+/* inner divider */
 .navbar.navTabs .nav-btn:not(:first-child)::after{
-  content:"";
-  position:absolute;
-  left: -6px;
-  top: 10px;
-  bottom: 10px;
-  width: 1px;
-  pointer-events:none;
+  content:"" !important;
+  position:absolute !important;
+  left: -6px !important;
+  top: 10px !important;
+  bottom: 10px !important;
+  width: 1px !important;
+  pointer-events:none !important;
 
   background: linear-gradient(180deg,
     rgba(255,120,40,0.00),
     rgba(255,120,40,0.18),
     rgba(255,120,40,0.00)
-  );
-  opacity: 0.75;
+  ) !important;
+
+  opacity: 0.75 !important;
 }
 
-/* hover: subtle lift + warm edge (no blue) */
+/* hover */
 .navbar.navTabs .nav-btn:hover{
-  transform: translateY(-1px);
-  color: rgba(255,255,255,0.92);
-  filter: brightness(1.05);
+  transform: translateY(-1px) !important;
+  color: rgba(255,255,255,0.92) !important;
+  filter: brightness(1.05) !important;
 }
 .navbar.navTabs .nav-btn:hover::before{
-  border-color: rgba(255,120,40,0.22);
+  border-color: rgba(255,120,40,0.22) !important;
   box-shadow:
     inset 0 1px 0 rgba(255,255,255,0.09),
     inset 0 -1px 0 rgba(0,0,0,0.35),
-    0 0 18px rgba(255,120,40,0.10);
+    0 0 18px rgba(255,120,40,0.10) !important;
 }
 
-/* active: double edge + inner glow */
+/* active */
 .navbar.navTabs .nav-btn.active{
-  color: rgba(255,225,200,0.98);
+  color: rgba(255,225,200,0.98) !important;
+  text-shadow: 0 0 18px rgba(255,120,40,0.28) !important;
 }
 .navbar.navTabs .nav-btn.active::before{
-  border-color: rgba(255,120,40,0.40);
+  border-color: rgba(255,120,40,0.40) !important;
   box-shadow:
     inset 0 1px 0 rgba(255,255,255,0.10),
     inset 0 -1px 0 rgba(0,0,0,0.35),
-    0 0 26px rgba(255,120,40,0.18);
-}
-.navbar.navTabs .nav-btn.active{
-  text-shadow:
-    0 0 18px rgba(255,120,40,0.28);
+    0 0 26px rgba(255,120,40,0.18) !important;
 }
 
-/* optional: tiny warm “status dots” under active (kept subtle) */
-.navbar.navTabs .nav-btn.active span,
-.navbar.navTabs .nav-btn.active{
-  position: relative;
-}
-.navbar.navTabs .nav-btn.active::marker{ content: ""; } /* noop safety */
-
-/* if you DON'T want dots at all, delete block below */
+/* kill any old dot/underline coming from other rules */
+.navbar.navTabs .nav-btn span::after,
 .navbar.navTabs .nav-btn.active::after{
-  content:"";
-  position:absolute;
-  left: 34px;
-  bottom: 6px;
-  width: 52px;
-  height: 6px;
-  pointer-events:none;
-  background:
-    radial-gradient(circle at 6px 3px, rgba(255,120,40,0.95) 0 2px, rgba(255,120,40,0) 3px),
-    radial-gradient(circle at 22px 3px, rgba(255,120,40,0.75) 0 2px, rgba(255,120,40,0) 3px),
-    radial-gradient(circle at 38px 3px, rgba(255,120,40,0.55) 0 2px, rgba(255,120,40,0) 3px);
-  opacity: 0.65;
+  display:none !important;
 }
 
-/* Keep nav above halo if needed */
-.navbar.navTabs{
-  z-index: 50;
-}
-
-/* Mobile safety (optional) */
+/* responsive */
 @media (max-width: 780px){
-  .navbar.navTabs{ width: calc(100% - 24px); padding: 8px; }
-  .navbar.navTabs .nav-btn{ min-width: 0; padding: 12px 14px; font-size: 11px; }
+  .navbar.navTabs{ width: calc(100% - 24px) !important; padding: 8px !important; }
+  .navbar.navTabs .nav-btn{ min-width: 0 !important; padding: 12px 14px !important; font-size: 11px !important; }
 }
-/* TEST: if you see big red border, theme_A is loaded */
-.navbar.navTabs { outline: 4px solid red !important; }
+
