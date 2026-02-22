@@ -2491,72 +2491,91 @@ body .navbar.navTabs > .nav-btn.active > span::after{
   mix-blend-mode: screen !important;
 }
 /* =========================================
-   NAV FIX — REMOVE LEFT DOT/DIVIDER ARTIFACT
+   V3 — ACTIVE ONLY GOLD SUN RAILS (SPAN SAFE)
+   Only for .nav-btn.active
+   Paste at VERY END of theme_A.css
 ========================================= */
 
-/* гарантовано прибираємо divider у першої вкладки */
-body .navbar.navTabs > .nav-btn:first-child::after{
-  display: none !important;
-}
-/* =========================================
-   ACTIVE TAB — FULL WIDTH GOLD TOP RAIL
-========================================= */
-
-body .navbar.navTabs > .nav-btn.active{
+/* база для ліній */
+body .navbar.navTabs > .nav-btn > span{
   position: relative !important;
+  z-index: 6 !important;
 }
 
-/* основна золота лінія */
-body .navbar.navTabs > .nav-btn.active::after{
+/* TOP rail (GOLD SUN) — тільки active */
+body .navbar.navTabs > .nav-btn.active > span::before{
   content:"" !important;
   position:absolute !important;
-
-  /* НА ВСЮ ВКЛАДКУ */
-  left: 0 !important;
-  right: 0 !important;
-
-  top: 4px !important;
+  left: -40px !important;      /* розтягуємо на всю вкладку */
+  right: -40px !important;
+  top: -22px !important;
   height: 4px !important;
-
   pointer-events:none !important;
 
-  background: linear-gradient(90deg,
-    rgba(255,195,95,1) 0%,
-    rgba(255,225,150,1) 22%,
-    rgba(255,255,235,0.70) 50%,
-    rgba(255,225,150,1) 78%,
-    rgba(255,195,95,1) 100%
-  ) !important;
+  /* золоте “сонце”: яскрава смуга + hotspot зліва */
+  background:
+    radial-gradient(140px 26px at 18% 50%,
+      rgba(255,255,255,0.70) 0%,
+      rgba(255,235,170,0.55) 22%,
+      rgba(255,170,70,0.20) 58%,
+      rgba(255,170,70,0.00) 78%
+    ),
+    linear-gradient(90deg,
+      rgba(255,190,95,1.00) 0%,
+      rgba(255,225,150,1.00) 22%,
+      rgba(255,255,235,0.70) 50%,
+      rgba(255,225,150,1.00) 78%,
+      rgba(255,190,95,1.00) 100%
+    ) !important;
 
   box-shadow:
-    0 0 10px rgba(255,210,120,0.95),
-    0 0 26px rgba(255,140,40,0.55),
-    0 0 70px rgba(255,90,10,0.25) !important;
+    0 0 10px rgba(255,220,150,0.95),
+    0 0 28px rgba(255,140,40,0.60),
+    0 0 80px rgba(255,80,10,0.28) !important;
 
   border-radius: 8px !important;
-  mix-blend-mode: screen !important;
+  filter: blur(0.25px) !important;
   opacity: 1 !important;
+  mix-blend-mode: screen !important;
+
+  /* під форму плитки (щоб не обрізалось дивно на першій вкладці) */
+  clip-path: polygon(14px 0%, 100% 0%, calc(100% - 12px) 100%, 0% 100%, 0% 20px) !important;
 }
 
-/* тонкий “сонячний” хайлайт над лінією */
-body .navbar.navTabs > .nav-btn.active::before{
+/* BOTTOM rail (GOLD SUN) — тільки active */
+body .navbar.navTabs > .nav-btn.active > span::after{
   content:"" !important;
   position:absolute !important;
-  left: 6px !important;
-  right: 6px !important;
-  top: 2px !important;
-  height: 1px !important;
+  left: -40px !important;
+  right: -40px !important;
+  bottom: -22px !important;
+  height: 4px !important;
   pointer-events:none !important;
 
-  background: linear-gradient(90deg,
-    rgba(255,255,255,0.0) 0%,
-    rgba(255,255,255,0.45) 20%,
-    rgba(255,255,255,0.80) 50%,
-    rgba(255,255,255,0.45) 80%,
-    rgba(255,255,255,0.0) 100%
-  ) !important;
+  background:
+    radial-gradient(160px 28px at 24% 50%,
+      rgba(255,255,255,0.62) 0%,
+      rgba(255,235,170,0.48) 22%,
+      rgba(255,170,70,0.18) 60%,
+      rgba(255,170,70,0.00) 80%
+    ),
+    linear-gradient(90deg,
+      rgba(255,190,95,1.00) 0%,
+      rgba(255,225,150,1.00) 22%,
+      rgba(255,255,235,0.70) 50%,
+      rgba(255,225,150,1.00) 78%,
+      rgba(255,190,95,1.00) 100%
+    ) !important;
 
-  box-shadow: 0 0 14px rgba(255,230,160,0.55) !important;
+  box-shadow:
+    0 0 12px rgba(255,220,150,1.00),
+    0 0 34px rgba(255,130,35,0.65),
+    0 0 95px rgba(255,70,0,0.30) !important;
+
+  border-radius: 8px !important;
+  filter: blur(0.25px) !important;
   opacity: 1 !important;
   mix-blend-mode: screen !important;
+
+  clip-path: polygon(14px 0%, 100% 0%, calc(100% - 12px) 100%, 0% 100%, 0% 20px) !important;
 }
