@@ -3249,4 +3249,6 @@ body::before{
 
 /* прибити старі “точки/лінії” якщо були */
 .navbar .nav-btn.active::after{ display:none !important; }
-
+/* RANKED RAIL TEST */
+.navbar.navRail { outline: 4px solid lime !important; }
+.navbar.navRail .nav-btn { outline: 2px solid cyan !important; }
