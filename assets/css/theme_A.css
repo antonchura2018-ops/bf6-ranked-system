@@ -2293,85 +2293,103 @@ body .navbar.navTabs .nav-btn.active::after{
   display:none !important;
 }
 /* =========================================================
-   NAV TABS — APEX FIRE GLOW FRAME (outer glow + inner line)
+   NAV TABS — ENERGY LINES (NOT aura)
+   thin inner line + strong glowing TOP/BOTTOM lines
    Paste at VERY END of theme_A.css
    ========================================================= */
 
 :root{
-  --apexHot: rgba(255, 90, 35, 1);
-  --apexHotSoft: rgba(255, 90, 35, .55);
-  --apexHotDeep: rgba(255, 40, 15, .35);
-  --apexInnerLine: rgba(255, 180, 120, .55);
+  --E_hot: rgba(255, 90, 35, 1);
+  --E_hotSoft: rgba(255, 90, 35, .45);
+  --E_hotDeep: rgba(255, 40, 15, .22);
+  --E_inner: rgba(255, 190, 130, .30);
+  --E_white: rgba(255,255,255,.10);
 }
 
-/* IMPORTANT: keep navbar positioned for pseudo-elements */
 body .navbar.navTabs{
   position: relative !important;
   isolation: isolate !important;
 }
 
-/* OUTER: strong blurred glow frame */
-body .navbar.navTabs::after{
-  content:"" !important;
-  position:absolute !important;
-  inset: -10px !important;            /* how far the glow expands */
-  border-radius: 18px !important;
-  pointer-events:none !important;
-  z-index: 0 !important;
-
-  /* outer energy frame */
-  background:
-    linear-gradient(90deg,
-      rgba(255,90,35,0),
-      rgba(255,90,35,.55),
-      rgba(255,180,120,.22),
-      rgba(255,90,35,.55),
-      rgba(255,90,35,0)
-    );
-
-  /* strong glow */
-  filter: blur(10px) !important;
-  opacity: .95 !important;
-
-  box-shadow:
-    0 0 40px rgba(255,90,35,.55),
-    0 0 110px rgba(255,60,20,.28),
-    0 0 180px rgba(255,40,15,.18) !important;
-
-  mix-blend-mode: screen; /* gives “energy” look */
-}
-
-/* INNER: thin sharp line frame */
+/* 1) THIN INNER FRAME (sharp line) */
 body .navbar.navTabs::before{
   content:"" !important;
   position:absolute !important;
-  inset: -1px !important;
+  inset: 0 !important;
   border-radius: 14px !important;
   pointer-events:none !important;
   z-index: 2 !important;
 
-  border: 1px solid rgba(255,180,120,.35) !important;
-
-  /* thin inner line with hot highlights */
+  border: 1px solid rgba(255,140,80,.22) !important;
   box-shadow:
     inset 0 0 0 1px rgba(0,0,0,.55),
-    0 0 0 1px rgba(255,90,35,.20),
-    0 0 18px rgba(255,90,35,.22) !important;
+    inset 0 1px 0 rgba(255,255,255,.06),
+    0 0 10px rgba(255,90,35,.18) !important;
 }
 
-/* make sure buttons sit above the glow */
+/* 2) ENERGY LINES LAYER (top+bottom lines + channels + hotspots) */
+body .navbar.navTabs::after{
+  content:"" !important;
+  position:absolute !important;
+  inset: -2px !important;                 /* small, so it stays like lines */
+  border-radius: 16px !important;
+  pointer-events:none !important;
+  z-index: 3 !important;
+
+  background:
+    /* TOP main hot line (thin but bright) */
+    linear-gradient(90deg,
+      rgba(255,90,35,0),
+      rgba(255,90,35,.95),
+      rgba(255,230,200,.18),
+      rgba(255,90,35,.95),
+      rgba(255,90,35,0)
+    ) top / 100% 2px no-repeat,
+
+    /* TOP inner channel line */
+    linear-gradient(90deg,
+      rgba(255,90,35,0),
+      rgba(255,90,35,.26),
+      rgba(255,90,35,0)
+    ) 0 10px / 100% 1px no-repeat,
+
+    /* BOTTOM main hot line (stronger, like ref) */
+    linear-gradient(90deg,
+      rgba(255,90,35,0),
+      rgba(255,90,35,1),
+      rgba(255,230,200,.22),
+      rgba(255,90,35,1),
+      rgba(255,90,35,0)
+    ) bottom / 100% 3px no-repeat,
+
+    /* BOTTOM inner channel line */
+    linear-gradient(90deg,
+      rgba(255,90,35,0),
+      rgba(255,90,35,.22),
+      rgba(255,90,35,0)
+    ) 0 calc(100% - 10px) / 100% 1px no-repeat,
+
+    /* subtle white micro highlight (adds “tech”) */
+    linear-gradient(90deg,
+      rgba(255,255,255,0),
+      rgba(255,255,255,.12),
+      rgba(255,255,255,0)
+    ) 0 3px / 100% 1px no-repeat,
+
+    /* EDGE HOTSPOTS like Apex */
+    radial-gradient(180px 60px at 10% 0%, rgba(255,90,35,.22), transparent 70%),
+    radial-gradient(180px 60px at 90% 0%, rgba(255,90,35,.18), transparent 70%),
+    radial-gradient(220px 80px at 92% 100%, rgba(255,90,35,.16), transparent 72%) !important;
+
+  /* glow that keeps lines as lines */
+  filter: drop-shadow(0 0 10px rgba(255,90,35,.35))
+          drop-shadow(0 0 26px rgba(255,60,20,.18)) !important;
+
+  opacity: .95 !important;
+}
+
+/* ensure tabs appear above lines */
 body .navbar.navTabs > .nav-btn{
   position: relative !important;
-  z-index: 5 !important;
-}
-
-/* NO BLUE artifacts */
-body .navbar.navTabs,
-body .navbar.navTabs *{
-  outline: none !important;
-}
-
-/* optional: stronger active glow (tab itself) */
-body .navbar.navTabs > .nav-btn.active{
-  text-shadow: 0 0 16px rgba(255,90,35,.35) !important;
+  z-index: 6 !important;
 }
