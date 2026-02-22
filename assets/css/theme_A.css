@@ -2553,3 +2553,139 @@ body::before{
   opacity: .95;
   pointer-events:none;
 }
+/* =========================================================
+   NAV TABS — RECTANGULAR, JOINED, ACTIVE TOP+BOTTOM GLOW
+   Paste at VERY END of theme_A.css
+   ========================================================= */
+
+.navbar.navRail{
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 9999 !important;
+
+  display:flex !important;
+  justify-content:center !important;
+  align-items:center !important;
+
+  gap: 0 !important;
+  padding: 18px 14px 10px !important;
+
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+/* якщо у тебе ще десь лишились капси — прибити */
+.navbar.navRail .navCap{ display:none !important; }
+
+/* центральна темна “планка” під табами (щоб читалось на космосі) */
+.navbar.navRail::before{
+  content:"" !important;
+  position:absolute !important;
+  left:50% !important;
+  top:50% !important;
+  transform: translate(-50%, -50%) !important;
+
+  width: min(860px, 92vw) !important;
+  height: 46px !important;
+
+  border-radius: 2px !important;
+  background: linear-gradient(180deg, rgba(10,10,12,.92), rgba(6,6,8,.92)) !important;
+  border: 1px solid rgba(255,255,255,.08) !important;
+
+  box-shadow: 0 18px 60px rgba(0,0,0,.55) !important;
+  pointer-events:none !important;
+}
+
+/* прибираємо старий “скан-лайн” якщо він десь лишився */
+.navbar.navRail::after{ display:none !important; }
+
+/* TAB BUTTONS */
+.navbar.navRail .nav-btn{
+  position: relative !important;
+  z-index: 2 !important;
+
+  height: 46px !important;
+  min-width: 170px !important;
+
+  margin: 0 !important;
+  padding: 0 22px !important;
+
+  border-radius: 0 !important;
+  clip-path: none !important;          /* 🔥 прибрали трикутники */
+  background: transparent !important;
+
+  border: 0 !important;
+  color: rgba(255,255,255,.78) !important;
+
+  font-family: var(--font-ui) !important;
+  font-weight: 800 !important;
+  font-size: 12px !important;
+  letter-spacing: .16em !important;
+  text-transform: uppercase !important;
+
+  cursor: pointer !important;
+}
+
+/* тонкі вертикальні розділювачі */
+.navbar.navRail .nav-btn + .nav-btn{
+  box-shadow: inset 1px 0 0 rgba(255,255,255,.08) !important;
+}
+
+/* прибити будь-які старі псевдо з попереднього nav */
+.navbar.navRail .nav-btn::before,
+.navbar.navRail .nav-btn::after,
+.navbar.navRail .nav-btn span::after{
+  content: none !important;
+}
+
+/* HOVER */
+.navbar.navRail .nav-btn:hover{
+  color: rgba(255,255,255,.92) !important;
+}
+
+/* ACTIVE: як твій скрін 2 — підсвітка зверху і знизу + легкі “hotspots” */
+.navbar.navRail .nav-btn.active{
+  color: rgba(255,255,255,.96) !important;
+}
+
+/* верхня лінія */
+.navbar.navRail .nav-btn.active::before{
+  content:"" !important;
+  position:absolute !important;
+  left: 10px !important;
+  right: 10px !important;
+  top: 0px !important;
+  height: 1px !important;
+  background: linear-gradient(90deg,
+    transparent,
+    rgba(255,90,40,.55),
+    rgba(255,255,255,.10),
+    rgba(255,90,40,.55),
+    transparent) !important;
+  opacity: .9 !important;
+}
+
+/* нижня лінія */
+.navbar.navRail .nav-btn.active::after{
+  content:"" !important;
+  position:absolute !important;
+  left: 10px !important;
+  right: 10px !important;
+  bottom: 0px !important;
+  height: 1px !important;
+  background: linear-gradient(90deg,
+    transparent,
+    rgba(255,90,40,.70),
+    rgba(255,255,255,.10),
+    rgba(255,90,40,.70),
+    transparent) !important;
+  opacity: 1 !important;
+}
+
+/* маленькі "hotspots" зліва/справа (як іскри, не червона калюжа) */
+.navbar.navRail .nav-btn.active{
+  background:
+    radial-gradient(16px 10px at 12% 50%, rgba(255,90,40,.25), transparent 70%),
+    radial-gradient(16px 10px at 88% 50%, rgba(255,90,40,.25), transparent 70%) !important;
+}
