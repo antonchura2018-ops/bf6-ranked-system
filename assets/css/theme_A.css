@@ -2403,3 +2403,153 @@ body::before{
 .navbar.navRail .nav-btn span::after{
   display:none !important;
 }
+/* =========================================================
+   NAV TABS — RECTANGULAR, CONNECTED, 1:1 REF
+   Paste at VERY END of theme_A.css
+   ========================================================= */
+
+/* if any old caps still exist — hide them */
+.navCap{ display:none !important; }
+
+/* navbar container */
+.navbar.navRail{
+  position: sticky;
+  top: 0;
+  z-index: 9999;
+  display:flex;
+  justify-content:center;
+  gap: 0 !important;
+  padding: 18px 0 10px !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+/* kill the "rail" plate if you still have it */
+.navbar.navRail::before,
+.navbar.navRail::after{
+  content:none !important;
+}
+
+/* base tab */
+.navbar.navRail .nav-btn{
+  position: relative;
+  height: 44px;
+  min-width: 200px;
+  padding: 0 22px;
+  margin: 0 !important;
+
+  /* IMPORTANT: make them rectangular */
+  clip-path: none !important;
+  border-radius: 0 !important;
+
+  background: rgba(0,0,0,.38) !important;
+  border: 1px solid rgba(255,255,255,.10) !important;
+  border-left-width: 0 !important;
+
+  color: rgba(255,255,255,.78) !important;
+  font-family: var(--font-ui);
+  font-weight: 800;
+  font-size: 12px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+
+  box-shadow: inset 0 0 0 1px rgba(0,0,0,.35);
+  backdrop-filter: blur(0px);
+}
+
+/* first tab gets left border back */
+.navbar.navRail .nav-btn:first-of-type{
+  border-left-width: 1px !important;
+}
+
+/* subtle top & bottom seams like ref */
+.navbar.navRail .nav-btn::before{
+  content:"";
+  position:absolute;
+  left: 0; right: 0; top: 0;
+  height: 1px;
+  background: linear-gradient(90deg,
+    transparent,
+    rgba(255,120,80,.18),
+    rgba(255,255,255,.06),
+    rgba(255,120,80,.18),
+    transparent);
+  opacity: .9;
+  pointer-events:none;
+}
+.navbar.navRail .nav-btn::after{
+  content:"";
+  position:absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 1px;
+  background: linear-gradient(90deg,
+    transparent,
+    rgba(255,255,255,.06),
+    transparent);
+  opacity: .65;
+  pointer-events:none;
+}
+
+/* remove old "active dot" from previous styles */
+.navbar.navRail .nav-btn.active span::after{ content:none !important; }
+
+/* hover */
+.navbar.navRail .nav-btn:hover{
+  color: rgba(255,255,255,.92) !important;
+  background: rgba(0,0,0,.46) !important;
+}
+
+/* ACTIVE (like your 2nd reference) */
+.navbar.navRail .nav-btn.active{
+  color: rgba(255,255,255,.96) !important;
+  background: rgba(0,0,0,.58) !important;
+  border-color: rgba(255,120,80,.28) !important;
+
+  box-shadow:
+    0 14px 34px rgba(0,0,0,.55),
+    inset 0 0 0 1px rgba(0,0,0,.45),
+    0 0 40px rgba(255,60,30,.10);
+}
+
+/* Active top glow + bottom hot flare (NO solid red line) */
+.navbar.navRail .nav-btn.active::before{
+  height: 2px;
+  opacity: 1;
+  background: linear-gradient(90deg,
+    transparent,
+    rgba(255,120,80,.28),
+    rgba(255,255,255,.08),
+    rgba(255,120,80,.28),
+    transparent) !important;
+}
+.navbar.navRail .nav-btn.active::after{
+  height: 2px;
+  opacity: 1;
+  background: linear-gradient(90deg,
+    rgba(255,60,30,0) 0%,
+    rgba(255,60,30,.65) 18%,
+    rgba(255,160,110,.20) 45%,
+    rgba(255,60,30,0) 100%) !important;
+  filter: blur(.15px);
+}
+
+/* active left “flare spot” like ref */
+.navbar.navRail .nav-btn.active span{
+  position: relative;
+}
+.navbar.navRail .nav-btn.active span::before{
+  content:"";
+  position:absolute;
+  left: -38px;
+  bottom: -14px;
+  width: 70px;
+  height: 10px;
+  background: radial-gradient(circle at 30% 50%,
+    rgba(255,60,30,.85),
+    rgba(255,60,30,.18),
+    transparent 70%);
+  filter: blur(.2px);
+  opacity: .95;
+  pointer-events:none;
+}
