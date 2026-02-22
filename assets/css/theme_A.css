@@ -3364,3 +3364,5 @@ body::before{
   .navbar.navTabs{ width: calc(100% - 24px); padding: 8px; }
   .navbar.navTabs .nav-btn{ min-width: 0; padding: 12px 14px; font-size: 11px; }
 }
+/* TEST: if you see big red border, theme_A is loaded */
+.navbar.navTabs { outline: 4px solid red !important; }
