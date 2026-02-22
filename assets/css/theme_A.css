@@ -2776,3 +2776,76 @@ body .navbar.navTabs > .nav-btn.active:last-child > span::before{
   left: 8px !important;
   right: 14px !important;
 }
+/* =========================================
+   ACTIVE TOP RAIL — PER TAB TUNING (V3)
+   Fix ends for each segment (overlaps + corners)
+========================================= */
+
+/* span already must be full-width */
+body .navbar.navTabs > .nav-btn > span{
+  display:block !important;
+  width:100% !important;
+  text-align:center !important;
+  position:relative !important;
+}
+
+/* active button above neighbors (important for overlaps) */
+body .navbar.navTabs > .nav-btn.active{
+  z-index: 20 !important;
+}
+
+/* Base rail (we will override left/right per tab) */
+body .navbar.navTabs > .nav-btn.active > span::before{
+  content:"" !important;
+  position:absolute !important;
+  top: -14px !important;
+  height: 3px !important;
+  pointer-events:none !important;
+
+  /* default — will be overridden */
+  left: 0 !important;
+  right: 0 !important;
+
+  background: linear-gradient(90deg,
+    rgba(255,120,40,1.00) 0%,
+    rgba(255,170,70,1.00) 22%,
+    rgba(255,230,160,0.55) 50%,
+    rgba(255,170,70,1.00) 78%,
+    rgba(255,120,40,1.00) 100%
+  ) !important;
+
+  box-shadow:
+    0 0 10px rgba(255,140,40,0.95),
+    0 0 28px rgba(255,80,20,0.55) !important;
+
+  border-radius: 6px !important;
+  filter: blur(0.2px) !important;
+  opacity: 1 !important;
+  mix-blend-mode: screen !important;
+  clip-path: none !important;
+}
+
+/* ---------- PER TAB ---------- */
+/* 1) PLAYER HUB (first) — не ліземо в лівий скошений кут, але добиваємо вправо до стику */
+body .navbar.navTabs > .nav-btn.active:first-child > span::before{
+  left: 12px !important;     /* прибирає артефакт зліва */
+  right: -26px !important;   /* добиває до стику (зелений справа) */
+}
+
+/* 2) RANK (second) — треба “вліво і вправо” в зону накладання */
+body .navbar.navTabs > .nav-btn.active:nth-child(2) > span::before{
+  left: -26px !important;
+  right: -26px !important;
+}
+
+/* 3) MATCH HISTORY (third) — так само, щоб не було короткого правого кінця */
+body .navbar.navTabs > .nav-btn.active:nth-child(3) > span::before{
+  left: -26px !important;
+  right: -26px !important;
+}
+
+/* 4) ADD MATCH (last) — добиваємо вліво до стику, але не ліземо у правий округлий кут */
+body .navbar.navTabs > .nav-btn.active:last-child > span::before{
+  left: -26px !important;
+  right: 12px !important;    /* прибирає артефакт справа */
+}
