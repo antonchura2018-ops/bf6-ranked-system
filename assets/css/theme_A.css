@@ -1692,7 +1692,7 @@ body::before{
 
 :root{
   --navW: min(980px, calc(100% - 160px));
-  --navH: 50px;
+  --navH: 44px;
 
   --hot: rgba(255,90,35,1);
   --hot2: rgba(255,150,90,1);
@@ -1731,7 +1731,7 @@ body #dashboard .navbar.navTabs::before,
 body .navbar.navTabs::before{
   content:"" !important;
   position:absolute !important;
-  inset: -6px !important;
+  inset: -2px !important;
   pointer-events:none !important;
 
   /* angled ends like ref */
@@ -1757,7 +1757,7 @@ body .navbar.navTabs::before{
 
     /* BOTTOM main rail (strong) */
     linear-gradient(90deg, rgba(255,90,35,0), rgba(255,90,35,1), rgba(255,230,200,.20), rgba(255,90,35,1), rgba(255,90,35,0))
-      bottom / 100% 4px no-repeat,
+      bottom / 100% 3px no-repeat,
 
     /* BOTTOM inner thin line */
     linear-gradient(90deg, rgba(255,90,35,0), rgba(255,90,35,.26), rgba(255,90,35,0))
@@ -1862,23 +1862,10 @@ body .navbar.navTabs > .nav-btn > span::before{
   box-shadow: inset 0 1px 0 rgba(255,255,255,.04);
 }
 
-/* seam / connector between tabs (glowy wedge like ref) */
+/* remove wedge arrows between tabs */
 body #dashboard .navbar.navTabs > .nav-btn:not(:first-child)::after,
 body .navbar.navTabs > .nav-btn:not(:first-child)::after{
-  content:"" !important;
-  position:absolute !important;
-  left: -14px !important;
-  top: 9px !important;
-  bottom: 9px !important;
-  width: 28px !important;
-  pointer-events:none !important;
-
-  background:
-    radial-gradient(circle at 55% 50%, rgba(255,90,35,.22), transparent 62%),
-    linear-gradient(180deg, transparent, rgba(255,90,35,.16), transparent) !important;
-
-  clip-path: polygon(0 0, 100% 50%, 0 100%, 22% 50%) !important;
-  opacity: .9 !important;
+  content: none !important;
 }
 
 /* hover */
@@ -1931,6 +1918,36 @@ body .navbar.navTabs > .nav-btn.active > span::after{
   background: linear-gradient(90deg, transparent, var(--hot), transparent);
   box-shadow: 0 0 22px rgba(255,90,35,.65);
   opacity: 1;
+}
+/* KILL any blue/cyan artifacts from older CSS */
+body .navbar.navTabs,
+body .navbar.navTabs *{
+  box-shadow: none !important; /* we'll add only what we want below via our rules */
+}
+
+body .navbar.navTabs{
+  outline: none !important;
+}
+
+body .navbar.navTabs::before,
+body .navbar.navTabs::after,
+body .navbar.navTabs > .nav-btn::before,
+body .navbar.navTabs > .nav-btn::after,
+body .navbar.navTabs > .nav-btn > span::before,
+body .navbar.navTabs > .nav-btn > span::after{
+  filter: none !important;
+}
+
+/* if some old rule draws cyan underline */
+body .navbar.navTabs::after{
+  content: none !important;
+}
+/* restore warm glow only (no blue) */
+body #dashboard .navbar.navTabs::before,
+body .navbar.navTabs::before{
+  box-shadow:
+    0 0 18px rgba(255,90,35,.22),
+    0 0 70px rgba(255,60,20,.10) !important;
 }
 
 /* IMPORTANT: remove any old dots (safety) */
