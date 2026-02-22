@@ -2579,3 +2579,78 @@ body .navbar.navTabs > .nav-btn.active > span::after{
 
   clip-path: polygon(14px 0%, 100% 0%, calc(100% - 12px) 100%, 0% 100%, 0% 20px) !important;
 }
+/* =========================================
+   V3 — CLEAN ACTIVE GOLD RAILS (INSIDE TAB)
+   Removes left dot + removes notch + rails in correct place
+========================================= */
+
+/* 1) прибрати "точку" на першій вкладці (divider) */
+body .navbar.navTabs > .nav-btn:first-child::after{
+  display: none !important;
+}
+
+/* 2) TOP rail — всередині активної вкладки, по всій ширині */
+body .navbar.navTabs > .nav-btn.active > span::before{
+  /* прибрати clip-path (він давав “зубчик/стрілку”) */
+  clip-path: none !important;
+
+  /* лінія має бути В СЕРЕДИНІ вкладки */
+  left: -28px !important;
+  right: -28px !important;
+  top: -6px !important;          /* було -22px (над вкладкою) */
+  height: 3px !important;
+
+  background:
+    radial-gradient(140px 22px at 18% 50%,
+      rgba(255,255,255,0.70) 0%,
+      rgba(255,235,170,0.55) 22%,
+      rgba(255,170,70,0.18) 60%,
+      rgba(255,170,70,0.00) 80%
+    ),
+    linear-gradient(90deg,
+      rgba(255,190,95,1.00) 0%,
+      rgba(255,225,150,1.00) 22%,
+      rgba(255,255,235,0.70) 50%,
+      rgba(255,225,150,1.00) 78%,
+      rgba(255,190,95,1.00) 100%
+    ) !important;
+
+  box-shadow:
+    0 0 10px rgba(255,220,150,0.95),
+    0 0 26px rgba(255,140,40,0.55),
+    0 0 70px rgba(255,80,10,0.22) !important;
+
+  border-radius: 6px !important;
+}
+
+/* 3) BOTTOM rail — всередині активної вкладки, по всій ширині */
+body .navbar.navTabs > .nav-btn.active > span::after{
+  clip-path: none !important;
+
+  left: -28px !important;
+  right: -28px !important;
+  bottom: -6px !important;       /* було -22px (під вкладкою) */
+  height: 3px !important;
+
+  background:
+    radial-gradient(160px 24px at 24% 50%,
+      rgba(255,255,255,0.62) 0%,
+      rgba(255,235,170,0.48) 22%,
+      rgba(255,170,70,0.16) 62%,
+      rgba(255,170,70,0.00) 82%
+    ),
+    linear-gradient(90deg,
+      rgba(255,190,95,1.00) 0%,
+      rgba(255,225,150,1.00) 22%,
+      rgba(255,255,235,0.70) 50%,
+      rgba(255,225,150,1.00) 78%,
+      rgba(255,190,95,1.00) 100%
+    ) !important;
+
+  box-shadow:
+    0 0 12px rgba(255,220,150,1.00),
+    0 0 32px rgba(255,130,35,0.60),
+    0 0 85px rgba(255,70,0,0.26) !important;
+
+  border-radius: 6px !important;
+}
