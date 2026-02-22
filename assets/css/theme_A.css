@@ -1681,173 +1681,492 @@ body::before{
   /* ЧИМ БІЛЬШЕ число — ТИМ НИЖЧЕ опуститься кільце */
   background-position: center 15% !important;  /* пробуй 22% / 28% / 34% / 40% */
 }
-
-
 /* =========================================================
-   NAV TABS — 1:1 FIRE RAIL (MATCH REFERENCE)
-   HTML:
-   <div class="navbar navTabs">
-     <button class="nav-btn active"><span>PLAYER HUB</span></button> ...
+   NAV TABS — ORANGE SPACE RAIL (1:1 like screenshot)
+   Works with your HTML:
+   <div class="navbar navRail">
+     <span class="navCap navCap--L"></span>
+     <button class="nav-btn ..."><span>...</span></button>...
+     <span class="navCap navCap--R"></span>
    </div>
-   Paste as VERY LAST block in theme_A.css
    ========================================================= */
 
 :root{
-  /* overall size (smaller than your current) */
-  --navW: min(980px, calc(100% - 80px));
-  --navH: 52px;                 /* rail height */
-  --segInsetY: 10px;            /* inner segment padding (top/bottom) */
-  --segInsetX: 12px;            /* inner segment padding (left/right) */
+  --tabH: 46px;
+  --tabW: min(860px, 92vw);
 
-  /* colors */
-  --hot: rgba(255, 90, 35, 1);
-  --hotSoft: rgba(255, 90, 35, .30);
-  --hotSoft2: rgba(255, 140, 80, .22);
+  --tabLine: rgba(255,255,255,.12);
+  --tabLine2: rgba(255,255,255,.06);
 
-  --plateA: rgba(18,18,22,.78);
-  --plateB: rgba(6,6,10,.86);
+  --tabOrange: #ff3b1f;
+  --tabOrange2:#ff8a4a;
 
-  --segA: rgba(28,28,34,.70);
-  --segB: rgba(8,8,10,.86);
-
-  --txt: rgba(255,255,255,.82);
-  --txtA: rgba(255,230,210,.98);
+  --tabGlassTop: rgba(255,255,255,.06);
+  --tabSteelA: rgba(18,18,22,.78);
+  --tabSteelB: rgba(8,8,10,.88);
 }
 
-/* ---------- container row ---------- */
+/* navbar контейнер — тільки тримає вкладки вгорі */
+.navbar.navRail{
+  position: sticky;
+  top: 0;
+  z-index: 9999;
+
+  height: auto !important;
+  padding: 18px 0 10px !important;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+/* прибираємо стару "металеву планку" (вона дає зайвий фон) */
+.navbar.navRail::before,
+.navbar.navRail::after{
+  content: none !important;
+}
+
+/* caps по краях — як "направляючі" */
+.navCap{
+  width: 70px;
+  height: var(--tabH);
+  flex: 0 0 auto;
+  position: relative;
+  pointer-events: none;
+  opacity: .9;
+
+  background:
+    linear-gradient(180deg, var(--tabGlassTop), rgba(255,255,255,0) 45%),
+    linear-gradient(180deg, var(--tabSteelA), var(--tabSteelB));
+  border: 1px solid var(--tabLine);
+  box-shadow:
+    0 18px 50px rgba(0,0,0,.55),
+    inset 0 0 0 1px rgba(0,0,0,.35);
+}
+
+.navCap--L{
+  margin-right: -14px; /* злипання з першою кнопкою */
+  clip-path: polygon(0 50%, 22px 0, 100% 0, 100% 100%, 22px 100%);
+  border-top-left-radius: 12px;
+  border-bottom-left-radius: 12px;
+}
+.navCap--R{
+  margin-left: -14px;
+  clip-path: polygon(0 0, calc(100% - 22px) 0, 100% 50%, calc(100% - 22px) 100%, 0 100%);
+  border-top-right-radius: 12px;
+  border-bottom-right-radius: 12px;
+}
+
+/* кнопки */
+.navbar.navRail .nav-btn{
+  height: var(--tabH);
+  min-width: 180px;
+  padding: 0 22px;
+  margin: 0 -14px; /* злипання як у рефі */
+  position: relative;
+
+  border: 1px solid var(--tabLine);
+  background:
+    linear-gradient(180deg, var(--tabGlassTop), rgba(255,255,255,0) 45%),
+    linear-gradient(180deg, var(--tabSteelA), var(--tabSteelB));
+  box-shadow:
+    0 18px 50px rgba(0,0,0,.55),
+    inset 0 0 0 1px rgba(0,0,0,.35);
+
+  color: rgba(255,255,255,.75);
+  font-family: var(--font-ui);
+  font-weight: 800;
+  font-size: 12px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+
+  cursor: pointer;
+  outline: none;
+
+  clip-path: polygon(
+    0 50%,
+    22px 0,
+    calc(100% - 22px) 0,
+    100% 50%,
+    calc(100% - 22px) 100%,
+    22px 100%
+  );
+
+  transition: transform .12s ease, filter .12s ease, color .12s ease, border-color .12s ease;
+}
+
+.navbar.navRail .nav-btn span{
+  position: relative;
+  display: inline-block;
+  transform: translateY(0.5px);
+}
+
+/* тонка внутрішня рамка */
+.navbar.navRail .nav-btn::before{
+  content:"";
+  position:absolute;
+  inset: 2px;
+  clip-path: inherit;
+  border: 1px solid var(--tabLine2);
+  opacity: .7;
+  pointer-events:none;
+}
+
+/* hover */
+.navbar.navRail .nav-btn:hover{
+  color: rgba(255,255,255,.92);
+  transform: translateY(-1px);
+}
+
+/* ACTIVE — як на скріні (помаранчеве свічення + нижня лінія) */
+.navbar.navRail .nav-btn.active{
+  color: rgba(255,255,255,.95);
+  border-color: color-mix(in srgb, var(--tabOrange) 60%, rgba(255,255,255,.18));
+
+  background:
+    radial-gradient(160px 70px at 50% 55%, rgba(255,70,30,.22), transparent 62%),
+    linear-gradient(180deg, var(--tabGlassTop), rgba(255,255,255,0) 45%),
+    linear-gradient(180deg, rgba(50,16,12,.72), rgba(8,8,10,.90));
+
+  box-shadow:
+    0 18px 56px rgba(0,0,0,.62),
+    0 0 44px rgba(255,70,30,.16),
+    inset 0 0 0 1px rgba(0,0,0,.35);
+}
+
+/* нижня помаранчева "рейка" на активній вкладці */
+.navbar.navRail .nav-btn.active::after{
+  content:"";
+  position:absolute;
+  left: 26px;
+  right: 26px;
+  bottom: 6px;
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, transparent, var(--tabOrange), transparent);
+  box-shadow: 0 0 18px rgba(255,70,30,.35);
+  opacity: 1;
+}
+
+/* ВАЖЛИВО: прибираємо "червону точку", яку ти бачив раніше */
+.navbar.navRail .nav-btn.active span::after{
+  content: none !important;
+}
+/* --- NAV: remove side caps (1:1 like your screenshot) --- */
+.navbar.navRail .navCap{
+  display: none !important;
+}
+/* tabs no longer need negative overlap with caps */
+.navbar.navRail .nav-btn{
+  margin: 0 -10px !important; /* трохи менше злипання, як у рефі */
+}
+
+/* FIRST tab: left edge straight, right edge angled */
+.navbar.navRail .nav-btn:first-of-type{
+  margin-left: 0 !important;
+  clip-path: polygon(
+    0 0,
+    calc(100% - 22px) 0,
+    100% 50%,
+    calc(100% - 22px) 100%,
+    0 100%
+  ) !important;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+
+/* LAST tab: right edge straight, left edge angled */
+.navbar.navRail .nav-btn:last-of-type{
+  margin-right: 0 !important;
+  clip-path: polygon(
+    22px 0,
+    100% 0,
+    100% 100%,
+    22px 100%,
+    0 50%
+  ) !important;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+/* make inner seam match new shapes */
+.navbar.navRail .nav-btn:first-of-type::before,
+.navbar.navRail .nav-btn:last-of-type::before{
+  clip-path: inherit !important;
+}
+/* ==========================================================
+   NAV TABS — RECT (match reference) ✅ paste VERY END
+   ========================================================== */
+
+/* прибрати "рейку" та синю/сірі смуги, залишити тільки кнопки */
+.navbar.navRail{
+  position: sticky;
+  top: 0;
+  z-index: 9999;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 14px;
+  padding: 18px 14px 10px !important;
+  height: auto !important;
+
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+/* ВАЖЛИВО: прибираємо твої псевдо-елементи "metal rail" */
+.navbar.navRail::before,
+.navbar.navRail::after{
+  content: none !important;
+  display: none !important;
+}
+
+/* прибираємо бокові "капси" (ті штуки які ти показував стрілками) */
+.navbar.navRail .navCap{
+  display: none !important;
+}
+
+/* базова кнопка (прямокутна як у рефі) */
+.navbar.navRail .nav-btn{
+  position: relative;
+  z-index: 2;
+
+  height: 44px;
+  min-width: 170px;
+  padding: 0 22px;
+  margin: 0 !important;
+
+  border: 1px solid rgba(255, 80, 60, .22);
+  color: rgba(255,255,255,.78);
+
+  background:
+    linear-gradient(180deg, rgba(0,0,0,.52), rgba(0,0,0,.20));
+
+  box-shadow:
+    0 10px 26px rgba(0,0,0,.45),
+    inset 0 0 0 1px rgba(255,255,255,.06);
+
+  font-family: var(--font-ui);
+  font-weight: 800;
+  font-size: 12px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+
+  cursor: pointer;
+  outline: none;
+
+  /* прямокутник + легкі зрізи кутів як у рефі */
+  clip-path: polygon(
+    10px 0,
+    calc(100% - 10px) 0,
+    100% 10px,
+    100% calc(100% - 10px),
+    calc(100% - 10px) 100%,
+    10px 100%,
+    0 calc(100% - 10px),
+    0 10px
+  );
+
+  transition: transform .12s ease, border-color .12s ease, color .12s ease, box-shadow .12s ease, filter .12s ease;
+}
+
+.navbar.navRail .nav-btn span{
+  position: relative;
+  display: inline-block;
+  transform: translateY(0.5px);
+}
+
+/* hover */
+.navbar.navRail .nav-btn:hover{
+  color: rgba(255,255,255,.92);
+  border-color: rgba(255, 120, 90, .35);
+  filter: saturate(1.05);
+  transform: translateY(-1px);
+}
+
+/* ACTIVE — як на рефі: тепле підсвічування, тонка лінія зверху/знизу, БЕЗ точки */
+.navbar.navRail .nav-btn.active{
+  color: rgba(255,255,255,.96);
+  border-color: rgba(255, 90, 60, .55);
+
+  background:
+    radial-gradient(220px 80px at 18% 50%, rgba(255,70,35,.20), transparent 62%),
+    linear-gradient(180deg, rgba(18,12,10,.82), rgba(0,0,0,.22));
+
+  box-shadow:
+    0 14px 34px rgba(0,0,0,.55),
+    0 0 38px rgba(255,60,30,.16),
+    inset 0 0 0 1px rgba(255,255,255,.08);
+}
+
+/* прибрати твою "червону точку" під активною вкладкою */
+.navbar.navRail .nav-btn.active span::after{
+  content: none !important;
+  display: none !important;
+}
+
+/* прибрати старий нижній "блик-лінію", якщо вона ще є */
+.navbar.navRail .nav-btn.active::after{
+  content: "" !important;
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: 6px;
+  height: 2px;
+  border-radius: 999px;
+
+  /* у рефі — не одна точка, а м’який підпал по центру */
+  background: linear-gradient(90deg, transparent, rgba(255,70,35,.85), transparent);
+  box-shadow: 0 0 18px rgba(255,60,30,.22);
+  opacity: .65;
+  pointer-events: none;
+}
+
+/* тонка верхня “кромка” як у рефі */
+.navbar.navRail .nav-btn::before{
+  content: "";
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  top: 6px;
+  height: 1px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.08), transparent);
+  opacity: .65;
+  pointer-events: none;
+}
+/* =========================================================
+   NAV TABS — HOLOGRAPHIC EDGE (V3 FINAL)
+   ONE CONTINUOUS RAIL + CONNECTED SEGMENTS
+   MUST BE LAST IN theme_A.css
+   ========================================================= */
+
 body .navbar.navTabs{
   position: sticky !important;
   top: 0 !important;
   z-index: 9999 !important;
 
-  width: var(--navW) !important;
-  margin: 14px auto 0 !important;
+  width: min(980px, calc(100% - 80px)) !important;
+  margin: 18px auto 0 !important;
 
-  display:flex !important;
-  align-items:center !important;
-  justify-content:center !important;
-  gap: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
 
   padding: 0 !important;
+  gap: 0 !important;
+
   background: transparent !important;
   border: 0 !important;
+  border-radius: 0 !important;
   box-shadow: none !important;
 
-  isolation: isolate !important;
+  height: auto !important;
+  min-height: 0 !important;
   overflow: visible !important;
+
+  isolation: isolate !important;
 }
 
-/* ---------- the long FIRE RAIL (with angled endcaps) ---------- */
+/* hard-kill any “big capsule” from older styles (if they exist) */
+body .navbar.navTabs{
+  outline: none !important;
+  filter: none !important;
+}
+
 body .navbar.navTabs::before{
   content:"" !important;
   position:absolute !important;
-  left: 0 !important; right: 0 !important;
-  top: 0 !important; bottom: 0 !important;
-
-  height: var(--navH) !important;
-  margin: 0 !important;
-
-  /* angled ends like the reference */
-  clip-path: polygon(
-    18px 0,
-    calc(100% - 18px) 0,
-    100% 18px,
-    100% calc(100% - 18px),
-    calc(100% - 18px) 100%,
-    18px 100%,
-    0 calc(100% - 18px),
-    0 18px
-  ) !important;
-
-  border-radius: 0 !important;
+  inset: 0 !important;
+  border-radius: 12px !important;
   pointer-events:none !important;
 
-  /* multi-layer plate */
   background:
-    linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,0) 45%),
-    linear-gradient(180deg, var(--plateA), var(--plateB)) !important;
+    linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.00) 45%),
+    linear-gradient(180deg, rgba(0,0,0,0.72), rgba(0,0,0,0.50)) !important;
 
-  border: 1px solid rgba(255,140,80,.22) !important;
+  border: 1px solid rgba(255,120,40,0.16) !important;
 
   box-shadow:
-    0 18px 55px rgba(0,0,0,.55),
-    inset 0 1px 0 rgba(255,255,255,.06),
-    inset 0 0 0 1px rgba(255,90,35,.10),
-    inset 0 -1px 0 rgba(0,0,0,.55) !important;
+    0 18px 55px rgba(0,0,0,0.55),
+    inset 0 1px 0 rgba(255,255,255,0.06) !important;
 
   z-index: 0 !important;
 }
 
-/* hot top+bottom rails + outer glow (NO brackets) */
 body .navbar.navTabs::after{
   content:"" !important;
   position:absolute !important;
-  inset: -3px !important;
+  inset:-3px !important;
+  border-radius: 14px !important;
   pointer-events:none !important;
 
-  clip-path: polygon(
-    18px 0,
-    calc(100% - 18px) 0,
-    100% 18px,
-    100% calc(100% - 18px),
-    calc(100% - 18px) 100%,
-    18px 100%,
-    0 calc(100% - 18px),
-    0 18px
-  ) !important;
+  /* thin outer border */
+  border: 1px solid rgba(255,150,90,0.38) !important;
 
+  /* IMPORTANT: make top & bottom orange rails across full width */
   background:
-    /* TOP */
+    /* TOP rail */
     linear-gradient(90deg,
-      rgba(255,90,35,0),
-      rgba(255,90,35,.95),
-      rgba(255,220,170,.18),
-      rgba(255,90,35,.95),
-      rgba(255,90,35,0)
+      rgba(255,90,35,0.00),
+      rgba(255,90,35,0.70),
+      rgba(255,220,170,0.18),
+      rgba(255,90,35,0.70),
+      rgba(255,90,35,0.00)
     ) top / 100% 2px no-repeat,
 
-    /* BOTTOM */
+    /* BOTTOM rail */
     linear-gradient(90deg,
-      rgba(255,90,35,0),
-      rgba(255,90,35,1),
-      rgba(255,220,170,.20),
-      rgba(255,90,35,1),
-      rgba(255,90,35,0)
+      rgba(255,90,35,0.00),
+      rgba(255,90,35,0.80),
+      rgba(255,220,170,0.20),
+      rgba(255,90,35,0.80),
+      rgba(255,90,35,0.00)
     ) bottom / 100% 2px no-repeat,
 
-    /* warm sheen */
+    /* soft warm “holo” sheen (very subtle) */
     linear-gradient(180deg,
-      rgba(255,200,160,.10),
-      rgba(255,200,160,0) 45%,
-      rgba(255,90,35,.10)
+      rgba(255,200,160,0.08),
+      rgba(255,200,160,0.00) 45%,
+      rgba(255,90,35,0.08)
     ) !important;
 
-  border: 1px solid rgba(255,160,100,.40) !important;
-
+  /* perimeter glow (this is what you miss now) */
   box-shadow:
-    0 0 0 1px rgba(255,110,55,.20),
-    0 0 22px rgba(255,110,55,.32),
-    0 0 80px rgba(255,80,30,.16) !important;
+    0 0 0 1px rgba(255,110,55,0.22),
+    0 0 18px rgba(255,110,55,0.28),
+    0 0 60px rgba(255,80,30,0.14) !important;
 
-  filter: blur(.10px) !important;
-  z-index: 1 !important;
+  opacity: 1 !important;
+  filter: blur(0.12px) !important;
+  z-index: 3 !important;
 }
 
-/* ---------- buttons: compact, connected segments ---------- */
+/* 4 equal segments, fill the rail */
 body .navbar.navTabs > .nav-btn{
   position: relative !important;
-  z-index: 3 !important;
+  z-index: 2 !important;
 
   flex: 1 1 0 !important;
   min-width: 0 !important;
 
-  height: var(--navH) !important;
+  height: 54px !important;
   margin: 0 !important;
-  padding: 0 10px !important;
+  padding: 0 18px !important;
 
   border: 0 !important;
   background: transparent !important;
-  box-shadow: none !important;
 
   font-family: var(--font-ui, system-ui) !important;
   font-weight: 800 !important;
@@ -1855,126 +2174,121 @@ body .navbar.navTabs > .nav-btn{
   letter-spacing: .16em !important;
   text-transform: uppercase !important;
 
-  color: var(--txt) !important;
+  color: rgba(255,255,255,0.82) !important;
   cursor: pointer !important;
 
-  transition: filter .16s ease, transform .16s ease, color .16s ease !important;
+  /* kill old “trapezoid/gaps” sources */
+  clip-path: none !important;
+  transform: none !important;
+  box-shadow: none !important;
+  filter: none !important;
+
+  transition: transform .16s ease, color .16s ease, filter .16s ease !important;
 }
 
-/* pull segments together */
+/* IMPORTANT: force segments to touch */
 body .navbar.navTabs > .nav-btn + .nav-btn{
-  margin-left: -14px !important;
+  margin-left: -16px !important;
 }
 
-/* segment plate (trapezoid) */
+/* segment plate */
 body .navbar.navTabs > .nav-btn::before{
   content:"" !important;
   position:absolute !important;
-  inset: var(--segInsetY) var(--segInsetX) !important;
+
+  /* less “air” inside — this fixes the look you have now */
+  inset: 6px 8px !important;
+
+  border-radius: 10px !important;
   pointer-events:none !important;
 
   background:
-    linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,0) 44%),
-    linear-gradient(180deg, var(--segA), var(--segB)) !important;
+    radial-gradient(120% 140% at 50% 0%,
+      rgba(255,255,255,0.09),
+      rgba(255,255,255,0.02) 55%,
+      rgba(0,0,0,0.10) 100%
+    ),
+    linear-gradient(180deg,
+      rgba(18,18,22,0.72),
+      rgba(8,8,10,0.55)
+    ) !important;
 
-  border: 1px solid rgba(255,140,80,.14) !important;
+  border: 1px solid rgba(255,140,80,0.22) !important;
+
+  clip-path: polygon(10px 0%, 100% 0%, calc(100% - 12px) 100%, 0% 100%) !important;
 
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.06),
-    inset 0 -1px 0 rgba(0,0,0,.45) !important;
-
-  /* trapezoid like ref */
-  clip-path: polygon(16px 0%, 100% 0%, calc(100% - 16px) 100%, 0% 100%) !important;
-
-  border-radius: 10px !important;
+    inset 0 1px 0 rgba(255,255,255,0.07),
+    inset 0 -1px 0 rgba(0,0,0,0.35),
+    0 0 18px rgba(255,90,35,0.06) !important;
 }
 
-/* first & last segment edges */
 body .navbar.navTabs > .nav-btn:first-child::before{
-  clip-path: polygon(22px 0%, 100% 0%, calc(100% - 16px) 100%, 0% 100%, 0% 26px) !important;
+  clip-path: polygon(14px 0%, 100% 0%, calc(100% - 12px) 100%, 0% 100%, 0% 20px) !important;
 }
 body .navbar.navTabs > .nav-btn:last-child::before{
-  clip-path: polygon(16px 0%, 100% 0%, 100% 26px, calc(100% - 16px) 100%, 0% 100%) !important;
+  clip-path: polygon(10px 0%, 100% 0%, 100% 24px, calc(100% - 10px) 100%, 0% 100%) !important;
 }
 
-/* divider line between segments */
+/* subtle divider */
 body .navbar.navTabs > .nav-btn::after{
   content:"" !important;
   position:absolute !important;
   left: 0 !important;
-  top: 16px !important;
-  bottom: 16px !important;
+  top: 14px !important;
+  bottom: 14px !important;
   width: 1px !important;
   pointer-events:none !important;
+
   background: linear-gradient(180deg,
-    rgba(255,90,35,0),
-    rgba(255,90,35,.18),
-    rgba(255,90,35,0)
+    rgba(255,120,40,0.00),
+    rgba(255,120,40,0.14),
+    rgba(255,120,40,0.00)
   ) !important;
+
   opacity: .85 !important;
 }
-body .navbar.navTabs > .nav-btn:first-child::after{ display:none !important; }
+body .navbar.navTabs > .nav-btn:first-child::after{
+  display:none !important;
+}
 
+/* text on top */
 body .navbar.navTabs > .nav-btn > span{
   position: relative !important;
-  z-index: 4 !important;
+  z-index: 3 !important;
 }
 
 /* hover */
 body .navbar.navTabs > .nav-btn:hover{
   transform: translateY(-1px) !important;
-  filter: brightness(1.07) !important;
-  color: rgba(255,255,255,.94) !important;
+  color: rgba(255,255,255,0.95) !important;
+  filter: brightness(1.06) !important;
 }
 
-/* ---------- ACTIVE: fiery left segment + double frame + dots ---------- */
+/* active */
 body .navbar.navTabs > .nav-btn.active{
-  color: var(--txtA) !important;
-  text-shadow: 0 0 18px rgba(255,110,55,.18) !important;
+  color: rgba(255,225,200,0.98) !important;
+  text-shadow: 0 0 18px rgba(255,120,40,0.18) !important;
 }
-
 body .navbar.navTabs > .nav-btn.active::before{
-  border-color: rgba(255,160,100,.48) !important;
+  border-color: rgba(255,120,40,0.38) !important;
 
   background:
-    radial-gradient(260px 80px at 16% 50%, rgba(255,90,35,.18), transparent 65%),
-    linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,0) 44%),
-    linear-gradient(180deg, rgba(55,24,16,.82), rgba(10,8,10,.90)) !important;
+    radial-gradient(240px 70px at 20% 50%, rgba(255,90,35,0.14), transparent 65%),
+    radial-gradient(240px 70px at 80% 50%, rgba(255,90,35,0.10), transparent 65%),
+    linear-gradient(180deg, rgba(22,16,14,0.70), rgba(8,8,10,0.62)) !important;
 
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.10),
-    inset 0 -1px 0 rgba(0,0,0,.40),
-    0 0 40px rgba(255,110,55,.22),
-    0 0 110px rgba(255,80,30,.12) !important;
+    inset 0 1px 0 rgba(255,255,255,0.08),
+    inset 0 -1px 0 rgba(0,0,0,0.35),
+    0 0 26px rgba(255,120,40,0.14) !important;
+
+  outline: 1px solid rgba(255,140,80,0.32) !important;
+  filter: brightness(1.08) !important;
 }
 
-/* active internal top+bottom glow line like ref */
-body .navbar.navTabs > .nav-btn.active > span::before,
-body .navbar.navTabs > .nav-btn.active > span::after{
-  content:"";
-  position:absolute;
-  left: -20px;
-  right: -20px;
-  height: 2px;
-  border-radius: 999px;
-  background: linear-gradient(90deg, transparent, rgba(255,90,35,.98), transparent);
-  box-shadow: 0 0 18px rgba(255,90,35,.35);
-  opacity: .95;
-  pointer-events:none;
-}
-body .navbar.navTabs > .nav-btn.active > span::before{ top: -18px; }
-body .navbar.navTabs > .nav-btn.active > span::after{ bottom: -18px; }
-
-/* 3 dots under active (bottom-left) */
-body .navbar.navTabs > .nav-btn.active{
-  background:
-    radial-gradient(circle at 34px calc(100% - 8px), rgba(255,90,35,.95) 0 2px, rgba(255,90,35,0) 3px),
-    radial-gradient(circle at 48px calc(100% - 8px), rgba(255,90,35,.70) 0 2px, rgba(255,90,35,0) 3px),
-    radial-gradient(circle at 62px calc(100% - 8px), rgba(255,90,35,.55) 0 2px, rgba(255,90,35,0) 3px) !important;
-}
-
-/* safety: kill any blue glow if something else adds it */
-body .navbar.navTabs,
-body .navbar.navTabs *{
-  text-decoration: none !important;
+/* kill any old dot/underline */
+body .navbar.navTabs .nav-btn span::after,
+body .navbar.navTabs .nav-btn.active::after{
+  display:none !important;
 }
