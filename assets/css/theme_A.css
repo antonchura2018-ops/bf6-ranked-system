@@ -2074,6 +2074,7 @@ body .navbar.navTabs{
 
   height: auto !important;
   min-height: 0 !important;
+  overflow: visible !important;
 
   isolation: isolate !important;
 }
@@ -2084,15 +2085,10 @@ body .navbar.navTabs{
   filter: none !important;
 }
 
-/* ONE rail */
 body .navbar.navTabs::before{
   content:"" !important;
   position:absolute !important;
-  left: 0 !important;
-  right: 0 !important;
-  top: 0 !important;
-  bottom: 0 !important;
-
+  inset: 0 !important;
   border-radius: 12px !important;
   pointer-events:none !important;
 
@@ -2100,43 +2096,43 @@ body .navbar.navTabs::before{
     linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.00) 45%),
     linear-gradient(180deg, rgba(0,0,0,0.72), rgba(0,0,0,0.50)) !important;
 
-  border: 1px solid rgba(255,120,40,0.30) !important;
+  border: 1px solid rgba(255,120,40,0.16) !important;
 
   box-shadow:
     0 18px 55px rgba(0,0,0,0.55),
-    inset 0 1px 0 rgba(255,255,255,0.06),
-    inset 0 0 0 1px rgba(255,90,35,0.14) !important;
+    inset 0 1px 0 rgba(255,255,255,0.06) !important;
+
+  z-index: 0 !important;
 }
 
 body .navbar.navTabs::after{
   content:"" !important;
   position:absolute !important;
-  inset:-4px !important;
-  border-radius: 16px !important;
+  inset: -2px !important;                 /* трошки назовні */
+  border-radius: 14px !important;
   pointer-events:none !important;
 
+  /* робимо саме контур */
+  border: 1px solid rgba(255,140,80,0.28) !important;
+
+  /* суцільне світіння по периметру */
+  box-shadow:
+    0 0 0 1px rgba(255,110,55,0.18),
+    0 0 18px rgba(255,110,55,0.22),
+    0 0 46px rgba(255,80,30,0.12) !important;
+
+  /* легкий “холо” відблиск зверху/знизу (не смуга по центру) */
   background:
-    /* outer warm halo */
-    linear-gradient(90deg,
-      rgba(255,120,40,0.00),
-      rgba(255,120,40,0.28),
-      rgba(255,70,25,0.22),
-      rgba(255,120,40,0.28),
-      rgba(255,120,40,0.00)
-    ),
-    /* tiny highlight band to look “holographic” */
     linear-gradient(180deg,
       rgba(255,200,160,0.10),
       rgba(255,200,160,0.00) 45%,
       rgba(255,90,35,0.10)
     ) !important;
 
-  opacity: .95 !important;
-  filter: blur(0.55px) !important;
+  opacity: 1 !important;
+  filter: blur(0.15px) !important;
 
-  box-shadow:
-    0 0 22px rgba(255,120,40,0.22),
-    0 0 55px rgba(255,90,35,0.10) !important;
+  z-index: 3 !important;
 }
 
 /* 4 equal segments, fill the rail */
