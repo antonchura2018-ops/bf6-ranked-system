@@ -2884,17 +2884,15 @@ body::before{
   .navbar.navTabs::before{ width: min(92vw, 760px); }
   .navbar.navTabs .nav-btn{ min-width: 140px; font-size: 11px !important; }
 }
-/* ==== NAV UPGRADE: CLEAN GLOW ==== */
+/* ==== NAV UPGRADE: POWER FRAME ==== */
 
-.navbar.navTabs .nav-btn.active::after{
-  height: 3px !important;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    #ff3b1f,
-    #ff6a2f,
-    #ff3b1f,
-    transparent
-  ) !important;
-  box-shadow: 0 0 24px rgba(255,59,31,.55);
+.navbar.navTabs .nav-btn.active{
+  box-shadow:
+    0 0 0 1px rgba(255,80,40,.55),
+    0 0 30px rgba(255,59,31,.25),
+    inset 0 0 18px rgba(255,59,31,.15);
+}
+
+.navbar.navTabs .nav-btn.active span{
+  text-shadow: 0 0 10px rgba(255,59,31,.6);
 }
