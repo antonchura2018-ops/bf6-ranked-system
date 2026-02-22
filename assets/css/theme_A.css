@@ -1683,45 +1683,34 @@ body::before{
 }
 
 
+
+
 /* =========================================================
-   NAV TABS — 1:1 FIRE RAIL (MATCH REFERENCE)
-   HTML:
-   <div class="navbar navTabs">
-     <button class="nav-btn active"><span>PLAYER HUB</span></button> ...
-   </div>
+   NAV TABS — V6 REF 1:1 (FIRE RAIL + DOUBLE FRAMES)
    Paste as VERY LAST block in theme_A.css
    ========================================================= */
 
 :root{
-  /* overall size (smaller than your current) */
-  --navW: min(920px, calc(100% - 120px));
-  --navH: 52px;                 /* rail height */
-  --segInsetY: 10px;            /* inner segment padding (top/bottom) */
-  --segInsetX: 12px;            /* inner segment padding (left/right) */
+  --navW: min(980px, calc(100% - 160px));
+  --navH: 50px;
 
-  /* colors */
-  --hot: rgba(255, 90, 35, 1);
-  --hotSoft: rgba(255, 90, 35, .30);
-  --hotSoft2: rgba(255, 140, 80, .22);
+  --hot: rgba(255,90,35,1);
+  --hot2: rgba(255,150,90,1);
 
-  --plateA: rgba(18,18,22,.78);
-  --plateB: rgba(6,6,10,.86);
-
-  --segA: rgba(28,28,34,.70);
-  --segB: rgba(8,8,10,.86);
-
-  --txt: rgba(255,255,255,.82);
-  --txtA: rgba(255,230,210,.98);
+  --txt: rgba(255,255,255,.84);
+  --txtA: rgba(255,235,220,.98);
 }
 
-/* ---------- container row ---------- */
+/* container */
+body #dashboard .navbar.navTabs,
 body .navbar.navTabs{
   position: sticky !important;
   top: 0 !important;
   z-index: 9999 !important;
 
   width: var(--navW) !important;
-  margin: 14px auto 0 !important;
+  height: var(--navH) !important;
+  margin: 10px auto 0 !important;
 
   display:flex !important;
   align-items:center !important;
@@ -1737,125 +1726,69 @@ body .navbar.navTabs{
   overflow: visible !important;
 }
 
-/* ---------- the long FIRE RAIL (with angled endcaps) ---------- */
+/* ---------- RAIL: no big plate, only lines + subtle haze ---------- */
+body #dashboard .navbar.navTabs::before,
 body .navbar.navTabs::before{
   content:"" !important;
   position:absolute !important;
-  left: 0 !important; right: 0 !important;
-  top: 0 !important; bottom: 0 !important;
-
-  height: var(--navH) !important;
-  margin: 0 !important;
-
-  /* angled ends like the reference */
-  clip-path: polygon(
-    18px 0,
-    calc(100% - 18px) 0,
-    100% 18px,
-    100% calc(100% - 18px),
-    calc(100% - 18px) 100%,
-    18px 100%,
-    0 calc(100% - 18px),
-    0 18px
-  ) !important;
-
-  border-radius: 0 !important;
+  inset: -6px !important;
   pointer-events:none !important;
 
-  /* multi-layer plate */
-  background:
-    linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,0) 45%),
-    linear-gradient(180deg, var(--plateA), var(--plateB)) !important;
+  /* angled ends like ref */
+  clip-path: polygon(
+    16px 0,
+    calc(100% - 16px) 0,
+    100% 16px,
+    100% calc(100% - 16px),
+    calc(100% - 16px) 100%,
+    16px 100%,
+    0 calc(100% - 16px),
+    0 16px
+  ) !important;
 
-  border: 1px solid rgba(255,140,80,.22) !important;
+  background:
+    /* TOP bright rail */
+    linear-gradient(90deg, rgba(255,90,35,0), rgba(255,90,35,.95), rgba(255,230,200,.18), rgba(255,90,35,.95), rgba(255,90,35,0))
+      top / 100% 3px no-repeat,
+
+    /* TOP inner thin line */
+    linear-gradient(90deg, rgba(255,90,35,0), rgba(255,90,35,.30), rgba(255,90,35,0))
+      0 12px / 100% 1px no-repeat,
+
+    /* BOTTOM main rail (strong) */
+    linear-gradient(90deg, rgba(255,90,35,0), rgba(255,90,35,1), rgba(255,230,200,.20), rgba(255,90,35,1), rgba(255,90,35,0))
+      bottom / 100% 4px no-repeat,
+
+    /* BOTTOM inner thin line */
+    linear-gradient(90deg, rgba(255,90,35,0), rgba(255,90,35,.26), rgba(255,90,35,0))
+      0 calc(100% - 12px) / 100% 1px no-repeat,
+
+    /* end flares */
+    radial-gradient(180px 60px at 10% 20%, rgba(255,90,35,.22), transparent 70%),
+    radial-gradient(180px 60px at 90% 20%, rgba(255,90,35,.18), transparent 70%),
+    radial-gradient(220px 90px at 90% 90%, rgba(255,90,35,.16), transparent 72%) !important;
 
   box-shadow:
-    0 18px 55px rgba(0,0,0,.55),
-    inset 0 1px 0 rgba(255,255,255,.06),
-    inset 0 0 0 1px rgba(255,90,35,.10),
-    inset 0 -1px 0 rgba(0,0,0,.55) !important;
-
-  z-index: 0 !important;
+    0 0 22px rgba(255,90,35,.28),
+    0 0 90px rgba(255,60,20,.14) !important;
 }
 
-/* hot top+bottom rails + outer glow (NO brackets) */
+/* kill any extra plate someone adds */
+body #dashboard .navbar.navTabs::after,
 body .navbar.navTabs::after{
-  content:"" !important;
-  position:absolute !important;
-  inset: -3px !important;
-  pointer-events:none !important;
-
-  clip-path: polygon(
-    18px 0,
-    calc(100% - 18px) 0,
-    100% 18px,
-    100% calc(100% - 18px),
-    calc(100% - 18px) 100%,
-    18px 100%,
-    0 calc(100% - 18px),
-    0 18px
-  ) !important;
-
-  background:
-    /* TOP */
-    linear-gradient(90deg,
-      rgba(255,90,35,0),
-      rgba(255,90,35,.95),
-      rgba(255,220,170,.18),
-      rgba(255,90,35,.95),
-      rgba(255,90,35,0)
-    ) top / 100% 2px no-repeat,
-
-    /* BOTTOM */
-    linear-gradient(90deg,
-      rgba(255,90,35,0),
-      rgba(255,90,35,1),
-      rgba(255,220,170,.20),
-      rgba(255,90,35,1),
-      rgba(255,90,35,0)
-    ) bottom / 100% 2px no-repeat,
-
-    /* inner tech channels (2 thin lines like reference) */
-  linear-gradient(90deg,
-    rgba(255,90,35,0),
-    rgba(255,90,35,.30),
-    rgba(255,90,35,0)
-  ) calc(0% + 0px) 12px / 100% 1px no-repeat,
-
-  linear-gradient(90deg,
-    rgba(255,90,35,0),
-    rgba(255,90,35,.22),
-    rgba(255,90,35,0)
-  ) calc(0% + 0px) calc(100% - 12px) / 100% 1px no-repeat,
-    
-
-    /* warm sheen */
-    linear-gradient(180deg,
-      rgba(255,200,160,.10),
-      rgba(255,200,160,0) 45%,
-      rgba(255,90,35,.10)
-    ) !important;
-
-  border: 1px solid rgba(255,160,100,.40) !important;
-
-  box-shadow:
-    0 0 0 1px rgba(255,110,55,.20),
-    0 0 22px rgba(255,110,55,.32),
-    0 0 80px rgba(255,80,30,.16) !important;
-
-  filter: blur(.10px) !important;
-  z-index: 1 !important;
+  content:none !important;
 }
 
-/* ---------- buttons: compact, connected segments ---------- */
+/* ---------- BUTTONS: tight trapezoids ---------- */
+body #dashboard .navbar.navTabs > .nav-btn,
 body .navbar.navTabs > .nav-btn{
   position: relative !important;
-  z-index: 3 !important;
+  z-index: 2 !important;
 
   flex: 1 1 0 !important;
   min-width: 0 !important;
-
   height: var(--navH) !important;
+
   margin: 0 !important;
   padding: 0 10px !important;
 
@@ -1863,7 +1796,6 @@ body .navbar.navTabs > .nav-btn{
   background: transparent !important;
   box-shadow: none !important;
 
-  font-family: var(--font-ui, system-ui) !important;
   font-weight: 800 !important;
   font-size: 12px !important;
   letter-spacing: .16em !important;
@@ -1871,381 +1803,135 @@ body .navbar.navTabs > .nav-btn{
 
   color: var(--txt) !important;
   cursor: pointer !important;
-
-  transition: filter .16s ease, transform .16s ease, color .16s ease !important;
 }
 
-/* pull segments together */
-body .navbar.navTabs > .nav-btn + .nav-btn{
-  margin-left: -26px !important;
-}
-
-/* segment plate (trapezoid) */
-body .navbar.navTabs > .nav-btn::before{
-  content:"" !important;
-  position:absolute !important;
-  inset: var(--segInsetY) var(--segInsetX) !important;
-  pointer-events:none !important;
-
-  background:
-    linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,0) 44%),
-    linear-gradient(180deg, var(--segA), var(--segB)) !important;
-
-  border: 1px solid rgba(255,140,80,.14) !important;
-
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.06),
-    inset 0 -1px 0 rgba(0,0,0,.45) !important;
-
-  /* trapezoid like ref */
-  clip-path: polygon(22px 0%, 100% 0%, calc(100% - 22px) 100%, 0% 100%) !important;
-
-  border-radius: 10px !important;
-}
-
-body .navbar.navTabs > .nav-btn:first-child::before{
-  clip-path: polygon(24px 0%, 100% 0%, calc(100% - 22px) 100%, 0% 100%) !important;
-}
-
-body .navbar.navTabs > .nav-btn:last-child::before{
-  clip-path: polygon(22px 0%, 100% 0%, calc(100% - 24px) 100%, 0% 100%) !important;
-}
-
-/* divider line between segments */
-body .navbar.navTabs > .nav-btn::after{
-  content:"" !important;
-  position:absolute !important;
-  left: 0 !important;
-  top: 16px !important;
-  bottom: 16px !important;
-  width: 1px !important;
-  pointer-events:none !important;
-  background: linear-gradient(180deg,
-    rgba(255,90,35,0),
-    rgba(255,90,35,.18),
-    rgba(255,90,35,0)
-  ) !important;
-  opacity: .85 !important;
-}
-body .navbar.navTabs > .nav-btn:first-child::after{ display:none !important; }
-
-body .navbar.navTabs > .nav-btn > span{
-  position: relative !important;
-  z-index: 4 !important;
-}
-
-/* hover */
-body .navbar.navTabs > .nav-btn:hover{
-  transform: translateY(-1px) !important;
-  filter: brightness(1.07) !important;
-  color: rgba(255,255,255,.94) !important;
-}
-
-/* ---------- ACTIVE: fiery left segment + double frame + dots ---------- */
-body .navbar.navTabs > .nav-btn.active{
-  color: var(--txtA) !important;
-  text-shadow: 0 0 18px rgba(255,110,55,.18) !important;
-}
-
-body .navbar.navTabs > .nav-btn.active::before{
-  border: 1px solid rgba(255,170,110,.70) !important;
-  box-shadow:
-    /* outer hot outline */
-    0 0 0 1px rgba(255,90,35,.35),
-    0 0 22px rgba(255,90,35,.55),
-    0 0 70px rgba(255,60,20,.22),
-
-    /* inner bevel */
-    inset 0 1px 0 rgba(255,255,255,.12),
-    inset 0 -1px 0 rgba(0,0,0,.45) !important;
-
-  background:
-    /* hot flare left like reference */
-    radial-gradient(260px 90px at 18% 50%, rgba(255,90,35,.28), transparent 65%),
-    /* subtle top highlight */
-    linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,0) 46%),
-    /* warm plate */
-    linear-gradient(180deg, rgba(65,26,16,.88), rgba(10,8,10,.92)) !important;
-
-  filter: brightness(1.06) !important;
-}
-
-/* active internal top+bottom glow line like ref */
-body .navbar.navTabs > .nav-btn.active > span::before,
-body .navbar.navTabs > .nav-btn.active > span::after{
-  content:"";
-  position:absolute;
-  left: -20px;
-  right: -20px;
-  height: 2px;
-  border-radius: 999px;
-  background: linear-gradient(90deg, transparent, rgba(255,90,35,1), transparent) !important;
-  box-shadow: 0 0 20px rgba(255,90,35,.55) !important;
-  opacity: 1 !important;
-  pointer-events:none;
-}
-body .navbar.navTabs > .nav-btn.active > span::before{ top: -18px; }
-body .navbar.navTabs > .nav-btn.active > span::after{ bottom: -18px; }
-
-body .navbar.navTabs > .nav-btn.active{
-  background: transparent !important;
-}
-
-/* safety: kill any blue glow if something else adds it */
-body .navbar.navTabs,
-body .navbar.navTabs *{
-  text-decoration: none !important;
-}
-/* =========================================================
-   NAV TABS — V5 HARD OVERRIDE (FORCE 1:1 FIRE)
-   Paste as VERY LAST lines of theme_A.css
-   ========================================================= */
-
-body #dashboard .navbar.navTabs,
-body .navbar.navTabs{
-  width: min(860px, calc(100% - 160px)) !important; /* ✅ прибрали зайвий фон */
-  margin: 10px auto 0 !important;
-  padding: 0 !important;
-  background: transparent !important;
-  border: 0 !important;
-  box-shadow: none !important;
-  position: sticky !important;
-  top: 0 !important;
-  z-index: 9999 !important;
-  isolation: isolate !important;
-  overflow: visible !important;
-}
-
-/* rail plate — MINIMAL (no big background) */
-body #dashboard .navbar.navTabs::before,
-body .navbar.navTabs::before{
-  content:"" !important;
-  position:absolute !important;
-  inset: 0 !important;
-  height: 50px !important;
-
-  clip-path: polygon(
-    16px 0,
-    calc(100% - 16px) 0,
-    100% 16px,
-    100% calc(100% - 16px),
-    calc(100% - 16px) 100%,
-    16px 100%,
-    0 calc(100% - 16px),
-    0 16px
-  ) !important;
-
-  /* ✅ very subtle plate only */
-  background: linear-gradient(180deg, rgba(0,0,0,.22), rgba(0,0,0,.10)) !important;
-
-  border: 1px solid rgba(255,140,80,.12) !important;
-  box-shadow:
-    0 10px 30px rgba(0,0,0,.35),
-    inset 0 1px 0 rgba(255,255,255,.04) !important;
-
-  pointer-events:none !important;
-  z-index: 0 !important;
-}
-
-/* rail glow lines — LIKE REF */
-body #dashboard .navbar.navTabs::after,
-body .navbar.navTabs::after{
-  content:"" !important;
-  position:absolute !important;
-  inset: -4px !important;
-  pointer-events:none !important;
-
-  clip-path: polygon(
-    16px 0,
-    calc(100% - 16px) 0,
-    100% 16px,
-    100% calc(100% - 16px),
-    calc(100% - 16px) 100%,
-    16px 100%,
-    0 calc(100% - 16px),
-    0 16px
-  ) !important;
-
-  background:
-    /* TOP thin line (outer) */
-    linear-gradient(90deg,
-      rgba(255,90,35,0),
-      rgba(255,120,70,.85),
-      rgba(255,220,170,.14),
-      rgba(255,120,70,.85),
-      rgba(255,90,35,0)
-    ) top / 100% 2px no-repeat,
-
-    /* TOP thin line (inner channel) */
-    linear-gradient(90deg,
-      rgba(255,90,35,0),
-      rgba(255,90,35,.35),
-      rgba(255,90,35,0)
-    ) 0 10px / 100% 1px no-repeat,
-
-    /* BOTTOM main hot line (strong) */
-    linear-gradient(90deg,
-      rgba(255,90,35,0),
-      rgba(255,90,35,1),
-      rgba(255,220,170,.18),
-      rgba(255,90,35,1),
-      rgba(255,90,35,0)
-    ) bottom / 100% 4px no-repeat,
-
-    /* BOTTOM inner channel */
-    linear-gradient(90deg,
-      rgba(255,90,35,0),
-      rgba(255,90,35,.30),
-      rgba(255,90,35,0)
-    ) 0 calc(100% - 10px) / 100% 1px no-repeat,
-
-    /* edge hotspots (left + right) like reference */
-    radial-gradient(120px 40px at 10% 0%, rgba(255,90,35,.38), transparent 70%),
-    radial-gradient(120px 40px at 90% 0%, rgba(255,90,35,.26), transparent 70%),
-    radial-gradient(140px 60px at 88% 100%, rgba(255,90,35,.28), transparent 72%) !important;
-
-  border: 1px solid rgba(255,160,100,.26) !important;
-
-  box-shadow:
-    0 0 22px rgba(255,90,35,.28),
-    0 0 90px rgba(255,60,20,.14) !important;
-
-  filter: blur(.10px) !important;
-  z-index: 1 !important;
-}
-
-/* buttons */
-body #dashboard .navbar.navTabs > .nav-btn,
-body .navbar.navTabs > .nav-btn{
-  position: relative !important;
-  z-index: 3 !important;
-
-  flex: 1 1 0 !important;
-  min-width: 0 !important;
-
-  height: 50px !important;
-  margin: 0 !important;
-  padding: 0 10px !important;
-
-  border: 0 !important;
-  background: transparent !important;
-
-  font-weight: 800 !important;
-  font-size: 12px !important;
-  letter-spacing: .16em !important;
-  text-transform: uppercase !important;
-
-  color: rgba(255,255,255,.82) !important;
-}
-
-/* ✅ bring segments closer */
+/* tighter overlap (closer tabs) */
 body #dashboard .navbar.navTabs > .nav-btn + .nav-btn,
 body .navbar.navTabs > .nav-btn + .nav-btn{
-  margin-left: -28px !important;
+  margin-left: -32px !important;
 }
 
-/* trapezoid segments */
+/* OUTER PLATE (dark) + OUTER FRAME */
 body #dashboard .navbar.navTabs > .nav-btn::before,
 body .navbar.navTabs > .nav-btn::before{
   content:"" !important;
   position:absolute !important;
-  inset: 10px 12px !important;
+  inset: 9px 12px !important;
   border-radius: 10px !important;
+  pointer-events:none !important;
+
+  /* pure trapezoid */
+  clip-path: polygon(24px 0%, 100% 0%, calc(100% - 24px) 100%, 0% 100%) !important;
 
   background:
-    linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,0) 44%),
-    linear-gradient(180deg, rgba(28,28,34,.68), rgba(8,8,10,.88)) !important;
+    /* top bevel */
+    linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,0) 46%),
+    /* base */
+    linear-gradient(180deg, rgba(26,26,32,.68), rgba(8,8,10,.90)) !important;
 
   border: 1px solid rgba(255,140,80,.16) !important;
 
   box-shadow:
     inset 0 1px 0 rgba(255,255,255,.06),
-    inset 0 -1px 0 rgba(0,0,0,.45) !important;
-
-  /* ✅ pure trapezoid (no polygon mess) */
-  clip-path: polygon(22px 0%, 100% 0%, calc(100% - 22px) 100%, 0% 100%) !important;
-
-  pointer-events:none !important;
+    inset 0 -1px 0 rgba(0,0,0,.55) !important;
 }
 
-/* first/last remain trapezoids */
-body #dashboard .navbar.navTabs > .nav-btn:first-child::before,
-body .navbar.navTabs > .nav-btn:first-child::before{
-  clip-path: polygon(24px 0%, 100% 0%, calc(100% - 22px) 100%, 0% 100%) !important;
-}
-body #dashboard .navbar.navTabs > .nav-btn:last-child::before,
-body .navbar.navTabs > .nav-btn:last-child::before{
-  clip-path: polygon(22px 0%, 100% 0%, calc(100% - 24px) 100%, 0% 100%) !important;
-}
-
-/* divider */
-body #dashboard .navbar.navTabs > .nav-btn::after,
-body .navbar.navTabs > .nav-btn::after{
-  content:"" !important;
-  position:absolute !important;
-  left: 0 !important;
-  top: 16px !important;
-  bottom: 16px !important;
-  width: 1px !important;
-  background: linear-gradient(180deg, rgba(255,90,35,0), rgba(255,90,35,.18), rgba(255,90,35,0)) !important;
-  opacity: .85 !important;
-  pointer-events:none !important;
-}
-body #dashboard .navbar.navTabs > .nav-btn:first-child::after,
-body .navbar.navTabs > .nav-btn:first-child::after{
-  display:none !important;
-}
-
+/* INNER FRAME (second frame) via span::before */
 body #dashboard .navbar.navTabs > .nav-btn > span,
 body .navbar.navTabs > .nav-btn > span{
   position: relative !important;
-  z-index: 4 !important;
+  z-index: 3 !important;
+  display:inline-block !important;
 }
 
-/* ACTIVE — “fire” */
-body #dashboard .navbar.navTabs > .nav-btn.active,
-body .navbar.navTabs > .nav-btn.active{
-  color: rgba(255,235,220,.98) !important;
-  text-shadow: 0 0 18px rgba(255,90,35,.28) !important;
-  background: transparent !important; /* ✅ no dots */
+body #dashboard .navbar.navTabs > .nav-btn > span::before,
+body .navbar.navTabs > .nav-btn > span::before{
+  content:"";
+  position:absolute;
+  left: -14px; right: -14px;
+  top: -12px; bottom: -12px;
+  pointer-events:none;
+
+  border-radius: 9px;
+  opacity: .70;
+
+  /* inner trapezoid border */
+  clip-path: polygon(22px 0%, 100% 0%, calc(100% - 22px) 100%, 0% 100%);
+
+  border: 1px solid rgba(255,255,255,.08);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.04);
 }
 
-body #dashboard .navbar.navTabs > .nav-btn.active::before,
-body .navbar.navTabs > .nav-btn.active::before{
-  border-color: rgba(255,180,120,.72) !important;
+/* seam / connector between tabs (glowy wedge like ref) */
+body #dashboard .navbar.navTabs > .nav-btn:not(:first-child)::after,
+body .navbar.navTabs > .nav-btn:not(:first-child)::after{
+  content:"" !important;
+  position:absolute !important;
+  left: -14px !important;
+  top: 9px !important;
+  bottom: 9px !important;
+  width: 28px !important;
+  pointer-events:none !important;
 
   background:
-    radial-gradient(320px 90px at 18% 50%, rgba(255,90,35,.34), transparent 60%),
-    linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,0) 44%),
-    linear-gradient(180deg, rgba(75,28,16,.92), rgba(10,8,10,.92)) !important;
+    radial-gradient(circle at 55% 50%, rgba(255,90,35,.22), transparent 62%),
+    linear-gradient(180deg, transparent, rgba(255,90,35,.16), transparent) !important;
 
-   box-shadow:
-    0 0 0 1px rgba(255,110,55,.35),
-    0 0 46px rgba(255,90,35,.72),
-    0 0 160px rgba(255,60,20,.30),
-    inset 0 1px 0 rgba(255,255,255,.10),
-    inset 0 -1px 0 rgba(0,0,0,.45) !important;
-
-  filter: brightness(1.08) !important;
+  clip-path: polygon(0 0, 100% 50%, 0 100%, 22% 50%) !important;
+  opacity: .9 !important;
 }
 
-/* active top+bottom hot lines inside the segment */
-body #dashboard .navbar.navTabs > .nav-btn.active > span::before,
+/* hover */
+body #dashboard .navbar.navTabs > .nav-btn:hover,
+body .navbar.navTabs > .nav-btn:hover{
+  color: rgba(255,255,255,.94) !important;
+  filter: brightness(1.06) !important;
+}
+
+/* ---------- ACTIVE: real fire glow, no dots ---------- */
+body #dashboard .navbar.navTabs > .nav-btn.active,
+body .navbar.navTabs > .nav-btn.active{
+  color: var(--txtA) !important;
+  text-shadow: 0 0 16px rgba(255,90,35,.30) !important;
+  background: transparent !important;
+}
+
+/* active outer plate becomes fiery */
+body #dashboard .navbar.navTabs > .nav-btn.active::before,
+body .navbar.navTabs > .nav-btn.active::before{
+  border-color: rgba(255,180,120,.75) !important;
+
+  background:
+    /* big hot flare on left like ref */
+    radial-gradient(360px 110px at 18% 50%, rgba(255,90,35,.42), transparent 60%),
+    /* hot rim */
+    linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,0) 46%),
+    /* warm base */
+    linear-gradient(180deg, rgba(85,30,16,.92), rgba(10,8,10,.92)) !important;
+
+  box-shadow:
+    0 0 0 1px rgba(255,120,70,.35),
+    0 0 42px rgba(255,90,35,.70),
+    0 0 170px rgba(255,60,20,.30),
+    inset 0 1px 0 rgba(255,255,255,.10),
+    inset 0 -1px 0 rgba(0,0,0,.55) !important;
+}
+
+/* active hot lines inside segment (top+bottom) */
 body #dashboard .navbar.navTabs > .nav-btn.active > span::after,
-body .navbar.navTabs > .nav-btn.active > span::before,
 body .navbar.navTabs > .nav-btn.active > span::after{
   content:"";
   position:absolute;
-  left: -20px;
-  right: -20px;
-  height: 2px;
+  left: -18px; right: -18px;
+  bottom: -14px;
+  height: 3px;
   border-radius: 999px;
-  background: linear-gradient(90deg, transparent, rgba(255,90,35,1), transparent) !important;
-  box-shadow: 0 0 22px rgba(255,90,35,.62) !important;
-  opacity: 1 !important;
   pointer-events:none;
+
+  background: linear-gradient(90deg, transparent, var(--hot), transparent);
+  box-shadow: 0 0 22px rgba(255,90,35,.65);
+  opacity: 1;
 }
-body #dashboard .navbar.navTabs > .nav-btn.active > span::before,
-body .navbar.navTabs > .nav-btn.active > span::before{ top: -18px; }
-body #dashboard .navbar.navTabs > .nav-btn.active > span::after,
-body .navbar.navTabs > .nav-btn.active > span::after{ bottom: -18px; }
+
+/* IMPORTANT: remove any old dots (safety) */
+body #dashboard .navbar.navTabs > .nav-btn.active{ background-image: none !important; }
