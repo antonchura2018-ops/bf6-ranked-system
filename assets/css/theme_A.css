@@ -2992,3 +2992,37 @@ body .navbar.navTabs > .nav-btn.active:last-child > span::before{
   padding-top: var(--stackTop) !important;
   margin-top: 0 !important;
 }
+/* ==========================================================
+   LAST RESORT — FORCE HOME CONTENT UP (NO SCROLL NEEDED)
+   Paste ABSOLUTELY LAST
+   ========================================================== */
+
+/* 1) home must be a full-height stage */
+.rankHome{
+  min-height: 100vh !important;
+  display: block !important;
+}
+
+/* 2) center container must start from top */
+.rankHome__center{
+  min-height: 100vh !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+
+  /* kill any old pushes */
+  margin-top: 0 !important;
+  padding-top: 360px !important;   /* <-- підніме текст одразу */
+  padding-bottom: 0 !important;
+}
+
+/* 3) ring position (leave as you like) */
+.rankHome__center::before{
+  top: 34px !important;
+  width: 980px !important;
+  height: 980px !important;
+}
+
+/* 4) ensure nothing adds extra top spacing */
+.rankTitle{ margin-top: 0 !important; }
