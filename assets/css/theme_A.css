@@ -3364,4 +3364,96 @@ body::before{
 
 /* no center mark */
 #dashboard .pulseMark{ display:none !important; }
+/* ==========================================================
+   HOME — SINGLE IMAGE BACKGROUND (ring baked in image)
+   Place ABSOLUTELY LAST in theme_A.css
+   ========================================================== */
+
+/* 0) base */
+html, body { height: 100%; margin: 0; padding: 0; }
+body { background:#05060a !important; overflow-x:hidden; }
+
+/* 1) ONE background image for whole page (THIS image contains the ring) */
+body::before{
+  content:"" !important;
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: -10 !important;
+  pointer-events: none !important;
+
+  background-image: url("/assets/img/bg/cosmos.png") !important;
+  background-repeat: no-repeat !important;
+  background-size: cover !important;
+
+  /* 🔧 РУХАЄ КІЛЬЦЕ ВГОРУ/ВНИЗ (бо кільце в самій картинці)
+     більше % = кільце нижче, менше % = вище */
+  background-position: center 18% !important;
+
+  /* без blur */
+  filter: saturate(1.08) contrast(1.06) !important;
+  transform: translateZ(0) !important;
+}
+
+/* 2) home full-bleed */
+.app, .section, #dashboard{
+  width:100% !important;
+  max-width:none !important;
+  margin:0 !important;
+  padding:0 !important;
+  background: transparent !important;
+}
+
+.rankHome{
+  width: 100vw !important;
+  min-height: 100vh !important;
+  margin-left: calc(50% - 50vw) !important;
+  margin-right: calc(50% - 50vw) !important;
+  background: transparent !important;
+}
+
+/* 3) kill extra overlays/layers that create bands */
+.rankHome__bg{ display:none !important; }
+.rankHome__vignette{ display:none !important; }
+body::after{ content:none !important; display:none !important; }
+
+/* 4) IMPORTANT: do NOT use ::before ring at all */
+.rankHome__center::before{
+  content: none !important;
+  display: none !important;
+  background: none !important;
+}
+
+/* 5) content positioning: put title at bottom of ring */
+:root{
+  /* 🔧 ГОЛОВНЕ: це опускає OUTCAST/IMMORTAL вниз (під кільце) */
+  --homeStackTop: 300px;
+
+  /* відступи між блоками як у рефі */
+  --gapTitleRP: 10px;
+  --gapRPProgress: 18px;
+  --gapProgressToHeader: 62px;
+}
+
+.rankHome__center{
+  min-height: 100vh !important;
+  display:flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+
+  padding-top: var(--homeStackTop) !important;
+  padding-bottom: 80px !important;
+}
+
+/* spacing like reference */
+.rankTitle{ margin: 0 !important; }
+.rankRP{ margin-top: var(--gapTitleRP) !important; }
+.rankProgress{ margin-top: var(--gapRPProgress) !important; }
+.pulseHeader{ margin-top: var(--gapProgressToHeader) !important; }
+
+/* keep everything above background */
+.rankTitle,.rankRP,.rankProgress,.pulseHeader,.pulseGrid{
+  position: relative !important;
+  z-index: 2 !important;
+}
 
