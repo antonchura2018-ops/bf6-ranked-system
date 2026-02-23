@@ -2862,7 +2862,7 @@ body .navbar.navTabs > .nav-btn.active:first-child > span::before{
 
 /* 2) RANK (second) */
 body .navbar.navTabs > .nav-btn.active:nth-child(2) > span::before{
-  left: -8px !important;    /* було -26 */
+  left: -6px !important;    /* було -26 */
   right: -10px !important;
 }
 
