@@ -2849,3 +2849,31 @@ body .navbar.navTabs > .nav-btn.active:last-child > span::before{
   left: -26px !important;
   right: 12px !important;    /* прибирає артефакт справа */
 }
+/* =========================================
+   ACTIVE TOP RAIL — PER TAB TUNING (SMALLER)
+   Replace the previous -26px version
+========================================= */
+
+/* 1) PLAYER HUB (first) */
+body .navbar.navTabs > .nav-btn.active:first-child > span::before{
+  left: 12px !important;
+  right: -14px !important;   /* було -26 */
+}
+
+/* 2) RANK (second) */
+body .navbar.navTabs > .nav-btn.active:nth-child(2) > span::before{
+  left: -14px !important;    /* було -26 */
+  right: -14px !important;
+}
+
+/* 3) MATCH HISTORY (third) */
+body .navbar.navTabs > .nav-btn.active:nth-child(3) > span::before{
+  left: -14px !important;    /* було -26 */
+  right: -14px !important;
+}
+
+/* 4) ADD MATCH (last) */
+body .navbar.navTabs > .nav-btn.active:last-child > span::before{
+  left: -14px !important;    /* було -26 */
+  right: 12px !important;
+}
