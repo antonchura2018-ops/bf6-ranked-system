@@ -3456,4 +3456,38 @@ body::after{ content:none !important; display:none !important; }
   position: relative !important;
   z-index: 2 !important;
 }
+/* ==========================================================
+   HOME HUD OVERLAY — EXACT 1:1 MATCH (1536×1024)
+   MUST BE LAST IN theme_A.css
+   ========================================================== */
+
+/* ensure home is positioning context */
+.rankHome{
+  position: relative !important;
+}
+
+/* overlay */
+.rankHome__hud{
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+
+  background-image: url("/assets/img/ui/home_hud_overlay.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center 18%; /* ОБОВʼЯЗКОВО як у body::before */
+}
+
+/* content must be above overlay */
+.rankHome__center{
+  position: relative !important;
+  z-index: 3 !important;
+}
+
+/* ensure no CSS ring is drawn */
+.rankHome__center::before{
+  content: none !important;
+  display: none !important;
+}
 
