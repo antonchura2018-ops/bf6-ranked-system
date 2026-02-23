@@ -2856,7 +2856,7 @@ body .navbar.navTabs > .nav-btn.active:last-child > span::before{
 
 /* 1) PLAYER HUB (first) */
 body .navbar.navTabs > .nav-btn.active:first-child > span::before{
-  left: 4px !important;
+  left: 3px !important;
   right: -10px !important;   /* було -26 */
 }
 
