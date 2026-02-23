@@ -3026,3 +3026,206 @@ body .navbar.navTabs > .nav-btn.active:last-child > span::before{
 
 /* 4) ensure nothing adds extra top spacing */
 .rankTitle{ margin-top: 0 !important; }
+/* =========================================================
+   HERO RANK STYLE — IMMORTAL REFERENCE
+   Paste LAST in theme_A.css
+   ========================================================= */
+
+:root{
+  --heroRed: #ff3b1f;
+  --heroRedSoft: rgba(255,59,31,.35);
+  --heroLine: rgba(255,255,255,.12);
+  --heroLineSoft: rgba(255,255,255,.06);
+}
+
+/* ===============================
+   MAIN RANK TITLE
+================================= */
+
+.rankTitle{
+  font-family: var(--font-ui);
+  font-size: 64px !important;
+  font-weight: 700 !important;
+  letter-spacing: .18em !important;
+  text-transform: uppercase;
+
+  color: rgba(255,255,255,.92);
+
+  text-shadow:
+    0 0 12px rgba(255,255,255,.08),
+    0 0 40px rgba(255,60,30,.18);
+
+  margin-bottom: 6px;
+}
+
+/* ===============================
+   RP VALUE
+================================= */
+
+.rankRP{
+  font-family: var(--font-ui);
+  font-size: 28px !important;
+  font-weight: 600;
+  letter-spacing: .08em;
+  color: rgba(255,255,255,.88);
+
+  text-shadow:
+    0 0 18px rgba(255,60,30,.18);
+
+  margin-bottom: 24px;
+}
+
+.rankRP span{
+  font-size: 14px;
+  letter-spacing: .22em;
+  opacity: .75;
+  margin-left: 8px;
+}
+
+/* ===============================
+   NEXT RANK BAR
+================================= */
+
+.rankProgress__label{
+  font-size: 13px !important;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.65);
+  margin-bottom: 10px;
+}
+
+.rankProgress__track{
+  height: 3px !important;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--heroLine),
+    var(--heroLine),
+    transparent
+  );
+  border-radius: 999px;
+  position: relative;
+}
+
+.rankProgress__fill{
+  height: 100%;
+  border-radius: 999px;
+
+  background: linear-gradient(
+    90deg,
+    var(--heroRed),
+    rgba(255,120,80,.45)
+  );
+
+  box-shadow:
+    0 0 18px var(--heroRedSoft),
+    0 0 40px rgba(255,60,30,.25);
+}
+
+/* ===============================
+   PLAYER ASCENSION HEADER
+================================= */
+
+.pulseHeader{
+  margin-top: 44px !important;
+  font-size: 13px !important;
+  letter-spacing: .35em !important;
+  font-weight: 600;
+  color: rgba(255,255,255,.6);
+  text-transform: uppercase;
+  text-align: center;
+  position: relative;
+}
+
+/* top & bottom cinematic rails */
+.pulseHeader::before,
+.pulseHeader::after{
+  content:"";
+  position:absolute;
+  left:50%;
+  transform:translateX(-50%);
+  width:100%;
+  height:2px;
+  border-radius:999px;
+
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--heroLine),
+    var(--heroRedSoft),
+    var(--heroLine),
+    transparent
+  );
+}
+
+.pulseHeader::before{ top:-18px; }
+.pulseHeader::after{ bottom:-18px; }
+
+/* ===============================
+   METRICS GRID
+================================= */
+
+.pulseGrid{
+  margin-top: 26px !important;
+  padding-bottom: 16px;
+}
+
+/* vertical separators */
+.metric:not(:first-child)::before{
+  content:"";
+  position:absolute;
+  left:0;
+  top:12px;
+  bottom:12px;
+  width:1px;
+
+  background: linear-gradient(
+    180deg,
+    transparent,
+    var(--heroLine),
+    var(--heroRedSoft),
+    var(--heroLine),
+    transparent
+  );
+}
+
+/* metric label */
+.metric .k{
+  font-size: 12px !important;
+  letter-spacing: .22em !important;
+  color: rgba(255,255,255,.55);
+  margin-bottom: 8px;
+}
+
+/* metric value */
+.metric .v{
+  font-size: 48px !important;
+  font-weight: 700;
+  letter-spacing: .02em;
+
+  color: rgba(255,255,255,.92);
+
+  text-shadow:
+    0 0 12px rgba(255,255,255,.08),
+    0 0 30px rgba(255,60,30,.18);
+}
+
+/* underline glow under first metric (like reference) */
+.metric:first-child::after{
+  content:"";
+  position:absolute;
+  left:20px;
+  right:20px;
+  bottom:-8px;
+  height:3px;
+  border-radius:999px;
+
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--heroRed),
+    transparent
+  );
+
+  box-shadow: 0 0 20px var(--heroRedSoft);
+}
