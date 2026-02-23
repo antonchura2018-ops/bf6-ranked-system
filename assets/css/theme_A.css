@@ -3013,7 +3013,7 @@ body .navbar.navTabs > .nav-btn.active:last-child > span::before{
 
   /* kill any old pushes */
   margin-top: 0 !important;
-  padding-top: calc(34px + 980px - 760px) !important; /* <-- піднімає вище */
+  padding-top: calc(34px + 980px - 810px) !important; /* <-- піднімає вище */
   padding-bottom: 0 !important;
 }
 
