@@ -2888,7 +2888,7 @@ body .navbar.navTabs > .nav-btn.active:last-child > span::before{
   --ringY: 34px;          /* відступ кільця зверху */
 
   /* ГОЛОВНЕ: де починається OUTCAST відносно кільця */
-  --stackTop: calc(var(--ringY) + var(--ringSize) - 260px);
+  --stackTop: calc(var(--ringY) + var(--ringSize) - 360px);
   /* ↑ якщо OUTCAST занадто високо/низько — крутиш тільки -260px */
 
   /* Відступи між блоками */
