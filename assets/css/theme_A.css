@@ -2987,3 +2987,8 @@ body .navbar.navTabs > .nav-btn.active:last-child > span::before{
 .pulseGrid{
   padding-bottom: 14px !important;
 }
+/* FORCE: remove any old padding-top sources */
+.rankHome__center{
+  padding-top: var(--stackTop) !important;
+  margin-top: 0 !important;
+}
