@@ -2877,3 +2877,113 @@ body .navbar.navTabs > .nav-btn.active:last-child > span::before{
   left: -3px !important;    /* було -26 */
   right: -6px !important;
 }
+/* ==========================================================
+   HOME — RING ON TOP, CONTENT UNDER RING (REFERENCE LAYOUT)
+   Paste ABSOLUTELY LAST in theme_A.css
+   ========================================================== */
+
+:root{
+  --ringImg: url("/assets/img/ui/halo_plasma.png");
+  --ringSize: 980px;      /* розмір кільця */
+  --ringY: 34px;          /* відступ кільця зверху */
+
+  /* ГОЛОВНЕ: де починається OUTCAST відносно кільця */
+  --stackTop: calc(var(--ringY) + var(--ringSize) - 260px);
+  /* ↑ якщо OUTCAST занадто високо/низько — крутиш тільки -260px */
+
+  /* Відступи між блоками */
+  --gapTitleToRP: 8px;
+  --gapRPToNext: 18px;
+  --gapNextToAsc: 38px;
+  --gapAscToMetrics: 16px;
+}
+
+/* центр-стек під кільцем */
+.rankHome__center{
+  position: relative !important;
+  z-index: 2 !important;
+
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+
+  /* ключ: переносимо весь контент ПІД кільце */
+  padding-top: var(--stackTop) !important;
+  padding-bottom: 70px !important;
+}
+
+/* кільце — окремим шаром позаду */
+.rankHome__center::before{
+  content:"" !important;
+  position: absolute !important;
+  left: 50% !important;
+  top: var(--ringY) !important;
+  transform: translateX(-50%) !important;
+
+  width: var(--ringSize) !important;
+  height: var(--ringSize) !important;
+
+  pointer-events: none !important;
+  z-index: 0 !important;
+
+  background-image: var(--ringImg) !important;
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+  background-size: contain !important;
+
+  opacity: 1 !important;
+  filter: saturate(1.06) contrast(1.05) brightness(1.02) !important;
+}
+
+/* все, що текст/блоки — поверх кільця */
+.rankTitle,.rankRP,.rankProgress,.pulseHeader,.pulseGrid,.pulseMark{
+  position: relative !important;
+  z-index: 2 !important;
+}
+
+/* ----- spacing exactly like reference ----- */
+.rankTitle{ margin-top: 0 !important; }
+.rankRP{ margin-top: var(--gapTitleToRP) !important; }
+.rankProgress{ margin-top: var(--gapRPToNext) !important; }
+.pulseHeader{ margin-top: var(--gapNextToAsc) !important; }
+.pulseGrid{ margin-top: var(--gapAscToMetrics) !important; }
+
+/* трохи “референсніші” розміри тексту (можеш лишити свої) */
+.rankTitle{
+  font-size: 56px !important;
+  letter-spacing: .14em !important;
+  font-weight: 700 !important;
+  text-shadow: 0 0 22px rgba(255,60,30,.12) !important;
+}
+.rankRP{
+  font-size: 14px !important;            /* як у рефі маленький рядок */
+  letter-spacing: .28em !important;
+  text-transform: uppercase !important;
+  opacity: .70 !important;
+}
+.rankRP span{
+  font-size: 12px !important;
+  letter-spacing: .22em !important;
+  opacity: .75 !important;
+  margin-left: 8px !important;
+}
+
+/* Next rank line — легше/тонше */
+.rankProgress__label{
+  font-size: 12px !important;
+  letter-spacing: .22em !important;
+  opacity: .60 !important;
+}
+.rankProgress__track{
+  height: 2px !important;
+  background: rgba(255,255,255,.10) !important;
+}
+.rankProgress__fill{
+  box-shadow: 0 0 20px rgba(255,60,30,.18) !important;
+}
+
+/* метрики — трохи нижче і “бенд” як у рефі */
+.pulseGrid{
+  padding-bottom: 14px !important;
+}
