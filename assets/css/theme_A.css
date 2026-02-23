@@ -3456,4 +3456,70 @@ body::after{ content:none !important; display:none !important; }
   position: relative !important;
   z-index: 2 !important;
 }
+/* ==========================================================
+   HOME FX — lines + sparks (NOT part of background image)
+   PASTE ABSOLUTELY LAST in theme_A.css
+   ========================================================== */
+
+.rankHome__fx{
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2; /* над фоном, під текстом */
+}
+
+/* 1) Long thin rails across the screen (those subtle lines) */
+.rankHome__fx::before{
+  content:"";
+  position:absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(1200px, 96vw);
+  top: 370px;              /* 🔧 підкручуй по висоті під свій макет */
+  height: 260px;           /* зона де є лінії */
+
+  background:
+    /* very thin upper hairline */
+    linear-gradient(90deg, transparent, rgba(255,255,255,.10), transparent) 0 30px / 100% 1px no-repeat,
+    /* mid hairline */
+    linear-gradient(90deg, transparent, rgba(255,255,255,.08), transparent) 0 120px / 100% 1px no-repeat,
+    /* lower hairline */
+    linear-gradient(90deg, transparent, rgba(255,255,255,.10), transparent) 0 210px / 100% 1px no-repeat,
+
+    /* subtle warm bleed line (like ref) */
+    linear-gradient(90deg, transparent, rgba(255,60,30,.22), transparent) 0 121px / 100% 2px no-repeat;
+
+  opacity: .85;
+}
+
+/* 2) Orange hotspots / embers on rails */
+.rankHome__fx::after{
+  content:"";
+  position:absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(1200px, 96vw);
+  top: 370px;              /* має збігатися з ::before */
+  height: 260px;
+
+  background:
+    /* hotspot near progress bar */
+    radial-gradient(90px 10px at 32% 34px, rgba(255,70,35,.95), rgba(255,70,35,.25) 40%, transparent 70%),
+    /* hotspot near "Performance Pulse" left/right */
+    radial-gradient(80px 10px at 38% 120px, rgba(255,70,35,.85), rgba(255,70,35,.18) 45%, transparent 72%),
+    radial-gradient(80px 10px at 62% 120px, rgba(255,70,35,.85), rgba(255,70,35,.18) 45%, transparent 72%),
+    /* hotspot under Win Rate */
+    radial-gradient(110px 12px at 16% 210px, rgba(255,70,35,.95), rgba(255,70,35,.22) 45%, transparent 75%),
+    /* small mid bottom ember */
+    radial-gradient(70px 10px at 50% 235px, rgba(255,70,35,.75), rgba(255,70,35,.16) 50%, transparent 78%);
+
+  filter: blur(.2px);
+  opacity: .95;
+}
+
+/* Make sure text is above FX */
+.rankHome__center{
+  position: relative;
+  z-index: 3;
+}
 
