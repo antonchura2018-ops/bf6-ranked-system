@@ -2875,5 +2875,5 @@ body .navbar.navTabs > .nav-btn.active:nth-child(3) > span::before{
 /* 4) ADD MATCH (last) */
 body .navbar.navTabs > .nav-btn.active:last-child > span::before{
   left: -3px !important;    /* було -26 */
-  right: 10px !important;
+  right: 6px !important;
 }
