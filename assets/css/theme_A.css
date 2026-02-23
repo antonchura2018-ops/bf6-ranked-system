@@ -3026,206 +3026,333 @@ body .navbar.navTabs > .nav-btn.active:last-child > span::before{
 
 /* 4) ensure nothing adds extra top spacing */
 .rankTitle{ margin-top: 0 !important; }
+
 /* =========================================================
-   HERO RANK STYLE — IMMORTAL REFERENCE
-   Paste LAST in theme_A.css
+   IMMORTAL 1:1 — MASTER OVERRIDE (TYPO + LINES + GLOW)
+   Paste ABSOLUTELY LAST in theme_A.css
    ========================================================= */
 
 :root{
-  --heroRed: #ff3b1f;
-  --heroRedSoft: rgba(255,59,31,.35);
-  --heroLine: rgba(255,255,255,.12);
-  --heroLineSoft: rgba(255,255,255,.06);
+  --imHot: #ff3b1f;
+  --imHot2: rgba(255,90,35,.85);
+  --imHotSoft: rgba(255,59,31,.30);
+  --imWhite: rgba(255,255,255,.92);
+  --imFaint: rgba(255,255,255,.58);
+  --imLine: rgba(255,255,255,.12);
+  --imLineSoft: rgba(255,255,255,.07);
 }
 
-/* ===============================
-   MAIN RANK TITLE
-================================= */
+/* make sure center stack is predictable */
+body #dashboard .rankHome .rankHome__center{
+  display:flex !important;
+  flex-direction:column !important;
+  align-items:center !important;
+  justify-content:flex-start !important;
+}
 
-.rankTitle{
-  font-family: var(--font-ui);
-  font-size: 64px !important;
+/* =========================
+   TITLE (OUTCAST / IMMORTAL)
+   ========================= */
+body #dashboard .rankHome .rankTitle{
+  font-family: var(--font-ui, system-ui) !important;
   font-weight: 700 !important;
+  font-size: 64px !important;
   letter-spacing: .18em !important;
-  text-transform: uppercase;
-
-  color: rgba(255,255,255,.92);
+  text-transform: uppercase !important;
+  color: var(--imWhite) !important;
 
   text-shadow:
-    0 0 12px rgba(255,255,255,.08),
-    0 0 40px rgba(255,60,30,.18);
+    0 0 10px rgba(255,255,255,.08),
+    0 0 28px rgba(255,60,30,.16),
+    0 0 60px rgba(255,60,30,.10) !important;
 
-  margin-bottom: 6px;
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
-/* ===============================
-   RP VALUE
-================================= */
-
-.rankRP{
-  font-family: var(--font-ui);
+/* =========================
+   RP (12,450 RP)
+   ========================= */
+body #dashboard .rankHome .rankRP{
+  font-family: var(--font-ui, system-ui) !important;
+  font-weight: 600 !important;
   font-size: 28px !important;
-  font-weight: 600;
-  letter-spacing: .08em;
-  color: rgba(255,255,255,.88);
+  letter-spacing: .08em !important;
+  color: rgba(255,255,255,.86) !important;
 
-  text-shadow:
-    0 0 18px rgba(255,60,30,.18);
-
-  margin-bottom: 24px;
+  margin: 10px 0 18px !important;
+  text-shadow: 0 0 22px rgba(255,60,30,.12) !important;
 }
 
-.rankRP span{
-  font-size: 14px;
-  letter-spacing: .22em;
-  opacity: .75;
-  margin-left: 8px;
+body #dashboard .rankHome .rankRP span{
+  font-size: 14px !important;
+  letter-spacing: .22em !important;
+  opacity: .78 !important;
+  margin-left: 8px !important;
 }
 
-/* ===============================
-   NEXT RANK BAR
-================================= */
+/* =========================
+   NEXT RANK label + rail
+   ========================= */
+body #dashboard .rankHome .rankProgress{
+  width: min(720px, 86vw) !important;
+  margin-top: 10px !important;
+  position: relative !important;
+}
 
-.rankProgress__label{
+body #dashboard .rankHome .rankProgress__label{
+  font-family: var(--font-ui, system-ui) !important;
   font-size: 13px !important;
-  letter-spacing: .22em;
-  text-transform: uppercase;
-  color: rgba(255,255,255,.65);
-  margin-bottom: 10px;
+  letter-spacing: .22em !important;
+  text-transform: uppercase !important;
+  color: rgba(255,255,255,.62) !important;
+  margin: 0 0 12px !important;
+  text-align: center !important;
 }
 
-.rankProgress__track{
-  height: 3px !important;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    var(--heroLine),
-    var(--heroLine),
-    transparent
-  );
-  border-radius: 999px;
-  position: relative;
+/* the long thin “reference” rail behind */
+body #dashboard .rankHome .rankProgress__track{
+  height: 2px !important;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    var(--imLineSoft) 14%,
+    var(--imLine) 50%,
+    var(--imLineSoft) 86%,
+    transparent 100%) !important;
+
+  border-radius: 999px !important;
+  position: relative !important;
+  box-shadow: none !important;
 }
 
-.rankProgress__fill{
-  height: 100%;
-  border-radius: 999px;
+/* hot fill */
+body #dashboard .rankHome .rankProgress__fill{
+  height: 100% !important;
+  border-radius: 999px !important;
 
-  background: linear-gradient(
-    90deg,
-    var(--heroRed),
-    rgba(255,120,80,.45)
-  );
+  background: linear-gradient(90deg,
+    var(--imHot) 0%,
+    rgba(255,140,80,.55) 100%) !important;
 
   box-shadow:
-    0 0 18px var(--heroRedSoft),
-    0 0 40px rgba(255,60,30,.25);
+    0 0 16px var(--imHotSoft),
+    0 0 44px rgba(255,60,30,.18) !important;
 }
 
-/* ===============================
-   PLAYER ASCENSION HEADER
-================================= */
-
-.pulseHeader{
-  margin-top: 44px !important;
-  font-size: 13px !important;
-  letter-spacing: .35em !important;
-  font-weight: 600;
-  color: rgba(255,255,255,.6);
-  text-transform: uppercase;
-  text-align: center;
-  position: relative;
+/* moving spark */
+body #dashboard .rankHome .rankProgress__spark{
+  width: 44px !important;
+  height: 10px !important;
+  background: radial-gradient(circle, rgba(255,60,30,1), transparent 70%) !important;
+  filter: blur(.15px) !important;
+  opacity: .95 !important;
 }
 
-/* top & bottom cinematic rails */
-.pulseHeader::before,
-.pulseHeader::after{
-  content:"";
-  position:absolute;
-  left:50%;
-  transform:translateX(-50%);
-  width:100%;
-  height:2px;
-  border-radius:999px;
+/* extra thin line under the Next Rank section (the one you see in ref) */
+body #dashboard .rankHome .rankProgress::after{
+  content:"" !important;
+  position:absolute !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  bottom: -18px !important;
+  width: min(900px, 92vw) !important;
+  height: 1px !important;
 
-  background: linear-gradient(
-    90deg,
+  background: linear-gradient(90deg,
     transparent,
-    var(--heroLine),
-    var(--heroRedSoft),
-    var(--heroLine),
-    transparent
-  );
+    rgba(255,255,255,.08),
+    rgba(255,60,30,.16),
+    rgba(255,255,255,.08),
+    transparent) !important;
+
+  opacity: .9 !important;
 }
 
-.pulseHeader::before{ top:-18px; }
-.pulseHeader::after{ bottom:-18px; }
+/* =========================
+   PERFORMANCE PULSE (header)
+   ========================= */
+body #dashboard .rankHome .pulseHeader{
+  width: min(980px, 92vw) !important;
+  margin-top: 64px !important;
+  text-align:center !important;
 
-/* ===============================
-   METRICS GRID
-================================= */
+  font-family: var(--font-ui, system-ui) !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  letter-spacing: .34em !important;
+  text-transform: uppercase !important;
+  color: rgba(255,255,255,.55) !important;
 
-.pulseGrid{
-  margin-top: 26px !important;
-  padding-bottom: 16px;
+  position: relative !important;
+  padding: 14px 0 !important;
+}
+
+/* the two long rails (top/bottom) */
+body #dashboard .rankHome .pulseHeader::before,
+body #dashboard .rankHome .pulseHeader::after{
+  content:"" !important;
+  position:absolute !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  width: 100% !important;
+  height: 2px !important;
+  border-radius: 999px !important;
+
+  background: linear-gradient(90deg,
+    transparent,
+    rgba(255,255,255,.10),
+    rgba(255,60,30,.22),
+    rgba(255,255,255,.10),
+    transparent) !important;
+
+  opacity: .85 !important;
+}
+body #dashboard .rankHome .pulseHeader::before{ top: 0 !important; }
+body #dashboard .rankHome .pulseHeader::after{ bottom: 0 !important; }
+
+/* little hot “embers” left/right of title */
+body #dashboard .rankHome .pulseHeader span{
+  position: relative !important;
+  display:inline-block !important;
+  padding: 0 12px !important;
+}
+body #dashboard .rankHome .pulseHeader span::before,
+body #dashboard .rankHome .pulseHeader span::after{
+  content:"" !important;
+  position:absolute !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  width: 68px !important;
+  height: 2px !important;
+  border-radius: 999px !important;
+
+  background: linear-gradient(90deg, transparent, var(--imHot), transparent) !important;
+  box-shadow: 0 0 18px var(--imHotSoft) !important;
+  opacity: .95 !important;
+}
+body #dashboard .rankHome .pulseHeader span::before{ left: -86px !important; }
+body #dashboard .rankHome .pulseHeader span::after{ right: -86px !important; }
+
+/* =========================
+   METRICS ROW (dim + separators)
+   ========================= */
+body #dashboard .rankHome .pulseGrid{
+  width: min(980px, 92vw) !important;
+  margin-top: 18px !important;
+  padding: 18px 0 18px !important;
+  position: relative !important;
+}
+
+/* subtle dark band behind metrics (like ref) */
+body #dashboard .rankHome .pulseGrid::before{
+  content:"" !important;
+  position:absolute !important;
+  inset: -14px -24px -18px -24px !important;
+  background: radial-gradient(900px 240px at 50% 35%,
+    rgba(0,0,0,.45),
+    rgba(0,0,0,.22) 55%,
+    rgba(0,0,0,0) 82%) !important;
+  opacity: .95 !important;
+  pointer-events:none !important;
+}
+
+/* bottom long rail */
+body #dashboard .rankHome .pulseGrid::after{
+  content:"" !important;
+  position:absolute !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  bottom: 0 !important;
+  width: 100% !important;
+  height: 2px !important;
+  border-radius: 999px !important;
+
+  background: linear-gradient(90deg,
+    transparent,
+    rgba(255,255,255,.10),
+    rgba(255,60,30,.18),
+    rgba(255,255,255,.10),
+    transparent) !important;
+
+  opacity: .75 !important;
+}
+
+/* each metric */
+body #dashboard .rankHome .metric{
+  position: relative !important;
+  text-align:center !important;
+  padding: 0 18px !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  z-index: 1 !important;
 }
 
 /* vertical separators */
-.metric:not(:first-child)::before{
-  content:"";
-  position:absolute;
-  left:0;
-  top:12px;
-  bottom:12px;
-  width:1px;
+body #dashboard .rankHome .metric:not(:first-child)::before{
+  content:"" !important;
+  position:absolute !important;
+  left: 0 !important;
+  top: 10px !important;
+  bottom: 10px !important;
+  width: 1px !important;
 
-  background: linear-gradient(
-    180deg,
+  background: linear-gradient(180deg,
     transparent,
-    var(--heroLine),
-    var(--heroRedSoft),
-    var(--heroLine),
-    transparent
-  );
+    rgba(255,255,255,.10),
+    rgba(255,60,30,.16),
+    rgba(255,255,255,.10),
+    transparent) !important;
+
+  opacity: .75 !important;
 }
 
-/* metric label */
-.metric .k{
-  font-size: 12px !important;
+/* label/value typography */
+body #dashboard .rankHome .metric .k{
+  font-family: var(--font-ui, system-ui) !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
   letter-spacing: .22em !important;
-  color: rgba(255,255,255,.55);
-  margin-bottom: 8px;
+  text-transform: uppercase !important;
+  color: rgba(255,255,255,.52) !important;
+  margin-bottom: 10px !important;
 }
 
-/* metric value */
-.metric .v{
+body #dashboard .rankHome .metric .v{
+  font-family: var(--font-ui, system-ui) !important;
   font-size: 48px !important;
-  font-weight: 700;
-  letter-spacing: .02em;
-
-  color: rgba(255,255,255,.92);
+  font-weight: 800 !important;
+  letter-spacing: .02em !important;
+  color: rgba(255,255,255,.90) !important;
 
   text-shadow:
-    0 0 12px rgba(255,255,255,.08),
-    0 0 30px rgba(255,60,30,.18);
+    0 0 12px rgba(255,255,255,.06),
+    0 0 30px rgba(255,60,30,.14) !important;
 }
 
-/* underline glow under first metric (like reference) */
-.metric:first-child::after{
-  content:"";
-  position:absolute;
-  left:20px;
-  right:20px;
-  bottom:-8px;
-  height:3px;
-  border-radius:999px;
-
-  background: linear-gradient(
-    90deg,
-    transparent,
-    var(--heroRed),
-    transparent
-  );
-
-  box-shadow: 0 0 20px var(--heroRedSoft);
+body #dashboard .rankHome .metric .v span{
+  font-size: 16px !important;
+  letter-spacing: .12em !important;
+  margin-left: 6px !important;
+  color: rgba(255,255,255,.68) !important;
 }
+
+/* the hot underline under WIN RATE (like ref) */
+body #dashboard .rankHome .metric:first-child::after{
+  content:"" !important;
+  position:absolute !important;
+  left: 18px !important;
+  right: 18px !important;
+  bottom: -10px !important;
+  height: 2px !important;
+  border-radius: 999px !important;
+
+  background: linear-gradient(90deg, transparent, var(--imHot), transparent) !important;
+  box-shadow: 0 0 18px var(--imHotSoft) !important;
+  opacity: .95 !important;
+}
+
+/* turn OFF your old pulseMark if it exists */
+body #dashboard .rankHome .pulseMark{
+  display:none !important;
+}
+
