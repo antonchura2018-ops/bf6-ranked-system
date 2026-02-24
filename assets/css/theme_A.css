@@ -3015,3 +3015,62 @@ body .navbar.navTabs > .nav-btn.active > span{
     0 0 14px rgba(255,90,35,.35),
     0 0 50px rgba(255,60,0,.20) !important;
 }
+/* =========================================================
+   RANK STATS — BEBAS NEUE STYLE
+   ========================================================= */
+
+/* Next Rank */
+.rankProgress__label{
+  font-family: "Bebas Neue", sans-serif !important;
+  font-size: 20px !important;
+  letter-spacing: .08em !important;
+  color: rgba(255,255,255,.95) !important;
+
+  text-shadow:
+    0 0 10px rgba(255,90,35,.25),
+    0 0 35px rgba(255,60,0,.15) !important;
+}
+
+/* PLAYER ASCENSION */
+.pulseHeader,
+.pulseHeader span{
+  font-family: "Bebas Neue", sans-serif !important;
+  font-size: 22px !important;
+  letter-spacing: .18em !important;
+  color: rgba(255,255,255,.96) !important;
+
+  text-shadow:
+    0 0 12px rgba(255,90,35,.30),
+    0 0 40px rgba(255,60,0,.18) !important;
+}
+
+/* Metric labels (WIN RATE, TOTAL MATCHES etc) */
+.metric .k{
+  font-family: "Bebas Neue", sans-serif !important;
+  font-size: 18px !important;
+  letter-spacing: .12em !important;
+  color: rgba(255,255,255,.85) !important;
+
+  margin-bottom: 2px !important; /* 🔥 зменшили відстань */
+
+  text-shadow: 0 0 8px rgba(255,90,35,.18) !important;
+}
+
+/* Metric values (56%, 9, 0.0...) */
+.metric .v{
+  font-family: "Bebas Neue", sans-serif !important;
+  font-size: 42px !important;
+  letter-spacing: .04em !important;
+  color: rgba(255,240,230,.98) !important;
+
+  margin-top: 0 !important;
+
+  text-shadow:
+    0 0 14px rgba(255,90,35,.35),
+    0 0 45px rgba(255,60,0,.20) !important;
+}
+
+/* Ближче один до одного */
+.metric{
+  padding: 8px 18px 10px !important;
+}
