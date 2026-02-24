@@ -2230,6 +2230,104 @@ body .navbar.navTabs > .nav-btn.active:last-child > span::before{
   right: -6px !important;
 }
 
+/* ==========================================================
+   HOME — 1 BACKGROUND + HUD OVERLAY (1536×1024)  ✅ FINAL
+   ========================================================== */
+
+html, body { height: 100%; margin: 0; padding: 0; }
+body { background:#05060a !important; overflow-x:hidden; }
+
+/* 1) ONE cosmos image (1536×1024) */
+body::before{
+  content:"" !important;
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: -10 !important;
+  pointer-events: none !important;
+
+  background: url("/assets/img/bg/cosmos.png") center/cover no-repeat !important;
+
+  /* !!! MUST MATCH OVERLAY */
+  background-position: center 18% !important;
+
+  filter: saturate(1.08) contrast(1.06) !important;
+  transform: translateZ(0) !important;
+}
+
+/* 2) kill ANY extra overlays that create bands */
+body::after{ content:none !important; display:none !important; }
+.rankHome__bg{ display:none !important; }
+.rankHome__vignette{ display:none !important; }
+
+/* 3) Home full-bleed */
+.app, .section, #dashboard{
+  width:100% !important;
+  max-width:none !important;
+  margin:0 !important;
+  padding:0 !important;
+  background: transparent !important;
+}
+
+.rankHome{
+  position: relative !important;
+  width: 100vw !important;
+  min-height: 100vh !important;
+  margin-left: calc(50% - 50vw) !important;
+  margin-right: calc(50% - 50vw) !important;
+  background: transparent !important;
+  overflow: hidden !important;
+}
+
+.rankHome__hud{
+  /* 1) HUD завжди на всю ширину — НІЯКИХ країв/ліній */
+  background-size: 100% auto !important;
+
+  /* 2) Опустити HUD вниз (не рухаючи контент) */
+  transform: translateY(80px) !important;
+  transform-origin: top center !important;
+}
+
+/* якщо після цього ще видно тонкі краї — прибиваємо будь-які бордери/аутлайни контейнерів */
+.rankHome,
+.app,
+.section,
+#dashboard{
+  border: 0 !important;
+  outline: 0 !important;
+  box-shadow: none !important;
+}
+
+/* 5) Content on top */
+.rankHome__center{
+  position: relative !important;
+  z-index: 3 !important;
+
+  min-height: 100vh !important;
+  display:flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+
+  padding-top: 200px !important;   /* було 260-300 */
+  padding-bottom: 40px !important;
+}
+
+/* 6) IMPORTANT: disable any CSS ring layer */
+.rankHome__center::before{
+  content: none !important;
+  display: none !important;
+}
+/* =========================================
+   HUD FINAL (VISIBLE + SAFE SCALE + MOVE DOWN)
+   Paste VERY END of theme_A.css
+========================================= */
+
+.rankHome{ position: relative !important; }
+
+.rankHome__hud{ display:none !important; }
+
+/* контент вище HUD */
+.rankHome__center{ position:relative !important; z-index:3 !important; }
 /* =========================================================
    METRICS — CLEAN AAA (NO HUD)
    Paste VERY END of theme_A.css
