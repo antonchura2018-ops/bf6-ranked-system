@@ -3289,4 +3289,54 @@ body .navbar.navTabs > .nav-btn.active > span{
   color: rgba(255, 205, 185, .96) !important;
   -webkit-text-fill-color: rgba(255, 205, 185, .96) !important;
 }
+/* =========================================================
+   OUTCAST + 0 RP — CINEMATIC LEGEND STYLE
+   ========================================================= */
+
+/* OUTCAST */
+#dashboard.section.active .rankHome .rankTitle{
+  font-family: "Orbitron", sans-serif !important;
+  font-weight: 800 !important;
+  letter-spacing: .14em !important;
+
+  background: linear-gradient(
+    180deg,
+    #ffffff 0%,
+    #ffe6d6 55%,
+    #ff9a5c 100%
+  );
+
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  text-shadow:
+    0 0 10px rgba(255,90,35,.25),
+    0 0 35px rgba(255,60,0,.18),
+    0 0 80px rgba(255,40,0,.10) !important;
+}
+
+/* 0 RP */
+#dashboard.section.active .rankHome .rankRP{
+  font-family: "Orbitron", sans-serif !important;
+  font-weight: 700 !important;
+
+  background: linear-gradient(
+    180deg,
+    #ffffff 0%,
+    #ffd8c4 60%,
+    #ff8a4a 100%
+  );
+
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  text-shadow:
+    0 0 8px rgba(255,90,35,.22),
+    0 0 28px rgba(255,60,0,.16) !important;
+}
+
+/* RP span щоб було однакове */
+#dashboard.section.active .rankHome .rankRP span{
+  -webkit-text-fill-color: inherit !important;
+}
 
