@@ -3086,4 +3086,34 @@ body::after{ content:none !important; display:none !important; }
     0 0 18px rgba(255,70,30,.28),
     0 0 70px rgba(255,30,10,.14) !important;
 }
+/* =========================================================
+   FONT FORCE v8 — tabs + Next Rank + Player Ascension
+   Paste VERY END of theme_A.css
+   ========================================================= */
+
+/* 1) TOP NAV TABS (works even if nav is outside #dashboard) */
+.app nav a,
+.app nav button,
+header nav a,
+header nav button,
+nav a,
+nav button{
+  font-family: "Rajdhani", system-ui, sans-serif !important;
+}
+
+/* якщо вкладки зроблені як div/span */
+.app [class*="tab"],
+.app [class*="Tab"],
+.app [class*="nav"],
+.app [class*="Nav"]{
+  font-family: "Rajdhani", system-ui, sans-serif !important;
+}
+
+/* 2) Next Rank + Player Ascension (точно твої класи) */
+.rankHome .rankProgress__label,
+.rankHome .rankProgress__label * ,
+.rankHome .pulseHeader,
+.rankHome .pulseHeader *{
+  font-family: "Rajdhani", system-ui, sans-serif !important;
+}
 
