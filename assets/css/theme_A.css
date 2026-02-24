@@ -3290,28 +3290,3 @@ body .navbar.navTabs > .nav-btn.active > span{
   -webkit-text-fill-color: rgba(255, 205, 185, .96) !important;
 }
 
-
-#dashboard.section.active .rankHome .pulseGrid .metric .v::after{
-  content: "" !important;
-  position: absolute !important;
-  left: 50% !important;
-  transform: translateX(-50%) !important;
-  bottom: -10px !important;
-
-  width: 64px !important;       /* можна 48–80 */
-  height: 2px !important;
-
-  background: linear-gradient(90deg,
-    transparent,
-    rgba(255, 120, 60, .55),
-    rgba(255, 40, 0, .35),
-    transparent
-  ) !important;
-
-  box-shadow:
-    0 0 14px rgba(255, 80, 30, .22),
-    0 0 40px rgba(255, 30, 0, .14) !important;
-
-  opacity: .85 !important;
-  pointer-events: none !important;
-}
