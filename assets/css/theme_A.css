@@ -3194,7 +3194,7 @@ body .navbar.navTabs > .nav-btn.active > span{
 
 /* тільки цифри */
 #dashboard.section.active .rankHome .pulseGrid .metric .v{
-  font-size: 62px !important;      /* <-- розмір цифр */
+  font-size: 56px !important;      /* <-- розмір цифр */
   line-height: .9 !important;
 
   margin-top: -6px !important;     /* <-- підняти вище */
