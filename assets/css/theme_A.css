@@ -3775,3 +3775,6 @@ body .navbar.navTabs > .nav-btn.active > span{
     0 0 40px rgba(255,0,0,.8),
     0 0 90px rgba(255,0,0,.5) !important;
 }
+#dashboard.section.active .rankHome .rankProgress{
+  background: none !important;
+}
