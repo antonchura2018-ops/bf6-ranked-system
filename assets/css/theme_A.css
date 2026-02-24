@@ -3202,7 +3202,7 @@ body .navbar.navTabs > .nav-btn.active > span{
 
 /* якщо є % span */
 #dashboard.section.active .rankHome .pulseGrid .metric .v span{
-  font-size: 62px !important;
+  font-size: 52px !important;
 }
 
 
