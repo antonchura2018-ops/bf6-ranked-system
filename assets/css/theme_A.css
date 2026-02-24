@@ -3742,3 +3742,36 @@ body .navbar.navTabs > .nav-btn.active > span{
     0 0 40px rgba(255,0,0,.6),
     0 0 80px rgba(255,0,0,.35) !important;
 }
+/* =========================================================
+   NUCLEAR FIX — REMOVE ANY GREY LAYER
+   ========================================================= */
+
+/* Вимикаємо будь-які псевдоелементи */
+#dashboard.section.active .rankHome .rankProgress::before,
+#dashboard.section.active .rankHome .rankProgress::after,
+#dashboard.section.active .rankHome .rankProgress__track::before,
+#dashboard.section.active .rankHome .rankProgress__track::after{
+  display: none !important;
+  background: none !important;
+  box-shadow: none !important;
+}
+
+/* Повністю чистий неоновий трек */
+#dashboard.section.active .rankHome .rankProgress__track{
+  height: 2px !important;
+  border: none !important;
+  background: rgba(255,0,0,0.95) !important;
+  box-shadow:
+    0 0 10px rgba(255,0,0,.8),
+    0 0 30px rgba(255,0,0,.6),
+    0 0 70px rgba(255,0,0,.4) !important;
+}
+
+/* Активна частина */
+#dashboard.section.active .rankHome .rankProgress__fill{
+  background: rgba(255,60,0,1) !important;
+  box-shadow:
+    0 0 14px rgba(255,0,0,1),
+    0 0 40px rgba(255,0,0,.8),
+    0 0 90px rgba(255,0,0,.5) !important;
+}
