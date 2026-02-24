@@ -2417,82 +2417,58 @@ body::after{ content:none !important; display:none !important; }
 /* remove old marker if you don’t want it */
 .pulseMark{ display:none !important; }
 /* ==========================================================
-   METRICS — CLEAN AAA (NO HUD) ✅ FINAL
-   Paste as VERY LAST in theme_A.css
+   FINAL — TYPE + METRICS (MATCH REF) + NO H-SCROLL
+   Paste VERY END of theme_A.css
    ========================================================== */
 
-/* 0) Kill horizontal scroll (the right/left slider) */
-html, body{
-  width: 100%;
-  overflow-x: hidden !important;
-}
-
-/* 1) Single background (cosmos only) */
-body{
-  background: #05060a !important;
-}
-
-body::before{
-  content:"" !important;
-  position: fixed !important;
-  inset: 0 !important;
-  z-index: -10 !important;
-  pointer-events: none !important;
-
-  background: url("/assets/img/bg/cosmos.png") center/cover no-repeat !important;
-  background-position: center 18% !important;
-  filter: saturate(1.08) contrast(1.06) !important;
-  transform: translateZ(0) !important;
-}
-
-/* 2) Make home full-bleed but safe (no 100vw side overflow) */
-.app, .section, #dashboard{
-  width: 100% !important;
-  max-width: none !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  background: transparent !important;
-}
-
+/* kill horizontal scroll (той “повзунок” вліво/вправо) */
+html, body { overflow-x: hidden !important; }
+.app, .section, #dashboard { max-width:none !important; width:100% !important; }
 .rankHome{
-  position: relative !important;
-  width: 100% !important;          /* NOT 100vw */
-  min-height: 100vh !important;
-  margin: 0 !important;             /* NOT margin-left calc(...) */
-  background: transparent !important;
-  overflow: hidden !important;       /* safety */
+  width: 100% !important;      /* НЕ 100vw */
+  margin: 0 !important;        /* НЕ calc(50% - 50vw) */
+  overflow: hidden !important; /* прибирає бокові артефакти */
 }
 
-/* 3) Remove any HUD leftovers (even if exists in HTML) */
-.rankHome__hud{ display: none !important; }
+/* зробити “правий край/лінію” менш помітною (легкий fade по краях) */
+.rankHome::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  z-index: 1;
+  background:
+    linear-gradient(90deg,
+      rgba(0,0,0,.28) 0%,
+      rgba(0,0,0,0) 12%,
+      rgba(0,0,0,0) 88%,
+      rgba(0,0,0,.22) 100%);
+  opacity: .55;
+}
 
-/* 4) Layout: make it more compact vertically */
+/* --------- COMPACT STACK (зжати все вертикально) --------- */
 .rankHome__center{
   position: relative !important;
   z-index: 2 !important;
 
-  min-height: 100vh !important;
-  display: flex !important;
-  flex-direction: column !important;
-  align-items: center !important;
-  justify-content: flex-start !important;
-
-  padding-top: 210px !important;     /* compact (було 300) */
-  padding-bottom: 48px !important;
-  gap: 0 !important;
+  /* було “повітря” — стискаємо */
+  padding-top: 210px !important;   /* якщо треба нижче — 220/230 */
+  padding-bottom: 56px !important;
 }
 
-/* 5) Typography: match reference look (Rajdhani, bigger, glow) */
+/* --------- OUTCAST + RP like ref --------- */
 .rankTitle{
   font-family: var(--font-ui) !important;
   font-weight: 800 !important;
-  font-size: 64px !important;
-  letter-spacing: .14em !important;
-  text-transform: uppercase !important;
+  font-size: 68px !important;
+  letter-spacing: .16em !important;
   margin: 0 !important;
+  text-transform: uppercase !important;
+
+  color: rgba(255,255,255,.92) !important;
   text-shadow:
-    0 0 26px rgba(255,60,30,.16),
-    0 0 60px rgba(255,60,30,.08) !important;
+    0 0 20px rgba(255,90,35,.10),
+    0 0 46px rgba(255,60,0,.08) !important;
 }
 
 .rankRP{
@@ -2500,116 +2476,174 @@ body::before{
   font-weight: 600 !important;
   font-size: 34px !important;
   letter-spacing: .06em !important;
+  margin-top: 10px !important;
   opacity: .92 !important;
-  margin-top: 6px !important;
 }
-
 .rankRP span{
   font-size: 14px !important;
   letter-spacing: .18em !important;
   opacity: .78 !important;
 }
 
-/* 6) Progress: tighter spacing + hotter line */
+/* Next Rank line (тонка, з hotspot) */
 .rankProgress{
   width: min(720px, 88vw) !important;
   margin-top: 14px !important;
-  margin-bottom: 10px !important;
 }
-
 .rankProgress__label{
   font-family: var(--font-ui) !important;
-  font-size: 13px !important;
-  letter-spacing: .20em !important;
-  opacity: .80 !important;
+  font-weight: 700 !important;
+  font-size: 12px !important;
+  letter-spacing: .22em !important;
+  opacity: .78 !important;
   margin-bottom: 10px !important;
 }
-
 .rankProgress__track{
   height: 2px !important;
   background: rgba(255,255,255,.12) !important;
   box-shadow: none !important;
 }
-
 .rankProgress__fill{
-  background: linear-gradient(90deg, rgba(255,60,30,.95), rgba(255,140,80,.35)) !important;
-  box-shadow: 0 0 24px rgba(255,60,30,.18) !important;
+  background: linear-gradient(90deg,
+    rgba(255,90,35,.95),
+    rgba(255,170,90,.30)) !important;
+  box-shadow: 0 0 22px rgba(255,80,20,.20) !important;
 }
-
 .rankProgress__spark{
   width: 44px !important;
   height: 8px !important;
-  background: radial-gradient(circle, rgba(255,60,30,1), transparent 70%) !important;
+  background: radial-gradient(circle, rgba(255,90,35,1), transparent 70%) !important;
   opacity: .95 !important;
 }
 
-/* 7) Header (PLAYER ASCENSION / PERFORMANCE PULSE style): brighter + closer */
+/* --------- PLAYER ASCENSION header like ref --------- */
 .pulseHeader{
   width: min(980px, 92vw) !important;
-  margin-top: 14px !important;
+  margin-top: 18px !important;     /* ближче до прогресу */
   margin-bottom: 10px !important;
 
   font-family: var(--font-ui) !important;
+  font-weight: 800 !important;
   font-size: 12px !important;
-  letter-spacing: .32em !important;
+  letter-spacing: .34em !important;
   text-transform: uppercase !important;
-  opacity: .82 !important;
+  opacity: .86 !important;
+  text-align: center !important;
+  position: relative !important;
 }
 
 .pulseHeader::before,
 .pulseHeader::after{
-  opacity: .9 !important;
+  content:"";
+  position:absolute;
+  left: 0; right: 0;
+  height: 2px;
   background: linear-gradient(90deg,
     transparent,
-    rgba(255,255,255,.06),
-    rgba(255,60,30,.35),
-    rgba(255,255,255,.06),
-    transparent) !important;
+    rgba(255,255,255,.10),
+    rgba(255,90,35,.55),
+    rgba(255,255,255,.10),
+    transparent);
+  opacity: .90;
 }
+.pulseHeader::before{ top: -12px; }
+.pulseHeader::after{  bottom: -12px; }
 
-/* 8) Metrics row: bigger numbers + glow + tighter vertical spacing */
+/* --------- METRICS like ref (bigger + glow + tighter) --------- */
 .pulseGrid{
   width: min(980px, 92vw) !important;
-  margin-top: 8px !important;
-  padding-top: 8px !important;
+  margin-top: 12px !important;  /* ближче до заголовка */
+  padding-top: 12px !important;
+  padding-bottom: 12px !important;
+
+  display: grid !important;
+  grid-template-columns: repeat(5, 1fr) !important;
+  gap: 0 !important;
+  position: relative !important;
 }
 
+/* легкий “дим” під ряд метрик */
+.pulseGrid::before{
+  content:"";
+  position:absolute;
+  inset: -14px -24px -14px -24px;
+  background: radial-gradient(900px 220px at 50% 35%,
+    rgba(0,0,0,.45),
+    rgba(0,0,0,.18) 55%,
+    rgba(0,0,0,0) 82%);
+  opacity: .92;
+  pointer-events:none;
+}
+
+/* нижня тонка лінія як у рефі */
+.pulseGrid::after{
+  content:"";
+  position:absolute;
+  left: 0; right: 0;
+  bottom: 2px;
+  height: 2px;
+  background: linear-gradient(90deg,
+    transparent,
+    rgba(255,255,255,.10),
+    rgba(255,90,35,.35),
+    rgba(255,255,255,.10),
+    transparent);
+  opacity: .65;
+  pointer-events:none;
+}
+
+.metric{
+  position: relative !important;
+  text-align: center !important;
+  padding: 0 18px !important;
+  z-index: 1 !important;
+}
+
+/* вертикальні розділювачі */
+.metric:not(:first-child)::before{
+  content:"";
+  position:absolute;
+  left: 0;
+  top: 6px;
+  bottom: 10px;
+  width: 1px;
+  background: linear-gradient(180deg,
+    transparent,
+    rgba(255,255,255,.12),
+    rgba(255,90,35,.24),
+    rgba(255,255,255,.10),
+    transparent);
+  opacity: .75;
+}
+
+/* labels */
 .metric .k{
   font-family: var(--font-ui) !important;
+  font-weight: 800 !important;
   font-size: 12px !important;
-  font-weight: 700 !important;
-  letter-spacing: .20em !important;
-  opacity: .70 !important;
+  letter-spacing: .22em !important;
+  text-transform: uppercase !important;
+  color: rgba(255,255,255,.70) !important;
   margin-bottom: 8px !important;
 }
 
+/* values */
 .metric .v{
   font-family: var(--font-ui) !important;
-  font-size: 52px !important;
-  font-weight: 800 !important;
+  font-weight: 900 !important;
+  font-size: 48px !important;
+  line-height: 1 !important;
   letter-spacing: .02em !important;
-  color: rgba(255,255,255,.94) !important;
-  text-shadow:
-    0 0 22px rgba(255,60,30,.12),
-    0 0 60px rgba(255,60,30,.06) !important;
-}
 
+  color: rgba(255,230,210,.96) !important;
+  text-shadow:
+    0 0 14px rgba(255,90,35,.18),
+    0 0 38px rgba(255,60,0,.12) !important;
+}
 .metric .v > span{
   font-size: 18px !important;
-  opacity: .80 !important;
+  font-weight: 900 !important;
+  letter-spacing: .10em !important;
   margin-left: 6px !important;
+  color: rgba(255,200,175,.78) !important;
 }
-
-/* separators: clearer like reference */
-.metric:not(:last-child)::after{
-  opacity: .85 !important;
-  background: linear-gradient(180deg,
-    transparent,
-    rgba(255,255,255,.08),
-    rgba(255,60,30,.22),
-    rgba(255,255,255,.08),
-    transparent) !important;
-}
-
-/* 9) If pulseMark exists — hide (reference uses a different center mark) */
-.pulseMark{ display: none !important; }
