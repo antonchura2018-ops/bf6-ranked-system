@@ -3187,16 +3187,3 @@ body .navbar.navTabs > .nav-btn.active > span{
 #dashboard.section.active .rankHome .pulseGrid .metric .v{
   font-size: 56px !important;       /* було ~46 */
 }
-/* =========================================================
-   METRIC NUMBERS — FINE TUNE
-   ========================================================= */
-
-#dashboard.section.active .rankHome .pulseGrid .metric .v{
-  font-size: 64px !important;   /* оптимальний баланс */
-  margin-top: -2px !important;  /* трохи ближче */
-  line-height: 1 !important;
-}
-
-#dashboard.section.active .rankHome .pulseGrid .metric .v span{
-  font-size: 44px !important;
-}
