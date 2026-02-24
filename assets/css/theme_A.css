@@ -2990,4 +2990,100 @@ body::after{ content:none !important; display:none !important; }
     0 0 22px rgba(255,90,35,.20),
     0 0 70px rgba(255,60,0,.12) !important;
 }
+/* =========================================================
+   PATCH v7 — Tabs + Next Rank + Player Ascension (ONLY)
+   Paste VERY END of theme_A.css
+   ========================================================= */
+
+/* (A) TOP TABS TEXT: Player Hub / Rank / Match History / Add Match */
+/* Підібрано “широко”, бо класи у меню можуть відрізнятись */
+#dashboard .topNav,
+#dashboard .topNav * ,
+#dashboard nav,
+#dashboard nav *{
+  font-family: "Rajdhani", system-ui, sans-serif !important;
+}
+
+#dashboard nav a,
+#dashboard nav button,
+#dashboard .topNav a,
+#dashboard .topNav button,
+#dashboard [class*="tab"] a,
+#dashboard [class*="tab"] button{
+  font-size: 14px !important;          /* 👈 ЗБІЛЬШУЄШ ТУТ (наприклад 15-16) */
+  font-weight: 900 !important;
+  letter-spacing: .22em !important;
+  text-transform: uppercase !important;
+  color: rgba(255,255,255,.86) !important;
+  text-shadow:
+    0 0 10px rgba(255,90,35,.12),
+    0 0 26px rgba(255,60,0,.08) !important;
+}
+
+/* (B) NEXT RANK label — more readable font */
+#dashboard.section.active .rankHome .rankProgress__label{
+  font-family: "Rajdhani", system-ui, sans-serif !important; /* читабельний */
+  font-weight: 900 !important;
+  font-size: 15px !important;          /* 👈 можна 16 */
+  letter-spacing: .24em !important;
+  color: rgba(255,255,255,.90) !important;
+  text-shadow:
+    0 0 12px rgba(255,90,35,.16),
+    0 0 30px rgba(255,60,0,.10) !important;
+}
+
+/* (C) Progress bar under Next Rank — thinner + more red */
+#dashboard.section.active .rankHome .rankProgress__track{
+  height: 3px !important;              /* 👈 ТОНШЕ (2-4) */
+  background: rgba(255,255,255,.10) !important;
+  border-radius: 999px !important;
+}
+
+#dashboard.section.active .rankHome .rankProgress__fill{
+  background: linear-gradient(90deg,
+    rgba(255,40,20,1),                 /* більш червоний */
+    rgba(255,120,60,.55)
+  ) !important;
+  box-shadow:
+    0 0 14px rgba(255,50,20,.28),
+    0 0 46px rgba(255,30,10,.14) !important;
+}
+
+/* spark теж трохи “червоніший” */
+#dashboard.section.active .rankHome .rankProgress__spark{
+  width: 40px !important;
+  height: 14px !important;
+  background: radial-gradient(circle, rgba(255,60,30,1), transparent 70%) !important;
+  opacity: .95 !important;
+}
+
+/* (D) PLAYER ASCENSION — more readable font */
+#dashboard.section.active .rankHome .pulseHeader,
+#dashboard.section.active .rankHome .pulseHeader span{
+  font-family: "Rajdhani", system-ui, sans-serif !important; /* читабельний */
+  font-weight: 900 !important;
+  font-size: 15px !important;          /* 👈 можна 16 */
+  letter-spacing: .36em !important;
+  color: rgba(255,255,255,.90) !important;
+  text-shadow:
+    0 0 12px rgba(255,90,35,.16),
+    0 0 34px rgba(255,60,0,.12) !important;
+}
+
+/* (E) PLAYER ASCENSION side rails — brighter + more glow */
+#dashboard.section.active .rankHome .pulseHeader::before,
+#dashboard.section.active .rankHome .pulseHeader::after{
+  height: 2px !important;
+  opacity: 1 !important;
+  background: linear-gradient(90deg,
+    transparent,
+    rgba(255,255,255,.14),
+    rgba(255,70,30,.90),               /* сильніший “хот” */
+    rgba(255,255,255,.14),
+    transparent
+  ) !important;
+  box-shadow:
+    0 0 18px rgba(255,70,30,.28),
+    0 0 70px rgba(255,30,10,.14) !important;
+}
 
