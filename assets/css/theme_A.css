@@ -2344,7 +2344,7 @@ body::after{ content:none !important; display:none !important; }
   background-size: cover !important;
 
   /* ОПУСТИТИ HUD: робимо це position-ом, НЕ transform */
-  background-position: center 38% !important;
+  background-position: center 44% !important;
 }
 
 /* контент вище HUD */
