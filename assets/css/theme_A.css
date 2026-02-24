@@ -2882,7 +2882,7 @@ body::after{ content:none !important; display:none !important; }
 /* 1) OUTCAST — smaller + glow */
 #dashboard.section.active .rankHome .rankTitle{
   /* 👇 ТУТ РЕГУЛЮЄШ РОЗМІР OUTCAST */
-  font-size: clamp(32px, 3.6vw, 60px) !important;
+  font-size: clamp(26px, 3.6vw, 50px) !important;
 
   letter-spacing: .18em !important;
   color: rgba(255,255,255,.94) !important;
@@ -2896,7 +2896,7 @@ body::after{ content:none !important; display:none !important; }
 #dashboard.section.active .rankHome .rankRP{
   font-family: "Orbitron","Rajdhani",system-ui,sans-serif !important;
   font-weight: 800 !important;
-  font-size: 22px !important;  /* 👈 тут регулюєш розмір 0 RP */
+  font-size: 20px !important;  /* 👈 тут регулюєш розмір 0 RP */
   letter-spacing: .06em !important;
   color: rgba(255,255,255,.90) !important;
   text-shadow:
