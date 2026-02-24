@@ -3290,10 +3290,7 @@ body .navbar.navTabs > .nav-btn.active > span{
   -webkit-text-fill-color: rgba(255, 205, 185, .96) !important;
 }
 
-/* маленька “нижня підсвітка” під цифрами (як полоса жару) */
-#dashboard.section.active .rankHome .pulseGrid .metric .v{
-  position: relative !important;
-}
+
 #dashboard.section.active .rankHome .pulseGrid .metric .v::after{
   content: "" !important;
   position: absolute !important;
