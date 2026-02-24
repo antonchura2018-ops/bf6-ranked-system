@@ -3709,43 +3709,36 @@ body .navbar.navTabs > .nav-btn.active > span{
     0 0 40px rgba(255,0,0,.20) !important;
 }
 /* =========================================================
-   FULL NEON PROGRESS BAR (NO DARK PART)
+   REMOVE ALL GREY FROM PROGRESS BAR (ABSOLUTE OVERRIDE)
    ========================================================= */
 
-/* ---- TRACK (вся довжина — неон) ---- */
+/* Забираємо будь-який старий фон */
+#dashboard.section.active .rankHome .rankProgress,
+#dashboard.section.active .rankHome .rankProgress__track{
+  background: none !important;
+  box-shadow: none !important;
+}
+
+/* Повністю неоновий трек */
 #dashboard.section.active .rankHome .rankProgress__track{
   height: 2px !important;
   border-radius: 999px !important;
   overflow: hidden !important;
 
-  background: linear-gradient(
-    90deg,
-    rgba(255,0,0,.55),
-    rgba(255,30,30,.85),
-    rgba(255,0,0,.55)
-  ) !important;
+  background: rgba(255,0,0,0.85) !important;
 
   box-shadow:
-    0 0 10px rgba(255,0,0,.35),
-    0 0 30px rgba(255,0,0,.25),
-    0 0 60px rgba(255,0,0,.15) !important;
+    0 0 8px rgba(255,0,0,.6),
+    0 0 22px rgba(255,0,0,.5),
+    0 0 55px rgba(255,0,0,.35) !important;
 }
 
-
-/* ---- FILL (активна частина — ще яскравіша) ---- */
+/* Яскравіша активна частина */
 #dashboard.section.active .rankHome .rankProgress__fill{
-  height: 100% !important;
-  border-radius: 999px !important;
-
-  background: linear-gradient(
-    90deg,
-    rgba(255,255,255,.95) 0%,
-    rgba(255,120,80,1) 35%,
-    rgba(255,0,0,1) 100%
-  ) !important;
+  background: rgba(255,40,0,1) !important;
 
   box-shadow:
-    0 0 14px rgba(255,0,0,.65),
-    0 0 40px rgba(255,0,0,.45),
-    0 0 80px rgba(255,0,0,.25) !important;
+    0 0 14px rgba(255,0,0,.8),
+    0 0 40px rgba(255,0,0,.6),
+    0 0 80px rgba(255,0,0,.35) !important;
 }
