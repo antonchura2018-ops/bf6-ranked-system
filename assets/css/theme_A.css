@@ -2317,4 +2317,43 @@ body::after{ content:none !important; display:none !important; }
   content: none !important;
   display: none !important;
 }
+/* =========================================
+   HUD RECOVER + NO SIDE EDGES + MOVE DOWN
+   Paste VERY END of theme_A.css
+========================================= */
+
+/* переконуємось що home — контекст */
+.rankHome{ position: relative !important; }
+
+/* HUD має існувати і бути видимим */
+.rankHome__hud{
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+
+  pointer-events: none !important;
+  z-index: 2 !important;
+
+  /* ВАЖЛИВО: повертаємо саму картинку HUD (як було) */
+  background-image: url("/assets/img/ui/home_hud_overlay.png") !important;
+  background-repeat: no-repeat !important;
+
+  /* прибрати “краї” на широких екранах */
+  background-size: 100% auto !important;
+
+  /* позиція (та сама що і в cosmos) */
+  background-position: center 18% !important;
+
+  /* опустити HUD вниз (тільки HUD, не тексти/метрики/вкладки) */
+  transform: translateY(80px) !important;
+  transform-origin: top center !important;
+}
+
+/* контент завжди вище HUD */
+.rankHome__center{ position: relative !important; z-index: 3 !important; }
 
