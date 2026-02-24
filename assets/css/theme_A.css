@@ -3422,8 +3422,8 @@ body .navbar.navTabs > .nav-btn.active > span{
 
   box-shadow:
     0 0 10px rgba(255,255,255,.16),
-    0 0 22px rgba(255,90,35,.22),
-    0 0 46px rgba(255,40,0,.14) !important;
+    0 0 22px rgba(255,90,35,.32),
+    0 0 46px rgba(255,40,0,.24) !important;
 }
 
 /* маленька “головка” на кінці прогресу */
@@ -3460,6 +3460,6 @@ body .navbar.navTabs > .nav-btn.active > span{
 
   box-shadow:
     0 0 10px rgba(255,255,255,.08),
-    0 0 22px rgba(255,90,35,.22),
-    0 0 70px rgba(255,40,0,.14) !important;
+    0 0 22px rgba(255,90,35,.32),
+    0 0 70px rgba(255,40,0,.24) !important;
 }
