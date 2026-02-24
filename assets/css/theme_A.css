@@ -3290,10 +3290,23 @@ body .navbar.navTabs > .nav-btn.active > span{
   -webkit-text-fill-color: rgba(255, 205, 185, .96) !important;
 }
 /* =========================================================
-   OUTCAST + 0 RP — FIRE LEGEND STYLE
+   OUTCAST + 0 RP — SOFT WARM + SUBTLE PULSE
+   Paste ABSOLUTELY LAST
    ========================================================= */
 
-/* OUTCAST */
+/* 1) Subtle pulse animation */
+@keyframes uiGlowPulse{
+  0%, 100%{
+    filter: drop-shadow(0 0 6px rgba(255,90,35,.18))
+            drop-shadow(0 0 18px rgba(255,60,0,.10));
+  }
+  50%{
+    filter: drop-shadow(0 0 10px rgba(255,90,35,.26))
+            drop-shadow(0 0 26px rgba(255,60,0,.14));
+  }
+}
+
+/* 2) OUTCAST — less fire, more clean warmth */
 #dashboard.section.active .rankHome .rankTitle{
   font-family: "Orbitron", sans-serif !important;
   font-weight: 800 !important;
@@ -3302,22 +3315,20 @@ body .navbar.navTabs > .nav-btn.active > span{
   background: linear-gradient(
     180deg,
     #ffffff 0%,
-    #ffd5c0 35%,
-    #ff7a3a 65%,
-    #ff2a00 100%
+    #fff1e7 55%,
+    #ffbf9a 100%
   );
-
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 
   text-shadow:
-    0 0 10px rgba(255,120,60,.45),
-    0 0 25px rgba(255,80,30,.45),
-    0 0 60px rgba(255,40,0,.35),
-    0 0 120px rgba(255,10,0,.25) !important;
+    0 0 10px rgba(255,90,35,.16),
+    0 0 34px rgba(255,60,0,.10) !important;
+
+  animation: uiGlowPulse 2.8s ease-in-out infinite !important;
 }
 
-/* 0 RP */
+/* 3) 0 RP — same warmth, slightly smaller glow */
 #dashboard.section.active .rankHome .rankRP{
   font-family: "Orbitron", sans-serif !important;
   font-weight: 700 !important;
@@ -3325,21 +3336,20 @@ body .navbar.navTabs > .nav-btn.active > span{
   background: linear-gradient(
     180deg,
     #ffffff 0%,
-    #ffcfb8 45%,
-    #ff6a2f 75%,
-    #ff1e00 100%
+    #fff0e4 60%,
+    #ffb48a 100%
   );
-
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 
   text-shadow:
-    0 0 8px rgba(255,110,50,.45),
-    0 0 22px rgba(255,70,20,.40),
-    0 0 55px rgba(255,30,0,.30) !important;
+    0 0 8px rgba(255,90,35,.14),
+    0 0 26px rgba(255,60,0,.09) !important;
+
+  animation: uiGlowPulse 3.2s ease-in-out infinite !important;
 }
 
-/* RP span синхронізуємо */
+/* keep RP unit in sync */
 #dashboard.section.active .rankHome .rankRP span{
   -webkit-text-fill-color: inherit !important;
 }
