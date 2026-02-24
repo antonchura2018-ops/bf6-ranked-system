@@ -2279,22 +2279,22 @@ body::after{ content:none !important; display:none !important; }
 }
 
 .rankHome__hud{
-  position: absolute !important;
-  inset: 0 !important;
-  pointer-events: none !important;
-  z-index: 2 !important;
+  /* 1) HUD завжди на всю ширину — НІЯКИХ країв/ліній */
+  background-size: 100% auto !important;
 
-  background-image: url("/assets/img/ui/home_hud_overlay.png") !important;
-  background-repeat: no-repeat !important;
+  /* 2) Опустити HUD вниз (не рухаючи контент) */
+  transform: translateY(80px) !important;
+  transform-origin: top center !important;
+}
 
-  /* КЛЮЧ: НЕ cover, бо cover обрізає PNG і “лиш одна лінія” */
-  background-size: min(1536px, 100vw) auto !important;
-
-  /* MUST MATCH COSMOS */
-  background-position: center 18% !important;
-
-  /* якщо HUD виглядає занадто “слабко” — можеш 0.95-1 */
-  opacity: 1 !important;
+/* якщо після цього ще видно тонкі краї — прибиваємо будь-які бордери/аутлайни контейнерів */
+.rankHome,
+.app,
+.section,
+#dashboard{
+  border: 0 !important;
+  outline: 0 !important;
+  box-shadow: none !important;
 }
 
 /* 5) Content on top */
