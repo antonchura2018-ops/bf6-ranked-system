@@ -3199,3 +3199,42 @@ body .navbar.navTabs > .nav-btn.active > span{
 #dashboard.section.active .rankHome .pulseGrid .metric .v span{
   font-size: 22px !important;
 }
+/* =========================================================
+   METRICS — IMMORTAL STYLE GLOW
+   ========================================================= */
+
+#dashboard.section.active .rankHome .pulseGrid .metric .v{
+  font-size: 46px !important;  /* залиш як є або свій */
+
+  /* Теплий внутрішній відтінок */
+  background: linear-gradient(
+    180deg,
+    #ffffff 0%,
+    #ffe3d2 40%,
+    #ff9a5c 75%,
+    #ff5a2a 100%
+  );
+
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  text-shadow:
+    0 0 8px rgba(255,120,60,.35),
+    0 0 18px rgba(255,80,40,.35),
+    0 0 45px rgba(255,40,10,.25),
+    0 0 90px rgba(255,20,0,.15) !important;
+}
+
+/* якщо є % */
+#dashboard.section.active .rankHome .pulseGrid .metric .v span{
+  background: linear-gradient(
+    180deg,
+    #ffffff 0%,
+    #ffe3d2 40%,
+    #ff9a5c 75%,
+    #ff5a2a 100%
+  );
+
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
