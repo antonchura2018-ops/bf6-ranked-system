@@ -3016,60 +3016,138 @@ body .navbar.navTabs > .nav-btn.active > span{
     0 0 50px rgba(255,60,0,.20) !important;
 }
 /* =========================================================
-   HARD OVERRIDE — METRICS (tight + white + glow)
+   FINAL LOCK v9 — WHITE + GLOW + TIGHT METRICS + THIN BAR
    Paste ABSOLUTELY LAST in theme_A.css
    ========================================================= */
 
-/* WIN RATE / TOTAL MATCHES / ... (labels) */
-#dashboard.section.active .rankHome .pulseGrid .metric .k{
+/* ---------- Next Rank (label + value) ---------- */
+#dashboard.section.active .rankHome .rankProgress__label{
   font-family: "Bebas Neue", sans-serif !important;
   font-weight: 400 !important;
   font-size: 20px !important;
-  letter-spacing: .14em !important;
+  letter-spacing: .10em !important;
+  text-transform: uppercase !important;
 
   color: #fff !important;
   opacity: 1 !important;
 
-  margin: 0 !important;
+  text-shadow:
+    0 0 10px rgba(255,90,35,.22),
+    0 0 34px rgba(255,60,0,.14) !important;
+}
+#dashboard.section.active .rankHome .rankProgress__label b{
+  color: #fff !important;
+  opacity: 1 !important;
+  text-shadow:
+    0 0 12px rgba(255,90,35,.28),
+    0 0 44px rgba(255,60,0,.18) !important;
+}
+
+/* ---------- Progress bar under Next Rank: THIN + RED ---------- */
+#dashboard.section.active .rankHome .rankProgress__track{
+  height: 2px !important;              /* <-- тонка */
+  border-radius: 999px !important;
+  background: rgba(255,255,255,.10) !important;
+  overflow: hidden !important;
+}
+#dashboard.section.active .rankHome .rankProgress__fill{
+  height: 100% !important;
+  background: linear-gradient(90deg,
+    rgba(255,20,0,1),
+    rgba(255,120,60,.55)
+  ) !important;
+  box-shadow:
+    0 0 14px rgba(255,40,0,.30),
+    0 0 55px rgba(255,10,0,.16) !important;
+}
+
+/* ---------- PLAYER ASCENSION ---------- */
+#dashboard.section.active .rankHome .pulseHeader,
+#dashboard.section.active .rankHome .pulseHeader span{
+  font-family: "Bebas Neue", sans-serif !important;
+  font-weight: 400 !important;
+  font-size: 22px !important;
+  letter-spacing: .18em !important;
+  text-transform: uppercase !important;
+
+  color: #fff !important;
+  opacity: 1 !important;
+
+  text-shadow:
+    0 0 12px rgba(255,90,35,.22),
+    0 0 46px rgba(255,60,0,.14) !important;
+}
+
+/* rails stronger */
+#dashboard.section.active .rankHome .pulseHeader::before,
+#dashboard.section.active .rankHome .pulseHeader::after{
+  opacity: 1 !important;
+  height: 2px !important;
+  background: linear-gradient(90deg,
+    transparent,
+    rgba(255,255,255,.16),
+    rgba(255,60,20,1),
+    rgba(255,255,255,.16),
+    transparent
+  ) !important;
+  box-shadow:
+    0 0 18px rgba(255,70,30,.26),
+    0 0 80px rgba(255,30,10,.14) !important;
+}
+
+/* ---------- METRICS: force tight label/value like ref ---------- */
+#dashboard.section.active .rankHome .pulseGrid .metric{
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+
+  gap: 0px !important;                 /* <-- притиснули */
+  padding: 6px 18px 8px !important;
+}
+
+/* labels */
+#dashboard.section.active .rankHome .pulseGrid .metric .k{
+  font-family: "Bebas Neue", sans-serif !important;
+  font-weight: 400 !important;
+  font-size: 18px !important;
+  letter-spacing: .14em !important;
+  text-transform: uppercase !important;
+
+  color: #fff !important;
+  opacity: 1 !important;
+
+  margin: 0 !important;                /* <-- прибрали відступи */
   padding: 0 !important;
   line-height: 1 !important;
 
   text-shadow:
-    0 0 10px rgba(255,90,35,.35),
-    0 0 32px rgba(255,60,0,.20) !important;
+    0 0 10px rgba(255,90,35,.18),
+    0 0 30px rgba(255,60,0,.12) !important;
 }
 
-/* 56% / 9 / 0.0 / ... (values) */
+/* values (56%, 9, 0.0...) — THIS is what stayed grey */
 #dashboard.section.active .rankHome .pulseGrid .metric .v{
   font-family: "Bebas Neue", sans-serif !important;
   font-weight: 400 !important;
   font-size: 46px !important;
-  letter-spacing: .03em !important;
+  letter-spacing: .04em !important;
 
   color: #fff !important;
   opacity: 1 !important;
 
-  margin: 2px 0 0 0 !important; /* <-- ближче до label */
+  margin: 2px 0 0 0 !important;        /* <-- дуже близько до label */
   padding: 0 !important;
   line-height: 1 !important;
 
   text-shadow:
-    0 0 14px rgba(255,90,35,.55),
-    0 0 50px rgba(255,60,0,.30),
-    0 0 95px rgba(255,40,0,.16) !important;
+    0 0 14px rgba(255,90,35,.40),
+    0 0 50px rgba(255,60,0,.22),
+    0 0 95px rgba(255,40,0,.14) !important;
 }
 
-/* ЗМУСИТИ label+value бути ближче незалежно від старих стилів */
-#dashboard.section.active .rankHome .pulseGrid .metric{
-  display: flex !important;
-  flex-direction: column !important;
-  gap: 2px !important;          /* <-- ось тут регулюєш “ближче/далі” */
-  padding-top: 6px !important;
-  padding-bottom: 8px !important;
-}
-
-/* якщо pulseGrid мав великий row-gap — притиснемо */
-#dashboard.section.active .rankHome .pulseGrid{
-  row-gap: 6px !important;
+/* units like % (if needed) */
+#dashboard.section.active .rankHome .pulseGrid .metric .v span{
+  color: #fff !important;
+  opacity: 1 !important;
 }
 
