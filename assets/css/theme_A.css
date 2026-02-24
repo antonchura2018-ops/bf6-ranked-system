@@ -3116,4 +3116,71 @@ nav button{
 .rankHome .pulseHeader *{
   font-family: "Rajdhani", system-ui, sans-serif !important;
 }
+/* =========================================================
+   TOP NAV — precise fix (based on your DOM)
+   ========================================================= */
 
+.app .topNav a,
+.app .topNav button,
+.app nav a,
+.app nav button{
+  font-family: "Rajdhani", system-ui, sans-serif !important;
+  font-weight: 900 !important;
+  font-size: 15px !important;     /* 👈 регулюєш тут */
+  letter-spacing: .24em !important;
+  text-transform: uppercase !important;
+  color: rgba(255,255,255,.92) !important;
+
+  text-shadow:
+    0 0 12px rgba(255,90,35,.18),
+    0 0 34px rgba(255,60,0,.10) !important;
+}
+/* NEXT RANK — sci-fi look */
+#dashboard.section.active .rankHome .rankProgress__label{
+  font-family: "Orbitron", system-ui, sans-serif !important;
+  font-weight: 700 !important;
+  font-size: 16px !important;   /* 👈 регулюєш */
+  letter-spacing: .18em !important;
+}
+/* PLAYER ASCENSION — sharper */
+#dashboard.section.active .rankHome .pulseHeader{
+  font-family: "Orbitron", system-ui, sans-serif !important;
+  font-weight: 700 !important;
+  font-size: 16px !important;    /* 👈 регулюєш */
+  letter-spacing: .32em !important;
+
+  text-shadow:
+    0 0 14px rgba(255,90,35,.20),
+    0 0 50px rgba(255,60,0,.14) !important;
+}
+#dashboard.section.active .rankHome .pulseHeader::before,
+#dashboard.section.active .rankHome .pulseHeader::after{
+  height: 2px !important;
+  opacity: 1 !important;
+
+  background: linear-gradient(90deg,
+    transparent,
+    rgba(255,255,255,.18),
+    rgba(255,50,20,1),
+    rgba(255,255,255,.18),
+    transparent
+  ) !important;
+
+  box-shadow:
+    0 0 22px rgba(255,50,20,.35),
+    0 0 80px rgba(255,30,10,.18) !important;
+}
+#dashboard.section.active .rankHome .rankProgress__track{
+  height: 2px !important;   /* 👈 тонше */
+}
+
+#dashboard.section.active .rankHome .rankProgress__fill{
+  background: linear-gradient(90deg,
+    rgba(255,20,0,1),
+    rgba(255,80,30,.65)
+  ) !important;
+
+  box-shadow:
+    0 0 16px rgba(255,30,0,.35),
+    0 0 60px rgba(255,10,0,.18) !important;
+}
