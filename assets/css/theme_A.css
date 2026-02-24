@@ -2992,27 +2992,27 @@ body::after{ content:none !important; display:none !important; }
 }
 
 /* =========================================================
-   TOP TABS — ORBITRON + BIGGER
+   TOP TABS — AUDIOWIDE
    ========================================================= */
 
 body .navbar.navTabs > .nav-btn > span{
-  font-family: "Orbitron", sans-serif !important;
-  font-weight: 700 !important;
+  font-family: "Audiowide", sans-serif !important;
+  font-weight: 400 !important;
 
-  font-size: 16px !important;      /* 👈 ТУТ МІНЯЄШ РОЗМІР */
-  letter-spacing: .18em !important;
+  font-size: 17px !important;   /* 👈 можеш 18 якщо хочеш */
+  letter-spacing: .10em !important;
   text-transform: uppercase !important;
 
-  color: rgba(255,255,255,.92) !important;
+  color: rgba(255,255,255,.95) !important;
 
   text-shadow:
-    0 0 10px rgba(255,90,35,.18),
-    0 0 30px rgba(255,60,0,.12) !important;
+    0 0 10px rgba(255,90,35,.22),
+    0 0 32px rgba(255,60,0,.14) !important;
 }
-body .navbar.navTabs > .nav-btn.active > span{
-  color: rgba(255,255,255,1) !important;
 
+/* активна вкладка */
+body .navbar.navTabs > .nav-btn.active > span{
   text-shadow:
     0 0 14px rgba(255,90,35,.35),
-    0 0 50px rgba(255,60,0,.20) !important;
+    0 0 50px rgba(255,60,0,.22) !important;
 }
