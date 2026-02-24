@@ -3290,69 +3290,59 @@ body .navbar.navTabs > .nav-btn.active > span{
   -webkit-text-fill-color: rgba(255, 205, 185, .96) !important;
 }
 /* =========================================================
-   OUTCAST + 0 RP — COSMIC WHITE STYLE
+   OUTCAST + 0 RP — WHITE CORE + RED OUTER GLOW
    ========================================================= */
 
-/* 1️⃣ Космічний pulse */
-@keyframes cosmicPulse{
+/* Pulse animation */
+@keyframes hybridPulse{
   0%,100%{
     filter:
-      drop-shadow(0 0 6px rgba(200,230,255,.18))
-      drop-shadow(0 0 18px rgba(150,200,255,.10));
+      drop-shadow(0 0 6px rgba(255,90,35,.18))
+      drop-shadow(0 0 20px rgba(255,40,0,.12));
   }
   50%{
     filter:
-      drop-shadow(0 0 10px rgba(200,230,255,.28))
-      drop-shadow(0 0 26px rgba(150,200,255,.16));
+      drop-shadow(0 0 10px rgba(255,90,35,.28))
+      drop-shadow(0 0 32px rgba(255,40,0,.18));
   }
 }
 
-/* 2️⃣ OUTCAST */
+/* OUTCAST */
 #dashboard.section.active .rankHome .rankTitle{
   font-family: "Orbitron", sans-serif !important;
   font-weight: 800 !important;
   letter-spacing: .16em !important;
 
-  background: linear-gradient(
-    180deg,
-    #ffffff 0%,
-    #eaf6ff 60%,
-    #cfe9ff 100%
-  );
-
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  background: none !important;
 
   text-shadow:
-    0 0 10px rgba(200,230,255,.25),
-    0 0 40px rgba(160,210,255,.12) !important;
+    0 0 6px rgba(255,255,255,.35),   /* легкий білий внутрішній */
+    0 0 18px rgba(255,90,35,.25),
+    0 0 40px rgba(255,40,0,.15) !important;
 
-  animation: cosmicPulse 3.4s ease-in-out infinite !important;
+  animation: hybridPulse 3s ease-in-out infinite !important;
 }
 
-/* 3️⃣ 0 RP */
+/* 0 RP */
 #dashboard.section.active .rankHome .rankRP{
   font-family: "Orbitron", sans-serif !important;
   font-weight: 700 !important;
 
-  background: linear-gradient(
-    180deg,
-    #ffffff 0%,
-    #edf7ff 65%,
-    #d6ecff 100%
-  );
-
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  background: none !important;
 
   text-shadow:
-    0 0 8px rgba(200,230,255,.22),
-    0 0 30px rgba(160,210,255,.12) !important;
+    0 0 5px rgba(255,255,255,.25),
+    0 0 14px rgba(255,90,35,.20),
+    0 0 30px rgba(255,40,0,.14) !important;
 
-  animation: cosmicPulse 3.8s ease-in-out infinite !important;
+  animation: hybridPulse 3.4s ease-in-out infinite !important;
 }
 
-/* синхронізація RP */
+/* RP синхронізуємо */
 #dashboard.section.active .rankHome .rankRP span{
   -webkit-text-fill-color: inherit !important;
 }
