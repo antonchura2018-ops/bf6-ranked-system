@@ -3594,3 +3594,73 @@ body .navbar.navTabs > .nav-btn.active > span{
   animation: progressBreathReal 2.4s ease-in-out infinite !important;
   transform-origin: center;
 }
+/* =========================================================
+   PROGRESS BAR — NO FLICKER + NO GREY
+   Paste ABSOLUTELY LAST
+   ========================================================= */
+
+/* Track (фон) — прибрати сірий, зробити темно-червоний */
+#dashboard.section.active .rankHome .rankProgress__track{
+  height: 2px !important;
+  border-radius: 999px !important;
+  overflow: hidden !important;
+  position: relative !important;
+
+  /* замість сірого — темний червоний тон */
+  background: linear-gradient(90deg,
+    rgba(255,40,0,.18),
+    rgba(255,255,255,.08),
+    rgba(255,40,0,.18)
+  ) !important;
+
+  box-shadow:
+    0 0 10px rgba(255,40,0,.14) inset,
+    0 0 22px rgba(255,40,0,.10) !important;
+}
+
+/* Fill — залишаємо hybrid, але анімація тільки glow/opacity (приємно) */
+@keyframes fillBreathGlow {
+  0%,100%{
+    opacity: .92;
+    box-shadow:
+      0 0 10px rgba(255,90,35,.18),
+      0 0 26px rgba(255,40,0,.10);
+  }
+  50%{
+    opacity: 1;
+    box-shadow:
+      0 0 16px rgba(255,90,35,.28),
+      0 0 42px rgba(255,40,0,.18);
+  }
+}
+
+#dashboard.section.active .rankHome .rankProgress__fill{
+  height: 100% !important;
+  border-radius: 999px !important;
+
+  /* білий core + червоний edge */
+  background: linear-gradient(90deg,
+    rgba(255,255,255,.92) 0%,
+    rgba(255,235,225,.92) 35%,
+    rgba(255,140,90,.85) 70%,
+    rgba(255,60,20,.92) 100%
+  ) !important;
+
+  /* ВАЖЛИВО: без brightness/scale, тільки м’який glow */
+  animation: fillBreathGlow 4.6s ease-in-out infinite !important;
+}
+
+/* Spark — теж без “фліккера”, просто м’яке світіння */
+@keyframes sparkBreath {
+  0%,100%{ opacity: .80; filter: drop-shadow(0 0 10px rgba(255,60,20,.16)); }
+  50%{     opacity: .95; filter: drop-shadow(0 0 16px rgba(255,60,20,.22)); }
+}
+
+#dashboard.section.active .rankHome .rankProgress__spark{
+  animation: sparkBreath 4.6s ease-in-out infinite !important;
+  background: radial-gradient(circle,
+    rgba(255,255,255,.85) 0%,
+    rgba(255,120,70,.55) 45%,
+    rgba(255,60,20,0) 72%
+  ) !important;
+}
