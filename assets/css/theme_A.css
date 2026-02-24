@@ -3164,13 +3164,13 @@ body .navbar.navTabs > .nav-btn.active > span{
 /* labels */
 #dashboard.section.active .rankHome .pulseGrid .metric .k{
   line-height: .95 !important;
-  margin-bottom: 4px !important;   /* <-- підтягує value ближче */
+  margin-bottom: 5px !important;   /* <-- підтягує value ближче */
 }
 
 /* values */
 #dashboard.section.active .rankHome .pulseGrid .metric .v{
   line-height: .95 !important;
-  margin-top: 4px !important;      /* <-- ще ближче */
+  margin-top: 5px !important;      /* <-- ще ближче */
 }
 /* =========================================================
    METRICS SIZE BOOST
