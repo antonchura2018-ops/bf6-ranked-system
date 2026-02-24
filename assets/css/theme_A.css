@@ -3016,108 +3016,60 @@ body .navbar.navTabs > .nav-btn.active > span{
     0 0 50px rgba(255,60,0,.20) !important;
 }
 /* =========================================================
-   RANK STATS — BEBAS NEUE STYLE
+   HARD OVERRIDE — METRICS (tight + white + glow)
+   Paste ABSOLUTELY LAST in theme_A.css
    ========================================================= */
 
-/* Next Rank */
-.rankProgress__label{
+/* WIN RATE / TOTAL MATCHES / ... (labels) */
+#dashboard.section.active .rankHome .pulseGrid .metric .k{
   font-family: "Bebas Neue", sans-serif !important;
+  font-weight: 400 !important;
   font-size: 20px !important;
-  letter-spacing: .08em !important;
-  color: rgba(255,255,255,.95) !important;
-
-  text-shadow:
-    0 0 10px rgba(255,90,35,.25),
-    0 0 35px rgba(255,60,0,.15) !important;
-}
-
-/* PLAYER ASCENSION */
-.pulseHeader,
-.pulseHeader span{
-  font-family: "Bebas Neue", sans-serif !important;
-  font-size: 22px !important;
-  letter-spacing: .18em !important;
-  color: rgba(255,255,255,.96) !important;
-
-  text-shadow:
-    0 0 12px rgba(255,90,35,.30),
-    0 0 40px rgba(255,60,0,.18) !important;
-}
-
-/* Metric labels (WIN RATE, TOTAL MATCHES etc) */
-.metric .k{
-  font-family: "Bebas Neue", sans-serif !important;
-  font-size: 18px !important;
-  letter-spacing: .12em !important;
-  color: rgba(255,255,255,.85) !important;
-
-  margin-bottom: 2px !important; /* 🔥 зменшили відстань */
-
-  text-shadow: 0 0 8px rgba(255,90,35,.18) !important;
-}
-
-/* Metric values (56%, 9, 0.0...) */
-.metric .v{
-  font-family: "Bebas Neue", sans-serif !important;
-  font-size: 42px !important;
-  letter-spacing: .04em !important;
-  color: rgba(255,240,230,.98) !important;
-
-  margin-top: 0 !important;
-
-  text-shadow:
-    0 0 14px rgba(255,90,35,.35),
-    0 0 45px rgba(255,60,0,.20) !important;
-}
-
-/* Ближче один до одного */
-.metric{
-  padding: 8px 18px 10px !important;
-}
-/* =========================================================
-   METRICS FIX — WHITE + REAL GLOW + TIGHT SPACING
-   ========================================================= */
-
-/* LABELS (WIN RATE, TOTAL MATCHES...) */
-.metric .k{
-  font-family: "Bebas Neue", sans-serif !important;
-  font-size: 19px !important;
   letter-spacing: .14em !important;
 
-  color: #ffffff !important;   /* чистий білий */
+  color: #fff !important;
+  opacity: 1 !important;
 
-  margin-bottom: 0px !important;
+  margin: 0 !important;
+  padding: 0 !important;
   line-height: 1 !important;
 
   text-shadow:
-    0 0 10px rgba(255,80,30,.35),
-    0 0 30px rgba(255,60,0,.20) !important;
+    0 0 10px rgba(255,90,35,.35),
+    0 0 32px rgba(255,60,0,.20) !important;
 }
 
-/* VALUES (56%, 9, 0.0...) */
-.metric .v{
+/* 56% / 9 / 0.0 / ... (values) */
+#dashboard.section.active .rankHome .pulseGrid .metric .v{
   font-family: "Bebas Neue", sans-serif !important;
-  font-size: 44px !important;
+  font-weight: 400 !important;
+  font-size: 46px !important;
   letter-spacing: .03em !important;
 
-  color: #ffffff !important;
+  color: #fff !important;
+  opacity: 1 !important;
 
-  margin-top: 2px !important;
+  margin: 2px 0 0 0 !important; /* <-- ближче до label */
+  padding: 0 !important;
   line-height: 1 !important;
 
   text-shadow:
     0 0 14px rgba(255,90,35,.55),
-    0 0 45px rgba(255,60,0,.35),
-    0 0 90px rgba(255,40,0,.18) !important;
+    0 0 50px rgba(255,60,0,.30),
+    0 0 95px rgba(255,40,0,.16) !important;
 }
 
-/* зменшуємо вертикальний gap в grid */
-.pulseGrid{
+/* ЗМУСИТИ label+value бути ближче незалежно від старих стилів */
+#dashboard.section.active .rankHome .pulseGrid .metric{
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 2px !important;          /* <-- ось тут регулюєш “ближче/далі” */
+  padding-top: 6px !important;
+  padding-bottom: 8px !important;
+}
+
+/* якщо pulseGrid мав великий row-gap — притиснемо */
+#dashboard.section.active .rankHome .pulseGrid{
   row-gap: 6px !important;
 }
 
-/* забираємо зайвий padding */
-.metric{
-  padding-top: 4px !important;
-  padding-bottom: 6px !important;
-}
