@@ -2308,8 +2308,8 @@ body::after{ content:none !important; display:none !important; }
   align-items: center !important;
   justify-content: flex-start !important;
 
-  padding-top: 300px !important;   /* тут ти опускаєш OUTCAST вниз під кільце */
-  padding-bottom: 80px !important;
+  padding-top: 200px !important;   /* було 260-300 */
+  padding-bottom: 40px !important;
 }
 
 /* 6) IMPORTANT: disable any CSS ring layer */
@@ -2325,143 +2325,18 @@ body::after{ content:none !important; display:none !important; }
 .rankHome{ position: relative !important; }
 
 .rankHome__hud{
-  display:block !important;
-  opacity:1 !important;
-  visibility:visible !important;
-
   position:absolute !important;
   inset:0 !important;
-  width:100% !important;
-  height:100% !important;
-
   pointer-events:none !important;
   z-index:2 !important;
 
   background-image:url("/assets/img/ui/home_hud_overlay.png") !important;
   background-repeat:no-repeat !important;
 
-  /* ВАЖЛИВО: повертаємо нормальний рендер як раніше */
-  background-size: cover !important;
-
-  /* ОПУСТИТИ HUD: робимо це position-ом, НЕ transform */
-  background-position: center 44% !important;
+  /* 🔥 ЗМЕНШЕННЯ HUD */
+  background-size: 80% auto !important;  /* було 100% або cover */
+  background-position: center 65% !important; /* опустити вниз */
 }
 
 /* контент вище HUD */
 .rankHome__center{ position:relative !important; z-index:3 !important; }
-/* ==========================================================
-   FINAL HOME HUD — scalable + movable (NO side edges)
-   Paste as ABSOLUTE LAST block in theme_A.css
-   ========================================================== */
-
-:root{
-  /* підкрутки HUD */
-  --hudScale: .82;      /* менше = компактніше (0.78-0.88) */
-  --hudYOffset: 140px;  /* опустити HUD вниз */
-  --hudOpacity: 1;
-}
-
-/* базова підлога */
-html, body { height: 100%; margin: 0; padding: 0; }
-body { background:#05060a !important; overflow-x:hidden; }
-
-/* фон космосу — 1 раз на всю сторінку */
-body::before{
-  content:"" !important;
-  position: fixed !important;
-  inset: 0 !important;
-  z-index: -10 !important;
-  pointer-events: none !important;
-
-  background: url("/assets/img/bg/cosmos.png") center/cover no-repeat !important;
-  background-position: center 18% !important;
-  filter: saturate(1.08) contrast(1.06) !important;
-}
-
-/* прибрати будь-які старі оверлеї/віньєтки */
-body::after{ content:none !important; display:none !important; }
-.rankHome__bg{ display:none !important; }
-.rankHome__vignette{ display:none !important; }
-
-/* full-bleed контейнери */
-.app, .section, #dashboard{
-  width:100% !important;
-  max-width:none !important;
-  margin:0 !important;
-  padding:0 !important;
-  background: transparent !important;
-}
-
-.rankHome{
-  position: relative !important;
-  width: 100vw !important;
-  min-height: 100vh !important;
-  margin-left: calc(50% - 50vw) !important;
-  margin-right: calc(50% - 50vw) !important;
-  overflow: hidden !important; /* щоб не було бокових “країв” */
-  background: transparent !important;
-}
-
-/* HUD: робимо через ::before з фіксованими розмірами 1536×1024,
-   тоді НЕ буде розтягування і бокових ліній */
-.rankHome__hud{
-  position: absolute !important;
-  inset: 0 !important;
-  z-index: 2 !important;
-  pointer-events: none !important;
-}
-
-.rankHome__hud::before{
-  content:"" !important;
-  position: absolute !important;
-  left: 50% !important;
-  top: 0 !important;
-
-  width: 1536px !important;
-  height: 1024px !important;
-
-  transform:
-    translateX(-50%)
-    translateY(var(--hudYOffset))
-    scale(var(--hudScale)) !important;
-
-  transform-origin: top center !important;
-
-  background: url("/assets/img/ui/home_hud_overlay.png") center/contain no-repeat !important;
-  opacity: var(--hudOpacity) !important;
-}
-
-/* контент ВИЩЕ HUD */
-.rankHome__center{
-  position: relative !important;
-  z-index: 3 !important;
-
-  min-height: 100vh !important;
-  display:flex !important;
-  flex-direction: column !important;
-  align-items: center !important;
-  justify-content: flex-start !important;
-
-  /* Це рухає ТІЛЬКИ контент (OUTCAST/NextRank/метрики) — HUD окремо */
-  padding-top: 260px !important;  /* якщо багато пустоти — зменши до 230-245 */
-  padding-bottom: 70px !important;
-}
-
-/* прибити будь-який CSS-ring шар */
-.rankHome__center::before{
-  content: none !important;
-  display: none !important;
-}
-.rankHalo, .rankHalo__fx{ display:none !important; }
-
-/* ------------------------------------------
-   COMPACT SPACING (тільки відстані, без зміни текстів/цифр)
-   (прибирає “забагато місця” як на твоєму 2 фото)
------------------------------------------- */
-
-.rankTitle{ margin-top: 10px !important; }
-.rankRP{ margin-top: 4px !important; }
-
-.rankProgress{ margin-top: 12px !important; }
-.pulseHeader{ margin-top: 18px !important; padding: 10px 0 !important; }
-.pulseGrid{ margin-top: 10px !important; }
