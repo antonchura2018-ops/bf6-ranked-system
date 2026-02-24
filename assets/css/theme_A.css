@@ -2639,3 +2639,71 @@ body::after{ content:none !important; display:none !important; }
   opacity: .85 !important;
   text-shadow: 0 0 10px rgba(255,90,35,.16) !important;
 }
+/* ==========================================================
+   HARD OVERRIDE: Rajdhani + glow for Rank screen
+   Paste VERY END of theme_A.css
+   ========================================================== */
+
+/* прибрати горизонтальний скрол (той повзунок внизу) */
+html, body{
+  overflow-x: hidden !important;
+}
+
+/* ui-kit.css ставить Segoe на * — перебиваємо його через scope body[data-rank] */
+body[data-rank],
+body[data-rank] *{
+  font-family: "Rajdhani", system-ui, sans-serif !important;
+}
+
+/* загальний читаємий “AAA” текст + легкий glow */
+body[data-rank]{
+  color: rgba(255,255,255,.88);
+  text-shadow: 0 0 10px rgba(255,110,40,.10);
+}
+
+/* OUTCAST (великий заголовок) — якщо це h1 */
+body[data-rank] h1{
+  font-weight: 800 !important;
+  letter-spacing: .18em !important;
+  text-transform: uppercase !important;
+  text-shadow:
+    0 0 10px rgba(255,120,40,.22),
+    0 0 26px rgba(255,70,0,.14) !important;
+}
+
+/* маленькі підписи (WIN RATE / TOTAL MATCHES / KDA / AVG KILLS / MVP / PLAYER ASCENSION / NEXT RANK) */
+body[data-rank] .label,
+body[data-rank] [class*="label"],
+body[data-rank] [class*="Label"],
+body[data-rank] [class*="title"],
+body[data-rank] [class*="Title"]{
+  font-weight: 800 !important;
+  letter-spacing: .24em !important;
+  text-transform: uppercase !important;
+  font-size: 13px !important;
+  color: rgba(255,255,255,.76) !important;
+  text-shadow: 0 0 12px rgba(255,95,35,.16) !important;
+}
+
+/* числа (63% / 8 / 0.0 / 0% / 0 RP) */
+body[data-rank] .value,
+body[data-rank] [class*="value"],
+body[data-rank] [class*="Value"],
+body[data-rank] [class*="number"],
+body[data-rank] [class*="Number"]{
+  font-weight: 900 !important;
+  font-size: 34px !important;
+  line-height: 1.05 !important;
+  color: rgba(255,235,225,.96) !important;
+  text-shadow:
+    0 0 12px rgba(255,120,40,.26),
+    0 0 30px rgba(255,60,0,.16) !important;
+}
+
+/* праву лінію зробити менш помітною (часто це border/after у контейнера) */
+body[data-rank] [class*="edge"],
+body[data-rank] [class*="Edge"],
+body[data-rank] [class*="side"],
+body[data-rank] [class*="Side"]{
+  opacity: .35 !important;
+}
