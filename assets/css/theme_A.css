@@ -3170,7 +3170,7 @@ body .navbar.navTabs > .nav-btn.active > span{
 /* values */
 #dashboard.section.active .rankHome .pulseGrid .metric .v{
   line-height: .95 !important;
-  margin-top: 0px !important;      /* <-- ще ближче */
+  margin-top: 2px !important;      /* <-- ще ближче */
 }
 /* =========================================================
    METRICS SIZE BOOST
