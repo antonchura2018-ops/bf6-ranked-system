@@ -3188,21 +3188,18 @@ body .navbar.navTabs > .nav-btn.active > span{
   font-size: 56px !important;       /* було ~46 */
 }
 /* =========================================================
-   METRIC NUMBERS — BIGGER + HIGHER
-   Paste ABSOLUTELY LAST
+   METRIC NUMBERS — CONTROLLED SCALE
    ========================================================= */
 
 /* тільки цифри */
 #dashboard.section.active .rankHome .pulseGrid .metric .v{
-  font-size: 46px !important;      /* <-- розмір цифр */
-  line-height: .9 !important;
+  font-size: 52px !important;   /* було 62 — це занадто */
+  line-height: 1 !important;
 
-  margin-top: -3px !important;     /* <-- підняти вище */
+  margin-top: -3px !important;  /* трохи ближче */
 }
 
 /* якщо є % span */
 #dashboard.section.active .rankHome .pulseGrid .metric .v span{
   font-size: 52px !important;
 }
-
-
