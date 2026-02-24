@@ -2230,113 +2230,134 @@ body .navbar.navTabs > .nav-btn.active:last-child > span::before{
   right: -6px !important;
 }
 
-/* ==========================================================
-   HOME — 1 BACKGROUND + HUD OVERLAY (1536×1024)  ✅ FINAL
-   ========================================================== */
-
-html, body { height: 100%; margin: 0; padding: 0; }
-body { background:#05060a !important; overflow-x:hidden; }
-
-/* 1) ONE cosmos image (1536×1024) */
-body::before{
-  content:"" !important;
-  position: fixed !important;
-  inset: 0 !important;
-  z-index: -10 !important;
-  pointer-events: none !important;
-
-  background: url("/assets/img/bg/cosmos.png") center/cover no-repeat !important;
-
-  /* !!! MUST MATCH OVERLAY */
-  background-position: center 18% !important;
-
-  filter: saturate(1.08) contrast(1.06) !important;
-  transform: translateZ(0) !important;
-}
-
-/* 2) kill ANY extra overlays that create bands */
-body::after{ content:none !important; display:none !important; }
-.rankHome__bg{ display:none !important; }
-.rankHome__vignette{ display:none !important; }
-
-/* 3) Home full-bleed */
-.app, .section, #dashboard{
-  width:100% !important;
-  max-width:none !important;
-  margin:0 !important;
-  padding:0 !important;
-  background: transparent !important;
-}
-
-.rankHome{
-  position: relative !important;
-  width: 100vw !important;
-  min-height: 100vh !important;
-  margin-left: calc(50% - 50vw) !important;
-  margin-right: calc(50% - 50vw) !important;
-  background: transparent !important;
-  overflow: hidden !important;
-}
-
-.rankHome__hud{
-  /* 1) HUD завжди на всю ширину — НІЯКИХ країв/ліній */
-  background-size: 100% auto !important;
-
-  /* 2) Опустити HUD вниз (не рухаючи контент) */
-  transform: translateY(80px) !important;
-  transform-origin: top center !important;
-}
-
-/* якщо після цього ще видно тонкі краї — прибиваємо будь-які бордери/аутлайни контейнерів */
-.rankHome,
-.app,
-.section,
-#dashboard{
-  border: 0 !important;
-  outline: 0 !important;
-  box-shadow: none !important;
-}
-
-/* 5) Content on top */
-.rankHome__center{
-  position: relative !important;
-  z-index: 3 !important;
-
-  min-height: 100vh !important;
-  display:flex !important;
-  flex-direction: column !important;
-  align-items: center !important;
-  justify-content: flex-start !important;
-
-  padding-top: 200px !important;   /* було 260-300 */
-  padding-bottom: 40px !important;
-}
-
-/* 6) IMPORTANT: disable any CSS ring layer */
-.rankHome__center::before{
-  content: none !important;
-  display: none !important;
-}
-/* =========================================
-   HUD FINAL (VISIBLE + SAFE SCALE + MOVE DOWN)
+/* =========================================================
+   METRICS — CLEAN AAA (NO HUD)
    Paste VERY END of theme_A.css
-========================================= */
+   ========================================================= */
 
-.rankHome{ position: relative !important; }
+/* трохи компактніше вся секція */
+.rankProgress{ margin-top: 14px !important; }
+.pulseHeader{ margin-top: 18px !important; padding: 10px 0 !important; opacity: .78 !important; }
+.pulseGrid{ margin-top: 10px !important; }
 
-.rankHome__hud{
-  position:absolute !important;
-  inset:0 !important;
-  pointer-events:none !important;
-  z-index:2 !important;
-
-  background-image:url("/assets/img/ui/home_hud_overlay.png") !important;
-  background-repeat:no-repeat !important;
-
-  /* 🔥 ЗМЕНШЕННЯ HUD */
-  background-size: 80% auto !important;  /* було 100% або cover */
-  background-position: center 65% !important; /* опустити вниз */
+/* м’який “скляний” бенд під метрики (без видимих країв) */
+.pulseGrid{
+  position: relative !important;
+  padding: 16px 0 14px !important;
 }
 
-/* контент вище HUD */
-.rankHome__center{ position:relative !important; z-index:3 !important; }
+.pulseGrid::before{
+  content:"";
+  position:absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: -14px;
+  bottom: -16px;
+  width: min(1100px, 96vw);
+
+  background:
+    radial-gradient(900px 220px at 50% 30%,
+      rgba(0,0,0,.46),
+      rgba(0,0,0,.22) 55%,
+      rgba(0,0,0,0) 80%);
+
+  pointer-events:none;
+  opacity: .95;
+  z-index: -1;
+}
+
+/* верхня + нижня тонка рейка як у AAA HUD */
+.pulseGrid::after{
+  content:"";
+  position:absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 2px;
+  width: min(1100px, 96vw);
+  height: 2px;
+  border-radius: 999px;
+
+  background: linear-gradient(90deg,
+    transparent,
+    rgba(255,255,255,.10),
+    rgba(255,255,255,.14),
+    rgba(255,255,255,.10),
+    transparent);
+
+  box-shadow: 0 0 20px rgba(255,60,30,.08);
+  opacity: .85;
+  pointer-events:none;
+}
+
+.pulseHeader::before,
+.pulseHeader::after{
+  opacity: .85 !important;
+}
+
+/* клітинки */
+.metric{
+  position: relative !important;
+  text-align:center !important;
+  padding: 0 18px !important;
+}
+
+/* вертикальні сепаратори (тонкі, з легким жаром) */
+.metric:not(:first-child)::before{
+  content:"";
+  position:absolute;
+  left: 0;
+  top: 6px;
+  bottom: 8px;
+  width: 1px;
+  background: linear-gradient(180deg,
+    transparent,
+    rgba(255,255,255,.10),
+    rgba(255,60,30,.18),
+    rgba(255,255,255,.10),
+    transparent);
+  opacity: .75;
+}
+
+/* підписи */
+.metric .k{
+  font-family: var(--font-ui) !important;
+  font-size: 11px !important;
+  letter-spacing: .20em !important;
+  text-transform: uppercase !important;
+  opacity: .62 !important;
+  margin-bottom: 8px !important;
+}
+
+/* значення */
+.metric .v{
+  font-family: var(--font-ui) !important;
+  font-weight: 800 !important;
+  font-size: 42px !important;
+  line-height: 1 !important;
+  color: rgba(255,255,255,.92) !important;
+  text-shadow: 0 0 22px rgba(255,60,30,.10) !important;
+}
+
+/* маленькі одиниці типу % */
+.metric .v > span{
+  font-size: 16px !important;
+  opacity: .75 !important;
+  margin-left: 6px !important;
+}
+
+/* легкий “гарячий сегмент” під першою метрикою як акцент */
+.metric:first-child::after{
+  content:"";
+  position:absolute;
+  left: 18px;
+  right: 18px;
+  bottom: 0;
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, transparent, rgba(255,60,30,.95), transparent);
+  box-shadow: 0 0 18px rgba(255,60,30,.22);
+  opacity: .8;
+}
+
+/* якщо твій pulseMark не потрібен — можеш лишити або вимкнути */
+.pulseMark{ display:none !important; }
