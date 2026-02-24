@@ -2556,3 +2556,86 @@ body::after{ content:none !important; display:none !important; }
   opacity: .35 !important;
   filter: saturate(.9) !important;
 }
+/* ==========================================================
+   FORCE TYPE + ORANGE GLOW (ARROW TEXT) — VERY BROAD TARGET
+   Paste VERY END of theme_A.css
+   ========================================================== */
+
+/* 1) Force font for the whole rank screen area */
+#dashboard, #dashboard * ,
+#rank, #rank * ,
+.rankHome, .rankHome * ,
+.home, .home * ,
+#dashboard .home, #dashboard .home *{
+  font-family: "Rajdhani","Orbitron","DIN","Segoe UI",system-ui,sans-serif !important;
+  -webkit-font-smoothing: antialiased !important;
+  text-rendering: geometricPrecision !important;
+}
+
+/* 2) OUTCAST big title */
+#dashboard h1, #dashboard .title, #dashboard .rankTitle, #dashboard .rankName,
+#rank h1, #rank .title, #rank .rankTitle, #rank .rankName,
+.rankHome h1, .rankHome .title, .rankHome .rankTitle, .rankHome .rankName{
+  font-weight: 800 !important;
+  letter-spacing: .18em !important;
+  text-transform: uppercase !important;
+  color: rgba(255,255,255,.92) !important;
+  text-shadow:
+    0 0 10px rgba(255,120,40,.22),
+    0 0 26px rgba(255,70,0,.14) !important;
+}
+
+/* 3) Small headers like: PLAYER ASCENSION, WIN RATE, TOTAL MATCHES, etc */
+#dashboard .sectionTitle, #dashboard .metricsTitle, #dashboard .playerAscension,
+#dashboard .label, #dashboard .statLabel, #dashboard .metricLabel,
+#dashboard [class*="label"], #dashboard [class*="title"],
+
+#rank .sectionTitle, #rank .metricsTitle, #rank .playerAscension,
+#rank .label, #rank .statLabel, #rank .metricLabel,
+#rank [class*="label"], #rank [class*="title"],
+
+.rankHome .sectionTitle, .rankHome .metricsTitle, .rankHome .playerAscension,
+.rankHome .label, .rankHome .statLabel, .rankHome .metricLabel,
+.rankHome [class*="label"], .rankHome [class*="title"]{
+  font-weight: 800 !important;
+  letter-spacing: .26em !important;
+  text-transform: uppercase !important;
+  font-size: 12px !important;
+  color: rgba(255,255,255,.75) !important;
+  text-shadow: 0 0 10px rgba(255,90,35,.12) !important;
+}
+
+/* 4) Numbers: 0 RP, 63%, 8, 0.0, 0% (values) */
+#dashboard .value, #dashboard .statValue, #dashboard .metricValue,
+#dashboard [class*="value"], #dashboard [class*="Value"],
+#dashboard [class*="number"], #dashboard [class*="Number"],
+#dashboard .rp, #dashboard .rankRP, #dashboard .rankPoints,
+
+#rank .value, #rank .statValue, #rank .metricValue,
+#rank [class*="value"], #rank [class*="Value"],
+#rank [class*="number"], #rank [class*="Number"],
+#rank .rp, #rank .rankRP, #rank .rankPoints,
+
+.rankHome .value, .rankHome .statValue, .rankHome .metricValue,
+.rankHome [class*="value"], .rankHome [class*="Value"],
+.rankHome [class*="number"], .rankHome [class*="Number"],
+.rankHome .rp, .rankHome .rankRP, .rankHome .rankPoints{
+  font-weight: 900 !important;
+  font-size: 34px !important;     /* <- головне збільшення цифр */
+  line-height: 1.05 !important;
+  color: rgba(255,235,225,.96) !important;
+  text-shadow:
+    0 0 10px rgba(255,120,40,.24),
+    0 0 28px rgba(255,60,0,.14) !important;
+}
+
+/* 5) Units like RP / % smaller but glowing */
+#dashboard .value span, #dashboard .statValue span, #dashboard .metricValue span,
+#rank .value span, #rank .statValue span, #rank .metricValue span,
+.rankHome .value span, .rankHome .statValue span, .rankHome .metricValue span{
+  font-weight: 900 !important;
+  font-size: 14px !important;
+  letter-spacing: .12em !important;
+  opacity: .85 !important;
+  text-shadow: 0 0 10px rgba(255,90,35,.16) !important;
+}
