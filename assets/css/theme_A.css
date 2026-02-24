@@ -3150,4 +3150,42 @@ body .navbar.navTabs > .nav-btn.active > span{
   color: #fff !important;
   opacity: 1 !important;
 }
+/* =========================================================
+   METRICS ULTRA-TIGHT (label closer to value)
+   Paste ABSOLUTELY LAST
+   ========================================================= */
+
+#dashboard.section.active .rankHome .pulseGrid .metric{
+  gap: 0 !important;
+  padding-top: 4px !important;
+  padding-bottom: 6px !important;
+}
+
+/* labels */
+#dashboard.section.active .rankHome .pulseGrid .metric .k{
+  line-height: .95 !important;
+  margin-bottom: -2px !important;   /* <-- підтягує value ближче */
+}
+
+/* values */
+#dashboard.section.active .rankHome .pulseGrid .metric .v{
+  line-height: .95 !important;
+  margin-top: -2px !important;      /* <-- ще ближче */
+}
+/* =========================================================
+   METRICS SIZE BOOST
+   Paste ABSOLUTELY LAST
+   ========================================================= */
+
+/* LABELS */
+#dashboard.section.active .rankHome .pulseGrid .metric .k{
+  font-size: 22px !important;       /* було ~18 */
+  letter-spacing: .16em !important;
+}
+
+/* VALUES */
+#dashboard.section.active .rankHome .pulseGrid .metric .v{
+  font-size: 56px !important;       /* було ~46 */
+}
+
 
