@@ -3192,11 +3192,11 @@ body .navbar.navTabs > .nav-btn.active > span{
    ========================================================= */
 
 #dashboard.section.active .rankHome .pulseGrid .metric .v{
-  font-size: 50px !important;   /* оптимальний баланс */
+  font-size: 44px !important;   /* оптимальний баланс */
   margin-top: -2px !important;  /* трохи ближче */
   line-height: 1 !important;
 }
 
 #dashboard.section.active .rankHome .pulseGrid .metric .v span{
-  font-size: 50px !important;
+  font-size: 440px !important;
 }
