@@ -3266,3 +3266,55 @@ body .navbar.navTabs > .nav-btn.active > span{
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
+/* =========================================================
+   METRIC NUMBERS — IMMORTAL SALMON + GLOW (NO GRADIENT LOOK)
+   Paste ABSOLUTELY LAST
+   ========================================================= */
+
+#dashboard.section.active .rankHome .pulseGrid .metric .v{
+  /* теплий тон як на рефі */
+  color: rgba(255, 205, 185, .96) !important;
+  -webkit-text-fill-color: rgba(255, 205, 185, .96) !important;
+  background: none !important;
+
+  /* м’який glow як на фото */
+  text-shadow:
+    0 0 10px rgba(255, 120, 60, .22),
+    0 0 26px rgba(255, 70, 25, .18),
+    0 0 70px rgba(255, 35, 0, .10) !important;
+}
+
+/* % теж таким самим тоном */
+#dashboard.section.active .rankHome .pulseGrid .metric .v span{
+  color: rgba(255, 205, 185, .96) !important;
+  -webkit-text-fill-color: rgba(255, 205, 185, .96) !important;
+}
+
+/* маленька “нижня підсвітка” під цифрами (як полоса жару) */
+#dashboard.section.active .rankHome .pulseGrid .metric .v{
+  position: relative !important;
+}
+#dashboard.section.active .rankHome .pulseGrid .metric .v::after{
+  content: "" !important;
+  position: absolute !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  bottom: -10px !important;
+
+  width: 64px !important;       /* можна 48–80 */
+  height: 2px !important;
+
+  background: linear-gradient(90deg,
+    transparent,
+    rgba(255, 120, 60, .55),
+    rgba(255, 40, 0, .35),
+    transparent
+  ) !important;
+
+  box-shadow:
+    0 0 14px rgba(255, 80, 30, .22),
+    0 0 40px rgba(255, 30, 0, .14) !important;
+
+  opacity: .85 !important;
+  pointer-events: none !important;
+}
