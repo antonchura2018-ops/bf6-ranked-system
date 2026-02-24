@@ -3179,7 +3179,7 @@ body .navbar.navTabs > .nav-btn.active > span{
 
 /* LABELS */
 #dashboard.section.active .rankHome .pulseGrid .metric .k{
-  font-size: 22px !important;       /* було ~18 */
+  font-size: 25px !important;       /* було ~18 */
   letter-spacing: .16em !important;
 }
 
