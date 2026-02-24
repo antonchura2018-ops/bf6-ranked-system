@@ -2229,6 +2229,193 @@ body .navbar.navTabs > .nav-btn.active:last-child > span::before{
   left: -3px !important;    /* було -26 */
   right: -6px !important;
 }
+
+/* =========================================================
+   FINAL — METRICS + TYPE (match reference #2)
+   Paste VERY END of theme_A.css
+   ========================================================= */
+
+/* keep only cosmos background (NO HUD) */
+body::before{
+  content:"" !important;
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: -10 !important;
+  pointer-events:none !important;
+  background: url("/assets/img/bg/cosmos.png") center/cover no-repeat !important;
+  background-position: center 18% !important;
+  filter: saturate(1.08) contrast(1.06) !important;
+}
+body::after{ content:none !important; display:none !important; }
+.rankHome__hud{ display:none !important; }
+.rankHome__bg{ display:none !important; }
+.rankHome__vignette{ display:none !important; }
+
+/* tighten vertical spacing of the whole block (OUTCAST -> metrics) */
+.rankHome__center{
+  display:flex !important;
+  flex-direction: column !important;
+  align-items:center !important;
+  justify-content:flex-start !important;
+
+  /* підкручуй 190–240 якщо треба */
+  padding-top: 210px !important;
+  padding-bottom: 48px !important;
+}
+
+/* OUTCAST title like ref */
+.rankTitle{
+  font-family: var(--font-ui) !important;
+  font-weight: 800 !important;
+  letter-spacing: .16em !important;
+  font-size: 60px !important;
+  margin: 0 !important;
+  text-shadow:
+    0 0 22px rgba(255,90,35,.14),
+    0 0 60px rgba(255,60,0,.08) !important;
+}
+
+/* RP line */
+.rankRP{
+  font-family: var(--font-ui) !important;
+  font-weight: 600 !important;
+  font-size: 30px !important;
+  letter-spacing: .08em !important;
+  margin: 6px 0 0 !important;
+  opacity: .92 !important;
+  text-shadow: 0 0 18px rgba(255,90,35,.10) !important;
+}
+.rankRP span{
+  font-size: 13px !important;
+  letter-spacing: .18em !important;
+  opacity: .75 !important;
+}
+
+/* Progress: closer to title, “hot” orange */
+.rankProgress{
+  width: min(720px, 86vw) !important;
+  margin-top: 12px !important;
+}
+.rankProgress__label{
+  font-family: var(--font-ui) !important;
+  font-size: 12px !important;
+  letter-spacing: .22em !important;
+  opacity: .80 !important;
+  margin-bottom: 8px !important;
+}
+.rankProgress__track{
+  height: 2px !important;
+  background: rgba(255,255,255,.14) !important;
+  box-shadow: none !important;
+}
+.rankProgress__fill{
+  background: linear-gradient(90deg,
+    rgba(255,80,35,1),
+    rgba(255,170,90,.38)) !important;
+  box-shadow:
+    0 0 18px rgba(255,90,35,.22),
+    0 0 55px rgba(255,60,0,.10) !important;
+}
+.rankProgress__spark{
+  width: 40px !important;
+  height: 8px !important;
+  background: radial-gradient(circle, rgba(255,90,35,1), transparent 70%) !important;
+  opacity: .95 !important;
+}
+
+/* “PERFORMANCE PULSE / PLAYER ASCENSION” header rails like ref */
+.pulseHeader{
+  width: min(980px, 92vw) !important;
+  margin-top: 18px !important;   /* було занадто низько */
+  padding: 10px 0 !important;
+
+  font-family: var(--font-ui) !important;
+  font-size: 12px !important;
+  font-weight: 800 !important;
+  letter-spacing: .34em !important;
+  text-transform: uppercase !important;
+  opacity: .82 !important;
+
+  text-align:center !important;
+}
+.pulseHeader::before,
+.pulseHeader::after{
+  height: 2px !important;
+  opacity: .95 !important;
+  background: linear-gradient(90deg,
+    transparent,
+    rgba(255,255,255,.08),
+    rgba(255,90,35,.55),
+    rgba(255,255,255,.08),
+    transparent) !important;
+  box-shadow: 0 0 18px rgba(255,90,35,.10) !important;
+}
+
+/* Metrics row: bigger numbers + warm glow + tighter spacing */
+.pulseGrid{
+  width: min(980px, 92vw) !important;
+  margin-top: 10px !important;   /* зжали ближче до header */
+  padding-top: 10px !important;
+}
+
+/* optional soft band like ref (subtle, not a visible “box”) */
+.pulseGrid::before{
+  content:"" !important;
+  position:absolute !important;
+  inset: -12px -18px -14px -18px !important;
+  background: radial-gradient(900px 220px at 50% 35%,
+    rgba(0,0,0,.42),
+    rgba(0,0,0,.18) 58%,
+    rgba(0,0,0,0) 82%) !important;
+  opacity: .9 !important;
+  pointer-events:none !important;
+  z-index: -1 !important;
+}
+
+/* metric cells */
+.metric{
+  text-align:center !important;
+  padding: 12px 18px 14px !important; /* tighter */
+}
+.metric .k{
+  font-family: var(--font-ui) !important;
+  font-weight: 800 !important;
+  font-size: 12px !important;
+  letter-spacing: .22em !important;
+  opacity: .70 !important;
+  margin-bottom: 8px !important;
+}
+.metric .v{
+  font-family: var(--font-ui) !important;
+  font-weight: 900 !important;
+  font-size: 52px !important;  /* bigger like ref */
+  letter-spacing: .02em !important;
+  color: rgba(255,255,255,.94) !important;
+  text-shadow:
+    0 0 22px rgba(255,90,35,.18),
+    0 0 70px rgba(255,60,0,.10) !important;
+}
+.metric .v > span{
+  font-size: 18px !important;
+  opacity: .78 !important;
+  margin-left: 6px !important;
+}
+
+/* vertical separators: thinner + warm accent */
+.metric:not(:last-child)::after{
+  top: 10px !important;
+  bottom: 10px !important;
+  opacity: .85 !important;
+  background: linear-gradient(180deg,
+    transparent,
+    rgba(255,255,255,.10),
+    rgba(255,90,35,.30),
+    rgba(255,255,255,.10),
+    transparent) !important;
+}
+
+/* remove old marker if you don’t want it */
+.pulseMark{ display:none !important; }
 /* ==========================================================
    METRICS — CLEAN AAA (NO HUD) ✅ FINAL
    Paste as VERY LAST in theme_A.css
@@ -2426,4 +2613,3 @@ body::before{
 
 /* 9) If pulseMark exists — hide (reference uses a different center mark) */
 .pulseMark{ display: none !important; }
-
