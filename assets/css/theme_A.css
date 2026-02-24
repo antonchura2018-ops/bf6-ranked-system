@@ -3391,3 +3391,75 @@ body .navbar.navTabs > .nav-btn.active > span{
     0 0 16px rgba(255,90,35,.22),
     0 0 36px rgba(255,40,0,.15) !important;
 }
+/* =========================================================
+   HYBRID — PROGRESS BAR + PLAYER ASCENSION RAILS
+   ========================================================= */
+
+/* ---------- Progress bar (thin + hybrid glow) ---------- */
+#dashboard.section.active .rankHome .rankProgress__track{
+  height: 2px !important;                 /* тонка */
+  border-radius: 999px !important;
+  background: rgba(255,255,255,.10) !important;
+  overflow: hidden !important;
+  position: relative !important;
+
+  box-shadow:
+    0 0 10px rgba(255,255,255,.06) inset,
+    0 0 18px rgba(255,60,0,.10) !important;
+}
+
+#dashboard.section.active .rankHome .rankProgress__fill{
+  height: 100% !important;
+  border-radius: 999px !important;
+
+  /* white core -> red edge */
+  background: linear-gradient(90deg,
+    rgba(255,255,255,.95) 0%,
+    rgba(255,225,210,.95) 35%,
+    rgba(255,110,70,.85) 70%,
+    rgba(255,50,20,.95) 100%
+  ) !important;
+
+  box-shadow:
+    0 0 10px rgba(255,255,255,.16),
+    0 0 22px rgba(255,90,35,.22),
+    0 0 46px rgba(255,40,0,.14) !important;
+}
+
+/* маленька “головка” на кінці прогресу */
+#dashboard.section.active .rankHome .rankProgress__spark{
+  width: 40px !important;
+  height: 14px !important;
+  opacity: .95 !important;
+
+  background: radial-gradient(circle,
+    rgba(255,255,255,.95) 0%,
+    rgba(255,140,90,.70) 40%,
+    rgba(255,60,20,.0) 72%
+  ) !important;
+
+  filter: drop-shadow(0 0 10px rgba(255,90,35,.20))
+          drop-shadow(0 0 26px rgba(255,40,0,.14)) !important;
+}
+
+/* ---------- PLAYER ASCENSION rails (brighter + hybrid glow) ---------- */
+#dashboard.section.active .rankHome .pulseHeader::before,
+#dashboard.section.active .rankHome .pulseHeader::after{
+  height: 2px !important;
+  opacity: 1 !important;
+
+  background: linear-gradient(90deg,
+    transparent,
+    rgba(255,255,255,.16),
+    rgba(255,255,255,.40),
+    rgba(255,90,35,.70),
+    rgba(255,40,0,.55),
+    rgba(255,255,255,.16),
+    transparent
+  ) !important;
+
+  box-shadow:
+    0 0 10px rgba(255,255,255,.08),
+    0 0 22px rgba(255,90,35,.22),
+    0 0 70px rgba(255,40,0,.14) !important;
+}
