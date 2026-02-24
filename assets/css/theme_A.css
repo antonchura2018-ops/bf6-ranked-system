@@ -2417,233 +2417,142 @@ body::after{ content:none !important; display:none !important; }
 /* remove old marker if you don’t want it */
 .pulseMark{ display:none !important; }
 /* ==========================================================
-   FINAL — TYPE + METRICS (MATCH REF) + NO H-SCROLL
+   SAFE PATCH v2 — ONLY TYPO + GLOW + COMPACT (NO LAYOUT CHANGES)
    Paste VERY END of theme_A.css
    ========================================================== */
 
-/* kill horizontal scroll (той “повзунок” вліво/вправо) */
-html, body { overflow-x: hidden !important; }
-.app, .section, #dashboard { max-width:none !important; width:100% !important; }
-.rankHome{
-  width: 100% !important;      /* НЕ 100vw */
-  margin: 0 !important;        /* НЕ calc(50% - 50vw) */
-  overflow: hidden !important; /* прибирає бокові артефакти */
+/* 1) Базовий UI-шрифт як у рефі */
+:root{
+  --uiFont: "Rajdhani", "Orbitron", "DIN", "Segoe UI", system-ui, sans-serif;
+  --uiGlow: rgba(255, 90, 35, .18);
+  --uiGlow2: rgba(255, 60, 0, .12);
 }
 
-/* зробити “правий край/лінію” менш помітною (легкий fade по краях) */
-.rankHome::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  pointer-events:none;
-  z-index: 1;
-  background:
-    linear-gradient(90deg,
-      rgba(0,0,0,.28) 0%,
-      rgba(0,0,0,0) 12%,
-      rgba(0,0,0,0) 88%,
-      rgba(0,0,0,.22) 100%);
-  opacity: .55;
+/* 2) Застосувати шрифт до всього блоку рангу */
+#dashboard .rankHome,
+#dashboard .rankHome *{
+  font-family: var(--uiFont) !important;
 }
 
-/* --------- COMPACT STACK (зжати все вертикально) --------- */
-.rankHome__center{
-  position: relative !important;
-  z-index: 2 !important;
-
-  /* було “повітря” — стискаємо */
-  padding-top: 210px !important;   /* якщо треба нижче — 220/230 */
-  padding-bottom: 56px !important;
-}
-
-/* --------- OUTCAST + RP like ref --------- */
-.rankTitle{
-  font-family: var(--font-ui) !important;
+/* 3) OUTCAST (головний заголовок) — більш як у рефі */
+#dashboard .rankHome h1,
+#dashboard .rankHome .rankTitle,
+#dashboard .rankHome .rankName,
+#dashboard .rankHome .rankLabel{
   font-weight: 800 !important;
-  font-size: 68px !important;
-  letter-spacing: .16em !important;
-  margin: 0 !important;
+  letter-spacing: .18em !important;
   text-transform: uppercase !important;
-
   color: rgba(255,255,255,.92) !important;
   text-shadow:
-    0 0 20px rgba(255,90,35,.10),
-    0 0 46px rgba(255,60,0,.08) !important;
+    0 0 18px var(--uiGlow),
+    0 0 44px var(--uiGlow2) !important;
 }
 
-.rankRP{
-  font-family: var(--font-ui) !important;
-  font-weight: 600 !important;
-  font-size: 34px !important;
-  letter-spacing: .06em !important;
-  margin-top: 10px !important;
-  opacity: .92 !important;
-}
-.rankRP span{
-  font-size: 14px !important;
-  letter-spacing: .18em !important;
-  opacity: .78 !important;
+/* Якщо твій заголовок реально менший — піднімемо розмір */
+#dashboard .rankHome h1{
+  font-size: clamp(46px, 4.2vw, 70px) !important;
+  margin: 0 !important;
 }
 
-/* Next Rank line (тонка, з hotspot) */
-.rankProgress{
-  width: min(720px, 88vw) !important;
-  margin-top: 14px !important;
-}
-.rankProgress__label{
-  font-family: var(--font-ui) !important;
-  font-weight: 700 !important;
-  font-size: 12px !important;
-  letter-spacing: .22em !important;
-  opacity: .78 !important;
-  margin-bottom: 10px !important;
-}
-.rankProgress__track{
-  height: 2px !important;
-  background: rgba(255,255,255,.12) !important;
-  box-shadow: none !important;
-}
-.rankProgress__fill{
-  background: linear-gradient(90deg,
-    rgba(255,90,35,.95),
-    rgba(255,170,90,.30)) !important;
-  box-shadow: 0 0 22px rgba(255,80,20,.20) !important;
-}
-.rankProgress__spark{
-  width: 44px !important;
-  height: 8px !important;
-  background: radial-gradient(circle, rgba(255,90,35,1), transparent 70%) !important;
-  opacity: .95 !important;
-}
-
-/* --------- PLAYER ASCENSION header like ref --------- */
-.pulseHeader{
-  width: min(980px, 92vw) !important;
-  margin-top: 18px !important;     /* ближче до прогресу */
-  margin-bottom: 10px !important;
-
-  font-family: var(--font-ui) !important;
+/* 4) "0 RP" — зробити читабельніше */
+#dashboard .rankHome .rp,
+#dashboard .rankHome .rankRP,
+#dashboard .rankHome .rankPoints,
+#dashboard .rankHome .rankValue{
   font-weight: 800 !important;
+  color: rgba(255,240,230,.95) !important;
+  text-shadow:
+    0 0 14px rgba(255,90,35,.16),
+    0 0 36px rgba(255,60,0,.10) !important;
+}
+
+/* 5) Next Rank рядок — тонкий, але ясний */
+#dashboard .rankHome .nextRank,
+#dashboard .rankHome .rankNext,
+#dashboard .rankHome .rankSub,
+#dashboard .rankHome .rankProgress__label{
+  font-weight: 700 !important;
+  letter-spacing: .22em !important;
+  text-transform: uppercase !important;
   font-size: 12px !important;
+  color: rgba(255,255,255,.72) !important;
+}
+
+/* 6) PLAYER ASCENSION — як “section header” в рефі */
+#dashboard .rankHome .pulseHeader,
+#dashboard .rankHome .sectionTitle,
+#dashboard .rankHome .metricsTitle,
+#dashboard .rankHome .playerAscension{
+  font-weight: 800 !important;
   letter-spacing: .34em !important;
   text-transform: uppercase !important;
-  opacity: .86 !important;
-  text-align: center !important;
-  position: relative !important;
-}
-
-.pulseHeader::before,
-.pulseHeader::after{
-  content:"";
-  position:absolute;
-  left: 0; right: 0;
-  height: 2px;
-  background: linear-gradient(90deg,
-    transparent,
-    rgba(255,255,255,.10),
-    rgba(255,90,35,.55),
-    rgba(255,255,255,.10),
-    transparent);
-  opacity: .90;
-}
-.pulseHeader::before{ top: -12px; }
-.pulseHeader::after{  bottom: -12px; }
-
-/* --------- METRICS like ref (bigger + glow + tighter) --------- */
-.pulseGrid{
-  width: min(980px, 92vw) !important;
-  margin-top: 12px !important;  /* ближче до заголовка */
-  padding-top: 12px !important;
-  padding-bottom: 12px !important;
-
-  display: grid !important;
-  grid-template-columns: repeat(5, 1fr) !important;
-  gap: 0 !important;
-  position: relative !important;
-}
-
-/* легкий “дим” під ряд метрик */
-.pulseGrid::before{
-  content:"";
-  position:absolute;
-  inset: -14px -24px -14px -24px;
-  background: radial-gradient(900px 220px at 50% 35%,
-    rgba(0,0,0,.45),
-    rgba(0,0,0,.18) 55%,
-    rgba(0,0,0,0) 82%);
-  opacity: .92;
-  pointer-events:none;
-}
-
-/* нижня тонка лінія як у рефі */
-.pulseGrid::after{
-  content:"";
-  position:absolute;
-  left: 0; right: 0;
-  bottom: 2px;
-  height: 2px;
-  background: linear-gradient(90deg,
-    transparent,
-    rgba(255,255,255,.10),
-    rgba(255,90,35,.35),
-    rgba(255,255,255,.10),
-    transparent);
-  opacity: .65;
-  pointer-events:none;
-}
-
-.metric{
-  position: relative !important;
-  text-align: center !important;
-  padding: 0 18px !important;
-  z-index: 1 !important;
-}
-
-/* вертикальні розділювачі */
-.metric:not(:first-child)::before{
-  content:"";
-  position:absolute;
-  left: 0;
-  top: 6px;
-  bottom: 10px;
-  width: 1px;
-  background: linear-gradient(180deg,
-    transparent,
-    rgba(255,255,255,.12),
-    rgba(255,90,35,.24),
-    rgba(255,255,255,.10),
-    transparent);
-  opacity: .75;
-}
-
-/* labels */
-.metric .k{
-  font-family: var(--font-ui) !important;
-  font-weight: 800 !important;
   font-size: 12px !important;
+  color: rgba(255,255,255,.78) !important;
+  text-align: center !important;
+}
+
+/* 7) Метрики: labels + values (НЕ міняємо layout, тільки вигляд) */
+#dashboard .rankHome .metric .k,
+#dashboard .rankHome .statLabel,
+#dashboard .rankHome .metricLabel,
+#dashboard .rankHome .label{
+  font-weight: 800 !important;
   letter-spacing: .22em !important;
   text-transform: uppercase !important;
+  font-size: 12px !important;
   color: rgba(255,255,255,.70) !important;
-  margin-bottom: 8px !important;
 }
 
-/* values */
-.metric .v{
-  font-family: var(--font-ui) !important;
+#dashboard .rankHome .metric .v,
+#dashboard .rankHome .statValue,
+#dashboard .rankHome .metricValue,
+#dashboard .rankHome .value{
   font-weight: 900 !important;
-  font-size: 48px !important;
+  font-size: 44px !important;
   line-height: 1 !important;
-  letter-spacing: .02em !important;
-
   color: rgba(255,230,210,.96) !important;
   text-shadow:
-    0 0 14px rgba(255,90,35,.18),
+    0 0 14px rgba(255,90,35,.20),
     0 0 38px rgba(255,60,0,.12) !important;
 }
-.metric .v > span{
-  font-size: 18px !important;
+
+/* маленькі одиниці типу % / RP */
+#dashboard .rankHome .metric .v span,
+#dashboard .rankHome .statValue span,
+#dashboard .rankHome .value span{
   font-weight: 900 !important;
-  letter-spacing: .10em !important;
-  margin-left: 6px !important;
-  color: rgba(255,200,175,.78) !important;
+  font-size: 16px !important;
+  letter-spacing: .12em !important;
+  opacity: .85 !important;
+}
+
+/* 8) Зжати вертикальні відстані (обережно) */
+#dashboard .rankHome .rankBlock,
+#dashboard .rankHome .rankCenter,
+#dashboard .rankHome .rankHome__center{
+  row-gap: 10px !important;
+}
+
+#dashboard .rankHome .pulseHeader,
+#dashboard .rankHome .playerAscension{
+  margin-top: 10px !important;
+  margin-bottom: 10px !important;
+}
+
+/* метрики ближче до header */
+#dashboard .rankHome .pulseGrid,
+#dashboard .rankHome .metrics,
+#dashboard .rankHome .statsRow{
+  margin-top: 10px !important;
+  padding-top: 10px !important;
+  padding-bottom: 10px !important;
+}
+
+/* 9) Лінії зробити менш помітними (як просив про “праву”) */
+#dashboard .rankHome hr,
+#dashboard .rankHome .line,
+#dashboard .rankHome .divider,
+#dashboard .rankHome .rule{
+  opacity: .35 !important;
+  filter: saturate(.9) !important;
 }
