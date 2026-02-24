@@ -3708,3 +3708,43 @@ body .navbar.navTabs > .nav-btn.active > span{
     0 0 18px rgba(255,0,0,.35),
     0 0 40px rgba(255,0,0,.20) !important;
 }
+/* =========================================================
+   REMOVE GREY — DARK RED TRACK + NEON FILL
+   ========================================================= */
+
+/* ---- TRACK (фон шкали, права частина) ---- */
+#dashboard.section.active .rankHome .rankProgress__track{
+  height: 2px !important;
+  border-radius: 999px !important;
+  overflow: hidden !important;
+
+  /* Темно-червоний фон замість сірого */
+  background: linear-gradient(
+    90deg,
+    rgba(80,0,0,.95),
+    rgba(120,0,0,.95),
+    rgba(80,0,0,.95)
+  ) !important;
+
+  box-shadow:
+    0 0 10px rgba(255,0,0,.25) inset,
+    0 0 20px rgba(255,0,0,.12) !important;
+}
+
+
+/* ---- FILL (ліва заповнена частина) ---- */
+#dashboard.section.active .rankHome .rankProgress__fill{
+  height: 100% !important;
+  border-radius: 999px !important;
+
+  background: linear-gradient(
+    90deg,
+    rgba(255,255,255,.95) 0%,
+    rgba(255,140,90,.9) 40%,
+    rgba(255,0,0,1) 100%
+  ) !important;
+
+  box-shadow:
+    0 0 12px rgba(255,0,0,.45),
+    0 0 40px rgba(255,0,0,.25) !important;
+}
