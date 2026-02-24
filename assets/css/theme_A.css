@@ -3778,3 +3778,36 @@ body .navbar.navTabs > .nav-btn.active > span{
 #dashboard.section.active .rankHome .rankProgress{
   background: none !important;
 }
+/* ==========================================
+   ABSOLUTE CLEAN NEON BAR FIX
+   ========================================== */
+
+/* Повністю прибираємо будь-який фон контейнера */
+#dashboard.section.active .rankHome .rankProgress,
+#dashboard.section.active .rankHome .rankProgress__track{
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* Малюємо неон тільки через fill */
+#dashboard.section.active .rankHome .rankProgress__fill{
+  height: 2px !important;
+  border-radius: 999px !important;
+
+  background: linear-gradient(
+    90deg,
+    rgba(255,40,0,1) 0%,
+    rgba(255,0,0,1) 100%
+  ) !important;
+
+  box-shadow:
+    0 0 12px rgba(255,0,0,.9),
+    0 0 30px rgba(255,0,0,.8),
+    0 0 70px rgba(255,0,0,.6) !important;
+}
+
+/* Забираємо spark якщо він створює сірий край */
+#dashboard.section.active .rankHome .rankProgress__spark{
+  display: none !important;
+}
