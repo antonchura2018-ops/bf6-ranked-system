@@ -3187,5 +3187,22 @@ body .navbar.navTabs > .nav-btn.active > span{
 #dashboard.section.active .rankHome .pulseGrid .metric .v{
   font-size: 56px !important;       /* було ~46 */
 }
+/* =========================================================
+   METRIC NUMBERS — BIGGER + HIGHER
+   Paste ABSOLUTELY LAST
+   ========================================================= */
 
-/* Якщо стане занадто широко — трохи зменшити */
+/* тільки цифри */
+#dashboard.section.active .rankHome .pulseGrid .metric .v{
+  font-size: 62px !important;      /* <-- розмір цифр */
+  line-height: .9 !important;
+
+  margin-top: -6px !important;     /* <-- підняти вище */
+}
+
+/* якщо є % span */
+#dashboard.section.active .rankHome .pulseGrid .metric .v span{
+  font-size: 62px !important;
+}
+
+
