@@ -3346,3 +3346,48 @@ body .navbar.navTabs > .nav-btn.active > span{
 #dashboard.section.active .rankHome .rankRP span{
   -webkit-text-fill-color: inherit !important;
 }
+/* =========================================================
+   HYBRID STYLE — 0 RP / NEXT RANK / PLAYER ASCENSION
+   ========================================================= */
+
+/* NEXT RANK LABEL */
+#dashboard.section.active .rankHome .rankProgress__label{
+  font-family: "Orbitron", sans-serif !important;
+  letter-spacing: .12em !important;
+
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  background: none !important;
+
+  text-shadow:
+    0 0 5px rgba(255,255,255,.25),
+    0 0 14px rgba(255,90,35,.22),
+    0 0 30px rgba(255,40,0,.15) !important;
+}
+
+/* NEXT RANK VALUE (0 RP inside label) */
+#dashboard.section.active .rankHome .rankProgress__label b{
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+
+  text-shadow:
+    0 0 6px rgba(255,255,255,.35),
+    0 0 18px rgba(255,90,35,.30),
+    0 0 40px rgba(255,40,0,.20) !important;
+}
+
+/* PLAYER ASCENSION */
+#dashboard.section.active .rankHome .pulseHeader,
+#dashboard.section.active .rankHome .pulseHeader span{
+  font-family: "Orbitron", sans-serif !important;
+  letter-spacing: .18em !important;
+
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  background: none !important;
+
+  text-shadow:
+    0 0 6px rgba(255,255,255,.30),
+    0 0 16px rgba(255,90,35,.22),
+    0 0 36px rgba(255,40,0,.15) !important;
+}
