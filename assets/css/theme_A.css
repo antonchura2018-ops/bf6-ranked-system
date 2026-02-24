@@ -3164,13 +3164,13 @@ body .navbar.navTabs > .nav-btn.active > span{
 /* labels */
 #dashboard.section.active .rankHome .pulseGrid .metric .k{
   line-height: .95 !important;
-  margin-bottom: 5px !important;   /* <-- підтягує value ближче */
+  margin-bottom: 4px !important;   /* <-- підтягує value ближче */
 }
 
 /* values */
 #dashboard.section.active .rankHome .pulseGrid .metric .v{
   line-height: .95 !important;
-  margin-top: 5px !important;      /* <-- ще ближче */
+  margin-top: 4px !important;      /* <-- ще ближче */
 }
 /* =========================================================
    METRICS SIZE BOOST
@@ -3200,39 +3200,67 @@ body .navbar.navTabs > .nav-btn.active > span{
   font-size: 22px !important;
 }
 /* =========================================================
-   METRICS — IMMORTAL STYLE GLOW
+   METRICS — RED POWER STYLE
+   Нижні = сильніше
+   Верхні = слабше
    ========================================================= */
 
-#dashboard.section.active .rankHome .pulseGrid .metric .v{
-  font-size: 46px !important;  /* залиш як є або свій */
 
-  /* Теплий внутрішній відтінок */
+/* =========================
+   ВЕРХНІ (WIN RATE, KDA...)
+   Легкий glow + легкий градієнт
+========================= */
+
+#dashboard.section.active .rankHome .pulseGrid .metric .k{
   background: linear-gradient(
     180deg,
     #ffffff 0%,
-    #ffe3d2 40%,
-    #ff9a5c 75%,
-    #ff5a2a 100%
+    #ffd8c8 70%,
+    #ff7a45 100%
   );
 
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 
   text-shadow:
-    0 0 8px rgba(255,120,60,.35),
-    0 0 18px rgba(255,80,40,.35),
-    0 0 45px rgba(255,40,10,.25),
-    0 0 90px rgba(255,20,0,.15) !important;
+    0 0 6px rgba(255,80,40,.25),
+    0 0 16px rgba(255,60,20,.18) !important;
 }
 
-/* якщо є % */
+
+/* =========================
+   НИЖНІ (50%, 10, 0.0...)
+   Сильний червоний glow
+========================= */
+
+#dashboard.section.active .rankHome .pulseGrid .metric .v{
+  background: linear-gradient(
+    180deg,
+    #ffffff 0%,
+    #ffb38f 35%,
+    #ff6a2f 65%,
+    #ff2a00 100%
+  );
+
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  text-shadow:
+    0 0 10px rgba(255,90,35,.55),
+    0 0 25px rgba(255,60,0,.45),
+    0 0 60px rgba(255,30,0,.35),
+    0 0 120px rgba(255,10,0,.25) !important;
+}
+
+
+/* якщо є % span */
 #dashboard.section.active .rankHome .pulseGrid .metric .v span{
   background: linear-gradient(
     180deg,
     #ffffff 0%,
-    #ffe3d2 40%,
-    #ff9a5c 75%,
-    #ff5a2a 100%
+    #ffb38f 35%,
+    #ff6a2f 65%,
+    #ff2a00 100%
   );
 
   -webkit-background-clip: text;
