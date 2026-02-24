@@ -3546,3 +3546,51 @@ body .navbar.navTabs > .nav-btn.active > span{
 #dashboard.section.active .rankHome .rankProgress__fill{
   animation: progressBreathSoft 2.8s ease-in-out infinite !important;
 }
+/* -----------------------------------------
+   RED rails for PLAYER ASCENSION
+------------------------------------------ */
+
+#dashboard.section.active .rankHome .pulseHeader::before,
+#dashboard.section.active .rankHome .pulseHeader::after{
+  height: 2px !important;
+  opacity: 1 !important;
+
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255,40,0,.8),
+    rgba(255,80,40,1),
+    rgba(255,40,0,.8),
+    transparent
+  ) !important;
+
+  box-shadow:
+    0 0 8px rgba(255,40,0,.35),
+    0 0 28px rgba(255,0,0,.25),
+    0 0 60px rgba(255,0,0,.15) !important;
+}
+/* -----------------------------------------
+   Stronger but still subtle pulse
+------------------------------------------ */
+
+@keyframes progressBreathReal {
+  0%,100%{
+    transform: scaleY(1);
+    filter: brightness(1);
+    box-shadow:
+      0 0 10px rgba(255,50,20,.25),
+      0 0 35px rgba(255,0,0,.15);
+  }
+  50%{
+    transform: scaleY(1.08);
+    filter: brightness(1.12);
+    box-shadow:
+      0 0 18px rgba(255,70,30,.45),
+      0 0 55px rgba(255,0,0,.25);
+  }
+}
+
+#dashboard.section.active .rankHome .rankProgress__fill{
+  animation: progressBreathReal 2.4s ease-in-out infinite !important;
+  transform-origin: center;
+}
