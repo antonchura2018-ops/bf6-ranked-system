@@ -3164,7 +3164,7 @@ body .navbar.navTabs > .nav-btn.active > span{
 /* labels */
 #dashboard.section.active .rankHome .pulseGrid .metric .k{
   line-height: .95 !important;
-  margin-bottom: -2px !important;   /* <-- підтягує value ближче */
+  margin-bottom: 2px !important;   /* <-- підтягує value ближче */
 }
 
 /* values */
