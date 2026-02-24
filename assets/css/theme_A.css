@@ -3325,7 +3325,7 @@ body .navbar.navTabs > .nav-btn.active > span{
     0 0 10px rgba(255,90,35,.16),
     0 0 34px rgba(255,60,0,.10) !important;
 
-  animation: uiGlowPulse 2.8s ease-in-out infinite !important;
+  animation: uiGlowPulse 3.8s ease-in-out infinite !important;
 }
 
 /* 3) 0 RP — same warmth, slightly smaller glow */
