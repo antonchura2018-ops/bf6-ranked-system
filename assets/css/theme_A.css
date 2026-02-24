@@ -2350,4 +2350,293 @@ body::after{ content:none !important; display:none !important; }
   content: none !important;
   display: none !important;
 }
+/* ==========================================================
+   MASTER FINAL — HOME (COSMOS + HUD OVERLAY) + NAVTABS RAILS
+   Paste ABSOLUTELY LAST in theme_A.css
+   ========================================================== */
+
+/* ---------- HOME: base & single background ---------- */
+html, body { height: 100%; margin: 0; padding: 0; }
+body { background:#05060a !important; overflow-x:hidden; }
+
+/* ONE cosmos background for the whole page */
+body::before{
+  content:"" !important;
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: -10 !important;
+  pointer-events: none !important;
+
+  background-image: url("/assets/img/bg/cosmos.png") !important;
+  background-repeat: no-repeat !important;
+  background-size: cover !important;
+
+  /* MUST MATCH HUD */
+  background-position: center 18% !important;
+
+  filter: saturate(1.08) contrast(1.06) !important;
+  transform: translateZ(0) !important;
+}
+
+/* kill any extra overlays that can create bands */
+body::after{ content:none !important; display:none !important; }
+.rankHome__bg{ display:none !important; }
+.rankHome__vignette{ display:none !important; }
+
+/* full-bleed containers */
+.app, .section, #dashboard{
+  width:100% !important;
+  max-width:none !important;
+  margin:0 !important;
+  padding:0 !important;
+  background: transparent !important;
+}
+
+#dashboard{ min-height: 100vh !important; }
+
+.rankHome{
+  position: relative !important;
+  width: 100vw !important;
+  min-height: 100vh !important;
+  margin-left: calc(50% - 50vw) !important;
+  margin-right: calc(50% - 50vw) !important;
+  background: transparent !important;
+  overflow: hidden !important;
+}
+
+/* HUD overlay PNG (must exist in HTML: <div class="rankHome__hud"></div>) */
+.rankHome__hud{
+  position: absolute !important;
+  inset: 0 !important;
+  pointer-events: none !important;
+  z-index: 2 !important;
+
+  background-image: url("/assets/img/ui/home_hud_overlay.png") !important;
+  background-repeat: no-repeat !important;
+  background-size: cover !important;
+
+  /* MUST MATCH COSMOS */
+  background-position: center 18% !important;
+}
+
+/* content on top of HUD */
+.rankHome__center{
+  position: relative !important;
+  z-index: 3 !important;
+
+  min-height: 100vh !important;
+  display:flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+
+  /* move OUTCAST/RP/NextRank relative to ring baked into the images */
+  padding-top: 300px !important;
+  padding-bottom: 80px !important;
+}
+
+/* IMPORTANT: disable any CSS ring layer */
+.rankHome__center::before{
+  content: none !important;
+  display: none !important;
+}
+
+/* optional: if any old halo element exists in DOM */
+.rankHalo, .rankHalo__fx{ display:none !important; }
+
+
+/* ---------- NAVTABS: keep it clean & stop conflicts ---------- */
+
+/* nav wrapper: no bar behind */
+body .navbar.navTabs{
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 9999 !important;
+
+  width: min(980px, calc(100% - 80px)) !important;
+  margin: 18px auto 0 !important;
+
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  gap: 0 !important;
+  padding: 0 !important;
+
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+
+  isolation: isolate !important;
+}
+
+/* buttons: segments touch */
+body .navbar.navTabs > .nav-btn{
+  position: relative !important;
+  z-index: 2 !important;
+
+  flex: 1 1 0 !important;
+  min-width: 0 !important;
+
+  height: 54px !important;
+  margin: 0 !important;
+  padding: 0 18px !important;
+
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+
+  font-family: var(--font-ui, system-ui) !important;
+  font-weight: 800 !important;
+  font-size: 12px !important;
+  letter-spacing: .16em !important;
+  text-transform: uppercase !important;
+
+  color: rgba(255,255,255,.82) !important;
+  cursor: pointer !important;
+
+  overflow: visible !important;
+}
+
+/* overlap seams (connected look) */
+body .navbar.navTabs > .nav-btn + .nav-btn{
+  margin-left: -16px !important;
+}
+
+/* segment plate */
+body .navbar.navTabs > .nav-btn::before{
+  content:"" !important;
+  position:absolute !important;
+  inset: 4px 6px !important;
+  border-radius: 10px !important;
+  pointer-events:none !important;
+
+  background:
+    radial-gradient(120% 140% at 50% 0%,
+      rgba(255,255,255,0.09),
+      rgba(255,255,255,0.02) 55%,
+      rgba(0,0,0,0.10) 100%
+    ),
+    linear-gradient(180deg,
+      rgba(18,18,22,0.72),
+      rgba(8,8,10,0.55)
+    ) !important;
+
+  border: 1px solid rgba(255,140,80,0.22) !important;
+
+  clip-path: polygon(10px 0%, 100% 0%, calc(100% - 12px) 100%, 0% 100%) !important;
+}
+
+/* divider line between segments */
+body .navbar.navTabs > .nav-btn::after{
+  content:"" !important;
+  position:absolute !important;
+  left: 0 !important;
+  top: 14px !important;
+  bottom: 14px !important;
+  width: 1px !important;
+  pointer-events:none !important;
+
+  background: linear-gradient(180deg,
+    rgba(255,120,40,0.00),
+    rgba(255,120,40,0.14),
+    rgba(255,120,40,0.00)
+  ) !important;
+  opacity: .85 !important;
+}
+body .navbar.navTabs > .nav-btn:first-child::after{ display:none !important; }
+
+/* text */
+body .navbar.navTabs > .nav-btn > span{
+  position: relative !important;
+  z-index: 3 !important;
+  display: block !important;
+  width: 100% !important;
+  text-align: center !important;
+}
+
+/* hover */
+body .navbar.navTabs > .nav-btn:hover{
+  transform: translateY(-1px) !important;
+  color: rgba(255,255,255,.95) !important;
+  filter: brightness(1.06) !important;
+}
+
+/* active: raise above neighbors */
+body .navbar.navTabs > .nav-btn.active{
+  z-index: 20 !important;
+  color: rgba(255,225,200,.98) !important;
+  text-shadow: 0 0 18px rgba(255,120,40,.18) !important;
+}
+body .navbar.navTabs > .nav-btn.active::before{
+  border-color: rgba(255,120,40,0.38) !important;
+  background:
+    radial-gradient(240px 70px at 20% 50%, rgba(255,90,35,0.14), transparent 65%),
+    radial-gradient(240px 70px at 80% 50%, rgba(255,90,35,0.10), transparent 65%),
+    linear-gradient(180deg, rgba(22,16,14,0.70), rgba(8,8,10,0.62)) !important;
+  box-shadow: 0 0 26px rgba(255,120,40,0.14) !important;
+}
+
+/* ACTIVE TOP RAIL (single source) */
+body .navbar.navTabs > .nav-btn.active > span::before{
+  content:"" !important;
+  position:absolute !important;
+  left: 0 !important;
+  right: 0 !important;
+  top: -14px !important;
+  height: 3px !important;
+  pointer-events:none !important;
+
+  background: linear-gradient(90deg,
+    rgba(255,110,30,1.00) 0%,
+    rgba(255,150,40,1.00) 22%,
+    rgba(255,210,120,0.55) 50%,
+    rgba(255,150,40,1.00) 78%,
+    rgba(255,110,30,1.00) 100%
+  ) !important;
+
+  box-shadow:
+    0 0 12px rgba(255,140,40,1),
+    0 0 30px rgba(255,80,20,0.65) !important;
+
+  border-radius: 6px !important;
+  filter: blur(0.2px) !important;
+  opacity: 1 !important;
+  mix-blend-mode: screen !important;
+}
+
+/* ACTIVE BOTTOM RAIL (single source) */
+body .navbar.navTabs > .nav-btn.active > span::after{
+  content:"" !important;
+  position:absolute !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: -6px !important;
+  height: 3px !important;
+  pointer-events:none !important;
+
+  background: linear-gradient(90deg,
+    rgba(255,190,95,1.00) 0%,
+    rgba(255,225,150,1.00) 22%,
+    rgba(255,255,235,0.70) 50%,
+    rgba(255,225,150,1.00) 78%,
+    rgba(255,190,95,1.00) 100%
+  ) !important;
+
+  box-shadow:
+    0 0 12px rgba(255,220,150,1.00),
+    0 0 32px rgba(255,130,35,0.60) !important;
+
+  border-radius: 6px !important;
+  filter: blur(0.2px) !important;
+  opacity: 1 !important;
+  mix-blend-mode: screen !important;
+}
+
+/* IMPORTANT: kill any old “dot” hacks only */
+body .navbar.navTabs .nav-btn span::after{
+  display:none !important;
+}
 
