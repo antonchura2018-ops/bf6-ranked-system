@@ -3569,57 +3569,74 @@ body .navbar.navTabs > .nav-btn.active > span{
     0 0 28px rgba(255,0,0,.25),
     0 0 60px rgba(255,0,0,.15) !important;
 }
-/* ==========================================
-   ABSOLUTE CLEAN NEON BAR FIX  (KEEP THIS)
-   ========================================== */
+/* =========================================================
+   CINEMATIC NEON PROGRESS BAR (NO GREY AT ALL)
+   ========================================================= */
 
-/* Повністю прибираємо будь-який фон контейнера */
-#dashboard.section.active .rankHome .rankProgress,
-#dashboard.section.active .rankHome .rankProgress__track{
+/* Контейнер */
+#dashboard.section.active .rankHome .rankProgress{
   background: transparent !important;
-  border: none !important;
-  box-shadow: none !important;
 }
 
-/* Малюємо неон тільки через fill */
-#dashboard.section.active .rankHome .rankProgress__fill{
+/* Track — глибокий темно-червоний, без сірого */
+#dashboard.section.active .rankHome .rankProgress__track{
   height: 2px !important;
+  border-radius: 999px !important;
+  overflow: hidden !important;
+  position: relative !important;
+
+  background: linear-gradient(
+    90deg,
+    rgba(90,0,0,.75),
+    rgba(140,0,0,.95),
+    rgba(90,0,0,.75)
+  ) !important;
+
+  box-shadow:
+    0 0 10px rgba(255,0,0,.25) inset,
+    0 0 25px rgba(255,0,0,.18);
+}
+
+/* Fill — білий core + червоний неоновий край */
+#dashboard.section.active .rankHome .rankProgress__fill{
+  height: 100% !important;
   border-radius: 999px !important;
 
   background: linear-gradient(
     90deg,
-    rgba(255,40,0,1) 0%,
-    rgba(255,0,0,1) 100%
+    rgba(255,255,255,.95) 0%,
+    rgba(255,220,210,.95) 35%,
+    rgba(255,90,40,.95) 75%,
+    rgba(255,30,0,1) 100%
   ) !important;
 
   box-shadow:
-    0 0 12px rgba(255,0,0,.9),
-    0 0 30px rgba(255,0,0,.8),
-    0 0 70px rgba(255,0,0,.6) !important;
+    0 0 14px rgba(255,0,0,.8),
+    0 0 35px rgba(255,0,0,.55),
+    0 0 80px rgba(255,0,0,.35);
+
+  animation: barGlow 6s ease-in-out infinite !important;
 }
 
-/* Забираємо spark якщо він створює сірий край */
-#dashboard.section.active .rankHome .rankProgress__spark{
-  display: none !important;
-}
-@keyframes neonBreath {
+/* Дуже subtle живий glow */
+@keyframes barGlow{
   0%,100%{
-    opacity: .92;
+    opacity: .95;
     box-shadow:
-      0 0 10px rgba(255,0,0,.75),
-      0 0 26px rgba(255,0,0,.55),
-      0 0 60px rgba(255,0,0,.35);
+      0 0 12px rgba(255,0,0,.7),
+      0 0 30px rgba(255,0,0,.5),
+      0 0 70px rgba(255,0,0,.30);
   }
   50%{
     opacity: 1;
     box-shadow:
-      0 0 14px rgba(255,0,0,.95),
-      0 0 34px rgba(255,0,0,.75),
-      0 0 80px rgba(255,0,0,.45);
+      0 0 16px rgba(255,0,0,.9),
+      0 0 45px rgba(255,0,0,.65),
+      0 0 95px rgba(255,0,0,.40);
   }
 }
 
-#dashboard.section.active .rankHome .rankProgress__fill{
-  animation: neonBreath 5.2s ease-in-out infinite !important;
+/* Вимикаємо spark якщо лишився */
+#dashboard.section.active .rankHome .rankProgress__spark{
+  display: none !important;
 }
-
