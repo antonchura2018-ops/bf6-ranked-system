@@ -3649,3 +3649,55 @@ body .navbar.navTabs > .nav-btn.active > span{
 #dashboard.section.active .rankHome .rankProgress__spark{
   display: none !important;
 }
+/* =========================================================
+   APEX OVERHEAT FLASH (END OF PROGRESS)
+   ========================================================= */
+
+#dashboard.section.active .rankHome .rankProgress__fill{
+  position: relative !important;
+  overflow: visible !important;
+}
+
+/* Світловий flare на кінці */
+#dashboard.section.active .rankHome .rankProgress__fill::after{
+  content: "";
+  position: absolute;
+  right: -6px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+
+  background: radial-gradient(circle,
+    rgba(255,255,255,1) 0%,
+    rgba(255,120,60,.9) 40%,
+    rgba(255,0,0,.6) 65%,
+    rgba(255,0,0,0) 80%
+  );
+
+  box-shadow:
+    0 0 12px rgba(255,0,0,1),
+    0 0 30px rgba(255,0,0,.8),
+    0 0 60px rgba(255,0,0,.6);
+
+  animation: overheatPulse 2.8s ease-in-out infinite;
+}
+
+@keyframes overheatPulse{
+  0%,100%{
+    transform: translateY(-50%) scale(1);
+    opacity: .85;
+  }
+  50%{
+    transform: translateY(-50%) scale(1.25);
+    opacity: 1;
+  }
+}
+/* =========================================================
+   LOWER WHOLE RANK BLOCK (NO STYLE CHANGES)
+   ========================================================= */
+
+#dashboard.section.active .rankHome__center{
+  margin-top: 80px !important;
+}
