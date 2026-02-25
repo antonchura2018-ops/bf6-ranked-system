@@ -3569,217 +3569,8 @@ body .navbar.navTabs > .nav-btn.active > span{
     0 0 28px rgba(255,0,0,.25),
     0 0 60px rgba(255,0,0,.15) !important;
 }
-/* -----------------------------------------
-   Stronger but still subtle pulse
------------------------------------------- */
-
-@keyframes progressBreathReal {
-  0%,100%{
-    transform: scaleY(1);
-    filter: brightness(1);
-    box-shadow:
-      0 0 10px rgba(255,50,20,.25),
-      0 0 35px rgba(255,0,0,.15);
-  }
-  50%{
-    transform: scaleY(1.08);
-    filter: brightness(1.12);
-    box-shadow:
-      0 0 18px rgba(255,70,30,.45),
-      0 0 55px rgba(255,0,0,.25);
-  }
-}
-
-#dashboard.section.active .rankHome .rankProgress__fill{
-  animation: progressBreathReal 2.4s ease-in-out infinite !important;
-  transform-origin: center;
-}
-/* =========================================================
-   PROGRESS BAR — NO FLICKER + NO GREY
-   Paste ABSOLUTELY LAST
-   ========================================================= */
-
-/* Track (фон) — прибрати сірий, зробити темно-червоний */
-#dashboard.section.active .rankHome .rankProgress__track{
-  height: 2px !important;
-  border-radius: 999px !important;
-  overflow: hidden !important;
-  position: relative !important;
-
-  /* замість сірого — темний червоний тон */
-  background: linear-gradient(90deg,
-    rgba(255,40,0,.18),
-    rgba(255,255,255,.08),
-    rgba(255,40,0,.18)
-  ) !important;
-
-  box-shadow:
-    0 0 10px rgba(255,40,0,.14) inset,
-    0 0 22px rgba(255,40,0,.10) !important;
-}
-
-/* Fill — залишаємо hybrid, але анімація тільки glow/opacity (приємно) */
-@keyframes fillBreathGlow {
-  0%,100%{
-    opacity: .92;
-    box-shadow:
-      0 0 10px rgba(255,90,35,.18),
-      0 0 26px rgba(255,40,0,.10);
-  }
-  50%{
-    opacity: 1;
-    box-shadow:
-      0 0 16px rgba(255,90,35,.28),
-      0 0 42px rgba(255,40,0,.18);
-  }
-}
-
-#dashboard.section.active .rankHome .rankProgress__fill{
-  height: 100% !important;
-  border-radius: 999px !important;
-
-  /* білий core + червоний edge */
-  background: linear-gradient(90deg,
-    rgba(255,255,255,.92) 0%,
-    rgba(255,235,225,.92) 35%,
-    rgba(255,140,90,.85) 70%,
-    rgba(255,60,20,.92) 100%
-  ) !important;
-
-  /* ВАЖЛИВО: без brightness/scale, тільки м’який glow */
-  animation: fillBreathGlow 4.6s ease-in-out infinite !important;
-}
-
-/* Spark — теж без “фліккера”, просто м’яке світіння */
-@keyframes sparkBreath {
-  0%,100%{ opacity: .80; filter: drop-shadow(0 0 10px rgba(255,60,20,.16)); }
-  50%{     opacity: .95; filter: drop-shadow(0 0 16px rgba(255,60,20,.22)); }
-}
-
-#dashboard.section.active .rankHome .rankProgress__spark{
-  animation: sparkBreath 4.6s ease-in-out infinite !important;
-  background: radial-gradient(circle,
-    rgba(255,255,255,.85) 0%,
-    rgba(255,120,70,.55) 45%,
-    rgba(255,60,20,0) 72%
-  ) !important;
-}
-/* =========================================================
-   PROGRESS TRACK — PURE RED (NO GREY)
-   ========================================================= */
-
-#dashboard.section.active .rankHome .rankProgress__track{
-  height: 2px !important;
-  border-radius: 999px !important;
-  overflow: hidden !important;
-  position: relative !important;
-
-  /* чисто червоний глибокий фон */
-  background: linear-gradient(90deg,
-    rgba(120,0,0,.55),
-    rgba(160,0,0,.75),
-    rgba(120,0,0,.55)
-  ) !important;
-
-  box-shadow:
-    0 0 12px rgba(255,0,0,.25) inset,
-    0 0 24px rgba(255,0,0,.15) !important;
-}
-/* =========================================================
-   PROGRESS TRACK — NEON RED
-   ========================================================= */
-
-#dashboard.section.active .rankHome .rankProgress__track{
-  height: 2px !important;
-  border-radius: 999px !important;
-  overflow: hidden !important;
-  position: relative !important;
-
-  /* Неоновий червоний */
-  background: linear-gradient(
-    90deg,
-    rgba(255,30,30,.85),
-    rgba(255,0,0,1),
-    rgba(255,30,30,.85)
-  ) !important;
-
-  box-shadow:
-    0 0 10px rgba(255,0,0,.35) inset,
-    0 0 18px rgba(255,0,0,.35),
-    0 0 40px rgba(255,0,0,.20) !important;
-}
-/* =========================================================
-   REMOVE ALL GREY FROM PROGRESS BAR (ABSOLUTE OVERRIDE)
-   ========================================================= */
-
-/* Забираємо будь-який старий фон */
-#dashboard.section.active .rankHome .rankProgress,
-#dashboard.section.active .rankHome .rankProgress__track{
-  background: none !important;
-  box-shadow: none !important;
-}
-
-/* Повністю неоновий трек */
-#dashboard.section.active .rankHome .rankProgress__track{
-  height: 2px !important;
-  border-radius: 999px !important;
-  overflow: hidden !important;
-
-  background: rgba(255,0,0,0.85) !important;
-
-  box-shadow:
-    0 0 8px rgba(255,0,0,.6),
-    0 0 22px rgba(255,0,0,.5),
-    0 0 55px rgba(255,0,0,.35) !important;
-}
-
-/* Яскравіша активна частина */
-#dashboard.section.active .rankHome .rankProgress__fill{
-  background: rgba(255,40,0,1) !important;
-
-  box-shadow:
-    0 0 14px rgba(255,0,0,.8),
-    0 0 40px rgba(255,0,0,.6),
-    0 0 80px rgba(255,0,0,.35) !important;
-}
-/* =========================================================
-   NUCLEAR FIX — REMOVE ANY GREY LAYER
-   ========================================================= */
-
-/* Вимикаємо будь-які псевдоелементи */
-#dashboard.section.active .rankHome .rankProgress::before,
-#dashboard.section.active .rankHome .rankProgress::after,
-#dashboard.section.active .rankHome .rankProgress__track::before,
-#dashboard.section.active .rankHome .rankProgress__track::after{
-  display: none !important;
-  background: none !important;
-  box-shadow: none !important;
-}
-
-/* Повністю чистий неоновий трек */
-#dashboard.section.active .rankHome .rankProgress__track{
-  height: 2px !important;
-  border: none !important;
-  background: rgba(255,0,0,0.95) !important;
-  box-shadow:
-    0 0 10px rgba(255,0,0,.8),
-    0 0 30px rgba(255,0,0,.6),
-    0 0 70px rgba(255,0,0,.4) !important;
-}
-
-/* Активна частина */
-#dashboard.section.active .rankHome .rankProgress__fill{
-  background: rgba(255,60,0,1) !important;
-  box-shadow:
-    0 0 14px rgba(255,0,0,1),
-    0 0 40px rgba(255,0,0,.8),
-    0 0 90px rgba(255,0,0,.5) !important;
-}
-#dashboard.section.active .rankHome .rankProgress{
-  background: none !important;
-}
 /* ==========================================
-   ABSOLUTE CLEAN NEON BAR FIX
+   ABSOLUTE CLEAN NEON BAR FIX  (KEEP THIS)
    ========================================== */
 
 /* Повністю прибираємо будь-який фон контейнера */
@@ -3810,4 +3601,24 @@ body .navbar.navTabs > .nav-btn.active > span{
 /* Забираємо spark якщо він створює сірий край */
 #dashboard.section.active .rankHome .rankProgress__spark{
   display: none !important;
+}
+@keyframes neonBreath {
+  0%,100%{
+    opacity: .92;
+    box-shadow:
+      0 0 10px rgba(255,0,0,.75),
+      0 0 26px rgba(255,0,0,.55),
+      0 0 60px rgba(255,0,0,.35);
+  }
+  50%{
+    opacity: 1;
+    box-shadow:
+      0 0 14px rgba(255,0,0,.95),
+      0 0 34px rgba(255,0,0,.75),
+      0 0 80px rgba(255,0,0,.45);
+  }
+}
+
+#dashboard.section.active .rankHome .rankProgress__fill{
+  animation: neonBreath 5.2s ease-in-out infinite !important;
 }
