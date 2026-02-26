@@ -2558,10 +2558,7 @@ if (DEBUG_RANK){
     rpEl.textContent = `${totalRP.toLocaleString("en-US")} RP`;
   }
 
-  // 4) EMBLEM (webp) — у тебе .rankEmblem через background-image
   const url = `/assets/ranks/${rank}.webp`;
-
-  // якщо в CSS стоїть background-image: var(--rankEmblemUrl)
   document.documentElement.style.setProperty("--rankEmblemUrl", `url("${url}")`);
 
   // fallback (навіть якщо var не використовується)
