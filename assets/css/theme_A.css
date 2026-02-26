@@ -3697,7 +3697,7 @@ html, body{
 
 /* приклад: під OUTCAST підстав файл емблеми (заміни шлях на свій) */
 body[data-rank="outcast"]{
-  --rankEmblemUrl: url("/assets/ranks//outcast.webp");
+  --rankEmblemUrl: url("/assets/ranks/outcast.webp");
 }
 #dashboard.section.active .rankHome .rankEmblem{
   opacity: 1 !important;
@@ -3707,7 +3707,7 @@ body[data-rank="outcast"]{
   width: 240px !important;
   height: 240px !important;
 
-  background: url("/assets/ranks//outcast.webp") center/contain no-repeat !important;
+  background: url("/assets/ranks/outcast.webp") center/contain no-repeat !important;
 
   filter: drop-shadow(0 18px 40px rgba(0,0,0,.65)) !important;
 }
