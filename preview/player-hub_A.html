@@ -2548,26 +2548,28 @@ if (DEBUG_RANK){
   // 1) rank-atmosphere (CSS theme)
   document.body.dataset.rank = rank;
 
-  // 2) HOME: rank name text
-  const nameEl = document.getElementById("homeRankName");
-  if(nameEl) nameEl.textContent = String(tierName || "").toUpperCase();
+  // 2) HOME: rank name text (your actual element)
+  const nameEl = document.getElementById("uiRankName") || document.querySelector(".rankTitle");
+  if (nameEl) nameEl.textContent = String(tierName || "").toUpperCase();
 
-  // 3) HOME: RP text
-  const rpEl = document.getElementById("homeRP");
-  if(rpEl && typeof totalRP === "number"){
-    rpEl.textContent = totalRP.toLocaleString("en-US");
+  // 3) HOME: RP text (your actual element)
+  const rpEl = document.getElementById("uiRP") || document.querySelector(".rankRP");
+  if (rpEl && typeof totalRP === "number"){
+    rpEl.textContent = `${totalRP.toLocaleString("en-US")} RP`;
   }
 
-  // 4) HOME: icon swap (webp + png fallback)
-  const webp = document.getElementById("homeIconWebp");
-  const png  = document.getElementById("homeIconPng");
+  // 4) HOME: emblem swap (your actual emblem div)
+  // You currently use: background-image: var(--rankEmblemUrl)
+  document.documentElement.style.setProperty("--rankEmblemUrl", `url("/assets/ranks/${rank}.png")`);
 
-  if(webp) webp.srcset = `../assets/ranks/${rank}.webp`;
-  if(png)  png.src     = `../assets/master/${rank}.png`;
-
-  // (optional) if you use a single img instead of picture:
-  const img = document.getElementById("homeIcon");
-  if(img) img.src = `../assets/ranks/${rank}.webp`;
+  // fallback direct set (if you prefer)
+  const emblem = document.querySelector(".rankEmblem");
+  if (emblem){
+    emblem.style.backgroundImage = `url("/assets/ranks/${rank}.png")`;
+    emblem.style.backgroundRepeat = "no-repeat";
+    emblem.style.backgroundPosition = "center";
+    emblem.style.backgroundSize = "contain";
+  }
 }
   
 
