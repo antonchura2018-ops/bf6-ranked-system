@@ -3692,3 +3692,27 @@ html, body{
 
 /* safety: if class remained */
 #dashboard.section.active .rankHome .rankEmblem.is-hidden{ opacity: 1 !important; }
+/* ===== RANK HOME EMBLEM (DYNAMIC, SAFE) — ABSOLUTELY LAST ===== */
+#dashboard.section.active .rankHome .rankEmblem{
+  opacity: 1 !important;
+  display: block !important;
+  visibility: visible !important;
+
+  width: 340px !important;
+  height: 340px !important;
+
+  /* важливо: НЕ background: none */
+  background-color: transparent !important;
+
+  /* це головне */
+  background-image: var(--rankEmblemUrl, url("/assets/ranks/outcast.webp")) !important;
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+  background-size: contain !important;
+
+  /* якщо раніше був градієнт-пляма */
+  box-shadow: none !important;
+  filter: drop-shadow(0 22px 60px rgba(0,0,0,.65)) !important;
+
+  margin: 0 auto -26px !important;
+}
