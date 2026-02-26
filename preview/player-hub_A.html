@@ -2542,32 +2542,33 @@ if (DEBUG_RANK){
 
   console.log("[DEBUG] Rank switcher ON: keys 1-0, [ ]");
 }
-  function applyHomeTier(tierName, totalRP){
-  const rank = String(tierName || "").toLowerCase();
+ function applyHomeTier(tierName, totalRP){
+  // якщо totalRP є — беремо істину з getRank
+  const r = (typeof totalRP === "number") ? getRank(totalRP) : null;
+  const tier = (r?.tierName || tierName || "OUTCAST");
+  const rank = String(tier).toLowerCase();
 
-  // 1) rank-atmosphere (CSS theme)
+  // 1) theme switch
   document.body.dataset.rank = rank;
 
-  // 2) rank name (у тебе на скріні id="uiRankName")
+  // 2) rank name (Rank page)
   const nameEl = document.getElementById("uiRankName") || document.querySelector(".rankTitle");
-  if (nameEl) nameEl.textContent = String(tierName || "").toUpperCase();
+  if (nameEl) nameEl.textContent = String(tier).toUpperCase();
 
-  // 3) RP (у тебе на скріні id="uiRP")
+  // 3) RP text (Rank page)
   const rpEl = document.getElementById("uiRP") || document.querySelector(".rankRP");
   if (rpEl && typeof totalRP === "number"){
     rpEl.textContent = `${totalRP.toLocaleString("en-US")} RP`;
   }
 
+  // 4) emblem (Rank page) — via CSS var
   const url = `/assets/ranks/${rank}.webp`;
   document.documentElement.style.setProperty("--rankEmblemUrl", `url("${url}")`);
 
-  // fallback (навіть якщо var не використовується)
-  const emblem = document.querySelector(".rankEmblem");
+  // fallback inline
+  const emblem = document.querySelector("#dashboard.section.active .rankHome .rankEmblem, .rankHome .rankEmblem");
   if (emblem){
     emblem.style.backgroundImage = `url("${url}")`;
-    emblem.style.backgroundRepeat = "no-repeat";
-    emblem.style.backgroundPosition = "center";
-    emblem.style.backgroundSize = "contain";
   }
 }
   
