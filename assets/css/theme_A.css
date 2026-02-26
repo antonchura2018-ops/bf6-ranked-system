@@ -3661,6 +3661,4 @@ body .navbar.navTabs > .nav-btn.active > span{
 html, body{
   overflow-x: hidden !important;
 }
-.rankHome__hud{
-  outline: 2px solid red;
-}
+
