@@ -3661,4 +3661,7 @@ body .navbar.navTabs > .nav-btn.active > span{
 html, body{
   overflow-x: hidden !important;
 }
+.rankEmblem{
+  opacity: 1 !important;
+}
 
