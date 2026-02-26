@@ -3664,4 +3664,39 @@ html, body{
 .rankEmblem{
   opacity: 1 !important;
 }
+/* ===============================
+   EMBLEM — RESTORE REAL ICON
+   Paste ABSOLUTELY LAST
+================================ */
+
+/* прибрати будь-які градієнти/плями */
+#dashboard.section.active .rankHome .rankEmblem{
+  opacity: 1 !important;
+  display: block !important;
+  visibility: visible !important;
+
+  width: 240px !important;
+  height: 240px !important;
+
+  background: none !important;          /* <- вбиває "пляму" */
+  background-color: transparent !important;
+
+  /* реальна емблема: підстав свій файл */
+  background-image: var(--rankEmblemUrl) !important;
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+  background-size: contain !important;
+
+  filter: drop-shadow(0 18px 40px rgba(0,0,0,.65)) !important;
+}
+
+/* якщо десь лишився клас hide */
+#dashboard.section.active .rankHome .rankEmblem.is-hidden{
+  opacity: 1 !important;
+}
+
+/* приклад: під OUTCAST підстав файл емблеми (заміни шлях на свій) */
+body[data-rank="outcast"]{
+  --rankEmblemUrl: url("/assets/img/ui/emblems/outcast.png");
+}
 
