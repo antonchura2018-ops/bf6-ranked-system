@@ -2253,9 +2253,6 @@ body::before{
   filter: saturate(1.08) contrast(1.06) !important;
 }
 body::after{ content:none !important; display:none !important; }
-.rankHome__hud{ display:none !important; }
-.rankHome__bg{ display:none !important; }
-.rankHome__vignette{ display:none !important; }
 
 /* tighten vertical spacing of the whole block (OUTCAST -> metrics) */
 .rankHome__center{
@@ -2660,8 +2657,6 @@ body::after{ content:none !important; display:none !important; }
   filter: blur(.2px) !important;
 }
 
-/* optional: hide old bottom marker */
-#dashboard .rankHome .pulseMark{ display:none !important; }
 /* =========================================================
    PATCH v4 — keep OUTCAST font, smaller title
    + boost + glow for yellow-arrow text/metrics
@@ -3665,28 +3660,4 @@ body .navbar.navTabs > .nav-btn.active > span{
 }
 html, body{
   overflow-x: hidden !important;
-}
-/* =========================================================
-   RESTORE EMBLEM (Rank Home)
-   ========================================================= */
-
-.rankHome__hud{
-  display: block !important;
-  opacity: 1 !important;
-}
-
-.rankHome__bg{
-  display: block !important;
-  opacity: 1 !important;
-}
-
-.rankHome__vignette{
-  display: block !important;
-  opacity: 1 !important;
-}
-
-/* якщо емблема була через pulseMark */
-.pulseMark{
-  display: block !important;
-  opacity: 1 !important;
 }
