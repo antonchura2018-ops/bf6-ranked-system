@@ -2252,7 +2252,7 @@ body::before{
   background-position: center 18% !important;
   filter: saturate(1.08) contrast(1.06) !important;
 }
-body::after{ content:none !important; display:none !important; }
+
 
 /* tighten vertical spacing of the whole block (OUTCAST -> metrics) */
 .rankHome__center{
