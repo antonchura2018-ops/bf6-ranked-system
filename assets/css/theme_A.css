@@ -3697,6 +3697,6 @@ html, body{
 
 /* приклад: під OUTCAST підстав файл емблеми (заміни шлях на свій) */
 body[data-rank="outcast"]{
-  --rankEmblemUrl: url("/assets/img/ui/emblems/outcast.png");
+  --rankEmblemUrl: url("/assets/css/ranks//outcast.webp");
 }
 
