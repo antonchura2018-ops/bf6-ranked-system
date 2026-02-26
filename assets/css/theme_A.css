@@ -3666,3 +3666,27 @@ body .navbar.navTabs > .nav-btn.active > span{
 html, body{
   overflow-x: hidden !important;
 }
+/* =========================================================
+   RESTORE EMBLEM (Rank Home)
+   ========================================================= */
+
+.rankHome__hud{
+  display: block !important;
+  opacity: 1 !important;
+}
+
+.rankHome__bg{
+  display: block !important;
+  opacity: 1 !important;
+}
+
+.rankHome__vignette{
+  display: block !important;
+  opacity: 1 !important;
+}
+
+/* якщо емблема була через pulseMark */
+.pulseMark{
+  display: block !important;
+  opacity: 1 !important;
+}
