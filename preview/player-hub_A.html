@@ -2548,24 +2548,26 @@ if (DEBUG_RANK){
   // 1) rank-atmosphere (CSS theme)
   document.body.dataset.rank = rank;
 
-  // 2) HOME: rank name text (your actual element)
+  // 2) rank name (у тебе на скріні id="uiRankName")
   const nameEl = document.getElementById("uiRankName") || document.querySelector(".rankTitle");
   if (nameEl) nameEl.textContent = String(tierName || "").toUpperCase();
 
-  // 3) HOME: RP text (your actual element)
+  // 3) RP (у тебе на скріні id="uiRP")
   const rpEl = document.getElementById("uiRP") || document.querySelector(".rankRP");
   if (rpEl && typeof totalRP === "number"){
     rpEl.textContent = `${totalRP.toLocaleString("en-US")} RP`;
   }
 
-  // 4) HOME: emblem swap (your actual emblem div)
-  // You currently use: background-image: var(--rankEmblemUrl)
-  document.documentElement.style.setProperty("--rankEmblemUrl", `url("/assets/ranks/${rank}.png")`);
+  // 4) EMBLEM (webp) — у тебе .rankEmblem через background-image
+  const url = `/assets/ranks/${rank}.webp`;
 
-  // fallback direct set (if you prefer)
+  // якщо в CSS стоїть background-image: var(--rankEmblemUrl)
+  document.documentElement.style.setProperty("--rankEmblemUrl", `url("${url}")`);
+
+  // fallback (навіть якщо var не використовується)
   const emblem = document.querySelector(".rankEmblem");
   if (emblem){
-    emblem.style.backgroundImage = `url("/assets/ranks/${rank}.png")`;
+    emblem.style.backgroundImage = `url("${url}")`;
     emblem.style.backgroundRepeat = "no-repeat";
     emblem.style.backgroundPosition = "center";
     emblem.style.backgroundSize = "contain";
