@@ -3809,4 +3809,34 @@ body:has(#dashboard.section.active) #rankEmblemOverlay{
   transform: none !important;
   filter: none !important;
 }
+/* ================================
+   HOME TEXT: restore bottom layout
+   ================================ */
 
+#dashboard .rankHome{
+  position: relative;
+}
+
+/* ВАЖЛИВО: прибираємо flex-центрування, яке зсунуло все в центр */
+#dashboard .rankHome .rankHome__center{
+  display: block !important;          /* було flex -> через це все по центру */
+  text-align: center;                /* щоб залишилось по центру по X */
+  margin-top: 0 !important;
+  padding-top: 520px !important;     /* ⬅️ опускає текст нижче кільця (підкрутиш) */
+  z-index: 3;
+}
+
+/* якщо десь є align-items/justify-content — глушимо */
+#dashboard .rankHome .rankHome__center{
+  align-items: initial !important;
+  justify-content: initial !important;
+}
+  /* ================================
+   EMBLEM: correct render in overlay
+   ================================ */
+
+#rankEmblemOverlay .rankEmblem{
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  background-size: contain !important;
+}
