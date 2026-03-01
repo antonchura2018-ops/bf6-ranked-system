@@ -2246,6 +2246,12 @@ function showTab(tabId, btn) {
     console.warn("showTab: missing section id =", tabId);
   }
 
+  // ✅ INSERT HERE: show overlay only on dashboard
+  var overlay = document.getElementById("rankEmblemOverlay");
+  if (overlay) {
+    overlay.style.display = (tabId === "dashboard") ? "block" : "none";
+  }
+
   // 4) season lock for ADD tab
   if (tabId === "add") {
     ensureSeasonSystem();
