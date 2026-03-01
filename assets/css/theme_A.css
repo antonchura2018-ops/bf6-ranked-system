@@ -3779,3 +3779,6 @@ html, body { height: 100%; }
 body:has(#dashboard.section.active) #rankEmblemOverlay{
   display:block;
 }
+#dashboard.section.active .rankHome__center{
+  padding-top: 220px !important; /* під емблему */
+}
