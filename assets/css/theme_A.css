@@ -3733,3 +3733,25 @@ html, body{
 
   margin: 0 auto -26px !important;
   filter: drop-shadow(0 22px 60px rgba(0,0,0,.65)) !important;
+
+/* ===== CENTER EMBLEM IN HALO (ABSOLUTE) — PASTE LAST ===== */
+
+#dashboard.section.active .rankHome .rankHome__center{
+  position: relative !important; /* anchor for absolute emblem */
+}
+
+/* Emblem pinned to center of the ring area */
+#dashboard.section.active .rankHome .rankEmblem{
+  position: absolute !important;
+  left: 50% !important;
+
+  /* 🔧 головне: підкручуй це значення, щоб попасти в центр кільця */
+  top: 320px !important;
+
+  transform: translateX(-50%) !important;
+
+  margin: 0 !important; /* прибираємо старі margin-хаки */
+  z-index: 6 !important;
+  pointer-events: none !important;
+}
+  
