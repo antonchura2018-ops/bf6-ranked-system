@@ -4628,6 +4628,43 @@ window.applyHomeTier = function(tierName, totalRP){
 
   console.log("[HOME] updated:", tierName, totalRP);
 };
+  function mountRankEmblemOverlay(){
+  // 1) шукаємо емблему
+  const emblem = document.querySelector(".rankHome .rankEmblem");
+  if (!emblem) return;
+
+  // 2) створюємо overlay якщо ще нема
+  let overlay = document.getElementById("rankEmblemOverlay");
+  if (!overlay){
+    overlay = document.createElement("div");
+    overlay.id = "rankEmblemOverlay";
+    document.body.appendChild(overlay);
+  }
+
+  // 3) переносимо емблему в overlay (ВІДРІЗАЄ від тексту назавжди)
+  overlay.appendChild(emblem);
+
+  // 4) гарантуємо fixed-стилі інлайном (це переб’є будь-які CSS війни)
+  overlay.style.position = "fixed";
+  overlay.style.left = "50%";
+  overlay.style.top = "44vh";              // 🔧 підкручуй 40-48vh
+  overlay.style.transform = "translate(-50%, -50%)";
+  overlay.style.zIndex = "9999";
+  overlay.style.pointerEvents = "none";
+  overlay.style.width = "340px";
+  overlay.style.height = "340px";
+
+  emblem.style.position = "absolute";
+  emblem.style.inset = "0";
+  emblem.style.margin = "0";
+  emblem.style.pointerEvents = "none";
+
+  // важливо: щоб overlay НЕ був прозорий для background-image
+  emblem.style.display = "block";
+  emblem.style.visibility = "visible";
+}
+
+document.addEventListener("DOMContentLoaded", mountRankEmblemOverlay);
   
   
   
