@@ -3878,11 +3878,11 @@ body:has(#dashboard.section.active) #rankEmblemOverlay{
 #rankEmblemOverlay{
   position: fixed !important;
   left: 50% !important;
-  top: 36vh !important;
+  top: 32vh !important;
   transform: translate(-50%, -50%) !important;
 
-  width: 700px !important;
-  height: 700px !important;
+  width: 720px !important;
+  height: 720px !important;
 
   z-index: 9999 !important;
   pointer-events: none !important;
@@ -3898,6 +3898,46 @@ body:has(#dashboard.section.active) #rankEmblemOverlay{
   background-repeat: no-repeat !important;
   background-position: center !important;
   background-size: contain !important;
+
+  opacity: 1 !important;
+}
+/* ===== FIX: do NOT clip rank emblem (kills the “cut wings”) ===== */
+#rankEmblemOverlay{ overflow: visible !important; }
+
+#rankEmblemOverlay .rankEmblem{
+  border-radius: 0 !important;    /* ⬅️ важливо: прибирає круг */
+  clip-path: none !important;      /* ⬅️ якщо десь було */
+  overflow: visible !important;
+}
+/* ===== EMBLEM OVERLAY — FINAL (PASTE ABSOLUTELY LAST) ===== */
+#rankEmblemOverlay{
+  position: fixed !important;
+  left: 50% !important;
+  top: 38vh !important;                 /* ⬅️ опускання/піднімання */
+  transform: translate(-50%, -50%) !important;
+
+  width: 720px !important;              /* ⬅️ розмір */
+  height: 720px !important;             /* ⬅️ розмір */
+
+  z-index: 9999 !important;
+  pointer-events: none !important;
+  overflow: visible !important;
+}
+
+#rankEmblemOverlay .rankEmblem{
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+
+  background-image: var(--rankEmblemUrl) !important;
+  background-repeat: no-repeat !important;
+  background-position: 50% 50% !important;
+  background-size: 92% auto !important;  /* ⬅️ щоб 2 ранг не підрізало */
+
+  border-radius: 0 !important;           /* ⬅️ КЛЮЧ */
+  clip-path: none !important;            /* ⬅️ КЛЮЧ */
+  overflow: visible !important;
 
   opacity: 1 !important;
 }
