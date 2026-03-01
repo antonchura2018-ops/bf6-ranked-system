@@ -3764,4 +3764,13 @@ html, body { height: 100%; }
   /* щоб не “прив’язувалась” до тексту */
   margin: 0 !important;
 }
+  /* FIX: do not trap fixed inside transformed parents */
+#dashboard.section.active,
+#dashboard.section.active .rankHome,
+#dashboard.section.active .rankHome__center,
+#dashboard.section.active .rankHome__hud{
+  transform: none !important;
+  filter: none !important;
+  perspective: none !important;
+}
   
