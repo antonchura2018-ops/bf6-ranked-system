@@ -3833,7 +3833,7 @@ body:has(#dashboard.section.active) #rankEmblemOverlay{
 #rankEmblemOverlay{
   position: fixed !important;
   left: 50% !important;
-  top: 56vh !important;                 /* 🔧 42–48vh */
+  top: 38vh !important;                 /* 🔧 42–48vh */
   transform: translate(-50%, -50%) !important;
 
   width: 700px !important;             /* 🔧 340–420 */
@@ -3873,4 +3873,8 @@ body:has(#dashboard.section.active) #rankEmblemOverlay{
 }
 #rankEmblemOverlay .rankEmblem{
   background-image: var(--rankEmblemUrl) !important; /* ⬅️ головне */
+}
+/* hide the in-layout emblem, keep only overlay */
+#dashboard.section.active .rankHome .rankEmblem{
+  display: none !important;
 }
