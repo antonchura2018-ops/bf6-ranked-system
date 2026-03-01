@@ -3716,19 +3716,3 @@ html, body{
 
   margin: 0 auto -26px !important;
 }
-/* DEBUG: force emblem visible */
-.rankEmblem, .rank-emblem, .rank__emblem, .emblem, .rankBadge img {
-  display: block !important;
-  opacity: 1 !important;
-  visibility: visible !important;
-  transform: none !important;
-  filter: none !important;
-  mix-blend-mode: normal !important;
-  position: relative !important;
-  z-index: 50 !important;
-  pointer-events: none !important;
-}
-
-.rankHalo {
-  z-index: 10 !important;
-}
