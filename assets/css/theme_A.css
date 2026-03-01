@@ -3734,24 +3734,34 @@ html, body{
   margin: 0 auto -26px !important;
   filter: drop-shadow(0 22px 60px rgba(0,0,0,.65)) !important;
 
-/* ===== CENTER EMBLEM IN HALO (ABSOLUTE) — PASTE LAST ===== */
+/* ===== HOME HUD: emblem locked to ring center (FIXED) — PASTE ABSOLUTELY LAST ===== */
 
-#dashboard.section.active .rankHome .rankHome__center{
-  position: relative !important; /* anchor for absolute emblem */
-}
+/* Важливо: щоб fixed працював нормально */
+html, body { height: 100%; }
 
-/* Emblem pinned to center of the ring area */
+/* 1) Емблема завжди в центрі вьюпорта */
 #dashboard.section.active .rankHome .rankEmblem{
-  position: absolute !important;
+  position: fixed !important;
+
+  /* центр екрана */
   left: 50% !important;
+  top: 44vh !important;            /* 🔧 підкручуй: 40-48vh */
+  transform: translate(-50%, -50%) !important;
 
-  /* 🔧 головне: підкручуй це значення, щоб попасти в центр кільця */
-  top: 320px !important;
+  /* твій розмір */
+  width: 340px !important;
+  height: 340px !important;
 
-  transform: translateX(-50%) !important;
+  /* зображення */
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+  background-size: contain !important;
 
-  margin: 0 !important; /* прибираємо старі margin-хаки */
-  z-index: 6 !important;
+  /* поверх кільця/фону, але не блочить кліки */
+  z-index: 8 !important;
   pointer-events: none !important;
+
+  /* щоб не “прив’язувалась” до тексту */
+  margin: 0 !important;
 }
   
