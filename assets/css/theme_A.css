@@ -3823,7 +3823,7 @@ body:has(#dashboard.section.active) #rankEmblemOverlay{
   justify-content: flex-start !important;
 
   /* 🔧 ОЦЕ повертає текст вниз (як було) */
-  padding-top: 600px !important;   /* підкрутиш 480-600 */
+  padding-top: 620px !important;   /* підкрутиш 480-600 */
   margin-top: 0 !important;
 
   transform: none !important;
@@ -3833,11 +3833,11 @@ body:has(#dashboard.section.active) #rankEmblemOverlay{
 #rankEmblemOverlay{
   position: fixed !important;
   left: 50% !important;
-  top: 48vh !important;                 /* 🔧 42–48vh */
+  top: 56vh !important;                 /* 🔧 42–48vh */
   transform: translate(-50%, -50%) !important;
 
-  width: 500px !important;             /* 🔧 340–420 */
-  height: 500px !important;
+  width: 700px !important;             /* 🔧 340–420 */
+  height: 700px !important;
 
   z-index: 9999 !important;
   pointer-events: none !important;
