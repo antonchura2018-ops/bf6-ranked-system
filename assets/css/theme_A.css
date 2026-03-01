@@ -3823,7 +3823,7 @@ body:has(#dashboard.section.active) #rankEmblemOverlay{
   justify-content: flex-start !important;
 
   /* 🔧 ОЦЕ повертає текст вниз (як було) */
-  padding-top: 520px !important;   /* підкрутиш 480-600 */
+  padding-top: 580px !important;   /* підкрутиш 480-600 */
   margin-top: 0 !important;
 
   transform: none !important;
