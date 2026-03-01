@@ -2817,7 +2817,7 @@ function showCinematic(fromRank, toRank, isPromotion, changeType) {
   if (rankText) rankText.textContent = String(toRank);
 
   // Badge image
-  if (badge) badge.src = "assets/ranks/" + getTierKeyFromLabel(toRank) + ".webp";
+  if (badge) badge.src = "/assets/ranks/" + getTierKeyFromLabel(toRank) + ".webp";
 
   // Open overlay
   if (window.__cinT) clearTimeout(window.__cinT);
@@ -2984,7 +2984,7 @@ function updateLadderUI(currentTierIndex) {
       var tierKey = String(rankTiers[i].name).toLowerCase();
 
       // Force override ANY existing gradient backgrounds
-      badgeEl.style.background = 'url("assets/ranks/' + tierKey + '.webp") center / contain no-repeat';
+      badgeEl.style.background = 'url("/assets/ranks/' + tierKey + '.webp") center / contain no-repeat';
     }
   }
 }
@@ -3021,8 +3021,8 @@ function updateHomeHubUI(rank, totalRP){
     fillEl.style.width = pct + "%";
   }
 
-  // 6) Emblem image (Home)
-  var url = 'url("assets/ranks/' + key + '.webp")';
+    // 6) Emblem image (Home)  ✅ FIX: absolute path
+  var url = 'url("/assets/ranks/' + key + '.webp")';
   document.documentElement.style.setProperty("--rankEmblemUrl", url);
 
   var emblem = document.querySelector(".rankHome .rankEmblem");
@@ -3146,7 +3146,7 @@ if (hub && rank && rank.tierName) {
   if (phBadgeImg && rank && rank.tierName) {
     var key = String(rank.tierName).toLowerCase(); // "monarch", "overlord", etc
 
-    phBadgeImg.src = "assets/ranks/" + key + ".webp";
+    phBadgeImg.src = "/assets/ranks/" + key + ".webp";
 
     // fallback to PNG if webp missing
     phBadgeImg.onerror = function () {
