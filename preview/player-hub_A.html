@@ -2988,7 +2988,51 @@ function updateLadderUI(currentTierIndex) {
     }
   }
 }
+function updateHomeHubUI(rank, totalRP){
+  if (!rank) return;
 
+  // 1) rank key => для theme_A.css (body[data-rank="outcast"] etc)
+  var key = String(rank.tierName || "OUTCAST").toLowerCase();
+  document.body.dataset.rank = key;
+
+  // 2) Title
+  var titleEl = document.getElementById("uiRankName");
+  if (titleEl) titleEl.textContent = String(rank.tierName || "").toUpperCase();
+
+  // 3) RP text
+  var rpEl = document.getElementById("uiRP");
+  if (rpEl) rpEl.innerHTML = totalRP.toLocaleString("en-US") + " <span>RP</span>";
+
+  // 4) Next Rank text
+  var nextEl = document.getElementById("uiNextRP");
+  if (nextEl) {
+    if (rank.tierName === "EIDOLON" || rank.nextMin == null) {
+      nextEl.textContent = "MAX";
+    } else {
+      var need = Math.max(0, Number(rank.nextMin) - Number(totalRP));
+      nextEl.textContent = need.toLocaleString("en-US") + " RP";
+    }
+  }
+
+  // 5) Progress fill (0..100 in current division)
+  var fillEl = document.getElementById("uiProgFill");
+  if (fillEl) {
+    var pct = Math.round((rank.rr / (DIV_RR - 1)) * 100);
+    fillEl.style.width = pct + "%";
+  }
+
+  // 6) Emblem image (Home)
+  var url = 'url("assets/ranks/' + key + '.webp")';
+  document.documentElement.style.setProperty("--rankEmblemUrl", url);
+
+  var emblem = document.querySelector(".rankHome .rankEmblem");
+  if (emblem) emblem.style.backgroundImage = url;
+
+  // 7) Accent (якщо ти використовуєш --hub-accent / --accent у CSS)
+  var hub = document.querySelector("#dashboard .rankHome");
+  if (hub) hub.style.setProperty("--hub-accent", rank.color);
+}
+  
 /* ===== UI UPDATES ===== */
 function updateRankUI(matchesAll) {
   // Backfill breakdown for old matches
@@ -3006,6 +3050,7 @@ function updateRankUI(matchesAll) {
   if (totalRP < MIN_RP) totalRP = MIN_RP;
 
   var rank = getRank(totalRP);
+  updateHomeHubUI(rank, totalRP);
   // ===== KROK 6.2: Hub platform tuning for ALL 10 ranks =====
 var hub = document.querySelector("#dashboard");
 if (hub && rank) {
