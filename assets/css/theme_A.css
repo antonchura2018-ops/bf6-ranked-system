@@ -352,11 +352,6 @@ body { background:#05060a; } /* запасний колір */
   background: transparent;
 }
 
-
-
-
-
-
 /* =========================================================
    HOME METRICS — MATCH SCREENSHOT 1 (DIM + LINES + TYPE)
    Paste at VERY END
@@ -602,16 +597,6 @@ body { background:#05060a; } /* запасний колір */
   --pulseTextFaint: rgba(255,255,255,.55);
 }
 
-.rankHome__center{
-  position:relative;
-  z-index:2;
-
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-
-  padding-top:140px;
-}
 
 /* HEADER: PLAYER ASCENSION */
 .pulseHeader{
@@ -1013,25 +998,6 @@ body::before{ filter:none !important; }
   position: relative !important;
 }
 
-/* 2) Force center container to NOT vertically center */
-.rankHome__center{
-  min-height: 100vh !important;
-  height: auto !important;
-
-  display: flex !important;
-  flex-direction: column !important;
-
-  /* ключове: не центруй по вертикалі */
-  justify-content: flex-start !important;
-
-  /* тепер padding реально зсуває вниз */
-  padding-top: 190px !important;  /* підкручуй 170-230px */
-}
-
-/* 3) (Optional) if any transform is shifting it обратно */
-.rankHome__center{
-  transform: none !important;
-}
 
 /* =========================================================
    NAV TABS — ORANGE SPACE RAIL (1:1 like screenshot)
@@ -3655,7 +3621,7 @@ body .navbar.navTabs > .nav-btn.active > span{
    LOWER WHOLE RANK BLOCK (NO STYLE CHANGES)
    ========================================================= */
 
-#dashboard.section.active .rankHome__center{
+#dashboard.section.active .rankHome .rankHome__center{
   margin-top: 85px !important;
 }
 html, body{
@@ -3733,6 +3699,7 @@ html, body{
 
   margin: 0 auto -26px !important;
   filter: drop-shadow(0 22px 60px rgba(0,0,0,.65)) !important;
+}
 
 /* ===== HOME HUD: emblem locked to ring center (FIXED) — PASTE ABSOLUTELY LAST ===== */
 
@@ -3839,4 +3806,68 @@ body:has(#dashboard.section.active) #rankEmblemOverlay{
   background-position: center !important;
   background-repeat: no-repeat !important;
   background-size: contain !important;
+}
+/* =========================================================
+   FINAL CLEAN LOCK — TEXT DOWN + EMBLEM CENTERED IN RING
+   (PASTE ABSOLUTELY LAST IN theme_A.css)
+   ========================================================= */
+
+/* 1) текстовий блок НЕ центруємо по вертикалі, а опускаємо вниз */
+#dashboard.section.active .rankHome .rankHome__center{
+  position: relative !important;
+  z-index: 3 !important;
+
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+
+  /* 🔧 ОЦЕ повертає текст вниз (як було) */
+  padding-top: 520px !important;   /* підкрутиш 480-600 */
+  margin-top: 0 !important;
+
+  transform: none !important;
+}
+
+/* 2) Емблема рендериться ОКРЕМО оверлеєм точно по центру кільця */
+#rankEmblemOverlay{
+  position: fixed !important;
+  left: 50% !important;
+  top: 44vh !important;                 /* 🔧 42–48vh */
+  transform: translate(-50%, -50%) !important;
+
+  width: 360px !important;             /* 🔧 340–420 */
+  height: 360px !important;
+
+  z-index: 9999 !important;
+  pointer-events: none !important;
+}
+
+#rankEmblemOverlay .rankEmblem{
+  position: absolute !important;
+  inset: 0 !important;
+
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+  background-size: contain !important;
+
+  opacity: 1 !important;
+  transform: none !important;
+  filter: none !important;
+}
+
+/* 3) ВАЖЛИВО: вимикаємо “пастку” fixed якщо десь є transform у батьків */
+#dashboard.section.active,
+#dashboard.section.active .rankHome,
+#dashboard.section.active .rankHome .rankHome__center,
+#dashboard.section.active .rankHome__hud{
+  transform: none !important;
+  filter: none !important;
+  perspective: none !important;
+}
+
+/* 4) Щоб стара .rankEmblem в DOM не ламала розкладку */
+#dashboard.section.active .rankHome .rankEmblem{
+  margin: 0 !important;
+  opacity: 0 !important;
 }
