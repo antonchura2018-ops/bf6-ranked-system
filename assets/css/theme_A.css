@@ -3773,4 +3773,9 @@ html, body { height: 100%; }
   filter: none !important;
   perspective: none !important;
 }
-  
+  /* show overlay only when dashboard active */
+#rankEmblemOverlay{ display:none; }
+#dashboard.section.active ~ #rankEmblemOverlay,
+body:has(#dashboard.section.active) #rankEmblemOverlay{
+  display:block;
+}
