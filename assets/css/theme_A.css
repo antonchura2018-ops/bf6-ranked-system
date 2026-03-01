@@ -3783,3 +3783,30 @@ body:has(#dashboard.section.active) #rankEmblemOverlay{
 #dashboard.section.active .rankHome .rankEmblem{
   margin: 0 !important;
 }
+/* =========================
+   FIX: Emblem overlay centered & independent
+   ========================= */
+#rankEmblemOverlay{
+  position: fixed !important;
+  left: 50% !important;
+  top: 44vh !important;                 /* 🔧 підкручуй: 42–48vh */
+  transform: translate(-50%, -50%) !important;
+  width: 360px !important;
+  height: 360px !important;
+  z-index: 9999 !important;
+  pointer-events: none !important;
+}
+
+/* ВАЖЛИВО: центр + без повторів + правильний масштаб */
+#rankEmblemOverlay .rankEmblem{
+  width: 100% !important;
+  height: 100% !important;
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+  background-size: contain !important;  /* або 72% для менше */
+}
+
+/* Якщо в верстці є ще одна емблема, ховаємо її, щоб НЕ "чіплялась" до тексту */
+.rankHome .rankEmblem{
+  display: none !important;
+}
