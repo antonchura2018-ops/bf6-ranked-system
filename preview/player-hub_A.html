@@ -2546,7 +2546,7 @@ if (DEBUG_RANK){
   // якщо totalRP є — беремо істину з getRank
   const r = (typeof totalRP === "number") ? getRank(totalRP) : null;
   const tier = (r?.tierName || tierName || "OUTCAST");
-  const rank = String(tier).toLowerCase();
+  const rank = String(tierName || "").toLowerCase();
 
   // 1) theme switch
   document.body.dataset.rank = rank;
