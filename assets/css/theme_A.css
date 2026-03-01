@@ -3874,7 +3874,30 @@ body:has(#dashboard.section.active) #rankEmblemOverlay{
 #rankEmblemOverlay .rankEmblem{
   background-image: var(--rankEmblemUrl) !important; /* ⬅️ головне */
 }
-/* hide the in-layout emblem, keep only overlay */
-#dashboard.section.active .rankHome .rankEmblem{
-  display: none !important;
+/* ===== EMBLEM OVERLAY — SIZE + CENTER (ABSOLUTE LAST) ===== */
+#rankEmblemOverlay{
+  position: fixed !important;
+  left: 50% !important;
+  top: 36vh !important;
+  transform: translate(-50%, -50%) !important;
+
+  width: 700px !important;
+  height: 700px !important;
+
+  z-index: 9999 !important;
+  pointer-events: none !important;
+}
+
+#rankEmblemOverlay .rankEmblem{
+  position: absolute !important;
+  left: 0 !important;
+  top: 0 !important;
+  width: 100% !important;     /* <-- ОЦЕ критично */
+  height: 100% !important;    /* <-- ОЦЕ критично */
+
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+  background-size: contain !important;
+
+  opacity: 1 !important;
 }
