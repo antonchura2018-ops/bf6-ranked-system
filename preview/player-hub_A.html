@@ -2246,11 +2246,15 @@ function showTab(tabId, btn) {
     console.warn("showTab: missing section id =", tabId);
   }
 
-  // ✅ INSERT HERE: show overlay only on dashboard
-  var overlay = document.getElementById("rankEmblemOverlay");
-  if (overlay) {
-    overlay.style.display = (tabId === "dashboard") ? "block" : "none";
-  }
+  // Dashboard mode toggle (CSS controls overlay + no-scroll)
+document.body.classList.toggle("is-dashboard", tabId === "dashboard");
+  // (optional safety) force overlay visibility even if old CSS exists
+var overlay = document.getElementById("rankEmblemOverlay");
+if (overlay) overlay.style.display = (tabId === "dashboard") ? "block" : "none";
+  
+
+  // Always reset scroll when switching tabs
+  window.scrollTo(0, 0);
 
   // 4) season lock for ADD tab
   if (tabId === "add") {
@@ -2262,6 +2266,29 @@ function showTab(tabId, btn) {
   // 5) activate clicked button
   if (btn && btn.classList) btn.classList.add("active");
 }
+  // ✅ Restore last rank on load / when returning to the tab
+function restoreRankFromStorage(){
+  try{
+    var tier = localStorage.getItem("bf6_rankTier");
+    var rp = localStorage.getItem("bf6_rankRP");
+    if (tier && rp != null && window.applyHomeTier){
+      window.applyHomeTier(tier, Number(rp));
+    }
+  }catch(e){}
+}
+
+// run once on initial load
+restoreRankFromStorage();
+// ensure correct mode on initial load (dashboard is default)
+document.body.classList.add("is-dashboard");
+window.scrollTo(0, 0);
+
+// run when user returns to this browser tab
+document.addEventListener("visibilitychange", function(){
+  if (!document.hidden) restoreRankFromStorage();
+});
+window.addEventListener("focus", restoreRankFromStorage);
+  
   // Safety: ensure navbar always switches tabs even if inline onclick glitches
 (function bindNavClicks(){
   var map = {
@@ -2568,7 +2595,7 @@ if (DEBUG_RANK){
   }
 
   // 4) emblem (Rank page) — via CSS var
-  const url = `/assets/ranks/${rank}.webp`;
+  const url = `/assets/ranks/${rank}.webp?v=${Date.now()}`;
   document.documentElement.style.setProperty("--rankEmblemUrl", `url("${url}")`);
 
   // fallback inline
@@ -2576,6 +2603,12 @@ if (DEBUG_RANK){
   if (emblem){
     emblem.style.backgroundImage = `url("${url}")`;
   }
+
+  // ✅ Persist current rank so it survives tab switching / focus
+  try{
+    localStorage.setItem("bf6_rankTier", String(tierName || ""));
+    localStorage.setItem("bf6_rankRP", String(totalRP || ""));
+  }catch(e){}
 }
   
 
