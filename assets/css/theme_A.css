@@ -3680,7 +3680,7 @@ html, body { height: 100%; }
 #dashboard.section.active .rankHome .rankHome__center{
   position: relative !important;
   z-index: 3 !important;
-  padding-top: 620px !important;  /* 🔧 крути 520–700 */
+  padding-top: clamp(560px, 60vh, 640px) !important;
   margin-top: 0 !important;
 }
 
@@ -3700,11 +3700,11 @@ body:has(#dashboard.section.active) #rankEmblemOverlay{
 #rankEmblemOverlay{
   position: fixed !important;
   left: 50% !important;
-  top: 38vh !important;                  /* 🔧 опустити: 40–48vh */
+  top: 36vh !important;                  /* 🔧 опустити: 40–48vh */
   transform: translate(-50%, -50%) !important;
 
-  width: 720px !important;               /* 🔧 розмір емблеми */
-  height: 720px !important;
+  width: 760px !important;               /* 🔧 розмір емблеми */
+  height: 760px !important;
 
   z-index: 9999 !important;
   pointer-events: none !important;
@@ -3738,4 +3738,78 @@ body:has(#dashboard.section.active) #rankEmblemOverlay{
   transform: none !important;
   filter: none !important;
   perspective: none !important;
+}
+/* =========================================================
+   PLAYER HUB — FINAL TUNING (EMBLEM + TEXT + NO SCROLL)
+   Paste ONCE at VERY END of theme_A.css
+   ========================================================= */
+
+/* A) Global scroll OFF (removes right scrollbar) */
+html, body{
+  height: 100%;
+  overflow: hidden;
+}
+
+/* B) Dashboard tab = exactly 1 screen */
+#dashboard.section.active{
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* C) Easy tuning variables */
+:root{
+  --emblemTop: 38vh;      /* move 36–41vh if needed */
+  --emblemSize: 720px;    /* 650–750 */
+  --emblemScale: 92%;     /* background-size */
+}
+
+/* D) Overlay show only on Player Hub */
+#rankEmblemOverlay{ display:none; }
+body:has(#dashboard.section.active) #rankEmblemOverlay{ display:block; }
+
+/* E) Overlay anchor */
+#rankEmblemOverlay{
+  position: fixed;
+  left: 50%;
+  top: var(--emblemTop);
+  transform: translate(-50%, -50%);
+  width: 1px;
+  height: 1px;
+  pointer-events: none;
+  z-index: 9999;
+  isolation: isolate;
+}
+
+/* F) Emblem render (NO cropping) */
+#rankEmblemOverlay .rankEmblem{
+  width: var(--emblemSize);
+  height: var(--emblemSize);
+
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform: translate(-50%, -50%);
+
+  background-image: var(--rankEmblemUrl);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: var(--emblemScale) auto;
+
+  border-radius: 0 !important;
+  overflow: visible !important;
+  clip-path: none !important;
+  mask: none !important;
+
+  filter: drop-shadow(0 0 22px rgba(0, 255, 170, 0.18));
+}
+
+/* G) Text stays independent and sits under ring (adaptive) */
+#dashboard.section.active .rankHome .rankHome__center{
+  padding-top: clamp(560px, 60vh, 640px) !important;
+  margin-top: 0 !important;
+
+  /* guard against flex centering overrides */
+  display: block !important;
+  align-items: initial !important;
+  justify-content: initial !important;
 }
