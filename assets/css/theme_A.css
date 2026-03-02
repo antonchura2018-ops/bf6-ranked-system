@@ -3630,76 +3630,7 @@ html, body{
 .rankEmblem{
   opacity: 1 !important;
 }
-/* ===== RANK HOME EMBLEM (DYNAMIC) — paste ABSOLUTELY LAST ===== */
 
-#dashboard.section.active .rankHome .rankEmblem{
-  opacity: 1 !important;
-  display: block !important;
-  visibility: visible !important;
-
-  /* BIGGER */
-  width: 340px !important;
-  height: 340px !important;
-
-  /* kill the “spot” */
-  background: none !important;
-  background-color: transparent !important;
-
-  /* dynamic icon from JS */
-  background-image: var(--rankEmblemUrl) !important;
-  background-repeat: no-repeat !important;
-  background-position: center !important;
-  background-size: contain !important;
-
-  /* place it nicer relative to title */
-  margin: 0 auto -26px !important;
-  filter: drop-shadow(0 22px 60px rgba(0,0,0,.65)) !important;
-}
-
-/* safety: if class remained */
-#dashboard.section.active .rankHome .rankEmblem.is-hidden{ opacity: 1 !important; }
-/* ===== RANK HOME EMBLEM (DYNAMIC, SAFE) — ABSOLUTELY LAST ===== */
-#dashboard.section.active .rankHome .rankEmblem{
-  opacity: 1 !important;
-  display: block !important;
-  visibility: visible !important;
-
-  width: 340px !important;
-  height: 340px !important;
-
-  /* важливо: НЕ background: none */
-  background-color: transparent !important;
-
-  /* це головне */
-  background-image: var(--rankEmblemUrl, url("/assets/ranks/outcast.webp")) !important;
-  background-repeat: no-repeat !important;
-  background-position: center !important;
-  background-size: contain !important;
-
-  /* якщо раніше був градієнт-пляма */
-  box-shadow: none !important;
-  filter: drop-shadow(0 22px 60px rgba(0,0,0,.65)) !important;
-
-  margin: 0 auto -26px !important;
-}
-#dashboard.section.active .rankHome .rankEmblem{
-  opacity: 1 !important;
-  display: block !important;
-  visibility: visible !important;
-
-  width: 340px !important;
-  height: 340px !important;
-
-  background-color: transparent !important;
-
-  background-image: var(--rankEmblemUrl) !important;
-  background-repeat: no-repeat !important;
-  background-position: center !important;
-  background-size: contain !important;
-
-  margin: 0 auto -26px !important;
-  filter: drop-shadow(0 22px 60px rgba(0,0,0,.65)) !important;
-}
 
 /* ===== HOME HUD: emblem locked to ring center (FIXED) — PASTE ABSOLUTELY LAST ===== */
 
@@ -3740,190 +3671,47 @@ html, body { height: 100%; }
   filter: none !important;
   perspective: none !important;
 }
-  /* show overlay only when dashboard active */
-#rankEmblemOverlay{ display:none; }
-#dashboard.section.active ~ #rankEmblemOverlay,
-body:has(#dashboard.section.active) #rankEmblemOverlay{
-  display:block;
-}
-/* overlay emblem: don't reserve space in layout */
-#dashboard.section.active .rankHome .rankEmblem{
-  margin: 0 !important;
-}
-/* =========================
-   Emblem overlay render fix
-   ========================= */
-#rankEmblemOverlay{
-  position: fixed !important;
-  left: 50% !important;
-  top: 44vh !important;                /* підкручуй 42–48vh */
-  transform: translate(-50%, -50%) !important;
-  width: 360px !important;
-  height: 360px !important;
-  z-index: 9999 !important;
-  pointer-events: none !important;
-}
-
-#rankEmblemOverlay .rankEmblem{
-  position: absolute !important;
-  inset: 0 !important;
-
-  background-repeat: no-repeat !important;
-  background-position: center !important;
-  background-size: contain !important;
-
-  opacity: 1 !important;
-  transform: none !important;
-  filter: none !important;
-}
-/* ================================
-   HOME TEXT: restore bottom layout
-   ================================ */
-
-#dashboard .rankHome{
-  position: relative;
-}
-
-/* ВАЖЛИВО: прибираємо flex-центрування, яке зсунуло все в центр */
-#dashboard .rankHome .rankHome__center{
-  display: block !important;          /* було flex -> через це все по центру */
-  text-align: center;                /* щоб залишилось по центру по X */
-  margin-top: 0 !important;
-  padding-top: 520px !important;     /* ⬅️ опускає текст нижче кільця (підкрутиш) */
-  z-index: 3;
-}
-
-/* якщо десь є align-items/justify-content — глушимо */
-#dashboard .rankHome .rankHome__center{
-  align-items: initial !important;
-  justify-content: initial !important;
-}
-  /* ================================
-   EMBLEM: correct render in overlay
-   ================================ */
-
-#rankEmblemOverlay .rankEmblem{
-  background-position: center !important;
-  background-repeat: no-repeat !important;
-  background-size: contain !important;
-}
 /* =========================================================
-   FINAL CLEAN LOCK — TEXT DOWN + EMBLEM CENTERED IN RING
-   (PASTE ABSOLUTELY LAST IN theme_A.css)
+   FINAL — HOME TEXT DOWN + EMBLEM OVERLAY (ONLY DASHBOARD)
+   Paste ABSOLUTELY LAST
    ========================================================= */
 
-/* 1) текстовий блок НЕ центруємо по вертикалі, а опускаємо вниз */
+/* 1) Text position (опускає текст нижче кільця) */
 #dashboard.section.active .rankHome .rankHome__center{
   position: relative !important;
   z-index: 3 !important;
-
-  display: flex !important;
-  flex-direction: column !important;
-  align-items: center !important;
-  justify-content: flex-start !important;
-
-  /* 🔧 ОЦЕ повертає текст вниз (як було) */
-  padding-top: 620px !important;   /* підкрутиш 480-600 */
+  padding-top: 620px !important;  /* 🔧 крути 520–700 */
   margin-top: 0 !important;
-
-  transform: none !important;
 }
 
-/* 2) Емблема рендериться ОКРЕМО оверлеєм точно по центру кільця */
-#rankEmblemOverlay{
-  position: fixed !important;
-  left: 50% !important;
-  top: 38vh !important;                 /* 🔧 42–48vh */
-  transform: translate(-50%, -50%) !important;
-
-  width: 700px !important;             /* 🔧 340–420 */
-  height: 700px !important;
-
-  z-index: 9999 !important;
+/* 2) Hide the old DOM emblem so it doesn't affect layout */
+#dashboard.section.active .rankHome .rankEmblem{
+  opacity: 0 !important;
   pointer-events: none !important;
 }
 
-#rankEmblemOverlay .rankEmblem{
-  position: absolute !important;
-  inset: 0 !important;
-
-  background-repeat: no-repeat !important;
-  background-position: center !important;
-  background-size: contain !important;
-
-  opacity: 1 !important;
-  transform: none !important;
-  filter: none !important;
+/* 3) Overlay is visible ONLY on Player Hub */
+#rankEmblemOverlay{ display:none !important; }
+body:has(#dashboard.section.active) #rankEmblemOverlay{
+  display:block !important;
 }
 
-/* 3) ВАЖЛИВО: вимикаємо “пастку” fixed якщо десь є transform у батьків */
-#dashboard.section.active,
-#dashboard.section.active .rankHome,
-#dashboard.section.active .rankHome .rankHome__center,
-#dashboard.section.active .rankHome__hud{
-  transform: none !important;
-  filter: none !important;
-  perspective: none !important;
-}
-
-/* 4) Щоб стара .rankEmblem в DOM не ламала розкладку */
-#dashboard.section.active .rankHome .rankEmblem{
-  margin: 0 !important;
-  opacity: 0 !important;
-}
-#rankEmblemOverlay .rankEmblem{
-  background-image: var(--rankEmblemUrl) !important; /* ⬅️ головне */
-}
-/* ===== EMBLEM OVERLAY — SIZE + CENTER (ABSOLUTE LAST) ===== */
+/* 4) Overlay positioning + size */
 #rankEmblemOverlay{
   position: fixed !important;
   left: 50% !important;
-  top: 32vh !important;
+  top: 38vh !important;                  /* 🔧 опустити: 40–48vh */
   transform: translate(-50%, -50%) !important;
 
-  width: 720px !important;
+  width: 720px !important;               /* 🔧 розмір емблеми */
   height: 720px !important;
 
   z-index: 9999 !important;
   pointer-events: none !important;
-}
-
-#rankEmblemOverlay .rankEmblem{
-  position: absolute !important;
-  left: 0 !important;
-  top: 0 !important;
-  width: 100% !important;     /* <-- ОЦЕ критично */
-  height: 100% !important;    /* <-- ОЦЕ критично */
-
-  background-repeat: no-repeat !important;
-  background-position: center !important;
-  background-size: contain !important;
-
-  opacity: 1 !important;
-}
-/* ===== FIX: do NOT clip rank emblem (kills the “cut wings”) ===== */
-#rankEmblemOverlay{ overflow: visible !important; }
-
-#rankEmblemOverlay .rankEmblem{
-  border-radius: 0 !important;    /* ⬅️ важливо: прибирає круг */
-  clip-path: none !important;      /* ⬅️ якщо десь було */
-  overflow: visible !important;
-}
-/* ===== EMBLEM OVERLAY — FINAL (PASTE ABSOLUTELY LAST) ===== */
-#rankEmblemOverlay{
-  position: fixed !important;
-  left: 50% !important;
-  top: 38vh !important;                 /* ⬅️ опускання/піднімання */
-  transform: translate(-50%, -50%) !important;
-
-  width: 720px !important;              /* ⬅️ розмір */
-  height: 720px !important;             /* ⬅️ розмір */
-
-  z-index: 9999 !important;
-  pointer-events: none !important;
   overflow: visible !important;
 }
 
+/* 5) Render emblem inside overlay (NO CLIP) */
 #rankEmblemOverlay .rankEmblem{
   position: absolute !important;
   inset: 0 !important;
@@ -3933,11 +3721,21 @@ body:has(#dashboard.section.active) #rankEmblemOverlay{
   background-image: var(--rankEmblemUrl) !important;
   background-repeat: no-repeat !important;
   background-position: 50% 50% !important;
-  background-size: 92% auto !important;  /* ⬅️ щоб 2 ранг не підрізало */
 
-  border-radius: 0 !important;           /* ⬅️ КЛЮЧ */
-  clip-path: none !important;            /* ⬅️ КЛЮЧ */
+  /* 1024x1024 icons safe fit (Rank2 wings won’t cut) */
+  background-size: 92% auto !important;  /* 🔧 90–98% */
+
+  border-radius: 0 !important;
+  clip-path: none !important;
   overflow: visible !important;
-
   opacity: 1 !important;
+}
+
+/* 6) Safety: prevent "fixed inside transform" bug */
+#dashboard.section.active,
+#dashboard.section.active .rankHome,
+#dashboard.section.active .rankHome__center{
+  transform: none !important;
+  filter: none !important;
+  perspective: none !important;
 }
