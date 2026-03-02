@@ -2266,14 +2266,21 @@ if (overlay) overlay.style.display = (tabId === "dashboard") ? "block" : "none";
   // 5) activate clicked button
   if (btn && btn.classList) btn.classList.add("active");
 }
-  // ✅ Restore last rank on load / when returning to the tab
-function restoreRankFromStorage(){
+ function restoreRankFromStorage(){
   try{
     var tier = localStorage.getItem("bf6_rankTier");
     var rp = localStorage.getItem("bf6_rankRP");
-    if (tier && rp != null && window.applyHomeTier){
-      window.applyHomeTier(tier, Number(rp));
+    if (!tier || rp == null || !window.applyHomeTier) return;
+
+    // ✅ Do not re-apply if nothing changed (prevents emblem blinking)
+    var lastTier = window.__bf6_lastTier;
+    var lastRp   = window.__bf6_lastRp;
+
+    if (String(lastTier) === String(tier) && Number(lastRp) === Number(rp)) {
+      return;
     }
+
+    window.applyHomeTier(tier, Number(rp));
   }catch(e){}
 }
 
@@ -2595,7 +2602,7 @@ if (DEBUG_RANK){
   }
 
   // 4) emblem (Rank page) — via CSS var
-  const url = `/assets/ranks/${rank}.webp?v=${Date.now()}`;
+  const url = `/assets/ranks/${rank}.webp`;
   document.documentElement.style.setProperty("--rankEmblemUrl", `url("${url}")`);
 
   // fallback inline
@@ -2609,6 +2616,9 @@ if (DEBUG_RANK){
     localStorage.setItem("bf6_rankTier", String(tierName || ""));
     localStorage.setItem("bf6_rankRP", String(totalRP || ""));
   }catch(e){}
+   // ✅ Remember last applied (prevents blinking on focus restore)
+  window.__bf6_lastTier = tierName;
+  window.__bf6_lastRp = totalRP;
 }
   
 
