@@ -137,7 +137,7 @@ body[data-rank="azure"]{    --accent:#3aa7ff; --accent2:#9ad5ff; }
 .rankHome{
   position: relative;
   min-height: 100vh;
-  overflow: hidden;
+  overflow: visible;
   background: #05060a;
   color: rgba(255,255,255,.92);
   font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
@@ -3756,10 +3756,15 @@ body.is-dashboard #dashboard.section.active{
   height: 100vh;
   overflow: hidden;
 }
+
+body.is-dashboard #dashboard.section.active .rankHome{
+  overflow: hidden;
+}
+
 /* C) Easy tuning variables */
 :root{
-  --emblemTop: 40vh;      /* move 36–41vh if needed */
-  --emblemSize: 690px;    /* 650–750 */
+  --emblemTop: 40.5vh;      /* move 36–41vh if needed */
+  --emblemSize: 700px;    /* 650–750 */
   --emblemScale: 92%;     /* background-size */
 }
 
