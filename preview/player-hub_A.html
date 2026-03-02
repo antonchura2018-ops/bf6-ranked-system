@@ -4660,6 +4660,22 @@ document.addEventListener("DOMContentLoaded", tryMountOverlay);
 }
 
 document.addEventListener("DOMContentLoaded", forceHomeTextLayout);
+
+  /* ==========================================
+   FORCE: no scroll + always reset to top
+   ========================================== */
+document.documentElement.style.overflow = "hidden";
+document.body.style.overflow = "hidden";
+window.scrollTo(0, 0);
+
+// wrap showTab to always reset scroll
+if (window.showTab) {
+  const __showTab = window.showTab;
+  window.showTab = function(tabId, btn){
+    __showTab(tabId, btn);
+    window.scrollTo(0, 0);
+  };
+}
   
   
   
