@@ -4776,7 +4776,30 @@ document.addEventListener("DOMContentLoaded", function(){
   // IMPORTANT: renderHistoryFromStorage runs below; after it, restore rank state so it never falls back to Thrall label
   setTimeout(restoreRank, 0);
 });
+// ===== CINEMATIC MODE TOGGLE (hide overlay + darken bg) =====
+(function(){
+  function cinematicOn(){ document.body.classList.add("is-cinematic"); }
+  function cinematicOff(){ document.body.classList.remove("is-cinematic"); }
 
+  if (typeof window.showRankUp === "function"){
+    const _rankUp = window.showRankUp;
+    window.showRankUp = function(payload){
+      cinematicOn();
+      try{ return _rankUp(payload); }
+      finally{ setTimeout(cinematicOff, 1600); }
+    };
+  }
+
+  if (typeof window.showTierUp === "function"){
+    const _tierUp = window.showTierUp;
+    window.showTierUp = function(payload){
+      cinematicOn();
+      try{ return _tierUp(payload); }
+      finally{ setTimeout(cinematicOff, 1400); }
+    };
+  }
+})();
+  
 /* ===== INIT ===== */
 renderHistoryFromStorage();
 </script>
