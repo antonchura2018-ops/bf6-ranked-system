@@ -2294,6 +2294,17 @@ function clearRankOverride(){
 
 function restoreRankFromStorage(){
   try{
+    // ✅ If override exists, restore override first
+    var ov = getRankOverride && getRankOverride();
+    if (ov && ov.rp != null) {
+      window.applyHomeTier(ov.tier, Number(ov.rp));
+      try{
+        var rr = Number(ov.rp);
+        var rk = getRank(rr);
+        updateHomeHubUI(rk, rr);
+      }catch(e){}
+      return;
+    }
     var tier = localStorage.getItem("bf6_rankTier");
     var rp = localStorage.getItem("bf6_rankRP");
     if (!tier || rp == null || !window.applyHomeTier) return;
@@ -2577,23 +2588,24 @@ function debugRPForTier(tierName){
 }
 
 function debugSetTier(tierName){
-  // ✅ Anti-spam: prevents double-click / wrong tier / missing animation when switching fast
+  // ✅ Anti-spam (prevents double firing)
   if (window.__bf6_debugLock) return;
   window.__bf6_debugLock = true;
-  setTimeout(() => { window.__bf6_debugLock = false; }, 200);
+  setTimeout(() => { window.__bf6_debugLock = false; }, 120);
 
   const targetTotal = debugRPForTier(tierName);
 
-  // тимчасово підміняємо totalRP через "фейкові матчі"
-  // зробимо 1 матч з rp так, щоб START_RP + sum = targetTotal
-  const need = targetTotal - START_RP;
-  const fake = [{ rp: need, breakdown: { total: need } }];
+  // ✅ Persist override immediately
+  setRankOverride(tierName, targetTotal);
 
-  updateRankUI(fake);
+  // ✅ Apply tier synchronously (no delayed updateRankUI)
   applyHomeTier(tierName, targetTotal);
 
-  // ✅ Keep this tier as override so updateRankUI won't reset it from stored matches
-  setRankOverride(tierName, targetTotal);
+  // ✅ Also sync Player Hub UI immediately
+  try{
+    const rk = getRank(targetTotal);
+    updateHomeHubUI(rk, targetTotal);
+  }catch(e){}
 
   console.log("[DEBUG] tier =", tierName, "totalRP =", targetTotal);
 }
@@ -2628,6 +2640,13 @@ if (DEBUG_RANK){
   console.log("[DEBUG] Rank switcher ON: keys 1-0, [ ]");
 }
  function applyHomeTier(tierName, totalRP){
+   // ✅ Ensure overlay exists (prevents missing emblem)
+  if (!document.getElementById("rankEmblemOverlay")) {
+    const o = document.createElement("div");
+    o.id = "rankEmblemOverlay";
+    o.innerHTML = '<div class="rankEmblem"></div>';
+    document.body.appendChild(o);
+  }
   // якщо totalRP є — беремо істину з getRank
   const r = (typeof totalRP === "number") ? getRank(totalRP) : null;
   const tier = (r?.tierName || tierName || "OUTCAST");
@@ -2649,6 +2668,14 @@ if (DEBUG_RANK){
   // 4) emblem (Rank page) — via CSS var
   const url = `/assets/ranks/${rank}.webp`;
   document.documentElement.style.setProperty("--rankEmblemUrl", `url("${url}")`);
+   // ✅ Always push image into the overlay element (not only CSS var)
+  const ovEmblem = document.querySelector("#rankEmblemOverlay .rankEmblem");
+  if (ovEmblem){
+    ovEmblem.style.backgroundImage = `url("${url}")`;
+    ovEmblem.style.backgroundRepeat = "no-repeat";
+    ovEmblem.style.backgroundPosition = "center";
+    ovEmblem.style.backgroundSize = "92% auto";
+  }
 
   const emblem = document.querySelector(
   "#rankEmblemOverlay .rankEmblem, #dashboard.section.active .rankHome .rankEmblem, .rankHome .rankEmblem"
@@ -3570,7 +3597,9 @@ if (summaryEl) {
   }
   if (changed) saveMatches(matchesAll);
 
+  if (!getRankOverride()) {
   updateRankUI(activeMatchesAll);
+}
   // ===== Player Hub snapshot (ACTIVE season) =====
   var statsHub = computeSeasonStats(activeMatchesAll);
 
