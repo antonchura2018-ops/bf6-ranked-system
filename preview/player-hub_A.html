@@ -2646,11 +2646,15 @@ if (DEBUG_RANK){
   const url = `/assets/ranks/${rank}.webp`;
   document.documentElement.style.setProperty("--rankEmblemUrl", `url("${url}")`);
 
-  // fallback inline
-  const emblem = document.querySelector("#dashboard.section.active .rankHome .rankEmblem, .rankHome .rankEmblem");
-  if (emblem){
-    emblem.style.backgroundImage = `url("${url}")`;
-  }
+  const emblem = document.querySelector(
+  "#rankEmblemOverlay .rankEmblem, #dashboard.section.active .rankHome .rankEmblem, .rankHome .rankEmblem"
+);
+if (emblem){
+  emblem.style.backgroundImage = `url("${url}")`;
+  emblem.style.backgroundRepeat = "no-repeat";
+  emblem.style.backgroundPosition = "center";
+  emblem.style.backgroundSize = "92% auto";
+}
 
   // ✅ Persist current rank so it survives tab switching / focus
   try{
