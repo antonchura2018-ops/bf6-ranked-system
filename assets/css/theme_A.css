@@ -3866,7 +3866,14 @@ body{
 
 /* No scroll only on Player Hub */
 body.is-dashboard{
-  overflow: hidden !important;
+  overflow-y: auto !important;   /* ✅ якщо zoom збільшив — можна прокрутити */
+  overflow-x: hidden !important;
+  scrollbar-width: none;         /* Firefox: hide scrollbar */
+}
+
+body.is-dashboard::-webkit-scrollbar{
+  width: 0;
+  height: 0;
 }
 
 /* Make sure dashboard section doesn't create its own scroll */
@@ -3888,8 +3895,8 @@ body.is-dashboard #dashboard.section.active{
 
 :root{
   --emblemSize: clamp(600px, 58vw, 820px); /* РОЗМІР */
-  --emblemTop: 32.5vh;                     /* ВВЕРХ/ВНИЗ */
-  --emblemX: -30%;                         /* ВЛІВО/ВПРАВО */
+  --emblemTop: 22.5vh;                     /* ВВЕРХ/ВНИЗ */
+  --emblemX: -10%;                         /* ВЛІВО/ВПРАВО */
 }
 
 /* Overlay container */
