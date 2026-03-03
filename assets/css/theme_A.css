@@ -3961,3 +3961,114 @@ body.is-cinematic #rankEmblemOverlay{
   opacity: 0 !important;
   visibility: hidden !important;
 }
+/* =========================================================
+   FIX LOCK: EMBLEM OVERLAY ALWAYS CENTERED (HARD OVERRIDE)
+   Paste at VERY END of theme_A.css
+   ========================================================= */
+
+/* Tuning knobs */
+:root{
+  --emblemSize: clamp(620px, 58vw, 860px); /* size */
+  --emblemTop: 36.5vh;                     /* up/down */
+}
+
+/* Always create stable stacking & prevent any external overrides */
+body.is-dashboard #rankEmblemOverlay{
+  display: block !important;
+  position: fixed !important;
+  left: 50% !important;
+  top: var(--emblemTop) !important;
+  transform: translate(-50%, -50%) !important;
+
+  width: var(--emblemSize) !important;
+  height: var(--emblemSize) !important;
+
+  pointer-events: none !important;
+  z-index: 2000 !important;
+}
+
+/* Render */
+body.is-dashboard #rankEmblemOverlay .rankEmblem{
+  position: absolute !important;
+  inset: 0 !important;
+
+  background-image: var(--rankEmblemUrl) !important;
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+  background-size: 92% auto !important;
+
+  filter: drop-shadow(0 18px 48px rgba(0,0,0,.55)) !important;
+}
+/* =========================================================
+   FIX: CENTER RANK TITLE + RP UNDER EMBLEM
+   ========================================================= */
+
+#dashboard.section.active .rankHome .rankHome__center{
+  width: 100% !important;
+  max-width: 1200px !important;
+  margin: 0 auto !important;
+  text-align: center !important;
+}
+
+#dashboard.section.active .rankHome .rankTitle,
+#dashboard.section.active .rankHome #uiRankName,
+#dashboard.section.active .rankHome .rankRP,
+#dashboard.section.active .rankHome #uiRP{
+  text-align: center !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+/* =========================================================
+   CINEMATIC BLACKOUT: SHOW ONLY CINEMATIC + EMBLEM
+   ========================================================= */
+
+/* hard black background */
+body.is-cinematic{
+  background: #000 !important;
+}
+
+/* blackout layer */
+body.is-cinematic::before{
+  content:"";
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.92);
+  z-index: 1500;
+  pointer-events: none;
+}
+
+/* Hide main UI during cinematic */
+body.is-cinematic .navbar,
+body.is-cinematic #dashboard.section.active,
+body.is-cinematic #rank.section.active,
+body.is-cinematic #history.section.active,
+body.is-cinematic #add.section.active{
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+/* Keep your emblem visible in cinematic */
+body.is-cinematic #rankEmblemOverlay{
+  opacity: 1 !important;
+  visibility: visible !important;
+  z-index: 2500 !important;
+}
+
+/* Keep cinematic overlays above blackout (IDs may differ; these are safe) */
+body.is-cinematic [id*="RankUp"],
+body.is-cinematic [id*="rankUp"],
+body.is-cinematic [id*="TierUp"],
+body.is-cinematic [id*="tierUp"]{
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: none !important;
+  z-index: 3000 !important;
+}
+
+/* IMPORTANT: prevent duplicate emblem inside cinematic overlay
+   (hides any element whose class contains "emblem" inside the cinematic overlays) */
+body.is-cinematic [id*="rankUp"] [class*="emblem"],
+body.is-cinematic [id*="tierUp"] [class*="emblem"]{
+  display: none !important;
+}
