@@ -3634,35 +3634,35 @@ html, body{
 
 /* ===== HOME HUD: emblem locked to ring center (FIXED) — PASTE ABSOLUTELY LAST ===== */
 
-/* Важливо: щоб fixed працював нормально */
+/* DISABLED: OLD INLINE EMBLEM (conflicts with overlay)
 html, body { height: 100%; }
 
-/* 1) Емблема завжди в центрі вьюпорта */
+/* 1) Емблема завжди в центрі вьюпорта 
 #dashboard.section.active .rankHome .rankEmblem{
   position: fixed !important;
 
-  /* центр екрана */
+  /* центр екрана 
   left: 50% !important;
-  top: 44vh !important;            /* 🔧 підкручуй: 40-48vh */
+  top: 44vh !important;            
   transform: translate(-50%, -50%) !important;
 
-  /* твій розмір */
+  /* твій розмір 
   width: 340px !important;
   height: 340px !important;
 
-  /* зображення */
+  /* зображення 
   background-repeat: no-repeat !important;
   background-position: center !important;
   background-size: contain !important;
 
-  /* поверх кільця/фону, але не блочить кліки */
+  /* поверх кільця/фону, але не блочить кліки 
   z-index: 8 !important;
   pointer-events: none !important;
 
-  /* щоб не “прив’язувалась” до тексту */
+  /* щоб не “прив’язувалась” до тексту 
   margin: 0 !important;
 }
-  /* FIX: do not trap fixed inside transformed parents */
+  /* FIX: do not trap fixed inside transformed parents 
 #dashboard.section.active,
 #dashboard.section.active .rankHome,
 #dashboard.section.active .rankHome__center,
@@ -4106,4 +4106,8 @@ body.is-dashboard #rankEmblemOverlay .rankEmblem{
   background-repeat: no-repeat !important;
   background-position: center !important;
   background-size: 92% auto !important;
+}
+/* Hide any old emblem node inside dashboard (overlay is the only source of emblem) */
+#dashboard.section.active .rankHome .rankEmblem{
+  display: none !important;
 }
