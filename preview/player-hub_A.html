@@ -2248,6 +2248,7 @@ function showTab(tabId, btn) {
 
   // Dashboard mode toggle (CSS controls overlay + no-scroll)
 document.body.classList.toggle("is-dashboard", tabId === "dashboard");
+  if (tabId === "dashboard") restoreRankFromStorage();
   // (optional safety) force overlay visibility even if old CSS exists
 var overlay = document.getElementById("rankEmblemOverlay");
 if (overlay) overlay.style.display = (tabId === "dashboard") ? "block" : "none";
@@ -2284,8 +2285,6 @@ if (overlay) overlay.style.display = (tabId === "dashboard") ? "block" : "none";
   }catch(e){}
 }
 
-// run once on initial load
-restoreRankFromStorage();
 // ensure correct mode on initial load (dashboard is default)
 document.body.classList.add("is-dashboard");
 window.scrollTo(0, 0);
@@ -4719,6 +4718,9 @@ if (window.showTab) {
     window.scrollTo(0, 0);
   };
 }
+document.addEventListener("DOMContentLoaded", function(){
+  restoreRankFromStorage();
+});
   
   
   
