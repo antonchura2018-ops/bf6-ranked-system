@@ -2619,11 +2619,11 @@ if (DEBUG_RANK){
 
   // ✅ Persist current rank so it survives tab switching / focus
   try{
-    localStorage.setItem("bf6_rankTier", String(tierName || ""));
+    localStorage.setItem("bf6_rankTier", String(tier || ""));
     localStorage.setItem("bf6_rankRP", String(totalRP || ""));
   }catch(e){}
    // ✅ Remember last applied (prevents blinking on focus restore)
-  window.__bf6_lastTier = tierName;
+  window.__bf6_lastTier = tier;
   window.__bf6_lastRp = totalRP;
 }
   
@@ -4326,13 +4326,13 @@ function openOverlay(mode){
   if(!els.award || !els.badge) return;
 
   clearTimers();
-  
- // prevent double-open flicker
-if (award.classList.contains('is-open')) {
-  award.classList.remove('is-open');
-  award.removeAttribute('data-phase');
-  void award.offsetWidth; // force reflow
-}
+
+  // prevent double-open flicker
+  if (els.award.classList.contains('is-open')) {
+    els.award.classList.remove('is-open');
+    els.award.removeAttribute('data-phase');
+    void els.award.offsetWidth; // force reflow
+  }
 
   els.award.classList.add('is-open');
   els.award.setAttribute('aria-hidden','false');
@@ -4340,13 +4340,9 @@ if (award.classList.contains('is-open')) {
   els.award.classList.toggle('is-tierup', mode === 'tierUp');
   els.award.classList.toggle('is-rankup', mode === 'rankUp');
 
-  // reset mode flags
   els.award.classList.remove('is-top','is-finisher','is-up','is-down');
-
-  // ✅ CRITICAL: phase machine start
   els.award.setAttribute('data-phase','open');
 
-  // reset badge animation
   els.badge.classList.remove('anim-up');
   void els.badge.offsetWidth;
 }
@@ -4429,7 +4425,10 @@ function playSFX(name){
   function stopSFX(name){
   const a = SFX[name];
   if(!a) return;
-  try { a.pause(); a.currentTime = 0; } catch(e){}
+  try {
+    a.pause();
+    a.currentTime = 0;
+  } catch(e){}
 }
   
   function formatDivisionFromLabel(toText){
