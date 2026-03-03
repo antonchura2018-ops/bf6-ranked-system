@@ -3819,21 +3819,28 @@ body:has(#dashboard.section.active) #rankEmblemOverlay{ display:block; }
   justify-content: initial !important;
 }
 /* =========================================================
-   SCROLL — allow on all tabs except Player Hub
-   (FINAL OVERRIDE, paste at very end)
+   SCROLL SYSTEM (FINAL)
+   - Scroll lives on html only (prevents double-scroll flash)
+   - Dashboard locks scroll
    ========================================================= */
 
-/* default: scrolling allowed */
-html, body{
+html{
   overflow-y: auto !important;
   height: auto !important;
 }
 
-/* dashboard: lock */
-body.is-dashboard{
+body{
+  overflow: visible !important;
+  height: auto !important;
+}
+
+/* Player Hub only: lock */
+body.is-dashboard,
+body.is-dashboard html{
   overflow: hidden !important;
   height: 100vh !important;
 }
+
 body.is-dashboard #dashboard.section.active{
   height: 100vh !important;
   overflow: hidden !important;
