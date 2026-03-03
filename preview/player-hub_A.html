@@ -2267,6 +2267,7 @@ if (overlay) overlay.style.display = (tabId === "dashboard") ? "block" : "none";
   // 5) activate clicked button
   if (btn && btn.classList) btn.classList.add("active");
 }
+  
  function restoreRankFromStorage(){
   try{
     var tier = localStorage.getItem("bf6_rankTier");
@@ -2289,11 +2290,17 @@ if (overlay) overlay.style.display = (tabId === "dashboard") ? "block" : "none";
 document.body.classList.add("is-dashboard");
 window.scrollTo(0, 0);
 
-// run when user returns to this browser tab
 document.addEventListener("visibilitychange", function(){
-  if (!document.hidden) restoreRankFromStorage();
+  if (!document.hidden && document.body.classList.contains("is-dashboard")) {
+    restoreRankFromStorage();
+  }
 });
-window.addEventListener("focus", restoreRankFromStorage);
+
+window.addEventListener("focus", function(){
+  if (document.body.classList.contains("is-dashboard")) {
+    restoreRankFromStorage();
+  }
+});
   
   // Safety: ensure navbar always switches tabs even if inline onclick glitches
 (function bindNavClicks(){
