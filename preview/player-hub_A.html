@@ -2332,18 +2332,6 @@ function restoreRankFromStorage(){
 document.body.classList.add("is-dashboard");
 document.documentElement.classList.add("is-dashboard");
 window.scrollTo(0, 0);
-
-document.addEventListener("visibilitychange", function(){
-  if (!document.hidden && document.body.classList.contains("is-dashboard")) {
-    restoreRankFromStorage();
-  }
-});
-
-window.addEventListener("focus", function(){
-  if (document.body.classList.contains("is-dashboard")) {
-    restoreRankFromStorage();
-  }
-});
   
   // Safety: ensure navbar always switches tabs even if inline onclick glitches
 (function bindNavClicks(){
@@ -2588,26 +2576,21 @@ function debugRPForTier(tierName){
 }
 
 function debugSetTier(tierName){
-  // ✅ Anti-spam (prevents double firing)
-  if (window.__bf6_debugLock) return;
-  window.__bf6_debugLock = true;
-  setTimeout(() => { window.__bf6_debugLock = false; }, 120);
 
   const targetTotal = debugRPForTier(tierName);
 
-  // ✅ Persist override immediately
+  // persist override
   setRankOverride(tierName, targetTotal);
 
-  // ✅ Apply tier synchronously (no delayed updateRankUI)
+  // apply immediately
   applyHomeTier(tierName, targetTotal);
 
-  // ✅ Also sync Player Hub UI immediately
   try{
     const rk = getRank(targetTotal);
     updateHomeHubUI(rk, targetTotal);
   }catch(e){}
 
-  console.log("[DEBUG] tier =", tierName, "totalRP =", targetTotal);
+  console.log("[DEBUG] tier =", tierName, targetTotal);
 }
 
 function debugStep(dir){
@@ -2640,6 +2623,12 @@ if (DEBUG_RANK){
   console.log("[DEBUG] Rank switcher ON: keys 1-0, [ ]");
 }
  function applyHomeTier(tierName, totalRP){
+   if (!document.getElementById("rankEmblemOverlay")) {
+  const o = document.createElement("div");
+  o.id = "rankEmblemOverlay";
+  o.innerHTML = '<div class="rankEmblem"></div>';
+  document.body.appendChild(o);
+}
    // ✅ Ensure overlay exists (prevents missing emblem)
   if (!document.getElementById("rankEmblemOverlay")) {
     const o = document.createElement("div");
@@ -2676,7 +2665,9 @@ if (DEBUG_RANK){
     ovEmblem.style.backgroundPosition = "center";
     ovEmblem.style.backgroundSize = "92% auto";
   }
-
+const el = document.querySelector("#rankEmblemOverlay .rankEmblem");
+if (el) el.style.backgroundImage = `url("${url}")`;
+   
   const emblem = document.querySelector(
   "#rankEmblemOverlay .rankEmblem, #dashboard.section.active .rankHome .rankEmblem, .rankHome .rankEmblem"
 );
@@ -3160,6 +3151,9 @@ function updateHomeHubUI(rank, totalRP){
   
 /* ===== UI UPDATES ===== */
 function updateRankUI(matchesAll) {
+  if (getRankOverride && getRankOverride()) {
+    return; // stop auto recalculation when debug override is active
+  }
   // Backfill breakdown for old matches
   for (var bi = 0; bi < matchesAll.length; bi++) {
     if (!matchesAll[bi].breakdown) {
