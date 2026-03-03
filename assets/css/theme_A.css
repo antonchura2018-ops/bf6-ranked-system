@@ -4072,3 +4072,38 @@ body.is-cinematic [id*="rankUp"] [class*="emblem"],
 body.is-cinematic [id*="tierUp"] [class*="emblem"]{
   display: none !important;
 }
+/* =========================================================
+   LOCK EMBLEM OVERLAY (DO NOT MOVE)
+   Paste at VERY END of theme_A.css
+   ========================================================= */
+
+:root{
+  --emblemSize: clamp(620px, 58vw, 860px); /* size */
+  --emblemTop: 36.5vh;                     /* up/down */
+}
+
+/* Always centered on dashboard */
+body.is-dashboard #rankEmblemOverlay{
+  display: block !important;
+  position: fixed !important;
+  left: 50% !important;
+  top: var(--emblemTop) !important;
+  transform: translate(-50%, -50%) !important;
+
+  width: var(--emblemSize) !important;
+  height: var(--emblemSize) !important;
+
+  pointer-events: none !important;
+  z-index: 2500 !important;
+}
+
+/* Emblem draw */
+body.is-dashboard #rankEmblemOverlay .rankEmblem{
+  position: absolute !important;
+  inset: 0 !important;
+
+  background-image: var(--rankEmblemUrl) !important;
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+  background-size: 92% auto !important;
+}
