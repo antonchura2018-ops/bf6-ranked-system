@@ -4651,7 +4651,28 @@ function ensureRankEmblemOverlay(){
   }
   return overlay;
 }
+// Force overlay position (prevents random inline overrides)
+function lockRankEmblemOverlayPosition(){
+  const overlay = document.getElementById("rankEmblemOverlay");
+  if (!overlay) return;
 
+  // Remove any inline styles that can push it into a corner
+  overlay.style.left = "";
+  overlay.style.top = "";
+  overlay.style.right = "";
+  overlay.style.bottom = "";
+  overlay.style.transform = "";
+  overlay.style.margin = "";
+  overlay.style.inset = "";
+
+  // Also ensure the emblem itself doesn't get clipped/scaled weirdly
+  const emblem = overlay.querySelector(".rankEmblem");
+  if (emblem){
+    emblem.style.borderRadius = "0";
+    emblem.style.overflow = "visible";
+  }
+}
+  
 // Restart a CSS animation safely (no blink)
 function restartAnim(el, cls){
   if (!el) return;
@@ -4758,6 +4779,8 @@ function setDashboardMode(isDash){
   window.scrollTo(0, 0);
   // Ensure overlay exists early
   ensureRankEmblemOverlay();
+
+  if (isDash) lockRankEmblemOverlayPosition();
 }
 
 // Hook into showTab (keep your original showTab logic)
