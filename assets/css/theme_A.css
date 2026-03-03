@@ -3882,15 +3882,21 @@ body.is-dashboard #dashboard.section.active{
   z-index: 10;
 }
 
+:root{
+  --emblemSize: clamp(600px, 58vw, 820px); /* РОЗМІР */
+  --emblemTop: 36.5vh;                     /* ВВЕРХ/ВНИЗ */
+  --emblemX: -50%;                         /* ВЛІВО/ВПРАВО */
+}
+
 /* Overlay container */
 #rankEmblemOverlay{
   display: none;
   position: fixed;
   left: 50%;
-  top: 38vh; /* tweak 36–40vh if needed */
-  transform: translate(-50%, -50%);
-  width: clamp(560px, 54vw, 760px);
-  height: clamp(560px, 54vw, 760px);
+  top: var(--emblemTop);
+  transform: translate(var(--emblemX), -50%);
+  width: var(--emblemSize);
+  height: var(--emblemSize);
   pointer-events: none;
   z-index: 60;
 }
@@ -3907,9 +3913,8 @@ body.is-dashboard #rankEmblemOverlay{
   background-image: var(--rankEmblemUrl);
   background-repeat: no-repeat;
   background-position: center;
-  background-size: 92% auto; /* 88–100% */
+  background-size: 92% auto;
   filter: drop-shadow(0 18px 48px rgba(0,0,0,.55));
-  transform: none;
 }
 
 /* Pop (restarted from JS with class "rankEmblemPop") */
