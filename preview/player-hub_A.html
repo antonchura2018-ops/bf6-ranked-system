@@ -2593,12 +2593,12 @@ if (DEBUG_RANK){
   const url = `/assets/ranks/${rank}.webp`;
   document.documentElement.style.setProperty("--rankEmblemUrl", `url("${url}")`);
 
-  // fallback inline
+  /* DISABLED: old inline emblem fallback (we use overlay only)
   const emblem = document.querySelector("#dashboard.section.active .rankHome .rankEmblem, .rankHome .rankEmblem");
   if (emblem){
     emblem.style.backgroundImage = `url("${url}")`;
   }
-
+END DISABLED */
   // ✅ Persist current rank so it survives tab switching / focus
   try{
     localStorage.setItem("bf6_rankTier", String(tier || ""));
