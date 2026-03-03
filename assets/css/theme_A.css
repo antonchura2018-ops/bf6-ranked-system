@@ -3884,8 +3884,8 @@ body.is-dashboard #dashboard.section.active{
 
 :root{
   --emblemSize: clamp(600px, 58vw, 820px); /* РОЗМІР */
-  --emblemTop: 36.5vh;                     /* ВВЕРХ/ВНИЗ */
-  --emblemX: -50%;                         /* ВЛІВО/ВПРАВО */
+  --emblemTop: 32.5vh;                     /* ВВЕРХ/ВНИЗ */
+  --emblemX: -30%;                         /* ВЛІВО/ВПРАВО */
 }
 
 /* Overlay container */
