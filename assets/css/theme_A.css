@@ -3880,6 +3880,10 @@ body.is-dashboard #dashboard.section.active{
   padding-top: 620px !important;
   position: relative;
   z-index: 10;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
 }
 
 :root{
@@ -3924,4 +3928,29 @@ body.is-dashboard #rankEmblemOverlay{
 @keyframes bf6EmblemPop{
   0%   { transform: scale(.985); opacity: .88; }
   100% { transform: scale(1);    opacity: 1; }
+}
+#dashboard.section.active .rankHome .rankTitle,
+#dashboard.section.active .rankHome #uiRankName{
+  text-align: center !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+#dashboard.section.active .rankHome .rankRP,
+#dashboard.section.active .rankHome #uiRP{
+  text-align: center !important;
+}
+/* CINEMATIC MODE: darken bg + hide static emblem overlay */
+body.is-cinematic::before{
+  content:"";
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.78);
+  z-index: 999;
+  pointer-events: none;
+}
+
+body.is-cinematic #rankEmblemOverlay{
+  opacity: 0 !important;
+  visibility: hidden !important;
 }
