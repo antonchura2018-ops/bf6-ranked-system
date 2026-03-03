@@ -2577,6 +2577,11 @@ function debugRPForTier(tierName){
 }
 
 function debugSetTier(tierName){
+  // ✅ Anti-spam: prevents double-click / wrong tier / missing animation when switching fast
+  if (window.__bf6_debugLock) return;
+  window.__bf6_debugLock = true;
+  setTimeout(() => { window.__bf6_debugLock = false; }, 200);
+
   const targetTotal = debugRPForTier(tierName);
 
   // тимчасово підміняємо totalRP через "фейкові матчі"
@@ -2590,7 +2595,6 @@ function debugSetTier(tierName){
   // ✅ Keep this tier as override so updateRankUI won't reset it from stored matches
   setRankOverride(tierName, targetTotal);
 
-  // маленький лог щоб тобі легко було мені скидати
   console.log("[DEBUG] tier =", tierName, "totalRP =", targetTotal);
 }
 
