@@ -3778,3 +3778,26 @@ body.is-dashboard #dashboard.section.active{
   height: 100vh !important;
   overflow: hidden !important;
 }
+#rankEmblemOverlay{
+  display:none !important;
+  position: fixed !important;
+  left: 50% !important;
+  top: 38vh !important;
+  transform: translate(-50%, -50%) !important;
+  width: 760px !important;
+  height: 760px !important;
+  pointer-events: none !important;
+  z-index: 999 !important;
+}
+
+body.is-dashboard #rankEmblemOverlay{
+  display:block !important;
+}
+
+#rankEmblemOverlay .rankEmblem{
+  width: 100% !important;
+  height: 100% !important;
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+  background-size: 92% auto !important;
+}
