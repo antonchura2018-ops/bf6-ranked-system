@@ -1,5 +1,6 @@
 /* theme_A.css — Neon Ops (Apex-like, non-military) */
 :root{
+  --rankEmblemUrl: url("/assets/ranks/outcast.webp");
   /* fonts */
   --font-ui: "Rajdhani", system-ui, -apple-system, Segoe UI, sans-serif;
   --font-body: "Inter", system-ui, -apple-system, Segoe UI, sans-serif;
