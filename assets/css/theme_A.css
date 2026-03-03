@@ -4111,3 +4111,42 @@ body.is-dashboard #rankEmblemOverlay .rankEmblem{
 #dashboard.section.active .rankHome .rankEmblem{
   display: none !important;
 }
+/* FULL BLACKOUT DURING CINEMATIC */
+body.is-cinematic{
+  background: #000 !important;
+}
+
+body.is-cinematic::before{
+  content:"";
+  position: fixed;
+  inset: 0;
+  background: #000;          /* 100% black */
+  z-index: 5000;
+  pointer-events: none;
+}
+
+/* Hide all site UI during cinematic */
+body.is-cinematic .navbar,
+body.is-cinematic .section{
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+/* But keep cinematic overlay visible (adjust selector if your overlay has a different id/class) */
+body.is-cinematic #rankUpOverlay,
+body.is-cinematic #tierUpOverlay,
+body.is-cinematic .rankUpOverlay,
+body.is-cinematic .tierUpOverlay{
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: none !important;
+  z-index: 6000 !important;
+}
+
+/* Also keep the emblem overlay visible during cinematic */
+body.is-cinematic #rankEmblemOverlay{
+  opacity: 1 !important;
+  visibility: visible !important;
+  z-index: 6500 !important;
+}
