@@ -4799,26 +4799,29 @@ document.addEventListener("DOMContentLoaded", function(){
   // IMPORTANT: renderHistoryFromStorage runs below; after it, restore rank state so it never falls back to Thrall label
   setTimeout(restoreRank, 0);
 });
-// ===== CINEMATIC MODE TOGGLE (hide overlay + darken bg) =====
 (function(){
-  function cinematicOn(){ document.body.classList.add("is-cinematic"); }
-  function cinematicOff(){ document.body.classList.remove("is-cinematic"); }
+  function on(){ document.body.classList.add("is-cinematic"); }
+  function off(){ document.body.classList.remove("is-cinematic"); }
+
+  // IMPORTANT: set these durations to your real animation length
+  const RANK_UP_MS = 1800;
+  const TIER_UP_MS = 1600;
 
   if (typeof window.showRankUp === "function"){
-    const _rankUp = window.showRankUp;
+    const _f = window.showRankUp;
     window.showRankUp = function(payload){
-      cinematicOn();
-      try{ return _rankUp(payload); }
-      finally{ setTimeout(cinematicOff, 1600); }
+      on();
+      try{ return _f(payload); }
+      finally{ setTimeout(off, RANK_UP_MS); }
     };
   }
 
   if (typeof window.showTierUp === "function"){
-    const _tierUp = window.showTierUp;
+    const _f = window.showTierUp;
     window.showTierUp = function(payload){
-      cinematicOn();
-      try{ return _tierUp(payload); }
-      finally{ setTimeout(cinematicOff, 1400); }
+      on();
+      try{ return _f(payload); }
+      finally{ setTimeout(off, TIER_UP_MS); }
     };
   }
 })();
