@@ -1897,11 +1897,7 @@ body{
     
 
 <div class="rankHome__center">
-
-  <!-- placeholder for your emblem (later) -->
-  <div class="rankEmblem"></div>
-
-  <div class="rankTitle" id="uiRankName">OUTCAST</div>
+<div class="rankTitle" id="uiRankName">OUTCAST</div>
   <div class="rankRP" id="uiRP">0 <span>RP</span></div>
 
     <div class="rankProgress">
@@ -2248,12 +2244,8 @@ function showTab(tabId, btn) {
 
   // Dashboard mode toggle (CSS controls overlay + no-scroll)
 document.body.classList.toggle("is-dashboard", tabId === "dashboard");
+  document.documentElement.classList.toggle("is-dashboard", tabId === "dashboard");
   if (tabId === "dashboard") restoreRankFromStorage();
-  // (optional safety) force overlay visibility even if old CSS exists
-var overlay = document.getElementById("rankEmblemOverlay");
-if (overlay) overlay.style.display = (tabId === "dashboard") ? "block" : "none";
-  
-
   // Always reset scroll when switching tabs
   window.scrollTo(0, 0);
 
@@ -2268,11 +2260,73 @@ if (overlay) overlay.style.display = (tabId === "dashboard") ? "block" : "none";
   if (btn && btn.classList) btn.classList.add("active");
 }
   
- function restoreRankFromStorage(){ try{ if (typeof restoreRank==="function") restoreRank(); }catch(e){} }
+ 
+/* ===== RANK OVERRIDE (debug/preview) ===== */
+var RANK_OVERRIDE_KEY = "bf6_rankOverride_v1";
 
+function setRankOverride(tierName, totalRP){
+  try{
+    localStorage.setItem(RANK_OVERRIDE_KEY, JSON.stringify({
+      tier: String(tierName || ""),
+      rp: Number(totalRP || 0),
+      ts: Date.now()
+    }));
+  }catch(e){}
+}
+
+function getRankOverride(){
+  try{
+    var raw = localStorage.getItem(RANK_OVERRIDE_KEY);
+    if (!raw) return null;
+    var o = JSON.parse(raw);
+    if (!o || o.rp == null) return null;
+    return o;
+  }catch(e){ return null; }
+}
+
+function clearRankOverride(){
+  try{ localStorage.removeItem(RANK_OVERRIDE_KEY); }catch(e){}
+}
+
+function restoreRankFromStorage(){
+  try{
+    // ✅ If override exists, restore override first
+    var ov = getRankOverride && getRankOverride();
+    if (ov && ov.rp != null) {
+      window.applyHomeTier(ov.tier, Number(ov.rp));
+      try{
+        var rr = Number(ov.rp);
+        var rk = getRank(rr);
+        updateHomeHubUI(rk, rr);
+      }catch(e){}
+      return;
+    }
+    var tier = localStorage.getItem("bf6_rankTier");
+    var rp = localStorage.getItem("bf6_rankRP");
+    if (!tier || rp == null || !window.applyHomeTier) return;
+
+    // ✅ Do not re-apply if nothing changed (prevents emblem blinking)
+    var lastTier = window.__bf6_lastTier;
+    var lastRp   = window.__bf6_lastRp;
+
+    if (String(lastTier) === String(tier) && Number(lastRp) === Number(rp)) {
+      return;
+    }
+
+    window.applyHomeTier(tier, Number(rp));
+
+    // also sync Player Hub label/badge to the same RP
+    try{
+      var rr = Number(rp);
+      var rk = getRank(rr);
+      updateHomeHubUI(rk, rr);
+    }catch(e){}
+  }catch(e){}
+}
 
 // ensure correct mode on initial load (dashboard is default)
 document.body.classList.add("is-dashboard");
+document.documentElement.classList.add("is-dashboard");
 window.scrollTo(0, 0);
 
 document.addEventListener("visibilitychange", function(){
@@ -2530,13 +2584,24 @@ function debugRPForTier(tierName){
 }
 
 function debugSetTier(tierName){
+  // ✅ Anti-spam (prevents double firing)
+  if (window.__bf6_debugLock) return;
+  window.__bf6_debugLock = true;
+  setTimeout(() => { window.__bf6_debugLock = false; }, 120);
+
   const targetTotal = debugRPForTier(tierName);
 
-  // lock override so matches recalculation won't snap you back
-  setOverrideRP(targetTotal);
+  // ✅ Persist override immediately
+  setRankOverride(tierName, targetTotal);
 
-  // apply instantly everywhere (with cinematic)
-  applyTotalRP(targetTotal, { skipCinematic: false });
+  // ✅ Apply tier synchronously (no delayed updateRankUI)
+  applyHomeTier(tierName, targetTotal);
+
+  // ✅ Also sync Player Hub UI immediately
+  try{
+    const rk = getRank(targetTotal);
+    updateHomeHubUI(rk, targetTotal);
+  }catch(e){}
 
   console.log("[DEBUG] tier =", tierName, "totalRP =", targetTotal);
 }
@@ -2570,35 +2635,61 @@ if (DEBUG_RANK){
 
   console.log("[DEBUG] Rank switcher ON: keys 1-0, [ ]");
 }
- function applyHomeTier(tierName, totalRP){
-  // якщо totalRP є — беремо істину з getRank
+ function ensureRankEmblemOverlay(){
+  let overlay = document.getElementById("rankEmblemOverlay");
+  if (!overlay){
+    overlay = document.createElement("div");
+    overlay.id = "rankEmblemOverlay";
+    overlay.innerHTML = '<div class="rankEmblem"></div>';
+    document.body.appendChild(overlay);
+  }
+  return overlay;
+}
+
+function applyHomeTier(tierName, totalRP){
+  // If totalRP is provided — treat it as truth via getRank()
   const r = (typeof totalRP === "number") ? getRank(totalRP) : null;
   const tier = (r?.tierName || tierName || "OUTCAST");
   const rank = String(tier || "OUTCAST").toLowerCase();
 
-  // 1) theme switch
+  // 1) theme switch (for accents etc.)
   document.body.dataset.rank = rank;
 
-  // 2) rank name (Rank page)
+  // 2) texts (Player Hub)
   const nameEl = document.getElementById("uiRankName") || document.querySelector(".rankTitle");
   if (nameEl) nameEl.textContent = String(tier).toUpperCase();
 
-  // 3) RP text (Rank page)
   const rpEl = document.getElementById("uiRP") || document.querySelector(".rankRP");
   if (rpEl && typeof totalRP === "number"){
     rpEl.textContent = `${totalRP.toLocaleString("en-US")} RP`;
   }
 
-  // 4) emblem (Rank page) — via CSS var
+  // 3) emblem url (single source of truth)
   const url = `/assets/ranks/${rank}.webp`;
   document.documentElement.style.setProperty("--rankEmblemUrl", `url("${url}")`);
+  document.documentElement.style.setProperty("--badge-url", `url("${url}")`); // animation badge
 
-  /* DISABLED: old inline emblem fallback (we use overlay only)
-  const emblem = document.querySelector("#dashboard.section.active .rankHome .rankEmblem, .rankHome .rankEmblem");
-  if (emblem){
-    emblem.style.backgroundImage = `url("${url}")`;
+  // 4) ensure overlay + push url into overlay element (no other emblem in DOM)
+  const overlay = ensureRankEmblemOverlay();
+  const ovEmblem = overlay && overlay.querySelector(".rankEmblem");
+  if (ovEmblem){
+    ovEmblem.style.backgroundImage = `url("${url}")`;
+    ovEmblem.style.backgroundRepeat = "no-repeat";
+    ovEmblem.style.backgroundPosition = "center";
+    ovEmblem.style.backgroundSize = "92% auto";
   }
-END DISABLED */
+
+  // 5) persist rank — survives tab switch / focus
+  try{
+    localStorage.setItem("bf6_rankTier", String(tier));
+    localStorage.setItem("bf6_rankRP", String(typeof totalRP === "number" ? totalRP : ""));
+  }catch(e){}
+
+  // 6) anti-flicker memory
+  window.__bf6_lastTier = String(tier);
+  window.__bf6_lastRp = (typeof totalRP === "number") ? totalRP : null;
+}
+
   // ✅ Persist current rank so it survives tab switching / focus
   try{
     localStorage.setItem("bf6_rankTier", String(tier || ""));
@@ -3083,28 +3174,19 @@ function updateRankUI(matchesAll) {
   var sum = 0;
   for (var i = 0; i < matchesAll.length; i++) sum += Number(matchesAll[i].rp || 0);
 
-  
-var totalRP = START_RP + sum;
-if (totalRP < MIN_RP) totalRP = MIN_RP;
+  var totalRP = START_RP + sum;
+  if (totalRP < MIN_RP) totalRP = MIN_RP;
 
-// ✅ If user set an override (debug/preview), use it and do NOT snap back to match-based Thrall
-var _ov = getOverrideRP ? getOverrideRP() : null;
-if (_ov != null && Number.isFinite(_ov)) {
-  totalRP = Number(_ov);
+
+// ✅ If override exists, do NOT recompute rank from stored matches (prevents reverting to THRALL)
+var ov = getRankOverride();
+if (ov && ov.rp != null) {
+  totalRP = Number(ov.rp);
+  if (totalRP < MIN_RP) totalRP = MIN_RP;
 }
 
-var rank = getRank(totalRP);
+  var rank = getRank(totalRP);
   updateHomeHubUI(rank, totalRP);
-  // keep Rank page + overlay emblem in sync
-  try{ applyHomeTier(rank.tierName, totalRP); }catch(e){}
-  try{
-    const overlay = (typeof ensureRankEmblemOverlay==="function") ? ensureRankEmblemOverlay() : null;
-    const el = overlay ? overlay.querySelector(".rankEmblem") : null;
-    const key = String(rank.tierName || "OUTCAST").toLowerCase();
-    const url = `/assets/ranks/${key}.webp`;
-    if (el) el.style.backgroundImage = `url("${url}")`;
-  }catch(e){}
-
   // ===== KROK 6.2: Hub platform tuning for ALL 10 ranks =====
 var hub = document.querySelector("#dashboard");
 if (hub && rank) {
@@ -3336,39 +3418,39 @@ if (badgeImg && rank.tierName) {
   // Cinematic trigger (tier + division)
 var currentState = { tierIndex: rank.tierIndex, divIndex: rank.divIndex, label: rank.label };
 
-if (window.lastRankState === null) {
-  window.lastRankState = currentState;
+if (lastRankState === null) {
+  lastRankState = currentState;
 } else {
-  var tierChanged = currentState.tierIndex !== window.lastRankState.tierIndex;
-  var divChanged = currentState.divIndex !== window.lastRankState.divIndex;
+  var tierChanged = currentState.tierIndex !== lastRankState.tierIndex;
+  var divChanged = currentState.divIndex !== lastRankState.divIndex;
 
   if (tierChanged) {
-    var promotedTier = currentState.tierIndex > window.lastRankState.tierIndex;
+    var promotedTier = currentState.tierIndex > lastRankState.tierIndex;
 
     if (typeof window.showRankUp === "function") {
       window.showRankUp({
-        fromText: window.lastRankState.label,
+        fromText: lastRankState.label,
         toText: currentState.label,
         rrText: promotedTier ? "NEW RANK UNLOCKED" : "RANK DOWN"
       });
     }
 
-    window.lastRankState = currentState;
+    lastRankState = currentState;
   } else if (divChanged) {
     var a = (currentState.divIndex === null || currentState.divIndex === undefined) ? 0 : currentState.divIndex;
-    var b = (window.lastRankState.divIndex === null || window.lastRankState.divIndex === undefined) ? 0 : window.lastRankState.divIndex;
+    var b = (lastRankState.divIndex === null || lastRankState.divIndex === undefined) ? 0 : lastRankState.divIndex;
     var promotedDiv = a > b;
 
     if (typeof window.showTierUp === "function") {
       window.showTierUp({
-  fromText: window.lastRankState.label,
+  fromText: lastRankState.label,
   toText: currentState.label,
   rrText: promotedDiv ? "TIER UPGRADED" : "TIER DOWNGRADED",
   divIndex: currentState.divIndex
       });
     }
 
-    window.lastRankState = currentState;
+    lastRankState = currentState;
     }
   }
 }
@@ -3518,7 +3600,9 @@ if (summaryEl) {
   }
   if (changed) saveMatches(matchesAll);
 
+  if (!getRankOverride()) {
   updateRankUI(activeMatchesAll);
+}
   // ===== Player Hub snapshot (ACTIVE season) =====
   var statsHub = computeSeasonStats(activeMatchesAll);
 
@@ -4326,6 +4410,9 @@ function openOverlay(mode){
 
   clearTimers();
 
+  // Cinematic mode: hide site, show only award overlay
+  document.body.classList.add('is-cinematic');
+
   // prevent double-open flicker
   if (els.award.classList.contains('is-open')) {
     els.award.classList.remove('is-open');
@@ -4351,6 +4438,9 @@ function closeOverlay(){
   if(!els.award) return;
 
   clearTimers();
+
+  // leave cinematic mode when closing
+  document.body.classList.remove('is-cinematic');
 
   els.award.classList.remove('is-open','is-tierup','is-rankup','is-top','is-finisher','is-up','is-down');
   els.award.removeAttribute('data-phase');
@@ -4634,197 +4724,100 @@ window.showRankUp = function(payload){
 };
 
 
-  /* ===============================
-   STABLE PLAYER HUB OVERLAY SYSTEM
-   - No DOM moving
-   - No intervals
-   - Dashboard only
-   =============================== */
+  function mountRankEmblemOverlay(){
+  // 1) шукаємо емблему
+  const emblem = document.querySelector(".rankHome .rankEmblem");
+  if (!emblem) return;
 
-function ensureRankEmblemOverlay(){
+  // 2) створюємо overlay якщо ще нема
   let overlay = document.getElementById("rankEmblemOverlay");
   if (!overlay){
     overlay = document.createElement("div");
     overlay.id = "rankEmblemOverlay";
-    overlay.innerHTML = '<div class="rankEmblem"></div>';
     document.body.appendChild(overlay);
   }
-  return overlay;
-}
-// Force overlay position (prevents random inline overrides)
-function lockRankEmblemOverlayPosition(){
-  const overlay = document.getElementById("rankEmblemOverlay");
-  if (!overlay) return;
 
-  // Remove any inline styles that can push it into a corner
-  overlay.style.left = "";
-  overlay.style.top = "";
-  overlay.style.right = "";
-  overlay.style.bottom = "";
-  overlay.style.transform = "";
-  overlay.style.margin = "";
-  overlay.style.inset = "";
+  // 3) переносимо емблему в overlay (ВІДРІЗАЄ від тексту назавжди)
+  overlay.appendChild(emblem);
 
-  // Also ensure the emblem itself doesn't get clipped/scaled weirdly
-  const emblem = overlay.querySelector(".rankEmblem");
-  if (emblem){
-    emblem.style.borderRadius = "0";
-    emblem.style.overflow = "visible";
-  }
-}
-  
-// Restart a CSS animation safely (no blink)
-function restartAnim(el, cls){
-  if (!el) return;
-  el.classList.remove(cls);
-  // force reflow
-  void el.offsetWidth;
-  el.classList.add(cls);
-}
+  // 4) гарантуємо fixed-стилі інлайном (це переб’є будь-які CSS війни)
+  overlay.style.position = "fixed";
+  overlay.style.left = "50%";
+  overlay.style.top  = "calc(50% - 10px)";                 // ✅ справжній центр екрана
+  overlay.style.transform = "translate(-50%, -50%)";
+  overlay.style.zIndex = "9999";
+  overlay.style.pointerEvents = "none";
+  overlay.style.width = "560px";
+  overlay.style.height = "560px";
+  overlay.style.display = "block";
 
-// One source of truth for current RP in preview/debug
-const BF6_OVERRIDE_KEY = "bf6_override_rp_v1";
-function getOverrideRP(){
-  try{
-    const v = localStorage.getItem(BF6_OVERRIDE_KEY);
-    if (v == null || v === "") return null;
-    const n = Number(v);
-    return Number.isFinite(n) ? n : null;
-  }catch(e){ return null; }
-}
-function setOverrideRP(rp){
-  try{ localStorage.setItem(BF6_OVERRIDE_KEY, String(rp)); }catch(e){}
-}
-function clearOverrideRP(){
-  try{ localStorage.removeItem(BF6_OVERRIDE_KEY); }catch(e){}
+  // скидаємо вплив layout-контейнерів
+  overlay.style.margin = "0";
+  overlay.style.padding = "0";
+
+  emblem.style.position = "absolute";
+  emblem.style.left = "0";
+  emblem.style.top = "0";
+  emblem.style.right = "0";
+  emblem.style.bottom = "0";
+  emblem.style.margin = "0";
+  emblem.style.pointerEvents = "none";
+
+  // force visible no matter what CSS says
+  emblem.style.display = "block";
+  emblem.style.visibility = "visible";
+  emblem.style.backgroundRepeat = "no-repeat";
+  emblem.style.backgroundPosition = "center";
+  emblem.style.backgroundSize     = "92% auto"; // <- 88%..105% підкручуй
+  emblem.style.opacity = "1";
+  emblem.style.transform = "none";
 }
 
-// Apply TOTAL RP everywhere (Hub + Rank page + emblem overlay) + cinematic
-function applyTotalRP(totalRP, opts){
-  opts = opts || {};
-  if (typeof totalRP !== "number" || !Number.isFinite(totalRP)) return;
+function tryMountOverlay(){
+  let n = 0;
+  const t = setInterval(()=>{
+    mountRankEmblemOverlay();
+    const ok = document.getElementById("rankEmblemOverlay")?.querySelector(".rankEmblem");
+    if (ok || n++ > 30) clearInterval(t);
+  }, 100);
+}
+document.addEventListener("DOMContentLoaded", tryMountOverlay);
+  function forceHomeTextLayout(){
+  const c = document.querySelector("#dashboard .rankHome .rankHome__center");
+  if(!c) return;
 
-  const rank = getRank(totalRP);
+  // 1) kill flex-centering (у тебе саме воно тримає текст по середині)
+  c.style.display = "block";
+  c.style.justifyContent = "initial";
+  c.style.alignItems = "initial";
 
-  // 1) Update hub UI (labels, bars, etc)
-  updateHomeHubUI(rank, totalRP);
-
-  // 2) Update rank page + persist tier/rp
-  applyHomeTier(rank.tierName, totalRP);
-
-  // 3) Update overlay emblem image (always)
-  const overlay = ensureRankEmblemOverlay();
-  const el = overlay.querySelector(".rankEmblem");
-  const key = String(rank.tierName || "OUTCAST").toLowerCase();
-  const url = `/assets/ranks/${key}.webp`;
-  if (el){
-    el.style.backgroundImage = `url("${url}")`;
-    el.style.backgroundRepeat = "no-repeat";
-    el.style.backgroundPosition = "center";
-    el.style.backgroundSize = "92% auto";
-  }
-
-  // 4) Cinematic (optional)
-  if (!opts.skipCinematic){
-    try{
-      const currentState = { tierIndex: rank.tierIndex, divIndex: rank.divIndex, label: rank.label };
-      if (window.lastRankState == null){
-        window.lastRankState = currentState;
-      } else {
-        const tierChanged = currentState.tierIndex !== window.lastRankState.tierIndex;
-        const divChanged  = currentState.divIndex  !== window.lastRankState.divIndex;
-
-        if (tierChanged && typeof window.showRankUp === "function"){
-          const promotedTier = currentState.tierIndex > window.lastRankState.tierIndex;
-          window.showRankUp({ fromText: window.lastRankState.label, toText: currentState.label, rrText: promotedTier ? "NEW RANK UNLOCKED" : "RANK DOWN" });
-          window.lastRankState = currentState;
-        } else if (divChanged && typeof window.showTierUp === "function"){
-          const a = (currentState.divIndex == null) ? 0 : Number(currentState.divIndex);
-          const b = (window.lastRankState.divIndex == null) ? 0 : Number(window.lastRankState.divIndex);
-          const promotedDiv = a > b;
-          window.showTierUp({ fromText: window.lastRankState.label, toText: currentState.label, rrText: promotedDiv ? "TIER UPGRADED" : "TIER DOWNGRADED", divIndex: currentState.divIndex });
-          window.lastRankState = currentState;
-        }
-      }
-    }catch(e){}
-  }
-
-  // 5) Small pop animation on emblem (never blocks)
-  restartAnim(document.getElementById("rankEmblemOverlay"), "rankEmblemPop");
+  // 2) повертаємо текст вниз (підкручуй тільки це число)
+  c.style.paddingTop = "520px"; // <- 480-600px під свою геометрію
+  c.style.textAlign = "center";
 }
 
-// Restore rank on load: prefer override, else stored rp, else compute from matches
-function restoreRank(){
-  const ov = getOverrideRP();
-  if (ov != null){
-    applyTotalRP(ov, { skipCinematic: true });
-    return;
-  }
-  try{
-    const rp = localStorage.getItem("bf6_rankRP");
-    if (rp != null && rp !== ""){
-      const n = Number(rp);
-      if (Number.isFinite(n)){
-        applyTotalRP(n, { skipCinematic: true });
-        return;
-      }
-    }
-  }catch(e){}
-}
+document.addEventListener("DOMContentLoaded", forceHomeTextLayout);
 
-// Dashboard mode toggle (CSS controls overlay + scroll)
-function setDashboardMode(isDash){
-  document.body.classList.toggle("is-dashboard", !!isDash);
-  // Always reset scroll on tab switch
-  window.scrollTo(0, 0);
-  // Ensure overlay exists early
-  ensureRankEmblemOverlay();
+  /* ==========================================
+   FORCE: no scroll + always reset to top
+   ========================================== */
+document.documentElement.style.overflow = "hidden";
+document.body.style.overflow = "hidden";
+window.scrollTo(0, 0);
 
-  if (isDash) lockRankEmblemOverlayPosition();
-}
-
-// Hook into showTab (keep your original showTab logic)
-(function wrapShowTab(){
-  if (typeof window.showTab !== "function") return;
-  const _showTab = window.showTab;
+// wrap showTab to always reset scroll
+if (window.showTab) {
+  const __showTab = window.showTab;
   window.showTab = function(tabId, btn){
-    _showTab(tabId, btn);
-    setDashboardMode(tabId === "dashboard");
+    __showTab(tabId, btn);
+    window.scrollTo(0, 0);
   };
-})();
-
+}
 document.addEventListener("DOMContentLoaded", function(){
-  // default tab is dashboard
-  setDashboardMode(true);
-  // IMPORTANT: renderHistoryFromStorage runs below; after it, restore rank state so it never falls back to Thrall label
-  setTimeout(restoreRank, 0);
+  restoreRankFromStorage();
 });
-(function(){
-  function on(){ document.body.classList.add("is-cinematic"); }
-  function off(){ document.body.classList.remove("is-cinematic"); }
-
-  // IMPORTANT: set these durations to your real animation length
-  const RANK_UP_MS = 1800;
-  const TIER_UP_MS = 1600;
-
-  if (typeof window.showRankUp === "function"){
-    const _f = window.showRankUp;
-    window.showRankUp = function(payload){
-      on();
-      try{ return _f(payload); }
-      finally{ setTimeout(off, RANK_UP_MS); }
-    };
-  }
-
-  if (typeof window.showTierUp === "function"){
-    const _f = window.showTierUp;
-    window.showTierUp = function(payload){
-      on();
-      try{ return _f(payload); }
-      finally{ setTimeout(off, TIER_UP_MS); }
-    };
-  }
-})();
+  
+  
   
 /* ===== INIT ===== */
 renderHistoryFromStorage();
@@ -4893,7 +4886,16 @@ renderHistoryFromStorage();
   
 </div>
 
-<script src="assets/js/stats.js?v=1"></script>
+<script src="assets/js/stats.js?v=1">/* ===== INIT (fixed) ===== */
+(function initPlayerHub(){
+  try{
+    var dash = document.getElementById("dashboard");
+    document.body.classList.toggle("is-dashboard", !!(dash && dash.classList.contains("active")));
+    ensureRankEmblemOverlay();
+    if (typeof restoreRankFromStorage === "function") restoreRankFromStorage();
+  }catch(e){}
+})();
+</script>
   
 </body>
 </html>
