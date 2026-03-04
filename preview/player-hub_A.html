@@ -2214,7 +2214,100 @@ function playSfx(mode) {
   } catch(e) {}
 }
   
-  function preloadRankBadges() {
+  /* ===== FIX: ensure rankTiers + getRank exist BEFORE any debug/preload uses them ===== */
+if (typeof window.rankTiers === "undefined") {
+  var rankTiers = [
+  { name: "OUTCAST",   color: "#ffb86b", min: 0   },
+  { name: "THRALL",    color: "#22d3ee", min: 300 },
+  { name: "MARAUDER",  color: "#38bdf8", min: 600 },
+  { name: "HARBINGER", color: "#a78bfa", min: 900 },
+  { name: "REAPER",    color: "#fb7185", min: 1200 },
+  { name: "ARCHON",    color: "#fbbf24", min: 1500 },
+  { name: "OVERLORD",  color: "#2dd4bf", min: 1800 },
+  { name: "MONARCH",   color: "#60a5fa", min: 2100 },
+  { name: "SERAPH",    color: "#e5e7eb", min: 2400 },
+  { name: "EIDOLON",   color: "#ff3b3b", min: 2700 }
+];
+
+// cinematic tracking (tier + division)
+var lastRankState = null; // { tierIndex, divIndex, label }
+  window.rankTiers = rankTiers;
+} else {
+  var rankTiers = window.rankTiers;
+}
+
+if (typeof window.getRank !== "function") {
+  function getRank(totalRP) {
+  // find tier index
+  var tierIndex = 0;
+  for (var i = 0; i < rankTiers.length; i++) {
+    if (totalRP >= rankTiers[i].min) tierIndex = i;
+  }
+
+  var tier = rankTiers[tierIndex];
+
+  // NEXUS special case
+  if (tier.name === "EIDOLON") {
+    return {
+      label: "EIDOLON",
+      tierName: "EIDOLON",
+      tierIndex: tierIndex,
+      div: null,
+      divIndex: null,
+      color: tier.color,
+      rr: 100,
+      nextMin: null
+    };
+  }
+
+  var nextTier = rankTiers[tierIndex + 1];
+
+  // RR inside this tier
+  var rrInTier = totalRP - tier.min;
+  if (rrInTier < 0) rrInTier = 0;
+
+  // Division index (0..2) based on 100 RR chunks
+  var divIndex = Math.floor(rrInTier / DIV_RR);
+  if (divIndex < 0) divIndex = 0;
+  if (divIndex > (DIVS_PER_TIER - 1)) divIndex = (DIVS_PER_TIER - 1);
+
+  // RR progress inside current division (0..99)
+  var rr = rrInTier - (divIndex * DIV_RR);
+  if (rr < 0) rr = 0;
+  if (rr > (DIV_RR - 1)) rr = (DIV_RR - 1);
+
+  // Division label mapping: 0->III, 1->II, 2->I
+  var div = (divIndex === 0) ? "III" : (divIndex === 1 ? "II" : "I");
+
+  // Label
+  var label = tier.name + " " + div;
+
+  // Next threshold shown on UI
+  var nextMin = null;
+  if (divIndex === (DIVS_PER_TIER - 1)) nextMin = nextTier ? nextTier.min : null;
+  else nextMin = tier.min + ((divIndex + 1) * DIV_RR);
+
+  return {
+    label: label,
+    tierName: tier.name,
+    tierIndex: tierIndex,
+    div: div,
+    divIndex: divIndex,
+    color: tier.color,
+    rr: rr, // 0..99
+    nextMin: nextMin
+  };
+}
+
+/* ===== BR RR FORMULA (hard to climb) ===== */
+function calcRPBreakdown(m) {
+  var place = Math.min(25, Math.max(1, Number(m.place || 25)));
+  window.getRank = getRank;
+} else if (typeof getRank !== "function") {
+  function getRank(totalRP){ return window.getRank(totalRP); }
+}
+
+function preloadRankBadges() {
   for (var i = 0; i < rankTiers.length; i++) {
     var img = new Image();
     img.src = "assets/ranks/" + String(rankTiers[i].name).toLowerCase() + ".webp";
