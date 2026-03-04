@@ -3634,35 +3634,35 @@ html, body{
 
 /* ===== HOME HUD: emblem locked to ring center (FIXED) — PASTE ABSOLUTELY LAST ===== */
 
-/* DISABLED: OLD INLINE EMBLEM (conflicts with overlay)
+/* Важливо: щоб fixed працював нормально */
 html, body { height: 100%; }
 
-/* 1) Емблема завжди в центрі вьюпорта 
+/* 1) Емблема завжди в центрі вьюпорта */
 #dashboard.section.active .rankHome .rankEmblem{
   position: fixed !important;
 
-  /* центр екрана 
+  /* центр екрана */
   left: 50% !important;
-  top: 44vh !important;            
+  top: 44vh !important;            /* 🔧 підкручуй: 40-48vh */
   transform: translate(-50%, -50%) !important;
 
-  /* твій розмір 
+  /* твій розмір */
   width: 340px !important;
   height: 340px !important;
 
-  /* зображення 
+  /* зображення */
   background-repeat: no-repeat !important;
   background-position: center !important;
   background-size: contain !important;
 
-  /* поверх кільця/фону, але не блочить кліки 
+  /* поверх кільця/фону, але не блочить кліки */
   z-index: 8 !important;
   pointer-events: none !important;
 
-  /* щоб не “прив’язувалась” до тексту 
+  /* щоб не “прив’язувалась” до тексту */
   margin: 0 !important;
 }
-  /* FIX: do not trap fixed inside transformed parents 
+  /* FIX: do not trap fixed inside transformed parents */
 #dashboard.section.active,
 #dashboard.section.active .rankHome,
 #dashboard.section.active .rankHome__center,
@@ -3846,307 +3846,114 @@ body.is-dashboard #dashboard.section.active{
   overflow: hidden !important;
 }
 
-
 /* =========================================================
-   PLAYER HUB — HALO EMBLEM OVERLAY (FINAL)
-   - dashboard only
-   - fixed center, no DOM moving
-   - does NOT affect text layout
+   BF6 FIXED FINAL OVERRIDES (DO NOT DUPLICATE)
+   - Single emblem system via #rankEmblemOverlay
+   - Text is independent (below ring)
+   - Cinematic blackout during rank/tier animation
    ========================================================= */
 
-html, body{
-  height: 100%;
-  overflow-x: hidden;
-}
-
-/* Scroll everywhere by default */
-body{
-  overflow-y: auto;
-}
-
-/* No scroll only on Player Hub */
+/* A) Dashboard scrolling: allow scroll when zoom would clip, but hide scrollbar */
 body.is-dashboard{
-  overflow-y: auto !important;   /* ✅ якщо zoom збільшив — можна прокрутити */
+  overflow-y: auto !important;
   overflow-x: hidden !important;
-  scrollbar-width: none;         /* Firefox: hide scrollbar */
+  scrollbar-width: none;           /* Firefox */
+}
+body.is-dashboard::-webkit-scrollbar{ width:0; height:0; } /* Chromium */
+
+/* B) Kill any inline/old emblem placeholders inside the home center */
+#dashboard.section.active .rankHome__center .rankEmblem{
+  display: none !important;
 }
 
-body.is-dashboard::-webkit-scrollbar{
-  width: 0;
-  height: 0;
-}
-
-/* Make sure dashboard section doesn't create its own scroll */
-body.is-dashboard #dashboard.section.active{
-  height: 100vh;
-  overflow: hidden !important;
-}
-
-/* Text block stays below the ring (adjust only this value if needed) */
-#dashboard.section.active .rankHome .rankHome__center{
-  padding-top: 620px !important;
-  position: relative;
-  z-index: 10;
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  text-align: center;
-}
-
+/* C) Overlay emblem (ONLY source of emblem on Player Hub) */
 :root{
-  --emblemSize: clamp(600px, 58vw, 820px); /* РОЗМІР */
-  --emblemTop: 22.5vh;                     /* ВВЕРХ/ВНИЗ */
-  --emblemX: -10%;                         /* ВЛІВО/ВПРАВО */
+  --emblemSize: clamp(640px, 56vw, 860px);
+  --emblemTop: 38vh; /* center of the ring visually */
+  --emblemX: 50%;
 }
 
-/* Overlay container */
 #rankEmblemOverlay{
   display: none;
-  position: fixed;
-  left: 50%;
-  top: var(--emblemTop);
-  transform: translate(var(--emblemX), -50%);
-  width: var(--emblemSize);
-  height: var(--emblemSize);
-  pointer-events: none;
-  z-index: 60;
 }
 
-/* Visible only on dashboard */
-body.is-dashboard #rankEmblemOverlay{
-  display: block;
-}
-
-/* Emblem render (NO radius / NO overflow / NO clipping) */
-#rankEmblemOverlay .rankEmblem{
-  position: absolute;
-  inset: 0;
-  background-image: var(--rankEmblemUrl);
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: 92% auto;
-  filter: drop-shadow(0 18px 48px rgba(0,0,0,.55));
-}
-
-/* Pop (restarted from JS with class "rankEmblemPop") */
-#rankEmblemOverlay.rankEmblemPop .rankEmblem{
-  animation: bf6EmblemPop .22s ease-out;
-}
-@keyframes bf6EmblemPop{
-  0%   { transform: scale(.985); opacity: .88; }
-  100% { transform: scale(1);    opacity: 1; }
-}
-#dashboard.section.active .rankHome .rankTitle,
-#dashboard.section.active .rankHome #uiRankName{
-  text-align: center !important;
-  margin-left: auto !important;
-  margin-right: auto !important;
-}
-
-#dashboard.section.active .rankHome .rankRP,
-#dashboard.section.active .rankHome #uiRP{
-  text-align: center !important;
-}
-/* CINEMATIC MODE: darken bg + hide static emblem overlay */
-body.is-cinematic::before{
-  content:"";
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,.78);
-  z-index: 999;
-  pointer-events: none;
-}
-
-body.is-cinematic #rankEmblemOverlay{
-  opacity: 0 !important;
-  visibility: hidden !important;
-}
-/* =========================================================
-   FIX LOCK: EMBLEM OVERLAY ALWAYS CENTERED (HARD OVERRIDE)
-   Paste at VERY END of theme_A.css
-   ========================================================= */
-
-/* Tuning knobs */
-:root{
-  --emblemSize: clamp(620px, 58vw, 860px); /* size */
-  --emblemTop: 36.5vh;                     /* up/down */
-}
-
-/* Always create stable stacking & prevent any external overrides */
 body.is-dashboard #rankEmblemOverlay{
   display: block !important;
   position: fixed !important;
-  left: 50% !important;
+  left: var(--emblemX) !important;
   top: var(--emblemTop) !important;
   transform: translate(-50%, -50%) !important;
-
   width: var(--emblemSize) !important;
   height: var(--emblemSize) !important;
-
-  pointer-events: none !important;
-  z-index: 2000 !important;
-}
-
-/* Render */
-body.is-dashboard #rankEmblemOverlay .rankEmblem{
-  position: absolute !important;
-  inset: 0 !important;
-
-  background-image: var(--rankEmblemUrl) !important;
-  background-repeat: no-repeat !important;
-  background-position: center !important;
-  background-size: 92% auto !important;
-
-  filter: drop-shadow(0 18px 48px rgba(0,0,0,.55)) !important;
-}
-/* =========================================================
-   FIX: CENTER RANK TITLE + RP UNDER EMBLEM
-   ========================================================= */
-
-#dashboard.section.active .rankHome .rankHome__center{
-  width: 100% !important;
-  max-width: 1200px !important;
-  margin: 0 auto !important;
-  text-align: center !important;
-}
-
-#dashboard.section.active .rankHome .rankTitle,
-#dashboard.section.active .rankHome #uiRankName,
-#dashboard.section.active .rankHome .rankRP,
-#dashboard.section.active .rankHome #uiRP{
-  text-align: center !important;
-  margin-left: auto !important;
-  margin-right: auto !important;
-}
-/* =========================================================
-   CINEMATIC BLACKOUT: SHOW ONLY CINEMATIC + EMBLEM
-   ========================================================= */
-
-/* hard black background */
-body.is-cinematic{
-  background: #000 !important;
-}
-
-/* blackout layer */
-body.is-cinematic::before{
-  content:"";
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,.92);
-  z-index: 1500;
-  pointer-events: none;
-}
-
-/* Hide main UI during cinematic */
-body.is-cinematic .navbar,
-body.is-cinematic #dashboard.section.active,
-body.is-cinematic #rank.section.active,
-body.is-cinematic #history.section.active,
-body.is-cinematic #add.section.active{
-  opacity: 0 !important;
-  visibility: hidden !important;
-  pointer-events: none !important;
-}
-
-/* Keep your emblem visible in cinematic */
-body.is-cinematic #rankEmblemOverlay{
-  opacity: 1 !important;
-  visibility: visible !important;
-  z-index: 2500 !important;
-}
-
-/* Keep cinematic overlays above blackout (IDs may differ; these are safe) */
-body.is-cinematic [id*="RankUp"],
-body.is-cinematic [id*="rankUp"],
-body.is-cinematic [id*="TierUp"],
-body.is-cinematic [id*="tierUp"]{
-  opacity: 1 !important;
-  visibility: visible !important;
   pointer-events: none !important;
   z-index: 3000 !important;
 }
 
-/* IMPORTANT: prevent duplicate emblem inside cinematic overlay
-   (hides any element whose class contains "emblem" inside the cinematic overlays) */
-body.is-cinematic [id*="rankUp"] [class*="emblem"],
-body.is-cinematic [id*="tierUp"] [class*="emblem"]{
-  display: none !important;
-}
-/* =========================================================
-   LOCK EMBLEM OVERLAY (DO NOT MOVE)
-   Paste at VERY END of theme_A.css
-   ========================================================= */
-
-:root{
-  --emblemSize: clamp(620px, 58vw, 860px); /* size */
-  --emblemTop: 36.5vh;                     /* up/down */
-}
-
-/* Always centered on dashboard */
-body.is-dashboard #rankEmblemOverlay{
-  display: block !important;
-  position: fixed !important;
-  left: 50% !important;
-  top: var(--emblemTop) !important;
-  transform: translate(-50%, -50%) !important;
-
-  width: var(--emblemSize) !important;
-  height: var(--emblemSize) !important;
-
-  pointer-events: none !important;
-  z-index: 2500 !important;
-}
-
-/* Emblem draw */
 body.is-dashboard #rankEmblemOverlay .rankEmblem{
   position: absolute !important;
   inset: 0 !important;
-
   background-image: var(--rankEmblemUrl) !important;
   background-repeat: no-repeat !important;
   background-position: center !important;
   background-size: 92% auto !important;
-}
-/* Hide any old emblem node inside dashboard (overlay is the only source of emblem) */
-#dashboard.section.active .rankHome .rankEmblem{
-  display: none !important;
-}
-/* FULL BLACKOUT DURING CINEMATIC */
-body.is-cinematic{
-  background: #000 !important;
+  filter: drop-shadow(0 0 26px rgba(0,0,0,.45));
 }
 
+/* D) Text block: always centered and below ring (NOT tied to emblem) */
+#dashboard.section.active .rankHome .rankHome__center{
+  width: min(1200px, 92vw) !important;
+  margin: 0 auto !important;
+  text-align: center !important;
+  padding-top: 620px !important;
+}
+
+/* Make sure title / rp are centered even if some old flex sneaks in */
+#dashboard.section.active .rankHome .rankTitle,
+#dashboard.section.active .rankHome .rankRP,
+#dashboard.section.active .rankHome .rankProgress{
+  text-align: center !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+/* E) Cinematic blackout: during award animation show ONLY the animation overlay */
+body.is-cinematic{
+  overflow: hidden !important;
+}
+
+/* full blackout layer */
 body.is-cinematic::before{
   content:"";
   position: fixed;
   inset: 0;
-  background: #000;          /* 100% black */
-  z-index: 5000;
+  background: #000;
+  z-index: 9000;
   pointer-events: none;
 }
 
-/* Hide all site UI during cinematic */
+/* hide whole site */
 body.is-cinematic .navbar,
+body.is-cinematic .app,
 body.is-cinematic .section{
   opacity: 0 !important;
   visibility: hidden !important;
   pointer-events: none !important;
 }
 
-/* But keep cinematic overlay visible (adjust selector if your overlay has a different id/class) */
-body.is-cinematic #rankUpOverlay,
-body.is-cinematic #tierUpOverlay,
-body.is-cinematic .rankUpOverlay,
-body.is-cinematic .tierUpOverlay{
-  opacity: 1 !important;
-  visibility: visible !important;
-  pointer-events: none !important;
-  z-index: 6000 !important;
+/* prevent duplicate static emblem during animation */
+body.is-cinematic #rankEmblemOverlay{
+  display: none !important;
 }
 
-/* Also keep the emblem overlay visible during cinematic */
-body.is-cinematic #rankEmblemOverlay{
+/* bring award overlay above blackout */
+body.is-cinematic #award{
   opacity: 1 !important;
   visibility: visible !important;
-  z-index: 6500 !important;
+  pointer-events: auto !important;
+  z-index: 9500 !important;
+}
+
+/* ensure badge icon uses the same url */
+:root{
+  --badge-url: var(--rankEmblemUrl);
 }
