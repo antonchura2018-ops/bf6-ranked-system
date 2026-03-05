@@ -3660,8 +3660,8 @@ body.is-dashboard{
 
 /* ---- Emblem Overlay: dashboard only, always centered ---- */
 :root{
-  --emblemSize: clamp(620px, 58vw, 860px);
-  --emblemTop: 37vh;          /* move up/down */
+  --emblemSize: clamp(580px, 55vw, 800px);
+  --emblemTop: 39vh;          /* move up/down */
   --emblemScale: 92%;           /* background-size */
 }
 
