@@ -1863,6 +1863,170 @@ body{
 }
   
 </style>
+
+<style id="dashboard-stability-fix">
+/* =========================================================
+   DASHBOARD STABILITY + RESPONSIVE LOCK (2026-03-05)
+   Single-screen Player Hub without overlap on 1080p / 1440p / 4K
+   ========================================================= */
+:root{
+  --navTabsH: 78px;
+  --emblemSize: clamp(500px, 42vw, 680px);
+  --emblemTop: clamp(33vh, 34.5vh, 36vh);
+  --emblemScale: 92%;
+  --hubMetricsTopPad: calc(var(--emblemTop) + (var(--emblemSize) * 0.5) + clamp(18px, 2vh, 32px));
+  --hubMetricsBottomPad: clamp(18px, 2.4vh, 36px);
+}
+
+html{
+  overflow-y: auto !important;
+  scrollbar-gutter: stable both-edges;
+}
+
+body{
+  overflow-x: hidden !important;
+}
+
+body:not(.is-dashboard){
+  overflow-y: auto !important;
+}
+
+body.is-dashboard{
+  overflow: hidden !important;
+}
+
+body .navbar.navTabs{
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 9999 !important;
+}
+
+body.is-dashboard .app{
+  width: 100% !important;
+  max-width: none !important;
+  min-height: calc(100dvh - var(--navTabsH)) !important;
+  padding: 0 !important;
+}
+
+body.is-dashboard #dashboard.section.active{
+  display: block !important;
+  width: 100% !important;
+  max-width: none !important;
+  height: calc(100dvh - var(--navTabsH)) !important;
+  min-height: calc(100dvh - var(--navTabsH)) !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  overflow: hidden !important;
+}
+
+body.is-dashboard #dashboard.section.active > .rankHome{
+  width: 100vw !important;
+  height: calc(100dvh - var(--navTabsH)) !important;
+  min-height: calc(100dvh - var(--navTabsH)) !important;
+  margin: 0 calc(50% - 50vw) !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  display: grid !important;
+  grid-template-rows: minmax(0, 1fr) auto !important;
+  justify-items: center !important;
+  align-items: end !important;
+}
+
+body.is-dashboard #dashboard.section.active .rankHome__center{
+  width: min(1100px, 94vw) !important;
+  min-height: 0 !important;
+  margin: 0 auto !important;
+  padding:
+    var(--hubMetricsTopPad)
+    clamp(14px, 1.8vw, 28px)
+    var(--hubMetricsBottomPad) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  gap: clamp(4px, .7vh, 10px) !important;
+  position: relative !important;
+  z-index: 5 !important;
+}
+
+body.is-dashboard #dashboard.section.active .rankHome .rankTitle{
+  font-size: clamp(44px, 4.5vw, 62px) !important;
+  line-height: .95 !important;
+  margin: 0 !important;
+}
+
+body.is-dashboard #dashboard.section.active .rankHome .rankRP{
+  font-size: clamp(24px, 2.2vw, 32px) !important;
+  margin: 0 !important;
+}
+
+body.is-dashboard #dashboard.section.active .rankHome .rankRP span{
+  font-size: clamp(11px, .8vw, 13px) !important;
+}
+
+body.is-dashboard #dashboard.section.active .rankHome .rankProgress{
+  width: min(720px, 88vw) !important;
+  margin-top: clamp(8px, 1vh, 14px) !important;
+}
+
+body.is-dashboard #dashboard.section.active .rankHome .rankProgress__label{
+  font-size: clamp(11px, .86vw, 13px) !important;
+  margin-bottom: clamp(6px, .8vh, 10px) !important;
+}
+
+body.is-dashboard #dashboard.section.active .rankHome .pulseHeader{
+  width: min(980px, 92vw) !important;
+  margin-top: clamp(12px, 1.5vh, 18px) !important;
+  padding: clamp(8px, .9vh, 12px) 0 !important;
+}
+
+body.is-dashboard #dashboard.section.active .rankHome .pulseGrid{
+  width: min(980px, 92vw) !important;
+  margin-top: clamp(8px, 1vh, 12px) !important;
+  padding-top: clamp(6px, .8vh, 10px) !important;
+  grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+}
+
+body.is-dashboard #dashboard.section.active .rankHome .metric{
+  padding: clamp(10px, 1.1vh, 14px) clamp(12px, 1.1vw, 18px) !important;
+}
+
+body.is-dashboard #dashboard.section.active .rankHome .metric .k{
+  font-size: clamp(10px, .82vw, 12px) !important;
+  margin-bottom: clamp(6px, .7vh, 8px) !important;
+}
+
+body.is-dashboard #dashboard.section.active .rankHome .metric .v{
+  font-size: clamp(34px, 3.2vw, 50px) !important;
+  line-height: .95 !important;
+}
+
+body.is-dashboard #dashboard.section.active .rankHome .metric .v span{
+  font-size: clamp(14px, 1vw, 18px) !important;
+}
+
+body.is-dashboard #dashboard.section.active .rankHome .pulseMark{
+  margin-top: clamp(12px, 1.4vh, 18px) !important;
+}
+
+#rankEmblemOverlay{
+  left: 50% !important;
+  top: var(--emblemTop) !important;
+  transform: translate(-50%, -50%) !important;
+  width: var(--emblemSize) !important;
+  height: var(--emblemSize) !important;
+  z-index: 4 !important;
+}
+
+body:not(.is-dashboard) #rankEmblemOverlay{
+  display: none !important;
+}
+
+body.is-dashboard #dashboard.section.active .rankHome .rankEmblem{
+  display: none !important;
+}
+</style>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;800&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
