@@ -4173,9 +4173,9 @@ body.award-active #award{
    ================================ */
 
 :root{
-  --hub-emblem-size: 420px;     /* 🔧 розмір емблеми */
-  --hub-emblem-y: -10px;        /* 🔧 вверх/вниз (міняй) */
-  --hub-emblem-x: 0px;          /* 🔧 ліво/право (міняй) */
+  --hub-emblem-size: 820px;     /* 🔧 розмір емблеми */
+  --hub-emblem-y: 30px;        /* 🔧 вверх/вниз (міняй) */
+  --hub-emblem-x: 30px;          /* 🔧 ліво/право (міняй) */
 }
 
 #dashboard.section.active .rankHome__center{
