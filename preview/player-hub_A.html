@@ -4748,13 +4748,13 @@ function applyTotalRP(totalRP, opts){
 
         if (tierChanged && typeof window.showRankUp === "function"){
           const promotedTier = currentState.tierIndex > window.lastRankState.tierIndex;
-          window.playRankUp({ fromText: window.lastRankState.label, toText: currentState.label, rrText: promotedTier ? "NEW RANK UNLOCKED" : "RANK DOWN" });
+          window.showRankUp({ fromText: window.lastRankState.label, toText: currentState.label, rrText: promotedTier ? "NEW RANK UNLOCKED" : "RANK DOWN" });
           window.lastRankState = currentState;
         } else if (divChanged && typeof window.showTierUp === "function"){
           const a = (currentState.divIndex == null) ? 0 : Number(currentState.divIndex);
           const b = (window.lastRankState.divIndex == null) ? 0 : Number(window.lastRankState.divIndex);
           const promotedDiv = a > b;
-          window.playTierUp({ fromText: window.lastRankState.label, toText: currentState.label, rrText: promotedDiv ? "TIER UPGRADED" : "TIER DOWNGRADED", divIndex: currentState.divIndex });
+          window.showTierUp({ fromText: window.lastRankState.label, toText: currentState.label, rrText: promotedDiv ? "TIER UPGRADED" : "TIER DOWNGRADED", divIndex: currentState.divIndex });
           window.lastRankState = currentState;
         }
       }
