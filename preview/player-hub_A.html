@@ -3847,6 +3847,29 @@ var newId = "S" + (maxNum + 1);
   var matches = loadMatches();
   matches.push(match);
   saveMatches(matches);
+
+  // ✅ Instant Home update (no page refresh)
+  try{
+    // If you were using debug override, clear it once real matches are recorded
+    if (typeof clearOverrideRP === "function") clearOverrideRP();
+
+    var activeSeasonId = (typeof getActiveSeasonId === "function") ? getActiveSeasonId() : null;
+    var total = (typeof START_RP === "number" ? START_RP : 0);
+
+    for (var i = 0; i < matches.length; i++){
+      var mm = matches[i];
+      if (activeSeasonId && mm && mm.seasonId && mm.seasonId !== activeSeasonId) continue;
+      total += Number(mm && mm.rp ? mm.rp : 0) || 0;
+    }
+
+    try{ localStorage.setItem("bf6_rankRP", String(total)); }catch(e){}
+    if (typeof applyTotalRP === "function"){
+      applyTotalRP(total, { skipCinematic: false });
+    }
+  }catch(e){
+    console.warn("Instant RP refresh failed:", e);
+  }
+
     document.getElementById("inKills").value = 0;
     document.getElementById("inAssists").value = 0;
     document.getElementById("inDeaths").value = 1;
