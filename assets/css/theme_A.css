@@ -3622,8 +3622,12 @@ body .navbar.navTabs > .nav-btn.active > span{
    ========================================================= */
 
 #dashboard.section.active .rankHome .rankHome__center{
-  margin-top: 85px !important;
+  padding-top: var(--hubTextPadTop) !important;
+  margin-top: 0 !important;
+  position: relative;
+  z-index: 5;
 }
+
 html, body{
   overflow-x: hidden !important;
 }
@@ -3660,6 +3664,11 @@ body.is-dashboard{
   --emblemTop: 36.5vh;          /* move up/down */
   --emblemScale: 92%;           /* background-size */
 }
+
+:root{
+  --hubTextPadTop: clamp(640px, 66vh, 760px);
+}
+
 
 #rankEmblemOverlay{
   display: none;
@@ -3723,4 +3732,16 @@ body.award-active .section{
 /* Make sure award is always on top */
 #award{
   z-index: 9999 !important;
+}
+
+
+/* =================================
+   SCROLLBAR STABILITY (prevents flash on tab switch)
+   ================================= */
+html{
+  overflow-y: scroll;
+  scrollbar-gutter: stable;
+}
+body{
+  overflow-y: auto;
 }
