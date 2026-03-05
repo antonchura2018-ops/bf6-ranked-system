@@ -3671,74 +3671,7 @@ html, body { height: 100%; }
   filter: none !important;
   perspective: none !important;
 }
-/* =========================================================
-   FINAL — HOME TEXT DOWN + EMBLEM OVERLAY (ONLY DASHBOARD)
-   Paste ABSOLUTELY LAST
-   ========================================================= */
 
-/* 1) Text position (опускає текст нижче кільця) */
-#dashboard.section.active .rankHome .rankHome__center{
-  position: relative !important;
-  z-index: 3 !important;
-  padding-top: clamp(560px, 60vh, 640px) !important;
-  margin-top: 0 !important;
-}
-
-/* 2) Hide the old DOM emblem so it doesn't affect layout */
-#dashboard.section.active .rankHome .rankEmblem{
-  opacity: 0 !important;
-  pointer-events: none !important;
-}
-
-/* 3) Overlay is visible ONLY on Player Hub */
-#rankEmblemOverlay{ display:none !important; }
-body:has(#dashboard.section.active) #rankEmblemOverlay{
-  display:block !important;
-}
-
-/* 4) Overlay positioning + size */
-#rankEmblemOverlay{
-  position: fixed !important;
-  left: 50% !important;
-  top: 36vh !important;                  /* 🔧 опустити: 40–48vh */
-  transform: translate(-50%, -50%) !important;
-
-  width: 760px !important;               /* 🔧 розмір емблеми */
-  height: 760px !important;
-
-  z-index: 9999 !important;
-  pointer-events: none !important;
-  overflow: visible !important;
-}
-
-/* 5) Render emblem inside overlay (NO CLIP) */
-#rankEmblemOverlay .rankEmblem{
-  position: absolute !important;
-  inset: 0 !important;
-  width: 100% !important;
-  height: 100% !important;
-
-  background-image: var(--rankEmblemUrl) !important;
-  background-repeat: no-repeat !important;
-  background-position: 50% 50% !important;
-
-  /* 1024x1024 icons safe fit (Rank2 wings won’t cut) */
-  background-size: 92% auto !important;  /* 🔧 90–98% */
-
-  border-radius: 0 !important;
-  clip-path: none !important;
-  overflow: visible !important;
-  opacity: 1 !important;
-}
-
-/* 6) Safety: prevent "fixed inside transform" bug */
-#dashboard.section.active,
-#dashboard.section.active .rankHome,
-#dashboard.section.active .rankHome__center{
-  transform: none !important;
-  filter: none !important;
-  perspective: none !important;
-}
 /* =========================================================
    PLAYER HUB — FINAL TUNING (EMBLEM + TEXT + NO SCROLL)
    Paste ONCE at VERY END of theme_A.css
@@ -4234,4 +4167,42 @@ body.award-active #award{
   inset: 0 !important;
   z-index: 9999 !important;
   background: #000 !important;
+}
+/* ================================
+   HUB — EMBLEM CENTER TUNING
+   ================================ */
+
+:root{
+  --hub-emblem-size: 420px;     /* 🔧 розмір емблеми */
+  --hub-emblem-y: -10px;        /* 🔧 вверх/вниз (міняй) */
+  --hub-emblem-x: 0px;          /* 🔧 ліво/право (міняй) */
+}
+
+#dashboard.section.active .rankHome__center{
+  display: grid !important;
+  place-items: center !important;
+  row-gap: 16px !important;
+}
+
+#dashboard.section.active .rankHome .rankEmblem{
+  width: var(--hub-emblem-size) !important;
+  height: var(--hub-emblem-size) !important;
+
+  transform: translate(var(--hub-emblem-x), var(--hub-emblem-y)) !important;
+
+  background-repeat: no-repeat !important;
+  background-position: 50% 50% !important;
+  background-size: contain !important;
+
+  margin: 0 auto !important;
+  z-index: 6 !important;
+  pointer-events: none !important;
+}
+
+/* Назва рангу строго по центру під емблемою */
+#dashboard.section.active .rankHome .rankTitle,
+#dashboard.section.active .rankHome #uiRankName{
+  width: 100% !important;
+  text-align: center !important;
+  justify-self: center !important;
 }
