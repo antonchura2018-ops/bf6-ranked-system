@@ -1897,7 +1897,11 @@ body{
     
 
 <div class="rankHome__center">
-<div class="rankTitle" id="uiRankName">OUTCAST</div>
+
+  <!-- placeholder for your emblem (later) -->
+  <div class="rankEmblem"></div>
+
+  <div class="rankTitle" id="uiRankName">OUTCAST</div>
   <div class="rankRP" id="uiRP">0 <span>RP</span></div>
 
     <div class="rankProgress">
@@ -2214,211 +2218,7 @@ function playSfx(mode) {
   } catch(e) {}
 }
   
-  /* ===== FIX: ensure rankTiers + getRank exist BEFORE any debug/preload uses them ===== */
-if (typeof window.rankTiers === "undefined") {
-  var rankTiers = [
-  { name: "OUTCAST",   color: "#ffb86b", min: 0   },
-  { name: "THRALL",    color: "#22d3ee", min: 300 },
-  { name: "MARAUDER",  color: "#38bdf8", min: 600 },
-  { name: "HARBINGER", color: "#a78bfa", min: 900 },
-  { name: "REAPER",    color: "#fb7185", min: 1200 },
-  { name: "ARCHON",    color: "#fbbf24", min: 1500 },
-  { name: "OVERLORD",  color: "#2dd4bf", min: 1800 },
-  { name: "MONARCH",   color: "#60a5fa", min: 2100 },
-  { name: "SERAPH",    color: "#e5e7eb", min: 2400 },
-  { name: "EIDOLON",   color: "#ff3b3b", min: 2700 }
-];
-
-// cinematic tracking (tier + division)
-var lastRankState = null; // { tierIndex, divIndex, label }
-  window.rankTiers = rankTiers;
-} else {
-  var rankTiers = window.rankTiers;
-}
-
-if (typeof window.getRank !== "function") {
-  function getRank(totalRP) {
-  // find tier index
-  var tierIndex = 0;
-  for (var i = 0; i < rankTiers.length; i++) {
-    if (totalRP >= rankTiers[i].min) tierIndex = i;
-  }
-
-  var tier = rankTiers[tierIndex];
-
-  // NEXUS special case
-  if (tier.name === "EIDOLON") {
-    return {
-      label: "EIDOLON",
-      tierName: "EIDOLON",
-      tierIndex: tierIndex,
-      div: null,
-      divIndex: null,
-      color: tier.color,
-      rr: 100,
-      nextMin: null
-    };
-  }
-
-  var nextTier = rankTiers[tierIndex + 1];
-
-  // RR inside this tier
-  var rrInTier = totalRP - tier.min;
-  if (rrInTier < 0) rrInTier = 0;
-
-  // Division index (0..2) based on 100 RR chunks
-  var divIndex = Math.floor(rrInTier / DIV_RR);
-  if (divIndex < 0) divIndex = 0;
-  if (divIndex > (DIVS_PER_TIER - 1)) divIndex = (DIVS_PER_TIER - 1);
-
-  // RR progress inside current division (0..99)
-  var rr = rrInTier - (divIndex * DIV_RR);
-  if (rr < 0) rr = 0;
-  if (rr > (DIV_RR - 1)) rr = (DIV_RR - 1);
-
-  // Division label mapping: 0->III, 1->II, 2->I
-  var div = (divIndex === 0) ? "III" : (divIndex === 1 ? "II" : "I");
-
-  // Label
-  var label = tier.name + " " + div;
-
-  // Next threshold shown on UI
-  var nextMin = null;
-  if (divIndex === (DIVS_PER_TIER - 1)) nextMin = nextTier ? nextTier.min : null;
-  else nextMin = tier.min + ((divIndex + 1) * DIV_RR);
-
-  return {
-    label: label,
-    tierName: tier.name,
-    tierIndex: tierIndex,
-    div: div,
-    divIndex: divIndex,
-    color: tier.color,
-    rr: rr, // 0..99
-    nextMin: nextMin
-  };
-}
-  window.getRank = getRank;
-} else {
-  // Use existing global getRank
-  var getRank = window.getRank;
-}
-
-
-/* ===== BR RR FORMULA (hard to climb) ===== */
-function calcRPBreakdown(m) {
-  var place = Math.min(25, Math.max(1, Number(m.place || 25)));
-  var kills = Math.max(0, Number(m.kills || 0));
-  var assists = Math.max(0, Number(m.assists || 0));
-  var deaths = Math.max(0, Number(m.deaths || 0));
-  var mvp = !!m.mvp;
-  var left = !!m.left;
-
-  var contrib = kills + assists;
-
-  // Contribution tiers
-  var isLow = contrib < 5;
-  var isNormal = contrib >= 5;
-  var isHigh = (kills >= 10) || (contrib >= 20);
-
-  // Placement base
-  var placementBase = 0;
-  if (place === 1) placementBase = 26;
-  else if (place === 2) placementBase = 22;
-  else if (place === 3) placementBase = 20;
-  else if (place === 4) placementBase = 17;
-  else if (place === 5) placementBase = 15;
-  else if (place === 6) placementBase = 13;
-  else if (place === 7) placementBase = 11;
-  else if (place >= 8 && place <= 11) placementBase = 0;
-  else if (place >= 12 && place <= 15) placementBase = -2;
-  else if (place === 16) placementBase = -4;
-  else if (place === 17) placementBase = -6;
-  else if (place === 18) placementBase = -8;
-  else if (place === 19) placementBase = -10;
-  else if (place === 20) placementBase = -12;
-  else if (place === 21) placementBase = -14;
-  else if (place === 22) placementBase = -16;
-  else if (place === 23) placementBase = -18;
-  else if (place === 24) placementBase = -20;
-  else placementBase = -22;
-
-  // Placement modifier by contribution
-  var placementMod = 0;
-  if (place <= 7) {
-    if (isHigh) placementMod = 2;
-    else if (isNormal) placementMod = 1;
-    else placementMod = 0;
-  } else if (place >= 8 && place <= 11) {
-    if (isHigh) placementMod = 3;
-    else if (isNormal) placementMod = 2;
-    else placementMod = 0;
-  } else if (place >= 12 && place <= 15) {
-    if (isHigh) placementMod = 3;        // -2 +3 = +1
-    else if (isNormal) placementMod = 2;  // -2 +2 = 0
-    else placementMod = -2;              // -2 -2 = -4
-  } else {
-    placementMod = 0; // place > 15: no mod
-  }
-
-  var placementScore = placementBase + placementMod;
-
-  // Combat score (normalized & capped)
-  var killScore = 0;
-  var k1 = Math.min(kills, 5);
-  var k2 = Math.min(Math.max(kills - 5, 0), 5);
-  killScore += k1 * 2;
-  killScore += k2 * 1;
-
-  var assistScore = 0;
-  var a1 = Math.min(assists, 5);
-  var a2 = Math.min(Math.max(assists - 5, 0), 5);
-  assistScore += a1 * 1;
-  assistScore += a2 * 0.5;
-
-  var deathScore = -2 * deaths;
-  if (deathScore < -10) deathScore = -10;
-
-  var combatScore = killScore + assistScore + deathScore;
-  if (combatScore > 14) combatScore = 14;
-
-  var mvpBonus = mvp ? 3 : 0;
-
-  var leftBonus = 0;
-  if (left) {
-    if (place === 1) leftBonus = 10;
-    else if (place <= 3) leftBonus = 7;
-    else if (place <= 7) leftBonus = 4;
-  }
-
-  var total = placementScore + combatScore + mvpBonus + leftBonus;
-
-  // Clamp final RR per match
-  if (total > 32) total = 32;
-  if (total < -25) total = -25;
-
-  // Invalid-ish protection
-  if (left && place > 15 && total < -8) total = -8;
-
-  total = Math.round(total);
-
-  return {
-    place: place,
-    contrib: contrib,
-    placementBase: placementBase,
-    placementMod: placementMod,
-    placementScore: placementScore,
-    killScore: killScore,
-    assistScore: assistScore,
-    deathScore: deathScore,
-    combatScore: combatScore,
-    mvpBonus: mvpBonus,
-    leftBonus: leftBonus,
-    total: total
-  };
-}
-
-function preloadRankBadges() {
+  function preloadRankBadges() {
   for (var i = 0; i < rankTiers.length; i++) {
     var img = new Image();
     img.src = "assets/ranks/" + String(rankTiers[i].name).toLowerCase() + ".webp";
@@ -2448,10 +2248,24 @@ function showTab(tabId, btn) {
 
   // Dashboard mode toggle (CSS controls overlay + no-scroll)
 document.body.classList.toggle("is-dashboard", tabId === "dashboard");
-  document.documentElement.classList.toggle("is-dashboard", tabId === "dashboard");
   if (tabId === "dashboard") restoreRankFromStorage();
+  // (optional safety) force overlay visibility even if old CSS exists
+var overlay = document.getElementById("rankEmblemOverlay");
+if (overlay) overlay.style.display = (tabId === "dashboard") ? "block" : "none";
+  
+
   // Always reset scroll when switching tabs
   window.scrollTo(0, 0);
+
+  // Emblem overlay: only on dashboard
+  try{
+    var overlay = ensureRankEmblemOverlay();
+    if (overlay){
+      overlay.style.display = (tabId === "dashboard") ? "block" : "none";
+      if (tabId === "dashboard") lockRankEmblemOverlayPosition();
+    }
+  }catch(e){}
+
 
   // 4) season lock for ADD tab
   if (tabId === "add") {
@@ -2464,73 +2278,11 @@ document.body.classList.toggle("is-dashboard", tabId === "dashboard");
   if (btn && btn.classList) btn.classList.add("active");
 }
   
- 
-/* ===== RANK OVERRIDE (debug/preview) ===== */
-var RANK_OVERRIDE_KEY = "bf6_rankOverride_v1";
+ function restoreRankFromStorage(){ try{ if (typeof restoreRank==="function") restoreRank(); }catch(e){} }
 
-function setRankOverride(tierName, totalRP){
-  try{
-    localStorage.setItem(RANK_OVERRIDE_KEY, JSON.stringify({
-      tier: String(tierName || ""),
-      rp: Number(totalRP || 0),
-      ts: Date.now()
-    }));
-  }catch(e){}
-}
-
-function getRankOverride(){
-  try{
-    var raw = localStorage.getItem(RANK_OVERRIDE_KEY);
-    if (!raw) return null;
-    var o = JSON.parse(raw);
-    if (!o || o.rp == null) return null;
-    return o;
-  }catch(e){ return null; }
-}
-
-function clearRankOverride(){
-  try{ localStorage.removeItem(RANK_OVERRIDE_KEY); }catch(e){}
-}
-
-function restoreRankFromStorage(){
-  try{
-    // ✅ If override exists, restore override first
-    var ov = getRankOverride && getRankOverride();
-    if (ov && ov.rp != null) {
-      window.applyHomeTier(ov.tier, Number(ov.rp));
-      try{
-        var rr = Number(ov.rp);
-        var rk = getRank(rr);
-        updateHomeHubUI(rk, rr);
-      }catch(e){}
-      return;
-    }
-    var tier = localStorage.getItem("bf6_rankTier");
-    var rp = localStorage.getItem("bf6_rankRP");
-    if (!tier || rp == null || !window.applyHomeTier) return;
-
-    // ✅ Do not re-apply if nothing changed (prevents emblem blinking)
-    var lastTier = window.__bf6_lastTier;
-    var lastRp   = window.__bf6_lastRp;
-
-    if (String(lastTier) === String(tier) && Number(lastRp) === Number(rp)) {
-      return;
-    }
-
-    window.applyHomeTier(tier, Number(rp));
-
-    // also sync Player Hub label/badge to the same RP
-    try{
-      var rr = Number(rp);
-      var rk = getRank(rr);
-      updateHomeHubUI(rk, rr);
-    }catch(e){}
-  }catch(e){}
-}
 
 // ensure correct mode on initial load (dashboard is default)
 document.body.classList.add("is-dashboard");
-document.documentElement.classList.add("is-dashboard");
 window.scrollTo(0, 0);
 
 document.addEventListener("visibilitychange", function(){
@@ -2788,24 +2540,13 @@ function debugRPForTier(tierName){
 }
 
 function debugSetTier(tierName){
-  // ✅ Anti-spam (prevents double firing)
-  if (window.__bf6_debugLock) return;
-  window.__bf6_debugLock = true;
-  setTimeout(() => { window.__bf6_debugLock = false; }, 120);
-
   const targetTotal = debugRPForTier(tierName);
 
-  // ✅ Persist override immediately
-  setRankOverride(tierName, targetTotal);
+  // lock override so matches recalculation won't snap you back
+  setOverrideRP(targetTotal);
 
-  // ✅ Apply tier synchronously (no delayed updateRankUI)
-  applyHomeTier(tierName, targetTotal);
-
-  // ✅ Also sync Player Hub UI immediately
-  try{
-    const rk = getRank(targetTotal);
-    updateHomeHubUI(rk, targetTotal);
-  }catch(e){}
+  // apply instantly everywhere (with cinematic)
+  applyTotalRP(targetTotal, { skipCinematic: false });
 
   console.log("[DEBUG] tier =", tierName, "totalRP =", targetTotal);
 }
@@ -2839,61 +2580,130 @@ if (DEBUG_RANK){
 
   console.log("[DEBUG] Rank switcher ON: keys 1-0, [ ]");
 }
- function ensureRankEmblemOverlay(){
-  let overlay = document.getElementById("rankEmblemOverlay");
-  if (!overlay){
-    overlay = document.createElement("div");
-    overlay.id = "rankEmblemOverlay";
-    overlay.innerHTML = '<div class="rankEmblem"></div>';
-    document.body.appendChild(overlay);
-  }
-  return overlay;
-}
-
-function applyHomeTier(tierName, totalRP){
-  // If totalRP is provided — treat it as truth via getRank()
+ function applyHomeTier(tierName, totalRP){
+  // якщо totalRP є — беремо істину з getRank
   const r = (typeof totalRP === "number") ? getRank(totalRP) : null;
   const tier = (r?.tierName || tierName || "OUTCAST");
   const rank = String(tier || "OUTCAST").toLowerCase();
 
-  // 1) theme switch (for accents etc.)
+  // 1) theme switch
   document.body.dataset.rank = rank;
 
-  // 2) texts (Player Hub)
+  // 2) rank name (Rank page)
   const nameEl = document.getElementById("uiRankName") || document.querySelector(".rankTitle");
   if (nameEl) nameEl.textContent = String(tier).toUpperCase();
 
+  // 3) RP text (Rank page)
   const rpEl = document.getElementById("uiRP") || document.querySelector(".rankRP");
   if (rpEl && typeof totalRP === "number"){
     rpEl.textContent = `${totalRP.toLocaleString("en-US")} RP`;
   }
 
-  // 3) emblem url (single source of truth)
+  // 4) emblem (Rank page) — via CSS var
   const url = `/assets/ranks/${rank}.webp`;
   document.documentElement.style.setProperty("--rankEmblemUrl", `url("${url}")`);
-  document.documentElement.style.setProperty("--badge-url", `url("${url}")`); // animation badge
 
-  // 4) ensure overlay + push url into overlay element (no other emblem in DOM)
-  const overlay = ensureRankEmblemOverlay();
-  const ovEmblem = overlay && overlay.querySelector(".rankEmblem");
-  if (ovEmblem){
-    ovEmblem.style.backgroundImage = `url("${url}")`;
-    ovEmblem.style.backgroundRepeat = "no-repeat";
-    ovEmblem.style.backgroundPosition = "center";
-    ovEmblem.style.backgroundSize = "92% auto";
+  /* DISABLED: old inline emblem fallback (we use overlay only)
+  const emblem = document.querySelector("#rankEmblemOverlay .rankEmblem, #dashboard.section.active .rankHome .rankEmblem, .rankHome .rankEmblem");
+  if (emblem){
+    emblem.style.backgroundImage = `url("${url}")`;
+  }
+END DISABLED */
+  // ✅ Persist current rank so it survives tab switching / focus
+  try{
+    localStorage.setItem("bf6_rankTier", String(tier || ""));
+    localStorage.setItem("bf6_rankRP", String(totalRP || ""));
+  }catch(e){}
+   // ✅ Remember last applied (prevents blinking on focus restore)
+  window.__bf6_lastTier = tier;
+  window.__bf6_lastRp = totalRP;
+}
+  
+
+/*
+IMPORTANT:
+To have exactly 3 divisions per tier (III/II/I), each tier should span 300 RR.
+So tier mins are spaced by 300.
+This also makes ranking progression consistent and hard.
+*/
+var rankTiers = [
+  { name: "OUTCAST",   color: "#ffb86b", min: 0   },
+  { name: "THRALL",    color: "#22d3ee", min: 300 },
+  { name: "MARAUDER",  color: "#38bdf8", min: 600 },
+  { name: "HARBINGER", color: "#a78bfa", min: 900 },
+  { name: "REAPER",    color: "#fb7185", min: 1200 },
+  { name: "ARCHON",    color: "#fbbf24", min: 1500 },
+  { name: "OVERLORD",  color: "#2dd4bf", min: 1800 },
+  { name: "MONARCH",   color: "#60a5fa", min: 2100 },
+  { name: "SERAPH",    color: "#e5e7eb", min: 2400 },
+  { name: "EIDOLON",   color: "#ff3b3b", min: 2700 }
+];
+
+// cinematic tracking (tier + division)
+var lastRankState = null; // { tierIndex, divIndex, label }
+
+/* ===== RANK CALC ===== */
+function getRank(totalRP) {
+  // find tier index
+  var tierIndex = 0;
+  for (var i = 0; i < rankTiers.length; i++) {
+    if (totalRP >= rankTiers[i].min) tierIndex = i;
   }
 
-  // 5) persist rank — survives tab switch / focus
-  try{
-    localStorage.setItem("bf6_rankTier", String(tier));
-    localStorage.setItem("bf6_rankRP", String(typeof totalRP === "number" ? totalRP : ""));
-  }catch(e){}
+  var tier = rankTiers[tierIndex];
 
-  // 6) anti-flicker memory
-  window.__bf6_lastTier = String(tier);
-  window.__bf6_lastRp = (typeof totalRP === "number") ? totalRP : null;
+  // NEXUS special case
+  if (tier.name === "EIDOLON") {
+    return {
+      label: "EIDOLON",
+      tierName: "EIDOLON",
+      tierIndex: tierIndex,
+      div: null,
+      divIndex: null,
+      color: tier.color,
+      rr: 100,
+      nextMin: null
+    };
+  }
+
+  var nextTier = rankTiers[tierIndex + 1];
+
+  // RR inside this tier
+  var rrInTier = totalRP - tier.min;
+  if (rrInTier < 0) rrInTier = 0;
+
+  // Division index (0..2) based on 100 RR chunks
+  var divIndex = Math.floor(rrInTier / DIV_RR);
+  if (divIndex < 0) divIndex = 0;
+  if (divIndex > (DIVS_PER_TIER - 1)) divIndex = (DIVS_PER_TIER - 1);
+
+  // RR progress inside current division (0..99)
+  var rr = rrInTier - (divIndex * DIV_RR);
+  if (rr < 0) rr = 0;
+  if (rr > (DIV_RR - 1)) rr = (DIV_RR - 1);
+
+  // Division label mapping: 0->III, 1->II, 2->I
+  var div = (divIndex === 0) ? "III" : (divIndex === 1 ? "II" : "I");
+
+  // Label
+  var label = tier.name + " " + div;
+
+  // Next threshold shown on UI
+  var nextMin = null;
+  if (divIndex === (DIVS_PER_TIER - 1)) nextMin = nextTier ? nextTier.min : null;
+  else nextMin = tier.min + ((divIndex + 1) * DIV_RR);
+
+  return {
+    label: label,
+    tierName: tier.name,
+    tierIndex: tierIndex,
+    div: div,
+    divIndex: divIndex,
+    color: tier.color,
+    rr: rr, // 0..99
+    nextMin: nextMin
+  };
 }
-
 
 /* ===== BR RR FORMULA (hard to climb) ===== */
 function calcRPBreakdown(m) {
@@ -3283,19 +3093,28 @@ function updateRankUI(matchesAll) {
   var sum = 0;
   for (var i = 0; i < matchesAll.length; i++) sum += Number(matchesAll[i].rp || 0);
 
-  var totalRP = START_RP + sum;
-  if (totalRP < MIN_RP) totalRP = MIN_RP;
+  
+var totalRP = START_RP + sum;
+if (totalRP < MIN_RP) totalRP = MIN_RP;
 
-
-// ✅ If override exists, do NOT recompute rank from stored matches (prevents reverting to THRALL)
-var ov = getRankOverride();
-if (ov && ov.rp != null) {
-  totalRP = Number(ov.rp);
-  if (totalRP < MIN_RP) totalRP = MIN_RP;
+// ✅ If user set an override (debug/preview), use it and do NOT snap back to match-based Thrall
+var _ov = getOverrideRP ? getOverrideRP() : null;
+if (_ov != null && Number.isFinite(_ov)) {
+  totalRP = Number(_ov);
 }
 
-  var rank = getRank(totalRP);
+var rank = getRank(totalRP);
   updateHomeHubUI(rank, totalRP);
+  // keep Rank page + overlay emblem in sync
+  try{ applyHomeTier(rank.tierName, totalRP); }catch(e){}
+  try{
+    const overlay = (typeof ensureRankEmblemOverlay==="function") ? ensureRankEmblemOverlay() : null;
+    const el = overlay ? overlay.querySelector(".rankEmblem") : null;
+    const key = String(rank.tierName || "OUTCAST").toLowerCase();
+    const url = `/assets/ranks/${key}.webp`;
+    if (el) el.style.backgroundImage = `url("${url}")`;
+  }catch(e){}
+
   // ===== KROK 6.2: Hub platform tuning for ALL 10 ranks =====
 var hub = document.querySelector("#dashboard");
 if (hub && rank) {
@@ -3527,39 +3346,39 @@ if (badgeImg && rank.tierName) {
   // Cinematic trigger (tier + division)
 var currentState = { tierIndex: rank.tierIndex, divIndex: rank.divIndex, label: rank.label };
 
-if (lastRankState === null) {
-  lastRankState = currentState;
+if (window.lastRankState === null) {
+  window.lastRankState = currentState;
 } else {
-  var tierChanged = currentState.tierIndex !== lastRankState.tierIndex;
-  var divChanged = currentState.divIndex !== lastRankState.divIndex;
+  var tierChanged = currentState.tierIndex !== window.lastRankState.tierIndex;
+  var divChanged = currentState.divIndex !== window.lastRankState.divIndex;
 
   if (tierChanged) {
-    var promotedTier = currentState.tierIndex > lastRankState.tierIndex;
+    var promotedTier = currentState.tierIndex > window.lastRankState.tierIndex;
 
     if (typeof window.showRankUp === "function") {
       window.showRankUp({
-        fromText: lastRankState.label,
+        fromText: window.lastRankState.label,
         toText: currentState.label,
         rrText: promotedTier ? "NEW RANK UNLOCKED" : "RANK DOWN"
       });
     }
 
-    lastRankState = currentState;
+    window.lastRankState = currentState;
   } else if (divChanged) {
     var a = (currentState.divIndex === null || currentState.divIndex === undefined) ? 0 : currentState.divIndex;
-    var b = (lastRankState.divIndex === null || lastRankState.divIndex === undefined) ? 0 : lastRankState.divIndex;
+    var b = (window.lastRankState.divIndex === null || window.lastRankState.divIndex === undefined) ? 0 : window.lastRankState.divIndex;
     var promotedDiv = a > b;
 
     if (typeof window.showTierUp === "function") {
       window.showTierUp({
-  fromText: lastRankState.label,
+  fromText: window.lastRankState.label,
   toText: currentState.label,
   rrText: promotedDiv ? "TIER UPGRADED" : "TIER DOWNGRADED",
   divIndex: currentState.divIndex
       });
     }
 
-    lastRankState = currentState;
+    window.lastRankState = currentState;
     }
   }
 }
@@ -3709,9 +3528,7 @@ if (summaryEl) {
   }
   if (changed) saveMatches(matchesAll);
 
-  if (!getRankOverride()) {
   updateRankUI(activeMatchesAll);
-}
   // ===== Player Hub snapshot (ACTIVE season) =====
   var statsHub = computeSeasonStats(activeMatchesAll);
 
@@ -4514,13 +4331,11 @@ const ACCENT_BY_RANK = {
 };
 
 function openOverlay(mode){
+  document.body.classList.add('award-active');
   const els = getAwardEls();
   if(!els.award || !els.badge) return;
 
   clearTimers();
-
-  // Cinematic mode: hide site, show only award overlay
-  document.body.classList.add('is-cinematic');
 
   // prevent double-open flicker
   if (els.award.classList.contains('is-open')) {
@@ -4543,13 +4358,11 @@ function openOverlay(mode){
 }
 
 function closeOverlay(){
+  document.body.classList.remove('award-active');
   const els = getAwardEls();
   if(!els.award) return;
 
   clearTimers();
-
-  // leave cinematic mode when closing
-  document.body.classList.remove('is-cinematic');
 
   els.award.classList.remove('is-open','is-tierup','is-rankup','is-top','is-finisher','is-up','is-down');
   els.award.removeAttribute('data-phase');
@@ -4833,100 +4646,197 @@ window.showRankUp = function(payload){
 };
 
 
-  function mountRankEmblemOverlay(){
-  // 1) шукаємо емблему
-  const emblem = document.querySelector(".rankHome .rankEmblem");
-  if (!emblem) return;
+  /* ===============================
+   STABLE PLAYER HUB OVERLAY SYSTEM
+   - No DOM moving
+   - No intervals
+   - Dashboard only
+   =============================== */
 
-  // 2) створюємо overlay якщо ще нема
+function ensureRankEmblemOverlay(){
   let overlay = document.getElementById("rankEmblemOverlay");
   if (!overlay){
     overlay = document.createElement("div");
     overlay.id = "rankEmblemOverlay";
+    overlay.innerHTML = '<div class="rankEmblem"></div>';
     document.body.appendChild(overlay);
   }
+  return overlay;
+}
+// Force overlay position (prevents random inline overrides)
+function lockRankEmblemOverlayPosition(){
+  const overlay = document.getElementById("rankEmblemOverlay");
+  if (!overlay) return;
 
-  // 3) переносимо емблему в overlay (ВІДРІЗАЄ від тексту назавжди)
-  overlay.appendChild(emblem);
+  // Remove any inline styles that can push it into a corner
+  overlay.style.left = "";
+  overlay.style.top = "";
+  overlay.style.right = "";
+  overlay.style.bottom = "";
+  overlay.style.transform = "";
+  overlay.style.margin = "";
+  overlay.style.inset = "";
 
-  // 4) гарантуємо fixed-стилі інлайном (це переб’є будь-які CSS війни)
-  overlay.style.position = "fixed";
-  overlay.style.left = "50%";
-  overlay.style.top  = "calc(50% - 10px)";                 // ✅ справжній центр екрана
-  overlay.style.transform = "translate(-50%, -50%)";
-  overlay.style.zIndex = "9999";
-  overlay.style.pointerEvents = "none";
-  overlay.style.width = "560px";
-  overlay.style.height = "560px";
-  overlay.style.display = "block";
-
-  // скидаємо вплив layout-контейнерів
-  overlay.style.margin = "0";
-  overlay.style.padding = "0";
-
-  emblem.style.position = "absolute";
-  emblem.style.left = "0";
-  emblem.style.top = "0";
-  emblem.style.right = "0";
-  emblem.style.bottom = "0";
-  emblem.style.margin = "0";
-  emblem.style.pointerEvents = "none";
-
-  // force visible no matter what CSS says
-  emblem.style.display = "block";
-  emblem.style.visibility = "visible";
-  emblem.style.backgroundRepeat = "no-repeat";
-  emblem.style.backgroundPosition = "center";
-  emblem.style.backgroundSize     = "92% auto"; // <- 88%..105% підкручуй
-  emblem.style.opacity = "1";
-  emblem.style.transform = "none";
+  // Also ensure the emblem itself doesn't get clipped/scaled weirdly
+  const emblem = overlay.querySelector(".rankEmblem");
+  if (emblem){
+    emblem.style.borderRadius = "0";
+    emblem.style.overflow = "visible";
+  }
+}
+  
+// Restart a CSS animation safely (no blink)
+function restartAnim(el, cls){
+  if (!el) return;
+  el.classList.remove(cls);
+  // force reflow
+  void el.offsetWidth;
+  el.classList.add(cls);
 }
 
-function tryMountOverlay(){
-  let n = 0;
-  const t = setInterval(()=>{
-    mountRankEmblemOverlay();
-    const ok = document.getElementById("rankEmblemOverlay")?.querySelector(".rankEmblem");
-    if (ok || n++ > 30) clearInterval(t);
-  }, 100);
+// One source of truth for current RP in preview/debug
+const BF6_OVERRIDE_KEY = "bf6_override_rp_v1";
+function getOverrideRP(){
+  try{
+    const v = localStorage.getItem(BF6_OVERRIDE_KEY);
+    if (v == null || v === "") return null;
+    const n = Number(v);
+    return Number.isFinite(n) ? n : null;
+  }catch(e){ return null; }
 }
-document.addEventListener("DOMContentLoaded", tryMountOverlay);
-  function forceHomeTextLayout(){
-  const c = document.querySelector("#dashboard .rankHome .rankHome__center");
-  if(!c) return;
-
-  // 1) kill flex-centering (у тебе саме воно тримає текст по середині)
-  c.style.display = "block";
-  c.style.justifyContent = "initial";
-  c.style.alignItems = "initial";
-
-  // 2) повертаємо текст вниз (підкручуй тільки це число)
-  c.style.paddingTop = "520px"; // <- 480-600px під свою геометрію
-  c.style.textAlign = "center";
+function setOverrideRP(rp){
+  try{ localStorage.setItem(BF6_OVERRIDE_KEY, String(rp)); }catch(e){}
+}
+function clearOverrideRP(){
+  try{ localStorage.removeItem(BF6_OVERRIDE_KEY); }catch(e){}
 }
 
-document.addEventListener("DOMContentLoaded", forceHomeTextLayout);
+// Apply TOTAL RP everywhere (Hub + Rank page + emblem overlay) + cinematic
+function applyTotalRP(totalRP, opts){
+  opts = opts || {};
+  if (typeof totalRP !== "number" || !Number.isFinite(totalRP)) return;
 
-  /* ==========================================
-   FORCE: no scroll + always reset to top
-   ========================================== */
-document.documentElement.style.overflow = "hidden";
-document.body.style.overflow = "hidden";
-window.scrollTo(0, 0);
+  const rank = getRank(totalRP);
 
-// wrap showTab to always reset scroll
-if (window.showTab) {
-  const __showTab = window.showTab;
+  // 1) Update hub UI (labels, bars, etc)
+  updateHomeHubUI(rank, totalRP);
+
+  // 2) Update rank page + persist tier/rp
+  applyHomeTier(rank.tierName, totalRP);
+
+  // 3) Update overlay emblem image (always)
+  const overlay = ensureRankEmblemOverlay();
+  const el = overlay.querySelector(".rankEmblem");
+  const key = String(rank.tierName || "OUTCAST").toLowerCase();
+  const url = `/assets/ranks/${key}.webp`;
+  if (el){
+    el.style.backgroundImage = `url("${url}")`;
+    el.style.backgroundRepeat = "no-repeat";
+    el.style.backgroundPosition = "center";
+    el.style.backgroundSize = "92% auto";
+  }
+
+  // 4) Cinematic (optional)
+  if (!opts.skipCinematic){
+    try{
+      const currentState = { tierIndex: rank.tierIndex, divIndex: rank.divIndex, label: rank.label };
+      if (window.lastRankState == null){
+        window.lastRankState = currentState;
+      } else {
+        const tierChanged = currentState.tierIndex !== window.lastRankState.tierIndex;
+        const divChanged  = currentState.divIndex  !== window.lastRankState.divIndex;
+
+        if (tierChanged && typeof window.showRankUp === "function"){
+          const promotedTier = currentState.tierIndex > window.lastRankState.tierIndex;
+          window.showRankUp({ fromText: window.lastRankState.label, toText: currentState.label, rrText: promotedTier ? "NEW RANK UNLOCKED" : "RANK DOWN" });
+          window.lastRankState = currentState;
+        } else if (divChanged && typeof window.showTierUp === "function"){
+          const a = (currentState.divIndex == null) ? 0 : Number(currentState.divIndex);
+          const b = (window.lastRankState.divIndex == null) ? 0 : Number(window.lastRankState.divIndex);
+          const promotedDiv = a > b;
+          window.showTierUp({ fromText: window.lastRankState.label, toText: currentState.label, rrText: promotedDiv ? "TIER UPGRADED" : "TIER DOWNGRADED", divIndex: currentState.divIndex });
+          window.lastRankState = currentState;
+        }
+      }
+    }catch(e){}
+  }
+
+  // 5) Small pop animation on emblem (never blocks)
+  restartAnim(document.getElementById("rankEmblemOverlay"), "rankEmblemPop");
+}
+
+// Restore rank on load: prefer override, else stored rp, else compute from matches
+function restoreRank(){
+  const ov = getOverrideRP();
+  if (ov != null){
+    applyTotalRP(ov, { skipCinematic: true });
+    return;
+  }
+  try{
+    const rp = localStorage.getItem("bf6_rankRP");
+    if (rp != null && rp !== ""){
+      const n = Number(rp);
+      if (Number.isFinite(n)){
+        applyTotalRP(n, { skipCinematic: true });
+        return;
+      }
+    }
+  }catch(e){}
+}
+
+// Dashboard mode toggle (CSS controls overlay + scroll)
+function setDashboardMode(isDash){
+  document.body.classList.toggle("is-dashboard", !!isDash);
+  // Always reset scroll on tab switch
+  window.scrollTo(0, 0);
+  // Ensure overlay exists early
+  ensureRankEmblemOverlay();
+
+  if (isDash) lockRankEmblemOverlayPosition();
+}
+
+// Hook into showTab (keep your original showTab logic)
+(function wrapShowTab(){
+  if (typeof window.showTab !== "function") return;
+  const _showTab = window.showTab;
   window.showTab = function(tabId, btn){
-    __showTab(tabId, btn);
-    window.scrollTo(0, 0);
+    _showTab(tabId, btn);
+    setDashboardMode(tabId === "dashboard");
   };
-}
+})();
+
 document.addEventListener("DOMContentLoaded", function(){
-  restoreRankFromStorage();
+  // default tab is dashboard
+  setDashboardMode(true);
+  // IMPORTANT: renderHistoryFromStorage runs below; after it, restore rank state so it never falls back to Thrall label
+  setTimeout(restoreRank, 0);
 });
-  
-  
+(function(){
+  function on(){ document.body.classList.add("is-cinematic"); }
+  function off(){ document.body.classList.remove("is-cinematic"); }
+
+  // IMPORTANT: set these durations to your real animation length
+  const RANK_UP_MS = 1800;
+  const TIER_UP_MS = 1600;
+
+  if (typeof window.showRankUp === "function"){
+    const _f = window.showRankUp;
+    window.showRankUp = function(payload){
+      on();
+      try{ return _f(payload); }
+      finally{ setTimeout(off, RANK_UP_MS); }
+    };
+  }
+
+  if (typeof window.showTierUp === "function"){
+    const _f = window.showTierUp;
+    window.showTierUp = function(payload){
+      on();
+      try{ return _f(payload); }
+      finally{ setTimeout(off, TIER_UP_MS); }
+    };
+  }
+})();
   
 /* ===== INIT ===== */
 renderHistoryFromStorage();
@@ -4995,16 +4905,7 @@ renderHistoryFromStorage();
   
 </div>
 
-<script src="assets/js/stats.js?v=1">/* ===== INIT (fixed) ===== */
-(function initPlayerHub(){
-  try{
-    var dash = document.getElementById("dashboard");
-    document.body.classList.toggle("is-dashboard", !!(dash && dash.classList.contains("active")));
-    ensureRankEmblemOverlay();
-    if (typeof restoreRankFromStorage === "function") restoreRankFromStorage();
-  }catch(e){}
-})();
-</script>
+<script src="assets/js/stats.js?v=1"></script>
   
 </body>
 </html>
