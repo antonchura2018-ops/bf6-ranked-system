@@ -3748,152 +3748,235 @@ body{
 
 
 /* =========================================================
-   REV-C FINAL PLAYER HUB FIXES
+   BF6 FINAL FIXES — REV D
+   1) single-scroll architecture
+   2) dashboard metrics locked under emblem
+   3) award overlay hides live page/tabs/emblem
+   4) responsive 1080p / 1440p / 4K tuning
    ========================================================= */
-html, body{
-  margin:0 !important;
-  padding:0 !important;
-  width:100% !important;
-  max-width:100% !important;
-  overflow-x:hidden !important;
-  scrollbar-gutter:auto !important;
+
+:root{
+  --navTabsTop: 14px;
+  --navTabsH: 86px;
+  --sectionTopPad: calc(var(--navTabsTop) + var(--navTabsH) + 20px);
+
+  --emblemSize: clamp(520px, 34vw, 920px);
+  --emblemTop: clamp(210px, 31vh, 670px);
+  --emblemScale: 90%;
+  --hubTextGap: clamp(10px, 1.1vh, 22px);
+  --hubTextPadTop: calc(var(--emblemTop) + (var(--emblemSize) / 2) + var(--hubTextGap));
+  --hubBottomPad: clamp(18px, 2.3vh, 34px);
 }
-html{
-  overflow-y:auto !important;
-}
+
+html,
 body{
-  overflow-y:auto !important;
-  background:#05060a !important;
+  height: 100% !important;
+  overflow: hidden !important;
+  overflow-x: hidden !important;
+  scrollbar-gutter: auto !important;
 }
 
-html.is-dashboard,
-body.is-dashboard{
-  height:100dvh !important;
-  overflow:hidden !important;
+body{
+  margin: 0 !important;
+  overscroll-behavior-y: none;
 }
 
-body:not(.is-dashboard) .app{
-  min-height:100dvh;
+.app{
+  width: 100% !important;
+  max-width: none !important;
+  height: 100dvh !important;
+  overflow: hidden !important;
+  padding: 0 !important;
+  margin: 0 !important;
 }
 
-/* remove side bands caused by 100vw + gutter math */
-#dashboard.section.active,
-#dashboard.section.active .rankHome{
-  width:100% !important;
-  max-width:none !important;
-  margin-left:0 !important;
-  margin-right:0 !important;
+.navbar.navTabs{
+  position: fixed !important;
+  top: var(--navTabsTop) !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  z-index: 9300 !important;
+}
+
+.section{
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+}
+
+#dashboard.section,
+#rank.section,
+#history.section,
+#add.section{
+  height: 100dvh !important;
 }
 
 #dashboard.section.active{
-  min-height:calc(100dvh - var(--navH,72px)) !important;
-  overflow:hidden !important;
+  overflow: hidden !important;
 }
 
-#dashboard.section.active .rankHome{
-  min-height:calc(100dvh - var(--navH,72px)) !important;
-  height:calc(100dvh - var(--navH,72px)) !important;
-  overflow:hidden !important;
-  position:relative !important;
+#rank.section.active,
+#history.section.active,
+#add.section.active{
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  padding: var(--sectionTopPad) clamp(18px, 2vw, 32px) 34px !important;
+  scrollbar-gutter: stable;
 }
 
-/* keep tabs visible and stable */
-body .navbar.navTabs{
-  position:sticky !important;
-  top:0 !important;
-  z-index:6000 !important;
+#dashboard{
+  padding: 0 !important;
 }
 
-:root{
-  --emblemSize: clamp(500px, 44vw, 690px);
-  --emblemTop: 33.5vh;
-  --emblemScale: 90%;
-  --hubTextPadTop: clamp(530px, 58vh, 660px);
+#dashboard .rankHome{
+  width: 100% !important;
+  height: 100dvh !important;
+  min-height: 100dvh !important;
+  margin: 0 !important;
+  overflow: hidden !important;
+}
+
+#dashboard .rankHome__center{
+  min-height: 100dvh !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  padding-top: var(--hubTextPadTop) !important;
+  padding-bottom: var(--hubBottomPad) !important;
+  margin-top: 0 !important;
+  position: relative !important;
+  z-index: 5 !important;
 }
 
 #rankEmblemOverlay{
-  top:var(--emblemTop) !important;
-  width:var(--emblemSize) !important;
-  height:var(--emblemSize) !important;
+  top: var(--emblemTop) !important;
+  width: var(--emblemSize) !important;
+  height: var(--emblemSize) !important;
+  z-index: 2000 !important;
 }
 
-#dashboard.section.active .rankHome .rankHome__center{
-  display:flex !important;
-  flex-direction:column !important;
-  align-items:center !important;
-  justify-content:flex-start !important;
-  min-height:100% !important;
-  box-sizing:border-box !important;
-  padding-top:var(--hubTextPadTop) !important;
-  padding-bottom:28px !important;
-  position:relative !important;
-  z-index:5 !important;
+#rankEmblemOverlay .rankEmblem{
+  background-size: var(--emblemScale) auto !important;
 }
 
 #dashboard.section.active .rankHome .rankTitle{
-  margin:0 !important;
-  font-size:clamp(44px, 4.2vw, 66px) !important;
-  line-height:.92 !important;
-  letter-spacing:.12em !important;
+  margin: 0 !important;
+  font-size: clamp(48px, 4.2vw, 82px) !important;
+  line-height: .92 !important;
+  letter-spacing: .12em !important;
 }
 
 #dashboard.section.active .rankHome .rankRP{
-  margin-top:6px !important;
-  font-size:clamp(22px, 2vw, 32px) !important;
-  line-height:1 !important;
+  margin-top: 6px !important;
+  font-size: clamp(20px, 1.8vw, 34px) !important;
+  line-height: 1 !important;
 }
 
 #dashboard.section.active .rankHome .rankRP span{
-  font-size:clamp(11px, .9vw, 14px) !important;
+  font-size: .74em !important;
+  margin-left: 7px !important;
 }
 
 #dashboard.section.active .rankHome .rankProgress{
-  width:min(560px, 74vw) !important;
-  margin-top:10px !important;
+  width: min(620px, 66vw) !important;
+  margin-top: 14px !important;
 }
 
 #dashboard.section.active .rankHome .rankProgress__label{
-  font-size:clamp(11px, .78vw, 13px) !important;
-  letter-spacing:.14em !important;
+  font-size: clamp(12px, .92vw, 18px) !important;
+  line-height: 1.1 !important;
+  letter-spacing: .16em !important;
 }
 
-#dashboard.section.active .rankHome .pulseHeader{
-  width:min(760px, 84vw) !important;
-  margin-top:18px !important;
-  padding:10px 0 !important;
-  font-size:clamp(13px, 1.2vw, 20px) !important;
-  letter-spacing:.12em !important;
+#dashboard.section.active .rankHome .pulseHeader,
+#dashboard.section.active .rankHome .pulseHeader span{
+  margin-top: 18px !important;
+  font-size: clamp(18px, 1.1vw, 28px) !important;
+  line-height: 1 !important;
+  letter-spacing: .12em !important;
 }
 
 #dashboard.section.active .rankHome .pulseGrid{
-  width:min(900px, 92vw) !important;
-  margin-top:8px !important;
+  width: min(930px, 78vw) !important;
+  margin-top: 22px !important;
+  padding-top: 0 !important;
+  gap: 0 !important;
 }
 
 #dashboard.section.active .rankHome .pulseGrid .metric{
-  padding:16px 16px 18px !important;
+  padding: 0 clamp(12px, 1.8vw, 30px) !important;
 }
 
 #dashboard.section.active .rankHome .pulseGrid .metric .k{
-  font-size:clamp(10px, .8vw, 13px) !important;
-  letter-spacing:.14em !important;
-  margin-bottom:10px !important;
-  opacity:.82 !important;
+  font-size: clamp(11px, .76vw, 14px) !important;
+  letter-spacing: .18em !important;
+  opacity: .92 !important;
 }
 
 #dashboard.section.active .rankHome .pulseGrid .metric .v{
-  font-size:clamp(32px, 2.7vw, 44px) !important;
-  line-height:1 !important;
+  margin-top: 8px !important;
+  font-size: clamp(24px, 1.7vw, 34px) !important;
+  line-height: 1 !important;
+  letter-spacing: .08em !important;
 }
 
 #dashboard.section.active .rankHome .pulseGrid .metric .v span{
-  font-size:clamp(14px, 1.1vw, 18px) !important;
+  font-size: .74em !important;
+  margin-left: 4px !important;
 }
 
-/* keep non-dashboard tabs normally scrollable */
-body:not(.is-dashboard) #rank,
-body:not(.is-dashboard) #history,
-body:not(.is-dashboard) #add{
-  min-height:calc(100dvh - var(--navH,72px));
-  overflow:visible !important;
+#dashboard.section.active .rankHome .pulseMark{
+  margin-top: 0 !important;
+}
+
+/* Keep title/RP/progress centered directly under emblem */
+#dashboard.section.active .rankHome .rankTitle,
+#dashboard.section.active .rankHome .rankRP,
+#dashboard.section.active .rankHome .rankProgress,
+#dashboard.section.active .rankHome .pulseHeader,
+#dashboard.section.active .rankHome .pulseGrid{
+  align-self: center !important;
+}
+
+/* Award animation: hide live site behind it */
+body.award-active .navbar.navTabs,
+body.award-active .section,
+body.award-active #rankEmblemOverlay,
+body.is-cinematic .navbar.navTabs,
+body.is-cinematic .section,
+body.is-cinematic #rankEmblemOverlay{
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
+
+#award .veil{
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  background:
+    radial-gradient(900px 520px at 50% 42%, color-mix(in srgb, var(--accent) 16%, transparent), rgba(0,0,0,.94)) !important,
+    radial-gradient(1200px 720px at 50% 10%, color-mix(in srgb, var(--accent) 8%, transparent), transparent 58%) !important,
+    linear-gradient(180deg, rgba(0,0,0,.92), rgba(0,0,0,.985)) !important;
+}
+
+#award{
+  z-index: 99999 !important;
+}
+
+@media (max-width: 1600px){
+  :root{
+    --emblemSize: clamp(500px, 38vw, 820px);
+    --emblemTop: clamp(190px, 30vh, 520px);
+  }
+}
+
+@media (max-width: 1280px){
+  :root{
+    --emblemSize: clamp(430px, 44vw, 700px);
+    --emblemTop: clamp(180px, 29vh, 420px);
+  }
+
+  #dashboard.section.active .rankHome .pulseGrid{
+    width: min(860px, 88vw) !important;
+  }
 }
