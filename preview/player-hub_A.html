@@ -2256,6 +2256,11 @@ if (overlay) overlay.style.display = (tabId === "dashboard") ? "block" : "none";
 
   // Always reset scroll when switching tabs
   window.scrollTo(0, 0);
+  try {
+    if (target) target.scrollTop = 0;
+    var scrollers = document.querySelectorAll(".section");
+    for (var s = 0; s < scrollers.length; s++) scrollers[s].scrollTop = 0;
+  } catch(e) {}
 
   // Emblem overlay: only on dashboard
   try{
