@@ -1901,8 +1901,9 @@ body{
   <!-- placeholder for your emblem (later) -->
   <div class="rankEmblem"></div>
 
-  <div class="rankTitle" id="uiRankName">OUTCAST</div>
-  <div class="rankRP" id="uiRP">0 <span>RP</span></div>
+  <div class="rankHome__infoStack">
+    <div class="rankTitle" id="uiRankName">OUTCAST</div>
+    <div class="rankRP" id="uiRP">0 <span>RP</span></div>
 
     <div class="rankProgress">
       <div class="rankProgress__label">Next Rank : <b id="uiNextRP">0 RP</b></div>
@@ -1914,35 +1915,36 @@ body{
 
     <div class="pulseHeader"><span>PLAYER ASCENSION</span></div>
 
-     <div class="pulseGrid">
-    <div class="metric">
-      <div class="k">WIN RATE</div>
-      <div class="v"><span id="mWinRate">0</span><span>%</span></div>
+    <div class="pulseGrid">
+      <div class="metric">
+        <div class="k">WIN RATE</div>
+        <div class="v"><span id="mWinRate">0</span><span>%</span></div>
+      </div>
+
+      <div class="metric">
+        <div class="k">TOTAL MATCHES</div>
+        <div class="v"><span id="mTotal">0</span></div>
+      </div>
+
+      <div class="metric">
+        <div class="k">KDA</div>
+        <div class="v"><span id="mKDA">0.0</span></div>
+      </div>
+
+      <div class="metric">
+        <div class="k">AVG KILLS</div>
+        <div class="v"><span id="mAvgKills">0.0</span></div>
+      </div>
+
+      <div class="metric">
+        <div class="k">MVP</div>
+        <div class="v"><span id="mMVP">0</span><span>%</span></div>
+      </div>
     </div>
 
-    <div class="metric">
-      <div class="k">TOTAL MATCHES</div>
-      <div class="v"><span id="mTotal">0</span></div>
-    </div>
-
-    <div class="metric">
-      <div class="k">KDA</div>
-      <div class="v"><span id="mKDA">0.0</span></div>
-    </div>
-
-    <div class="metric">
-      <div class="k">AVG KILLS</div>
-      <div class="v"><span id="mAvgKills">0.0</span></div>
-    </div>
-
-    <div class="metric">
-      <div class="k">MVP</div>
-      <div class="v"><span id="mMVP">0</span><span>%</span></div>
-    </div>
+    <div class="pulseMark"></div>
   </div>
-
-      <div class="pulseMark"></div>
-    </div>
+</div>
   </section>
 
 </div>
@@ -2256,11 +2258,6 @@ if (overlay) overlay.style.display = (tabId === "dashboard") ? "block" : "none";
 
   // Always reset scroll when switching tabs
   window.scrollTo(0, 0);
-  try {
-    if (target) target.scrollTop = 0;
-    var scrollers = document.querySelectorAll(".section");
-    for (var s = 0; s < scrollers.length; s++) scrollers[s].scrollTop = 0;
-  } catch(e) {}
 
   // Emblem overlay: only on dashboard
   try{
