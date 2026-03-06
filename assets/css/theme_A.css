@@ -3980,3 +3980,202 @@ body.is-cinematic #rankEmblemOverlay{
     width: min(860px, 88vw) !important;
   }
 }
+
+
+/* =========================================================
+   BF6 FINAL FIXES — REV E
+   1) dashboard fits better on 67% / 75% zoom and shorter heights
+   2) non-dashboard tabs scroll on the far-right viewport edge only
+   3) Player Hub text block stays under emblem without cropping
+   ========================================================= */
+
+:root{
+  --navTabsTop: 10px;
+  --navTabsH: 76px;
+  --sectionTopPad: calc(var(--navTabsTop) + var(--navTabsH) + 18px);
+
+  /* Height-aware emblem sizing so Hub survives zoom / shorter viewports */
+  --emblemSize: min(48vh, 40vw, 760px);
+  --emblemTop: clamp(150px, 26vh, 290px);
+  --emblemScale: 90%;
+  --hubTextGap: clamp(8px, 1vh, 18px);
+  --hubTextPadTop: calc(var(--emblemTop) + (var(--emblemSize) * 0.52) + var(--hubTextGap));
+  --hubBottomPad: clamp(12px, 1.5vh, 24px);
+}
+
+html, body{
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: none !important;
+  height: 100% !important;
+  overflow: hidden !important;
+}
+
+body{
+  margin: 0 !important;
+  overscroll-behavior: none !important;
+}
+
+.app{
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100vw !important;
+  height: 100dvh !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+}
+
+.navbar.navTabs{
+  position: fixed !important;
+  top: var(--navTabsTop) !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  z-index: 9300 !important;
+}
+
+.section{
+  display: none;
+}
+.section.active{
+  display: block;
+}
+
+#dashboard.section.active,
+#rank.section.active,
+#history.section.active,
+#add.section.active{
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100vw !important;
+  height: 100dvh !important;
+  max-width: none !important;
+  margin: 0 !important;
+  box-sizing: border-box !important;
+}
+
+#dashboard.section.active{
+  overflow: hidden !important;
+  padding: 0 !important;
+}
+
+#rank.section.active,
+#history.section.active,
+#add.section.active{
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  padding: var(--sectionTopPad) clamp(26px, 2vw, 34px) 34px clamp(26px, 2vw, 34px) !important;
+  scrollbar-gutter: auto !important;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,.24) transparent;
+}
+#rank.section.active::-webkit-scrollbar,
+#history.section.active::-webkit-scrollbar,
+#add.section.active::-webkit-scrollbar{ width: 8px; }
+#rank.section.active::-webkit-scrollbar-track,
+#history.section.active::-webkit-scrollbar-track,
+#add.section.active::-webkit-scrollbar-track{ background: transparent; }
+#rank.section.active::-webkit-scrollbar-thumb,
+#history.section.active::-webkit-scrollbar-thumb,
+#add.section.active::-webkit-scrollbar-thumb{
+  background: rgba(255,255,255,.22);
+  border-radius: 999px;
+}
+
+#dashboard .rankHome{
+  width: 100vw !important;
+  height: 100dvh !important;
+  min-height: 100dvh !important;
+  overflow: hidden !important;
+}
+
+#dashboard .rankHome__center{
+  min-height: 100dvh !important;
+  padding-top: var(--hubTextPadTop) !important;
+  padding-bottom: var(--hubBottomPad) !important;
+}
+
+#rankEmblemOverlay{
+  top: var(--emblemTop) !important;
+  width: var(--emblemSize) !important;
+  height: var(--emblemSize) !important;
+}
+#rankEmblemOverlay .rankEmblem{
+  background-size: var(--emblemScale) auto !important;
+}
+
+/* Player Hub text block tuned to reference proportions */
+#dashboard.section.active .rankHome .rankTitle{
+  margin: 0 !important;
+  font-size: clamp(34px, 6.3vh, 78px) !important;
+  line-height: .92 !important;
+  letter-spacing: .12em !important;
+}
+#dashboard.section.active .rankHome .rankRP{
+  margin-top: 4px !important;
+  font-size: clamp(16px, 2.8vh, 30px) !important;
+  line-height: 1 !important;
+}
+#dashboard.section.active .rankHome .rankRP span{
+  font-size: .74em !important;
+}
+#dashboard.section.active .rankHome .rankProgress{
+  width: min(520px, 58vw) !important;
+  margin-top: 12px !important;
+}
+#dashboard.section.active .rankHome .rankProgress__label{
+  font-size: clamp(10px, 1.5vh, 16px) !important;
+  letter-spacing: .16em !important;
+}
+#dashboard.section.active .rankHome .pulseHeader,
+#dashboard.section.active .rankHome .pulseHeader span{
+  margin-top: 14px !important;
+  font-size: clamp(16px, 2.4vh, 28px) !important;
+  line-height: 1 !important;
+}
+#dashboard.section.active .rankHome .pulseGrid{
+  width: min(980px, 88vw) !important;
+  margin-top: 18px !important;
+  margin-bottom: 0 !important;
+}
+#dashboard.section.active .rankHome .pulseGrid .metric .k{
+  font-size: clamp(10px, 1.25vh, 14px) !important;
+}
+#dashboard.section.active .rankHome .pulseGrid .metric .v{
+  margin-top: 6px !important;
+  font-size: clamp(20px, 2.35vh, 32px) !important;
+}
+
+/* Shorter-height rescue for browser zoom / smaller windows */
+@media (max-height: 980px){
+  :root{
+    --emblemSize: min(44vh, 38vw, 660px);
+    --emblemTop: clamp(136px, 24vh, 250px);
+    --hubTextGap: 8px;
+    --hubTextPadTop: calc(var(--emblemTop) + (var(--emblemSize) * 0.50) + var(--hubTextGap));
+  }
+  #dashboard.section.active .rankHome .rankTitle{ font-size: clamp(30px, 5.4vh, 64px) !important; }
+  #dashboard.section.active .rankHome .rankRP{ font-size: clamp(14px, 2.3vh, 24px) !important; }
+  #dashboard.section.active .rankHome .rankProgress{ width: min(480px, 56vw) !important; margin-top: 10px !important; }
+  #dashboard.section.active .rankHome .pulseHeader,
+  #dashboard.section.active .rankHome .pulseHeader span{ margin-top: 12px !important; font-size: clamp(15px, 2.1vh, 24px) !important; }
+  #dashboard.section.active .rankHome .pulseGrid{ width: min(940px, 90vw) !important; margin-top: 14px !important; }
+  #dashboard.section.active .rankHome .pulseGrid .metric .v{ font-size: clamp(18px, 2vh, 28px) !important; }
+}
+
+@media (max-height: 860px){
+  :root{
+    --emblemSize: min(38vh, 34vw, 560px);
+    --emblemTop: clamp(120px, 22vh, 210px);
+    --hubTextPadTop: calc(var(--emblemTop) + (var(--emblemSize) * 0.49) + 6px);
+  }
+  #dashboard.section.active .rankHome .rankTitle{ font-size: clamp(28px, 4.7vh, 54px) !important; }
+  #dashboard.section.active .rankHome .rankRP{ font-size: clamp(13px, 1.9vh, 22px) !important; }
+  #dashboard.section.active .rankHome .rankProgress{ margin-top: 8px !important; }
+  #dashboard.section.active .rankHome .pulseHeader,
+  #dashboard.section.active .rankHome .pulseHeader span{ margin-top: 10px !important; font-size: clamp(14px, 1.8vh, 22px) !important; }
+  #dashboard.section.active .rankHome .pulseGrid{ margin-top: 12px !important; }
+  #dashboard.section.active .rankHome .pulseGrid .metric .k{ font-size: clamp(9px, 1vh, 12px) !important; }
+  #dashboard.section.active .rankHome .pulseGrid .metric .v{ font-size: clamp(16px, 1.7vh, 24px) !important; }
+}
