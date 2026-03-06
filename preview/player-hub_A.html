@@ -4928,30 +4928,186 @@ renderHistoryFromStorage();
   
 </div>
 
-<script src="assets/js/stats.js?v=1"></script>
-  
 
-<script id="rev-c-dashboard-mode">
+<script id="bf6-final-patches">
 (function(){
-  function applyDashboardMode(isDash){
-    document.documentElement.classList.toggle('is-dashboard', !!isDash);
-    document.body.classList.toggle('is-dashboard', !!isDash);
+  function getActiveMatchesPatched(){
+    try{
+      if (typeof ensureSeasonSystem === "function") ensureSeasonSystem();
+      var all = (typeof loadMatches === "function") ? loadMatches() : [];
+      if (!Array.isArray(all)) return [];
+      var activeId = (typeof getActiveSeasonId === "function") ? getActiveSeasonId() : null;
+      if (!activeId) return all.slice();
+      return all.filter(function(m){
+        return !!m && (!m.seasonId || m.seasonId === activeId);
+      });
+    }catch(e){
+      return [];
+    }
   }
 
-  applyDashboardMode(!!document.querySelector('#dashboard.section.active'));
+  function getEffectiveTotalRPPatched(){
+    try{
+      if (typeof getOverrideRP === "function"){
+        var ov = getOverrideRP();
+        if (ov != null && Number.isFinite(Number(ov))) {
+          var ovn = Number(ov);
+          var minRp = (typeof MIN_RP === "number") ? MIN_RP : 0;
+          return ovn < minRp ? minRp : ovn;
+        }
+      }
+    }catch(e){}
 
-  if (typeof window.showTab === 'function' && !window.__revCWrappedShowTab){
-    const origShowTab = window.showTab;
-    window.showTab = function(tabId, btn){
-      const result = origShowTab.apply(this, arguments);
-      applyDashboardMode(tabId === 'dashboard');
-      window.scrollTo(0, 0);
-      return result;
+    var matches = getActiveMatchesPatched();
+    var total = (typeof START_RP === "number") ? START_RP : 0;
+    for (var i = 0; i < matches.length; i++) total += Number(matches[i] && matches[i].rp ? matches[i].rp : 0) || 0;
+    var min = (typeof MIN_RP === "number") ? MIN_RP : 0;
+    return total < min ? min : total;
+  }
+
+  function setTxt(id, value){
+    var el = document.getElementById(id);
+    if (el) el.textContent = String(value);
+  }
+
+  function renderHomeMetricsPatched(){
+    var matches = getActiveMatchesPatched();
+    var total = matches.length;
+
+    if (!total){
+      setTxt("mWinRate", "0");
+      setTxt("mTotal", "0");
+      setTxt("mKDA", "0.0");
+      setTxt("mAvgKills", "0.0");
+      setTxt("mMVP", "0");
+      return;
+    }
+
+    var wins = 0, kills = 0, assists = 0, deaths = 0, mvp = 0;
+    for (var i = 0; i < matches.length; i++){
+      var m = matches[i] || {};
+      var place = Number(m.place || 99);
+      if (place <= 7) wins++;
+      kills += Number(m.kills || 0) || 0;
+      assists += Number(m.assists || 0) || 0;
+      deaths += Number(m.deaths || 0) || 0;
+      if (m.mvp) mvp++;
+    }
+
+    var winRate = Math.round((wins / total) * 100);
+    var kda = ((kills + assists) / Math.max(1, deaths)).toFixed(1);
+    var avgKills = (kills / total).toFixed(1);
+    var mvpRate = Math.round((mvp / total) * 100);
+
+    setTxt("mWinRate", winRate);
+    setTxt("mTotal", total);
+    setTxt("mKDA", kda);
+    setTxt("mAvgKills", avgKills);
+    setTxt("mMVP", mvpRate);
+  }
+
+  function syncRankCardPatched(totalRP){
+    if (typeof getRank !== "function" || typeof updateLadderUI !== "function") return;
+    totalRP = Number(totalRP);
+    if (!Number.isFinite(totalRP)) return;
+
+    var rank = getRank(totalRP);
+    if (!rank) return;
+
+    var rankTitle = document.getElementById("rankCardTitle") || document.querySelector("#rank .rank-info h2");
+    var rankRP = document.getElementById("rankCardRP") || document.querySelector("#rank .rank-rp");
+    var rpFill = document.getElementById("rankCardFill") || document.querySelector("#rank .rp-fill");
+    var chip = document.getElementById("rankCardChip");
+    var icon = document.getElementById("rankCardIcon");
+    var badgeImg = document.getElementById("rankBadgeImg");
+    var hud = document.getElementById("rankTierHUD");
+
+    if (rankTitle) rankTitle.textContent = rank.label;
+    if (rankRP) {
+      rankRP.textContent = (rank.tierName === "EIDOLON")
+        ? ("RR: " + totalRP + " (MAX)")
+        : ("RR: " + totalRP + " / " + rank.nextMin);
+    }
+    if (rpFill) {
+      var pct = Math.max(0, Math.min(100, Math.round((rank.rr / (DIV_RR - 1)) * 100)));
+      rpFill.style.width = pct + "%";
+    }
+    if (chip) chip.textContent = (rank.tierName === "EIDOLON") ? "ABSOLUTE PEAK" : ("TIER: " + rank.tierName);
+    if (icon) icon.style.setProperty("--rank-accent", rank.color);
+    if (badgeImg && rank.tierName) badgeImg.src = "assets/ranks/" + String(rank.tierName).toLowerCase() + ".webp";
+
+    if (hud){
+      var dots = hud.querySelectorAll(".tierHUD__dot");
+      for (var i = 0; i < dots.length; i++) dots[i].classList.remove("is-on");
+      if (rank.tierName === "EIDOLON") {
+        hud.style.display = "none";
+      } else {
+        hud.style.display = "flex";
+        var onCount = (rank.divIndex != null) ? (Number(rank.divIndex) + 1) : 0;
+        for (var j = 0; j < onCount && j < dots.length; j++) dots[j].classList.add("is-on");
+      }
+    }
+
+    updateLadderUI(rank.tierIndex);
+  }
+
+  var _applyTotalRP = window.applyTotalRP;
+  if (typeof _applyTotalRP === "function"){
+    window.applyTotalRP = function(totalRP, opts){
+      var res = _applyTotalRP(totalRP, opts);
+      try{ syncRankCardPatched(totalRP); }catch(e){}
+      try{ renderHomeMetricsPatched(); }catch(e){}
+      return res;
     };
-    window.__revCWrappedShowTab = true;
   }
+
+  var _renderHistoryFromStorage = window.renderHistoryFromStorage;
+  if (typeof _renderHistoryFromStorage === "function"){
+    window.renderHistoryFromStorage = function(){
+      var res = _renderHistoryFromStorage();
+      try{ renderHomeMetricsPatched(); }catch(e){}
+      try{ syncRankCardPatched(getEffectiveTotalRPPatched()); }catch(e){}
+      return res;
+    };
+  }
+
+  window.restoreRank = function(){
+    try{
+      var total = getEffectiveTotalRPPatched();
+      if (typeof window.applyTotalRP === "function") window.applyTotalRP(total, { skipCinematic: true });
+    }catch(e){}
+  };
+
+  var _showTab = window.showTab;
+  if (typeof _showTab === "function"){
+    window.showTab = function(tabId, btn){
+      var res = _showTab(tabId, btn);
+      try{
+        var target = document.getElementById(tabId);
+        if (target) target.scrollTop = 0;
+        if (document.scrollingElement) document.scrollingElement.scrollTop = 0;
+      }catch(e){}
+      try{
+        if (tabId === "dashboard" || tabId === "rank" || tabId === "history"){
+          renderHomeMetricsPatched();
+          syncRankCardPatched(getEffectiveTotalRPPatched());
+        }
+      }catch(e){}
+      return res;
+    };
+  }
+
+  document.addEventListener("DOMContentLoaded", function(){
+    setTimeout(function(){
+      try{ renderHomeMetricsPatched(); }catch(e){}
+      try{ syncRankCardPatched(getEffectiveTotalRPPatched()); }catch(e){}
+    }, 0);
+  });
 })();
 </script>
 
+
+<script src="assets/js/stats.js?v=1"></script>
+  
 </body>
 </html>
