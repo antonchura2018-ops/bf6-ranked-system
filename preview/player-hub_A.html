@@ -2625,7 +2625,19 @@ END DISABLED */
   window.__bf6_lastTier = tier;
   window.__bf6_lastRp = totalRP;
 }
-  
+function applyRankBackground(tierName){
+  const root = document.documentElement;
+  const key = String(tierName || "OUTCAST").toLowerCase();
+
+  const bgMap = {
+    outcast: "url('assets/img/bg/cosmos_outcast.png')"
+  };
+
+  root.style.setProperty(
+    "--rank-bg-image",
+    bgMap[key] || "url('assets/img/bg/cosmos.png')"
+  );
+}  
 
 /*
 IMPORTANT:
@@ -3111,16 +3123,17 @@ if (_ov != null && Number.isFinite(_ov)) {
 }
 
 var rank = getRank(totalRP);
-  updateHomeHubUI(rank, totalRP);
-  // keep Rank page + overlay emblem in sync
-  try{ applyHomeTier(rank.tierName, totalRP); }catch(e){}
-  try{
-    const overlay = (typeof ensureRankEmblemOverlay==="function") ? ensureRankEmblemOverlay() : null;
-    const el = overlay ? overlay.querySelector(".rankEmblem") : null;
-    const key = String(rank.tierName || "OUTCAST").toLowerCase();
-    const url = `/assets/ranks/${key}.webp`;
-    if (el) el.style.backgroundImage = `url("${url}")`;
-  }catch(e){}
+updateHomeHubUI(rank, totalRP);
+// keep Rank page + overlay emblem in sync
+try{ applyHomeTier(rank.tierName, totalRP); }catch(e){}
+try{ applyRankBackground(rank.tierName); }catch(e){}
+try{
+  const overlay = (typeof ensureRankEmblemOverlay==="function") ? ensureRankEmblemOverlay() : null;
+  const el = overlay ? overlay.querySelector(".rankEmblem") : null;
+  const key = String(rank.tierName || "OUTCAST").toLowerCase();
+  const url = `/assets/ranks/${key}.webp`;
+  if (el) el.style.backgroundImage = `url("${url}")`;
+}catch(e){}
 
   // ===== KROK 6.2: Hub platform tuning for ALL 10 ranks =====
 var hub = document.querySelector("#dashboard");
