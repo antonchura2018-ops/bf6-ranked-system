@@ -3760,12 +3760,13 @@ body{
   --navTabsH: 86px;
   --sectionTopPad: calc(var(--navTabsTop) + var(--navTabsH) + 20px);
 
-  --emblemSize: clamp(520px, 34vw, 920px);
-  --emblemTop: clamp(210px, 31vh, 670px);
-  --emblemScale: 90%;
-  --hubTextGap: clamp(10px, 1.1vh, 22px);
-  --hubTextPadTop: calc(var(--emblemTop) + (var(--emblemSize) / 2) + var(--hubTextGap));
-  --hubBottomPad: clamp(18px, 2.3vh, 34px);
+  --emblemSize: clamp(500px, 33vw, 860px);
+  --emblemTop: clamp(198px, 29.6vh, 640px);
+  --emblemScale: 89%;
+
+  --hubTextGap: clamp(4px, .55vh, 12px);
+  --hubTextPadTop: calc(var(--emblemTop) + (var(--emblemSize) / 2) - 4px);
+  --hubBottomPad: clamp(8px, 1.2vh, 18px);
 }
 
 html,
@@ -3862,44 +3863,44 @@ body{
 
 #dashboard.section.active .rankHome .rankTitle{
   margin: 0 !important;
-  font-size: clamp(48px, 4.2vw, 82px) !important;
+  font-size: clamp(42px, 3.55vw, 68px) !important;
   line-height: .92 !important;
-  letter-spacing: .12em !important;
+  letter-spacing: .10em !important;
 }
 
 #dashboard.section.active .rankHome .rankRP{
-  margin-top: 6px !important;
-  font-size: clamp(20px, 1.8vw, 34px) !important;
+  margin-top: 4px !important;
+  font-size: clamp(17px, 1.35vw, 26px) !important;
   line-height: 1 !important;
 }
 
 #dashboard.section.active .rankHome .rankRP span{
-  font-size: .74em !important;
-  margin-left: 7px !important;
+  font-size: .70em !important;
+  margin-left: 6px !important;
 }
 
 #dashboard.section.active .rankHome .rankProgress{
-  width: min(620px, 66vw) !important;
-  margin-top: 14px !important;
+  width: min(560px, 62vw) !important;
+  margin-top: 10px !important;
 }
 
 #dashboard.section.active .rankHome .rankProgress__label{
-  font-size: clamp(12px, .92vw, 18px) !important;
+  font-size: clamp(11px, .78vw, 15px) !important;
   line-height: 1.1 !important;
-  letter-spacing: .16em !important;
+  letter-spacing: .14em !important;
 }
 
 #dashboard.section.active .rankHome .pulseHeader,
 #dashboard.section.active .rankHome .pulseHeader span{
-  margin-top: 18px !important;
-  font-size: clamp(18px, 1.1vw, 28px) !important;
+  margin-top: 14px !important;
+  font-size: clamp(16px, 1.0vw, 24px) !important;
   line-height: 1 !important;
-  letter-spacing: .12em !important;
+  letter-spacing: .11em !important;
 }
 
 #dashboard.section.active .rankHome .pulseGrid{
-  width: min(930px, 78vw) !important;
-  margin-top: 22px !important;
+  width: min(880px, 76vw) !important;
+  margin-top: 16px !important;
   padding-top: 0 !important;
   gap: 0 !important;
 }
