@@ -4265,48 +4265,52 @@ body.is-cinematic #rankEmblemOverlay{
   }
 }
 /* =========================================================
-   BF6 RANK BACKGROUND SWITCH — SAFE VERSION
-   keeps current layout/emblem intact
+   BF6 RANK BACKGROUND LAYER — FINAL CLEAN FIX
+   one fullscreen layer, no seams
    ========================================================= */
 
 :root{
   --rank-bg-image: url('/assets/img/bg/cosmos.png');
 }
 
+/* rank 1 */
 body[data-rank="outcast"]{
   --rank-bg-image: url('/assets/img/bg/cosmos_outcast.png');
 }
 
-/* міняємо тільки картинку фону, не чіпаючи геометрію */
-#dashboard .rankHome{
-  background-image: var(--rank-bg-image) !important;
-  background-size: cover !important;
-  background-position: center top !important;
-  background-repeat: no-repeat !important;
-}
-
-/* окрема верхня смуга під вкладками, але без втручання в емблему */
-#dashboard.section.active::before{
-  content: "";
+/* single fullscreen background */
+#rankBgLayer{
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 120px;
+  inset: 0;
   pointer-events: none;
-  z-index: 1;
-  background-image: var(--rank-bg-image) !important;
-  background-size: cover !important;
-  background-position: center top !important;
-  background-repeat: no-repeat !important;
+  z-index: 0;
+  background-image: var(--rank-bg-image);
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
 }
 
-/* емблему повертаємо поверх */
+/* keep main app above background */
+.app,
+.section,
+#dashboard,
+#dashboard .rankHome,
+#dashboard .rankHome__center{
+  position: relative;
+  z-index: 1;
+}
+
+/* emblem above UI */
 #rankEmblemOverlay{
   z-index: 2000 !important;
 }
 
-/* вкладки ще вище */
+/* tabs above everything */
 .navbar.navTabs{
   z-index: 9300 !important;
+}
+
+/* IMPORTANT: dashboard itself should not draw its own background anymore */
+#dashboard .rankHome{
+  background: transparent !important;
 }
