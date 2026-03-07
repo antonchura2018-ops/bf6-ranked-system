@@ -3989,11 +3989,11 @@ body.is-cinematic #rankEmblemOverlay{
    ========================================================= */
 
 :root{
-  --ph-emblemSize: clamp(520px, 32vw, 600px);
-  --ph-emblemTop: clamp(205px, 32vh, 390px);
+  --ph-emblemSize: clamp(620px, 38vw, 800px);
+  --ph-emblemTop: clamp(230px, 36vh, 420px);
   --ph-emblemShiftX: 0px;
   --ph-emblemScale: 90%;
-  --ph-infoBottom: clamp(40px, 6vh, 90px);
+  --ph-infoBottom: clamp(52px, 7vh, 110px);
   --ph-titleSize: clamp(34px, 3.2vw, 52px);
   --ph-rpSize: clamp(14px, 1.2vw, 20px);
   --ph-nextSize: clamp(11px, .86vw, 16px);
