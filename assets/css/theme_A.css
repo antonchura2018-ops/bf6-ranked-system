@@ -4268,6 +4268,7 @@ body.is-cinematic #rankEmblemOverlay{
   --rank-bg-image: url('../img/bg/cosmos.png');
 }
 
+#dashboard.section.active,
 #dashboard .rankHome{
   background-image: var(--rank-bg-image) !important;
   background-size: cover !important;
