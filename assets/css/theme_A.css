@@ -4264,3 +4264,111 @@ body.is-cinematic #rankEmblemOverlay{
     font-size: clamp(16px, .96vw, 21px) !important;
   }
 }
+/* =========================================================
+   BF6 VISUAL FX ADD-ON
+   Safe additive effects only
+   Accent tuned for #26374d
+   ========================================================= */
+
+:root{
+  --fx-accent: #26374d;
+  --fx-accent-rgb: 38, 55, 77;
+  --fx-accent-soft: rgba(38, 55, 77, 0.18);
+  --fx-accent-line: rgba(38, 55, 77, 0.42);
+  --fx-accent-glow: rgba(38, 55, 77, 0.28);
+  --fx-accent-glow-strong: rgba(38, 55, 77, 0.42);
+}
+
+/* 1) Soft energy glow under emblem */
+#dashboard.section.active #rankEmblemOverlay::after{
+  content: "";
+  position: absolute;
+  inset: 18% 18% 18% 18%;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: -1;
+  background:
+    radial-gradient(
+      circle,
+      rgba(38, 55, 77, 0.22) 0%,
+      rgba(38, 55, 77, 0.12) 32%,
+      rgba(38, 55, 77, 0.05) 52%,
+      rgba(38, 55, 77, 0.00) 72%
+    );
+  opacity: .9;
+}
+
+/* 2) Thin sci-fi accent lines around lower info stack */
+#dashboard.section.active .rankHome__infoStack{
+  position: absolute;
+}
+
+#dashboard.section.active .rankHome__infoStack::before,
+#dashboard.section.active .rankHome__infoStack::after{
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(880px, 78vw);
+  height: 1px;
+  pointer-events: none;
+  opacity: .9;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(38, 55, 77, 0.00) 0%,
+      rgba(38, 55, 77, 0.18) 10%,
+      rgba(38, 55, 77, 0.42) 22%,
+      rgba(255,255,255,0.82) 50%,
+      rgba(38, 55, 77, 0.42) 78%,
+      rgba(38, 55, 77, 0.18) 90%,
+      rgba(38, 55, 77, 0.00) 100%
+    );
+}
+
+#dashboard.section.active .rankHome__infoStack::before{
+  top: 118px;
+}
+
+#dashboard.section.active .rankHome__infoStack::after{
+  top: 214px;
+  width: min(980px, 84vw);
+  opacity: .72;
+}
+
+/* 3) Subtle accent enhancement for active tab */
+.navbar.navTabs .nav-btn.active{
+  box-shadow:
+    inset 0 0 0 1px rgba(38, 55, 77, 0.34),
+    0 0 18px rgba(38, 55, 77, 0.18) !important;
+}
+
+.navbar.navTabs .nav-btn.active::after{
+  content: "";
+  position: absolute;
+  left: 12%;
+  right: 12%;
+  bottom: 3px;
+  height: 1px;
+  pointer-events: none;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(38, 55, 77, 0.00) 0%,
+      rgba(38, 55, 77, 0.55) 50%,
+      rgba(38, 55, 77, 0.00) 100%
+    );
+  opacity: .95;
+}
+
+/* Small accent polish on progress track */
+#dashboard.section.active .rankHome .rankProgress__track{
+  box-shadow:
+    0 0 10px rgba(38, 55, 77, 0.10);
+}
+
+/* Small accent polish on Player Ascension header lines */
+#dashboard.section.active .rankHome .pulseHeader{
+  text-shadow:
+    0 0 10px rgba(38, 55, 77, 0.16);
+}
