@@ -3760,12 +3760,12 @@ body{
   --navTabsH: 86px;
   --sectionTopPad: calc(var(--navTabsTop) + var(--navTabsH) + 20px);
 
-  --emblemSize: clamp(545px, 36.5vw, 920px);
-  --emblemTop: clamp(206px, 30.6vh, 660px);
+  --emblemSize: clamp(575px, 38vw, 960px);
+  --emblemTop: clamp(214px, 31.2vh, 680px);
   --emblemScale: 90%;
 
   --hubTextGap: clamp(4px, .5vh, 10px);
-  --hubTextPadTop: calc(var(--emblemTop) + (var(--emblemSize) / 2) - 28px);
+  --hubTextPadTop: calc(var(--emblemTop) + (var(--emblemSize) / 2) - 44px);
   --hubBottomPad: clamp(4px, .8vh, 12px);
 }
 
@@ -3863,37 +3863,37 @@ body{
 
 #dashboard.section.active .rankHome .rankTitle{
   margin: 0 !important;
-  font-size: clamp(36px, 3.05vw, 58px) !important;
+  font-size: clamp(32px, 2.85vw, 54px) !important;
   line-height: .92 !important;
-  letter-spacing: .095em !important;
+  letter-spacing: .09em !important;
 }
 
 #dashboard.section.active .rankHome .rankRP{
-  margin-top: 3px !important;
-  font-size: clamp(15px, 1.15vw, 21px) !important;
+  margin-top: 2px !important;
+  font-size: clamp(12px, 1.02vw, 19px) !important;
   line-height: 1 !important;
 }
 
 #dashboard.section.active .rankHome .rankRP span{
-  font-size: .68em !important;
-  margin-left: 5px !important;
+  font-size: .66em !important;
+  margin-left: 4px !important;
 }
 
 #dashboard.section.active .rankHome .rankProgress{
-  width: min(540px, 60vw) !important;
-  margin-top: 8px !important;
+  width: min(520px, 58vw) !important;
+  margin-top: 6px !important;
 }
 
 #dashboard.section.active .rankHome .rankProgress__label{
-  font-size: clamp(11px, .76vw, 14px) !important;
-  line-height: 1.1 !important;
-  letter-spacing: .14em !important;
+  font-size: clamp(10px, .72vw, 13px) !important;
+  line-height: 1.05 !important;
+  letter-spacing: .13em !important;
 }
 
 #dashboard.section.active .rankHome .pulseHeader,
 #dashboard.section.active .rankHome .pulseHeader span{
-  margin-top: 10px !important;
-  font-size: clamp(15px, .95vw, 22px) !important;
+  margin-top: 8px !important;
+  font-size: clamp(14px, .90vw, 20px) !important;
   line-height: 1 !important;
   letter-spacing: .11em !important;
 }
