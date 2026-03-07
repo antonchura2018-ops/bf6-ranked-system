@@ -2625,19 +2625,7 @@ END DISABLED */
   window.__bf6_lastTier = tier;
   window.__bf6_lastRp = totalRP;
 }
-function applyRankBackground(tierName){
-  const root = document.documentElement;
-  const key = String(tierName || "OUTCAST").toLowerCase();
 
-  const bgMap = {
-    outcast: "url('/assets/img/bg/cosmos_outcast.png')"
-  };
-
-  root.style.setProperty(
-    "--rank-bg-image",
-    bgMap[key] || "url('/assets/img/bg/cosmos.png')"
-  );
-}  
 
 /*
 IMPORTANT:
@@ -3126,7 +3114,6 @@ var rank = getRank(totalRP);
 updateHomeHubUI(rank, totalRP);
 // keep Rank page + overlay emblem in sync
 try{ applyHomeTier(rank.tierName, totalRP); }catch(e){}
-try{ applyRankBackground(rank.tierName); }catch(e){}
 try{
   const overlay = (typeof ensureRankEmblemOverlay==="function") ? ensureRankEmblemOverlay() : null;
   const el = overlay ? overlay.querySelector(".rankEmblem") : null;
