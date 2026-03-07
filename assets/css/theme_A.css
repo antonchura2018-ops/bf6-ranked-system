@@ -3989,12 +3989,13 @@ body.is-cinematic #rankEmblemOverlay{
    ========================================================= */
 
 :root{
-  --ph-emblemSize: clamp(420px, 28vw, 560px);
-  --ph-emblemTop: clamp(170px, 29vh, 330px);
+  --ph-emblemSize: clamp(520px, 32vw, 600px);
+  --ph-emblemTop: clamp(205px, 32vh, 390px);
+  --ph-emblemShiftX: 0px;
   --ph-emblemScale: 90%;
-  --ph-infoBottom: clamp(16px, 3.2vh, 42px);
-  --ph-titleSize: clamp(44px, 4.15vw, 72px);
-  --ph-rpSize: clamp(18px, 1.8vw, 30px);
+  --ph-infoBottom: clamp(40px, 6vh, 90px);
+  --ph-titleSize: clamp(34px, 3.2vw, 52px);
+  --ph-rpSize: clamp(14px, 1.2vw, 20px);
   --ph-nextSize: clamp(11px, .86vw, 16px);
   --ph-ascSize: clamp(18px, 1.15vw, 24px);
   --ph-progressW: min(560px, 58vw);
@@ -4038,7 +4039,7 @@ body.is-cinematic #rankEmblemOverlay{
   top: var(--ph-emblemTop) !important;
   width: var(--ph-emblemSize) !important;
   height: var(--ph-emblemSize) !important;
-  transform: translate(-50%, -50%) !important;
+  transform: translate(calc(-50% + var(--ph-emblemShiftX)), -50%) !important;
   z-index: 2000 !important;
 }
 #rankEmblemOverlay .rankEmblem{
