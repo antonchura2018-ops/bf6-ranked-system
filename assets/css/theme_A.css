@@ -138,7 +138,6 @@ body[data-rank="azure"]{    --accent:#3aa7ff; --accent2:#9ad5ff; }
   position: relative;
   min-height: 100vh;
   overflow: visible;
-  background: #05060a;
   color: rgba(255,255,255,.92);
   font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
 }
@@ -334,7 +333,7 @@ body[data-rank="azure"]{    --accent:#3aa7ff; --accent2:#9ad5ff; }
 
 /* ===== FIX: rankHome truly fullscreen (no bottom empty area) ===== */
 html, body { margin:0; padding:0; height:100%; }
-body { background:#05060a; } /* запасний колір */
+body { background: transparent; }
 
 .app, .section, #dashboard{
   width: 100%;
@@ -2206,18 +2205,6 @@ body .navbar.navTabs > .nav-btn.active:last-child > span::before{
    FINAL — METRICS + TYPE (match reference #2)
    Paste VERY END of theme_A.css
    ========================================================= */
-
-/* keep only cosmos background (NO HUD) */
-body::before{
-  content:"" !important;
-  position: fixed !important;
-  inset: 0 !important;
-  z-index: -10 !important;
-  pointer-events:none !important;
-  background: url("/assets/img/bg/cosmos.png") center/cover no-repeat !important;
-  background-position: center 18% !important;
-  filter: saturate(1.08) contrast(1.06) !important;
-}
 
 
 /* tighten vertical spacing of the whole block (OUTCAST -> metrics) */
@@ -4264,21 +4251,51 @@ body.is-cinematic #rankEmblemOverlay{
     font-size: clamp(16px, .96vw, 21px) !important;
   }
 }
-/* =========================================================
-   BF6 RANK BACKGROUND LAYER — FINAL CLEAN FIX
-   one fullscreen layer, no seams
-   ========================================================= */
-
 :root{
   --rank-bg-image: url('/assets/img/bg/cosmos.png');
 }
 
-/* rank 1 */
+/* per-rank backgrounds */
 body[data-rank="outcast"]{
   --rank-bg-image: url('/assets/img/bg/cosmos_outcast.png');
 }
 
-/* single fullscreen background */
+body[data-rank="thrall"]{
+  --rank-bg-image: url('/assets/img/bg/cosmos.png');
+}
+
+body[data-rank="marauder"]{
+  --rank-bg-image: url('/assets/img/bg/cosmos.png');
+}
+
+body[data-rank="harbinger"]{
+  --rank-bg-image: url('/assets/img/bg/cosmos.png');
+}
+
+body[data-rank="reaper"]{
+  --rank-bg-image: url('/assets/img/bg/cosmos.png');
+}
+
+body[data-rank="archon"]{
+  --rank-bg-image: url('/assets/img/bg/cosmos.png');
+}
+
+body[data-rank="overlord"]{
+  --rank-bg-image: url('/assets/img/bg/cosmos.png');
+}
+
+body[data-rank="monarch"]{
+  --rank-bg-image: url('/assets/img/bg/cosmos.png');
+}
+
+body[data-rank="seraph"]{
+  --rank-bg-image: url('/assets/img/bg/cosmos.png');
+}
+
+body[data-rank="eidolon"]{
+  --rank-bg-image: url('/assets/img/bg/cosmos.png');
+}
+
 #rankBgLayer{
   position: fixed;
   inset: 0;
@@ -4291,7 +4308,6 @@ body[data-rank="outcast"]{
   background-repeat: no-repeat;
 }
 
-/* keep main app above background */
 .app,
 .section,
 #dashboard,
@@ -4301,17 +4317,16 @@ body[data-rank="outcast"]{
   z-index: 1;
 }
 
-/* emblem above UI */
+#dashboard .rankHome{
+  background: transparent !important;
+}
+
 #rankEmblemOverlay{
   z-index: 2000 !important;
 }
 
-/* tabs above everything */
 .navbar.navTabs{
   z-index: 9300 !important;
 }
 
-/* IMPORTANT: dashboard itself should not draw its own background anymore */
-#dashboard .rankHome{
-  background: transparent !important;
-}
+
