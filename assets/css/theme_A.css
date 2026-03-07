@@ -4284,9 +4284,10 @@ body[data-rank="outcast"]{
   inset: 0;
   pointer-events: none;
   z-index: 0;
+
   background-image: var(--rank-bg-image);
   background-size: cover;
-  background-position: center 90px;
+  background-position: center center;
   background-repeat: no-repeat;
 }
 
