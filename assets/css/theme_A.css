@@ -3989,16 +3989,19 @@ body.is-cinematic #rankEmblemOverlay{
    ========================================================= */
 
 :root{
-  --ph-emblemSize: clamp(710px, 42vw, 900px);
-  --ph-emblemTop: clamp(272px, 40vh, 490px);
+  --ph-emblemSize: clamp(700px, 42vw, 920px);
+  --ph-emblemTop: clamp(235px, 34vh, 430px);
   --ph-emblemShiftX: 0px;
   --ph-emblemScale: 90%;
-  --ph-infoBottom: clamp(78px, 10vh, 150px);
-  --ph-titleSize: clamp(28px, 2.6vw, 42px);
-  --ph-rpSize: clamp(11px, .95vw, 16px);
-  --ph-nextSize: clamp(11px, .86vw, 16px);
-  --ph-ascSize: clamp(18px, 1.15vw, 24px);
-  --ph-progressW: min(560px, 58vw);
+
+  --ph-infoBottom: clamp(72px, 9vh, 140px);
+
+  --ph-titleSize: clamp(30px, 2.7vw, 46px);
+  --ph-rpSize: clamp(12px, 1vw, 18px);
+  --ph-nextSize: clamp(10px, .74vw, 14px);
+  --ph-ascSize: clamp(16px, 1vw, 22px);
+
+  --ph-progressW: min(540px, 56vw);
   --ph-pulseW: min(980px, 84vw);
 }
 
@@ -4154,16 +4157,26 @@ body.is-cinematic #rankEmblemOverlay{
   z-index: 99999 !important;
 }
 
-/* Height-aware tuning for browser zoom / shorter viewports */
 @media (max-height: 980px){
   :root{
-    --ph-emblemSize: clamp(620px, 37vw, 860px);
-    --ph-emblemTop: clamp(205px, 31vh, 360px);
-    --ph-titleSize: clamp(26px, 2.2vw, 38px);
-    --ph-rpSize: clamp(10px, .84vw, 14px);
+    --ph-emblemSize: clamp(620px, 38vw, 820px);
+    --ph-emblemTop: clamp(205px, 30vh, 350px);
+    --ph-titleSize: clamp(26px, 2.35vw, 40px);
+    --ph-rpSize: clamp(10px, .86vw, 15px);
+    --ph-nextSize: clamp(9px, .68vw, 13px);
+    --ph-ascSize: clamp(15px, .92vw, 20px);
     --ph-progressW: min(500px, 54vw);
     --ph-pulseW: min(940px, 84vw);
-    --ph-infoBottom: clamp(42px, 5.5vh, 84px);
+    --ph-infoBottom: clamp(52px, 6.2vh, 96px);
+  }
+
+  #dashboard.section.active .rankHome .pulseHeader,
+  #dashboard.section.active .rankHome .pulseHeader span{
+    margin-top: 10px !important;
+  }
+
+  #dashboard.section.active .rankHome .pulseGrid{
+    margin-top: 8px !important;
   }
 }
 @media (max-height: 860px){
