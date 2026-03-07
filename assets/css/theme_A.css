@@ -4266,20 +4266,43 @@ body.is-cinematic #rankEmblemOverlay{
 }
 /* =========================================================
    BF6 RANK BACKGROUND SWITCH
-   Uses existing body[data-rank] from applyHomeTier()
+   Clean version — fixes top seam under tabs
    ========================================================= */
 
-/* default background for all ranks */
+:root{
+  --rank-bg-image: url('/assets/img/bg/cosmos.png');
+}
+
+body[data-rank="outcast"]{
+  --rank-bg-image: url('/assets/img/bg/cosmos_outcast.png');
+}
+
+/* main Player Hub background */
 #dashboard.section.active,
 #dashboard .rankHome{
-  background-image: url('/assets/img/bg/cosmos.png') !important;
+  background-image: var(--rank-bg-image) !important;
   background-size: cover !important;
-  background-position: center center !important;
+  background-position: center top !important;
   background-repeat: no-repeat !important;
 }
 
-/* rank 1 only */
-body[data-rank="outcast"] #dashboard.section.active,
-body[data-rank="outcast"] #dashboard .rankHome{
-  background-image: url('/assets/img/bg/cosmos_outcast.png') !important;
+/* top strip behind fixed tabs */
+#dashboard.section.active::before{
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 120px;
+  pointer-events: none;
+  z-index: 0;
+  background-image: var(--rank-bg-image) !important;
+  background-size: cover !important;
+  background-position: center top !important;
+  background-repeat: no-repeat !important;
+}
+
+/* keep tabs above the strip */
+.navbar.navTabs{
+  z-index: 9300 !important;
 }
