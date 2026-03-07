@@ -4265,13 +4265,16 @@ body.is-cinematic #rankEmblemOverlay{
   }
 }
 :root{
-  --rank-bg-image: url('../img/bg/cosmos.png');
+  --rank-bg-image: url('/assets/img/bg/cosmos.png');
 }
 
+html,
+body,
+.app,
 #dashboard.section.active,
 #dashboard .rankHome{
   background-image: var(--rank-bg-image) !important;
   background-size: cover !important;
-  background-position: center !important;
+  background-position: center top !important;
   background-repeat: no-repeat !important;
 }
