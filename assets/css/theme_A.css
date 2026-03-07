@@ -3952,8 +3952,8 @@ body.is-cinematic #rankEmblemOverlay{
 }
 
 #award .veil{
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
   background:
     radial-gradient(900px 520px at 50% 42%, color-mix(in srgb, var(--accent) 16%, transparent), rgba(0,0,0,.94)),
     radial-gradient(1200px 720px at 50% 10%, color-mix(in srgb, var(--accent) 8%, transparent), transparent 58%),
@@ -3990,7 +3990,7 @@ body.is-cinematic #rankEmblemOverlay{
 
 :root{
   --ph-emblemSize: clamp(680px, 40vw, 840px);
-  --ph-emblemTop: clamp(250px, 38vh, 450px);
+  --ph-emblemTop: clamp(260px, 39vh, 460px);
   --ph-emblemShiftX: 0px;
   --ph-emblemScale: 90%;
   --ph-infoBottom: clamp(53px, 8vh, 120px);
