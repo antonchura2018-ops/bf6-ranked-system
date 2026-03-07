@@ -3990,10 +3990,10 @@ body.is-cinematic #rankEmblemOverlay{
 
 :root{
   --ph-emblemSize: clamp(620px, 38vw, 800px);
-  --ph-emblemTop: clamp(230px, 36vh, 420px);
+  --ph-emblemTop: clamp(250px, 38vh, 450px);
   --ph-emblemShiftX: 0px;
   --ph-emblemScale: 90%;
-  --ph-infoBottom: clamp(52px, 7vh, 110px);
+  --ph-infoBottom: clamp(53px, 8vh, 120px);
   --ph-titleSize: clamp(34px, 3.2vw, 52px);
   --ph-rpSize: clamp(14px, 1.2vw, 20px);
   --ph-nextSize: clamp(11px, .86vw, 16px);
