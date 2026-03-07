@@ -3760,8 +3760,8 @@ body{
   --navTabsH: 86px;
   --sectionTopPad: calc(var(--navTabsTop) + var(--navTabsH) + 20px);
 
-  --emblemSize: clamp(750px, 38vw, 960px);
-  --emblemTop: clamp(350px, 31.2vh, 680px);
+  --emblemSize: clamp(750px, 45vw, 1020px);
+  --emblemTop: clamp(250px, 35vh, 720px);
   --emblemScale: 90%;
 
   --hubTextGap: clamp(4px, .5vh, 10px);
