@@ -3990,7 +3990,7 @@ body.is-cinematic #rankEmblemOverlay{
 
 :root{
   --ph-emblemSize: clamp(700px, 42vw, 920px);
-  --ph-emblemTop: clamp(268px, 37.2vh, 485px);
+  --ph-emblemTop: clamp(278px, 38vh, 500px);
   --ph-emblemShiftX: 0px;
   --ph-emblemScale: 90%;
 
@@ -4160,7 +4160,7 @@ body.is-cinematic #rankEmblemOverlay{
 @media (max-height: 980px){
   :root{
     --ph-emblemSize: clamp(610px, 36vw, 800px);
-    --ph-emblemTop: clamp(268px, 37vh, 430px);
+    --ph-emblemTop: clamp(286px, 38.8vh, 455px);
     --ph-titleSize: clamp(24px, 2.1vw, 36px);
     --ph-rpSize: clamp(10px, .82vw, 14px);
     --ph-nextSize: clamp(9px, .66vw, 12px);
