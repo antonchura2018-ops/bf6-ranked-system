@@ -4265,10 +4265,10 @@ body.is-cinematic #rankEmblemOverlay{
   }
 }
 /* =========================================================
-   BF6 RANK BACKGROUND SWITCH — CLEAN FULLSCREEN LAYER
+   BF6 RANK BACKGROUND SWITCH — SAFE VERSION
+   keeps current layout/emblem intact
    ========================================================= */
 
-/* rank background source */
 :root{
   --rank-bg-image: url('/assets/img/bg/cosmos.png');
 }
@@ -4277,35 +4277,36 @@ body[data-rank="outcast"]{
   --rank-bg-image: url('/assets/img/bg/cosmos_outcast.png');
 }
 
-/* remove local backgrounds to avoid seams */
-#dashboard.section.active,
+/* міняємо тільки картинку фону, не чіпаючи геометрію */
 #dashboard .rankHome{
-  background: none !important;
-}
-
-/* one single fullscreen background layer for Player Hub only */
-#dashboard.section.active::before{
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
   background-image: var(--rank-bg-image) !important;
   background-size: cover !important;
-  background-position: center center !important;
+  background-position: center top !important;
   background-repeat: no-repeat !important;
 }
 
-/* make sure hub content stays above the background layer */
-#dashboard.section.active > *,
-#dashboard .rankHome,
-#dashboard .rankHome__center,
-#rankEmblemOverlay{
-  position: relative;
+/* окрема верхня смуга під вкладками, але без втручання в емблему */
+#dashboard.section.active::before{
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 120px;
+  pointer-events: none;
   z-index: 1;
+  background-image: var(--rank-bg-image) !important;
+  background-size: cover !important;
+  background-position: center top !important;
+  background-repeat: no-repeat !important;
 }
 
-/* tabs stay above everything */
+/* емблему повертаємо поверх */
+#rankEmblemOverlay{
+  z-index: 2000 !important;
+}
+
+/* вкладки ще вище */
 .navbar.navTabs{
   z-index: 9300 !important;
 }
