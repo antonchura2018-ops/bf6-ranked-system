@@ -4264,17 +4264,22 @@ body.is-cinematic #rankEmblemOverlay{
     font-size: clamp(16px, .96vw, 21px) !important;
   }
 }
-:root{
-  --rank-bg-image: url('/assets/img/bg/cosmos.png');
-}
+/* =========================================================
+   BF6 RANK BACKGROUND SWITCH
+   Uses existing body[data-rank] from applyHomeTier()
+   ========================================================= */
 
-html,
-body,
-.app,
+/* default background for all ranks */
 #dashboard.section.active,
 #dashboard .rankHome{
-  background-image: var(--rank-bg-image) !important;
+  background-image: url('/assets/img/bg/cosmos.png') !important;
   background-size: cover !important;
-  background-position: center top !important;
+  background-position: center center !important;
   background-repeat: no-repeat !important;
+}
+
+/* rank 1 only */
+body[data-rank="outcast"] #dashboard.section.active,
+body[data-rank="outcast"] #dashboard .rankHome{
+  background-image: url('/assets/img/bg/cosmos_outcast.png') !important;
 }
