@@ -3900,7 +3900,7 @@ body{
 
 #dashboard.section.active .rankHome .pulseGrid{
   width: min(920px, 78vw) !important;
-  margin-top: 10px !important;
+  margin-top: 6px !important;
   padding-top: 0 !important;
   gap: 0 !important;
 }
