@@ -4567,4 +4567,323 @@ body[data-rank="eidolon"]{
     0 0 22px var(--rank-ui-textglow-a),
     0 0 46px color-mix(in srgb, var(--rank-ui-primary) 24%, transparent) !important;
 }
+/* =========================================================
+   RANK UI CONTROL PANEL
+   ВСТАВИТИ В САМИЙ КІНЕЦЬ theme_A.css
 
+   ЩО ТУТ МІНЯЄТЬСЯ:
+   1) ФОН РАНГУ            -> --rank-bg-image
+   2) ОСНОВНИЙ КОЛІР UI    -> --rank-ui-primary
+   3) ДОДАТКОВИЙ КОЛІР UI  -> --rank-ui-secondary
+   4) КОЛІР ЛІНІЙ          -> --rank-ui-line
+   5) М'ЯКИЙ КОЛІР ЛІНІЙ   -> --rank-ui-line-soft
+   6) GLOW                 -> --rank-ui-textglow-a / b
+
+   ДЕ ЩО МІНЯТИ:
+   - хочеш змінити фон рангу -> міняй --rank-bg-image
+   - хочеш змінити колір ліній / метриків / progress -> міняй primary/secondary/line/glow
+   ========================================================= */
+
+/* ---------- DEFAULT FALLBACK ---------- */
+:root{
+  --rank-bg-image: url('/assets/img/bg/cosmos.png');
+
+  --rank-ui-primary: #ff5a23;
+  --rank-ui-secondary: #ff2a1a;
+
+  --rank-ui-line: rgba(255,110,60,.95);
+  --rank-ui-line-soft: rgba(255,255,255,.14);
+
+  --rank-ui-textglow-a: rgba(255,110,60,.30);
+  --rank-ui-textglow-b: rgba(255,50,20,.18);
+}
+
+
+/* =========================================================
+   RANK 1 — OUTCAST
+   ========================================================= */
+body[data-rank="outcast"]{
+  /* ФОН */
+  --rank-bg-image: url('/assets/img/bg/cosmos_outcast.png');
+
+  /* ОСНОВНИЙ КОЛІР UI */
+  --rank-ui-primary: #8d1f22;
+  --rank-ui-secondary: #8d1f22;
+
+  /* ЛІНІЇ / СВІТІННЯ */
+  --rank-ui-line: rgba(141,31,34,.95);
+  --rank-ui-line-soft: rgba(255,225,230,.14);
+  --rank-ui-textglow-a: rgba(141,31,34,.28);
+  --rank-ui-textglow-b: rgba(141,31,34,.18);
+}
+
+
+/* =========================================================
+   RANK 2 — THRALL
+   ========================================================= */
+body[data-rank="thrall"]{
+  /* ФОН */
+  --rank-bg-image: url('/assets/img/bg/cosmos_thrall.png');
+
+  /* ОСНОВНИЙ КОЛІР UI */
+  --rank-ui-primary: #083d85;
+  --rank-ui-secondary: #083d85;
+
+  /* ЛІНІЇ / СВІТІННЯ */
+  --rank-ui-line: rgba(8,61,133,.95);
+  --rank-ui-line-soft: rgba(220,235,255,.14);
+  --rank-ui-textglow-a: rgba(8,61,133,.28);
+  --rank-ui-textglow-b: rgba(8,61,133,.18);
+}
+
+
+/* =========================================================
+   RANK 3 — MARAUDER
+   РОЗКОМЕНТУЙ ПІЗНІШЕ
+   ========================================================= */
+/*
+body[data-rank="marauder"]{
+  --rank-bg-image: url('/assets/img/bg/cosmos_marauder.png');
+  --rank-ui-primary: #xxxxxx;
+  --rank-ui-secondary: #xxxxxx;
+  --rank-ui-line: rgba(x,x,x,.95);
+  --rank-ui-line-soft: rgba(x,x,x,.14);
+  --rank-ui-textglow-a: rgba(x,x,x,.28);
+  --rank-ui-textglow-b: rgba(x,x,x,.18);
+}
+*/
+
+
+/* =========================================================
+   RANK 4 — HARBINGER
+   ========================================================= */
+/*
+body[data-rank="harbinger"]{
+  --rank-bg-image: url('/assets/img/bg/cosmos_harbinger.png');
+  --rank-ui-primary: #xxxxxx;
+  --rank-ui-secondary: #xxxxxx;
+  --rank-ui-line: rgba(x,x,x,.95);
+  --rank-ui-line-soft: rgba(x,x,x,.14);
+  --rank-ui-textglow-a: rgba(x,x,x,.28);
+  --rank-ui-textglow-b: rgba(x,x,x,.18);
+}
+*/
+
+
+/* =========================================================
+   RANK 5 — REAPER
+   ========================================================= */
+/*
+body[data-rank="reaper"]{
+  --rank-bg-image: url('/assets/img/bg/cosmos_reaper.png');
+  --rank-ui-primary: #xxxxxx;
+  --rank-ui-secondary: #xxxxxx;
+  --rank-ui-line: rgba(x,x,x,.95);
+  --rank-ui-line-soft: rgba(x,x,x,.14);
+  --rank-ui-textglow-a: rgba(x,x,x,.28);
+  --rank-ui-textglow-b: rgba(x,x,x,.18);
+}
+*/
+
+
+/* =========================================================
+   RANK 6 — ARCHON
+   ========================================================= */
+/*
+body[data-rank="archon"]{
+  --rank-bg-image: url('/assets/img/bg/cosmos_archon.png');
+  --rank-ui-primary: #xxxxxx;
+  --rank-ui-secondary: #xxxxxx;
+  --rank-ui-line: rgba(x,x,x,.95);
+  --rank-ui-line-soft: rgba(x,x,x,.14);
+  --rank-ui-textglow-a: rgba(x,x,x,.28);
+  --rank-ui-textglow-b: rgba(x,x,x,.18);
+}
+*/
+
+
+/* =========================================================
+   RANK 7 — OVERLORD
+   ========================================================= */
+/*
+body[data-rank="overlord"]{
+  --rank-bg-image: url('/assets/img/bg/cosmos_overlord.png');
+  --rank-ui-primary: #xxxxxx;
+  --rank-ui-secondary: #xxxxxx;
+  --rank-ui-line: rgba(x,x,x,.95);
+  --rank-ui-line-soft: rgba(x,x,x,.14);
+  --rank-ui-textglow-a: rgba(x,x,x,.28);
+  --rank-ui-textglow-b: rgba(x,x,x,.18);
+}
+*/
+
+
+/* =========================================================
+   RANK 8 — MONARCH
+   ========================================================= */
+/*
+body[data-rank="monarch"]{
+  --rank-bg-image: url('/assets/img/bg/cosmos_monarch.png');
+  --rank-ui-primary: #xxxxxx;
+  --rank-ui-secondary: #xxxxxx;
+  --rank-ui-line: rgba(x,x,x,.95);
+  --rank-ui-line-soft: rgba(x,x,x,.14);
+  --rank-ui-textglow-a: rgba(x,x,x,.28);
+  --rank-ui-textglow-b: rgba(x,x,x,.18);
+}
+*/
+
+
+/* =========================================================
+   RANK 9 — SERAPH
+   ========================================================= */
+/*
+body[data-rank="seraph"]{
+  --rank-bg-image: url('/assets/img/bg/cosmos_seraph.png');
+  --rank-ui-primary: #xxxxxx;
+  --rank-ui-secondary: #xxxxxx;
+  --rank-ui-line: rgba(x,x,x,.95);
+  --rank-ui-line-soft: rgba(x,x,x,.14);
+  --rank-ui-textglow-a: rgba(x,x,x,.28);
+  --rank-ui-textglow-b: rgba(x,x,x,.18);
+}
+*/
+
+
+/* =========================================================
+   RANK 10 — EIDOLON
+   ========================================================= */
+/*
+body[data-rank="eidolon"]{
+  --rank-bg-image: url('/assets/img/bg/cosmos_eidolon.png');
+  --rank-ui-primary: #xxxxxx;
+  --rank-ui-secondary: #xxxxxx;
+  --rank-ui-line: rgba(x,x,x,.95);
+  --rank-ui-line-soft: rgba(x,x,x,.14);
+  --rank-ui-textglow-a: rgba(x,x,x,.28);
+  --rank-ui-textglow-b: rgba(x,x,x,.18);
+}
+*/
+
+
+/* =========================================================
+   SHARED APPLICATION OF RANK COLORS
+   Це вже автоматично бере кольори з body[data-rank="..."]
+   ========================================================= */
+
+/* Fullscreen background */
+#rankBgLayer::before{
+  background-image: var(--rank-bg-image) !important;
+}
+
+/* PLAYER ASCENSION — довгі лінії */
+#dashboard.section.active .rankHome .pulseHeader::before,
+#dashboard.section.active .rankHome .pulseHeader::after{
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--rank-ui-line-soft),
+    var(--rank-ui-line),
+    var(--rank-ui-line-soft),
+    transparent
+  ) !important;
+
+  box-shadow:
+    0 0 14px var(--rank-ui-textglow-a),
+    0 0 40px var(--rank-ui-textglow-b) !important;
+}
+
+/* PLAYER ASCENSION — маленькі бокові лінії */
+#dashboard.section.active .rankHome .pulseHeader span::before,
+#dashboard.section.active .rankHome .pulseHeader span::after{
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--rank-ui-line),
+    transparent
+  ) !important;
+
+  box-shadow:
+    0 0 10px var(--rank-ui-textglow-a),
+    0 0 24px var(--rank-ui-textglow-b) !important;
+
+  opacity: 1 !important;
+}
+
+/* Metrics label: WIN RATE / TOTAL MATCHES / etc */
+#dashboard.section.active .rankHome .pulseGrid .metric .k{
+  font-size: clamp(12px, .9vw, 15px) !important;
+  letter-spacing: .18em !important;
+
+  background: linear-gradient(
+    180deg,
+    #ffffff 0%,
+    color-mix(in srgb, var(--rank-ui-primary) 22%, white 78%) 72%,
+    color-mix(in srgb, var(--rank-ui-primary) 78%, white 22%) 100%
+  ) !important;
+
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+
+  text-shadow:
+    0 0 6px var(--rank-ui-textglow-a),
+    0 0 18px var(--rank-ui-textglow-b) !important;
+}
+
+/* Metrics value: 63% / 43 / 0.6 / etc */
+#dashboard.section.active .rankHome .pulseGrid .metric .v{
+  font-size: clamp(26px, 1.9vw, 36px) !important;
+  line-height: 1 !important;
+
+  background: linear-gradient(
+    180deg,
+    #ffffff 0%,
+    color-mix(in srgb, var(--rank-ui-primary) 26%, white 74%) 30%,
+    color-mix(in srgb, var(--rank-ui-primary) 72%, white 28%) 68%,
+    color-mix(in srgb, var(--rank-ui-secondary) 86%, var(--rank-ui-primary) 14%) 100%
+  ) !important;
+
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+
+  text-shadow:
+    0 0 10px var(--rank-ui-textglow-a),
+    0 0 24px var(--rank-ui-textglow-b),
+    0 0 56px color-mix(in srgb, var(--rank-ui-primary) 24%, transparent) !important;
+}
+
+#dashboard.section.active .rankHome .pulseGrid .metric .v span{
+  font-size: .76em !important;
+  background: inherit !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+}
+
+/* Vertical separators between metrics */
+#dashboard.section.active .rankHome .pulseGrid .metric + .metric::before{
+  background: linear-gradient(
+    180deg,
+    transparent,
+    color-mix(in srgb, var(--rank-ui-line) 75%, transparent),
+    transparent
+  ) !important;
+
+  box-shadow:
+    0 0 12px color-mix(in srgb, var(--rank-ui-primary) 16%, transparent) !important;
+}
+
+/* Next Rank progress line */
+#dashboard.section.active .rankHome .rankProgress__fill{
+  background: linear-gradient(
+    90deg,
+    #ffffff 0%,
+    color-mix(in srgb, var(--rank-ui-primary) 20%, white 80%) 32%,
+    var(--rank-ui-primary) 72%,
+    var(--rank-ui-secondary) 100%
+  ) !important;
+
+  box-shadow:
+    0 0 10px rgba(255,255,255,.12),
+    0 0 22px var(--rank-ui-textglow-a),
+    0 0 46px color-mix(in srgb, var(--rank-ui-primary) 24%, transparent) !important;
+}
