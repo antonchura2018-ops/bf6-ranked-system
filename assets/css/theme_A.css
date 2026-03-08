@@ -4420,10 +4420,10 @@ body .navbar.navTabs > .nav-btn.active:nth-child(2) > span::before{
   right: -92px !important;
 }
 body .navbar.navTabs > .nav-btn.active:nth-child(3) > span::before{
-  left: -42px !important;
-  right: -48px !important;
+  left: -38px !important;
+  right: -40px !important;
 }
 body .navbar.navTabs > .nav-btn.active:last-child > span::before{
-  left: -42px !important;
-  right: -40px !important;
+  left: -62px !important;
+  right: -60px !important;
 }
