@@ -4890,3 +4890,53 @@ body[data-rank="eidolon"]{
     0 0 22px var(--rank-ui-textglow-a),
     0 0 46px color-mix(in srgb, var(--rank-ui-primary) 24%, transparent) !important;
 }
+/* =========================================================
+   NAV TABS — rank colored top line + outer glow
+   ========================================================= */
+
+/* outer container glow */
+.navbar.navTabs{
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--rank-ui-primary) 26%, rgba(255,255,255,.08)) inset,
+    0 0 18px color-mix(in srgb, var(--rank-ui-primary) 16%, transparent),
+    0 0 42px color-mix(in srgb, var(--rank-ui-primary) 10%, transparent) !important;
+}
+
+/* subtle glow on all labels */
+.navbar.navTabs > .nav-btn > span{
+  text-shadow:
+    0 0 6px rgba(255,255,255,.06),
+    0 0 12px color-mix(in srgb, var(--rank-ui-primary) 12%, transparent) !important;
+}
+
+/* active tab main glow */
+.navbar.navTabs > .nav-btn.active{
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--rank-ui-primary) 22%, rgba(255,255,255,.08)),
+    0 0 16px color-mix(in srgb, var(--rank-ui-primary) 18%, transparent),
+    0 0 34px color-mix(in srgb, var(--rank-ui-primary) 14%, transparent) !important;
+}
+
+/* top gold strip -> rank color */
+.navbar.navTabs > .nav-btn.active::before{
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    color-mix(in srgb, var(--rank-ui-primary) 40%, white 60%) 18%,
+    #ffffff 50%,
+    color-mix(in srgb, var(--rank-ui-primary) 55%, white 45%) 82%,
+    transparent 100%
+  ) !important;
+
+  box-shadow:
+    0 0 8px color-mix(in srgb, var(--rank-ui-primary) 38%, transparent),
+    0 0 18px color-mix(in srgb, var(--rank-ui-primary) 24%, transparent) !important;
+}
+
+/* active tab text — slightly richer but still clean */
+.navbar.navTabs > .nav-btn.active > span{
+  text-shadow:
+    0 0 8px rgba(255,255,255,.10),
+    0 0 14px color-mix(in srgb, var(--rank-ui-primary) 16%, transparent),
+    0 0 24px color-mix(in srgb, var(--rank-ui-primary) 10%, transparent) !important;
+}
