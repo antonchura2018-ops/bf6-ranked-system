@@ -4412,8 +4412,8 @@ body .navbar.navTabs > .nav-btn.active > span::before{
 
 /* exact fit per tab, using your old good dimensions */
 body .navbar.navTabs > .nav-btn.active:first-child > span::before{
-  left: -10px !important;
-  right: -36px !important;
+  left: -20px !important;
+  right: -44px !important;
 }
 body .navbar.navTabs > .nav-btn.active:nth-child(2) > span::before{
   left: -18px !important;
