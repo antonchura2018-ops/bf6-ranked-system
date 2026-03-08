@@ -4361,45 +4361,47 @@ body .navbar.navTabs > .nav-btn.active{
 
 /* active tab plate */
 body .navbar.navTabs > .nav-btn.active::before{
-  border-color: color-mix(in srgb, var(--rank-ui-primary) 44%, rgba(255,120,40,0.38)) !important;
+  border-color: color-mix(in srgb, var(--rank-ui-primary) 54%, rgba(255,120,40,0.38)) !important;
 
   background:
-    radial-gradient(240px 70px at 20% 50%, color-mix(in srgb, var(--rank-ui-primary) 16%, transparent), transparent 65%),
-    radial-gradient(240px 70px at 80% 50%, color-mix(in srgb, var(--rank-ui-primary) 12%, transparent), transparent 65%),
-    linear-gradient(180deg, rgba(22,16,14,0.70), rgba(8,8,10,0.62)) !important;
+    radial-gradient(240px 70px at 20% 50%, color-mix(in srgb, var(--rank-ui-primary) 22%, transparent), transparent 65%),
+    radial-gradient(240px 70px at 80% 50%, color-mix(in srgb, var(--rank-ui-primary) 16%, transparent), transparent 65%),
+    linear-gradient(180deg, rgba(26,18,16,0.78), rgba(8,8,10,0.66)) !important;
 
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,0.08),
-    inset 0 -1px 0 rgba(0,0,0,0.35),
-    0 0 26px color-mix(in srgb, var(--rank-ui-primary) 18%, transparent) !important;
+    inset 0 1px 0 rgba(255,255,255,0.10),
+    inset 0 -1px 0 rgba(0,0,0,0.38),
+    0 0 30px color-mix(in srgb, var(--rank-ui-primary) 24%, transparent),
+    0 0 60px color-mix(in srgb, var(--rank-ui-primary) 10%, transparent) !important;
 
-  outline: 1px solid color-mix(in srgb, var(--rank-ui-primary) 34%, transparent) !important;
+  outline: 1px solid color-mix(in srgb, var(--rank-ui-primary) 42%, transparent) !important;
+  filter: brightness(1.10) !important;
 }
 
 /* clean active top line — same old placement, just recolored */
 body .navbar.navTabs > .nav-btn.active > span::before{
   content:"" !important;
   position:absolute !important;
-  left: 3px !important;
-  right: -10px !important;
+  left: -18px !important;
+  right: -18px !important;
   top: -14px !important;
   height: 3px !important;
   pointer-events:none !important;
 
   background: linear-gradient(90deg,
-    color-mix(in srgb, var(--rank-ui-primary) 86%, black 14%) 0%,
-    color-mix(in srgb, var(--rank-ui-primary) 92%, white 8%) 22%,
-    color-mix(in srgb, var(--rank-ui-primary) 30%, white 70%) 50%,
-    color-mix(in srgb, var(--rank-ui-primary) 92%, white 8%) 78%,
-    color-mix(in srgb, var(--rank-ui-primary) 86%, black 14%) 100%
+    color-mix(in srgb, var(--rank-ui-primary) 88%, black 12%) 0%,
+    color-mix(in srgb, var(--rank-ui-primary) 96%, white 4%) 20%,
+    color-mix(in srgb, var(--rank-ui-primary) 34%, white 66%) 50%,
+    color-mix(in srgb, var(--rank-ui-primary) 96%, white 4%) 80%,
+    color-mix(in srgb, var(--rank-ui-primary) 88%, black 12%) 100%
   ) !important;
 
   box-shadow:
-    0 0 10px color-mix(in srgb, var(--rank-ui-primary) 70%, transparent),
-    0 0 28px color-mix(in srgb, var(--rank-ui-primary) 32%, transparent) !important;
+    0 0 12px color-mix(in srgb, var(--rank-ui-primary) 78%, transparent),
+    0 0 34px color-mix(in srgb, var(--rank-ui-primary) 38%, transparent) !important;
 
   border-radius: 0 !important;
-  filter: blur(0.2px) !important;
+  filter: blur(0.15px) !important;
   opacity: 1 !important;
   mix-blend-mode: screen !important;
   clip-path: none !important;
@@ -4407,18 +4409,18 @@ body .navbar.navTabs > .nav-btn.active > span::before{
 
 /* exact fit per tab, using your old good dimensions */
 body .navbar.navTabs > .nav-btn.active:first-child > span::before{
-  left: 3px !important;
-  right: -10px !important;
+  left: 10px !important;
+  right: -18px !important;
 }
 body .navbar.navTabs > .nav-btn.active:nth-child(2) > span::before{
-  left: -3px !important;
-  right: -10px !important;
+  left: -12px !important;
+  right: -18px !important;
 }
 body .navbar.navTabs > .nav-btn.active:nth-child(3) > span::before{
-  left: -3px !important;
-  right: -10px !important;
+  left: -12px !important;
+  right: -18px !important;
 }
 body .navbar.navTabs > .nav-btn.active:last-child > span::before{
-  left: -3px !important;
-  right: -6px !important;
+  left: -12px !important;
+  right: 10px !important;
 }
