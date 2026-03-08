@@ -4304,7 +4304,7 @@ body[data-rank="eidolon"]{
 
   background-image: var(--rank-bg-image);
   background-size: cover;
-  background-position: center 70px;
+  background-position: center 50px;
   background-repeat: no-repeat;
 }
 
