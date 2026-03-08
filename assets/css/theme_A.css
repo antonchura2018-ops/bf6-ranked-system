@@ -4891,52 +4891,72 @@ body[data-rank="eidolon"]{
     0 0 46px color-mix(in srgb, var(--rank-ui-primary) 24%, transparent) !important;
 }
 /* =========================================================
-   NAV TABS — rank colored top line + outer glow
+   FINAL NAV TABS OVERRIDE
+   rank color top rail + outer glow + remove rounded rail ends
+   ВСТАВИТИ В САМИЙ КІНЕЦЬ theme_A.css
    ========================================================= */
 
-/* outer container glow */
-.navbar.navTabs{
+/* 1) контейнер вкладок — glow під колір рангу */
+body .navbar.navTabs{
   box-shadow:
-    0 0 0 1px color-mix(in srgb, var(--rank-ui-primary) 26%, rgba(255,255,255,.08)) inset,
-    0 0 18px color-mix(in srgb, var(--rank-ui-primary) 16%, transparent),
-    0 0 42px color-mix(in srgb, var(--rank-ui-primary) 10%, transparent) !important;
+    inset 0 0 0 1px color-mix(in srgb, var(--rank-ui-primary) 18%, rgba(255,255,255,.10)),
+    0 0 16px color-mix(in srgb, var(--rank-ui-primary) 14%, transparent),
+    0 0 34px color-mix(in srgb, var(--rank-ui-primary) 10%, transparent) !important;
 }
 
-/* subtle glow on all labels */
-.navbar.navTabs > .nav-btn > span{
-  text-shadow:
-    0 0 6px rgba(255,255,255,.06),
-    0 0 12px color-mix(in srgb, var(--rank-ui-primary) 12%, transparent) !important;
-}
-
-/* active tab main glow */
-.navbar.navTabs > .nav-btn.active{
+/* 2) активна вкладка — м'який glow */
+body .navbar.navTabs > .nav-btn.active{
   box-shadow:
-    inset 0 0 0 1px color-mix(in srgb, var(--rank-ui-primary) 22%, rgba(255,255,255,.08)),
-    0 0 16px color-mix(in srgb, var(--rank-ui-primary) 18%, transparent),
-    0 0 34px color-mix(in srgb, var(--rank-ui-primary) 14%, transparent) !important;
+    inset 0 0 0 1px color-mix(in srgb, var(--rank-ui-primary) 20%, rgba(255,255,255,.08)),
+    0 0 14px color-mix(in srgb, var(--rank-ui-primary) 16%, transparent),
+    0 0 28px color-mix(in srgb, var(--rank-ui-primary) 10%, transparent) !important;
 }
 
-/* top gold strip -> rank color */
-.navbar.navTabs > .nav-btn.active::before{
+/* 3) верхня полоска active tab — під колір рангу */
+body .navbar.navTabs > .nav-btn.active > span::before{
+  content:"" !important;
+  position:absolute !important;
+  top:-14px !important;
+  height:3px !important;
+  pointer-events:none !important;
+
   background: linear-gradient(
     90deg,
-    transparent 0%,
-    color-mix(in srgb, var(--rank-ui-primary) 40%, white 60%) 18%,
-    #ffffff 50%,
-    color-mix(in srgb, var(--rank-ui-primary) 55%, white 45%) 82%,
-    transparent 100%
+    color-mix(in srgb, var(--rank-ui-primary) 78%, black 22%) 0%,
+    var(--rank-ui-primary) 22%,
+    color-mix(in srgb, var(--rank-ui-primary) 30%, white 70%) 50%,
+    var(--rank-ui-primary) 78%,
+    color-mix(in srgb, var(--rank-ui-primary) 78%, black 22%) 100%
   ) !important;
 
   box-shadow:
-    0 0 8px color-mix(in srgb, var(--rank-ui-primary) 38%, transparent),
-    0 0 18px color-mix(in srgb, var(--rank-ui-primary) 24%, transparent) !important;
+    0 0 8px color-mix(in srgb, var(--rank-ui-primary) 50%, transparent),
+    0 0 18px color-mix(in srgb, var(--rank-ui-primary) 30%, transparent) !important;
+
+  border-radius: 0 !important;   /* прибирає округлі кінці полоски */
+  filter: none !important;
+  opacity: 1 !important;
+  mix-blend-mode: screen !important;
+  clip-path: none !important;
 }
 
-/* active tab text — slightly richer but still clean */
-.navbar.navTabs > .nav-btn.active > span{
-  text-shadow:
-    0 0 8px rgba(255,255,255,.10),
-    0 0 14px color-mix(in srgb, var(--rank-ui-primary) 16%, transparent),
-    0 0 24px color-mix(in srgb, var(--rank-ui-primary) 10%, transparent) !important;
+/* 4) точне розтягнення полоски по active tab */
+body .navbar.navTabs > .nav-btn.active:first-child > span::before{
+  left: 6px !important;
+  right: -10px !important;
+}
+
+body .navbar.navTabs > .nav-btn.active:nth-child(2) > span::before{
+  left: -4px !important;
+  right: -10px !important;
+}
+
+body .navbar.navTabs > .nav-btn.active:nth-child(3) > span::before{
+  left: -4px !important;
+  right: -10px !important;
+}
+
+body .navbar.navTabs > .nav-btn.active:last-child > span::before{
+  left: -4px !important;
+  right: 6px !important;
 }
