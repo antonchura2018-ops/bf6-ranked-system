@@ -4355,8 +4355,11 @@ body .navbar.navTabs > .nav-btn::before{
 
 /* active tab text */
 body .navbar.navTabs > .nav-btn.active{
-  color: rgba(255,235,225,0.98) !important;
-  text-shadow: 0 0 18px color-mix(in srgb, var(--rank-ui-primary) 24%, transparent) !important;
+  color: rgba(255,245,238,0.99) !important;
+  text-shadow:
+    0 0 10px rgba(255,255,255,0.08),
+    0 0 20px color-mix(in srgb, var(--rank-ui-primary) 26%, transparent),
+    0 0 34px color-mix(in srgb, var(--rank-ui-primary) 12%, transparent) !important;
 }
 
 /* active tab plate */
