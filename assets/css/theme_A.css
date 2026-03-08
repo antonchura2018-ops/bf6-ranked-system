@@ -4301,10 +4301,20 @@ body[data-rank="eidolon"]{
   inset: 0;
   pointer-events: none;
   z-index: 0;
+  overflow: hidden;
+}
+
+#rankBgLayer::before{
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -120px;
+  bottom: 0;
 
   background-image: var(--rank-bg-image);
   background-size: cover;
-  background-position: center 50px;
+  background-position: center top;
   background-repeat: no-repeat;
 }
 
