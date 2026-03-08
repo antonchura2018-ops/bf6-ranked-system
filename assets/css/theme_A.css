@@ -4338,5 +4338,277 @@ body[data-rank="eidolon"]{
 .navbar.navTabs{
   z-index: 9300 !important;
 }
+/* =========================================================
+   BF6 RANK UI TOKENS — FINAL PER-RANK COLORS
+   Paste ABSOLUTELY LAST in theme_A.css
+   ========================================================= */
 
+:root{
+  --rank-ui-primary: #ff5a23;
+  --rank-ui-secondary: #ff2f1a;
+  --rank-ui-soft: rgba(255,120,70,.18);
+  --rank-ui-line: rgba(255,110,60,.95);
+  --rank-ui-line-soft: rgba(255,255,255,.14);
+  --rank-ui-textglow-a: rgba(255,110,60,.30);
+  --rank-ui-textglow-b: rgba(255,50,20,.18);
+  --rank-ui-tab-outline: rgba(255,140,80,.30);
+}
+
+/* OUTCAST — твій стиль #2c3d56 + #8d1f22 */
+body[data-rank="outcast"]{
+  --rank-ui-primary: #8d1f22;
+  --rank-ui-secondary: #2c3d56;
+  --rank-ui-soft: rgba(44,61,86,.20);
+  --rank-ui-line: rgba(141,31,34,.95);
+  --rank-ui-line-soft: rgba(210,225,255,.12);
+  --rank-ui-textglow-a: rgba(141,31,34,.28);
+  --rank-ui-textglow-b: rgba(44,61,86,.22);
+  --rank-ui-tab-outline: rgba(141,31,34,.30);
+}
+
+body[data-rank="thrall"]{
+  --rank-ui-primary: #22c55e;
+  --rank-ui-secondary: #0f3b22;
+  --rank-ui-soft: rgba(34,197,94,.18);
+  --rank-ui-line: rgba(34,197,94,.95);
+  --rank-ui-line-soft: rgba(220,255,230,.12);
+  --rank-ui-textglow-a: rgba(34,197,94,.24);
+  --rank-ui-textglow-b: rgba(15,59,34,.22);
+  --rank-ui-tab-outline: rgba(34,197,94,.28);
+}
+
+body[data-rank="marauder"]{
+  --rank-ui-primary: #06b6d4;
+  --rank-ui-secondary: #163b63;
+  --rank-ui-soft: rgba(6,182,212,.18);
+  --rank-ui-line: rgba(6,182,212,.95);
+  --rank-ui-line-soft: rgba(220,250,255,.14);
+  --rank-ui-textglow-a: rgba(6,182,212,.24);
+  --rank-ui-textglow-b: rgba(22,59,99,.22);
+  --rank-ui-tab-outline: rgba(6,182,212,.28);
+}
+
+body[data-rank="harbinger"]{
+  --rank-ui-primary: #3b82f6;
+  --rank-ui-secondary: #1e3a8a;
+  --rank-ui-soft: rgba(59,130,246,.18);
+  --rank-ui-line: rgba(59,130,246,.95);
+  --rank-ui-line-soft: rgba(225,240,255,.14);
+  --rank-ui-textglow-a: rgba(59,130,246,.24);
+  --rank-ui-textglow-b: rgba(30,58,138,.22);
+  --rank-ui-tab-outline: rgba(59,130,246,.28);
+}
+
+body[data-rank="reaper"]{
+  --rank-ui-primary: #8b5cf6;
+  --rank-ui-secondary: #312e81;
+  --rank-ui-soft: rgba(139,92,246,.18);
+  --rank-ui-line: rgba(139,92,246,.95);
+  --rank-ui-line-soft: rgba(240,230,255,.14);
+  --rank-ui-textglow-a: rgba(139,92,246,.24);
+  --rank-ui-textglow-b: rgba(49,46,129,.22);
+  --rank-ui-tab-outline: rgba(139,92,246,.28);
+}
+
+body[data-rank="archon"]{
+  --rank-ui-primary: #ec4899;
+  --rank-ui-secondary: #831843;
+  --rank-ui-soft: rgba(236,72,153,.18);
+  --rank-ui-line: rgba(236,72,153,.95);
+  --rank-ui-line-soft: rgba(255,225,240,.14);
+  --rank-ui-textglow-a: rgba(236,72,153,.24);
+  --rank-ui-textglow-b: rgba(131,24,67,.22);
+  --rank-ui-tab-outline: rgba(236,72,153,.28);
+}
+
+body[data-rank="overlord"]{
+  --rank-ui-primary: #ff5a23;
+  --rank-ui-secondary: #ff2a1a;
+  --rank-ui-soft: rgba(255,120,70,.18);
+  --rank-ui-line: rgba(255,110,60,.95);
+  --rank-ui-line-soft: rgba(255,255,255,.14);
+  --rank-ui-textglow-a: rgba(255,110,60,.30);
+  --rank-ui-textglow-b: rgba(255,50,20,.18);
+  --rank-ui-tab-outline: rgba(255,140,80,.30);
+}
+
+body[data-rank="monarch"]{
+  --rank-ui-primary: #facc15;
+  --rank-ui-secondary: #a16207;
+  --rank-ui-soft: rgba(250,204,21,.18);
+  --rank-ui-line: rgba(250,204,21,.95);
+  --rank-ui-line-soft: rgba(255,250,220,.14);
+  --rank-ui-textglow-a: rgba(250,204,21,.24);
+  --rank-ui-textglow-b: rgba(161,98,7,.20);
+  --rank-ui-tab-outline: rgba(250,204,21,.28);
+}
+
+body[data-rank="seraph"]{
+  --rank-ui-primary: #e5e7eb;
+  --rank-ui-secondary: #94a3b8;
+  --rank-ui-soft: rgba(229,231,235,.18);
+  --rank-ui-line: rgba(229,231,235,.95);
+  --rank-ui-line-soft: rgba(255,255,255,.18);
+  --rank-ui-textglow-a: rgba(229,231,235,.22);
+  --rank-ui-textglow-b: rgba(148,163,184,.18);
+  --rank-ui-tab-outline: rgba(229,231,235,.24);
+}
+
+body[data-rank="eidolon"]{
+  --rank-ui-primary: #a7f3d0;
+  --rank-ui-secondary: #0f766e;
+  --rank-ui-soft: rgba(167,243,208,.18);
+  --rank-ui-line: rgba(167,243,208,.95);
+  --rank-ui-line-soft: rgba(235,255,248,.16);
+  --rank-ui-textglow-a: rgba(167,243,208,.22);
+  --rank-ui-textglow-b: rgba(15,118,110,.18);
+  --rank-ui-tab-outline: rgba(167,243,208,.26);
+}
+
+/* =========================================================
+   TOP TABS — per-rank color
+   ========================================================= */
+
+body .navbar.navTabs > .nav-btn > span{
+  text-shadow:
+    0 0 10px var(--rank-ui-textglow-a),
+    0 0 28px var(--rank-ui-textglow-b) !important;
+}
+
+body .navbar.navTabs > .nav-btn.active{
+  box-shadow:
+    inset 0 0 0 1px var(--rank-ui-tab-outline),
+    0 0 20px var(--rank-ui-soft),
+    0 0 60px color-mix(in srgb, var(--rank-ui-primary) 18%, transparent) !important;
+}
+
+body .navbar.navTabs > .nav-btn.active::after{
+  background: linear-gradient(90deg,
+    transparent,
+    var(--rank-ui-line-soft),
+    var(--rank-ui-line),
+    var(--rank-ui-line-soft),
+    transparent
+  ) !important;
+}
+
+body .navbar.navTabs > .nav-btn.active > span::before{
+  background: linear-gradient(90deg,
+    transparent,
+    var(--rank-ui-line-soft),
+    var(--rank-ui-line),
+    var(--rank-ui-line-soft),
+    transparent
+  ) !important;
+}
+
+body .navbar.navTabs > .nav-btn.active > span{
+  text-shadow:
+    0 0 12px var(--rank-ui-textglow-a),
+    0 0 34px var(--rank-ui-textglow-b),
+    0 0 70px color-mix(in srgb, var(--rank-ui-primary) 20%, transparent) !important;
+}
+
+/* =========================================================
+   PLAYER ASCENSION rails — per-rank color
+   ========================================================= */
+
+#dashboard.section.active .rankHome .pulseHeader,
+#dashboard.section.active .rankHome .pulseHeader span{
+  text-shadow:
+    0 0 10px var(--rank-ui-textglow-a),
+    0 0 34px var(--rank-ui-textglow-b) !important;
+}
+
+#dashboard.section.active .rankHome .pulseHeader::before,
+#dashboard.section.active .rankHome .pulseHeader::after{
+  background: linear-gradient(90deg,
+    transparent,
+    var(--rank-ui-line-soft),
+    var(--rank-ui-line),
+    var(--rank-ui-line-soft),
+    transparent
+  ) !important;
+
+  box-shadow:
+    0 0 14px var(--rank-ui-textglow-a),
+    0 0 50px color-mix(in srgb, var(--rank-ui-primary) 22%, transparent) !important;
+}
+
+/* =========================================================
+   Metrics — трохи більші + per-rank color
+   ========================================================= */
+
+#dashboard.section.active .rankHome .pulseGrid .metric .k{
+  font-size: clamp(10px, .72vw, 13px) !important;
+  letter-spacing: .14em !important;
+
+  background: linear-gradient(
+    180deg,
+    #ffffff 0%,
+    color-mix(in srgb, var(--rank-ui-primary) 22%, white 78%) 72%,
+    color-mix(in srgb, var(--rank-ui-primary) 78%, white 22%) 100%
+  ) !important;
+
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+
+  text-shadow:
+    0 0 6px var(--rank-ui-textglow-a),
+    0 0 18px var(--rank-ui-textglow-b) !important;
+}
+
+#dashboard.section.active .rankHome .pulseGrid .metric .v{
+  font-size: clamp(19px, 1.18vw, 28px) !important;
+  line-height: 1 !important;
+
+  background: linear-gradient(
+    180deg,
+    #ffffff 0%,
+    color-mix(in srgb, var(--rank-ui-primary) 26%, white 74%) 30%,
+    color-mix(in srgb, var(--rank-ui-primary) 72%, white 28%) 68%,
+    color-mix(in srgb, var(--rank-ui-secondary) 86%, var(--rank-ui-primary) 14%) 100%
+  ) !important;
+
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+
+  text-shadow:
+    0 0 10px var(--rank-ui-textglow-a),
+    0 0 24px var(--rank-ui-textglow-b),
+    0 0 56px color-mix(in srgb, var(--rank-ui-primary) 24%, transparent) !important;
+}
+
+#dashboard.section.active .rankHome .pulseGrid .metric .v span{
+  background: inherit !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+}
+
+/* vertical separators between metrics */
+#dashboard.section.active .rankHome .pulseGrid .metric + .metric::before{
+  background: linear-gradient(180deg,
+    transparent,
+    color-mix(in srgb, var(--rank-ui-line) 75%, transparent),
+    transparent
+  ) !important;
+
+  box-shadow:
+    0 0 12px color-mix(in srgb, var(--rank-ui-primary) 16%, transparent) !important;
+}
+
+/* Next Rank line + progress use rank color too */
+#dashboard.section.active .rankHome .rankProgress__fill{
+  background: linear-gradient(90deg,
+    #ffffff 0%,
+    color-mix(in srgb, var(--rank-ui-primary) 20%, white 80%) 32%,
+    var(--rank-ui-primary) 72%,
+    var(--rank-ui-secondary) 100%
+  ) !important;
+
+  box-shadow:
+    0 0 10px rgba(255,255,255,.12),
+    0 0 22px var(--rank-ui-textglow-a),
+    0 0 46px color-mix(in srgb, var(--rank-ui-primary) 24%, transparent) !important;
+}
 
