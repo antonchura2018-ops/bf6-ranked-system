@@ -4416,14 +4416,14 @@ body .navbar.navTabs > .nav-btn.active:first-child > span::before{
   right: -60px !important;
 }
 body .navbar.navTabs > .nav-btn.active:nth-child(2) > span::before{
-  left: -80px !important;
-  right: -94px !important;
+  left: -86px !important;
+  right: -92px !important;
 }
 body .navbar.navTabs > .nav-btn.active:nth-child(3) > span::before{
-  left: -22px !important;
-  right: -28px !important;
+  left: -42px !important;
+  right: -48px !important;
 }
 body .navbar.navTabs > .nav-btn.active:last-child > span::before{
-  left: -32px !important;
-  right: -10px !important;
+  left: -42px !important;
+  right: -40px !important;
 }
