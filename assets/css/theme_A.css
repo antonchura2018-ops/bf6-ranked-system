@@ -4810,24 +4810,27 @@ body[data-rank="eidolon"]{
   opacity: 1 !important;
 }
 
-/* Metrics label: WIN RATE / TOTAL MATCHES / etc */
 #dashboard.section.active .rankHome .pulseGrid .metric .k{
-  font-size: clamp(12px, .9vw, 15px) !important;
-  letter-spacing: .18em !important;
+  font-size: clamp(13px, 1vw, 16px) !important;
+  letter-spacing: .20em !important;
+  line-height: 1.15 !important;
 
   background: linear-gradient(
     180deg,
     #ffffff 0%,
-    color-mix(in srgb, var(--rank-ui-primary) 22%, white 78%) 72%,
-    color-mix(in srgb, var(--rank-ui-primary) 78%, white 22%) 100%
+    color-mix(in srgb, var(--rank-ui-primary) 18%, white 82%) 68%,
+    color-mix(in srgb, var(--rank-ui-primary) 68%, white 32%) 100%
   ) !important;
 
   -webkit-background-clip: text !important;
   -webkit-text-fill-color: transparent !important;
 
   text-shadow:
-    0 0 6px var(--rank-ui-textglow-a),
+    0 0 4px rgba(255,255,255,.10),
+    0 0 8px var(--rank-ui-textglow-a),
     0 0 18px var(--rank-ui-textglow-b) !important;
+
+  opacity: .96 !important;
 }
 
 /* Metrics value: 63% / 43 / 0.6 / etc */
