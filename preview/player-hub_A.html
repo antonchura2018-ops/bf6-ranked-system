@@ -2252,7 +2252,7 @@ function showTab(tabId, btn) {
 
   // Dashboard mode toggle (CSS controls overlay + no-scroll)
 document.body.classList.toggle("is-dashboard", tabId === "dashboard");
-  if (tabId === "dashboard") restoreRankFromStorage();
+  restoreRankFromStorage();
   // (optional safety) force overlay visibility even if old CSS exists
 var overlay = document.getElementById("rankEmblemOverlay");
 if (overlay) overlay.style.display = (tabId === "dashboard") ? "block" : "none";
@@ -2295,15 +2295,17 @@ document.body.classList.add("is-dashboard");
 window.scrollTo(0, 0);
 
 document.addEventListener("visibilitychange", function(){
-  if (!document.hidden && document.body.classList.contains("is-dashboard")) {
+  if (!document.hidden) {
     restoreRankFromStorage();
   }
 });
 
 window.addEventListener("focus", function(){
-  if (document.body.classList.contains("is-dashboard")) {
-    restoreRankFromStorage();
-  }
+  restoreRankFromStorage();
+});
+
+window.addEventListener("pageshow", function(){
+  restoreRankFromStorage();
 });
   
   // Safety: ensure navbar always switches tabs even if inline onclick glitches
