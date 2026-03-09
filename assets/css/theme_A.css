@@ -4218,7 +4218,7 @@ body[data-rank="eidolon"]{
 }
 
 #dashboard.section.active .rankHome .pulseGrid .metric .k{
-  font-size: clamp(13px, 1vw, 16px) !important;
+  font-size: clamp(14px, 1.05vw, 17px) !important;
   letter-spacing: .20em !important;
   line-height: 1.15 !important;
 
@@ -4372,14 +4372,13 @@ body .navbar.navTabs > .nav-btn.active::before{
     linear-gradient(180deg, rgba(26,18,16,0.78), rgba(8,8,10,0.66)) !important;
 
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,0.12),
-    inset 0 -1px 0 rgba(0,0,0,0.40),
-    0 0 36px color-mix(in srgb, var(--rank-ui-primary) 30%, transparent),
-    0 0 72px color-mix(in srgb, var(--rank-ui-primary) 16%, transparent) !important;
+    inset 0 1px 0 rgba(255,255,255,0.14),
+    inset 0 -1px 0 rgba(0,0,0,0.42),
+    0 0 44px color-mix(in srgb, var(--rank-ui-primary) 38%, transparent),
+    0 0 92px color-mix(in srgb, var(--rank-ui-primary) 22%, transparent) !important;
 
-  outline: 1px solid color-mix(in srgb, var(--rank-ui-primary) 52%, transparent) !important;
-  filter: brightness(1.14) !important;
-}
+  outline: 1px solid color-mix(in srgb, var(--rank-ui-primary) 64%, transparent) !important;
+  filter: brightness(1.18) !important;
 
 /* clean active top line — same old placement, just recolored */
 body .navbar.navTabs > .nav-btn.active > span::before{
@@ -4392,11 +4391,10 @@ body .navbar.navTabs > .nav-btn.active > span::before{
   pointer-events:none !important;
 
   background: linear-gradient(90deg,
-    color-mix(in srgb, var(--rank-ui-primary) 88%, black 12%) 0%,
-    color-mix(in srgb, var(--rank-ui-primary) 96%, white 4%) 20%,
-    color-mix(in srgb, var(--rank-ui-primary) 34%, white 66%) 50%,
-    color-mix(in srgb, var(--rank-ui-primary) 96%, white 4%) 80%,
-    color-mix(in srgb, var(--rank-ui-primary) 88%, black 12%) 100%
+    color-mix(in srgb, var(--rank-ui-primary) 92%, black 8%) 0%,
+    var(--rank-ui-primary) 18%,
+    var(--rank-ui-primary) 82%,
+    color-mix(in srgb, var(--rank-ui-primary) 92%, black 8%) 100%
   ) !important;
 
   box-shadow:
