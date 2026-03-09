@@ -4395,22 +4395,20 @@ body .navbar.navTabs > .nav-btn.active > span::before{
   height: 3px !important;
 
   background: linear-gradient(90deg,
-    rgba(0,0,0,0) 0%,
-    var(--rank-ui-primary) 3%,
-    var(--rank-ui-primary) 97%,
-    rgba(0,0,0,0) 100%
+    var(--rank-ui-primary) 0%,
+    var(--rank-ui-primary) 100%
   ) !important;
 
   box-shadow:
     0 0 12px color-mix(in srgb, var(--rank-ui-primary) 100%, transparent),
-    0 0 26px color-mix(in srgb, var(--rank-ui-primary) 78%, transparent),
-    0 0 46px color-mix(in srgb, var(--rank-ui-primary) 38%, transparent) !important;
+    0 0 26px color-mix(in srgb, var(--rank-ui-primary) 82%, transparent),
+    0 0 48px color-mix(in srgb, var(--rank-ui-primary) 42%, transparent) !important;
 
   border-radius: 0 !important;
   opacity: 1 !important;
   visibility: visible !important;
   clip-path: none !important;
-  filter: blur(0.04px) !important;
+  filter: none !important;
   mix-blend-mode: screen !important;
 }
 
