@@ -4430,21 +4430,11 @@ body .navbar.navTabs > .nav-btn.active:last-child > span::before{
   right: -62px !important;
 }
 /* =========================================================
-   OUTCAST TEST FX — lightweight energy streak overlay
+   OUTCAST FX — subtle ember energy near halo
+   only for rank 1
    ========================================================= */
 
-:root{
-  --rank-fx-image: none;
-  --rank-fx-opacity: 0;
-}
-
-/* тільки для OUTCAST */
-body[data-rank="outcast"]{
-  --rank-fx-opacity: .55;
-}
-
-/* fx layer */
-#rankFxLayer{
+body[data-rank="outcast"] #rankFxLayer{
   position: fixed;
   inset: 0;
   pointer-events: none;
@@ -4452,163 +4442,116 @@ body[data-rank="outcast"]{
   overflow: hidden;
 }
 
-/* важливо: контент вище fx */
-.navbar.navTabs,
-#dashboard,
-#dashboard .rankHome,
-#dashboard .rankHome__center,
-#rankEmblemOverlay{
-  position: relative;
-  z-index: 2;
-}
-
-/* ліва енергія */
-#rankFxLayer::before{
+body[data-rank="outcast"] #rankFxLayer::before,
+body[data-rank="outcast"] #rankFxLayer::after{
   content: "";
   position: absolute;
-  left: -8%;
-  top: 14%;
-  width: 52vw;
-  height: 52vh;
-  opacity: var(--rank-fx-opacity);
+  pointer-events: none;
+  mix-blend-mode: screen;
+  opacity: .55;
+}
+
+/* left ember cluster */
+body[data-rank="outcast"] #rankFxLayer::before{
+  left: 7%;
+  top: 26%;
+  width: 28vw;
+  height: 34vh;
 
   background:
-    radial-gradient(circle at 18% 52%,
-      rgba(255,120,70,.95) 0%,
-      rgba(255,90,40,.45) 8%,
-      rgba(255,70,20,.18) 16%,
-      transparent 28%
-    ),
-    linear-gradient(24deg,
-      transparent 0%,
-      rgba(255,110,45,.00) 22%,
-      rgba(255,110,45,.26) 31%,
-      rgba(255,140,80,.70) 33%,
-      rgba(255,110,45,.20) 35%,
-      rgba(255,110,45,.00) 40%,
-      transparent 100%
-    ),
+    radial-gradient(circle at 20% 58%, rgba(255,170,110,.95) 0 1.5%, rgba(255,120,70,.45) 4%, transparent 10%),
+    radial-gradient(circle at 32% 44%, rgba(255,150,90,.85) 0 1.2%, rgba(255,110,60,.35) 4%, transparent 10%),
+    radial-gradient(circle at 48% 62%, rgba(255,145,85,.75) 0 1.2%, rgba(255,100,55,.28) 4%, transparent 10%),
     linear-gradient(18deg,
       transparent 0%,
-      rgba(255,120,60,.00) 36%,
-      rgba(255,120,60,.18) 42%,
-      rgba(255,150,90,.78) 44%,
-      rgba(255,120,60,.14) 46%,
-      rgba(255,120,60,.00) 52%,
+      rgba(255,120,60,0) 36%,
+      rgba(255,120,60,.16) 46%,
+      rgba(255,170,110,.72) 49%,
+      rgba(255,120,60,.14) 52%,
+      rgba(255,120,60,0) 60%,
       transparent 100%
     ),
-    linear-gradient(31deg,
+    linear-gradient(30deg,
       transparent 0%,
-      rgba(255,90,35,.00) 48%,
-      rgba(255,90,35,.18) 56%,
-      rgba(255,160,95,.60) 58%,
-      rgba(255,90,35,.10) 60%,
-      rgba(255,90,35,.00) 66%,
+      rgba(255,110,55,0) 30%,
+      rgba(255,110,55,.14) 40%,
+      rgba(255,160,95,.58) 43%,
+      rgba(255,110,55,.10) 46%,
+      rgba(255,110,55,0) 55%,
       transparent 100%
     );
 
-  filter: blur(1.6px);
-  mix-blend-mode: screen;
-  transform: rotate(-6deg) scale(1);
-  animation: outcastFxLeft 6.5s ease-in-out infinite;
+  filter: blur(1.2px);
+  animation: outcastEmberLeft 5.2s ease-in-out infinite;
 }
 
-/* права енергія */
-#rankFxLayer::after{
-  content: "";
-  position: absolute;
-  right: -10%;
-  top: 16%;
-  width: 50vw;
-  height: 48vh;
-  opacity: calc(var(--rank-fx-opacity) * .95);
+/* right ember cluster */
+body[data-rank="outcast"] #rankFxLayer::after{
+  right: 8%;
+  top: 28%;
+  width: 26vw;
+  height: 32vh;
 
   background:
-    radial-gradient(circle at 82% 48%,
-      rgba(255,120,70,.90) 0%,
-      rgba(255,90,40,.40) 8%,
-      rgba(255,70,20,.16) 16%,
-      transparent 28%
-    ),
-    linear-gradient(-24deg,
-      transparent 0%,
-      rgba(255,110,45,.00) 20%,
-      rgba(255,110,45,.22) 29%,
-      rgba(255,145,85,.68) 31%,
-      rgba(255,110,45,.18) 33%,
-      rgba(255,110,45,.00) 38%,
-      transparent 100%
-    ),
+    radial-gradient(circle at 82% 48%, rgba(255,170,110,.95) 0 1.5%, rgba(255,120,70,.45) 4%, transparent 10%),
+    radial-gradient(circle at 70% 62%, rgba(255,150,90,.85) 0 1.2%, rgba(255,110,60,.35) 4%, transparent 10%),
+    radial-gradient(circle at 54% 40%, rgba(255,145,85,.75) 0 1.2%, rgba(255,100,55,.28) 4%, transparent 10%),
     linear-gradient(-18deg,
       transparent 0%,
-      rgba(255,120,60,.00) 35%,
-      rgba(255,120,60,.16) 41%,
-      rgba(255,155,95,.74) 43%,
-      rgba(255,120,60,.12) 45%,
-      rgba(255,120,60,.00) 51%,
+      rgba(255,120,60,0) 38%,
+      rgba(255,120,60,.15) 48%,
+      rgba(255,170,110,.68) 51%,
+      rgba(255,120,60,.12) 54%,
+      rgba(255,120,60,0) 62%,
       transparent 100%
     ),
-    linear-gradient(-31deg,
+    linear-gradient(-30deg,
       transparent 0%,
-      rgba(255,90,35,.00) 46%,
-      rgba(255,90,35,.16) 54%,
-      rgba(255,160,95,.56) 56%,
-      rgba(255,90,35,.10) 58%,
-      rgba(255,90,35,.00) 64%,
+      rgba(255,110,55,0) 34%,
+      rgba(255,110,55,.14) 44%,
+      rgba(255,160,95,.56) 47%,
+      rgba(255,110,55,.10) 50%,
+      rgba(255,110,55,0) 58%,
       transparent 100%
     );
 
-  filter: blur(1.6px);
-  mix-blend-mode: screen;
-  transform: rotate(8deg) scale(1);
-  animation: outcastFxRight 7.2s ease-in-out infinite;
+  filter: blur(1.2px);
+  animation: outcastEmberRight 5.8s ease-in-out infinite;
 }
 
-@keyframes outcastFxLeft{
+@keyframes outcastEmberLeft{
   0%{
-    opacity: .34;
-    transform: rotate(-7deg) translateX(0) translateY(0) scale(.98);
+    opacity: .26;
+    transform: translateX(0) translateY(0) scale(.98);
   }
-  18%{
+  45%{
     opacity: .52;
+    transform: translateX(8px) translateY(-4px) scale(1.02);
+  }
+  100%{
+    opacity: .26;
+    transform: translateX(0) translateY(0) scale(.98);
+  }
+}
+
+@keyframes outcastEmberRight{
+  0%{
+    opacity: .24;
+    transform: translateX(0) translateY(0) scale(.98);
   }
   50%{
-    opacity: .68;
-    transform: rotate(-5deg) translateX(8px) translateY(-4px) scale(1.02);
-  }
-  72%{
-    opacity: .46;
+    opacity: .48;
+    transform: translateX(-8px) translateY(4px) scale(1.02);
   }
   100%{
-    opacity: .34;
-    transform: rotate(-7deg) translateX(0) translateY(0) scale(.98);
-  }
-}
-
-@keyframes outcastFxRight{
-  0%{
-    opacity: .30;
-    transform: rotate(9deg) translateX(0) translateY(0) scale(.98);
-  }
-  22%{
-    opacity: .50;
-  }
-  54%{
-    opacity: .66;
-    transform: rotate(7deg) translateX(-10px) translateY(4px) scale(1.03);
-  }
-  76%{
-    opacity: .42;
-  }
-  100%{
-    opacity: .30;
-    transform: rotate(9deg) translateX(0) translateY(0) scale(.98);
+    opacity: .24;
+    transform: translateX(0) translateY(0) scale(.98);
   }
 }
 
 @media (prefers-reduced-motion: reduce){
-  #rankFxLayer::before,
-  #rankFxLayer::after{
+  body[data-rank="outcast"] #rankFxLayer::before,
+  body[data-rank="outcast"] #rankFxLayer::after{
     animation: none !important;
   }
 }
