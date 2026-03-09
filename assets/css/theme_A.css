@@ -4429,4 +4429,186 @@ body .navbar.navTabs > .nav-btn.active:last-child > span::before{
   left: -56px !important;
   right: -62px !important;
 }
+/* =========================================================
+   OUTCAST TEST FX — lightweight energy streak overlay
+   ========================================================= */
 
+:root{
+  --rank-fx-image: none;
+  --rank-fx-opacity: 0;
+}
+
+/* тільки для OUTCAST */
+body[data-rank="outcast"]{
+  --rank-fx-opacity: .55;
+}
+
+/* fx layer */
+#rankFxLayer{
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+}
+
+/* важливо: контент вище fx */
+.navbar.navTabs,
+#dashboard,
+#dashboard .rankHome,
+#dashboard .rankHome__center,
+#rankEmblemOverlay{
+  position: relative;
+  z-index: 2;
+}
+
+/* ліва енергія */
+#rankFxLayer::before{
+  content: "";
+  position: absolute;
+  left: -8%;
+  top: 14%;
+  width: 52vw;
+  height: 52vh;
+  opacity: var(--rank-fx-opacity);
+
+  background:
+    radial-gradient(circle at 18% 52%,
+      rgba(255,120,70,.95) 0%,
+      rgba(255,90,40,.45) 8%,
+      rgba(255,70,20,.18) 16%,
+      transparent 28%
+    ),
+    linear-gradient(24deg,
+      transparent 0%,
+      rgba(255,110,45,.00) 22%,
+      rgba(255,110,45,.26) 31%,
+      rgba(255,140,80,.70) 33%,
+      rgba(255,110,45,.20) 35%,
+      rgba(255,110,45,.00) 40%,
+      transparent 100%
+    ),
+    linear-gradient(18deg,
+      transparent 0%,
+      rgba(255,120,60,.00) 36%,
+      rgba(255,120,60,.18) 42%,
+      rgba(255,150,90,.78) 44%,
+      rgba(255,120,60,.14) 46%,
+      rgba(255,120,60,.00) 52%,
+      transparent 100%
+    ),
+    linear-gradient(31deg,
+      transparent 0%,
+      rgba(255,90,35,.00) 48%,
+      rgba(255,90,35,.18) 56%,
+      rgba(255,160,95,.60) 58%,
+      rgba(255,90,35,.10) 60%,
+      rgba(255,90,35,.00) 66%,
+      transparent 100%
+    );
+
+  filter: blur(1.6px);
+  mix-blend-mode: screen;
+  transform: rotate(-6deg) scale(1);
+  animation: outcastFxLeft 6.5s ease-in-out infinite;
+}
+
+/* права енергія */
+#rankFxLayer::after{
+  content: "";
+  position: absolute;
+  right: -10%;
+  top: 16%;
+  width: 50vw;
+  height: 48vh;
+  opacity: calc(var(--rank-fx-opacity) * .95);
+
+  background:
+    radial-gradient(circle at 82% 48%,
+      rgba(255,120,70,.90) 0%,
+      rgba(255,90,40,.40) 8%,
+      rgba(255,70,20,.16) 16%,
+      transparent 28%
+    ),
+    linear-gradient(-24deg,
+      transparent 0%,
+      rgba(255,110,45,.00) 20%,
+      rgba(255,110,45,.22) 29%,
+      rgba(255,145,85,.68) 31%,
+      rgba(255,110,45,.18) 33%,
+      rgba(255,110,45,.00) 38%,
+      transparent 100%
+    ),
+    linear-gradient(-18deg,
+      transparent 0%,
+      rgba(255,120,60,.00) 35%,
+      rgba(255,120,60,.16) 41%,
+      rgba(255,155,95,.74) 43%,
+      rgba(255,120,60,.12) 45%,
+      rgba(255,120,60,.00) 51%,
+      transparent 100%
+    ),
+    linear-gradient(-31deg,
+      transparent 0%,
+      rgba(255,90,35,.00) 46%,
+      rgba(255,90,35,.16) 54%,
+      rgba(255,160,95,.56) 56%,
+      rgba(255,90,35,.10) 58%,
+      rgba(255,90,35,.00) 64%,
+      transparent 100%
+    );
+
+  filter: blur(1.6px);
+  mix-blend-mode: screen;
+  transform: rotate(8deg) scale(1);
+  animation: outcastFxRight 7.2s ease-in-out infinite;
+}
+
+@keyframes outcastFxLeft{
+  0%{
+    opacity: .34;
+    transform: rotate(-7deg) translateX(0) translateY(0) scale(.98);
+  }
+  18%{
+    opacity: .52;
+  }
+  50%{
+    opacity: .68;
+    transform: rotate(-5deg) translateX(8px) translateY(-4px) scale(1.02);
+  }
+  72%{
+    opacity: .46;
+  }
+  100%{
+    opacity: .34;
+    transform: rotate(-7deg) translateX(0) translateY(0) scale(.98);
+  }
+}
+
+@keyframes outcastFxRight{
+  0%{
+    opacity: .30;
+    transform: rotate(9deg) translateX(0) translateY(0) scale(.98);
+  }
+  22%{
+    opacity: .50;
+  }
+  54%{
+    opacity: .66;
+    transform: rotate(7deg) translateX(-10px) translateY(4px) scale(1.03);
+  }
+  76%{
+    opacity: .42;
+  }
+  100%{
+    opacity: .30;
+    transform: rotate(9deg) translateX(0) translateY(0) scale(.98);
+  }
+}
+
+@media (prefers-reduced-motion: reduce){
+  #rankFxLayer::before,
+  #rankFxLayer::after{
+    animation: none !important;
+  }
+}
