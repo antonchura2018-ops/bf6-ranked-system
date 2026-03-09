@@ -4463,38 +4463,38 @@ body[data-rank="thrall"]{
   content: "";
   position: absolute;
   left: 50%;
-  top: 30%;
-  width: 720px;
-  height: 720px;
+  top: 31%;
+  width: 860px;
+  height: 860px;
   transform: translate(-50%, -50%);
   pointer-events: none;
   z-index: 0;
 
   background:
     radial-gradient(circle,
-      color-mix(in srgb, var(--rank-ui-primary) 28%, transparent) 0%,
-      color-mix(in srgb, var(--rank-ui-primary) 16%, transparent) 28%,
-      color-mix(in srgb, var(--rank-ui-primary) 8%, transparent) 48%,
-      transparent 72%
+      color-mix(in srgb, var(--rank-ui-primary) 42%, transparent) 0%,
+      color-mix(in srgb, var(--rank-ui-primary) 24%, transparent) 26%,
+      color-mix(in srgb, var(--rank-ui-primary) 12%, transparent) 44%,
+      transparent 70%
     );
 
-  opacity: var(--rank-fx-ambient-opacity);
-  filter: blur(28px);
-  animation: rankAmbientPulse 6.5s ease-in-out infinite;
+  opacity: .42;
+  filter: blur(38px);
+  animation: rankAmbientPulse 5.5s ease-in-out infinite;
 }
 
 @keyframes rankAmbientPulse{
   0%{
-    opacity: calc(var(--rank-fx-ambient-opacity) * .82);
-    transform: translate(-50%, -50%) scale(.96);
+    opacity: .28;
+    transform: translate(-50%, -50%) scale(.94);
   }
   50%{
-    opacity: calc(var(--rank-fx-ambient-opacity) * 1.12);
-    transform: translate(-50%, -50%) scale(1.03);
+    opacity: .50;
+    transform: translate(-50%, -50%) scale(1.05);
   }
   100%{
-    opacity: calc(var(--rank-fx-ambient-opacity) * .82);
-    transform: translate(-50%, -50%) scale(.96);
+    opacity: .28;
+    transform: translate(-50%, -50%) scale(.94);
   }
 }
 
