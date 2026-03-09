@@ -4391,8 +4391,8 @@ body .navbar.navTabs > .nav-btn.active > span::before{
 
   left: 0 !important;
   right: 0 !important;
-  top: -14px !important;
-  height: 5px !important;
+  top: -13px !important;
+  height: 2px !important;
 
   background: linear-gradient(90deg,
     rgba(0,0,0,0) 0%,
