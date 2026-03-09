@@ -4218,7 +4218,7 @@ body[data-rank="eidolon"]{
 }
 
 #dashboard.section.active .rankHome .pulseGrid .metric .k{
-  font-size: clamp(14px, 1.05vw, 17px) !important;
+  font-size: clamp(15px, 1.15vw, 18px) !important;
   letter-spacing: .20em !important;
   line-height: 1.15 !important;
 
@@ -4391,15 +4391,15 @@ body .navbar.navTabs > .nav-btn.active > span::before{
   pointer-events:none !important;
 
   background: linear-gradient(90deg,
-    color-mix(in srgb, var(--rank-ui-primary) 92%, black 8%) 0%,
-    var(--rank-ui-primary) 18%,
-    var(--rank-ui-primary) 82%,
-    color-mix(in srgb, var(--rank-ui-primary) 92%, black 8%) 100%
+    transparent 0%,
+    var(--rank-ui-primary) 12%,
+    var(--rank-ui-primary) 88%,
+    transparent 100%
   ) !important;
 
-  box-shadow:
-    0 0 12px color-mix(in srgb, var(--rank-ui-primary) 78%, transparent),
-    0 0 34px color-mix(in srgb, var(--rank-ui-primary) 38%, transparent) !important;
+box-shadow:
+  0 0 8px color-mix(in srgb, var(--rank-ui-primary) 55%, transparent),
+  0 0 18px color-mix(in srgb, var(--rank-ui-primary) 28%, transparent) !important;
 
   border-radius: 0 !important;
   filter: blur(0.15px) !important;
