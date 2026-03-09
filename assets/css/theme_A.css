@@ -4429,3 +4429,150 @@ body .navbar.navTabs > .nav-btn.active:last-child > span::before{
   left: -56px !important;
   right: -62px !important;
 }
+/* =========================================================
+   OUTCAST LIGHT FX — 2 flare spikes near halo
+   lightweight / no-lag version
+   ========================================================= */
+
+#rankFxLayer{
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+}
+
+/* UI above FX */
+.navbar.navTabs,
+#dashboard,
+#dashboard .rankHome,
+#dashboard .rankHome__center,
+#rankEmblemOverlay{
+  position: relative;
+  z-index: 2;
+}
+
+/* by default OFF */
+#rankFxLayer::before,
+#rankFxLayer::after{
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  opacity: 0;
+}
+
+/* ONLY OUTCAST */
+body[data-rank="outcast"] #rankFxLayer::before,
+body[data-rank="outcast"] #rankFxLayer::after{
+  opacity: 1;
+  mix-blend-mode: screen;
+}
+
+/* LEFT FLARE */
+body[data-rank="outcast"] #rankFxLayer::before{
+  left: 10%;
+  top: 27%;
+  width: 220px;
+  height: 220px;
+  transform: translateZ(0);
+
+  background:
+    radial-gradient(circle at 50% 50%,
+      rgba(255,220,170,.95) 0 3%,
+      rgba(255,140,80,.68) 7%,
+      rgba(255,90,35,.22) 16%,
+      transparent 34%
+    ),
+    linear-gradient(22deg,
+      transparent 0%,
+      rgba(255,120,60,0) 40%,
+      rgba(255,170,110,.95) 48%,
+      rgba(255,120,60,0) 56%,
+      transparent 100%
+    ),
+    linear-gradient(-18deg,
+      transparent 0%,
+      rgba(255,120,60,0) 44%,
+      rgba(255,150,95,.65) 50%,
+      rgba(255,120,60,0) 56%,
+      transparent 100%
+    );
+
+  filter: blur(.6px);
+  animation: outcastLeftFlare 3.8s ease-in-out infinite;
+}
+
+/* RIGHT FLARE */
+body[data-rank="outcast"] #rankFxLayer::after{
+  right: 10%;
+  top: 29%;
+  width: 220px;
+  height: 220px;
+  transform: translateZ(0);
+
+  background:
+    radial-gradient(circle at 50% 50%,
+      rgba(255,220,170,.95) 0 3%,
+      rgba(255,140,80,.68) 7%,
+      rgba(255,90,35,.22) 16%,
+      transparent 34%
+    ),
+    linear-gradient(-22deg,
+      transparent 0%,
+      rgba(255,120,60,0) 40%,
+      rgba(255,170,110,.95) 48%,
+      rgba(255,120,60,0) 56%,
+      transparent 100%
+    ),
+    linear-gradient(18deg,
+      transparent 0%,
+      rgba(255,120,60,0) 44%,
+      rgba(255,150,95,.65) 50%,
+      rgba(255,120,60,0) 56%,
+      transparent 100%
+    );
+
+  filter: blur(.6px);
+  animation: outcastRightFlare 4.2s ease-in-out infinite;
+}
+
+@keyframes outcastLeftFlare{
+  0%, 100%{
+    opacity: .10;
+    transform: scale(.96);
+  }
+  18%{
+    opacity: .22;
+  }
+  50%{
+    opacity: .55;
+    transform: scale(1.03);
+  }
+  72%{
+    opacity: .18;
+  }
+}
+
+@keyframes outcastRightFlare{
+  0%, 100%{
+    opacity: .08;
+    transform: scale(.95);
+  }
+  24%{
+    opacity: .18;
+  }
+  54%{
+    opacity: .48;
+    transform: scale(1.04);
+  }
+  76%{
+    opacity: .16;
+  }
+}
+
+@media (prefers-reduced-motion: reduce){
+  body[data-rank="outcast"] #rankFxLayer::before,
+  body[data-rank="outcast"] #rankFxLayer::after{
+    animation: none !important;
+  }
+}
