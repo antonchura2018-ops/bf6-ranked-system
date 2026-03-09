@@ -4396,15 +4396,15 @@ body .navbar.navTabs > .nav-btn.active > span::before{
 
   background: linear-gradient(90deg,
     rgba(0,0,0,0) 0%,
-    var(--rank-ui-primary) 6%,
-    var(--rank-ui-primary) 94%,
+    var(--rank-ui-primary) 3%,
+    var(--rank-ui-primary) 97%,
     rgba(0,0,0,0) 100%
   ) !important;
 
   box-shadow:
-    0 0 10px color-mix(in srgb, var(--rank-ui-primary) 100%, transparent),
-    0 0 22px color-mix(in srgb, var(--rank-ui-primary) 72%, transparent),
-    0 0 40px color-mix(in srgb, var(--rank-ui-primary) 34%, transparent) !important;
+    0 0 12px color-mix(in srgb, var(--rank-ui-primary) 100%, transparent),
+    0 0 26px color-mix(in srgb, var(--rank-ui-primary) 78%, transparent),
+    0 0 46px color-mix(in srgb, var(--rank-ui-primary) 38%, transparent) !important;
 
   border-radius: 0 !important;
   opacity: 1 !important;
