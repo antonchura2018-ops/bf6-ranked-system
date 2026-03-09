@@ -4382,30 +4382,28 @@ body .navbar.navTabs > .nav-btn.active::before{
 
 /* clean active top line — same old placement, just recolored */
 body .navbar.navTabs > .nav-btn.active > span::before{
-  content:"" !important;
-  position:absolute !important;
-  left: -18px !important;
-  right: -18px !important;
+  content: "" !important;
+  display: block !important;
+  position: absolute !important;
+  z-index: 50 !important;
+  pointer-events: none !important;
+
+  left: 6px !important;
+  right: -22px !important;
   top: -14px !important;
   height: 3px !important;
-  pointer-events:none !important;
 
-  background: linear-gradient(90deg,
-    transparent 0%,
-    var(--rank-ui-primary) 12%,
-    var(--rank-ui-primary) 88%,
-    transparent 100%
-  ) !important;
-
-box-shadow:
-  0 0 8px color-mix(in srgb, var(--rank-ui-primary) 55%, transparent),
-  0 0 18px color-mix(in srgb, var(--rank-ui-primary) 28%, transparent) !important;
+  background: var(--rank-ui-primary) !important;
+  box-shadow:
+    0 0 10px color-mix(in srgb, var(--rank-ui-primary) 75%, transparent),
+    0 0 22px color-mix(in srgb, var(--rank-ui-primary) 40%, transparent) !important;
 
   border-radius: 0 !important;
-  filter: blur(0.15px) !important;
   opacity: 1 !important;
-  mix-blend-mode: screen !important;
+  visibility: visible !important;
   clip-path: none !important;
+  filter: none !important;
+  mix-blend-mode: normal !important;
 }
 
 /* exact fit per tab, using your old good dimensions */
