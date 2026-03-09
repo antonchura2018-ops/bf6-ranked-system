@@ -4218,7 +4218,7 @@ body[data-rank="eidolon"]{
 }
 
 #dashboard.section.active .rankHome .pulseGrid .metric .k{
-  font-size: clamp(15px, 1.15vw, 18px) !important;
+  font-size: clamp(16px, 1.25vw, 19px) !important;
   letter-spacing: .20em !important;
   line-height: 1.15 !important;
 
@@ -4364,9 +4364,24 @@ body .navbar.navTabs > .nav-btn.active{
 
 /* active tab plate */
 body .navbar.navTabs > .nav-btn.active::before{
-  border-color: color-mix(in srgb, var(--rank-ui-primary) 54%, rgba(255,120,40,0.38)) !important;
+  content:"" !important;
+  position:absolute !important;
+  pointer-events:none !important;
+  z-index: 8 !important;
+
+  inset: 4px 6px !important;
+  border-radius: 10px !important;
+
+  border: 1px solid color-mix(in srgb, var(--rank-ui-primary) 54%, rgba(255,120,40,0.38)) !important;
 
   background:
+    linear-gradient(90deg,
+      transparent 0%,
+      var(--rank-ui-primary) 10%,
+      var(--rank-ui-primary) 90%,
+      transparent 100%
+    ) top / calc(100% - 24px) 3px no-repeat,
+
     radial-gradient(240px 70px at 20% 50%, color-mix(in srgb, var(--rank-ui-primary) 22%, transparent), transparent 65%),
     radial-gradient(240px 70px at 80% 50%, color-mix(in srgb, var(--rank-ui-primary) 16%, transparent), transparent 65%),
     linear-gradient(180deg, rgba(26,18,16,0.78), rgba(8,8,10,0.66)) !important;
@@ -4379,47 +4394,18 @@ body .navbar.navTabs > .nav-btn.active::before{
 
   outline: 1px solid color-mix(in srgb, var(--rank-ui-primary) 64%, transparent) !important;
   filter: brightness(1.18) !important;
+}
 
 /* clean active top line — same old placement, just recolored */
 body .navbar.navTabs > .nav-btn.active > span::before{
-  content: "" !important;
-  display: block !important;
-  position: absolute !important;
-  z-index: 50 !important;
-  pointer-events: none !important;
-
-  left: 6px !important;
-  right: -22px !important;
-  top: -14px !important;
-  height: 3px !important;
-
-  background: var(--rank-ui-primary) !important;
-  box-shadow:
-    0 0 10px color-mix(in srgb, var(--rank-ui-primary) 75%, transparent),
-    0 0 22px color-mix(in srgb, var(--rank-ui-primary) 40%, transparent) !important;
-
-  border-radius: 0 !important;
-  opacity: 1 !important;
-  visibility: visible !important;
-  clip-path: none !important;
-  filter: none !important;
-  mix-blend-mode: normal !important;
+  content: none !important;
+  display: none !important;
 }
 
-/* exact fit per tab, using your old good dimensions */
-body .navbar.navTabs > .nav-btn.active:first-child > span::before{
-  left: -50px !important;
-  right: -60px !important;
-}
-body .navbar.navTabs > .nav-btn.active:nth-child(2) > span::before{
-  left: -86px !important;
-  right: -92px !important;
-}
-body .navbar.navTabs > .nav-btn.active:nth-child(3) > span::before{
-  left: -34px !important;
-  right: -40px !important;
-}
+body .navbar.navTabs > .nav-btn.active:first-child > span::before,
+body .navbar.navTabs > .nav-btn.active:nth-child(2) > span::before,
+body .navbar.navTabs > .nav-btn.active:nth-child(3) > span::before,
 body .navbar.navTabs > .nav-btn.active:last-child > span::before{
-  left: -56px !important;
-  right: -62px !important;
+  content: none !important;
+  display: none !important;
 }
