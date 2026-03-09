@@ -4429,3 +4429,201 @@ body .navbar.navTabs > .nav-btn.active:last-child > span::before{
   left: -56px !important;
   right: -62px !important;
 }
+/* =========================================================
+   RANK FX PACK — ambient glow + nav sweep + progress shine
+   safe starter version
+   ========================================================= */
+
+:root{
+  --rank-fx-strength: 1;
+  --rank-fx-speed: 5.5s;
+  --rank-fx-ambient-opacity: .22;
+  --rank-fx-shine-opacity: .32;
+}
+
+/* optional per-rank tuning */
+body[data-rank="outcast"]{
+  --rank-fx-strength: 1.00;
+  --rank-fx-speed: 5.8s;
+  --rank-fx-ambient-opacity: .20;
+  --rank-fx-shine-opacity: .30;
+}
+
+body[data-rank="thrall"]{
+  --rank-fx-strength: 1.05;
+  --rank-fx-speed: 5.3s;
+  --rank-fx-ambient-opacity: .24;
+  --rank-fx-shine-opacity: .34;
+}
+
+/* ---------------------------------------------------------
+   1) Ambient glow behind emblem / center scene
+   --------------------------------------------------------- */
+#dashboard.section.active .rankHome::before{
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 30%;
+  width: 720px;
+  height: 720px;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 0;
+
+  background:
+    radial-gradient(circle,
+      color-mix(in srgb, var(--rank-ui-primary) 28%, transparent) 0%,
+      color-mix(in srgb, var(--rank-ui-primary) 16%, transparent) 28%,
+      color-mix(in srgb, var(--rank-ui-primary) 8%, transparent) 48%,
+      transparent 72%
+    );
+
+  opacity: var(--rank-fx-ambient-opacity);
+  filter: blur(28px);
+  animation: rankAmbientPulse 6.5s ease-in-out infinite;
+}
+
+@keyframes rankAmbientPulse{
+  0%{
+    opacity: calc(var(--rank-fx-ambient-opacity) * .82);
+    transform: translate(-50%, -50%) scale(.96);
+  }
+  50%{
+    opacity: calc(var(--rank-fx-ambient-opacity) * 1.12);
+    transform: translate(-50%, -50%) scale(1.03);
+  }
+  100%{
+    opacity: calc(var(--rank-fx-ambient-opacity) * .82);
+    transform: translate(-50%, -50%) scale(.96);
+  }
+}
+
+/* make sure content stays above ambient glow */
+#dashboard.section.active .rankHome > *{
+  position: relative;
+  z-index: 1;
+}
+
+/* ---------------------------------------------------------
+   2) Active tab sweep
+   --------------------------------------------------------- */
+body .navbar.navTabs > .nav-btn.active{
+  overflow: hidden !important;
+}
+
+body .navbar.navTabs > .nav-btn.active::after{
+  content: "" !important;
+  position: absolute !important;
+  top: 6px !important;
+  bottom: 6px !important;
+  width: 64px !important;
+  left: -80px !important;
+  pointer-events: none !important;
+  z-index: 7 !important;
+
+  background: linear-gradient(90deg,
+    transparent 0%,
+    color-mix(in srgb, var(--rank-ui-primary) 16%, transparent) 30%,
+    color-mix(in srgb, var(--rank-ui-primary) 42%, white 58%) 50%,
+    color-mix(in srgb, var(--rank-ui-primary) 16%, transparent) 70%,
+    transparent 100%
+  ) !important;
+
+  opacity: .22 !important;
+  filter: blur(6px) !important;
+  transform: skewX(-18deg);
+  animation: activeTabSweep var(--rank-fx-speed) linear infinite;
+}
+
+@keyframes activeTabSweep{
+  0%{
+    left: -90px;
+    opacity: 0;
+  }
+  10%{
+    opacity: .12;
+  }
+  45%{
+    opacity: .22;
+  }
+  70%{
+    opacity: .10;
+  }
+  100%{
+    left: calc(100% + 90px);
+    opacity: 0;
+  }
+}
+
+/* ---------------------------------------------------------
+   3) Progress bar shine
+   --------------------------------------------------------- */
+#dashboard.section.active .rankHome .rankProgress{
+  overflow: hidden;
+}
+
+#dashboard.section.active .rankHome .rankProgress__fill{
+  position: relative;
+  overflow: hidden;
+}
+
+#dashboard.section.active .rankHome .rankProgress__fill::after{
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+
+  background: linear-gradient(110deg,
+    transparent 0%,
+    rgba(255,255,255,0) 30%,
+    rgba(255,255,255,var(--rank-fx-shine-opacity)) 48%,
+    rgba(255,255,255,0) 66%,
+    transparent 100%
+  );
+
+  transform: translateX(-140%);
+  animation: rankProgressShine 4.8s ease-in-out infinite;
+}
+
+@keyframes rankProgressShine{
+  0%, 55%{
+    transform: translateX(-140%);
+  }
+  100%{
+    transform: translateX(160%);
+  }
+}
+
+/* ---------------------------------------------------------
+   4) Slight pulse for PLAYER ASCENSION rails
+   --------------------------------------------------------- */
+#dashboard.section.active .rankHome .pulseHeader::before,
+#dashboard.section.active .rankHome .pulseHeader::after,
+#dashboard.section.active .rankHome .pulseHeader span::before,
+#dashboard.section.active .rankHome .pulseHeader span::after{
+  animation: rankRailPulse 3.8s ease-in-out infinite;
+}
+
+@keyframes rankRailPulse{
+  0%, 100%{
+    opacity: .78;
+  }
+  50%{
+    opacity: 1;
+  }
+}
+
+/* ---------------------------------------------------------
+   5) Respect reduced motion
+   --------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce){
+  #dashboard.section.active .rankHome::before,
+  body .navbar.navTabs > .nav-btn.active::after,
+  #dashboard.section.active .rankHome .rankProgress__fill::after,
+  #dashboard.section.active .rankHome .pulseHeader::before,
+  #dashboard.section.active .rankHome .pulseHeader::after,
+  #dashboard.section.active .rankHome .pulseHeader span::before,
+  #dashboard.section.active .rankHome .pulseHeader span::after{
+    animation: none !important;
+  }
+}
