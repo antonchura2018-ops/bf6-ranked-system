@@ -3672,11 +3672,11 @@ body[data-rank="thrall"]{
 }
 
 body[data-rank="marauder"]{
-  --rank-bg-image: url('/assets/img/bg/cosmos.png');
+  --rank-bg-image: url('/assets/img/bg/cosmos_marauder.png');
 }
 
 body[data-rank="harbinger"]{
-  --rank-bg-image: url('/assets/img/bg/cosmos.png');
+  --rank-bg-image: url('/assets/img/bg/cosmos_harbinger.png');
 }
 
 body[data-rank="reaper"]{
