@@ -5077,7 +5077,11 @@ body[data-rank="harbinger"] #dashboard.section.active .rankHome .rankProgress__f
     0 0 14px rgba(106,184,92,.18),
     0 0 24px rgba(106,184,92,.14) !important;
 }
-/* ===== HARBINGER RING LIGHTS — WORKING OVERLAY ===== */
+/* =========================================================
+   HARBINGER — RING LIGHTS V2
+   Сильніші та красивіші flare-бліки по кільцю
+   ========================================================= */
+
 body[data-rank="harbinger"] .rankHome,
 body[data-rank="harbinger"] .rankHome__center,
 body[data-rank="harbinger"] .rankHome__haloWrap,
@@ -5086,6 +5090,7 @@ body[data-rank="harbinger"] .rankHome__emblemWrap{
   position: relative !important;
 }
 
+/* MAIN FLARES */
 body[data-rank="harbinger"] .rankHome::before,
 body[data-rank="harbinger"] .rankHome__center::before,
 body[data-rank="harbinger"] .rankHome__haloWrap::before,
@@ -5103,38 +5108,124 @@ body[data-rank="harbinger"] .rankHome__emblemWrap::before{
   z-index: 20 !important;
 
   background:
-    radial-gradient(circle at 50% 4%, rgba(255,255,255,0) 0 6%, rgba(220,255,220,.30) 7%, rgba(120,255,120,.14) 10%, rgba(0,0,0,0) 14%),
-    radial-gradient(circle at 84% 50%, rgba(255,255,255,0) 0 6%, rgba(220,255,220,.28) 7%, rgba(120,255,120,.14) 10%, rgba(0,0,0,0) 14%),
-    radial-gradient(circle at 16% 50%, rgba(255,255,255,0) 0 6%, rgba(220,255,220,.24) 7%, rgba(120,255,120,.12) 10%, rgba(0,0,0,0) 14%),
-    radial-gradient(circle at 73% 18%, rgba(255,255,255,0) 0 5%, rgba(220,255,220,.18) 6%, rgba(120,255,120,.10) 9%, rgba(0,0,0,0) 13%),
-    radial-gradient(circle at 27% 18%, rgba(255,255,255,0) 0 5%, rgba(220,255,220,.16) 6%, rgba(120,255,120,.09) 9%, rgba(0,0,0,0) 13%),
-    radial-gradient(circle at 50% 96%, rgba(255,255,255,0) 0 5%, rgba(220,255,220,.10) 6%, rgba(120,255,120,.06) 9%, rgba(0,0,0,0) 13%);
+    radial-gradient(circle at 50% 4%,
+      rgba(255,255,255,0) 0 5.5%,
+      rgba(255,255,255,.34) 6.4%,
+      rgba(210,255,210,.22) 7.4%,
+      rgba(120,255,120,.10) 9.2%,
+      rgba(0,0,0,0) 13.5%
+    ),
 
-  filter: blur(8px);
+    radial-gradient(circle at 84% 50%,
+      rgba(255,255,255,0) 0 5.8%,
+      rgba(255,255,255,.38) 6.8%,
+      rgba(210,255,210,.24) 8.0%,
+      rgba(120,255,120,.12) 9.8%,
+      rgba(0,0,0,0) 14.5%
+    ),
+
+    radial-gradient(circle at 16% 50%,
+      rgba(255,255,255,0) 0 5.8%,
+      rgba(255,255,255,.34) 6.8%,
+      rgba(210,255,210,.22) 8.0%,
+      rgba(120,255,120,.11) 9.8%,
+      rgba(0,0,0,0) 14.5%
+    ),
+
+    radial-gradient(circle at 73% 18%,
+      rgba(255,255,255,0) 0 4.2%,
+      rgba(255,255,255,.22) 5.2%,
+      rgba(210,255,210,.14) 6.5%,
+      rgba(120,255,120,.07) 8.2%,
+      rgba(0,0,0,0) 12%
+    ),
+
+    radial-gradient(circle at 27% 18%,
+      rgba(255,255,255,0) 0 4.2%,
+      rgba(255,255,255,.20) 5.2%,
+      rgba(210,255,210,.13) 6.5%,
+      rgba(120,255,120,.07) 8.2%,
+      rgba(0,0,0,0) 12%
+    ),
+
+    radial-gradient(circle at 50% 96%,
+      rgba(255,255,255,0) 0 4.0%,
+      rgba(255,255,255,.12) 5.0%,
+      rgba(210,255,210,.08) 6.0%,
+      rgba(120,255,120,.04) 7.8%,
+      rgba(0,0,0,0) 11%
+    );
+
+  filter: blur(4px);
   mix-blend-mode: screen;
-  opacity: .55;
-  animation: harbingerRingBlink 5.5s ease-in-out infinite !important;
+  opacity: .92;
+  animation: harbingerRingBlinkV2 4.8s ease-in-out infinite !important;
 }
 
-@keyframes harbingerRingBlink{
+/* OUTER SOFT ENERGY HALO */
+body[data-rank="harbinger"] .rankHome::after,
+body[data-rank="harbinger"] .rankHome__center::after,
+body[data-rank="harbinger"] .rankHome__haloWrap::after,
+body[data-rank="harbinger"] .rankHome__halo::after,
+body[data-rank="harbinger"] .rankHome__emblemWrap::after{
+  content: "" !important;
+  position: absolute !important;
+  left: 50% !important;
+  top: 34% !important;
+  width: 760px !important;
+  height: 760px !important;
+  transform: translate(-50%, -50%) !important;
+  border-radius: 50% !important;
+  pointer-events: none !important;
+  z-index: 19 !important;
+
+  background:
+    radial-gradient(circle at 50% 4%, rgba(120,255,120,.12) 0%, rgba(120,255,120,0) 10%),
+    radial-gradient(circle at 84% 50%, rgba(120,255,120,.14) 0%, rgba(120,255,120,0) 11%),
+    radial-gradient(circle at 16% 50%, rgba(120,255,120,.12) 0%, rgba(120,255,120,0) 11%),
+    radial-gradient(circle at 73% 18%, rgba(120,255,120,.08) 0%, rgba(120,255,120,0) 9%),
+    radial-gradient(circle at 27% 18%, rgba(120,255,120,.08) 0%, rgba(120,255,120,0) 9%);
+
+  filter: blur(18px);
+  mix-blend-mode: screen;
+  opacity: .55;
+  animation: harbingerRingGlowV2 5.8s ease-in-out infinite !important;
+}
+
+@keyframes harbingerRingBlinkV2{
   0%{
-    opacity: .24;
-    filter: blur(8px) brightness(.95);
+    opacity: .58;
+    filter: blur(4px) brightness(.96);
   }
-  25%{
-    opacity: .52;
-    filter: blur(8px) brightness(1.06);
+  22%{
+    opacity: .92;
+    filter: blur(4px) brightness(1.10);
   }
-  50%{
-    opacity: .30;
-    filter: blur(8px) brightness(.98);
+  45%{
+    opacity: .66;
+    filter: blur(4px) brightness(.98);
   }
-  75%{
-    opacity: .60;
-    filter: blur(9px) brightness(1.10);
+  68%{
+    opacity: 1;
+    filter: blur(4.5px) brightness(1.16);
   }
   100%{
-    opacity: .24;
-    filter: blur(8px) brightness(.95);
+    opacity: .58;
+    filter: blur(4px) brightness(.96);
+  }
+}
+
+@keyframes harbingerRingGlowV2{
+  0%{
+    opacity: .30;
+    filter: blur(18px) brightness(.96);
+  }
+  50%{
+    opacity: .62;
+    filter: blur(20px) brightness(1.08);
+  }
+  100%{
+    opacity: .30;
+    filter: blur(18px) brightness(.96);
   }
 }
