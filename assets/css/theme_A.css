@@ -4076,16 +4076,16 @@ body[data-rank="harbinger"]{
   --rank-bg-image: url('/assets/img/bg/cosmos_harbinger.png');
 
   --rank-ui-primary: #66b157;
-  --rank-ui-secondary: #0f2b0c;
+  --rank-ui-secondary: #10230f;
   --rank-ui-soft: rgba(102,177,87,.18);
 
   --rank-ui-line: rgba(124,214,106,.92);
-  --rank-ui-line-soft: rgba(210,255,200,.12);
+  --rank-ui-line-soft: rgba(225,255,220,.10);
 
   --rank-ui-textglow-a: rgba(102,177,87,.30);
-  --rank-ui-textglow-b: rgba(15,43,12,.24);
+  --rank-ui-textglow-b: rgba(16,35,15,.24);
 
-  --rank-ui-tab-outline: rgba(102,177,87,.28);
+  --rank-ui-tab-outline: rgba(102,177,87,.30);
 }
 
 
