@@ -4540,3 +4540,64 @@ body[data-rank="harbinger"] #dashboard.section.active .rankHome .pulseGrid .metr
     0 0 14px rgba(65,160,95,.16),
     0 0 28px rgba(65,160,95,.08) !important;
 }
+/* =========================================================
+   HARBINGER — final line / progress overrides
+   ========================================================= */
+
+/* 1) прибрати червоний акцент під RP / NEXT RANK */
+body[data-rank="harbinger"] #dashboard.section.active .rankHome .rankSub::after,
+body[data-rank="harbinger"] #dashboard.section.active .rankHome .rankMeta::after,
+body[data-rank="harbinger"] #dashboard.section.active .rankHome .rankRP::after,
+body[data-rank="harbinger"] #dashboard.section.active .rankHome .rankProgressLabel::after{
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(90,185,105,.28) 18%,
+    rgba(120,220,140,.88) 50%,
+    rgba(90,185,105,.28) 82%,
+    transparent 100%
+  ) !important;
+
+  box-shadow:
+    0 0 8px rgba(120,220,140,.18),
+    0 0 18px rgba(90,185,105,.14) !important;
+}
+
+/* 2) сам progress bar fill — красивіший зелений */
+body[data-rank="harbinger"] #dashboard.section.active .rankHome .rankProgress__fill{
+  background: linear-gradient(
+    90deg,
+    #f7fff6 0%,
+    #bff0c6 16%,
+    #74d784 42%,
+    #4aa160 72%,
+    #274a30 100%
+  ) !important;
+
+  box-shadow:
+    0 0 8px rgba(255,255,255,.10),
+    0 0 18px rgba(74,161,96,.24),
+    0 0 32px rgba(74,161,96,.14) !important;
+}
+
+/* 3) трек progress bar — теж у зелену тему */
+body[data-rank="harbinger"] #dashboard.section.active .rankHome .rankProgress{
+  background: linear-gradient(
+    90deg,
+    rgba(255,255,255,.06),
+    rgba(74,161,96,.10),
+    rgba(255,255,255,.04)
+  ) !important;
+
+  box-shadow:
+    inset 0 0 0 1px rgba(74,161,96,.14),
+    0 0 12px rgba(74,161,96,.08) !important;
+}
+
+/* 4) якщо десь ще лишається червона тонка лінія в блоці rank meta */
+body[data-rank="harbinger"] #dashboard.section.active .rankHome .rankSub,
+body[data-rank="harbinger"] #dashboard.section.active .rankHome .rankMeta,
+body[data-rank="harbinger"] #dashboard.section.active .rankHome .rankRP,
+body[data-rank="harbinger"] #dashboard.section.active .rankHome .rankProgressLabel{
+  border-color: rgba(74,161,96,.22) !important;
+}
