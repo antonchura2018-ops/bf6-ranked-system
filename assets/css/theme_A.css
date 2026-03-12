@@ -4075,17 +4075,17 @@ body[data-rank="marauder"]{
 body[data-rank="harbinger"]{
   --rank-bg-image: url('/assets/img/bg/cosmos_harbinger.png');
 
-  --rank-ui-primary: #66b157;
-  --rank-ui-secondary: #10230f;
-  --rank-ui-soft: rgba(102,177,87,.18);
+  --rank-ui-primary: #4aa160;
+  --rank-ui-secondary: #1d2f22;
+  --rank-ui-soft: rgba(74,161,96,.18);
 
-  --rank-ui-line: rgba(124,214,106,.92);
-  --rank-ui-line-soft: rgba(225,255,220,.10);
+  --rank-ui-line: rgba(74,161,96,.95);
+  --rank-ui-line-soft: rgba(223,246,224,.14);
 
-  --rank-ui-textglow-a: rgba(102,177,87,.30);
-  --rank-ui-textglow-b: rgba(16,35,15,.24);
+  --rank-ui-textglow-a: rgba(74,161,96,.26);
+  --rank-ui-textglow-b: rgba(29,47,34,.20);
 
-  --rank-ui-tab-outline: rgba(102,177,87,.30);
+  --rank-ui-tab-outline: rgba(74,161,96,.28);
 }
 
 
@@ -4472,7 +4472,7 @@ body .navbar.navTabs > .nav-btn.active:last-child > span::before{
 body[data-rank="harbinger"] #dashboard.section.active .rankHome .rankEmblemOverlay,
 body[data-rank="harbinger"] #dashboard.section.active .rankHome #rankEmblemOverlay,
 body[data-rank="harbinger"] #rankEmblemOverlay{
-  transform: translate(-50%, -50%) scale(.92) !important;
+  transform: translate(-50%, -50%) scale(.88) !important;
 }
 /* rank title */
 body[data-rank="harbinger"] #dashboard.section.active .rankHome .rankTitle,
