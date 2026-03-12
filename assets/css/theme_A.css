@@ -4939,3 +4939,200 @@ body[data-rank="harbinger"] .navbar.navTabs > .nav-btn.active::before{
     0 0 26px rgba(102,177,87,.18),
     0 0 58px rgba(102,177,87,.10) !important;
 }
+/* =========================================================
+   HARBINGER — POLISH V2
+   ВСТАВИТИ В САМИЙ КІНЕЦЬ theme_A.css
+   ========================================================= */
+
+body[data-rank="harbinger"]{
+  --rank-bg-image: url('/assets/img/bg/cosmos_harbinger.png');
+
+  --rank-ui-primary: #6ab85c;
+  --rank-ui-secondary: #10230f;
+  --rank-ui-soft: rgba(106,184,92,.18);
+
+  --rank-ui-line: rgba(145,235,126,.90);
+  --rank-ui-line-soft: rgba(230,255,226,.11);
+
+  --rank-ui-textglow-a: rgba(106,184,92,.30);
+  --rank-ui-textglow-b: rgba(16,35,15,.24);
+
+  --rank-ui-tab-outline: rgba(106,184,92,.32);
+}
+
+/* cleaner center focus */
+body[data-rank="harbinger"] #rankBgLayer::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  z-index:1;
+  background:
+    radial-gradient(circle at 50% 34%,
+      rgba(4,10,6,0) 0%,
+      rgba(4,10,6,.08) 18%,
+      rgba(4,10,6,.18) 36%,
+      rgba(4,10,6,.28) 52%,
+      rgba(0,0,0,0) 72%),
+    radial-gradient(circle at 50% 54%,
+      rgba(0,0,0,0) 0%,
+      rgba(0,0,0,.06) 32%,
+      rgba(0,0,0,.10) 55%,
+      rgba(0,0,0,0) 75%);
+}
+
+/* rank title */
+body[data-rank="harbinger"] #dashboard.section.active .rankHome .rankTitle{
+  background: linear-gradient(
+    180deg,
+    #ffffff 0%,
+    #f5fff2 28%,
+    #ddffd7 66%,
+    #9edf8d 100%
+  ) !important;
+  -webkit-background-clip:text !important;
+  -webkit-text-fill-color:transparent !important;
+  text-shadow:
+    0 0 8px rgba(255,255,255,.10),
+    0 0 18px rgba(106,184,92,.20),
+    0 0 30px rgba(16,35,15,.18) !important;
+  letter-spacing: .11em !important;
+}
+
+/* RP / labels */
+body[data-rank="harbinger"] #dashboard.section.active .rankHome .rankRP{
+  color:#f2ffef !important;
+  text-shadow:
+    0 0 8px rgba(255,255,255,.08),
+    0 0 14px rgba(106,184,92,.16) !important;
+}
+
+body[data-rank="harbinger"] #dashboard.section.active .rankHome .rankRP span{
+  color:#ddffd7 !important;
+}
+
+body[data-rank="harbinger"] #dashboard.section.active .rankHome .rankProgress__label{
+  color:#ecfbe8 !important;
+  text-shadow:
+    0 0 8px rgba(106,184,92,.12),
+    0 0 16px rgba(16,35,15,.14) !important;
+  letter-spacing:.15em !important;
+}
+
+body[data-rank="harbinger"] #dashboard.section.active .rankHome .rankProgress__label b{
+  color:#ffffff !important;
+}
+
+/* progress */
+body[data-rank="harbinger"] #dashboard.section.active .rankHome .rankProgress__track{
+  background: linear-gradient(
+    90deg,
+    rgba(8,18,10,.20),
+    rgba(16,35,15,.50),
+    rgba(8,18,10,.20)
+  ) !important;
+  box-shadow:
+    inset 0 0 0 1px rgba(180,255,180,.05),
+    inset 0 0 16px rgba(0,0,0,.28),
+    0 0 16px rgba(106,184,92,.08) !important;
+}
+
+body[data-rank="harbinger"] #dashboard.section.active .rankHome .rankProgress__fill{
+  background: linear-gradient(
+    90deg,
+    #ffffff 0%,
+    #e6ffe0 18%,
+    #a6eb95 52%,
+    #6ab85c 80%,
+    #183117 100%
+  ) !important;
+  box-shadow:
+    0 0 10px rgba(255,255,255,.08),
+    0 0 18px rgba(106,184,92,.22),
+    0 0 34px rgba(106,184,92,.14) !important;
+}
+
+/* player ascension */
+body[data-rank="harbinger"] #dashboard.section.active .rankHome .pulseHeader,
+body[data-rank="harbinger"] #dashboard.section.active .rankHome .pulseHeader span{
+  background: linear-gradient(
+    180deg,
+    #ffffff 0%,
+    #efffec 34%,
+    #c9f5be 76%,
+    #6ab85c 100%
+  ) !important;
+  -webkit-background-clip:text !important;
+  -webkit-text-fill-color:transparent !important;
+  text-shadow:
+    0 0 8px rgba(255,255,255,.08),
+    0 0 16px rgba(106,184,92,.18),
+    0 0 26px rgba(16,35,15,.16) !important;
+}
+
+/* metrics block */
+body[data-rank="harbinger"] #dashboard.section.active .rankHome .pulseGrid{
+  background: linear-gradient(
+    180deg,
+    rgba(255,255,255,.02),
+    rgba(8,18,10,.10),
+    rgba(0,0,0,0)
+  ) !important;
+  border-radius: 14px !important;
+}
+
+body[data-rank="harbinger"] #dashboard.section.active .rankHome .pulseGrid .metric .k{
+  color:#d8ead4 !important;
+  opacity: .96 !important;
+}
+
+body[data-rank="harbinger"] #dashboard.section.active .rankHome .pulseGrid .metric .v{
+  color:#f3fff0 !important;
+  text-shadow:
+    0 0 8px rgba(106,184,92,.14),
+    0 0 22px rgba(16,35,15,.16) !important;
+}
+
+body[data-rank="harbinger"] #dashboard.section.active .rankHome .pulseGrid .metric + .metric::before{
+  background: linear-gradient(
+    180deg,
+    transparent,
+    rgba(145,235,126,.24),
+    transparent
+  ) !important;
+  box-shadow: 0 0 10px rgba(106,184,92,.10) !important;
+}
+
+/* tabs */
+body[data-rank="harbinger"] .navbar.navTabs::after{
+  border-color: rgba(106,184,92,.34) !important;
+  box-shadow:
+    0 0 0 1px rgba(106,184,92,.16),
+    0 0 20px rgba(106,184,92,.16),
+    0 0 44px rgba(106,184,92,.08) !important;
+}
+
+body[data-rank="harbinger"] .navbar.navTabs > .nav-btn::before{
+  border-color: rgba(106,184,92,.24) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.08),
+    inset 0 -1px 0 rgba(0,0,0,.30),
+    0 0 14px rgba(106,184,92,.06) !important;
+}
+
+body[data-rank="harbinger"] .navbar.navTabs > .nav-btn.active{
+  text-shadow:
+    0 0 8px rgba(255,255,255,.08),
+    0 0 16px rgba(106,184,92,.18),
+    0 0 28px rgba(106,184,92,.10) !important;
+}
+
+body[data-rank="harbinger"] .navbar.navTabs > .nav-btn.active::before{
+  border-color: rgba(106,184,92,.42) !important;
+  outline: 1px solid rgba(106,184,92,.30) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.10),
+    inset 0 -1px 0 rgba(0,0,0,.30),
+    0 0 22px rgba(106,184,92,.14),
+    0 0 48px rgba(106,184,92,.08) !important;
+}
