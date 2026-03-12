@@ -5077,3 +5077,103 @@ body[data-rank="harbinger"] #dashboard.section.active .rankHome .rankProgress__f
     0 0 14px rgba(106,184,92,.18),
     0 0 24px rgba(106,184,92,.14) !important;
 }
+/* =========================================================
+   HARBINGER — SAFE FX PACK
+   Безпечні бліки та легкі ефекти
+   ========================================================= */
+
+/* 1) EMBLEM / HALO AREA — very soft breathing glow */
+body[data-rank="harbinger"] .rankEmblem,
+body[data-rank="harbinger"] .rankBadge,
+body[data-rank="harbinger"] .rankHome__emblem,
+body[data-rank="harbinger"] .rankHome__badge,
+body[data-rank="harbinger"] .rankHome__crest,
+body[data-rank="harbinger"] .rankHome__rankIcon,
+body[data-rank="harbinger"] .rankIcon{
+  animation: harbingerEmblemPulse 5.2s ease-in-out infinite;
+  transform-origin: center center;
+}
+
+@keyframes harbingerEmblemPulse{
+  0%{
+    filter: brightness(1) saturate(1);
+  }
+  50%{
+    filter: brightness(1.045) saturate(1.04);
+  }
+  100%{
+    filter: brightness(1) saturate(1);
+  }
+}
+
+/* 2) HARBINGER title — soft readable glow pulse */
+body[data-rank="harbinger"] #dashboard.section.active .rankHome .rankTitle{
+  animation: harbingerTitleGlow 4.6s ease-in-out infinite;
+}
+
+@keyframes harbingerTitleGlow{
+  0%{
+    text-shadow:
+      0 0 6px rgba(255,255,255,.16),
+      0 0 16px rgba(106,184,92,.12),
+      0 0 28px rgba(16,35,15,.16);
+  }
+  50%{
+    text-shadow:
+      0 0 8px rgba(255,255,255,.22),
+      0 0 22px rgba(106,184,92,.18),
+      0 0 36px rgba(16,35,15,.20);
+  }
+  100%{
+    text-shadow:
+      0 0 6px rgba(255,255,255,.16),
+      0 0 16px rgba(106,184,92,.12),
+      0 0 28px rgba(16,35,15,.16);
+  }
+}
+
+/* 3) PLAYER ASCENSION lines / header — tiny energy shimmer */
+body[data-rank="harbinger"] #dashboard.section.active .rankHome .pulseHeader{
+  animation: harbingerAscensionGlow 5.8s ease-in-out infinite;
+}
+
+@keyframes harbingerAscensionGlow{
+  0%{
+    text-shadow:
+      0 0 4px rgba(255,255,255,.10),
+      0 0 12px rgba(106,184,92,.10);
+  }
+  50%{
+    text-shadow:
+      0 0 6px rgba(255,255,255,.16),
+      0 0 18px rgba(106,184,92,.14);
+  }
+  100%{
+    text-shadow:
+      0 0 4px rgba(255,255,255,.10),
+      0 0 12px rgba(106,184,92,.10);
+  }
+}
+
+/* 4) metric values — subtle living HUD feel */
+body[data-rank="harbinger"] #dashboard.section.active .rankHome .pulseGrid .metric .v{
+  animation: harbingerMetricGlow 6.4s ease-in-out infinite;
+}
+
+@keyframes harbingerMetricGlow{
+  0%{
+    text-shadow:
+      0 0 4px rgba(255,255,255,.06),
+      0 0 10px rgba(106,184,92,.08);
+  }
+  50%{
+    text-shadow:
+      0 0 6px rgba(255,255,255,.10),
+      0 0 14px rgba(106,184,92,.12);
+  }
+  100%{
+    text-shadow:
+      0 0 4px rgba(255,255,255,.06),
+      0 0 10px rgba(106,184,92,.08);
+  }
+}
