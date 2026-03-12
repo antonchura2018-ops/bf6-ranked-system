@@ -5078,102 +5078,111 @@ body[data-rank="harbinger"] #dashboard.section.active .rankHome .rankProgress__f
     0 0 24px rgba(106,184,92,.14) !important;
 }
 /* =========================================================
-   HARBINGER — SAFE FX PACK
-   Безпечні бліки та легкі ефекти
+   HARBINGER — RING LIGHT FX OVERLAY
+   Без анімації самого background-image
    ========================================================= */
 
-/* 1) EMBLEM / HALO AREA — very soft breathing glow */
-body[data-rank="harbinger"] .rankEmblem,
-body[data-rank="harbinger"] .rankBadge,
-body[data-rank="harbinger"] .rankHome__emblem,
-body[data-rank="harbinger"] .rankHome__badge,
-body[data-rank="harbinger"] .rankHome__crest,
-body[data-rank="harbinger"] .rankHome__rankIcon,
-body[data-rank="harbinger"] .rankIcon{
-  animation: harbingerEmblemPulse 5.2s ease-in-out infinite;
-  transform-origin: center center;
+/* контейнер центральної сцени */
+body[data-rank="harbinger"] #dashboard.section.active .rankHome{
+  position: relative !important;
+  isolation: isolate !important;
 }
 
-@keyframes harbingerEmblemPulse{
+/* м'які flare-бліки по кільцю */
+body[data-rank="harbinger"] #dashboard.section.active .rankHome::before{
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 35%;
+  width: 760px;
+  height: 760px;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 1;
+
+  background:
+    radial-gradient(circle at 50% 4%,  rgba(220,255,220,.00) 0 7%, rgba(220,255,220,.18) 8%, rgba(150,255,150,.10) 10%, rgba(0,0,0,0) 14%),
+    radial-gradient(circle at 84% 50%, rgba(220,255,220,.00) 0 7%, rgba(220,255,220,.20) 8%, rgba(150,255,150,.12) 10%, rgba(0,0,0,0) 14%),
+    radial-gradient(circle at 16% 50%, rgba(220,255,220,.00) 0 7%, rgba(220,255,220,.16) 8%, rgba(150,255,150,.10) 10%, rgba(0,0,0,0) 14%),
+    radial-gradient(circle at 73% 18%, rgba(220,255,220,.00) 0 6%, rgba(220,255,220,.14) 7%, rgba(150,255,150,.08) 9%, rgba(0,0,0,0) 13%),
+    radial-gradient(circle at 27% 18%, rgba(220,255,220,.00) 0 6%, rgba(220,255,220,.12) 7%, rgba(150,255,150,.08) 9%, rgba(0,0,0,0) 13%),
+    radial-gradient(circle at 50% 96%, rgba(220,255,220,.00) 0 6%, rgba(220,255,220,.10) 7%, rgba(150,255,150,.06) 9%, rgba(0,0,0,0) 13%);
+
+  filter: blur(8px);
+  opacity: .55;
+  mix-blend-mode: screen;
+  animation: harbingerRingBlink 5.5s ease-in-out infinite;
+}
+
+/* легкий energy sweep по кільцю */
+body[data-rank="harbinger"] #dashboard.section.active .rankHome::after{
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 35%;
+  width: 760px;
+  height: 760px;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 1;
+
+  background:
+    conic-gradient(
+      from 0deg,
+      rgba(255,255,255,0) 0deg,
+      rgba(180,255,180,.00) 20deg,
+      rgba(180,255,180,.08) 32deg,
+      rgba(255,255,255,.14) 38deg,
+      rgba(180,255,180,.08) 44deg,
+      rgba(180,255,180,0) 60deg,
+      rgba(255,255,255,0) 360deg
+    );
+
+  -webkit-mask: radial-gradient(circle, transparent 0 57%, #000 61%, #000 66%, transparent 70%);
+  mask: radial-gradient(circle, transparent 0 57%, #000 61%, #000 66%, transparent 70%);
+
+  filter: blur(6px);
+  opacity: .35;
+  mix-blend-mode: screen;
+  animation: harbingerRingSweep 7.5s linear infinite;
+}
+
+@keyframes harbingerRingBlink{
   0%{
-    filter: brightness(1) saturate(1);
+    opacity: .30;
+    filter: blur(8px) brightness(.95);
   }
-  50%{
-    filter: brightness(1.045) saturate(1.04);
+  20%{
+    opacity: .58;
+    filter: blur(8px) brightness(1.04);
+  }
+  40%{
+    opacity: .38;
+    filter: blur(8px) brightness(.98);
+  }
+  65%{
+    opacity: .62;
+    filter: blur(9px) brightness(1.08);
   }
   100%{
-    filter: brightness(1) saturate(1);
+    opacity: .30;
+    filter: blur(8px) brightness(.95);
   }
 }
 
-/* 2) HARBINGER title — soft readable glow pulse */
-body[data-rank="harbinger"] #dashboard.section.active .rankHome .rankTitle{
-  animation: harbingerTitleGlow 4.6s ease-in-out infinite;
-}
-
-@keyframes harbingerTitleGlow{
+@keyframes harbingerRingSweep{
   0%{
-    text-shadow:
-      0 0 6px rgba(255,255,255,.16),
-      0 0 16px rgba(106,184,92,.12),
-      0 0 28px rgba(16,35,15,.16);
+    transform: translate(-50%, -50%) rotate(0deg);
+    opacity: .18;
+  }
+  35%{
+    opacity: .34;
   }
   50%{
-    text-shadow:
-      0 0 8px rgba(255,255,255,.22),
-      0 0 22px rgba(106,184,92,.18),
-      0 0 36px rgba(16,35,15,.20);
+    opacity: .24;
   }
   100%{
-    text-shadow:
-      0 0 6px rgba(255,255,255,.16),
-      0 0 16px rgba(106,184,92,.12),
-      0 0 28px rgba(16,35,15,.16);
-  }
-}
-
-/* 3) PLAYER ASCENSION lines / header — tiny energy shimmer */
-body[data-rank="harbinger"] #dashboard.section.active .rankHome .pulseHeader{
-  animation: harbingerAscensionGlow 5.8s ease-in-out infinite;
-}
-
-@keyframes harbingerAscensionGlow{
-  0%{
-    text-shadow:
-      0 0 4px rgba(255,255,255,.10),
-      0 0 12px rgba(106,184,92,.10);
-  }
-  50%{
-    text-shadow:
-      0 0 6px rgba(255,255,255,.16),
-      0 0 18px rgba(106,184,92,.14);
-  }
-  100%{
-    text-shadow:
-      0 0 4px rgba(255,255,255,.10),
-      0 0 12px rgba(106,184,92,.10);
-  }
-}
-
-/* 4) metric values — subtle living HUD feel */
-body[data-rank="harbinger"] #dashboard.section.active .rankHome .pulseGrid .metric .v{
-  animation: harbingerMetricGlow 6.4s ease-in-out infinite;
-}
-
-@keyframes harbingerMetricGlow{
-  0%{
-    text-shadow:
-      0 0 4px rgba(255,255,255,.06),
-      0 0 10px rgba(106,184,92,.08);
-  }
-  50%{
-    text-shadow:
-      0 0 6px rgba(255,255,255,.10),
-      0 0 14px rgba(106,184,92,.12);
-  }
-  100%{
-    text-shadow:
-      0 0 4px rgba(255,255,255,.06),
-      0 0 10px rgba(106,184,92,.08);
+    transform: translate(-50%, -50%) rotate(360deg);
+    opacity: .18;
   }
 }
