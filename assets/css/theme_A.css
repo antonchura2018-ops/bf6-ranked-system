@@ -3997,12 +3997,15 @@ body[data-rank="eidolon"]{
 
   --rank-ui-primary: #ff5a23;
   --rank-ui-secondary: #ff2a1a;
+  --rank-ui-soft: rgba(255,110,60,.18);
 
   --rank-ui-line: rgba(255,110,60,.95);
   --rank-ui-line-soft: rgba(255,255,255,.14);
 
   --rank-ui-textglow-a: rgba(255,110,60,.30);
   --rank-ui-textglow-b: rgba(255,50,20,.18);
+
+  --rank-ui-tab-outline: rgba(255,110,60,.28);
 }
 
 
@@ -4010,18 +4013,19 @@ body[data-rank="eidolon"]{
    RANK 1 — OUTCAST
    ========================================================= */
 body[data-rank="outcast"]{
-  /* ФОН */
   --rank-bg-image: url('/assets/img/bg/cosmos_outcast.png');
 
-  /* ОСНОВНИЙ КОЛІР UI */
   --rank-ui-primary: #8d1f22;
   --rank-ui-secondary: #8d1f22;
+  --rank-ui-soft: rgba(141,31,34,.18);
 
-  /* ЛІНІЇ / СВІТІННЯ */
   --rank-ui-line: rgba(141,31,34,.95);
   --rank-ui-line-soft: rgba(255,225,230,.14);
+
   --rank-ui-textglow-a: rgba(141,31,34,.28);
   --rank-ui-textglow-b: rgba(141,31,34,.18);
+
+  --rank-ui-tab-outline: rgba(141,31,34,.28);
 }
 
 
@@ -4029,149 +4033,181 @@ body[data-rank="outcast"]{
    RANK 2 — THRALL
    ========================================================= */
 body[data-rank="thrall"]{
-  /* ФОН */
   --rank-bg-image: url('/assets/img/bg/cosmos_thrall.png');
 
-  /* ОСНОВНИЙ КОЛІР UI */
   --rank-ui-primary: #083d85;
   --rank-ui-secondary: #083d85;
+  --rank-ui-soft: rgba(8,61,133,.18);
 
-  /* ЛІНІЇ / СВІТІННЯ */
   --rank-ui-line: rgba(8,61,133,.95);
   --rank-ui-line-soft: rgba(220,235,255,.14);
+
   --rank-ui-textglow-a: rgba(8,61,133,.28);
   --rank-ui-textglow-b: rgba(8,61,133,.18);
+
+  --rank-ui-tab-outline: rgba(8,61,133,.28);
 }
 
 
 /* =========================================================
    RANK 3 — MARAUDER
-   РОЗКОМЕНТУЙ ПІЗНІШЕ
    ========================================================= */
-/*
 body[data-rank="marauder"]{
   --rank-bg-image: url('/assets/img/bg/cosmos_marauder.png');
-  --rank-ui-primary: #xxxxxx;
-  --rank-ui-secondary: #xxxxxx;
-  --rank-ui-line: rgba(x,x,x,.95);
-  --rank-ui-line-soft: rgba(x,x,x,.14);
-  --rank-ui-textglow-a: rgba(x,x,x,.28);
-  --rank-ui-textglow-b: rgba(x,x,x,.18);
+
+  --rank-ui-primary: #41365b;
+  --rank-ui-secondary: #222733;
+  --rank-ui-soft: rgba(65,54,91,.18);
+
+  --rank-ui-line: rgba(65,54,91,.95);
+  --rank-ui-line-soft: rgba(221,112,45,.16);
+
+  --rank-ui-textglow-a: rgba(65,54,91,.30);
+  --rank-ui-textglow-b: rgba(34,39,51,.22);
+
+  --rank-ui-tab-outline: rgba(65,54,91,.28);
 }
-*/
 
 
 /* =========================================================
    RANK 4 — HARBINGER
-   ========================================================= */
-/*
+   ========================================================= 
 body[data-rank="harbinger"]{
   --rank-bg-image: url('/assets/img/bg/cosmos_harbinger.png');
+
   --rank-ui-primary: #xxxxxx;
   --rank-ui-secondary: #xxxxxx;
+  --rank-ui-soft: rgba(x,x,x,.18);
+
   --rank-ui-line: rgba(x,x,x,.95);
   --rank-ui-line-soft: rgba(x,x,x,.14);
+
   --rank-ui-textglow-a: rgba(x,x,x,.28);
   --rank-ui-textglow-b: rgba(x,x,x,.18);
+
+  --rank-ui-tab-outline: rgba(x,x,x,.28);
 }
-*/
 
 
 /* =========================================================
    RANK 5 — REAPER
-   ========================================================= */
-/*
+   ========================================================= 
 body[data-rank="reaper"]{
   --rank-bg-image: url('/assets/img/bg/cosmos_reaper.png');
+
   --rank-ui-primary: #xxxxxx;
   --rank-ui-secondary: #xxxxxx;
+  --rank-ui-soft: rgba(x,x,x,.18);
+
   --rank-ui-line: rgba(x,x,x,.95);
   --rank-ui-line-soft: rgba(x,x,x,.14);
+
   --rank-ui-textglow-a: rgba(x,x,x,.28);
   --rank-ui-textglow-b: rgba(x,x,x,.18);
+
+  --rank-ui-tab-outline: rgba(x,x,x,.28);
 }
-*/
 
 
 /* =========================================================
    RANK 6 — ARCHON
-   ========================================================= */
-/*
+   ========================================================= 
 body[data-rank="archon"]{
   --rank-bg-image: url('/assets/img/bg/cosmos_archon.png');
+
   --rank-ui-primary: #xxxxxx;
   --rank-ui-secondary: #xxxxxx;
+  --rank-ui-soft: rgba(x,x,x,.18);
+
   --rank-ui-line: rgba(x,x,x,.95);
   --rank-ui-line-soft: rgba(x,x,x,.14);
+
   --rank-ui-textglow-a: rgba(x,x,x,.28);
   --rank-ui-textglow-b: rgba(x,x,x,.18);
+
+  --rank-ui-tab-outline: rgba(x,x,x,.28);
 }
-*/
 
 
 /* =========================================================
    RANK 7 — OVERLORD
-   ========================================================= */
-/*
+   ========================================================= 
 body[data-rank="overlord"]{
   --rank-bg-image: url('/assets/img/bg/cosmos_overlord.png');
+
   --rank-ui-primary: #xxxxxx;
   --rank-ui-secondary: #xxxxxx;
+  --rank-ui-soft: rgba(x,x,x,.18);
+
   --rank-ui-line: rgba(x,x,x,.95);
   --rank-ui-line-soft: rgba(x,x,x,.14);
+
   --rank-ui-textglow-a: rgba(x,x,x,.28);
   --rank-ui-textglow-b: rgba(x,x,x,.18);
+
+  --rank-ui-tab-outline: rgba(x,x,x,.28);
 }
-*/
 
 
 /* =========================================================
    RANK 8 — MONARCH
-   ========================================================= */
-/*
+   ========================================================= 
 body[data-rank="monarch"]{
   --rank-bg-image: url('/assets/img/bg/cosmos_monarch.png');
+
   --rank-ui-primary: #xxxxxx;
   --rank-ui-secondary: #xxxxxx;
+  --rank-ui-soft: rgba(x,x,x,.18);
+
   --rank-ui-line: rgba(x,x,x,.95);
   --rank-ui-line-soft: rgba(x,x,x,.14);
+
   --rank-ui-textglow-a: rgba(x,x,x,.28);
   --rank-ui-textglow-b: rgba(x,x,x,.18);
+
+  --rank-ui-tab-outline: rgba(x,x,x,.28);
 }
-*/
 
 
 /* =========================================================
    RANK 9 — SERAPH
-   ========================================================= */
-/*
+   ========================================================= 
 body[data-rank="seraph"]{
   --rank-bg-image: url('/assets/img/bg/cosmos_seraph.png');
+
   --rank-ui-primary: #xxxxxx;
   --rank-ui-secondary: #xxxxxx;
+  --rank-ui-soft: rgba(x,x,x,.18);
+
   --rank-ui-line: rgba(x,x,x,.95);
   --rank-ui-line-soft: rgba(x,x,x,.14);
+
   --rank-ui-textglow-a: rgba(x,x,x,.28);
   --rank-ui-textglow-b: rgba(x,x,x,.18);
+
+  --rank-ui-tab-outline: rgba(x,x,x,.28);
 }
 */
-
 
 /* =========================================================
    RANK 10 — EIDOLON
-   ========================================================= */
-/*
+   ========================================================= 
 body[data-rank="eidolon"]{
   --rank-bg-image: url('/assets/img/bg/cosmos_eidolon.png');
+
   --rank-ui-primary: #xxxxxx;
   --rank-ui-secondary: #xxxxxx;
+  --rank-ui-soft: rgba(x,x,x,.18);
+
   --rank-ui-line: rgba(x,x,x,.95);
   --rank-ui-line-soft: rgba(x,x,x,.14);
+
   --rank-ui-textglow-a: rgba(x,x,x,.28);
   --rank-ui-textglow-b: rgba(x,x,x,.18);
+
+  --rank-ui-tab-outline: rgba(x,x,x,.28);
 }
 */
-
 
 /* =========================================================
    SHARED APPLICATION OF RANK COLORS
