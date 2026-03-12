@@ -4721,3 +4721,221 @@ body[data-rank="harbinger"] #dashboard.section.active .rankHome .rankRP{
     0 0 6px rgba(255,255,255,.06),
     0 0 12px rgba(74,161,96,.14) !important;
 }
+/* =========================================================
+   HARBINGER — FINAL POLISH PACK
+   ВСТАВИТИ В САМИЙ КІНЕЦЬ theme_A.css
+   ========================================================= */
+
+/* 1) FINAL HARBINGER PALETTE */
+body[data-rank="harbinger"]{
+  --rank-bg-image: url('/assets/img/bg/cosmos_harbinger.png');
+
+  --rank-ui-primary: #66b157;
+  --rank-ui-secondary: #10230f;
+  --rank-ui-soft: rgba(102,177,87,.18);
+
+  --rank-ui-line: rgba(124,214,106,.92);
+  --rank-ui-line-soft: rgba(225,255,220,.10);
+
+  --rank-ui-textglow-a: rgba(102,177,87,.30);
+  --rank-ui-textglow-b: rgba(16,35,15,.24);
+
+  --rank-ui-tab-outline: rgba(102,177,87,.30);
+}
+
+/* 2) DARKER CENTER / CLEANER FOCUS FOR EMBLEM */
+body[data-rank="harbinger"] #rankBgLayer::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  z-index:1;
+
+  background:
+    radial-gradient(circle at 50% 34%,
+      rgba(5,12,7,.00) 0%,
+      rgba(5,12,7,.10) 20%,
+      rgba(5,12,7,.22) 38%,
+      rgba(5,12,7,.34) 56%,
+      rgba(0,0,0,.00) 72%),
+    linear-gradient(180deg,
+      rgba(0,0,0,.10) 0%,
+      rgba(0,0,0,.04) 22%,
+      rgba(0,0,0,.00) 40%,
+      rgba(0,0,0,.08) 100%);
+}
+
+/* 3) RANK TITLE — cleaner white-green sci-fi look */
+body[data-rank="harbinger"] #dashboard.section.active .rankHome .rankTitle{
+  background: linear-gradient(
+    180deg,
+    #ffffff 0%,
+    #f3fff1 35%,
+    #d7ffd2 70%,
+    #8fcf7f 100%
+  ) !important;
+
+  -webkit-background-clip:text !important;
+  -webkit-text-fill-color:transparent !important;
+
+  text-shadow:
+    0 0 8px rgba(255,255,255,.10),
+    0 0 18px rgba(102,177,87,.20),
+    0 0 34px rgba(16,35,15,.22) !important;
+
+  letter-spacing: .10em !important;
+}
+
+/* 4) RP + NEXT RANK — stronger readability */
+body[data-rank="harbinger"] #dashboard.section.active .rankHome .rankRP{
+  color: #eefdea !important;
+  text-shadow:
+    0 0 6px rgba(255,255,255,.08),
+    0 0 14px rgba(102,177,87,.18) !important;
+}
+
+body[data-rank="harbinger"] #dashboard.section.active .rankHome .rankRP span{
+  color: #d7ffd2 !important;
+}
+
+body[data-rank="harbinger"] #dashboard.section.active .rankHome .rankProgress__label{
+  color: #e5f8de !important;
+  text-shadow:
+    0 0 8px rgba(102,177,87,.14),
+    0 0 18px rgba(16,35,15,.16) !important;
+  letter-spacing: .16em !important;
+}
+
+body[data-rank="harbinger"] #dashboard.section.active .rankHome .rankProgress__label b{
+  color: #f4fff1 !important;
+}
+
+/* 5) PROGRESS BAR — fully Harbinger green */
+body[data-rank="harbinger"] #dashboard.section.active .rankHome .rankProgress__track{
+  background:
+    linear-gradient(
+      90deg,
+      rgba(8,20,10,.22),
+      rgba(16,35,15,.54),
+      rgba(8,20,10,.22)
+    ) !important;
+
+  box-shadow:
+    inset 0 0 0 1px rgba(155,255,155,.06),
+    inset 0 0 18px rgba(0,0,0,.30),
+    0 0 18px rgba(102,177,87,.08) !important;
+}
+
+body[data-rank="harbinger"] #dashboard.section.active .rankHome .rankProgress__fill{
+  background: linear-gradient(
+    90deg,
+    #ffffff 0%,
+    #d7ffd2 22%,
+    #8fe07a 58%,
+    #66b157 82%,
+    #10230f 100%
+  ) !important;
+
+  box-shadow:
+    0 0 10px rgba(255,255,255,.10),
+    0 0 20px rgba(102,177,87,.24),
+    0 0 42px rgba(102,177,87,.18) !important;
+}
+
+body[data-rank="harbinger"] #dashboard.section.active .rankHome .rankProgress__spark{
+  background: radial-gradient(circle, #f4fff1 0%, #baffaa 45%, rgba(186,255,170,0) 75%) !important;
+  filter: blur(1px) !important;
+}
+
+/* 6) PLAYER ASCENSION + METRICS — stronger / clearer */
+body[data-rank="harbinger"] #dashboard.section.active .rankHome .pulseHeader,
+body[data-rank="harbinger"] #dashboard.section.active .rankHome .pulseHeader span{
+  background: linear-gradient(
+    180deg,
+    #ffffff 0%,
+    #ebffe7 36%,
+    #baf0ae 78%,
+    #66b157 100%
+  ) !important;
+
+  -webkit-background-clip:text !important;
+  -webkit-text-fill-color:transparent !important;
+
+  text-shadow:
+    0 0 8px rgba(255,255,255,.08),
+    0 0 16px rgba(102,177,87,.18),
+    0 0 28px rgba(16,35,15,.18) !important;
+}
+
+body[data-rank="harbinger"] #dashboard.section.active .rankHome .pulseHeader::before,
+body[data-rank="harbinger"] #dashboard.section.active .rankHome .pulseHeader::after{
+  opacity: .95 !important;
+}
+
+body[data-rank="harbinger"] #dashboard.section.active .rankHome .pulseGrid{
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,.02),
+      rgba(9,18,11,.12),
+      rgba(0,0,0,0)
+    ) !important;
+  border-radius: 14px !important;
+}
+
+body[data-rank="harbinger"] #dashboard.section.active .rankHome .pulseGrid .metric .k{
+  opacity: .98 !important;
+}
+
+body[data-rank="harbinger"] #dashboard.section.active .rankHome .pulseGrid .metric .v{
+  text-shadow:
+    0 0 10px rgba(102,177,87,.18),
+    0 0 26px rgba(16,35,15,.18) !important;
+}
+
+body[data-rank="harbinger"] #dashboard.section.active .rankHome .pulseGrid .metric + .metric::before{
+  background: linear-gradient(
+    180deg,
+    transparent,
+    rgba(140,235,120,.28),
+    transparent
+  ) !important;
+
+  box-shadow:
+    0 0 10px rgba(102,177,87,.12) !important;
+}
+
+/* 7) NAV TABS — stronger but still premium */
+body[data-rank="harbinger"] .navbar.navTabs::after{
+  border-color: rgba(102,177,87,.34) !important;
+  box-shadow:
+    0 0 0 1px rgba(102,177,87,.18),
+    0 0 22px rgba(102,177,87,.18),
+    0 0 56px rgba(102,177,87,.10) !important;
+}
+
+body[data-rank="harbinger"] .navbar.navTabs > .nav-btn::before{
+  border-color: rgba(102,177,87,.26) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.08),
+    inset 0 -1px 0 rgba(0,0,0,.34),
+    0 0 18px rgba(102,177,87,.08) !important;
+}
+
+body[data-rank="harbinger"] .navbar.navTabs > .nav-btn.active{
+  text-shadow:
+    0 0 10px rgba(255,255,255,.08),
+    0 0 18px rgba(102,177,87,.20),
+    0 0 34px rgba(102,177,87,.14) !important;
+}
+
+body[data-rank="harbinger"] .navbar.navTabs > .nav-btn.active::before{
+  border-color: rgba(102,177,87,.46) !important;
+  outline: 1px solid rgba(102,177,87,.34) !important;
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.10),
+    inset 0 -1px 0 rgba(0,0,0,.34),
+    0 0 26px rgba(102,177,87,.18),
+    0 0 58px rgba(102,177,87,.10) !important;
+}
