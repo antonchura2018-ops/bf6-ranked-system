@@ -5161,26 +5161,4 @@ body[data-rank="harbinger"] #rankBgLayer::after{
     opacity: .10;
   }
 }
-/* =========================================================
-   HARBINGER — HALO PULSE FX
-   ========================================================= */
-
-body[data-rank="harbinger"] .rankHaloWrap,
-body[data-rank="harbinger"] .rankHalo,
-body[data-rank="harbinger"] .rankHome__halo{
-  animation: harbingerHaloPulse 5.8s ease-in-out infinite;
-  transform-origin: center;
-}
-
-@keyframes harbingerHaloPulse{
-  0%{
-    filter: brightness(1) saturate(1);
-  }
-  50%{
-    filter: brightness(1.08) saturate(1.05);
-  }
-  100%{
-    filter: brightness(1) saturate(1);
-  }
-}
 
