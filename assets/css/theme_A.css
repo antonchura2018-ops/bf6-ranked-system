@@ -5078,8 +5078,8 @@ body[data-rank="harbinger"] #dashboard.section.active .rankHome .rankProgress__f
     0 0 24px rgba(106,184,92,.14) !important;
 }
 /* =========================================================
-   HARBINGER — RING LIGHTS V2
-   Сильніші та красивіші flare-бліки по кільцю
+   HARBINGER — SOFT NEBULA BLOOM FX
+   М'які бліки / світіння як на фоні, не круглі flare-точки
    ========================================================= */
 
 body[data-rank="harbinger"] .rankHome,
@@ -5090,7 +5090,7 @@ body[data-rank="harbinger"] .rankHome__emblemWrap{
   position: relative !important;
 }
 
-/* MAIN FLARES */
+/* ОСНОВНИЙ ШАР М'ЯКИХ БЛІКІВ */
 body[data-rank="harbinger"] .rankHome::before,
 body[data-rank="harbinger"] .rankHome__center::before,
 body[data-rank="harbinger"] .rankHome__haloWrap::before,
@@ -5100,69 +5100,64 @@ body[data-rank="harbinger"] .rankHome__emblemWrap::before{
   position: absolute !important;
   left: 50% !important;
   top: 34% !important;
-  width: 760px !important;
+  width: 900px !important;
   height: 760px !important;
   transform: translate(-50%, -50%) !important;
-  border-radius: 50% !important;
   pointer-events: none !important;
   z-index: 20 !important;
 
   background:
-    radial-gradient(circle at 50% 4%,
-      rgba(255,255,255,0) 0 5.5%,
-      rgba(255,255,255,.34) 6.4%,
-      rgba(210,255,210,.22) 7.4%,
-      rgba(120,255,120,.10) 9.2%,
-      rgba(0,0,0,0) 13.5%
+    /* left big soft bloom */
+    radial-gradient(ellipse 180px 70px at 17% 51%,
+      rgba(255,255,255,.20) 0%,
+      rgba(210,255,210,.14) 18%,
+      rgba(140,255,140,.10) 34%,
+      rgba(140,255,140,.04) 48%,
+      rgba(0,0,0,0) 70%
     ),
 
-    radial-gradient(circle at 84% 50%,
-      rgba(255,255,255,0) 0 5.8%,
-      rgba(255,255,255,.38) 6.8%,
-      rgba(210,255,210,.24) 8.0%,
-      rgba(120,255,120,.12) 9.8%,
-      rgba(0,0,0,0) 14.5%
+    /* left upper arc bloom */
+    radial-gradient(ellipse 220px 60px at 26% 17%,
+      rgba(255,255,255,.12) 0%,
+      rgba(210,255,210,.10) 18%,
+      rgba(140,255,140,.08) 34%,
+      rgba(140,255,140,.03) 48%,
+      rgba(0,0,0,0) 72%
     ),
 
-    radial-gradient(circle at 16% 50%,
-      rgba(255,255,255,0) 0 5.8%,
-      rgba(255,255,255,.34) 6.8%,
-      rgba(210,255,210,.22) 8.0%,
-      rgba(120,255,120,.11) 9.8%,
-      rgba(0,0,0,0) 14.5%
+    /* right big soft bloom */
+    radial-gradient(ellipse 180px 70px at 83% 51%,
+      rgba(255,255,255,.22) 0%,
+      rgba(210,255,210,.16) 18%,
+      rgba(140,255,140,.10) 34%,
+      rgba(140,255,140,.04) 48%,
+      rgba(0,0,0,0) 70%
     ),
 
-    radial-gradient(circle at 73% 18%,
-      rgba(255,255,255,0) 0 4.2%,
-      rgba(255,255,255,.22) 5.2%,
-      rgba(210,255,210,.14) 6.5%,
-      rgba(120,255,120,.07) 8.2%,
-      rgba(0,0,0,0) 12%
+    /* right upper arc bloom */
+    radial-gradient(ellipse 220px 60px at 74% 17%,
+      rgba(255,255,255,.12) 0%,
+      rgba(210,255,210,.10) 18%,
+      rgba(140,255,140,.08) 34%,
+      rgba(140,255,140,.03) 48%,
+      rgba(0,0,0,0) 72%
     ),
 
-    radial-gradient(circle at 27% 18%,
-      rgba(255,255,255,0) 0 4.2%,
-      rgba(255,255,255,.20) 5.2%,
-      rgba(210,255,210,.13) 6.5%,
-      rgba(120,255,120,.07) 8.2%,
-      rgba(0,0,0,0) 12%
-    ),
-
-    radial-gradient(circle at 50% 96%,
-      rgba(255,255,255,0) 0 4.0%,
-      rgba(255,255,255,.12) 5.0%,
-      rgba(210,255,210,.08) 6.0%,
-      rgba(120,255,120,.04) 7.8%,
-      rgba(0,0,0,0) 11%
+    /* top center glow haze */
+    radial-gradient(ellipse 150px 46px at 50% 6%,
+      rgba(255,255,255,.10) 0%,
+      rgba(210,255,210,.08) 20%,
+      rgba(140,255,140,.05) 38%,
+      rgba(0,0,0,0) 70%
     );
 
-  filter: blur(4px);
+  filter: blur(14px);
   mix-blend-mode: screen;
-  opacity: .92;
-  animation: harbingerRingBlinkV2 4.8s ease-in-out infinite !important;
+  opacity: .58;
+  animation: harbingerNebulaBloom 6.5s ease-in-out infinite !important;
 }
 
-/* OUTER SOFT ENERGY HALO */
+/* ДОДАТКОВИЙ ШАР ДЛЯ ЖИВОГО МЕРЕХТІННЯ */
 body[data-rank="harbinger"] .rankHome::after,
 body[data-rank="harbinger"] .rankHome__center::after,
 body[data-rank="harbinger"] .rankHome__haloWrap::after,
@@ -5172,60 +5167,78 @@ body[data-rank="harbinger"] .rankHome__emblemWrap::after{
   position: absolute !important;
   left: 50% !important;
   top: 34% !important;
-  width: 760px !important;
+  width: 900px !important;
   height: 760px !important;
   transform: translate(-50%, -50%) !important;
-  border-radius: 50% !important;
   pointer-events: none !important;
   z-index: 19 !important;
 
   background:
-    radial-gradient(circle at 50% 4%, rgba(120,255,120,.12) 0%, rgba(120,255,120,0) 10%),
-    radial-gradient(circle at 84% 50%, rgba(120,255,120,.14) 0%, rgba(120,255,120,0) 11%),
-    radial-gradient(circle at 16% 50%, rgba(120,255,120,.12) 0%, rgba(120,255,120,0) 11%),
-    radial-gradient(circle at 73% 18%, rgba(120,255,120,.08) 0%, rgba(120,255,120,0) 9%),
-    radial-gradient(circle at 27% 18%, rgba(120,255,120,.08) 0%, rgba(120,255,120,0) 9%);
+    radial-gradient(ellipse 120px 34px at 18% 51%,
+      rgba(255,255,255,.18) 0%,
+      rgba(180,255,180,.10) 30%,
+      rgba(0,0,0,0) 75%
+    ),
+    radial-gradient(ellipse 120px 34px at 82% 51%,
+      rgba(255,255,255,.18) 0%,
+      rgba(180,255,180,.10) 30%,
+      rgba(0,0,0,0) 75%
+    ),
+    radial-gradient(ellipse 110px 26px at 26% 17%,
+      rgba(255,255,255,.10) 0%,
+      rgba(180,255,180,.08) 32%,
+      rgba(0,0,0,0) 76%
+    ),
+    radial-gradient(ellipse 110px 26px at 74% 17%,
+      rgba(255,255,255,.10) 0%,
+      rgba(180,255,180,.08) 32%,
+      rgba(0,0,0,0) 76%
+    );
 
-  filter: blur(18px);
+  filter: blur(8px);
   mix-blend-mode: screen;
-  opacity: .55;
-  animation: harbingerRingGlowV2 5.8s ease-in-out infinite !important;
+  opacity: .34;
+  animation: harbingerNebulaTwinkle 4.4s ease-in-out infinite !important;
 }
 
-@keyframes harbingerRingBlinkV2{
+@keyframes harbingerNebulaBloom{
   0%{
-    opacity: .58;
-    filter: blur(4px) brightness(.96);
+    opacity: .34;
+    filter: blur(14px) brightness(.96);
   }
-  22%{
-    opacity: .92;
-    filter: blur(4px) brightness(1.10);
+  35%{
+    opacity: .62;
+    filter: blur(15px) brightness(1.05);
   }
-  45%{
-    opacity: .66;
-    filter: blur(4px) brightness(.98);
-  }
-  68%{
-    opacity: 1;
-    filter: blur(4.5px) brightness(1.16);
+  60%{
+    opacity: .44;
+    filter: blur(14px) brightness(.98);
   }
   100%{
-    opacity: .58;
-    filter: blur(4px) brightness(.96);
+    opacity: .34;
+    filter: blur(14px) brightness(.96);
   }
 }
 
-@keyframes harbingerRingGlowV2{
+@keyframes harbingerNebulaTwinkle{
   0%{
-    opacity: .30;
-    filter: blur(18px) brightness(.96);
+    opacity: .18;
+    filter: blur(8px) brightness(.95);
+  }
+  25%{
+    opacity: .34;
+    filter: blur(9px) brightness(1.04);
   }
   50%{
-    opacity: .62;
-    filter: blur(20px) brightness(1.08);
+    opacity: .22;
+    filter: blur(8px) brightness(.98);
+  }
+  75%{
+    opacity: .40;
+    filter: blur(9px) brightness(1.08);
   }
   100%{
-    opacity: .30;
-    filter: blur(18px) brightness(.96);
+    opacity: .18;
+    filter: blur(8px) brightness(.95);
   }
 }
