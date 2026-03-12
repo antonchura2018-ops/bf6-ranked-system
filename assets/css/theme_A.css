@@ -4722,27 +4722,27 @@ body[data-rank="harbinger"] #dashboard.section.active .rankHome .rankRP{
     0 0 12px rgba(74,161,96,.14) !important;
 }
 /* =========================================================
-   HARBINGER — DARK ELITE VARIANT
-   ТЕСТУВАТИ ОКРЕМО ВІД POLISH V2
+   HARBINGER — POLISH V2
+   ВСТАВИТИ В САМИЙ КІНЕЦЬ theme_A.css
    ========================================================= */
 
 body[data-rank="harbinger"]{
   --rank-bg-image: url('/assets/img/bg/cosmos_harbinger.png');
 
-  --rank-ui-primary: #5aa34d;
-  --rank-ui-secondary: #091609;
-  --rank-ui-soft: rgba(90,163,77,.16);
+  --rank-ui-primary: #6ab85c;
+  --rank-ui-secondary: #10230f;
+  --rank-ui-soft: rgba(106,184,92,.18);
 
-  --rank-ui-line: rgba(122,214,102,.84);
-  --rank-ui-line-soft: rgba(220,255,215,.08);
+  --rank-ui-line: rgba(145,235,126,.90);
+  --rank-ui-line-soft: rgba(230,255,226,.11);
 
-  --rank-ui-textglow-a: rgba(90,163,77,.24);
-  --rank-ui-textglow-b: rgba(9,22,9,.28);
+  --rank-ui-textglow-a: rgba(106,184,92,.30);
+  --rank-ui-textglow-b: rgba(16,35,15,.24);
 
-  --rank-ui-tab-outline: rgba(90,163,77,.26);
+  --rank-ui-tab-outline: rgba(106,184,92,.32);
 }
 
-/* stronger dark focus */
+/* cleaner center focus */
 body[data-rank="harbinger"] #rankBgLayer::after{
   content:"";
   position:absolute;
@@ -4751,172 +4751,270 @@ body[data-rank="harbinger"] #rankBgLayer::after{
   z-index:1;
   background:
     radial-gradient(circle at 50% 34%,
+      rgba(4,10,6,0) 0%,
+      rgba(4,10,6,.08) 18%,
+      rgba(4,10,6,.18) 36%,
+      rgba(4,10,6,.28) 52%,
+      rgba(0,0,0,0) 72%),
+    radial-gradient(circle at 50% 54%,
       rgba(0,0,0,0) 0%,
-      rgba(0,0,0,.12) 18%,
-      rgba(0,0,0,.28) 38%,
-      rgba(0,0,0,.44) 58%,
-      rgba(0,0,0,0) 74%),
-    linear-gradient(
-      180deg,
-      rgba(0,0,0,.18) 0%,
-      rgba(0,0,0,.08) 24%,
-      rgba(0,0,0,.04) 46%,
-      rgba(0,0,0,.14) 100%
-    );
+      rgba(0,0,0,.06) 32%,
+      rgba(0,0,0,.10) 55%,
+      rgba(0,0,0,0) 75%);
 }
 
-/* rank title darker elite */
+/* rank title */
 body[data-rank="harbinger"] #dashboard.section.active .rankHome .rankTitle{
   background: linear-gradient(
     180deg,
     #ffffff 0%,
-    #edfdeb 32%,
-    #b9efad 72%,
-    #5aa34d 100%
+    #f5fff2 28%,
+    #ddffd7 66%,
+    #9edf8d 100%
   ) !important;
   -webkit-background-clip:text !important;
   -webkit-text-fill-color:transparent !important;
   text-shadow:
-    0 0 6px rgba(255,255,255,.08),
-    0 0 14px rgba(90,163,77,.16),
-    0 0 24px rgba(9,22,9,.24) !important;
-  letter-spacing:.11em !important;
+    0 0 8px rgba(255,255,255,.10),
+    0 0 18px rgba(106,184,92,.20),
+    0 0 30px rgba(16,35,15,.18) !important;
+  letter-spacing: .11em !important;
 }
 
 /* RP / labels */
 body[data-rank="harbinger"] #dashboard.section.active .rankHome .rankRP{
-  color:#edf9ea !important;
+  color:#f2ffef !important;
   text-shadow:
-    0 0 6px rgba(255,255,255,.06),
-    0 0 12px rgba(90,163,77,.10) !important;
+    0 0 8px rgba(255,255,255,.08),
+    0 0 14px rgba(106,184,92,.16) !important;
 }
 
 body[data-rank="harbinger"] #dashboard.section.active .rankHome .rankRP span{
-  color:#d4f3ce !important;
+  color:#ddffd7 !important;
 }
 
 body[data-rank="harbinger"] #dashboard.section.active .rankHome .rankProgress__label{
-  color:#dcefd7 !important;
+  color:#ecfbe8 !important;
   text-shadow:
-    0 0 6px rgba(90,163,77,.10),
-    0 0 12px rgba(9,22,9,.18) !important;
+    0 0 8px rgba(106,184,92,.12),
+    0 0 16px rgba(16,35,15,.14) !important;
   letter-spacing:.15em !important;
 }
 
 body[data-rank="harbinger"] #dashboard.section.active .rankHome .rankProgress__label b{
-  color:#f7fff5 !important;
+  color:#ffffff !important;
 }
 
-/* darker progress */
+/* progress */
 body[data-rank="harbinger"] #dashboard.section.active .rankHome .rankProgress__track{
   background: linear-gradient(
     90deg,
-    rgba(5,12,6,.28),
-    rgba(9,22,9,.60),
-    rgba(5,12,6,.28)
+    rgba(8,18,10,.20),
+    rgba(16,35,15,.50),
+    rgba(8,18,10,.20)
   ) !important;
   box-shadow:
-    inset 0 0 0 1px rgba(180,255,180,.03),
-    inset 0 0 18px rgba(0,0,0,.38),
-    0 0 12px rgba(90,163,77,.06) !important;
+    inset 0 0 0 1px rgba(180,255,180,.05),
+    inset 0 0 16px rgba(0,0,0,.28),
+    0 0 16px rgba(106,184,92,.08) !important;
 }
 
 body[data-rank="harbinger"] #dashboard.section.active .rankHome .rankProgress__fill{
   background: linear-gradient(
     90deg,
-    #eefdea 0%,
-    #cfeec8 20%,
-    #7ccb69 56%,
-    #5aa34d 82%,
-    #0b180b 100%
+    #ffffff 0%,
+    #e6ffe0 18%,
+    #a6eb95 52%,
+    #6ab85c 80%,
+    #183117 100%
   ) !important;
   box-shadow:
-    0 0 8px rgba(255,255,255,.06),
-    0 0 14px rgba(90,163,77,.16),
-    0 0 24px rgba(90,163,77,.10) !important;
+    0 0 10px rgba(255,255,255,.08),
+    0 0 18px rgba(106,184,92,.22),
+    0 0 34px rgba(106,184,92,.14) !important;
 }
 
-/* ascension */
+/* player ascension */
 body[data-rank="harbinger"] #dashboard.section.active .rankHome .pulseHeader,
 body[data-rank="harbinger"] #dashboard.section.active .rankHome .pulseHeader span{
   background: linear-gradient(
     180deg,
     #ffffff 0%,
-    #ecfbe8 34%,
-    #bfe8b5 78%,
-    #5aa34d 100%
+    #efffec 34%,
+    #c9f5be 76%,
+    #6ab85c 100%
   ) !important;
   -webkit-background-clip:text !important;
   -webkit-text-fill-color:transparent !important;
   text-shadow:
-    0 0 6px rgba(255,255,255,.06),
-    0 0 12px rgba(90,163,77,.14),
-    0 0 20px rgba(9,22,9,.20) !important;
+    0 0 8px rgba(255,255,255,.08),
+    0 0 16px rgba(106,184,92,.18),
+    0 0 26px rgba(16,35,15,.16) !important;
 }
 
-/* metrics darker elite */
+/* metrics block */
 body[data-rank="harbinger"] #dashboard.section.active .rankHome .pulseGrid{
   background: linear-gradient(
     180deg,
-    rgba(255,255,255,.015),
-    rgba(3,10,4,.16),
+    rgba(255,255,255,.02),
+    rgba(8,18,10,.10),
     rgba(0,0,0,0)
   ) !important;
   border-radius: 14px !important;
 }
 
 body[data-rank="harbinger"] #dashboard.section.active .rankHome .pulseGrid .metric .k{
-  color:#cfe3ca !important;
-  opacity:.94 !important;
+  color:#d8ead4 !important;
+  opacity: .96 !important;
 }
 
 body[data-rank="harbinger"] #dashboard.section.active .rankHome .pulseGrid .metric .v{
-  color:#edf9ea !important;
+  color:#f3fff0 !important;
   text-shadow:
-    0 0 6px rgba(90,163,77,.10),
-    0 0 16px rgba(9,22,9,.16) !important;
+    0 0 8px rgba(106,184,92,.14),
+    0 0 22px rgba(16,35,15,.16) !important;
 }
 
 body[data-rank="harbinger"] #dashboard.section.active .rankHome .pulseGrid .metric + .metric::before{
   background: linear-gradient(
     180deg,
     transparent,
-    rgba(122,214,102,.16),
+    rgba(145,235,126,.24),
     transparent
   ) !important;
-  box-shadow: 0 0 8px rgba(90,163,77,.08) !important;
+  box-shadow: 0 0 10px rgba(106,184,92,.10) !important;
 }
 
-/* tabs elite darker */
+/* tabs */
 body[data-rank="harbinger"] .navbar.navTabs::after{
-  border-color: rgba(90,163,77,.28) !important;
+  border-color: rgba(106,184,92,.34) !important;
   box-shadow:
-    0 0 0 1px rgba(90,163,77,.12),
-    0 0 16px rgba(90,163,77,.12),
-    0 0 36px rgba(90,163,77,.06) !important;
+    0 0 0 1px rgba(106,184,92,.16),
+    0 0 20px rgba(106,184,92,.16),
+    0 0 44px rgba(106,184,92,.08) !important;
 }
 
 body[data-rank="harbinger"] .navbar.navTabs > .nav-btn::before{
-  border-color: rgba(90,163,77,.18) !important;
+  border-color: rgba(106,184,92,.24) !important;
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.06),
-    inset 0 -1px 0 rgba(0,0,0,.34),
-    0 0 12px rgba(90,163,77,.04) !important;
+    inset 0 1px 0 rgba(255,255,255,.08),
+    inset 0 -1px 0 rgba(0,0,0,.30),
+    0 0 14px rgba(106,184,92,.06) !important;
 }
 
 body[data-rank="harbinger"] .navbar.navTabs > .nav-btn.active{
   text-shadow:
-    0 0 6px rgba(255,255,255,.06),
-    0 0 12px rgba(90,163,77,.14),
-    0 0 20px rgba(90,163,77,.08) !important;
+    0 0 8px rgba(255,255,255,.08),
+    0 0 16px rgba(106,184,92,.18),
+    0 0 28px rgba(106,184,92,.10) !important;
 }
 
 body[data-rank="harbinger"] .navbar.navTabs > .nav-btn.active::before{
-  border-color: rgba(90,163,77,.34) !important;
-  outline: 1px solid rgba(90,163,77,.22) !important;
+  border-color: rgba(106,184,92,.42) !important;
+  outline: 1px solid rgba(106,184,92,.30) !important;
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.08),
-    inset 0 -1px 0 rgba(0,0,0,.36),
-    0 0 16px rgba(90,163,77,.10),
-    0 0 34px rgba(90,163,77,.06) !important;
+    inset 0 1px 0 rgba(255,255,255,.10),
+    inset 0 -1px 0 rgba(0,0,0,.30),
+    0 0 22px rgba(106,184,92,.14),
+    0 0 48px rgba(106,184,92,.08) !important;
 }
+/* =========================================================
+   HARBINGER — POLISH V2 CLEAN TEXT FIX
+   ВСТАВИТИ В САМИЙ КІНЕЦЬ theme_A.css
+   ========================================================= */
+
+/* 1) HARBINGER — clean white text, no gradient */
+body[data-rank="harbinger"] #dashboard.section.active .rankHome .rankTitle{
+  background: none !important;
+  -webkit-background-clip: initial !important;
+  -webkit-text-fill-color: #ffffff !important;
+  color: #ffffff !important;
+
+  text-shadow:
+    0 0 6px rgba(255,255,255,.18),
+    0 0 14px rgba(255,255,255,.10),
+    0 0 22px rgba(106,184,92,.18),
+    0 0 36px rgba(16,35,15,.20) !important;
+
+  letter-spacing: .10em !important;
+}
+
+/* 2) PLAYER ASCENSION — clean white text, no gradient */
+body[data-rank="harbinger"] #dashboard.section.active .rankHome .pulseHeader,
+body[data-rank="harbinger"] #dashboard.section.active .rankHome .pulseHeader span{
+  background: none !important;
+  -webkit-background-clip: initial !important;
+  -webkit-text-fill-color: #ffffff !important;
+  color: #ffffff !important;
+
+  text-shadow:
+    0 0 5px rgba(255,255,255,.14),
+    0 0 12px rgba(255,255,255,.08),
+    0 0 20px rgba(106,184,92,.16),
+    0 0 30px rgba(16,35,15,.18) !important;
+}
+
+/* 3) RP + NEXT RANK text — keep readable and clean */
+body[data-rank="harbinger"] #dashboard.section.active .rankHome .rankRP{
+  color:#ffffff !important;
+  text-shadow:
+    0 0 5px rgba(255,255,255,.12),
+    0 0 12px rgba(106,184,92,.14) !important;
+}
+
+body[data-rank="harbinger"] #dashboard.section.active .rankHome .rankRP span{
+  color:#ffffff !important;
+}
+
+body[data-rank="harbinger"] #dashboard.section.active .rankHome .rankProgress__label{
+  color:#f7fff5 !important;
+  text-shadow:
+    0 0 5px rgba(255,255,255,.10),
+    0 0 10px rgba(106,184,92,.10) !important;
+}
+
+body[data-rank="harbinger"] #dashboard.section.active .rankHome .rankProgress__label b{
+  color:#ffffff !important;
+}
+
+/* 4) REMOVE THE RECTANGLE / BOX AROUND PROGRESS AREA */
+body[data-rank="harbinger"] #dashboard.section.active .rankHome .rankProgress__track{
+  background: transparent !important;
+  box-shadow: none !important;
+  border: 0 !important;
+  outline: 0 !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+/* 5) If track has pseudo-elements creating the rectangle, remove them */
+body[data-rank="harbinger"] #dashboard.section.active .rankHome .rankProgress__track::before,
+body[data-rank="harbinger"] #dashboard.section.active .rankHome .rankProgress__track::after{
+  content: none !important;
+  display: none !important;
+}
+
+/* 6) Keep only a clean glowing fill line */
+body[data-rank="harbinger"] #dashboard.section.active .rankHome .rankProgress__fill{
+  background: linear-gradient(
+    90deg,
+    #ffffff 0%,
+    #eaffe4 18%,
+    #a6eb95 55%,
+    #6ab85c 82%,
+    #183117 100%
+  ) !important;
+
+  box-shadow:
+    0 0 8px rgba(255,255,255,.10),
+    0 0 16px rgba(106,184,92,.18),
+    0 0 28px rgba(106,184,92,.12) !important;
+}
+
+/* 7) Optional: make the progress row cleaner */
+body[data-rank="harbinger"] #dashboard.section.active .rankHome .rankProgress{
+  background: transparent !important;
+  box-shadow: none !important;
+  border: 0 !important;
+}
+
