@@ -5078,167 +5078,286 @@ body[data-rank="harbinger"] #dashboard.section.active .rankHome .rankProgress__f
     0 0 24px rgba(106,184,92,.14) !important;
 }
 /* =========================================================
-   HARBINGER — SOFT NEBULA BLOOM FX
-   М'які бліки / світіння як на фоні, не круглі flare-точки
+   HARBINGER — RING FX LAYER
+   Новий варіант через окремий HTML-шар
    ========================================================= */
 
-body[data-rank="harbinger"] .rankHome,
-body[data-rank="harbinger"] .rankHome__center,
-body[data-rank="harbinger"] .rankHome__haloWrap,
-body[data-rank="harbinger"] .rankHome__halo,
-body[data-rank="harbinger"] .rankHome__emblemWrap{
+/* центральна сцена */
+body[data-rank="harbinger"] .rankHome__center{
   position: relative !important;
+  isolation: isolate !important;
 }
 
-/* ОСНОВНИЙ ШАР М'ЯКИХ БЛІКІВ */
-body[data-rank="harbinger"] .rankHome::before,
-body[data-rank="harbinger"] .rankHome__center::before,
-body[data-rank="harbinger"] .rankHome__haloWrap::before,
-body[data-rank="harbinger"] .rankHome__halo::before,
-body[data-rank="harbinger"] .rankHome__emblemWrap::before{
-  content: "" !important;
+/* важливо: емблема повинна бути над FX */
+body[data-rank="harbinger"] .rankEmblem{
+  position: relative !important;
+  z-index: 12 !important;
+}
+
+/* текст і UI теж над FX */
+body[data-rank="harbinger"] .rankHome__infoStack{
+  position: relative !important;
+  z-index: 13 !important;
+}
+
+/* контейнер ефектів */
+body[data-rank="harbinger"] .harbinger-ring-fx{
   position: absolute !important;
   left: 50% !important;
   top: 34% !important;
-  width: 900px !important;
-  height: 760px !important;
+  width: 980px !important;
+  height: 820px !important;
   transform: translate(-50%, -50%) !important;
   pointer-events: none !important;
-  z-index: 20 !important;
+  z-index: 8 !important;
+}
 
-  background:
-    /* left big soft bloom */
-    radial-gradient(ellipse 180px 70px at 17% 51%,
-      rgba(255,255,255,.20) 0%,
-      rgba(210,255,210,.14) 18%,
-      rgba(140,255,140,.10) 34%,
-      rgba(140,255,140,.04) 48%,
-      rgba(0,0,0,0) 70%
-    ),
-
-    /* left upper arc bloom */
-    radial-gradient(ellipse 220px 60px at 26% 17%,
-      rgba(255,255,255,.12) 0%,
-      rgba(210,255,210,.10) 18%,
-      rgba(140,255,140,.08) 34%,
-      rgba(140,255,140,.03) 48%,
-      rgba(0,0,0,0) 72%
-    ),
-
-    /* right big soft bloom */
-    radial-gradient(ellipse 180px 70px at 83% 51%,
-      rgba(255,255,255,.22) 0%,
-      rgba(210,255,210,.16) 18%,
-      rgba(140,255,140,.10) 34%,
-      rgba(140,255,140,.04) 48%,
-      rgba(0,0,0,0) 70%
-    ),
-
-    /* right upper arc bloom */
-    radial-gradient(ellipse 220px 60px at 74% 17%,
-      rgba(255,255,255,.12) 0%,
-      rgba(210,255,210,.10) 18%,
-      rgba(140,255,140,.08) 34%,
-      rgba(140,255,140,.03) 48%,
-      rgba(0,0,0,0) 72%
-    ),
-
-    /* top center glow haze */
-    radial-gradient(ellipse 150px 46px at 50% 6%,
-      rgba(255,255,255,.10) 0%,
-      rgba(210,255,210,.08) 20%,
-      rgba(140,255,140,.05) 38%,
-      rgba(0,0,0,0) 70%
-    );
-
-  filter: blur(14px);
+/* базовий стиль для всіх FX */
+body[data-rank="harbinger"] .harbinger-ring-fx .fx{
+  position: absolute;
+  display: block;
+  pointer-events: none;
   mix-blend-mode: screen;
-  opacity: .58;
-  animation: harbingerNebulaBloom 6.5s ease-in-out infinite !important;
 }
 
-/* ДОДАТКОВИЙ ШАР ДЛЯ ЖИВОГО МЕРЕХТІННЯ */
-body[data-rank="harbinger"] .rankHome::after,
-body[data-rank="harbinger"] .rankHome__center::after,
-body[data-rank="harbinger"] .rankHome__haloWrap::after,
-body[data-rank="harbinger"] .rankHome__halo::after,
-body[data-rank="harbinger"] .rankHome__emblemWrap::after{
-  content: "" !important;
-  position: absolute !important;
-  left: 50% !important;
-  top: 34% !important;
-  width: 900px !important;
-  height: 760px !important;
-  transform: translate(-50%, -50%) !important;
-  pointer-events: none !important;
-  z-index: 19 !important;
+/* =========================================
+   LEFT BLOOM
+   ========================================= */
+body[data-rank="harbinger"] .harbinger-ring-fx .fx-left{
+  left: 40px;
+  top: 270px;
+  width: 280px;
+  height: 110px;
 
   background:
-    radial-gradient(ellipse 120px 34px at 18% 51%,
+    radial-gradient(ellipse at center,
+      rgba(255,255,255,.34) 0%,
+      rgba(215,255,215,.22) 16%,
+      rgba(150,255,150,.16) 32%,
+      rgba(120,220,120,.08) 48%,
+      rgba(0,0,0,0) 74%
+    );
+
+  filter: blur(16px);
+  opacity: .72;
+  transform: rotate(-8deg);
+  animation: harbingerBloomLeft 5.8s ease-in-out infinite;
+}
+
+/* =========================================
+   RIGHT BLOOM
+   ========================================= */
+body[data-rank="harbinger"] .harbinger-ring-fx .fx-right{
+  right: 40px;
+  top: 270px;
+  width: 280px;
+  height: 110px;
+
+  background:
+    radial-gradient(ellipse at center,
+      rgba(255,255,255,.38) 0%,
+      rgba(215,255,215,.24) 16%,
+      rgba(150,255,150,.17) 32%,
+      rgba(120,220,120,.08) 48%,
+      rgba(0,0,0,0) 74%
+    );
+
+  filter: blur(16px);
+  opacity: .78;
+  transform: rotate(8deg);
+  animation: harbingerBloomRight 6.4s ease-in-out infinite;
+}
+
+/* =========================================
+   TOP ARC GLOW
+   ========================================= */
+body[data-rank="harbinger"] .harbinger-ring-fx .fx-top{
+  left: 50%;
+  top: 18px;
+  width: 520px;
+  height: 120px;
+  transform: translateX(-50%);
+
+  background:
+    radial-gradient(ellipse at center,
       rgba(255,255,255,.18) 0%,
-      rgba(180,255,180,.10) 30%,
-      rgba(0,0,0,0) 75%
-    ),
-    radial-gradient(ellipse 120px 34px at 82% 51%,
-      rgba(255,255,255,.18) 0%,
-      rgba(180,255,180,.10) 30%,
-      rgba(0,0,0,0) 75%
-    ),
-    radial-gradient(ellipse 110px 26px at 26% 17%,
-      rgba(255,255,255,.10) 0%,
-      rgba(180,255,180,.08) 32%,
-      rgba(0,0,0,0) 76%
-    ),
-    radial-gradient(ellipse 110px 26px at 74% 17%,
-      rgba(255,255,255,.10) 0%,
-      rgba(180,255,180,.08) 32%,
+      rgba(220,255,220,.14) 18%,
+      rgba(150,255,150,.10) 36%,
+      rgba(120,220,120,.05) 50%,
       rgba(0,0,0,0) 76%
     );
+
+  filter: blur(18px);
+  opacity: .56;
+  animation: harbingerBloomTop 7.2s ease-in-out infinite;
+}
+
+/* =========================================
+   SWEEP
+   ========================================= */
+body[data-rank="harbinger"] .harbinger-ring-fx .fx-sweep{
+  left: 50%;
+  top: 50%;
+  width: 780px;
+  height: 780px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+
+  background:
+    conic-gradient(
+      from 0deg,
+      rgba(255,255,255,0) 0deg,
+      rgba(255,255,255,0) 24deg,
+      rgba(220,255,220,.00) 30deg,
+      rgba(220,255,220,.10) 36deg,
+      rgba(255,255,255,.18) 40deg,
+      rgba(160,255,160,.10) 44deg,
+      rgba(255,255,255,0) 56deg,
+      rgba(255,255,255,0) 360deg
+    );
+
+  -webkit-mask: radial-gradient(circle, transparent 0 58%, #000 61%, #000 67%, transparent 70%);
+  mask: radial-gradient(circle, transparent 0 58%, #000 61%, #000 67%, transparent 70%);
 
   filter: blur(8px);
-  mix-blend-mode: screen;
-  opacity: .34;
-  animation: harbingerNebulaTwinkle 4.4s ease-in-out infinite !important;
+  opacity: .32;
+  animation: harbingerSweepArc 9s linear infinite;
 }
 
-@keyframes harbingerNebulaBloom{
+/* =========================================
+   EXTRA SOFT OUTER HAZE
+   ========================================= */
+body[data-rank="harbinger"] .harbinger-ring-fx::before{
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+
+  background:
+    radial-gradient(ellipse 220px 70px at 18% 49%,
+      rgba(140,255,140,.12) 0%,
+      rgba(140,255,140,.05) 34%,
+      rgba(0,0,0,0) 74%
+    ),
+    radial-gradient(ellipse 220px 70px at 82% 49%,
+      rgba(140,255,140,.12) 0%,
+      rgba(140,255,140,.05) 34%,
+      rgba(0,0,0,0) 74%
+    ),
+    radial-gradient(ellipse 260px 60px at 50% 7%,
+      rgba(140,255,140,.08) 0%,
+      rgba(140,255,140,.04) 34%,
+      rgba(0,0,0,0) 74%
+    );
+
+  filter: blur(24px);
+  opacity: .42;
+  animation: harbingerOuterHaze 8.5s ease-in-out infinite;
+}
+
+/* =========================================
+   ANIMATIONS
+   ========================================= */
+@keyframes harbingerBloomLeft{
   0%{
-    opacity: .34;
-    filter: blur(14px) brightness(.96);
+    opacity: .42;
+    filter: blur(16px) brightness(.96);
+    transform: rotate(-8deg) scale(1);
   }
   35%{
-    opacity: .62;
-    filter: blur(15px) brightness(1.05);
+    opacity: .88;
+    filter: blur(18px) brightness(1.12);
+    transform: rotate(-8deg) scale(1.04);
   }
   60%{
-    opacity: .44;
-    filter: blur(14px) brightness(.98);
+    opacity: .58;
+    filter: blur(16px) brightness(1.00);
+    transform: rotate(-8deg) scale(1.01);
   }
   100%{
-    opacity: .34;
-    filter: blur(14px) brightness(.96);
+    opacity: .42;
+    filter: blur(16px) brightness(.96);
+    transform: rotate(-8deg) scale(1);
   }
 }
 
-@keyframes harbingerNebulaTwinkle{
+@keyframes harbingerBloomRight{
   0%{
-    opacity: .18;
-    filter: blur(8px) brightness(.95);
+    opacity: .48;
+    filter: blur(16px) brightness(.98);
+    transform: rotate(8deg) scale(1);
   }
-  25%{
-    opacity: .34;
-    filter: blur(9px) brightness(1.04);
+  28%{
+    opacity: .70;
+    filter: blur(17px) brightness(1.04);
+    transform: rotate(8deg) scale(1.02);
   }
-  50%{
-    opacity: .22;
-    filter: blur(8px) brightness(.98);
-  }
-  75%{
-    opacity: .40;
-    filter: blur(9px) brightness(1.08);
+  62%{
+    opacity: .96;
+    filter: blur(18px) brightness(1.15);
+    transform: rotate(8deg) scale(1.05);
   }
   100%{
-    opacity: .18;
-    filter: blur(8px) brightness(.95);
+    opacity: .48;
+    filter: blur(16px) brightness(.98);
+    transform: rotate(8deg) scale(1);
+  }
+}
+
+@keyframes harbingerBloomTop{
+  0%{
+    opacity: .24;
+    filter: blur(18px) brightness(.96);
+    transform: translateX(-50%) scale(1);
+  }
+  40%{
+    opacity: .54;
+    filter: blur(20px) brightness(1.06);
+    transform: translateX(-50%) scale(1.03);
+  }
+  75%{
+    opacity: .34;
+    filter: blur(18px) brightness(.99);
+    transform: translateX(-50%) scale(1.01);
+  }
+  100%{
+    opacity: .24;
+    filter: blur(18px) brightness(.96);
+    transform: translateX(-50%) scale(1);
+  }
+}
+
+@keyframes harbingerSweepArc{
+  0%{
+    transform: translate(-50%, -50%) rotate(0deg);
+    opacity: .14;
+  }
+  20%{
+    opacity: .26;
+  }
+  50%{
+    opacity: .34;
+  }
+  80%{
+    opacity: .22;
+  }
+  100%{
+    transform: translate(-50%, -50%) rotate(360deg);
+    opacity: .14;
+  }
+}
+
+@keyframes harbingerOuterHaze{
+  0%{
+    opacity: .24;
+    filter: blur(24px) brightness(.96);
+  }
+  50%{
+    opacity: .48;
+    filter: blur(26px) brightness(1.06);
+  }
+  100%{
+    opacity: .24;
+    filter: blur(24px) brightness(.96);
   }
 }
