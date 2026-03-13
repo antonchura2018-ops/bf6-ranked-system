@@ -5077,287 +5077,292 @@ body[data-rank="harbinger"] #dashboard.section.active .rankHome .rankProgress__f
     0 0 14px rgba(106,184,92,.18),
     0 0 24px rgba(106,184,92,.14) !important;
 }
-/* =========================================================
-   HARBINGER — RING FX LAYER
-   Новий варіант через окремий HTML-шар
-   ========================================================= */
+/* ================================
+   HARBINGER RING FX
+   тільки анімація кільця
+================================ */
 
-/* центральна сцена */
-body[data-rank="harbinger"] .rankHome__center{
-  position: relative !important;
-  isolation: isolate !important;
+.rankHome{
+  --ring-size: 760px;              /* підкрутиш якщо треба */
+  --ring-green: #8cff7a;
+  --ring-green-2: #55ff88;
+  --ring-green-soft: rgba(120,255,160,.30);
+  --ring-green-mid: rgba(120,255,160,.55);
+  --ring-green-strong: rgba(170,255,190,.95);
 }
 
-/* важливо: емблема повинна бути над FX */
-body[data-rank="harbinger"] .rankEmblem{
-  position: relative !important;
-  z-index: 12 !important;
-}
-
-/* текст і UI теж над FX */
-body[data-rank="harbinger"] .rankHome__infoStack{
-  position: relative !important;
-  z-index: 13 !important;
-}
-
-/* контейнер ефектів */
-body[data-rank="harbinger"] .harbinger-ring-fx{
-  position: absolute !important;
-  left: 50% !important;
-  top: 34% !important;
-  width: 980px !important;
-  height: 820px !important;
-  transform: translate(-50%, -50%) !important;
-  pointer-events: none !important;
-  z-index: 8 !important;
-}
-
-/* базовий стиль для всіх FX */
-body[data-rank="harbinger"] .harbinger-ring-fx .fx{
+/* контейнер FX поверх твого кільця */
+.harbinger-ring-fx{
   position: absolute;
-  display: block;
-  pointer-events: none;
-  mix-blend-mode: screen;
-}
-
-/* =========================================
-   LEFT BLOOM
-   ========================================= */
-body[data-rank="harbinger"] .harbinger-ring-fx .fx-left{
-  left: 40px;
-  top: 270px;
-  width: 280px;
-  height: 110px;
-
-  background:
-    radial-gradient(ellipse at center,
-      rgba(255,255,255,.34) 0%,
-      rgba(215,255,215,.22) 16%,
-      rgba(150,255,150,.16) 32%,
-      rgba(120,220,120,.08) 48%,
-      rgba(0,0,0,0) 74%
-    );
-
-  filter: blur(16px);
-  opacity: .72;
-  transform: rotate(-8deg);
-  animation: harbingerBloomLeft 5.8s ease-in-out infinite;
-}
-
-/* =========================================
-   RIGHT BLOOM
-   ========================================= */
-body[data-rank="harbinger"] .harbinger-ring-fx .fx-right{
-  right: 40px;
-  top: 270px;
-  width: 280px;
-  height: 110px;
-
-  background:
-    radial-gradient(ellipse at center,
-      rgba(255,255,255,.38) 0%,
-      rgba(215,255,215,.24) 16%,
-      rgba(150,255,150,.17) 32%,
-      rgba(120,220,120,.08) 48%,
-      rgba(0,0,0,0) 74%
-    );
-
-  filter: blur(16px);
-  opacity: .78;
-  transform: rotate(8deg);
-  animation: harbingerBloomRight 6.4s ease-in-out infinite;
-}
-
-/* =========================================
-   TOP ARC GLOW
-   ========================================= */
-body[data-rank="harbinger"] .harbinger-ring-fx .fx-top{
   left: 50%;
-  top: 18px;
-  width: 520px;
-  height: 120px;
-  transform: translateX(-50%);
-
-  background:
-    radial-gradient(ellipse at center,
-      rgba(255,255,255,.18) 0%,
-      rgba(220,255,220,.14) 18%,
-      rgba(150,255,150,.10) 36%,
-      rgba(120,220,120,.05) 50%,
-      rgba(0,0,0,0) 76%
-    );
-
-  filter: blur(18px);
-  opacity: .56;
-  animation: harbingerBloomTop 7.2s ease-in-out infinite;
-}
-
-/* =========================================
-   SWEEP
-   ========================================= */
-body[data-rank="harbinger"] .harbinger-ring-fx .fx-sweep{
-  left: 50%;
-  top: 50%;
-  width: 780px;
-  height: 780px;
+  top: 43%;
+  width: var(--ring-size);
+  height: var(--ring-size);
   transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 3;
   border-radius: 50%;
-
-  background:
-    conic-gradient(
-      from 0deg,
-      rgba(255,255,255,0) 0deg,
-      rgba(255,255,255,0) 24deg,
-      rgba(220,255,220,.00) 30deg,
-      rgba(220,255,220,.10) 36deg,
-      rgba(255,255,255,.18) 40deg,
-      rgba(160,255,160,.10) 44deg,
-      rgba(255,255,255,0) 56deg,
-      rgba(255,255,255,0) 360deg
-    );
-
-  -webkit-mask: radial-gradient(circle, transparent 0 58%, #000 61%, #000 67%, transparent 70%);
-  mask: radial-gradient(circle, transparent 0 58%, #000 61%, #000 67%, transparent 70%);
-
-  filter: blur(8px);
-  opacity: .32;
-  animation: harbingerSweepArc 9s linear infinite;
+  filter: saturate(1.15);
 }
 
-/* =========================================
-   EXTRA SOFT OUTER HAZE
-   ========================================= */
-body[data-rank="harbinger"] .harbinger-ring-fx::before{
+/* базові налаштування для всіх світлових елементів */
+.harbinger-ring-fx .fx{
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+/* м'яке загальне breathing glow */
+.harbinger-ring-fx::before{
+  content: "";
+  position: absolute;
+  inset: -2%;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 50% 50%,
+      rgba(120,255,160,0) 58%,
+      rgba(120,255,160,.05) 63%,
+      rgba(120,255,160,.11) 67%,
+      rgba(120,255,160,0) 73%);
+  filter: blur(14px);
+  opacity: .95;
+  animation: ringBreath 4.5s ease-in-out infinite;
+}
+
+/* дуже тонкий додатковий внутрішній блиск */
+.harbinger-ring-fx::after{
+  content: "";
+  position: absolute;
+  inset: 4.2%;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 50% 50%,
+      rgba(255,255,255,0) 61%,
+      rgba(170,255,190,.08) 64%,
+      rgba(255,255,255,.16) 65.2%,
+      rgba(120,255,160,.05) 66.6%,
+      rgba(255,255,255,0) 69%);
+  filter: blur(4px);
+  opacity: .8;
+  animation: ringBreathInner 3.8s ease-in-out infinite;
+}
+
+/* лівий вузол */
+.harbinger-ring-fx .fx-left{
+  background:
+    conic-gradient(from 190deg,
+      transparent 0deg 328deg,
+      rgba(255,255,255,0) 332deg,
+      rgba(210,255,220,.98) 338deg,
+      rgba(140,255,170,.95) 344deg,
+      rgba(120,255,160,.45) 349deg,
+      transparent 355deg 360deg);
+  filter: blur(2px) drop-shadow(0 0 10px rgba(120,255,160,.65))
+                   drop-shadow(0 0 22px rgba(120,255,160,.45));
+  opacity: .95;
+  animation:
+    nodeOrbitA 6.6s linear infinite,
+    nodeFlicker 2.4s ease-in-out infinite;
+  mask: radial-gradient(farthest-side,
+      transparent calc(100% - 36px),
+      #000 calc(100% - 23px),
+      #000 calc(100% - 12px),
+      transparent calc(100% - 2px));
+  -webkit-mask: radial-gradient(farthest-side,
+      transparent calc(100% - 36px),
+      #000 calc(100% - 23px),
+      #000 calc(100% - 12px),
+      transparent calc(100% - 2px));
+}
+
+/* правий вузол */
+.harbinger-ring-fx .fx-right{
+  background:
+    conic-gradient(from 18deg,
+      transparent 0deg 336deg,
+      rgba(255,255,255,0) 340deg,
+      rgba(225,255,230,.98) 346deg,
+      rgba(110,255,155,.95) 352deg,
+      rgba(120,255,160,.38) 357deg,
+      transparent 360deg);
+  filter: blur(2px) drop-shadow(0 0 12px rgba(120,255,160,.75))
+                   drop-shadow(0 0 26px rgba(120,255,160,.50));
+  opacity: .92;
+  animation:
+    nodeOrbitB 7.3s linear infinite,
+    nodeFlicker 2.8s ease-in-out infinite reverse;
+  mask: radial-gradient(farthest-side,
+      transparent calc(100% - 35px),
+      #000 calc(100% - 22px),
+      #000 calc(100% - 11px),
+      transparent calc(100% - 1px));
+  -webkit-mask: radial-gradient(farthest-side,
+      transparent calc(100% - 35px),
+      #000 calc(100% - 22px),
+      #000 calc(100% - 11px),
+      transparent calc(100% - 1px));
+}
+
+/* верхній вузол */
+.harbinger-ring-fx .fx-top{
+  background:
+    conic-gradient(from 268deg,
+      transparent 0deg 338deg,
+      rgba(255,255,255,0) 343deg,
+      rgba(235,255,235,.98) 349deg,
+      rgba(155,255,180,.92) 354deg,
+      rgba(120,255,160,.32) 358deg,
+      transparent 360deg);
+  filter: blur(2px) drop-shadow(0 0 12px rgba(120,255,160,.70))
+                   drop-shadow(0 0 24px rgba(120,255,160,.46));
+  opacity: .9;
+  animation:
+    nodeOrbitC 8.2s linear infinite,
+    nodeFlicker 2.2s ease-in-out infinite;
+  mask: radial-gradient(farthest-side,
+      transparent calc(100% - 37px),
+      #000 calc(100% - 24px),
+      #000 calc(100% - 12px),
+      transparent calc(100% - 1px));
+  -webkit-mask: radial-gradient(farthest-side,
+      transparent calc(100% - 37px),
+      #000 calc(100% - 24px),
+      #000 calc(100% - 12px),
+      transparent calc(100% - 1px));
+}
+
+/* довгий sweep як у відео */
+.harbinger-ring-fx .fx-sweep{
+  background:
+    conic-gradient(from 250deg,
+      transparent 0deg 282deg,
+      rgba(255,255,255,0) 288deg,
+      rgba(210,255,220,.12) 294deg,
+      rgba(200,255,215,.38) 300deg,
+      rgba(255,255,255,.95) 306deg,
+      rgba(150,255,180,.72) 312deg,
+      rgba(120,255,160,.30) 319deg,
+      transparent 327deg 360deg);
+  filter: blur(3px) drop-shadow(0 0 10px rgba(120,255,160,.55))
+                   drop-shadow(0 0 28px rgba(120,255,160,.35));
+  opacity: .85;
+  animation: sweepOrbit 5.8s linear infinite;
+  mask: radial-gradient(farthest-side,
+      transparent calc(100% - 34px),
+      #000 calc(100% - 20px),
+      #000 calc(100% - 9px),
+      transparent 100%);
+  -webkit-mask: radial-gradient(farthest-side,
+      transparent calc(100% - 34px),
+      #000 calc(100% - 20px),
+      #000 calc(100% - 9px),
+      transparent 100%);
+}
+
+/* легкі бокові спалахи на кільці */
+.harbinger-ring-fx .fx-left::before,
+.harbinger-ring-fx .fx-right::before{
   content: "";
   position: absolute;
   inset: 0;
-  pointer-events: none;
-
+  border-radius: 50%;
   background:
-    radial-gradient(ellipse 220px 70px at 18% 49%,
-      rgba(140,255,140,.12) 0%,
-      rgba(140,255,140,.05) 34%,
-      rgba(0,0,0,0) 74%
-    ),
-    radial-gradient(ellipse 220px 70px at 82% 49%,
-      rgba(140,255,140,.12) 0%,
-      rgba(140,255,140,.05) 34%,
-      rgba(0,0,0,0) 74%
-    ),
-    radial-gradient(ellipse 260px 60px at 50% 7%,
-      rgba(140,255,140,.08) 0%,
-      rgba(140,255,140,.04) 34%,
-      rgba(0,0,0,0) 74%
-    );
-
-  filter: blur(24px);
-  opacity: .42;
-  animation: harbingerOuterHaze 8.5s ease-in-out infinite;
+    radial-gradient(circle at 16% 50%,
+      rgba(220,255,225,.95) 0%,
+      rgba(140,255,175,.55) 4.5%,
+      rgba(120,255,160,.12) 9%,
+      transparent 14%),
+    radial-gradient(circle at 84% 50%,
+      rgba(220,255,225,.95) 0%,
+      rgba(140,255,175,.55) 4.5%,
+      rgba(120,255,160,.12) 9%,
+      transparent 14%);
+  filter: blur(8px);
+  opacity: .65;
+  animation: sidePulse 3.2s ease-in-out infinite;
 }
 
-/* =========================================
-   ANIMATIONS
-   ========================================= */
-@keyframes harbingerBloomLeft{
-  0%{
-    opacity: .42;
-    filter: blur(16px) brightness(.96);
-    transform: rotate(-8deg) scale(1);
-  }
-  35%{
-    opacity: .88;
-    filter: blur(18px) brightness(1.12);
-    transform: rotate(-8deg) scale(1.04);
-  }
-  60%{
-    opacity: .58;
-    filter: blur(16px) brightness(1.00);
-    transform: rotate(-8deg) scale(1.01);
-  }
-  100%{
-    opacity: .42;
-    filter: blur(16px) brightness(.96);
-    transform: rotate(-8deg) scale(1);
-  }
-}
-
-@keyframes harbingerBloomRight{
-  0%{
-    opacity: .48;
-    filter: blur(16px) brightness(.98);
-    transform: rotate(8deg) scale(1);
-  }
-  28%{
+/* анімації */
+@keyframes ringBreath{
+  0%,100%{
+    transform: scale(1);
     opacity: .70;
-    filter: blur(17px) brightness(1.04);
-    transform: rotate(8deg) scale(1.02);
   }
-  62%{
-    opacity: .96;
-    filter: blur(18px) brightness(1.15);
-    transform: rotate(8deg) scale(1.05);
-  }
-  100%{
-    opacity: .48;
-    filter: blur(16px) brightness(.98);
-    transform: rotate(8deg) scale(1);
+  50%{
+    transform: scale(1.018);
+    opacity: 1;
   }
 }
 
-@keyframes harbingerBloomTop{
-  0%{
-    opacity: .24;
-    filter: blur(18px) brightness(.96);
-    transform: translateX(-50%) scale(1);
+@keyframes ringBreathInner{
+  0%,100%{
+    transform: scale(1);
+    opacity: .55;
   }
-  40%{
-    opacity: .54;
-    filter: blur(20px) brightness(1.06);
-    transform: translateX(-50%) scale(1.03);
+  50%{
+    transform: scale(1.01);
+    opacity: .9;
+  }
+}
+
+@keyframes nodeOrbitA{
+  from{ transform: rotate(0deg); }
+  to{ transform: rotate(360deg); }
+}
+
+@keyframes nodeOrbitB{
+  from{ transform: rotate(70deg); }
+  to{ transform: rotate(430deg); }
+}
+
+@keyframes nodeOrbitC{
+  from{ transform: rotate(145deg); }
+  to{ transform: rotate(505deg); }
+}
+
+@keyframes sweepOrbit{
+  from{ transform: rotate(0deg); }
+  to{ transform: rotate(360deg); }
+}
+
+@keyframes nodeFlicker{
+  0%,100%{
+    opacity: .78;
+  }
+  25%{
+    opacity: .98;
+  }
+  50%{
+    opacity: .86;
   }
   75%{
-    opacity: .34;
-    filter: blur(18px) brightness(.99);
-    transform: translateX(-50%) scale(1.01);
-  }
-  100%{
-    opacity: .24;
-    filter: blur(18px) brightness(.96);
-    transform: translateX(-50%) scale(1);
+    opacity: 1;
   }
 }
 
-@keyframes harbingerSweepArc{
-  0%{
-    transform: translate(-50%, -50%) rotate(0deg);
-    opacity: .14;
-  }
-  20%{
-    opacity: .26;
+@keyframes sidePulse{
+  0%,100%{
+    opacity: .35;
   }
   50%{
-    opacity: .34;
-  }
-  80%{
-    opacity: .22;
-  }
-  100%{
-    transform: translate(-50%, -50%) rotate(360deg);
-    opacity: .14;
+    opacity: .82;
   }
 }
 
-@keyframes harbingerOuterHaze{
-  0%{
-    opacity: .24;
-    filter: blur(24px) brightness(.96);
+/* адаптив */
+@media (max-width: 1200px){
+  .rankHome{
+    --ring-size: 640px;
   }
-  50%{
-    opacity: .48;
-    filter: blur(26px) brightness(1.06);
+}
+
+@media (max-width: 900px){
+  .rankHome{
+    --ring-size: 520px;
   }
-  100%{
-    opacity: .24;
-    filter: blur(24px) brightness(.96);
+
+  .harbinger-ring-fx{
+    top: 41%;
   }
 }
