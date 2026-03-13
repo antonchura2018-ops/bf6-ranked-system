@@ -5078,7 +5078,8 @@ body[data-rank="harbinger"] #dashboard.section.active .rankHome .rankProgress__f
     0 0 24px rgba(106,184,92,.14) !important;
 }
 /* =========================================================
-   HARBINGER — RING FX LAYER (STRONGER VERSION)
+   HARBINGER — STATIC BLOOM FX
+   Без кручення, тільки яскраве живе світіння
    ========================================================= */
 
 body[data-rank="harbinger"] .rankHome__center{
@@ -5100,8 +5101,8 @@ body[data-rank="harbinger"] .harbinger-ring-fx{
   position: absolute !important;
   left: 50% !important;
   top: 33% !important;
-  width: 1120px !important;
-  height: 900px !important;
+  width: 1180px !important;
+  height: 920px !important;
   transform: translate(-50%, -50%) !important;
   pointer-events: none !important;
   z-index: 8 !important;
@@ -5114,267 +5115,174 @@ body[data-rank="harbinger"] .harbinger-ring-fx .fx{
   mix-blend-mode: screen;
 }
 
-/* LEFT BLOOM */
+/* =========================================
+   LEFT BLOOM
+   ========================================= */
 body[data-rank="harbinger"] .harbinger-ring-fx .fx-left{
-  left: 8px;
-  top: 292px;
+  left: -8px;
+  top: 270px;
   width: 360px;
-  height: 150px;
+  height: 200px;
+
   background:
     radial-gradient(ellipse at center,
-      rgba(255,255,255,.52) 0%,
-      rgba(230,255,230,.34) 14%,
-      rgba(170,255,170,.24) 28%,
-      rgba(120,255,120,.14) 44%,
-      rgba(120,255,120,.06) 58%,
+      rgba(255,255,255,.72) 0%,
+      rgba(235,255,235,.44) 12%,
+      rgba(170,255,170,.28) 26%,
+      rgba(120,255,120,.16) 42%,
+      rgba(120,255,120,.07) 56%,
       rgba(0,0,0,0) 78%
     );
-  filter: blur(20px);
-  opacity: .92;
+
+  filter: blur(24px);
+  opacity: .78;
   transform: rotate(-10deg);
-  animation: harbingerBloomLeftStrong 5.2s ease-in-out infinite;
+  animation: harbingerLeftGlow 4.8s ease-in-out infinite;
 }
 
-/* RIGHT BLOOM */
+/* =========================================
+   RIGHT BLOOM
+   ========================================= */
 body[data-rank="harbinger"] .harbinger-ring-fx .fx-right{
-  right: 8px;
-  top: 292px;
+  right: -8px;
+  top: 270px;
   width: 360px;
-  height: 150px;
+  height: 200px;
+
   background:
     radial-gradient(ellipse at center,
-      rgba(255,255,255,.56) 0%,
-      rgba(230,255,230,.36) 14%,
-      rgba(170,255,170,.26) 28%,
-      rgba(120,255,120,.15) 44%,
-      rgba(120,255,120,.06) 58%,
+      rgba(255,255,255,.78) 0%,
+      rgba(235,255,235,.48) 12%,
+      rgba(170,255,170,.30) 26%,
+      rgba(120,255,120,.17) 42%,
+      rgba(120,255,120,.07) 56%,
       rgba(0,0,0,0) 78%
     );
-  filter: blur(20px);
-  opacity: .98;
+
+  filter: blur(24px);
+  opacity: .84;
   transform: rotate(10deg);
-  animation: harbingerBloomRightStrong 5.8s ease-in-out infinite;
+  animation: harbingerRightGlow 5.4s ease-in-out infinite;
 }
 
-/* TOP ARC */
+/* =========================================
+   TOP BLOOM
+   ========================================= */
 body[data-rank="harbinger"] .harbinger-ring-fx .fx-top{
   left: 50%;
-  top: -8px;
-  width: 640px;
+  top: -24px;
+  width: 620px;
   height: 150px;
   transform: translateX(-50%);
+
   background:
     radial-gradient(ellipse at center,
-      rgba(255,255,255,.24) 0%,
-      rgba(220,255,220,.18) 18%,
+      rgba(255,255,255,.30) 0%,
+      rgba(220,255,220,.22) 18%,
       rgba(160,255,160,.14) 34%,
       rgba(120,255,120,.08) 48%,
       rgba(0,0,0,0) 76%
     );
-  filter: blur(22px);
-  opacity: .78;
-  animation: harbingerBloomTopStrong 6.6s ease-in-out infinite;
+
+  filter: blur(26px);
+  opacity: .46;
+  animation: harbingerTopGlow 6.2s ease-in-out infinite;
 }
 
-/* SWEEP */
-body[data-rank="harbinger"] .harbinger-ring-fx .fx-sweep{
-  left: 50%;
-  top: 50%;
-  width: 860px;
-  height: 860px;
-  transform: translate(-50%, -50%);
-  border-radius: 50%;
-  background:
-    conic-gradient(
-      from 0deg,
-      rgba(255,255,255,0) 0deg,
-      rgba(255,255,255,0) 18deg,
-      rgba(220,255,220,.00) 24deg,
-      rgba(220,255,220,.18) 30deg,
-      rgba(255,255,255,.34) 36deg,
-      rgba(170,255,170,.20) 42deg,
-      rgba(255,255,255,0) 58deg,
-      rgba(255,255,255,0) 360deg
-    );
-  -webkit-mask: radial-gradient(circle, transparent 0 58%, #000 61%, #000 68%, transparent 72%);
-  mask: radial-gradient(circle, transparent 0 58%, #000 61%, #000 68%, transparent 72%);
-  filter: blur(10px);
-  opacity: .52;
-  animation: harbingerSweepArcStrong 7.2s linear infinite;
-}
-
-/* EXTRA HAZE */
+/* =========================================
+   EXTRA SIDE HAZE
+   ========================================= */
 body[data-rank="harbinger"] .harbinger-ring-fx::before{
   content: "";
   position: absolute;
   inset: 0;
   pointer-events: none;
+
   background:
-    radial-gradient(ellipse 300px 92px at 16% 50%,
-      rgba(160,255,160,.22) 0%,
-      rgba(160,255,160,.10) 34%,
+    radial-gradient(ellipse 280px 110px at 14% 49%,
+      rgba(170,255,170,.18) 0%,
+      rgba(170,255,170,.08) 34%,
       rgba(0,0,0,0) 74%
     ),
-    radial-gradient(ellipse 300px 92px at 84% 50%,
-      rgba(160,255,160,.24) 0%,
-      rgba(160,255,160,.10) 34%,
-      rgba(0,0,0,0) 74%
-    ),
-    radial-gradient(ellipse 360px 76px at 50% 6%,
-      rgba(160,255,160,.14) 0%,
-      rgba(160,255,160,.06) 34%,
+    radial-gradient(ellipse 280px 110px at 86% 49%,
+      rgba(170,255,170,.20) 0%,
+      rgba(170,255,170,.08) 34%,
       rgba(0,0,0,0) 74%
     );
-  filter: blur(30px);
-  opacity: .68;
-  animation: harbingerOuterHazeStrong 7.6s ease-in-out infinite;
+
+  filter: blur(32px);
+  opacity: .42;
+  animation: harbingerSideHaze 7s ease-in-out infinite;
 }
 
-/* SIDE FLASHES */
-body[data-rank="harbinger"] .harbinger-ring-fx::after{
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background:
-    radial-gradient(ellipse 140px 34px at 16% 50%,
-      rgba(255,255,255,.24) 0%,
-      rgba(255,255,255,.10) 24%,
-      rgba(0,0,0,0) 76%
-    ),
-    radial-gradient(ellipse 150px 36px at 84% 50%,
-      rgba(255,255,255,.28) 0%,
-      rgba(255,255,255,.12) 24%,
-      rgba(0,0,0,0) 76%
-    );
-  filter: blur(10px);
-  opacity: .58;
-  animation: harbingerFlashPulse 4.8s ease-in-out infinite;
-}
+/* =========================================
+   ANIMATIONS
+   ========================================= */
 
-@keyframes harbingerBloomLeftStrong{
+@keyframes harbingerLeftGlow{
   0%{
-    opacity: .52;
-    filter: blur(20px) brightness(.96);
-    transform: rotate(-10deg) scale(1);
+    opacity: .42;
+    filter: blur(24px) brightness(.95);
   }
-  30%{
-    opacity: .98;
-    filter: blur(22px) brightness(1.14);
-    transform: rotate(-10deg) scale(1.06);
+  35%{
+    opacity: .90;
+    filter: blur(26px) brightness(1.18);
   }
   60%{
-    opacity: .68;
-    filter: blur(20px) brightness(1.01);
-    transform: rotate(-10deg) scale(1.02);
+    opacity: .56;
+    filter: blur(24px) brightness(1.00);
   }
   100%{
-    opacity: .52;
-    filter: blur(20px) brightness(.96);
-    transform: rotate(-10deg) scale(1);
+    opacity: .42;
+    filter: blur(24px) brightness(.95);
   }
 }
 
-@keyframes harbingerBloomRightStrong{
+@keyframes harbingerRightGlow{
   0%{
-    opacity: .58;
-    filter: blur(20px) brightness(.98);
-    transform: rotate(10deg) scale(1);
-  }
-  24%{
-    opacity: .76;
-    filter: blur(21px) brightness(1.05);
-    transform: rotate(10deg) scale(1.03);
-  }
-  56%{
-    opacity: 1;
-    filter: blur(23px) brightness(1.18);
-    transform: rotate(10deg) scale(1.08);
-  }
-  100%{
-    opacity: .58;
-    filter: blur(20px) brightness(.98);
-    transform: rotate(10deg) scale(1);
-  }
-}
-
-@keyframes harbingerBloomTopStrong{
-  0%{
-    opacity: .34;
-    filter: blur(22px) brightness(.96);
-    transform: translateX(-50%) scale(1);
-  }
-  40%{
-    opacity: .82;
-    filter: blur(24px) brightness(1.10);
-    transform: translateX(-50%) scale(1.04);
-  }
-  70%{
     opacity: .48;
-    filter: blur(22px) brightness(1.00);
-    transform: translateX(-50%) scale(1.01);
+    filter: blur(24px) brightness(.96);
+  }
+  30%{
+    opacity: .68;
+    filter: blur(25px) brightness(1.04);
+  }
+  65%{
+    opacity: 1;
+    filter: blur(27px) brightness(1.22);
   }
   100%{
-    opacity: .34;
-    filter: blur(22px) brightness(.96);
-    transform: translateX(-50%) scale(1);
+    opacity: .48;
+    filter: blur(24px) brightness(.96);
   }
 }
 
-@keyframes harbingerSweepArcStrong{
+@keyframes harbingerTopGlow{
   0%{
-    transform: translate(-50%, -50%) rotate(0deg);
-    opacity: .20;
-  }
-  18%{
-    opacity: .44;
+    opacity: .22;
+    filter: blur(26px) brightness(.94);
   }
   50%{
     opacity: .58;
-  }
-  82%{
-    opacity: .34;
+    filter: blur(28px) brightness(1.10);
   }
   100%{
-    transform: translate(-50%, -50%) rotate(360deg);
+    opacity: .22;
+    filter: blur(26px) brightness(.94);
+  }
+}
+
+@keyframes harbingerSideHaze{
+  0%{
     opacity: .20;
-  }
-}
-
-@keyframes harbingerOuterHazeStrong{
-  0%{
-    opacity: .34;
-    filter: blur(30px) brightness(.96);
+    filter: blur(32px) brightness(.95);
   }
   50%{
-    opacity: .74;
-    filter: blur(32px) brightness(1.10);
+    opacity: .48;
+    filter: blur(34px) brightness(1.08);
   }
   100%{
-    opacity: .34;
-    filter: blur(30px) brightness(.96);
-  }
-}
-
-@keyframes harbingerFlashPulse{
-  0%{
-    opacity: .24;
-    filter: blur(10px) brightness(.96);
-  }
-  25%{
-    opacity: .62;
-    filter: blur(11px) brightness(1.12);
-  }
-  50%{
-    opacity: .30;
-    filter: blur(10px) brightness(1.00);
-  }
-  75%{
-    opacity: .68;
-    filter: blur(11px) brightness(1.16);
-  }
-  100%{
-    opacity: .24;
-    filter: blur(10px) brightness(.96);
+    opacity: .20;
+    filter: blur(32px) brightness(.95);
   }
 }
