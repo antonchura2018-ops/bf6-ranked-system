@@ -5121,8 +5121,8 @@ body[data-rank="harbinger"] .harbinger-ring-fx .fx{
 body[data-rank="harbinger"] .harbinger-ring-fx .fx-left{
   left: -20px;
   top: 325px;
-  width: 420px;
-  height: 230px;
+  width: 280px;
+  height: 150px;
 
   background:
    radial-gradient(ellipse at center,
@@ -5134,7 +5134,7 @@ body[data-rank="harbinger"] .harbinger-ring-fx .fx-left{
      rgba(0,0,0,0) 78%
    );
 
-  filter: blur(29px);
+  filter: blur(18px);
   opacity: .92;
   transform: rotate(-10deg);
   animation: harbingerLeftGlow 4.8s ease-in-out infinite;
@@ -5146,8 +5146,8 @@ body[data-rank="harbinger"] .harbinger-ring-fx .fx-left{
 body[data-rank="harbinger"] .harbinger-ring-fx .fx-right{
   right: -20px;
   top: 325px;
-  width: 420px;
-  height: 230px;
+  width: 280px;
+  height: 150px;
 
   background:
    radial-gradient(ellipse at center,
@@ -5159,7 +5159,7 @@ body[data-rank="harbinger"] .harbinger-ring-fx .fx-right{
      rgba(0,0,0,0) 78%
    );
 
-  filter: blur(28px);
+  filter: blur(18px);
   opacity: .96;
   transform: rotate(10deg);
   animation: harbingerRightGlow 5.4s ease-in-out infinite;
