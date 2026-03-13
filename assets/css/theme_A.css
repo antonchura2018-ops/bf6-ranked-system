@@ -5119,23 +5119,23 @@ body[data-rank="harbinger"] .harbinger-ring-fx .fx{
    LEFT BLOOM
    ========================================= */
 body[data-rank="harbinger"] .harbinger-ring-fx .fx-left{
-  left: -8px;
-  top: 270px;
-  width: 360px;
-  height: 200px;
+  left: -20px;
+  top: 325px;
+  width: 420px;
+  height: 230px;
 
   background:
-    radial-gradient(ellipse at center,
-      rgba(255,255,255,.72) 0%,
-      rgba(235,255,235,.44) 12%,
-      rgba(170,255,170,.28) 26%,
-      rgba(120,255,120,.16) 42%,
-      rgba(120,255,120,.07) 56%,
-      rgba(0,0,0,0) 78%
-    );
+   radial-gradient(ellipse at center,
+     rgba(255,255,255,.90) 0%,
+     rgba(240,255,240,.56) 10%,
+     rgba(180,255,180,.34) 24%,
+     rgba(120,255,120,.20) 40%,
+     rgba(120,255,120,.09) 56%,
+     rgba(0,0,0,0) 78%
+   );
 
-  filter: blur(24px);
-  opacity: .78;
+  filter: blur(29px);
+  opacity: .92;
   transform: rotate(-10deg);
   animation: harbingerLeftGlow 4.8s ease-in-out infinite;
 }
@@ -5144,23 +5144,23 @@ body[data-rank="harbinger"] .harbinger-ring-fx .fx-left{
    RIGHT BLOOM
    ========================================= */
 body[data-rank="harbinger"] .harbinger-ring-fx .fx-right{
-  right: -8px;
-  top: 270px;
-  width: 360px;
-  height: 200px;
+  right: -20px;
+  top: 325px;
+  width: 420px;
+  height: 230px;
 
   background:
-    radial-gradient(ellipse at center,
-      rgba(255,255,255,.78) 0%,
-      rgba(235,255,235,.48) 12%,
-      rgba(170,255,170,.30) 26%,
-      rgba(120,255,120,.17) 42%,
-      rgba(120,255,120,.07) 56%,
-      rgba(0,0,0,0) 78%
-    );
+   radial-gradient(ellipse at center,
+     rgba(255,255,255,.96) 0%,
+     rgba(240,255,240,.60) 10%,
+     rgba(180,255,180,.36) 24%,
+     rgba(120,255,120,.22) 40%,
+     rgba(120,255,120,.10) 56%,
+     rgba(0,0,0,0) 78%
+   );
 
-  filter: blur(24px);
-  opacity: .84;
+  filter: blur(28px);
+  opacity: .96;
   transform: rotate(10deg);
   animation: harbingerRightGlow 5.4s ease-in-out infinite;
 }
@@ -5221,39 +5221,39 @@ body[data-rank="harbinger"] .harbinger-ring-fx::before{
 
 @keyframes harbingerLeftGlow{
   0%{
-    opacity: .42;
-    filter: blur(24px) brightness(.95);
+    opacity: .50;
+    filter: blur(28px) brightness(.96);
   }
   35%{
-    opacity: .90;
-    filter: blur(26px) brightness(1.18);
+    opacity: 1;
+    filter: blur(30px) brightness(1.24);
   }
   60%{
-    opacity: .56;
-    filter: blur(24px) brightness(1.00);
+    opacity: .66;
+    filter: blur(28px) brightness(1.04);
   }
   100%{
-    opacity: .42;
-    filter: blur(24px) brightness(.95);
+    opacity: .50;
+    filter: blur(28px) brightness(.96);
   }
 }
 
 @keyframes harbingerRightGlow{
   0%{
-    opacity: .48;
-    filter: blur(24px) brightness(.96);
+    opacity: .56;
+    filter: blur(28px) brightness(.98);
   }
   30%{
-    opacity: .68;
-    filter: blur(25px) brightness(1.04);
+    opacity: .76;
+    filter: blur(29px) brightness(1.08);
   }
   65%{
     opacity: 1;
-    filter: blur(27px) brightness(1.22);
+    filter: blur(31px) brightness(1.28);
   }
   100%{
-    opacity: .48;
-    filter: blur(24px) brightness(.96);
+    opacity: .56;
+    filter: blur(28px) brightness(.98);
   }
 }
 
