@@ -5119,10 +5119,10 @@ body[data-rank="harbinger"] .harbinger-ring-fx .fx{
    LEFT BLOOM
    ========================================= */
 body[data-rank="harbinger"] .harbinger-ring-fx .fx-left{
-  left: -20px;
-  top: 325px;
-  width: 280px;
-  height: 150px;
+  left: -6px;
+  top: 320px;
+  width: 260px;
+  height: 140px;
 
   background:
    radial-gradient(ellipse at center,
@@ -5134,7 +5134,7 @@ body[data-rank="harbinger"] .harbinger-ring-fx .fx-left{
      rgba(0,0,0,0) 78%
    );
 
-  filter: blur(18px);
+  filter: blur(16px);
   opacity: .92;
   transform: rotate(-10deg);
   animation: harbingerLeftGlow 4.8s ease-in-out infinite;
@@ -5144,10 +5144,10 @@ body[data-rank="harbinger"] .harbinger-ring-fx .fx-left{
    RIGHT BLOOM
    ========================================= */
 body[data-rank="harbinger"] .harbinger-ring-fx .fx-right{
-  right: -20px;
-  top: 325px;
-  width: 280px;
-  height: 150px;
+  right: -6px;
+  top: 320px;
+  width: 260px;
+  height: 140px;
 
   background:
    radial-gradient(ellipse at center,
@@ -5159,7 +5159,7 @@ body[data-rank="harbinger"] .harbinger-ring-fx .fx-right{
      rgba(0,0,0,0) 78%
    );
 
-  filter: blur(18px);
+  filter: blur(16px);
   opacity: .96;
   transform: rotate(10deg);
   animation: harbingerRightGlow 5.4s ease-in-out infinite;
@@ -5284,5 +5284,128 @@ body[data-rank="harbinger"] .harbinger-ring-fx::before{
   100%{
     opacity: .20;
     filter: blur(32px) brightness(.95);
+  }
+}
+/* =========================================================
+   HARBINGER — PREMIUM MICRO FX PACK
+   Дуже м'яка поліровка без перевантаження
+   ========================================================= */
+
+/* HARBINGER title */
+body[data-rank="harbinger"] #dashboard.section.active .rankHome .rankTitle{
+  animation: harbingerTitlePulse 5.6s ease-in-out infinite;
+}
+
+@keyframes harbingerTitlePulse{
+  0%{
+    text-shadow:
+      0 0 6px rgba(255,255,255,.14),
+      0 0 14px rgba(106,184,92,.10),
+      0 0 22px rgba(16,35,15,.14);
+  }
+  50%{
+    text-shadow:
+      0 0 8px rgba(255,255,255,.20),
+      0 0 18px rgba(106,184,92,.16),
+      0 0 30px rgba(16,35,15,.18);
+  }
+  100%{
+    text-shadow:
+      0 0 6px rgba(255,255,255,.14),
+      0 0 14px rgba(106,184,92,.10),
+      0 0 22px rgba(16,35,15,.14);
+  }
+}
+
+/* PLAYER ASCENSION */
+body[data-rank="harbinger"] #dashboard.section.active .rankHome .pulseHeader,
+body[data-rank="harbinger"] #dashboard.section.active .rankHome .pulseHeader span{
+  animation: harbingerAscensionPulse 6.4s ease-in-out infinite;
+}
+
+@keyframes harbingerAscensionPulse{
+  0%{
+    text-shadow:
+      0 0 4px rgba(255,255,255,.08),
+      0 0 10px rgba(106,184,92,.08);
+  }
+  50%{
+    text-shadow:
+      0 0 6px rgba(255,255,255,.14),
+      0 0 14px rgba(106,184,92,.12);
+  }
+  100%{
+    text-shadow:
+      0 0 4px rgba(255,255,255,.08),
+      0 0 10px rgba(106,184,92,.08);
+  }
+}
+
+/* progress spark */
+body[data-rank="harbinger"] #dashboard.section.active .rankHome .rankProgress__spark{
+  animation: harbingerSparkPulse 3.8s ease-in-out infinite;
+}
+
+@keyframes harbingerSparkPulse{
+  0%{
+    opacity: .28;
+    filter: blur(1px) brightness(.95);
+  }
+  50%{
+    opacity: .62;
+    filter: blur(1.5px) brightness(1.12);
+  }
+  100%{
+    opacity: .28;
+    filter: blur(1px) brightness(.95);
+  }
+}
+
+/* active tab */
+body[data-rank="harbinger"] .navbar.navTabs > .nav-btn.active{
+  animation: harbingerTabPulse 5.2s ease-in-out infinite;
+}
+
+@keyframes harbingerTabPulse{
+  0%{
+    text-shadow:
+      0 0 6px rgba(255,255,255,.06),
+      0 0 12px rgba(106,184,92,.10),
+      0 0 18px rgba(106,184,92,.06);
+  }
+  50%{
+    text-shadow:
+      0 0 8px rgba(255,255,255,.10),
+      0 0 16px rgba(106,184,92,.14),
+      0 0 24px rgba(106,184,92,.10);
+  }
+  100%{
+    text-shadow:
+      0 0 6px rgba(255,255,255,.06),
+      0 0 12px rgba(106,184,92,.10),
+      0 0 18px rgba(106,184,92,.06);
+  }
+}
+
+/* optional: slightly living metric values */
+body[data-rank="harbinger"] #dashboard.section.active .rankHome .pulseGrid .metric .v{
+  animation: harbingerMetricSoftPulse 7.2s ease-in-out infinite;
+}
+
+@keyframes harbingerMetricSoftPulse{
+  0%{
+    text-shadow:
+      0 0 3px rgba(255,255,255,.05),
+      0 0 8px rgba(106,184,92,.06);
+  }
+  50%{
+    text-shadow:
+      0 0 5px rgba(255,255,255,.08),
+      0 0 12px rgba(106,184,92,.10);
+  }
+  100%{
+    text-shadow:
+      0 0 3px rgba(255,255,255,.05),
+      0 0 8px rgba(106,184,92,.06);
   }
 }
