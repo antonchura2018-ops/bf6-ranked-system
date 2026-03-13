@@ -5119,10 +5119,10 @@ body[data-rank="harbinger"] .harbinger-ring-fx .fx{
    LEFT BLOOM
    ========================================= */
 body[data-rank="harbinger"] .harbinger-ring-fx .fx-left{
-  left: -6px;
-  top: 320px;
-  width: 260px;
-  height: 140px;
+  left: -8px;
+  top: 270px;
+  width: 300px;
+  height: 165px;
 
   background:
    radial-gradient(ellipse at center,
@@ -5144,10 +5144,10 @@ body[data-rank="harbinger"] .harbinger-ring-fx .fx-left{
    RIGHT BLOOM
    ========================================= */
 body[data-rank="harbinger"] .harbinger-ring-fx .fx-right{
-  right: -6px;
-  top: 320px;
-  width: 260px;
-  height: 140px;
+  right: -8px;
+  top: 270px;
+  width: 300px;
+  height: 165px;
 
   background:
    radial-gradient(ellipse at center,
@@ -5287,125 +5287,21 @@ body[data-rank="harbinger"] .harbinger-ring-fx::before{
   }
 }
 /* =========================================================
-   HARBINGER — PREMIUM MICRO FX PACK
-   Дуже м'яка поліровка без перевантаження
+   HARBINGER — SIDE BLOOM POSITION FIX
    ========================================================= */
 
-/* HARBINGER title */
-body[data-rank="harbinger"] #dashboard.section.active .rankHome .rankTitle{
-  animation: harbingerTitlePulse 5.6s ease-in-out infinite;
+body[data-rank="harbinger"] .harbinger-ring-fx .fx-left{
+  left: -8px !important;
+  top: 270px !important;
+  width: 300px !important;
+  height: 165px !important;
+  filter: blur(18px) !important;
 }
 
-@keyframes harbingerTitlePulse{
-  0%{
-    text-shadow:
-      0 0 6px rgba(255,255,255,.14),
-      0 0 14px rgba(106,184,92,.10),
-      0 0 22px rgba(16,35,15,.14);
-  }
-  50%{
-    text-shadow:
-      0 0 8px rgba(255,255,255,.20),
-      0 0 18px rgba(106,184,92,.16),
-      0 0 30px rgba(16,35,15,.18);
-  }
-  100%{
-    text-shadow:
-      0 0 6px rgba(255,255,255,.14),
-      0 0 14px rgba(106,184,92,.10),
-      0 0 22px rgba(16,35,15,.14);
-  }
-}
-
-/* PLAYER ASCENSION */
-body[data-rank="harbinger"] #dashboard.section.active .rankHome .pulseHeader,
-body[data-rank="harbinger"] #dashboard.section.active .rankHome .pulseHeader span{
-  animation: harbingerAscensionPulse 6.4s ease-in-out infinite;
-}
-
-@keyframes harbingerAscensionPulse{
-  0%{
-    text-shadow:
-      0 0 4px rgba(255,255,255,.08),
-      0 0 10px rgba(106,184,92,.08);
-  }
-  50%{
-    text-shadow:
-      0 0 6px rgba(255,255,255,.14),
-      0 0 14px rgba(106,184,92,.12);
-  }
-  100%{
-    text-shadow:
-      0 0 4px rgba(255,255,255,.08),
-      0 0 10px rgba(106,184,92,.08);
-  }
-}
-
-/* progress spark */
-body[data-rank="harbinger"] #dashboard.section.active .rankHome .rankProgress__spark{
-  animation: harbingerSparkPulse 3.8s ease-in-out infinite;
-}
-
-@keyframes harbingerSparkPulse{
-  0%{
-    opacity: .28;
-    filter: blur(1px) brightness(.95);
-  }
-  50%{
-    opacity: .62;
-    filter: blur(1.5px) brightness(1.12);
-  }
-  100%{
-    opacity: .28;
-    filter: blur(1px) brightness(.95);
-  }
-}
-
-/* active tab */
-body[data-rank="harbinger"] .navbar.navTabs > .nav-btn.active{
-  animation: harbingerTabPulse 5.2s ease-in-out infinite;
-}
-
-@keyframes harbingerTabPulse{
-  0%{
-    text-shadow:
-      0 0 6px rgba(255,255,255,.06),
-      0 0 12px rgba(106,184,92,.10),
-      0 0 18px rgba(106,184,92,.06);
-  }
-  50%{
-    text-shadow:
-      0 0 8px rgba(255,255,255,.10),
-      0 0 16px rgba(106,184,92,.14),
-      0 0 24px rgba(106,184,92,.10);
-  }
-  100%{
-    text-shadow:
-      0 0 6px rgba(255,255,255,.06),
-      0 0 12px rgba(106,184,92,.10),
-      0 0 18px rgba(106,184,92,.06);
-  }
-}
-
-/* optional: slightly living metric values */
-body[data-rank="harbinger"] #dashboard.section.active .rankHome .pulseGrid .metric .v{
-  animation: harbingerMetricSoftPulse 7.2s ease-in-out infinite;
-}
-
-@keyframes harbingerMetricSoftPulse{
-  0%{
-    text-shadow:
-      0 0 3px rgba(255,255,255,.05),
-      0 0 8px rgba(106,184,92,.06);
-  }
-  50%{
-    text-shadow:
-      0 0 5px rgba(255,255,255,.08),
-      0 0 12px rgba(106,184,92,.10);
-  }
-  100%{
-    text-shadow:
-      0 0 3px rgba(255,255,255,.05),
-      0 0 8px rgba(106,184,92,.06);
-  }
+body[data-rank="harbinger"] .harbinger-ring-fx .fx-right{
+  right: -8px !important;
+  top: 270px !important;
+  width: 300px !important;
+  height: 165px !important;
+  filter: blur(18px) !important;
 }
