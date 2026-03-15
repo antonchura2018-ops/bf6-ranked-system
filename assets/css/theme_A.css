@@ -5079,26 +5079,6 @@ body[data-rank="harbinger"] #dashboard.section.active .rankHome .rankProgress__f
 }
 
 /* =========================================================
-   HARBINGER — METRIC SEPARATOR COLOR FIX
-   Прибирає червоний відтінок з вертикальних ліній
-   ========================================================= */
-
-body[data-rank="harbinger"] #dashboard.section.active .rankHome .pulseGrid .metric + .metric::before{
-  background: linear-gradient(
-    180deg,
-    transparent 0%,
-    rgba(170,255,170,.20) 28%,
-    rgba(230,255,230,.14) 50%,
-    rgba(170,255,170,.20) 72%,
-    transparent 100%
-  ) !important;
-
-  box-shadow:
-    0 0 8px rgba(120,220,120,.10) !important;
-
-  border: 0 !important;
-}
-/* =========================================================
    HARBINGER — STATIC BLOOM FX V2
    safer positioning + richer ambient life
    ========================================================= */
@@ -5357,4 +5337,24 @@ body[data-rank="harbinger"] .harbinger-ring-fx::after{
     opacity: .14;
     filter: blur(24px) brightness(.96);
   }
+}
+/* =========================================================
+   HARBINGER — METRIC SEPARATOR COLOR FIX
+   Прибирає червоний відтінок з вертикальних ліній
+   ========================================================= */
+
+body[data-rank="harbinger"] #dashboard.section.active .rankHome .pulseGrid .metric + .metric::before{
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(170,255,170,.20) 28%,
+    rgba(230,255,230,.14) 50%,
+    rgba(170,255,170,.20) 72%,
+    transparent 100%
+  ) !important;
+
+  box-shadow:
+    0 0 8px rgba(120,220,120,.10) !important;
+
+  border: 0 !important;
 }
