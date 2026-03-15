@@ -2296,28 +2296,37 @@ if (overlay) overlay.style.display = (tabId === "dashboard") ? "block" : "none";
   
 function restoreRankFromStorage(){
   try{
-    const savedTier = localStorage.getItem("bf6_rankTier");
-    const savedRp   = localStorage.getItem("bf6_rankRP");
+    const savedTierRaw = localStorage.getItem("bf6_rankTier");
+    const savedRpRaw   = localStorage.getItem("bf6_rankRP");
 
+    const savedTier = savedTierRaw ? String(savedTierRaw).toLowerCase() : "";
+    const savedRp   = Number(savedRpRaw);
+
+    /* 1) instantly restore visual rank + bg */
     if (savedTier && document.body){
-      document.body.dataset.rank = String(savedTier).toLowerCase();
+      document.body.dataset.rank = savedTier;
+      document.body.style.setProperty("--rank-bg-image", `url('/assets/img/bg/cosmos_${savedTier}.png')`);
     }
 
-    if (savedRp != null && savedRp !== ""){
-      const rp = Number(savedRp);
-      if (Number.isFinite(rp) && typeof applyTotalRP === "function"){
-        applyTotalRP(rp, { skipCinematic: true });
-        return;
-      }
+    /* 2) restore RP in two passes to beat focus/visibility race */
+    if (Number.isFinite(savedRp) && typeof applyTotalRP === "function"){
+      applyTotalRP(savedRp, { skipCinematic: true });
+
+      requestAnimationFrame(function(){
+        try{
+          applyTotalRP(savedRp, { skipCinematic: true });
+        }catch(e){}
+      });
+
+      return;
     }
 
+    /* 3) fallback only if nothing saved */
     if (typeof restoreRank === "function"){
       restoreRank();
     }
   }catch(e){}
 }
-
-
 
 
 // ensure correct mode on initial load (dashboard is default)
@@ -5123,39 +5132,68 @@ renderHistoryFromStorage();
 
   window.restoreRank = function(){
   try{
+    /* 1) debug/manual override */
     if (typeof getOverrideRP === "function"){
       var ov = getOverrideRP();
       if (ov != null && Number.isFinite(Number(ov))){
         var ovn = Number(ov);
+
+        if (typeof getRank === "function"){
+          var r = getRank(ovn);
+          var key = String((r && r.tierName) || "harbinger").toLowerCase();
+
+          if (document.body){
+            document.body.dataset.rank = key;
+            document.body.style.setProperty("--rank-bg-image", "url('/assets/img/bg/cosmos_" + key + ".png')");
+          }
+        }
+
         if (typeof window.applyTotalRP === "function"){
-          document.body.dataset.rank = String(getRankTierFromRP(ovn).key || "harbinger").toLowerCase();
           window.applyTotalRP(ovn, { skipCinematic: true });
+
+          requestAnimationFrame(function(){
+            try{
+              window.applyTotalRP(ovn, { skipCinematic: true });
+            }catch(e){}
+          });
+
           return;
         }
       }
     }
 
-    var savedTier = localStorage.getItem("bf6_rankTier");
-    var savedRp   = localStorage.getItem("bf6_rankRP");
+    /* 2) saved rank state */
+    var savedTierRaw = localStorage.getItem("bf6_rankTier");
+    var savedRpRaw   = localStorage.getItem("bf6_rankRP");
+
+    var savedTier = savedTierRaw ? String(savedTierRaw).toLowerCase() : "";
+    var savedRp   = Number(savedRpRaw);
 
     if (savedTier && document.body){
-      document.body.dataset.rank = String(savedTier).toLowerCase();
+      document.body.dataset.rank = savedTier;
+      document.body.style.setProperty("--rank-bg-image", "url('/assets/img/bg/cosmos_" + savedTier + ".png')");
     }
 
-    if (savedRp != null && savedRp !== "" && Number.isFinite(Number(savedRp))){
-      var srp = Number(savedRp);
-      if (typeof window.applyTotalRP === "function"){
-        window.applyTotalRP(srp, { skipCinematic: true });
-        return;
-      }
+    if (Number.isFinite(savedRp) && typeof window.applyTotalRP === "function"){
+      window.applyTotalRP(savedRp, { skipCinematic: true });
+
+      requestAnimationFrame(function(){
+        try{
+          window.applyTotalRP(savedRp, { skipCinematic: true });
+        }catch(e){}
+      });
+
+      return;
     }
 
+    /* 3) fallback */
     var total = getEffectiveTotalRPPatched();
     if (typeof window.applyTotalRP === "function"){
       window.applyTotalRP(total, { skipCinematic: true });
     }
   }catch(e){}
 };
+
 
 
 
