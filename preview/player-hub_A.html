@@ -2294,7 +2294,32 @@ if (overlay) overlay.style.display = (tabId === "dashboard") ? "block" : "none";
   if (btn && btn.classList) btn.classList.add("active");
 }
   
- function restoreRankFromStorage(){ try{ if (typeof restoreRank==="function") restoreRank(); }catch(e){} }
+function restoreRankFromStorage(){
+  try{
+    const savedTier = localStorage.getItem("bf6_rankTier");
+    const savedRp   = localStorage.getItem("bf6_rankRP");
+
+    /* 1) instantly restore body rank so background never flashes wrong */
+    if (savedTier && document.body){
+      document.body.dataset.rank = String(savedTier).toLowerCase();
+    }
+
+    /* 2) restore exact saved RP if possible */
+    if (savedRp != null && savedRp !== ""){
+      const rp = Number(savedRp);
+      if (Number.isFinite(rp) && typeof applyTotalRP === "function"){
+        applyTotalRP(rp, { skipCinematic: true });
+        return;
+      }
+    }
+
+    /* 3) fallback to old restore only if saved data is missing */
+    if (typeof restoreRank === "function"){
+      restoreRank();
+    }
+  }catch(e){}
+}
+
 
 
 // ensure correct mode on initial load (dashboard is default)
