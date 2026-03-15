@@ -2302,13 +2302,11 @@ function restoreRankFromStorage(){
     const savedTier = savedTierRaw ? String(savedTierRaw).toLowerCase() : "";
     const savedRp   = Number(savedRpRaw);
 
-    /* 1) instantly restore visual rank + bg */
     if (savedTier && document.body){
       document.body.dataset.rank = savedTier;
-      document.body.style.setProperty("--rank-bg-image", `url('/assets/img/bg/cosmos_${savedTier}.png')`);
+      document.body.style.removeProperty("--rank-bg-image");
     }
 
-    /* 2) restore RP in two passes to beat focus/visibility race */
     if (Number.isFinite(savedRp) && typeof applyTotalRP === "function"){
       applyTotalRP(savedRp, { skipCinematic: true });
 
@@ -2321,12 +2319,12 @@ function restoreRankFromStorage(){
       return;
     }
 
-    /* 3) fallback only if nothing saved */
     if (typeof restoreRank === "function"){
       restoreRank();
     }
   }catch(e){}
 }
+
 
 
 // ensure correct mode on initial load (dashboard is default)
@@ -2354,10 +2352,11 @@ window.addEventListener("pageshow", function(){
 
     if (savedTier && document.body){
       document.body.dataset.rank = savedTier;
-      document.body.style.setProperty("--rank-bg-image", `url('/assets/img/bg/cosmos_${savedTier}.png')`);
+      document.body.style.removeProperty("--rank-bg-image");
     }
   }catch(e){}
 });
+
 
   
   // Safety: ensure navbar always switches tabs even if inline onclick glitches
@@ -5134,9 +5133,8 @@ renderHistoryFromStorage();
     };
   }
 
-  window.restoreRank = function(){
+ window.restoreRank = function(){
   try{
-    /* 1) debug/manual override */
     if (typeof getOverrideRP === "function"){
       var ov = getOverrideRP();
       if (ov != null && Number.isFinite(Number(ov))){
@@ -5148,7 +5146,7 @@ renderHistoryFromStorage();
 
           if (document.body){
             document.body.dataset.rank = key;
-            document.body.style.setProperty("--rank-bg-image", "url('/assets/img/bg/cosmos_" + key + ".png')");
+            document.body.style.removeProperty("--rank-bg-image");
           }
         }
 
@@ -5166,7 +5164,6 @@ renderHistoryFromStorage();
       }
     }
 
-    /* 2) saved rank state */
     var savedTierRaw = localStorage.getItem("bf6_rankTier");
     var savedRpRaw   = localStorage.getItem("bf6_rankRP");
 
@@ -5175,7 +5172,7 @@ renderHistoryFromStorage();
 
     if (savedTier && document.body){
       document.body.dataset.rank = savedTier;
-      document.body.style.setProperty("--rank-bg-image", "url('/assets/img/bg/cosmos_" + savedTier + ".png')");
+      document.body.style.removeProperty("--rank-bg-image");
     }
 
     if (Number.isFinite(savedRp) && typeof window.applyTotalRP === "function"){
@@ -5190,13 +5187,13 @@ renderHistoryFromStorage();
       return;
     }
 
-    /* 3) fallback */
     var total = getEffectiveTotalRPPatched();
     if (typeof window.applyTotalRP === "function"){
       window.applyTotalRP(total, { skipCinematic: true });
     }
   }catch(e){}
 };
+
 
 
 
