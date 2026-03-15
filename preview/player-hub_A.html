@@ -1876,7 +1876,7 @@ body{
 <!-- ============================= -->
 <!-- ===== APPLICATION UI ======= -->
 <!-- ============================= -->
-<body data-rank="overlord">
+<body data-rank="harbinger">
 
 <!-- NAVIGATION (TABS) -->
 <div class="navbar navTabs">
@@ -5090,30 +5090,46 @@ renderHistoryFromStorage();
   }
 
   window.restoreRank = function(){
-    try{
-      var total = getEffectiveTotalRPPatched();
-      if (typeof window.applyTotalRP === "function") window.applyTotalRP(total, { skipCinematic: true });
-    }catch(e){}
-  };
-
-  var _showTab = window.showTab;
-  if (typeof _showTab === "function"){
-    window.showTab = function(tabId, btn){
-      var res = _showTab(tabId, btn);
-      try{
-        var target = document.getElementById(tabId);
-        if (target) target.scrollTop = 0;
-        if (document.scrollingElement) document.scrollingElement.scrollTop = 0;
-      }catch(e){}
-      try{
-        if (tabId === "dashboard" || tabId === "rank" || tabId === "history"){
-          renderHomeMetricsPatched();
-          syncRankCardPatched(getEffectiveTotalRPPatched());
+  try{
+    /* 1) first priority — manual/debug override */
+    if (typeof getOverrideRP === "function"){
+      var ov = getOverrideRP();
+      if (ov != null && Number.isFinite(Number(ov))){
+        var ovn = Number(ov);
+        if (typeof window.applyTotalRP === "function"){
+          window.applyTotalRP(ovn, { skipCinematic: true });
+          return;
         }
-      }catch(e){}
-      return res;
-    };
-  }
+      }
+    }
+
+    /* 2) second priority — last saved rank RP */
+    try{
+      var savedRp = localStorage.getItem("bf6_rankRP");
+      if (savedRp != null && savedRp !== "" && Number.isFinite(Number(savedRp))){
+        var srp = Number(savedRp);
+
+        /* apply body rank immediately so background never flashes wrong */
+        var savedTier = localStorage.getItem("bf6_rankTier");
+        if (savedTier){
+          document.body.dataset.rank = String(savedTier).toLowerCase();
+        }
+
+        if (typeof window.applyTotalRP === "function"){
+          window.applyTotalRP(srp, { skipCinematic: true });
+          return;
+        }
+      }
+    }catch(e){}
+
+    /* 3) fallback — compute from current active matches */
+    var total = getEffectiveTotalRPPatched();
+    if (typeof window.applyTotalRP === "function"){
+      window.applyTotalRP(total, { skipCinematic: true });
+    }
+  }catch(e){}
+};
+
 
   document.addEventListener("DOMContentLoaded", function(){
     setTimeout(function(){
