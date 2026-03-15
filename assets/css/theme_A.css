@@ -5358,3 +5358,52 @@ body[data-rank="harbinger"] #dashboard.section.active .rankHome .pulseGrid .metr
 
   border: 0 !important;
 }
+/* =========================================================
+   HARBINGER — NAV TAB SHAPE FIX
+   прибирає скошені/зламані верхні кути у вкладках
+   ========================================================= */
+
+body[data-rank="harbinger"] .navbar.navTabs > .nav-btn::before{
+  clip-path: none !important;
+  border-radius: 0 !important;
+}
+
+body[data-rank="harbinger"] .navbar.navTabs > .nav-btn:first-child::before,
+body[data-rank="harbinger"] .navbar.navTabs > .nav-btn:last-child::before{
+  clip-path: none !important;
+  border-radius: 0 !important;
+}
+
+/* =========================================================
+   HARBINGER — METRIC RED TINT HARD FIX
+   прибирає теплий/червоний відтінок у вертикальних лініях метрик
+   ========================================================= */
+
+body[data-rank="harbinger"] #dashboard.section.active .rankHome .pulseGrid .metric + .metric::before{
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(150,235,150,.16) 24%,
+    rgba(230,255,230,.12) 50%,
+    rgba(150,235,150,.16) 76%,
+    transparent 100%
+  ) !important;
+
+  box-shadow:
+    0 0 6px rgba(120,220,120,.08) !important;
+
+  border: 0 !important;
+  outline: 0 !important;
+}
+
+/* на всякий випадок прибрати теплий tint з усього pulse-блоку */
+body[data-rank="harbinger"] #dashboard.section.active .rankHome .pulseGrid,
+body[data-rank="harbinger"] #dashboard.section.active .rankHome .pulseGrid::before{
+  box-shadow: none !important;
+}
+
+body[data-rank="harbinger"] #dashboard.section.active .rankHome .metric .v{
+  text-shadow:
+    0 0 8px rgba(106,184,92,.10),
+    0 0 18px rgba(16,35,15,.12) !important;
+}
