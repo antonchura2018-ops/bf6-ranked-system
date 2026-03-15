@@ -5358,52 +5358,63 @@ body[data-rank="harbinger"] #dashboard.section.active .rankHome .pulseGrid .metr
 
   border: 0 !important;
 }
+
 /* =========================================================
-   HARBINGER — NAV TAB SHAPE FIX
-   прибирає скошені/зламані верхні кути у вкладках
+   HARBINGER — NAV TAB SHAPE FIX V2
+   повертає форму як у референсі, без кривих зрізів
    ========================================================= */
 
 body[data-rank="harbinger"] .navbar.navTabs > .nav-btn::before{
-  clip-path: none !important;
-  border-radius: 0 !important;
+  border-radius: 10px !important;
+  clip-path: polygon(
+    8px 0%,
+    calc(100% - 8px) 0%,
+    100% 100%,
+    0% 100%
+  ) !important;
 }
 
-body[data-rank="harbinger"] .navbar.navTabs > .nav-btn:first-child::before,
+body[data-rank="harbinger"] .navbar.navTabs > .nav-btn:first-child::before{
+  clip-path: polygon(
+    8px 0%,
+    calc(100% - 8px) 0%,
+    100% 100%,
+    0% 100%,
+    0% 18px
+  ) !important;
+}
+
 body[data-rank="harbinger"] .navbar.navTabs > .nav-btn:last-child::before{
-  clip-path: none !important;
-  border-radius: 0 !important;
+  clip-path: polygon(
+    8px 0%,
+    calc(100% - 8px) 0%,
+    100% 18px,
+    100% 100%,
+    0% 100%
+  ) !important;
 }
-
 /* =========================================================
-   HARBINGER — METRIC RED TINT HARD FIX
-   прибирає теплий/червоний відтінок у вертикальних лініях метрик
+   HARBINGER — METRIC SEPARATOR REAL FIX
+   прибирає теплий separator з базового ::after
    ========================================================= */
 
-body[data-rank="harbinger"] #dashboard.section.active .rankHome .pulseGrid .metric + .metric::before{
+body[data-rank="harbinger"] #dashboard .rankHome .metric:not(:last-child)::after{
   background: linear-gradient(
     180deg,
     transparent 0%,
-    rgba(150,235,150,.16) 24%,
-    rgba(230,255,230,.12) 50%,
-    rgba(150,235,150,.16) 76%,
+    rgba(255,255,255,.08) 22%,
+    rgba(150,235,150,.20) 50%,
+    rgba(255,255,255,.08) 78%,
     transparent 100%
   ) !important;
 
-  box-shadow:
-    0 0 6px rgba(120,220,120,.08) !important;
-
-  border: 0 !important;
-  outline: 0 !important;
+  opacity: .72 !important;
+  filter: blur(.2px) !important;
 }
 
-/* на всякий випадок прибрати теплий tint з усього pulse-блоку */
-body[data-rank="harbinger"] #dashboard.section.active .rankHome .pulseGrid,
-body[data-rank="harbinger"] #dashboard.section.active .rankHome .pulseGrid::before{
+/* якщо десь ще малюється альтернативний separator */
+body[data-rank="harbinger"] #dashboard.section.active .rankHome .pulseGrid .metric + .metric::before{
+  background: none !important;
   box-shadow: none !important;
 }
 
-body[data-rank="harbinger"] #dashboard.section.active .rankHome .metric .v{
-  text-shadow:
-    0 0 8px rgba(106,184,92,.10),
-    0 0 18px rgba(16,35,15,.12) !important;
-}
