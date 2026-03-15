@@ -5384,8 +5384,8 @@ body[data-rank="harbinger"] #dashboard.section.active .rankHome .pulseGrid .metr
   box-shadow: none !important;
 }
 /* =========================================================
-   HARBINGER — NAV CLEAN FIX
-   залишає форму як у 3 рангу, але прибирає зелений наплив на скосах
+   HARBINGER — NAV CLEAN FIX V2
+   зберігає форму вкладок як у 3 рангу, але прибирає зелений spill
    ========================================================= */
 
 body[data-rank="harbinger"] .navbar.navTabs > .nav-btn.active::before{
@@ -5393,41 +5393,61 @@ body[data-rank="harbinger"] .navbar.navTabs > .nav-btn.active::before{
 
   background:
     linear-gradient(180deg,
-      rgba(20,26,20,.62),
+      rgba(18,24,18,.60),
       rgba(8,8,10,.50)
     ) !important;
 
   box-shadow:
     inset 0 1px 0 rgba(255,255,255,.08),
     inset 0 -1px 0 rgba(0,0,0,.30),
-    0 0 16px rgba(106,184,92,.10),
-    0 0 34px rgba(106,184,92,.05) !important;
+    0 0 14px rgba(106,184,92,.08),
+    0 0 26px rgba(106,184,92,.04) !important;
 
-  filter: brightness(1.03) !important;
+  filter: brightness(1.02) !important;
 }
 
 body[data-rank="harbinger"] .navbar.navTabs > .nav-btn.active{
   text-shadow:
     0 0 6px rgba(255,255,255,.08),
-    0 0 12px rgba(106,184,92,.12),
-    0 0 20px rgba(106,184,92,.06) !important;
+    0 0 10px rgba(106,184,92,.10),
+    0 0 16px rgba(106,184,92,.05) !important;
 }
 
-/* верхня зелена лінія не повинна залазити на скошені краї */
+/* головна причина spill — верхня active line */
 body[data-rank="harbinger"] .navbar.navTabs > .nav-btn.active > span::before{
-  top: -11px !important;
+  top: -10px !important;
   height: 2px !important;
+  left: 10px !important;
+  right: 10px !important;
+
+  background: linear-gradient(
+    90deg,
+    rgba(106,184,92,.92) 0%,
+    rgba(140,220,128,.98) 50%,
+    rgba(106,184,92,.92) 100%
+  ) !important;
 
   box-shadow:
-    0 0 8px rgba(106,184,92,.20),
-    0 0 18px rgba(106,184,92,.12) !important;
+    0 0 6px rgba(106,184,92,.16),
+    0 0 14px rgba(106,184,92,.10) !important;
+
+  border-radius: 999px !important;
 }
 
-/* менше жорсткого зеленого по рамці всього navbar */
+/* перебиваємо старі глобальні negative offsets */
+body[data-rank="harbinger"] .navbar.navTabs > .nav-btn.active:first-child > span::before,
+body[data-rank="harbinger"] .navbar.navTabs > .nav-btn.active:nth-child(2) > span::before,
+body[data-rank="harbinger"] .navbar.navTabs > .nav-btn.active:nth-child(3) > span::before,
+body[data-rank="harbinger"] .navbar.navTabs > .nav-btn.active:last-child > span::before{
+  left: 10px !important;
+  right: 10px !important;
+}
+
+/* cleaner outer frame */
 body[data-rank="harbinger"] .navbar.navTabs::after{
+  border-color: rgba(106,184,92,.28) !important;
   box-shadow:
-    0 0 0 1px rgba(106,184,92,.12),
-    0 0 14px rgba(106,184,92,.12),
-    0 0 30px rgba(106,184,92,.05) !important;
+    0 0 0 1px rgba(106,184,92,.10),
+    0 0 12px rgba(106,184,92,.10),
+    0 0 24px rgba(106,184,92,.04) !important;
 }
-
