@@ -5360,40 +5360,6 @@ body[data-rank="harbinger"] #dashboard.section.active .rankHome .pulseGrid .metr
 }
 
 /* =========================================================
-   HARBINGER — NAV TAB SHAPE FIX V2
-   повертає форму як у референсі, без кривих зрізів
-   ========================================================= */
-
-body[data-rank="harbinger"] .navbar.navTabs > .nav-btn::before{
-  border-radius: 10px !important;
-  clip-path: polygon(
-    8px 0%,
-    calc(100% - 8px) 0%,
-    100% 100%,
-    0% 100%
-  ) !important;
-}
-
-body[data-rank="harbinger"] .navbar.navTabs > .nav-btn:first-child::before{
-  clip-path: polygon(
-    8px 0%,
-    calc(100% - 8px) 0%,
-    100% 100%,
-    0% 100%,
-    0% 18px
-  ) !important;
-}
-
-body[data-rank="harbinger"] .navbar.navTabs > .nav-btn:last-child::before{
-  clip-path: polygon(
-    8px 0%,
-    calc(100% - 8px) 0%,
-    100% 18px,
-    100% 100%,
-    0% 100%
-  ) !important;
-}
-/* =========================================================
    HARBINGER — METRIC SEPARATOR REAL FIX
    прибирає теплий separator з базового ::after
    ========================================================= */
@@ -5416,5 +5382,52 @@ body[data-rank="harbinger"] #dashboard .rankHome .metric:not(:last-child)::after
 body[data-rank="harbinger"] #dashboard.section.active .rankHome .pulseGrid .metric + .metric::before{
   background: none !important;
   box-shadow: none !important;
+}
+/* =========================================================
+   HARBINGER — NAV CLEAN FIX
+   залишає форму як у 3 рангу, але прибирає зелений наплив на скосах
+   ========================================================= */
+
+body[data-rank="harbinger"] .navbar.navTabs > .nav-btn.active::before{
+  outline: 0 !important;
+
+  background:
+    linear-gradient(180deg,
+      rgba(20,26,20,.62),
+      rgba(8,8,10,.50)
+    ) !important;
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.08),
+    inset 0 -1px 0 rgba(0,0,0,.30),
+    0 0 16px rgba(106,184,92,.10),
+    0 0 34px rgba(106,184,92,.05) !important;
+
+  filter: brightness(1.03) !important;
+}
+
+body[data-rank="harbinger"] .navbar.navTabs > .nav-btn.active{
+  text-shadow:
+    0 0 6px rgba(255,255,255,.08),
+    0 0 12px rgba(106,184,92,.12),
+    0 0 20px rgba(106,184,92,.06) !important;
+}
+
+/* верхня зелена лінія не повинна залазити на скошені краї */
+body[data-rank="harbinger"] .navbar.navTabs > .nav-btn.active > span::before{
+  top: -11px !important;
+  height: 2px !important;
+
+  box-shadow:
+    0 0 8px rgba(106,184,92,.20),
+    0 0 18px rgba(106,184,92,.12) !important;
+}
+
+/* менше жорсткого зеленого по рамці всього navbar */
+body[data-rank="harbinger"] .navbar.navTabs::after{
+  box-shadow:
+    0 0 0 1px rgba(106,184,92,.12),
+    0 0 14px rgba(106,184,92,.12),
+    0 0 30px rgba(106,184,92,.05) !important;
 }
 
