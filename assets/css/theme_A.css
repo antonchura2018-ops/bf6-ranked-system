@@ -5384,70 +5384,141 @@ body[data-rank="harbinger"] #dashboard.section.active .rankHome .pulseGrid .metr
   box-shadow: none !important;
 }
 /* =========================================================
-   HARBINGER — NAV CLEAN FIX V2
-   зберігає форму вкладок як у 3 рангу, але прибирає зелений spill
+   HARBINGER — NAV MATCH OUTCAST SHAPE
+   залишає той самий дизайн вкладок, що у rank 1,
+   але з зеленим rank tint
    ========================================================= */
 
+body[data-rank="harbinger"] .navbar.navTabs > .nav-btn{
+  color: rgba(255,250,245,.96) !important;
+  text-shadow:
+    0 0 6px rgba(255,255,255,.06),
+    0 0 10px rgba(106,184,92,.06) !important;
+}
+
+body[data-rank="harbinger"] .navbar.navTabs > .nav-btn::before{
+  border: 1px solid rgba(106,184,92,.20) !important;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(18,16,18,.76) 0%,
+      rgba(10,10,12,.88) 48%,
+      rgba(6,6,8,.94) 100%
+    ) !important;
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.06),
+    inset 0 -1px 0 rgba(0,0,0,.42),
+    0 0 10px rgba(106,184,92,.04) !important;
+}
+
+/* vertical dividers between segments */
+body[data-rank="harbinger"] .navbar.navTabs > .nav-btn::after{
+  background: linear-gradient(
+    180deg,
+    transparent,
+    rgba(106,184,92,.16),
+    transparent
+  ) !important;
+}
+
+/* outer frame */
+body[data-rank="harbinger"] .navbar.navTabs::after{
+  border: 1px solid rgba(106,184,92,.24) !important;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(106,184,92,.20),
+      rgba(210,255,210,.10),
+      rgba(106,184,92,.20),
+      transparent
+    ) top / 100% 2px no-repeat,
+
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(106,184,92,.20),
+      rgba(210,255,210,.10),
+      rgba(106,184,92,.20),
+      transparent
+    ) bottom / 100% 2px no-repeat,
+
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,.03),
+      rgba(0,0,0,0) 42%,
+      rgba(106,184,92,.04)
+    ) !important;
+
+  box-shadow:
+    0 0 0 1px rgba(106,184,92,.08),
+    0 0 10px rgba(106,184,92,.08),
+    0 0 24px rgba(106,184,92,.04) !important;
+}
+
+/* active tab text */
+body[data-rank="harbinger"] .navbar.navTabs > .nav-btn.active{
+  color: #ffffff !important;
+  text-shadow:
+    0 0 8px rgba(255,255,255,.10),
+    0 0 14px rgba(106,184,92,.10) !important;
+}
+
+/* active tab plate — same feel as rank 1, just green */
 body[data-rank="harbinger"] .navbar.navTabs > .nav-btn.active::before{
+  border-color: rgba(106,184,92,.34) !important;
   outline: 0 !important;
 
   background:
-    linear-gradient(180deg,
-      rgba(18,24,18,.60),
-      rgba(8,8,10,.50)
+    radial-gradient(220px 60px at 20% 50%, rgba(106,184,92,.08), transparent 65%),
+    radial-gradient(220px 60px at 80% 50%, rgba(106,184,92,.06), transparent 65%),
+    linear-gradient(
+      180deg,
+      rgba(22,20,22,.78) 0%,
+      rgba(10,10,12,.90) 52%,
+      rgba(6,6,8,.96) 100%
     ) !important;
 
   box-shadow:
     inset 0 1px 0 rgba(255,255,255,.08),
-    inset 0 -1px 0 rgba(0,0,0,.30),
-    0 0 14px rgba(106,184,92,.08),
-    0 0 26px rgba(106,184,92,.04) !important;
+    inset 0 -1px 0 rgba(0,0,0,.40),
+    0 0 12px rgba(106,184,92,.08),
+    0 0 24px rgba(106,184,92,.04) !important;
 
-  filter: brightness(1.02) !important;
+  filter: none !important;
 }
 
-body[data-rank="harbinger"] .navbar.navTabs > .nav-btn.active{
-  text-shadow:
-    0 0 6px rgba(255,255,255,.08),
-    0 0 10px rgba(106,184,92,.10),
-    0 0 16px rgba(106,184,92,.05) !important;
-}
-
-/* головна причина spill — верхня active line */
+/* IMPORTANT:
+   top active line must sit INSIDE the tab width,
+   not stretch across slanted edges */
 body[data-rank="harbinger"] .navbar.navTabs > .nav-btn.active > span::before{
   top: -10px !important;
   height: 2px !important;
-  left: 10px !important;
-  right: 10px !important;
+  left: 18px !important;
+  right: 18px !important;
 
   background: linear-gradient(
     90deg,
-    rgba(106,184,92,.92) 0%,
-    rgba(140,220,128,.98) 50%,
-    rgba(106,184,92,.92) 100%
+    rgba(106,184,92,.88) 0%,
+    rgba(170,235,150,.96) 50%,
+    rgba(106,184,92,.88) 100%
   ) !important;
 
   box-shadow:
-    0 0 6px rgba(106,184,92,.16),
-    0 0 14px rgba(106,184,92,.10) !important;
+    0 0 6px rgba(106,184,92,.12),
+    0 0 14px rgba(106,184,92,.08) !important;
 
   border-radius: 999px !important;
 }
 
-/* перебиваємо старі глобальні negative offsets */
+/* kill old per-tab stretching offsets */
 body[data-rank="harbinger"] .navbar.navTabs > .nav-btn.active:first-child > span::before,
 body[data-rank="harbinger"] .navbar.navTabs > .nav-btn.active:nth-child(2) > span::before,
 body[data-rank="harbinger"] .navbar.navTabs > .nav-btn.active:nth-child(3) > span::before,
 body[data-rank="harbinger"] .navbar.navTabs > .nav-btn.active:last-child > span::before{
-  left: 10px !important;
-  right: 10px !important;
-}
-
-/* cleaner outer frame */
-body[data-rank="harbinger"] .navbar.navTabs::after{
-  border-color: rgba(106,184,92,.28) !important;
-  box-shadow:
-    0 0 0 1px rgba(106,184,92,.10),
-    0 0 12px rgba(106,184,92,.10),
-    0 0 24px rgba(106,184,92,.04) !important;
+  left: 18px !important;
+  right: 18px !important;
 }
