@@ -5077,9 +5077,30 @@ body[data-rank="harbinger"] #dashboard.section.active .rankHome .rankProgress__f
     0 0 14px rgba(106,184,92,.18),
     0 0 24px rgba(106,184,92,.14) !important;
 }
+
 /* =========================================================
-   HARBINGER — STATIC BLOOM FX
-   Без кручення, тільки яскраве живе світіння
+   HARBINGER — METRIC SEPARATOR COLOR FIX
+   Прибирає червоний відтінок з вертикальних ліній
+   ========================================================= */
+
+body[data-rank="harbinger"] #dashboard.section.active .rankHome .pulseGrid .metric + .metric::before{
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(170,255,170,.20) 28%,
+    rgba(230,255,230,.14) 50%,
+    rgba(170,255,170,.20) 72%,
+    transparent 100%
+  ) !important;
+
+  box-shadow:
+    0 0 8px rgba(120,220,120,.10) !important;
+
+  border: 0 !important;
+}
+/* =========================================================
+   HARBINGER — STATIC BLOOM FX V2
+   safer positioning + richer ambient life
    ========================================================= */
 
 body[data-rank="harbinger"] .rankHome__center{
@@ -5100,7 +5121,7 @@ body[data-rank="harbinger"] .rankHome__infoStack{
 body[data-rank="harbinger"] .harbinger-ring-fx{
   position: absolute !important;
   left: 50% !important;
-  top: 33% !important;
+  top: 35.2% !important;
   width: 1180px !important;
   height: 920px !important;
   transform: translate(-50%, -50%) !important;
@@ -5119,51 +5140,50 @@ body[data-rank="harbinger"] .harbinger-ring-fx .fx{
    LEFT BLOOM
    ========================================= */
 body[data-rank="harbinger"] .harbinger-ring-fx .fx-left{
-  left: -8px;
-  top: 310px;
-  width: 290px;
-  height: 155px;
+  left: 8px !important;
+  top: 362px !important;
+  width: 248px !important;
+  height: 132px !important;
 
   background:
-   radial-gradient(ellipse at center,
-     rgba(255,255,255,.90) 0%,
-     rgba(240,255,240,.56) 10%,
-     rgba(180,255,180,.34) 24%,
-     rgba(120,255,120,.20) 40%,
-     rgba(120,255,120,.09) 56%,
-     rgba(0,0,0,0) 78%
-   );
+    radial-gradient(ellipse at center,
+      rgba(255,255,255,.92) 0%,
+      rgba(236,255,236,.58) 10%,
+      rgba(176,255,176,.32) 25%,
+      rgba(110,255,110,.17) 42%,
+      rgba(110,255,110,.07) 58%,
+      rgba(0,0,0,0) 78%
+    );
 
-  filter: blur(18px);
-  opacity: .92;
-  transform: rotate(-10deg);
-  animation: harbingerLeftGlow 4.8s ease-in-out infinite;
+  filter: blur(17px);
+  opacity: .88;
+  transform: rotate(-8deg);
+  animation: harbingerLeftGlow 5.2s ease-in-out infinite;
 }
 
 /* =========================================
    RIGHT BLOOM
    ========================================= */
 body[data-rank="harbinger"] .harbinger-ring-fx .fx-right{
-  right: -8px;
- top: 310px;
- width: 290px;
- height: 155px;
- filter: blur(17px);
+  right: 8px !important;
+  top: 362px !important;
+  width: 248px !important;
+  height: 132px !important;
 
   background:
-   radial-gradient(ellipse at center,
-     rgba(255,255,255,.96) 0%,
-     rgba(240,255,240,.60) 10%,
-     rgba(180,255,180,.36) 24%,
-     rgba(120,255,120,.22) 40%,
-     rgba(120,255,120,.10) 56%,
-     rgba(0,0,0,0) 78%
-   );
+    radial-gradient(ellipse at center,
+      rgba(255,255,255,.94) 0%,
+      rgba(236,255,236,.60) 10%,
+      rgba(176,255,176,.34) 25%,
+      rgba(110,255,110,.18) 42%,
+      rgba(110,255,110,.08) 58%,
+      rgba(0,0,0,0) 78%
+    );
 
-  filter: blur(18px);
-  opacity: .96;
-  transform: rotate(10deg);
-  animation: harbingerRightGlow 5.4s ease-in-out infinite;
+  filter: blur(17px);
+  opacity: .90;
+  transform: rotate(8deg);
+  animation: harbingerRightGlow 5.8s ease-in-out infinite;
 }
 
 /* =========================================
@@ -5171,49 +5191,85 @@ body[data-rank="harbinger"] .harbinger-ring-fx .fx-right{
    ========================================= */
 body[data-rank="harbinger"] .harbinger-ring-fx .fx-top{
   left: 50%;
-  top: -24px;
-  width: 620px;
-  height: 150px;
+  top: 10px;
+  width: 560px;
+  height: 120px;
   transform: translateX(-50%);
 
   background:
     radial-gradient(ellipse at center,
-      rgba(255,255,255,.30) 0%,
-      rgba(220,255,220,.22) 18%,
-      rgba(160,255,160,.14) 34%,
-      rgba(120,255,120,.08) 48%,
+      rgba(255,255,255,.20) 0%,
+      rgba(220,255,220,.15) 18%,
+      rgba(160,255,160,.09) 34%,
+      rgba(120,255,120,.04) 50%,
       rgba(0,0,0,0) 76%
     );
 
-  filter: blur(26px);
-  opacity: .46;
-  animation: harbingerTopGlow 6.2s ease-in-out infinite;
+  filter: blur(28px);
+  opacity: .28;
+  animation: harbingerTopGlow 6.8s ease-in-out infinite;
 }
 
 /* =========================================
-   EXTRA SIDE HAZE
+   INNER HALO
+   Дуже слабка жива підсвітка в центрі кільця
    ========================================= */
 body[data-rank="harbinger"] .harbinger-ring-fx::before{
   content: "";
   position: absolute;
   inset: 0;
   pointer-events: none;
+  z-index: 1;
 
   background:
-    radial-gradient(ellipse 280px 110px at 14% 49%,
-      rgba(170,255,170,.18) 0%,
-      rgba(170,255,170,.08) 34%,
+    radial-gradient(circle at 50% 46%,
+      rgba(170,255,170,.10) 0%,
+      rgba(170,255,170,.06) 18%,
+      rgba(170,255,170,.03) 30%,
+      rgba(0,0,0,0) 46%
+    ),
+    radial-gradient(ellipse 250px 96px at 14% 55%,
+      rgba(170,255,170,.15) 0%,
+      rgba(170,255,170,.07) 34%,
       rgba(0,0,0,0) 74%
     ),
-    radial-gradient(ellipse 280px 110px at 86% 49%,
-      rgba(170,255,170,.20) 0%,
-      rgba(170,255,170,.08) 34%,
+    radial-gradient(ellipse 250px 96px at 86% 55%,
+      rgba(170,255,170,.16) 0%,
+      rgba(170,255,170,.07) 34%,
       rgba(0,0,0,0) 74%
     );
 
-  filter: blur(32px);
-  opacity: .42;
-  animation: harbingerSideHaze 7s ease-in-out infinite;
+  filter: blur(30px);
+  opacity: .34;
+  animation: harbingerSideHaze 7.4s ease-in-out infinite;
+}
+
+/* =========================================
+   SOFT ARC SHIMMER
+   Ледь помітне живе світло по верхній частині кільця
+   ========================================= */
+body[data-rank="harbinger"] .harbinger-ring-fx::after{
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 88px;
+  width: 760px;
+  height: 260px;
+  transform: translateX(-50%);
+  pointer-events: none;
+  z-index: 1;
+
+  background:
+    radial-gradient(ellipse at center,
+      rgba(235,255,235,.10) 0%,
+      rgba(180,255,180,.06) 26%,
+      rgba(120,255,120,.03) 44%,
+      rgba(0,0,0,0) 72%
+    );
+
+  filter: blur(24px);
+  opacity: .24;
+  animation: harbingerArcShimmer 8.5s ease-in-out infinite;
 }
 
 /* =========================================
@@ -5222,88 +5278,83 @@ body[data-rank="harbinger"] .harbinger-ring-fx::before{
 
 @keyframes harbingerLeftGlow{
   0%{
-    opacity: .50;
-    filter: blur(28px) brightness(.96);
+    opacity: .56;
+    filter: blur(17px) brightness(.96);
   }
   35%{
-    opacity: 1;
-    filter: blur(30px) brightness(1.24);
+    opacity: .96;
+    filter: blur(19px) brightness(1.14);
   }
-  60%{
-    opacity: .66;
-    filter: blur(28px) brightness(1.04);
+  65%{
+    opacity: .70;
+    filter: blur(18px) brightness(1.03);
   }
   100%{
-    opacity: .50;
-    filter: blur(28px) brightness(.96);
+    opacity: .56;
+    filter: blur(17px) brightness(.96);
   }
 }
 
 @keyframes harbingerRightGlow{
   0%{
-    opacity: .56;
-    filter: blur(28px) brightness(.98);
+    opacity: .60;
+    filter: blur(17px) brightness(.98);
   }
-  30%{
+  32%{
     opacity: .76;
-    filter: blur(29px) brightness(1.08);
+    filter: blur(18px) brightness(1.04);
   }
-  65%{
-    opacity: 1;
-    filter: blur(31px) brightness(1.28);
+  68%{
+    opacity: .98;
+    filter: blur(19px) brightness(1.16);
   }
   100%{
-    opacity: .56;
-    filter: blur(28px) brightness(.98);
+    opacity: .60;
+    filter: blur(17px) brightness(.98);
   }
 }
 
 @keyframes harbingerTopGlow{
   0%{
-    opacity: .22;
-    filter: blur(26px) brightness(.94);
+    opacity: .16;
+    filter: blur(28px) brightness(.95);
   }
   50%{
-    opacity: .58;
-    filter: blur(28px) brightness(1.10);
+    opacity: .34;
+    filter: blur(30px) brightness(1.05);
   }
   100%{
-    opacity: .22;
-    filter: blur(26px) brightness(.94);
+    opacity: .16;
+    filter: blur(28px) brightness(.95);
   }
 }
 
 @keyframes harbingerSideHaze{
   0%{
-    opacity: .20;
-    filter: blur(32px) brightness(.95);
+    opacity: .24;
+    filter: blur(30px) brightness(.96);
   }
   50%{
-    opacity: .48;
-    filter: blur(34px) brightness(1.08);
+    opacity: .38;
+    filter: blur(32px) brightness(1.06);
   }
   100%{
-    opacity: .20;
-    filter: blur(32px) brightness(.95);
+    opacity: .24;
+    filter: blur(30px) brightness(.96);
   }
 }
-/* =========================================================
-   HARBINGER — METRIC SEPARATOR COLOR FIX
-   Прибирає червоний відтінок з вертикальних ліній
-   ========================================================= */
 
-body[data-rank="harbinger"] #dashboard.section.active .rankHome .pulseGrid .metric + .metric::before{
-  background: linear-gradient(
-    180deg,
-    transparent 0%,
-    rgba(170,255,170,.20) 28%,
-    rgba(230,255,230,.14) 50%,
-    rgba(170,255,170,.20) 72%,
-    transparent 100%
-  ) !important;
-
-  box-shadow:
-    0 0 8px rgba(120,220,120,.10) !important;
-
-  border: 0 !important;
+@keyframes harbingerArcShimmer{
+  0%{
+    opacity: .14;
+    filter: blur(24px) brightness(.96);
+  }
+  50%{
+    opacity: .30;
+    filter: blur(26px) brightness(1.04);
+  }
+  100%{
+    opacity: .14;
+    filter: blur(24px) brightness(.96);
+  }
 }
