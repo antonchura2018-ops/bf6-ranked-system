@@ -2347,14 +2347,18 @@ window.addEventListener("pageshow", function(){
   restoreRankFromStorage();
 });
 
-  window.addEventListener("blur", function(){
+ window.addEventListener("blur", function(){
   try{
-    const savedTier = localStorage.getItem("bf6_rankTier");
+    const savedTierRaw = localStorage.getItem("bf6_rankTier");
+    const savedTier = savedTierRaw ? String(savedTierRaw).toLowerCase() : "";
+
     if (savedTier && document.body){
-      document.body.dataset.rank = String(savedTier).toLowerCase();
+      document.body.dataset.rank = savedTier;
+      document.body.style.setProperty("--rank-bg-image", `url('/assets/img/bg/cosmos_${savedTier}.png')`);
     }
   }catch(e){}
 });
+
   
   // Safety: ensure navbar always switches tabs even if inline onclick glitches
 (function bindNavClicks(){
