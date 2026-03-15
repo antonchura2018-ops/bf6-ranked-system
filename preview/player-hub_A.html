@@ -2299,12 +2299,10 @@ function restoreRankFromStorage(){
     const savedTier = localStorage.getItem("bf6_rankTier");
     const savedRp   = localStorage.getItem("bf6_rankRP");
 
-    /* 1) instantly restore body rank so background never flashes wrong */
     if (savedTier && document.body){
       document.body.dataset.rank = String(savedTier).toLowerCase();
     }
 
-    /* 2) restore exact saved RP if possible */
     if (savedRp != null && savedRp !== ""){
       const rp = Number(savedRp);
       if (Number.isFinite(rp) && typeof applyTotalRP === "function"){
@@ -2313,12 +2311,12 @@ function restoreRankFromStorage(){
       }
     }
 
-    /* 3) fallback to old restore only if saved data is missing */
     if (typeof restoreRank === "function"){
       restoreRank();
     }
   }catch(e){}
 }
+
 
 
 
@@ -2338,6 +2336,15 @@ window.addEventListener("focus", function(){
 
 window.addEventListener("pageshow", function(){
   restoreRankFromStorage();
+});
+
+  window.addEventListener("blur", function(){
+  try{
+    const savedTier = localStorage.getItem("bf6_rankTier");
+    if (savedTier && document.body){
+      document.body.dataset.rank = String(savedTier).toLowerCase();
+    }
+  }catch(e){}
 });
   
   // Safety: ensure navbar always switches tabs even if inline onclick glitches
@@ -5116,44 +5123,40 @@ renderHistoryFromStorage();
 
   window.restoreRank = function(){
   try{
-    /* 1) first priority — manual/debug override */
     if (typeof getOverrideRP === "function"){
       var ov = getOverrideRP();
       if (ov != null && Number.isFinite(Number(ov))){
         var ovn = Number(ov);
         if (typeof window.applyTotalRP === "function"){
+          document.body.dataset.rank = String(getRankTierFromRP(ovn).key || "harbinger").toLowerCase();
           window.applyTotalRP(ovn, { skipCinematic: true });
           return;
         }
       }
     }
 
-    /* 2) second priority — last saved rank RP */
-    try{
-      var savedRp = localStorage.getItem("bf6_rankRP");
-      if (savedRp != null && savedRp !== "" && Number.isFinite(Number(savedRp))){
-        var srp = Number(savedRp);
+    var savedTier = localStorage.getItem("bf6_rankTier");
+    var savedRp   = localStorage.getItem("bf6_rankRP");
 
-        /* apply body rank immediately so background never flashes wrong */
-        var savedTier = localStorage.getItem("bf6_rankTier");
-        if (savedTier){
-          document.body.dataset.rank = String(savedTier).toLowerCase();
-        }
+    if (savedTier && document.body){
+      document.body.dataset.rank = String(savedTier).toLowerCase();
+    }
 
-        if (typeof window.applyTotalRP === "function"){
-          window.applyTotalRP(srp, { skipCinematic: true });
-          return;
-        }
+    if (savedRp != null && savedRp !== "" && Number.isFinite(Number(savedRp))){
+      var srp = Number(savedRp);
+      if (typeof window.applyTotalRP === "function"){
+        window.applyTotalRP(srp, { skipCinematic: true });
+        return;
       }
-    }catch(e){}
+    }
 
-    /* 3) fallback — compute from current active matches */
     var total = getEffectiveTotalRPPatched();
     if (typeof window.applyTotalRP === "function"){
       window.applyTotalRP(total, { skipCinematic: true });
     }
   }catch(e){}
 };
+
 
 
   document.addEventListener("DOMContentLoaded", function(){
