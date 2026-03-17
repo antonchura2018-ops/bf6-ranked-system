@@ -5533,10 +5533,10 @@ body[data-rank="harbinger"] .navbar.navTabs > .nav-btn:not(.active):hover::befor
     0 0 8px rgba(90,190,90,.04) !important;
 }
 /* =========================================================
-   HARBINGER — NAVBAR CENTER + HEIGHT FIX
+   HARBINGER — NAVBAR CENTER + PNG FIT SAFE
    ========================================================= */
 
-/* 1) сам navbar по центру */
+/* navbar centered, but do not crush button widths */
 body[data-rank="harbinger"] .navbar.navTabs{
   position: relative !important;
   isolation: isolate !important;
@@ -5544,8 +5544,7 @@ body[data-rank="harbinger"] .navbar.navTabs{
   justify-content: center !important;
   align-items: center !important;
 
-  width: fit-content !important;
-  min-width: 0 !important;
+  width: max-content !important;
   margin: 0 auto !important;
 
   left: auto !important;
@@ -5555,12 +5554,52 @@ body[data-rank="harbinger"] .navbar.navTabs{
   overflow: visible !important;
   z-index: 20 !important;
 
-  /* даємо більше висоти під PNG-рамку */
-  padding-top: 18px !important;
-  padding-bottom: 6px !important;
+  padding-top: 14px !important;
+  padding-bottom: 0 !important;
 }
 
-/* 2) якщо navbar лежить у верхньому wrapper/container, не дати йому обрізати рамку */
+/* never allow tab text to wrap */
+body[data-rank="harbinger"] .navbar.navTabs > .nav-btn,
+body[data-rank="harbinger"] .navbar.navTabs > .nav-btn > .nav-btn__label{
+  white-space: nowrap !important;
+}
+
+body[data-rank="harbinger"] .navbar.navTabs > .nav-btn{
+  position: relative !important;
+  flex: 0 0 auto !important;
+  min-width: 0 !important;
+  height: auto !important;
+  min-height: 0 !important;
+  z-index: 1 !important;
+  overflow: visible !important;
+}
+
+body[data-rank="harbinger"] .navbar.navTabs > .nav-btn.active{
+  z-index: 9 !important;
+}
+
+/* keep the dark tab shape close to the original size */
+body[data-rank="harbinger"] .navbar.navTabs > .nav-btn::before{
+  top: 2px !important;
+  bottom: 2px !important;
+}
+
+/* text only slightly lower */
+body[data-rank="harbinger"] .navbar.navTabs > .nav-btn > .nav-btn__label{
+  transform: translateY(1px) !important;
+}
+
+/* active PNG frame: slightly flatter and lower, but not over-compressed */
+body[data-rank="harbinger"] .navbar.navTabs > .nav-btn > .nav-btn__ornament{
+  left: -24px !important;
+  right: -24px !important;
+  top: -22px !important;
+  height: 108px !important;
+  z-index: 10 !important;
+  overflow: visible !important;
+}
+
+/* make sure wrappers do not crop the frame */
 body[data-rank="harbinger"] .navbar.navTabs,
 body[data-rank="harbinger"] .navbar.navTabs-wrap,
 body[data-rank="harbinger"] .topbar,
@@ -5568,41 +5607,4 @@ body[data-rank="harbinger"] .topbar-inner,
 body[data-rank="harbinger"] .header,
 body[data-rank="harbinger"] .header-inner{
   overflow: visible !important;
-}
-
-/* 3) робимо самі темні вкладки нижчими */
-body[data-rank="harbinger"] .navbar.navTabs > .nav-btn{
-  min-height: 54px !important;
-  height: 54px !important;
-  z-index: 1 !important;
-}
-
-body[data-rank="harbinger"] .navbar.navTabs > .nav-btn::before{
-  top: 10px !important;
-  bottom: 8px !important;
-}
-
-/* 4) текст трохи нижче, щоб зверху не було забагато пустоти */
-body[data-rank="harbinger"] .navbar.navTabs > .nav-btn > .nav-btn__label{
-  transform: translateY(3px) !important;
-}
-
-/* 5) active вкладка поверх сусідніх */
-body[data-rank="harbinger"] .navbar.navTabs > .nav-btn.active{
-  z-index: 9 !important;
-}
-
-/* 6) рамка: трохи нижче і трохи менш висока */
-body[data-rank="harbinger"] .navbar.navTabs > .nav-btn > .nav-btn__ornament{
-  left: -26px !important;
-  right: -26px !important;
-  top: -20px !important;
-  height: 104px !important;
-  z-index: 10 !important;
-  overflow: visible !important;
-}
-
-/* 7) сусідні вкладки не повинні перекривати active frame */
-body[data-rank="harbinger"] .navbar.navTabs > .nav-btn:not(.active){
-  z-index: 1 !important;
 }
