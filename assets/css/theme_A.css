@@ -5531,30 +5531,31 @@ body[data-rank="harbinger"] .navbar.navTabs > .nav-btn.active:last-child > span:
 body[data-rank="harbinger"] .navbar.navTabs > .nav-btn.active{
   color: #ffffff !important;
   text-shadow:
-    0 0 8px rgba(255,255,255,.12),
-    0 0 18px rgba(106,184,92,.16),
-    0 0 30px rgba(106,184,92,.08) !important;
+    0 0 10px rgba(255,255,255,.18),
+    0 0 20px rgba(255,255,255,.08),
+    0 0 24px rgba(106,184,92,.18),
+    0 0 38px rgba(106,184,92,.10) !important;
 }
 
 /* active tab plate — трохи помітніша за неактивні */
 body[data-rank="harbinger"] .navbar.navTabs > .nav-btn.active::before{
-  border-color: rgba(106,184,92,.38) !important;
+  border-color: rgba(140,220,128,.52) !important;
 
   background:
     linear-gradient(
       180deg,
-      rgba(26,30,26,.78) 0%,
-      rgba(12,14,12,.90) 48%,
-      rgba(8,10,8,.96) 100%
+      rgba(34,40,34,.86) 0%,
+      rgba(16,18,16,.94) 44%,
+      rgba(8,10,8,.98) 100%
     ) !important;
 
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.10),
-    inset 0 -1px 0 rgba(0,0,0,.40),
-    0 0 14px rgba(106,184,92,.10),
-    0 0 30px rgba(106,184,92,.06) !important;
+    inset 0 1px 0 rgba(255,255,255,.12),
+    inset 0 -1px 0 rgba(0,0,0,.42),
+    0 0 18px rgba(106,184,92,.14),
+    0 0 38px rgba(106,184,92,.08) !important;
 
-  filter: brightness(1.08) !important;
+  filter: brightness(1.15) !important;
 }
 
 /* top active line — однакова довжина для всіх вкладок */
