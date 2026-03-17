@@ -5359,6 +5359,8 @@ body[data-rank="harbinger"] #dashboard.section.active .rankHome .pulseGrid .metr
 body[data-rank="harbinger"] .navbar.navTabs{
   position: relative !important;
   isolation: isolate !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
 }
 
 /* outer navbar shell */
@@ -5398,12 +5400,15 @@ body[data-rank="harbinger"] .navbar.navTabs > .nav-btn{
   position: relative !important;
   isolation: isolate !important;
   overflow: visible !important;
+  z-index: 1 !important;
   color: rgba(255,250,245,.74) !important;
   text-shadow: 0 0 3px rgba(255,255,255,.03) !important;
 }
 
 /* dark plate for all tabs */
 body[data-rank="harbinger"] .navbar.navTabs > .nav-btn::before{
+  top: 6px !important;
+  bottom: 6px !important;
   border: 1px solid rgba(95,170,95,.16) !important;
   background:
     linear-gradient(
@@ -5436,6 +5441,7 @@ body[data-rank="harbinger"] .navbar.navTabs > .nav-btn > .nav-btn__label{
   z-index: 6 !important;
   display: inline-block !important;
   letter-spacing: .13em !important;
+  transform: translateY(2px) !important;
 }
 
 /* PNG ornament layer */
@@ -5449,6 +5455,7 @@ body[data-rank="harbinger"] .navbar.navTabs > .nav-btn > .nav-btn__ornament{
   pointer-events: none !important;
   display: block !important;
   opacity: 0 !important;
+  overflow: visible !important;
 
   background-image: url('/assets/img/ui/tab_active_harbinger.png') !important;
   background-repeat: no-repeat !important;
@@ -5471,6 +5478,7 @@ body[data-rank="harbinger"] .navbar.navTabs > .nav-btn:not(.active) > .nav-btn__
 
 /* active tab */
 body[data-rank="harbinger"] .navbar.navTabs > .nav-btn.active{
+  z-index: 8 !important;
   color: #ffffff !important;
   text-shadow:
     0 0 10px rgba(255,255,255,.18),
