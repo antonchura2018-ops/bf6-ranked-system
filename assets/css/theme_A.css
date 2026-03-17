@@ -5351,3 +5351,278 @@ body[data-rank="harbinger"] #dashboard.section.active .rankHome .pulseGrid .metr
   background: none !important;
   box-shadow: none !important;
 }
+/* =========================================================
+   RANK 4+ NAVBAR SYSTEM — HARBINGER BASE
+   нова чиста система вкладок для rank 4+
+   ========================================================= */
+
+body[data-rank="harbinger"] .navbar.navTabs{
+  position: relative !important;
+  isolation: isolate !important;
+}
+
+/* outer shell */
+body[data-rank="harbinger"] .navbar.navTabs::after{
+  content: "" !important;
+  position: absolute !important;
+  inset: -2px !important;
+  pointer-events: none !important;
+  z-index: 0 !important;
+  border-radius: 14px !important;
+
+  border: 1px solid rgba(98,190,98,.26) !important;
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(110,220,110,.14),
+      rgba(220,255,220,.08),
+      rgba(110,220,110,.14),
+      transparent
+    ) top / 100% 2px no-repeat,
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(110,220,110,.12),
+      rgba(220,255,220,.07),
+      rgba(110,220,110,.12),
+      transparent
+    ) bottom / 100% 2px no-repeat,
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,.02),
+      rgba(0,0,0,0) 42%,
+      rgba(80,170,80,.04)
+    ) !important;
+
+  box-shadow:
+    0 0 0 1px rgba(98,190,98,.08),
+    0 0 14px rgba(98,190,98,.10),
+    0 0 34px rgba(98,190,98,.05) !important;
+}
+
+/* buttons base */
+body[data-rank="harbinger"] .navbar.navTabs > .nav-btn{
+  position: relative !important;
+  isolation: isolate !important;
+  overflow: visible !important;
+  color: rgba(255,250,245,.82) !important;
+  text-shadow:
+    0 0 4px rgba(255,255,255,.04) !important;
+}
+
+/* main plate */
+body[data-rank="harbinger"] .navbar.navTabs > .nav-btn::before{
+  border: 1px solid rgba(95,170,95,.20) !important;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(20,22,20,.72) 0%,
+      rgba(10,11,10,.90) 50%,
+      rgba(5,6,5,.96) 100%
+    ) !important;
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.05),
+    inset 0 -1px 0 rgba(0,0,0,.38),
+    0 0 10px rgba(80,170,80,.03) !important;
+}
+
+/* seams between tabs */
+body[data-rank="harbinger"] .navbar.navTabs > .nav-btn::after{
+  background: linear-gradient(
+    180deg,
+    transparent,
+    rgba(100,200,100,.18),
+    transparent
+  ) !important;
+  opacity: .75 !important;
+}
+
+/* label layer */
+body[data-rank="harbinger"] .navbar.navTabs > .nav-btn > .nav-btn__label{
+  position: relative !important;
+  z-index: 4 !important;
+  display: inline-block !important;
+  letter-spacing: .13em !important;
+}
+
+/* ornament base */
+body[data-rank="harbinger"] .navbar.navTabs > .nav-btn > .nav-btn__ornament{
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 2 !important;
+  pointer-events: none !important;
+  display: block !important;
+  opacity: 0 !important;
+  transition: opacity .18s ease, transform .18s ease !important;
+}
+
+/* inactive ornament is off */
+body[data-rank="harbinger"] .navbar.navTabs > .nav-btn:not(.active) > .nav-btn__ornament{
+  opacity: 0 !important;
+}
+
+/* active tab text */
+body[data-rank="harbinger"] .navbar.navTabs > .nav-btn.active{
+  color: #ffffff !important;
+  text-shadow:
+    0 0 12px rgba(255,255,255,.18),
+    0 0 24px rgba(255,255,255,.08),
+    0 0 28px rgba(110,210,110,.18),
+    0 0 44px rgba(110,210,110,.08) !important;
+}
+
+/* active tab plate */
+body[data-rank="harbinger"] .navbar.navTabs > .nav-btn.active::before{
+  border-color: rgba(145,240,145,.60) !important;
+  outline: 0 !important;
+
+  background:
+    radial-gradient(180px 70px at 50% 18%, rgba(120,255,120,.10), transparent 60%),
+    linear-gradient(
+      180deg,
+      rgba(44,60,44,.88) 0%,
+      rgba(16,22,16,.95) 48%,
+      rgba(6,10,6,.98) 100%
+    ) !important;
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.12),
+    inset 0 -1px 0 rgba(0,0,0,.40),
+    0 0 18px rgba(100,220,100,.18),
+    0 0 38px rgba(100,220,100,.08) !important;
+
+  filter: brightness(1.16) saturate(1.06) !important;
+}
+
+/* top active line */
+body[data-rank="harbinger"] .navbar.navTabs > .nav-btn.active > .nav-btn__label::before{
+  content: "" !important;
+  position: absolute !important;
+  pointer-events: none !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  top: -18px !important;
+  width: calc(100% + 8px) !important;
+  min-width: 52px !important;
+  max-width: 118px !important;
+  height: 2px !important;
+  border-radius: 999px !important;
+
+  background: linear-gradient(
+    90deg,
+    rgba(120,210,120,.92) 0%,
+    rgba(215,255,215,1) 50%,
+    rgba(120,210,120,.92) 100%
+  ) !important;
+
+  box-shadow:
+    0 0 8px rgba(100,220,100,.22),
+    0 0 18px rgba(100,220,100,.10) !important;
+}
+
+/* ACTIVE ORNAMENT FRAME */
+body[data-rank="harbinger"] .navbar.navTabs > .nav-btn.active > .nav-btn__ornament{
+  opacity: 1 !important;
+  transform: scale(1) !important;
+}
+
+/* inner glow panel */
+body[data-rank="harbinger"] .navbar.navTabs > .nav-btn.active > .nav-btn__ornament::before{
+  content: "" !important;
+  position: absolute !important;
+  left: 10px !important;
+  right: 10px !important;
+  top: 6px !important;
+  bottom: 6px !important;
+  border-radius: 12px !important;
+  pointer-events: none !important;
+
+  background:
+    radial-gradient(circle at 50% 40%,
+      rgba(150,255,150,.22) 0%,
+      rgba(110,255,110,.12) 34%,
+      rgba(0,0,0,0) 72%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(90,255,90,.08) 0%,
+      rgba(70,180,70,.06) 48%,
+      rgba(20,40,20,.04) 100%
+    ) !important;
+
+  box-shadow:
+    inset 0 0 0 1px rgba(170,255,170,.14),
+    0 0 16px rgba(110,255,110,.18),
+    0 0 36px rgba(110,255,110,.08) !important;
+}
+
+/* top gem */
+body[data-rank="harbinger"] .navbar.navTabs > .nav-btn.active > .nav-btn__ornament::after{
+  content: "" !important;
+  position: absolute !important;
+  left: 50% !important;
+  top: -8px !important;
+  width: 16px !important;
+  height: 16px !important;
+  transform: translateX(-50%) rotate(45deg) !important;
+  pointer-events: none !important;
+
+  background: linear-gradient(
+    135deg,
+    rgba(230,255,230,1) 0%,
+    rgba(150,255,150,.95) 38%,
+    rgba(80,220,80,.95) 100%
+  ) !important;
+
+  border: 1px solid rgba(200,255,200,.55) !important;
+  box-shadow:
+    0 0 10px rgba(130,255,130,.24),
+    0 0 24px rgba(110,255,110,.14) !important;
+}
+
+/* left/right mechanical braces */
+body[data-rank="harbinger"] .navbar.navTabs > .nav-btn.active{
+  --hb-brace-width: 24px;
+}
+
+body[data-rank="harbinger"] .navbar.navTabs > .nav-btn.active::after{
+  background: none !important;
+}
+
+body[data-rank="harbinger"] .navbar.navTabs > .nav-btn.active > .nav-btn__ornament{
+  filter: drop-shadow(0 0 10px rgba(100,220,100,.12)) !important;
+}
+
+body[data-rank="harbinger"] .navbar.navTabs > .nav-btn.active > .nav-btn__label::after{
+  content: "" !important;
+  position: absolute !important;
+  left: 50% !important;
+  bottom: -16px !important;
+  width: 18px !important;
+  height: 8px !important;
+  transform: translateX(-50%) !important;
+  clip-path: polygon(50% 100%, 0 0, 100% 0) !important;
+  background: linear-gradient(
+    180deg,
+    rgba(180,255,180,.92),
+    rgba(90,220,90,.88)
+  ) !important;
+  box-shadow:
+    0 0 8px rgba(110,255,110,.14) !important;
+}
+
+/* optional hover */
+body[data-rank="harbinger"] .navbar.navTabs > .nav-btn:not(.active):hover{
+  color: rgba(255,255,255,.92) !important;
+}
+
+body[data-rank="harbinger"] .navbar.navTabs > .nav-btn:not(.active):hover::before{
+  border-color: rgba(120,200,120,.26) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.06),
+    inset 0 -1px 0 rgba(0,0,0,.38),
+    0 0 12px rgba(90,190,90,.05) !important;
+}
