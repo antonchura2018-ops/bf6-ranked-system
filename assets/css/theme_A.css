@@ -5522,3 +5522,81 @@ body[data-rank="harbinger"] .navbar.navTabs > .nav-btn.active:last-child > span:
   left: 18px !important;
   right: 18px !important;
 }
+/* =========================================================
+   HARBINGER — ACTIVE TAB POLISH
+   однакова top-line для всіх active tabs + сильніше виділення active state
+   ========================================================= */
+
+/* active tab text */
+body[data-rank="harbinger"] .navbar.navTabs > .nav-btn.active{
+  color: #ffffff !important;
+  text-shadow:
+    0 0 8px rgba(255,255,255,.12),
+    0 0 18px rgba(106,184,92,.16),
+    0 0 30px rgba(106,184,92,.08) !important;
+}
+
+/* active tab plate — трохи помітніша за неактивні */
+body[data-rank="harbinger"] .navbar.navTabs > .nav-btn.active::before{
+  border-color: rgba(106,184,92,.38) !important;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(26,30,26,.78) 0%,
+      rgba(12,14,12,.90) 48%,
+      rgba(8,10,8,.96) 100%
+    ) !important;
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.10),
+    inset 0 -1px 0 rgba(0,0,0,.40),
+    0 0 14px rgba(106,184,92,.10),
+    0 0 30px rgba(106,184,92,.06) !important;
+
+  filter: brightness(1.08) !important;
+}
+
+/* top active line — однакова довжина для всіх вкладок */
+body[data-rank="harbinger"] .navbar.navTabs > .nav-btn.active > span::before{
+  content: "" !important;
+  display: block !important;
+  position: absolute !important;
+  z-index: 50 !important;
+  pointer-events: none !important;
+
+  top: -10px !important;
+  left: 16px !important;
+  right: 16px !important;
+  height: 2px !important;
+
+  background: linear-gradient(
+    90deg,
+    rgba(106,184,92,.92) 0%,
+    rgba(170,235,150,.98) 50%,
+    rgba(106,184,92,.92) 100%
+  ) !important;
+
+  box-shadow:
+    0 0 8px rgba(106,184,92,.18),
+    0 0 18px rgba(106,184,92,.10) !important;
+
+  border-radius: 999px !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* прибиваємо старі різні розтяжки для 1/2/3/4 кнопки */
+body[data-rank="harbinger"] .navbar.navTabs > .nav-btn.active:first-child > span::before,
+body[data-rank="harbinger"] .navbar.navTabs > .nav-btn.active:nth-child(2) > span::before,
+body[data-rank="harbinger"] .navbar.navTabs > .nav-btn.active:nth-child(3) > span::before,
+body[data-rank="harbinger"] .navbar.navTabs > .nav-btn.active:last-child > span::before{
+  left: 16px !important;
+  right: 16px !important;
+}
+
+/* optional: неактивні трохи спокійніші, щоб active краще читалась */
+body[data-rank="harbinger"] .navbar.navTabs > .nav-btn:not(.active){
+  color: rgba(255,250,245,.88) !important;
+  text-shadow: 0 0 4px rgba(255,255,255,.04) !important;
+}
