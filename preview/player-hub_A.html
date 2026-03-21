@@ -1879,24 +1879,22 @@ body{
 <body data-rank="harbinger">
 
 <!-- NAVIGATION (TABS) -->
-<div class="navbar navTabs">
+<div class="navbar navTabs" id="rankNavTabs">
+  <span class="nav-active-frame" aria-hidden="true"></span>
+
   <button class="nav-btn active" onclick="showTab('dashboard', this)">
-    <span class="nav-btn__ornament" aria-hidden="true"></span>
     <span class="nav-btn__label">PLAYER HUB</span>
   </button>
 
   <button class="nav-btn" onclick="showTab('rank', this)">
-    <span class="nav-btn__ornament" aria-hidden="true"></span>
     <span class="nav-btn__label">RANK</span>
   </button>
 
   <button class="nav-btn" onclick="showTab('history', this)">
-    <span class="nav-btn__ornament" aria-hidden="true"></span>
     <span class="nav-btn__label">MATCH HISTORY</span>
   </button>
 
   <button class="nav-btn" onclick="showTab('add', this)">
-    <span class="nav-btn__ornament" aria-hidden="true"></span>
     <span class="nav-btn__label">ADD MATCH</span>
   </button>
 </div>
