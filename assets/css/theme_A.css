@@ -5352,43 +5352,32 @@ body[data-rank="harbinger"] #dashboard.section.active .rankHome .pulseGrid .metr
   box-shadow: none !important;
 }
 /* =========================================================
-   HARBINGER NAVBAR — EMERGENCY OVERRIDE
-   ВСТАВИТИ В САМИЙ КІНЕЦЬ theme_A.css
+   HARBINGER — FINAL PNG NAVBAR
+   active:   /assets/img/ui/tab_active_harbinger.png
+   inactive: /assets/img/ui/tab_inactive_harbinger.png
+   divider:  /assets/img/ui/tab_divider_harbinger.png
    ========================================================= */
 
-/* 1) сам navbar */
 body[data-rank="harbinger"] .navbar.navTabs{
   position: relative !important;
   left: 50% !important;
   right: auto !important;
   transform: translateX(-50%) !important;
-
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  gap: 0 !important;
-
-  width: max-content !important;
   margin: 0 !important;
-  padding: 10px 0 0 0 !important;
-
+  padding-top: 10px !important;
   overflow: visible !important;
   isolation: isolate !important;
-  z-index: 50 !important;
-
-  background: transparent !important;
-  border: none !important;
-  box-shadow: none !important;
+  z-index: 20 !important;
 }
 
-/* 2) прибираємо зовнішню обводку всього navbar */
+/* прибираємо зовнішню обводку navbar */
 body[data-rank="harbinger"] .navbar.navTabs::before,
 body[data-rank="harbinger"] .navbar.navTabs::after{
   content: none !important;
   display: none !important;
 }
 
-/* 3) батьківські обгортки не повинні різати PNG */
+/* не обрізати PNG */
 body[data-rank="harbinger"] .navbar.navTabs,
 body[data-rank="harbinger"] .topbar,
 body[data-rank="harbinger"] .topbar-inner,
@@ -5397,103 +5386,76 @@ body[data-rank="harbinger"] .header-inner{
   overflow: visible !important;
 }
 
-/* 4) базова кнопка */
+/* ВАЖЛИВО: не міняємо розміри кнопок */
 body[data-rank="harbinger"] .navbar.navTabs > .nav-btn{
   position: relative !important;
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-
   overflow: visible !important;
   isolation: isolate !important;
   z-index: 1 !important;
-
   background: transparent !important;
-  border: none !important;
   box-shadow: none !important;
 }
 
-/* 5) inactive PNG */
+/* inactive PNG */
 body[data-rank="harbinger"] .navbar.navTabs > .nav-btn::before{
   content: "" !important;
   position: absolute !important;
   inset: 0 !important;
   z-index: 1 !important;
   pointer-events: none !important;
-
   border: none !important;
   box-shadow: none !important;
-  background-color: transparent !important;
-  background-image: url('/assets/img/ui/tab_inactive_harbinger.png') !important;
-  background-repeat: no-repeat !important;
-  background-position: center center !important;
-  background-size: 100% 100% !important;
-
+  background: url('/assets/img/ui/tab_inactive_harbinger.png') center / 100% 100% no-repeat !important;
   opacity: 1 !important;
 }
 
-/* 6) divider PNG */
+/* divider PNG */
 body[data-rank="harbinger"] .navbar.navTabs > .nav-btn::after{
   content: "" !important;
   position: absolute !important;
   top: 50% !important;
-  right: -8px !important;
-  width: 16px !important;
-  height: 56px !important;
+  right: -7px !important;
+  width: 14px !important;
+  height: 54px !important;
   transform: translateY(-50%) !important;
-  z-index: 4 !important;
+  z-index: 3 !important;
   pointer-events: none !important;
-
   border: none !important;
   box-shadow: none !important;
-  background-color: transparent !important;
-  background-image: url('/assets/img/ui/tab_divider_harbinger.png') !important;
-  background-repeat: no-repeat !important;
-  background-position: center center !important;
-  background-size: 100% 100% !important;
-
+  background: url('/assets/img/ui/tab_divider_harbinger.png') center / 100% 100% no-repeat !important;
   opacity: 1 !important;
 }
 
-/* остання вкладка без divider */
 body[data-rank="harbinger"] .navbar.navTabs > .nav-btn:last-child::after{
   content: none !important;
   display: none !important;
 }
 
-/* 7) текст */
+/* текст поверх PNG */
 body[data-rank="harbinger"] .navbar.navTabs > .nav-btn > .nav-btn__label{
   position: relative !important;
   z-index: 6 !important;
-  display: inline-block !important;
-  background: transparent !important;
 }
 
-/* 8) active PNG рамка */
+/* active PNG */
 body[data-rank="harbinger"] .navbar.navTabs > .nav-btn > .nav-btn__ornament{
   position: absolute !important;
-  left: -28px !important;
-  right: -28px !important;
-  top: -24px !important;
-  height: 110px !important;
-
+  left: -30px !important;
+  right: -30px !important;
+  top: -26px !important;
+  height: 118px !important;
+  z-index: 8 !important;
+  pointer-events: none !important;
   display: block !important;
   opacity: 0 !important;
-  pointer-events: none !important;
   overflow: visible !important;
-  z-index: 8 !important;
 
-  background: transparent !important;
-  background-image: url('/assets/img/ui/tab_active_harbinger.png') !important;
-  background-repeat: no-repeat !important;
-  background-position: center center !important;
-  background-size: 100% auto !important;
-  box-shadow: none !important;
+  background: url('/assets/img/ui/tab_active_harbinger.png') center 50% / 100% auto no-repeat !important;
 }
 
-/* 9) active tab */
+/* active */
 body[data-rank="harbinger"] .navbar.navTabs > .nav-btn.active{
-  z-index: 10 !important;
+  z-index: 9 !important;
 }
 
 body[data-rank="harbinger"] .navbar.navTabs > .nav-btn.active::before{
@@ -5508,27 +5470,11 @@ body[data-rank="harbinger"] .navbar.navTabs > .nav-btn.active > .nav-btn__orname
   opacity: 1 !important;
 }
 
-/* 10) прибираємо всі старі декоративні артефакти */
+/* прибираємо старі артефакти */
 body[data-rank="harbinger"] .navbar.navTabs > .nav-btn > .nav-btn__label::before,
 body[data-rank="harbinger"] .navbar.navTabs > .nav-btn > .nav-btn__label::after,
 body[data-rank="harbinger"] .navbar.navTabs > .nav-btn > .nav-btn__ornament::before,
 body[data-rank="harbinger"] .navbar.navTabs > .nav-btn > .nav-btn__ornament::after{
   content: none !important;
   display: none !important;
-  background: none !important;
-  border: none !important;
-  box-shadow: none !important;
-}
-
-/* 11) страховка від старих hover/block стилів */
-body[data-rank="harbinger"] .navbar.navTabs > .nav-btn:hover::before{
-  opacity: 1 !important;
-}
-
-body[data-rank="harbinger"] .navbar.navTabs > .nav-btn.active:hover::before{
-  opacity: 0 !important;
-}
-
-body[data-rank="harbinger"] .navbar.navTabs > .nav-btn.active:hover > .nav-btn__ornament{
-  opacity: 1 !important;
 }
