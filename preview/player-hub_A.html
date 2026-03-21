@@ -2274,10 +2274,10 @@ function showTab(tabId, btn) {
 
   // Dashboard mode toggle (CSS controls overlay + no-scroll)
 document.body.classList.toggle("is-dashboard", tabId === "dashboard");
+
+if (tabId === "dashboard") {
   restoreRankFromStorage();
-  // (optional safety) force overlay visibility even if old CSS exists
-var overlay = document.getElementById("rankEmblemOverlay");
-if (overlay) overlay.style.display = (tabId === "dashboard") ? "block" : "none";
+}
   
 
   // Always reset scroll when switching tabs
@@ -2290,12 +2290,14 @@ if (overlay) overlay.style.display = (tabId === "dashboard") ? "block" : "none";
 
   // Emblem overlay: only on dashboard
   try{
-    var overlay = ensureRankEmblemOverlay();
-    if (overlay){
-      overlay.style.display = (tabId === "dashboard") ? "block" : "none";
-      if (tabId === "dashboard") lockRankEmblemOverlayPosition();
-    }
-  }catch(e){}
+   var overlay = ensureRankEmblemOverlay();
+   if (overlay){
+     overlay.style.display = (tabId === "dashboard") ? "block" : "none";
+     if (tabId === "dashboard") {
+       lockRankEmblemOverlayPosition();
+     }
+   }
+ }catch(e){}
 
 
   // 4) season lock for ADD tab
