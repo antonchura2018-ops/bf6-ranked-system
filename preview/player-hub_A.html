@@ -5221,58 +5221,7 @@ renderHistoryFromStorage();
   });
 })();
 </script>
-<script>
-<script>
-/* =========================================================
-   PLAYER HUB — RESTORE/FLASH HARD OVERRIDE
-   ДОДАТИ В САМИЙ КІНЕЦЬ player-hub_A.html
-   ========================================================= */
-(function(){
-  if (typeof window.restoreRankFromStorage !== "function") return;
 
-  const _restoreRankFromStorage = window.restoreRankFromStorage;
-  let restoreQueued = false;
-
-  window.restoreRankFromStorage = function(){
-    if (!document.body.classList.contains("is-dashboard")) return;
-    if (restoreQueued) return;
-
-    restoreQueued = true;
-    requestAnimationFrame(function(){
-      restoreQueued = false;
-      try{
-        _restoreRankFromStorage();
-      }catch(e){}
-    });
-  };
-})();
-
-(function(){
-  if (typeof window.showTab !== "function") return;
-
-  const _showTab = window.showTab;
-
-  window.showTab = function(tabId, btn){
-    _showTab(tabId, btn);
-
-    const isDash = (tabId === "dashboard");
-    document.body.classList.toggle("is-dashboard", isDash);
-
-    try{
-      var overlay = (typeof ensureRankEmblemOverlay === "function")
-        ? ensureRankEmblemOverlay()
-        : document.getElementById("rankEmblemOverlay");
-
-      if (overlay){
-        overlay.style.display = isDash ? "block" : "none";
-        if (isDash && typeof lockRankEmblemOverlayPosition === "function"){
-          lockRankEmblemOverlayPosition();
-        }
-      }
-    }catch(e){}
-  };
-})();
-</script>
 
 <script src="assets/js/stats.js?v=1"></script>
   
