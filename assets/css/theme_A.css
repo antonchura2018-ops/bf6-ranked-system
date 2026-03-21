@@ -5352,106 +5352,96 @@ body[data-rank="harbinger"] #dashboard.section.active .rankHome .pulseGrid .metr
   box-shadow: none !important;
 }
 /* =========================================================
-   HARBINGER — ACTIVE TAB PNG SYSTEM
+   HARBINGER — ACTIVE TAB PNG SYSTEM (ROLLBACK STABLE)
    uses /assets/img/ui/tab_active_harbinger.png
    ========================================================= */
 
 body[data-rank="harbinger"] .navbar.navTabs{
   position: relative !important;
   isolation: isolate !important;
-  margin-left: auto !important;
-  margin-right: auto !important;
+  left: 50% !important;
+  right: auto !important;
+  transform: translateX(-50%) !important;
+  margin: 0 !important;
+  overflow: visible !important;
+  z-index: 20 !important;
+  padding-top: 18px !important;
 }
 
-/* outer navbar shell */
+body[data-rank="harbinger"] .navbar.navTabs,
+body[data-rank="harbinger"] .topbar,
+body[data-rank="harbinger"] .topbar-inner,
+body[data-rank="harbinger"] .header,
+body[data-rank="harbinger"] .header-inner{
+  overflow: visible !important;
+}
+
 body[data-rank="harbinger"] .navbar.navTabs::after{
-  content: "" !important;
-  position: absolute !important;
-  inset: -1px !important;
-  pointer-events: none !important;
-  z-index: 0 !important;
-  border-radius: 14px !important;
-
-  border: 1px solid rgba(98,190,98,.22) !important;
-  background:
-    linear-gradient(
-      90deg,
-      transparent,
-      rgba(110,220,110,.10),
-      rgba(220,255,220,.05),
-      rgba(110,220,110,.10),
-      transparent
-    ) top / 100% 2px no-repeat,
-    linear-gradient(
-      180deg,
-      rgba(255,255,255,.02),
-      rgba(0,0,0,0) 44%,
-      rgba(80,170,80,.03)
-    ) !important;
-
-  box-shadow:
-    0 0 0 1px rgba(98,190,98,.05),
-    0 0 10px rgba(98,190,98,.07),
-    0 0 22px rgba(98,190,98,.04) !important;
+  content: none !important;
+  display: none !important;
 }
 
-/* base tab */
 body[data-rank="harbinger"] .navbar.navTabs > .nav-btn{
   position: relative !important;
   isolation: isolate !important;
   overflow: visible !important;
   z-index: 1 !important;
-  color: rgba(255,250,245,.74) !important;
-  text-shadow: 0 0 3px rgba(255,255,255,.03) !important;
+  color: rgba(255,250,245,.82) !important;
+  text-shadow:
+    0 0 3px rgba(255,255,255,.04),
+    0 0 8px rgba(80,150,80,.04) !important;
 }
 
-/* dark plate for all tabs */
 body[data-rank="harbinger"] .navbar.navTabs > .nav-btn::before{
-  top: 6px !important;
-  bottom: 6px !important;
-  border: 1px solid rgba(95,170,95,.16) !important;
+  border: 1px solid rgba(110,185,110,.12) !important;
   background:
     linear-gradient(
       180deg,
-      rgba(18,20,18,.76) 0%,
-      rgba(8,9,8,.90) 52%,
-      rgba(4,5,4,.96) 100%
+      rgba(18,20,18,.78) 0%,
+      rgba(8,9,8,.92) 52%,
+      rgba(4,5,4,.98) 100%
     ) !important;
 
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.04),
-    inset 0 -1px 0 rgba(0,0,0,.36),
-    0 0 7px rgba(80,170,80,.03) !important;
+    inset 0 1px 0 rgba(255,255,255,.03),
+    inset 0 -1px 0 rgba(0,0,0,.30) !important;
 }
 
-/* separators */
 body[data-rank="harbinger"] .navbar.navTabs > .nav-btn::after{
+  width: 1px !important;
+  top: 12px !important;
+  bottom: 12px !important;
+  right: -1px !important;
+
   background: linear-gradient(
     180deg,
-    transparent,
-    rgba(100,200,100,.14),
-    transparent
+    transparent 0%,
+    rgba(120,220,120,.20) 18%,
+    rgba(235,255,235,.32) 50%,
+    rgba(120,220,120,.20) 82%,
+    transparent 100%
   ) !important;
-  opacity: .72 !important;
+
+  opacity: 1 !important;
+  box-shadow:
+    0 0 6px rgba(110,210,110,.08) !important;
 }
 
-/* label */
 body[data-rank="harbinger"] .navbar.navTabs > .nav-btn > .nav-btn__label{
   position: relative !important;
   z-index: 6 !important;
   display: inline-block !important;
   letter-spacing: .13em !important;
-  transform: translateY(2px) !important;
+  white-space: nowrap !important;
 }
 
-/* PNG ornament layer */
 body[data-rank="harbinger"] .navbar.navTabs > .nav-btn > .nav-btn__ornament{
   position: absolute !important;
   left: -30px !important;
   right: -30px !important;
-  top: -34px !important;
-  height: 126px !important;
-  z-index: 4 !important;
+  top: -26px !important;
+  height: 118px !important;
+  z-index: 10 !important;
   pointer-events: none !important;
   display: block !important;
   opacity: 0 !important;
@@ -5466,19 +5456,19 @@ body[data-rank="harbinger"] .navbar.navTabs > .nav-btn > .nav-btn__ornament{
           drop-shadow(0 0 22px rgba(100,220,100,.05)) !important;
 }
 
-/* inactive tabs */
 body[data-rank="harbinger"] .navbar.navTabs > .nav-btn:not(.active){
-  color: rgba(255,250,245,.72) !important;
-  text-shadow: 0 0 2px rgba(255,255,255,.02) !important;
+  color: rgba(255,250,245,.88) !important;
+  text-shadow:
+    0 0 2px rgba(255,255,255,.03),
+    0 0 6px rgba(90,160,90,.03) !important;
 }
 
 body[data-rank="harbinger"] .navbar.navTabs > .nav-btn:not(.active) > .nav-btn__ornament{
   opacity: 0 !important;
 }
 
-/* active tab */
 body[data-rank="harbinger"] .navbar.navTabs > .nav-btn.active{
-  z-index: 8 !important;
+  z-index: 9 !important;
   color: #ffffff !important;
   text-shadow:
     0 0 10px rgba(255,255,255,.18),
@@ -5487,9 +5477,8 @@ body[data-rank="harbinger"] .navbar.navTabs > .nav-btn.active{
     0 0 34px rgba(110,210,110,.08) !important;
 }
 
-/* keep a dark readable backing under the PNG */
 body[data-rank="harbinger"] .navbar.navTabs > .nav-btn.active::before{
-  border-color: rgba(145,240,145,.20) !important;
+  border-color: rgba(145,240,145,.14) !important;
   background:
     linear-gradient(
       180deg,
@@ -5499,19 +5488,16 @@ body[data-rank="harbinger"] .navbar.navTabs > .nav-btn.active::before{
     ) !important;
 
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.08),
-    inset 0 -1px 0 rgba(0,0,0,.42),
-    0 0 10px rgba(100,220,100,.08) !important;
+    inset 0 1px 0 rgba(255,255,255,.06),
+    inset 0 -1px 0 rgba(0,0,0,.34) !important;
 
-  filter: brightness(1.06) !important;
+  filter: none !important;
 }
 
-/* show the PNG only on active tab */
 body[data-rank="harbinger"] .navbar.navTabs > .nav-btn.active > .nav-btn__ornament{
   opacity: 1 !important;
 }
 
-/* disable old generated lines/gems if any remain somewhere */
 body[data-rank="harbinger"] .navbar.navTabs > .nav-btn.active > .nav-btn__label::before,
 body[data-rank="harbinger"] .navbar.navTabs > .nav-btn.active > .nav-btn__label::after,
 body[data-rank="harbinger"] .navbar.navTabs > .nav-btn.active > .nav-btn__ornament::before,
@@ -5520,7 +5506,6 @@ body[data-rank="harbinger"] .navbar.navTabs > .nav-btn.active > .nav-btn__orname
   display: none !important;
 }
 
-/* hover for inactive tabs */
 body[data-rank="harbinger"] .navbar.navTabs > .nav-btn:not(.active):hover{
   color: rgba(255,255,255,.90) !important;
 }
@@ -5531,4 +5516,31 @@ body[data-rank="harbinger"] .navbar.navTabs > .nav-btn:not(.active):hover::befor
     inset 0 1px 0 rgba(255,255,255,.05),
     inset 0 -1px 0 rgba(0,0,0,.38),
     0 0 8px rgba(90,190,90,.04) !important;
+}
+/* =========================================================
+   HARBINGER — NAV CLEAN KILL
+   прибирає старий теплий/glow шар
+   ========================================================= */
+
+body[data-rank="harbinger"] .navbar.navTabs,
+body[data-rank="harbinger"] .navbar.navTabs::before,
+body[data-rank="harbinger"] .navbar.navTabs::after,
+body[data-rank="harbinger"] .navbar.navTabs > .nav-btn,
+body[data-rank="harbinger"] .navbar.navTabs > .nav-btn::before,
+body[data-rank="harbinger"] .navbar.navTabs > .nav-btn::after{
+  outline: none !important;
+  outline-color: transparent !important;
+}
+
+/* прибрати будь-який теплий зовнішній glow від старих правил */
+body[data-rank="harbinger"] .navbar.navTabs > .nav-btn,
+body[data-rank="harbinger"] .navbar.navTabs > .nav-btn::before,
+body[data-rank="harbinger"] .navbar.navTabs > .nav-btn::after{
+  filter: none !important;
+}
+
+/* inactive tabs clearer, but clean */
+body[data-rank="harbinger"] .navbar.navTabs > .nav-btn:not(.active){
+  color: rgba(255,250,245,.84) !important;
+  text-shadow: 0 0 2px rgba(255,255,255,.02) !important;
 }
