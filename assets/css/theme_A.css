@@ -5359,8 +5359,21 @@ body[data-rank="harbinger"] #dashboard.section.active .rankHome .pulseGrid .metr
 body[data-rank="harbinger"] .navbar.navTabs{
   position: relative !important;
   isolation: isolate !important;
-  margin-left: auto !important;
-  margin-right: auto !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+
+  width: max-content !important;
+  margin: 0 auto !important;
+
+  left: auto !important;
+  right: auto !important;
+  transform: none !important;
+
+  overflow: visible !important;
+  z-index: 20 !important;
+
+  padding-top: 18px !important;
 }
 
 /* outer navbar shell */
@@ -5409,7 +5422,7 @@ body[data-rank="harbinger"] .navbar.navTabs > .nav-btn{
 body[data-rank="harbinger"] .navbar.navTabs > .nav-btn::before{
   top: 6px !important;
   bottom: 6px !important;
-  border: 1px solid rgba(95,170,95,.16) !important;
+  border: 1px solid rgba(110,185,110,.24) !important;
   background:
     linear-gradient(
       180deg,
@@ -5422,17 +5435,23 @@ body[data-rank="harbinger"] .navbar.navTabs > .nav-btn::before{
     inset 0 1px 0 rgba(255,255,255,.04),
     inset 0 -1px 0 rgba(0,0,0,.36),
     0 0 7px rgba(80,170,80,.03) !important;
+  
 }
 
 /* separators */
 body[data-rank="harbinger"] .navbar.navTabs > .nav-btn::after{
   background: linear-gradient(
     180deg,
-    transparent,
-    rgba(100,200,100,.14),
-    transparent
+    transparent 0%,
+    rgba(130,220,130,.28) 22%,
+    rgba(220,255,220,.16) 50%,
+    rgba(130,220,130,.28) 78%,
+    transparent 100%
   ) !important;
-  opacity: .72 !important;
+
+  opacity: .95 !important;
+  box-shadow:
+    0 0 6px rgba(110,210,110,.10) !important;
 }
 
 /* label */
@@ -5449,8 +5468,8 @@ body[data-rank="harbinger"] .navbar.navTabs > .nav-btn > .nav-btn__ornament{
   position: absolute !important;
   left: -30px !important;
   right: -30px !important;
-  top: -34px !important;
-  height: 126px !important;
+  top: -26px !important;
+  height: 118px !important;
   z-index: 4 !important;
   pointer-events: none !important;
   display: block !important;
@@ -5468,8 +5487,10 @@ body[data-rank="harbinger"] .navbar.navTabs > .nav-btn > .nav-btn__ornament{
 
 /* inactive tabs */
 body[data-rank="harbinger"] .navbar.navTabs > .nav-btn:not(.active){
-  color: rgba(255,250,245,.72) !important;
-  text-shadow: 0 0 2px rgba(255,255,255,.02) !important;
+  color: rgba(255,250,245,.82) !important;
+  text-shadow:
+    0 0 3px rgba(255,255,255,.04),
+    0 0 8px rgba(80,150,80,.04) !important;
 }
 
 body[data-rank="harbinger"] .navbar.navTabs > .nav-btn:not(.active) > .nav-btn__ornament{
@@ -5531,4 +5552,12 @@ body[data-rank="harbinger"] .navbar.navTabs > .nav-btn:not(.active):hover::befor
     inset 0 1px 0 rgba(255,255,255,.05),
     inset 0 -1px 0 rgba(0,0,0,.38),
     0 0 8px rgba(90,190,90,.04) !important;
+}
+/* HARBINGER — allow active tab frame to overflow upward */
+body[data-rank="harbinger"] .navbar.navTabs,
+body[data-rank="harbinger"] .topbar,
+body[data-rank="harbinger"] .topbar-inner,
+body[data-rank="harbinger"] .header,
+body[data-rank="harbinger"] .header-inner{
+  overflow: visible !important;
 }
