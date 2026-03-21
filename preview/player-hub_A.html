@@ -561,7 +561,42 @@ body {
   min-height: 100vh;
 }
 
+/* ====== NAV BAR ====== */
+.navbar {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  padding: 20px;
+  background: linear-gradient(180deg, #0f172a, #020617);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
 
+.nav-btn {
+  background: transparent;
+  border: none;
+  color: #9ca3af;
+  font-size: 15px;
+  letter-spacing: 1px;
+  cursor: pointer;
+  padding: 10px 20px;
+  position: relative;
+  transition: color 0.3s;
+}
+
+.nav-btn:hover { color: #38bdf8; }
+.nav-btn.active { color: #22d3ee; }
+
+.nav-btn.active::after {
+  content: '';
+  position: absolute;
+  bottom: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40%;
+  height: 2px;
+  background: linear-gradient(90deg, #22d3ee, #38bdf8);
+  box-shadow: 0 0 12px #22d3ee;
+}
 
 /* ====== CONTENT ====== */
 .section {
@@ -1844,25 +1879,25 @@ body{
 <body data-rank="harbinger">
 
 <!-- NAVIGATION (TABS) -->
-<div class="harbinger-tabs" id="rankNavTabs">
-  <button class="harbinger-tab is-active" onclick="showTab('dashboard', this)">
-    <span class="harbinger-tab__frame" aria-hidden="true"></span>
-    <span class="harbinger-tab__label">PLAYER HUB</span>
+<div class="navbar navTabs">
+  <button class="nav-btn active" onclick="showTab('dashboard', this)">
+    <span class="nav-btn__ornament" aria-hidden="true"></span>
+    <span class="nav-btn__label">PLAYER HUB</span>
   </button>
 
-  <button class="harbinger-tab" onclick="showTab('rank', this)">
-    <span class="harbinger-tab__frame" aria-hidden="true"></span>
-    <span class="harbinger-tab__label">RANK</span>
+  <button class="nav-btn" onclick="showTab('rank', this)">
+    <span class="nav-btn__ornament" aria-hidden="true"></span>
+    <span class="nav-btn__label">RANK</span>
   </button>
 
-  <button class="harbinger-tab" onclick="showTab('history', this)">
-    <span class="harbinger-tab__frame" aria-hidden="true"></span>
-    <span class="harbinger-tab__label">MATCH HISTORY</span>
+  <button class="nav-btn" onclick="showTab('history', this)">
+    <span class="nav-btn__ornament" aria-hidden="true"></span>
+    <span class="nav-btn__label">MATCH HISTORY</span>
   </button>
 
-  <button class="harbinger-tab" onclick="showTab('add', this)">
-    <span class="harbinger-tab__frame" aria-hidden="true"></span>
-    <span class="harbinger-tab__label">ADD MATCH</span>
+  <button class="nav-btn" onclick="showTab('add', this)">
+    <span class="nav-btn__ornament" aria-hidden="true"></span>
+    <span class="nav-btn__label">ADD MATCH</span>
   </button>
 </div>
   
@@ -2223,10 +2258,10 @@ function showTab(tabId, btn) {
     sections[i].classList.remove("active");
   }
 
-   // 2) deactivate all nav buttons
-  var buttons = document.querySelectorAll("#rankNavTabs .harbinger-tab");
+  // 2) deactivate all nav buttons
+  var buttons = document.querySelectorAll(".nav-btn");
   for (var j = 0; j < buttons.length; j++) {
-    buttons[j].classList.remove("is-active");
+    buttons[j].classList.remove("active");
   }
 
   // 3) show target section
@@ -2271,7 +2306,7 @@ if (overlay) overlay.style.display = (tabId === "dashboard") ? "block" : "none";
   }
 
   // 5) activate clicked button
-  if (btn && btn.classList) btn.classList.add("is-active");
+  if (btn && btn.classList) btn.classList.add("active");
 }
   
 function restoreRankFromStorage(){
@@ -2336,6 +2371,31 @@ window.addEventListener("pageshow", function(){
     }
   }catch(e){}
 });
+
+
+  
+  // Safety: ensure navbar always switches tabs even if inline onclick glitches
+(function bindNavClicks(){
+  var map = {
+    "PLAYER HUB": "dashboard",
+    "RANK": "rank",
+    "MATCH HISTORY": "history",
+    "ADD MATCH": "add"
+  };
+
+  var btns = document.querySelectorAll(".nav-btn");
+  for (var i = 0; i < btns.length; i++) {
+    (function(b){
+      b.addEventListener("click", function(){
+        var key = (b.textContent || "").trim().toUpperCase();
+        var id = map[key];
+        if (id) showTab(id, b);
+      });
+    })(btns[i]);
+  }
+})();
+  
+
 /* ===== STORAGE ===== */
 var STORAGE_KEY = "bf6_ranked_matches_v1";
   var BACKUP_KEY = "bf6_backup_v1";
@@ -4838,21 +4898,10 @@ function setDashboardMode(isDash){
 // Hook into showTab (keep your original showTab logic)
 (function wrapShowTab(){
   if (typeof window.showTab !== "function") return;
-
   const _showTab = window.showTab;
-
   window.showTab = function(tabId, btn){
     _showTab(tabId, btn);
     setDashboardMode(tabId === "dashboard");
-
-    if (
-      document.body &&
-      document.body.dataset.rank === "harbinger" &&
-      typeof window.updateHarbingerNavFrame === "function"
-    ) {
-      requestAnimationFrame(window.updateHarbingerNavFrame);
-      setTimeout(window.updateHarbingerNavFrame, 40);
-    }
   };
 })();
 
