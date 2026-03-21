@@ -5221,7 +5221,46 @@ renderHistoryFromStorage();
   });
 })();
 </script>
+<script>
+/* =========================================================
+   PLAYER HUB — SAFE TAB/OVERLAY OVERRIDE
+   ДОДАТИ В САМИЙ КІНЕЦЬ player-hub_A.html
+   Не видаляє старий код, тільки перекриває його
+   ========================================================= */
+(function(){
+  if (typeof window.showTab !== "function") return;
 
+  const originalShowTab = window.showTab;
+
+  window.showTab = function(tabId, btn){
+    // 1) старий tab switch лишається
+    originalShowTab(tabId, btn);
+
+    // 2) dashboard mode тільки один раз, без зайвих дублів
+    const isDash = (tabId === "dashboard");
+    document.body.classList.toggle("is-dashboard", isDash);
+
+    // 3) overlay control — тільки тут, в одному місці
+    try{
+      var overlay = (typeof ensureRankEmblemOverlay === "function")
+        ? ensureRankEmblemOverlay()
+        : document.getElementById("rankEmblemOverlay");
+
+      if (overlay){
+        overlay.style.display = isDash ? "block" : "none";
+        if (isDash && typeof lockRankEmblemOverlayPosition === "function"){
+          lockRankEmblemOverlayPosition();
+        }
+      }
+    }catch(e){}
+
+    // 4) restore rank ТІЛЬКИ при вході в dashboard
+    if (isDash && typeof restoreRankFromStorage === "function"){
+      try{ restoreRankFromStorage(); }catch(e){}
+    }
+  };
+})();
+</script>
 
 <script src="assets/js/stats.js?v=1"></script>
   
