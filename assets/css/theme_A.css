@@ -5352,24 +5352,43 @@ body[data-rank="harbinger"] #dashboard.section.active .rankHome .pulseGrid .metr
   box-shadow: none !important;
 }
 /* =========================================================
-   HARBINGER — ACTIVE TAB PNG SYSTEM (FINAL SAFE BLOCK)
-   uses /assets/img/ui/tab_active_harbinger.png
+   HARBINGER NAVBAR — CLEAN PNG ACTIVE TAB
    ========================================================= */
 
-/* navbar: keep native width/layout, only center it safely */
 body[data-rank="harbinger"] .navbar.navTabs{
   position: relative !important;
-  isolation: isolate !important;
   left: 50% !important;
   right: auto !important;
   transform: translateX(-50%) !important;
+
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0 !important;
+
+  width: auto !important;
+  min-width: 0 !important;
+  padding: 0 18px !important;
+  height: 72px !important;
   margin: 0 !important;
+
   overflow: visible !important;
-  z-index: 20 !important;
-  padding-top: 10px !important;
+  isolation: isolate !important;
+  z-index: 40 !important;
+
+  background: none !important;
+  border: none !important;
+  box-shadow: none !important;
 }
 
-/* allow the active PNG frame to show above the navbar */
+/* прибираємо стару велику зовнішню обводку */
+body[data-rank="harbinger"] .navbar.navTabs::before,
+body[data-rank="harbinger"] .navbar.navTabs::after{
+  content: none !important;
+  display: none !important;
+}
+
+/* всі батьківські обгортки не повинні обрізати PNG */
 body[data-rank="harbinger"] .navbar.navTabs,
 body[data-rank="harbinger"] .topbar,
 body[data-rank="harbinger"] .topbar-inner,
@@ -5378,179 +5397,191 @@ body[data-rank="harbinger"] .header-inner{
   overflow: visible !important;
 }
 
-/* outer shell */
-body[data-rank="harbinger"] .navbar.navTabs::after{
-  content: "" !important;
-  position: absolute !important;
-  inset: -1px !important;
-  pointer-events: none !important;
-  z-index: 0 !important;
-  border-radius: 14px !important;
-
-  border: 1px solid rgba(98,190,98,.20) !important;
-  background:
-    linear-gradient(
-      90deg,
-      transparent,
-      rgba(110,220,110,.08),
-      rgba(220,255,220,.04),
-      rgba(110,220,110,.08),
-      transparent
-    ) top / 100% 2px no-repeat,
-    linear-gradient(
-      180deg,
-      rgba(255,255,255,.02),
-      rgba(0,0,0,0) 44%,
-      rgba(80,170,80,.03)
-    ) !important;
-
-  box-shadow:
-    0 0 0 1px rgba(98,190,98,.05),
-    0 0 10px rgba(98,190,98,.07),
-    0 0 22px rgba(98,190,98,.04) !important;
-}
-
-/* base tab */
 body[data-rank="harbinger"] .navbar.navTabs > .nav-btn{
   position: relative !important;
-  isolation: isolate !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  height: 44px !important;
+  min-height: 44px !important;
+  padding: 0 36px !important;
+  margin: 0 !important;
+
+  border: none !important;
+  border-radius: 0 !important;
+  background: none !important;
+  box-shadow: none !important;
   overflow: visible !important;
-  z-index: 1 !important;
-  color: rgba(255,250,245,.82) !important;
+  isolation: isolate !important;
+
+  color: rgba(255, 248, 235, 0.92) !important;
   text-shadow:
-    0 0 3px rgba(255,255,255,.04),
-    0 0 8px rgba(80,150,80,.04) !important;
+    0 1px 0 rgba(0,0,0,.65),
+    0 0 8px rgba(80,180,80,.08) !important;
+
+  z-index: 2 !important;
 }
 
-/* dark plate for all tabs — keep native geometry */
+/* темна sci-fi пластина кожної вкладки */
 body[data-rank="harbinger"] .navbar.navTabs > .nav-btn::before{
-  border: 1px solid rgba(110,185,110,.24) !important;
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 0 !important;
+  pointer-events: none !important;
+
+  border-radius: 8px !important;
+  border: 1px solid rgba(102, 180, 102, 0.22) !important;
+
   background:
     linear-gradient(
       180deg,
-      rgba(18,20,18,.76) 0%,
-      rgba(8,9,8,.90) 52%,
-      rgba(4,5,4,.96) 100%
+      rgba(20, 31, 20, 0.78) 0%,
+      rgba(8, 13, 8, 0.90) 50%,
+      rgba(3, 6, 3, 0.97) 100%
     ) !important;
 
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.04),
-    inset 0 -1px 0 rgba(0,0,0,.36),
-    0 0 7px rgba(80,170,80,.03) !important;
+    inset 0 1px 0 rgba(255,255,255,.05),
+    inset 0 -1px 0 rgba(0,0,0,.50),
+    0 0 10px rgba(45,110,45,.08) !important;
 }
 
-/* separators between inactive tabs */
+/* тонка верхня зелена лінія, як у референсі */
 body[data-rank="harbinger"] .navbar.navTabs > .nav-btn::after{
+  content: "" !important;
+  position: absolute !important;
+  left: 10px !important;
+  right: 10px !important;
+  top: 0 !important;
+  height: 1px !important;
+  z-index: 1 !important;
+  pointer-events: none !important;
+
   background: linear-gradient(
-    180deg,
+    90deg,
     transparent 0%,
-    rgba(130,220,130,.28) 22%,
-    rgba(220,255,220,.16) 50%,
-    rgba(130,220,130,.28) 78%,
+    rgba(120, 230, 120, 0.28) 18%,
+    rgba(210, 255, 210, 0.42) 50%,
+    rgba(120, 230, 120, 0.28) 82%,
     transparent 100%
   ) !important;
-
-  opacity: .95 !important;
-  box-shadow:
-    0 0 6px rgba(110,210,110,.10) !important;
 }
 
-/* label */
+/* невеликий відступ між вкладками */
+body[data-rank="harbinger"] .navbar.navTabs > .nav-btn + .nav-btn{
+  margin-left: 10px !important;
+}
+
+/* трошки різні ширини під текст */
+body[data-rank="harbinger"] .navbar.navTabs > .nav-btn:nth-child(1){
+  min-width: 220px !important;
+}
+body[data-rank="harbinger"] .navbar.navTabs > .nav-btn:nth-child(2){
+  min-width: 170px !important;
+}
+body[data-rank="harbinger"] .navbar.navTabs > .nav-btn:nth-child(3){
+  min-width: 250px !important;
+}
+body[data-rank="harbinger"] .navbar.navTabs > .nav-btn:nth-child(4){
+  min-width: 190px !important;
+}
+
 body[data-rank="harbinger"] .navbar.navTabs > .nav-btn > .nav-btn__label{
   position: relative !important;
   z-index: 6 !important;
   display: inline-block !important;
-  letter-spacing: .13em !important;
+
+  font-size: 14px !important;
+  font-weight: 800 !important;
+  letter-spacing: .09em !important;
+  line-height: 1 !important;
   white-space: nowrap !important;
+  text-transform: uppercase !important;
 }
 
-/* PNG ornament layer */
+/* PNG рамка активної вкладки */
 body[data-rank="harbinger"] .navbar.navTabs > .nav-btn > .nav-btn__ornament{
   position: absolute !important;
-  left: -30px !important;
-  right: -30px !important;
-  top: -26px !important;
-  height: 118px !important;
-  z-index: 10 !important;
+  left: -18px !important;
+  right: -18px !important;
+  top: -18px !important;
+  bottom: -18px !important;
+  z-index: 5 !important;
   pointer-events: none !important;
   display: block !important;
   opacity: 0 !important;
-  overflow: visible !important;
 
   background-image: url('/assets/img/ui/tab_active_harbinger.png') !important;
   background-repeat: no-repeat !important;
-  background-position: center 50% !important;
-  background-size: 100% auto !important;
+  background-position: center center !important;
+  background-size: 100% 100% !important;
 
-  filter: drop-shadow(0 0 10px rgba(100,220,100,.10))
-          drop-shadow(0 0 22px rgba(100,220,100,.05)) !important;
+  filter:
+    drop-shadow(0 0 10px rgba(95, 220, 95, 0.10))
+    drop-shadow(0 0 22px rgba(95, 220, 95, 0.05)) !important;
 }
 
-/* inactive tabs */
+/* неактивні */
 body[data-rank="harbinger"] .navbar.navTabs > .nav-btn:not(.active){
-  color: rgba(255,250,245,.82) !important;
-  text-shadow:
-    0 0 3px rgba(255,255,255,.04),
-    0 0 8px rgba(80,150,80,.04) !important;
+  color: rgba(255,248,235,.90) !important;
 }
 
 body[data-rank="harbinger"] .navbar.navTabs > .nav-btn:not(.active) > .nav-btn__ornament{
   opacity: 0 !important;
 }
 
-/* active tab */
+/* активна вкладка */
 body[data-rank="harbinger"] .navbar.navTabs > .nav-btn.active{
-  z-index: 9 !important;
-  color: #ffffff !important;
+  z-index: 10 !important;
+  color: #fffef5 !important;
   text-shadow:
+    0 1px 0 rgba(0,0,0,.7),
     0 0 10px rgba(255,255,255,.18),
-    0 0 20px rgba(255,255,255,.08),
-    0 0 24px rgba(110,210,110,.16),
-    0 0 34px rgba(110,210,110,.08) !important;
+    0 0 18px rgba(120,230,120,.12) !important;
 }
 
-/* keep readable dark backing under the PNG */
+/* темна внутрішня основа під PNG */
 body[data-rank="harbinger"] .navbar.navTabs > .nav-btn.active::before{
-  border-color: rgba(145,240,145,.20) !important;
+  border-color: rgba(135, 235, 135, 0.18) !important;
   background:
     linear-gradient(
       180deg,
-      rgba(26,32,26,.84) 0%,
-      rgba(10,14,10,.94) 54%,
-      rgba(4,7,4,.98) 100%
+      rgba(30, 52, 30, 0.82) 0%,
+      rgba(10, 18, 10, 0.94) 52%,
+      rgba(4, 8, 4, 0.98) 100%
     ) !important;
 
   box-shadow:
     inset 0 1px 0 rgba(255,255,255,.08),
-    inset 0 -1px 0 rgba(0,0,0,.42),
-    0 0 10px rgba(100,220,100,.08) !important;
-
-  filter: brightness(1.06) !important;
+    inset 0 -1px 0 rgba(0,0,0,.45),
+    0 0 12px rgba(85,200,85,.10) !important;
 }
 
-/* show PNG only on active tab */
+/* показуємо PNG тільки для active */
 body[data-rank="harbinger"] .navbar.navTabs > .nav-btn.active > .nav-btn__ornament{
   opacity: 1 !important;
 }
 
-/* kill any old generated lines/gems from previous experiments */
-body[data-rank="harbinger"] .navbar.navTabs > .nav-btn.active > .nav-btn__label::before,
-body[data-rank="harbinger"] .navbar.navTabs > .nav-btn.active > .nav-btn__label::after,
-body[data-rank="harbinger"] .navbar.navTabs > .nav-btn.active > .nav-btn__ornament::before,
-body[data-rank="harbinger"] .navbar.navTabs > .nav-btn.active > .nav-btn__ornament::after{
+/* прибираємо залишки старих псевдоелементів */
+body[data-rank="harbinger"] .navbar.navTabs > .nav-btn > .nav-btn__label::before,
+body[data-rank="harbinger"] .navbar.navTabs > .nav-btn > .nav-btn__label::after,
+body[data-rank="harbinger"] .navbar.navTabs > .nav-btn > .nav-btn__ornament::before,
+body[data-rank="harbinger"] .navbar.navTabs > .nav-btn > .nav-btn__ornament::after{
   content: none !important;
   display: none !important;
 }
 
-/* inactive hover */
+/* hover тільки для неактивних */
 body[data-rank="harbinger"] .navbar.navTabs > .nav-btn:not(.active):hover{
-  color: rgba(255,255,255,.90) !important;
+  color: #fffef2 !important;
 }
 
 body[data-rank="harbinger"] .navbar.navTabs > .nav-btn:not(.active):hover::before{
-  border-color: rgba(120,200,120,.22) !important;
+  border-color: rgba(120, 210, 120, 0.28) !important;
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.05),
-    inset 0 -1px 0 rgba(0,0,0,.38),
-    0 0 8px rgba(90,190,90,.04) !important;
+    inset 0 1px 0 rgba(255,255,255,.06),
+    inset 0 -1px 0 rgba(0,0,0,.45),
+    0 0 12px rgba(80,180,80,.07) !important;
 }
