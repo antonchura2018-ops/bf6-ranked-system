@@ -2348,20 +2348,6 @@ function restoreRankFromStorage(){
 document.body.classList.add("is-dashboard");
 window.scrollTo(0, 0);
 
-document.addEventListener("visibilitychange", function(){
-  if (!document.hidden) {
-    restoreRankFromStorage();
-  }
-});
-
-window.addEventListener("focus", function(){
-  restoreRankFromStorage();
-});
-
-window.addEventListener("pageshow", function(){
-  restoreRankFromStorage();
-});
-
  window.addEventListener("blur", function(){
   try{
     const savedTierRaw = localStorage.getItem("bf6_rankTier");
@@ -4896,16 +4882,6 @@ function setDashboardMode(isDash){
 
   if (isDash) lockRankEmblemOverlayPosition();
 }
-
-// Hook into showTab (keep your original showTab logic)
-(function wrapShowTab(){
-  if (typeof window.showTab !== "function") return;
-  const _showTab = window.showTab;
-  window.showTab = function(tabId, btn){
-    _showTab(tabId, btn);
-    setDashboardMode(tabId === "dashboard");
-  };
-})();
 
 document.addEventListener("DOMContentLoaded", function(){
   // default tab is dashboard
