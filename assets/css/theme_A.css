@@ -5544,3 +5544,128 @@ body[data-rank="harbinger"] .navbar.navTabs > .nav-btn:not(.active){
   color: rgba(255,250,245,.84) !important;
   text-shadow: 0 0 2px rgba(255,255,255,.02) !important;
 }
+/* =========================================================
+   HARBINGER — NAV OUTER FRAME HARD KILL
+   ========================================================= */
+
+body[data-rank="harbinger"] .navbar.navTabs{
+  box-shadow: none !important;
+  border: 0 !important;
+  outline: 0 !important;
+  background: transparent !important;
+}
+
+body[data-rank="harbinger"] .navbar.navTabs::before,
+body[data-rank="harbinger"] .navbar.navTabs::after{
+  content: none !important;
+  display: none !important;
+  background: none !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  outline: 0 !important;
+}
+
+body[data-rank="harbinger"] .navbar.navTabs *{
+  outline-color: transparent !important;
+}
+/* =========================================================
+   HARBINGER — NAV TAB CLEAN SEPARATION
+   ========================================================= */
+
+/* base tabs */
+body[data-rank="harbinger"] .navbar.navTabs > .nav-btn{
+  position: relative !important;
+  isolation: isolate !important;
+  overflow: visible !important;
+  z-index: 1 !important;
+  color: rgba(255,250,245,.90) !important;
+  text-shadow:
+    0 0 2px rgba(255,255,255,.03) !important;
+}
+
+/* dark tab plate */
+body[data-rank="harbinger"] .navbar.navTabs > .nav-btn::before{
+  border: 1px solid rgba(120,200,120,.14) !important;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(20,22,20,.84) 0%,
+      rgba(10,11,10,.94) 52%,
+      rgba(5,6,5,.98) 100%
+    ) !important;
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.03),
+    inset 0 -1px 0 rgba(0,0,0,.28) !important;
+}
+
+/* strong separators */
+body[data-rank="harbinger"] .navbar.navTabs > .nav-btn::after{
+  content: "" !important;
+  position: absolute !important;
+  top: 10px !important;
+  bottom: 10px !important;
+  right: -1px !important;
+  width: 1px !important;
+  z-index: 4 !important;
+
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(150,235,150,.26) 18%,
+    rgba(245,255,245,.38) 50%,
+    rgba(150,235,150,.26) 82%,
+    transparent 100%
+  ) !important;
+
+  opacity: 1 !important;
+  box-shadow:
+    0 0 8px rgba(110,210,110,.08) !important;
+}
+
+/* no separator after last tab */
+body[data-rank="harbinger"] .navbar.navTabs > .nav-btn:last-child::after{
+  content: none !important;
+  display: none !important;
+}
+
+/* inactive tabs */
+body[data-rank="harbinger"] .navbar.navTabs > .nav-btn:not(.active){
+  color: rgba(255,250,245,.88) !important;
+  text-shadow:
+    0 0 2px rgba(255,255,255,.03),
+    0 0 4px rgba(100,180,100,.02) !important;
+}
+
+/* inactive hover */
+body[data-rank="harbinger"] .navbar.navTabs > .nav-btn:not(.active):hover{
+  color: rgba(255,255,255,.95) !important;
+}
+
+/* active tab text */
+body[data-rank="harbinger"] .navbar.navTabs > .nav-btn.active{
+  z-index: 9 !important;
+  color: #ffffff !important;
+  text-shadow:
+    0 0 8px rgba(255,255,255,.16),
+    0 0 18px rgba(255,255,255,.06),
+    0 0 20px rgba(110,210,110,.10) !important;
+}
+
+/* active tab backing under PNG */
+body[data-rank="harbinger"] .navbar.navTabs > .nav-btn.active::before{
+  border-color: rgba(145,240,145,.12) !important;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(26,32,26,.86) 0%,
+      rgba(10,14,10,.95) 54%,
+      rgba(4,7,4,.99) 100%
+    ) !important;
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.05),
+    inset 0 -1px 0 rgba(0,0,0,.30) !important;
+
+  filter: none !important;
+}
