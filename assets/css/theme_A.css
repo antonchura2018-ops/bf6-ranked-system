@@ -5352,23 +5352,25 @@ body[data-rank="harbinger"] #dashboard.section.active .rankHome .pulseGrid .metr
   box-shadow: none !important;
 }
 /* =========================================================
-   HARBINGER NAVBAR — KEEP ORIGINAL SIZE, IMPROVE ACTIVE TAB
+   HARBINGER NAVBAR — SURGICAL FIX
+   не міняє розміри navbar і кнопок, тільки active PNG
    ========================================================= */
 
+/* нічого не перебудовуємо в самому navbar */
 body[data-rank="harbinger"] .navbar.navTabs{
   position: relative !important;
   overflow: visible !important;
   isolation: isolate !important;
 }
 
-/* нічого зайвого навколо всього navbar */
+/* не малюємо додаткові рамки навколо всього navbar */
 body[data-rank="harbinger"] .navbar.navTabs::before,
 body[data-rank="harbinger"] .navbar.navTabs::after{
   content: none !important;
   display: none !important;
 }
 
-/* батьківські обгортки не повинні обрізати активну PNG рамку */
+/* батьківські обгортки не повинні обрізати active PNG */
 body[data-rank="harbinger"] .navbar.navTabs,
 body[data-rank="harbinger"] .topbar,
 body[data-rank="harbinger"] .topbar-inner,
@@ -5377,72 +5379,62 @@ body[data-rank="harbinger"] .header-inner{
   overflow: visible !important;
 }
 
-/* не ламаємо існуючі розміри кнопок */
+/* кнопки залишають свої старі розміри та старий вигляд */
 body[data-rank="harbinger"] .navbar.navTabs > .nav-btn{
   position: relative !important;
   overflow: visible !important;
   isolation: isolate !important;
-  z-index: 2 !important;
 }
 
-/* не малюємо нові темні пластини поверх твого існуючого дизайну */
+/* не додаємо нових темних пластин і ліній */
 body[data-rank="harbinger"] .navbar.navTabs > .nav-btn::before,
 body[data-rank="harbinger"] .navbar.navTabs > .nav-btn::after{
   content: none !important;
   display: none !important;
 }
 
-/* текст лишається поверх рамки */
+/* текст над рамкою */
 body[data-rank="harbinger"] .navbar.navTabs > .nav-btn > .nav-btn__label{
   position: relative !important;
-  z-index: 6 !important;
+  z-index: 3 !important;
 }
 
-/* активна PNG рамка — головний фікс */
+/* active PNG рамка */
 body[data-rank="harbinger"] .navbar.navTabs > .nav-btn > .nav-btn__ornament{
   position: absolute !important;
   left: 50% !important;
   top: 50% !important;
-  width: calc(100% + 22px) !important;
-  height: 72px !important;
+  width: calc(100% + 10px) !important;
+  height: calc(100% + 26px) !important;
   transform: translate(-50%, -50%) !important;
 
-  z-index: 5 !important;
-  pointer-events: none !important;
   display: block !important;
   opacity: 0 !important;
+  pointer-events: none !important;
+  z-index: 2 !important;
   overflow: visible !important;
 
-  background-image: url('/assets/img/ui/tab_active_harbinger.png') !important;
-  background-repeat: no-repeat !important;
-  background-position: center center !important;
-  background-size: 100% 100% !important;
-
+  background: url('/assets/img/ui/tab_active_harbinger.png') center / 100% 100% no-repeat !important;
   filter:
-    drop-shadow(0 0 6px rgba(95, 220, 95, 0.08))
-    drop-shadow(0 0 14px rgba(95, 220, 95, 0.04)) !important;
+    drop-shadow(0 0 6px rgba(95,220,95,.08))
+    drop-shadow(0 0 12px rgba(95,220,95,.04)) !important;
 }
 
-/* тільки active показує PNG */
+/* показуємо PNG тільки на active */
 body[data-rank="harbinger"] .navbar.navTabs > .nav-btn.active{
-  z-index: 10 !important;
+  z-index: 5 !important;
 }
 
 body[data-rank="harbinger"] .navbar.navTabs > .nav-btn.active > .nav-btn__ornament{
   opacity: 1 !important;
 }
 
-/* неактивні вкладки без PNG */
+/* на неактивних ornament ховаємо */
 body[data-rank="harbinger"] .navbar.navTabs > .nav-btn:not(.active) > .nav-btn__ornament{
   opacity: 0 !important;
 }
 
-/* hover не ламає рамку */
-body[data-rank="harbinger"] .navbar.navTabs > .nav-btn:not(.active):hover > .nav-btn__ornament{
-  opacity: 0 !important;
-}
-
-/* прибираємо будь-які залишки старих псевдоелементів усередині ornament */
+/* прибираємо будь-які внутрішні псевдоелементи ornament */
 body[data-rank="harbinger"] .navbar.navTabs > .nav-btn > .nav-btn__ornament::before,
 body[data-rank="harbinger"] .navbar.navTabs > .nav-btn > .nav-btn__ornament::after,
 body[data-rank="harbinger"] .navbar.navTabs > .nav-btn > .nav-btn__label::before,
