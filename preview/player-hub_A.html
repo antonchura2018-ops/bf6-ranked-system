@@ -5219,6 +5219,59 @@ renderHistoryFromStorage();
   });
 })();
 </script>
+<script>
+(function(){
+  function updateHarbingerNavFrame(){
+    const body = document.body;
+    if (!body || body.dataset.rank !== "harbinger") return;
+
+    const nav = document.getElementById("rankNavTabs");
+    if (!nav) return;
+
+    const frame = nav.querySelector(".nav-active-frame");
+    const active = nav.querySelector(".nav-btn.active");
+    if (!frame || !active) return;
+
+    const navRect = nav.getBoundingClientRect();
+    const btnRect = active.getBoundingClientRect();
+
+    const frameX = btnRect.left - navRect.left - 24;
+    const frameW = btnRect.width + 48;
+
+    frame.style.transform = `translateX(${frameX}px)`;
+    frame.style.width = `${frameW}px`;
+  }
+
+  function bindHarbingerNavFrame(){
+    const nav = document.getElementById("rankNavTabs");
+    if (!nav) return;
+
+    nav.querySelectorAll(".nav-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        requestAnimationFrame(updateHarbingerNavFrame);
+        setTimeout(updateHarbingerNavFrame, 40);
+      });
+    });
+
+    window.addEventListener("resize", updateHarbingerNavFrame);
+    window.addEventListener("load", updateHarbingerNavFrame);
+    document.addEventListener("visibilitychange", () => {
+      if (!document.hidden) requestAnimationFrame(updateHarbingerNavFrame);
+    });
+
+    requestAnimationFrame(updateHarbingerNavFrame);
+    setTimeout(updateHarbingerNavFrame, 60);
+  }
+
+  if (document.readyState === "loading"){
+    document.addEventListener("DOMContentLoaded", bindHarbingerNavFrame);
+  } else {
+    bindHarbingerNavFrame();
+  }
+
+  window.updateHarbingerNavFrame = updateHarbingerNavFrame;
+})();
+</script>
 
 
 <script src="assets/js/stats.js?v=1"></script>
