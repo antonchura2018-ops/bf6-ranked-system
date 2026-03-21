@@ -5222,25 +5222,42 @@ renderHistoryFromStorage();
 })();
 </script>
 <script>
+<script>
 /* =========================================================
-   PLAYER HUB — SAFE TAB/OVERLAY OVERRIDE
+   PLAYER HUB — RESTORE/FLASH HARD OVERRIDE
    ДОДАТИ В САМИЙ КІНЕЦЬ player-hub_A.html
-   Не видаляє старий код, тільки перекриває його
    ========================================================= */
+(function(){
+  if (typeof window.restoreRankFromStorage !== "function") return;
+
+  const _restoreRankFromStorage = window.restoreRankFromStorage;
+  let restoreQueued = false;
+
+  window.restoreRankFromStorage = function(){
+    if (!document.body.classList.contains("is-dashboard")) return;
+    if (restoreQueued) return;
+
+    restoreQueued = true;
+    requestAnimationFrame(function(){
+      restoreQueued = false;
+      try{
+        _restoreRankFromStorage();
+      }catch(e){}
+    });
+  };
+})();
+
 (function(){
   if (typeof window.showTab !== "function") return;
 
-  const originalShowTab = window.showTab;
+  const _showTab = window.showTab;
 
   window.showTab = function(tabId, btn){
-    // 1) старий tab switch лишається
-    originalShowTab(tabId, btn);
+    _showTab(tabId, btn);
 
-    // 2) dashboard mode тільки один раз, без зайвих дублів
     const isDash = (tabId === "dashboard");
     document.body.classList.toggle("is-dashboard", isDash);
 
-    // 3) overlay control — тільки тут, в одному місці
     try{
       var overlay = (typeof ensureRankEmblemOverlay === "function")
         ? ensureRankEmblemOverlay()
@@ -5253,11 +5270,6 @@ renderHistoryFromStorage();
         }
       }
     }catch(e){}
-
-    // 4) restore rank ТІЛЬКИ при вході в dashboard
-    if (isDash && typeof restoreRankFromStorage === "function"){
-      try{ restoreRankFromStorage(); }catch(e){}
-    }
   };
 })();
 </script>
