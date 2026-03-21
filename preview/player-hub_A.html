@@ -2219,10 +2219,10 @@ function showTab(tabId, btn) {
     sections[i].classList.remove("active");
   }
 
-  // 2) deactivate all nav buttons
-  var buttons = document.querySelectorAll(".nav-btn");
+   // 2) deactivate all nav buttons
+  var buttons = document.querySelectorAll("#rankNavTabs .harbinger-tab");
   for (var j = 0; j < buttons.length; j++) {
-    buttons[j].classList.remove("active");
+    buttons[j].classList.remove("is-active");
   }
 
   // 3) show target section
@@ -2267,7 +2267,7 @@ if (overlay) overlay.style.display = (tabId === "dashboard") ? "block" : "none";
   }
 
   // 5) activate clicked button
-  if (btn && btn.classList) btn.classList.add("active");
+  if (btn && btn.classList) btn.classList.add("is-active");
 }
   
 function restoreRankFromStorage(){
