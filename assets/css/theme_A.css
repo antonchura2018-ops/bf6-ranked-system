@@ -800,193 +800,9 @@ body { background: transparent; }
   background: linear-gradient(90deg, transparent, rgba(255,255,255,.12), transparent);
   opacity: .8;
 }
- 
 
 
-/* =========================================================
-   NAVBAR — FORCE TRANSPARENT STRIP (KILL BLUE BAND)
-   Paste as VERY LAST block in theme_A.css
-   ========================================================= */
 
-/* 1) сам navbar — повністю прозорий, без blur */
-.navbar,
-.navbar.navRail{
-  background: transparent !important;
-  background-image: none !important;
-  backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;
-
-  border: 0 !important;
-  outline: 0 !important;
-  box-shadow: none !important;
-}
-
-/* 2) прибити можливі лінії/оверлеї з інших css */
-.navbar::before,
-.navbar::after{
-  background: none !important;
-  box-shadow: none !important;
-  border: 0 !important;
-  opacity: 1 !important;
-}
-
-.navbar.navRail::before{
-  content: none !important;
-  display: none !important;
-}
-
-.navbar.navRail::after{
-  /* твоя тонка червона лінія — залишаємо */
-  content:"" !important;
-  display:block !important;
-}
-
-/* =========================================================
-   NAVBAR STRIP FIX — ONLY RAIL, NO BLUE/BLACK BAND
-   Paste as VERY LAST block in theme_A.css
-   ========================================================= */
-
-/* 1) navbar area must be fully transparent + minimal height */
-.navbar,
-.navbar.navRail{
-  background: transparent !important;
-  background-image: none !important;
-  box-shadow: none !important;
-  border: 0 !important;
-
-  backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;
-
-  /* ключ: прибираємо “велику шапку” */
-  padding: 10px 0 6px !important;
-  height: auto !important;
-}
-
-/* 2) just in case ui-kit or other theme adds something */
-.navbar::before,
-.navbar::after{
-  box-shadow: none !important;
-}
-
-.navbar.navRail::before{
-  content: none !important;
-  display: none !important;
-}
-
-/* 4) If you still see a “full-width strip”, it’s usually from .app container
-      (because navbar is inside .app with max-width + padding).
-      Make navbar full-bleed. */
-.navbar{
-  width: 100vw !important;
-  margin-left: calc(50% - 50vw) !important;
-  margin-right: calc(50% - 50vw) !important;
-}
-/* =========================================================
-   KILL TOP OVERLAY STRIP (vignette layers)
-   Paste as VERY LAST block in theme_A.css
-   ========================================================= */
-
-/* 1) Disable global vignette overlay */
-body::after{
-  content: none !important;
-  display: none !important;
-  background: none !important;
-}
-
-/* 2) Disable rankHome vignette overlay */
-.rankHome__vignette{
-  display: none !important;
-  background: none !important;
-  opacity: 0 !important;
-}
-
-/* 3) If any extra top “cloud” exists */
-.rankHome__center::before{
-  content: none !important;
-  display: none !important;
-  background: none !important;
-}
-
-/* 4) Make sure navbar area has NO own backdrop */
-.navbar,
-.navbar.navRail{
-  background: transparent !important;
-  box-shadow: none !important;
-  backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;
-}
-body::before{ filter:none !important; }
-
-/* =========================================================
-   HOME + NAV FIXES (Ring lower + Better caps + Remove dot)
-   Paste at VERY END of theme_A.css
-   ========================================================= */
-
-/* 1) LOWER the whole hero (ring + title + metrics) */
-.rankHome__center{
-  /* було 140px — зробимо нижче */
-  padding-top: 190px !important;
-}
-
-/* (опціонально) якщо хочеш ще нижче — збільш до 210-230px */
-
-
-/* 2) REMOVE the active red DOT (the one you pointed) */
-.navbar.navRail .nav-btn.active span::after{
-  content: none !important;
-  display: none !important;
-}
-
-/* 3) UPGRADE side caps (the бокові штуки біля PLAYER HUB / ADD MATCH) */
-.navCap{
-  position: relative;
-  z-index: 3;
-  height: 38px;
-  width: 52px;              /* трохи ширше, щоб виглядало “важче” */
-  flex: 0 0 52px;
-  margin: 0 -10px;          /* злипання з кнопками */
-
-  background:
-    /* внутрішній червоний жар */
-    radial-gradient(90px 44px at 50% 50%, rgba(255,60,30,.22), transparent 62%),
-    /* верхній хайлайт */
-    linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,0) 42%),
-    /* метал */
-    linear-gradient(180deg, rgba(34,34,40,.92), rgba(10,10,14,.92));
-
-  border: 1px solid rgba(255,255,255,.10);
-  box-shadow:
-    0 12px 26px rgba(0,0,0,.55),
-    inset 0 0 0 1px rgba(0,0,0,.42);
-
-  overflow: hidden;
-}
-
-/* додатковий “скос/ребро” як у AAA UI */
-.navCap::after{
-  content:"";
-  position:absolute;
-  inset: 0;
-  background:
-    linear-gradient(135deg,
-      transparent 0 42%,
-      rgba(255,60,30,.18) 50%,
-      transparent 58% 100%);
-  opacity: .7;
-  pointer-events:none;
-}
-
-/* sharper chevron shapes */
-.navCap--L{
-  clip-path: polygon(0 50%, 22px 0, 100% 0, 100% 100%, 22px 100%);
-  border-top-left-radius: 12px;
-  border-bottom-left-radius: 12px;
-}
-.navCap--R{
-  clip-path: polygon(0 0, calc(100% - 22px) 0, 100% 50%, calc(100% - 22px) 100%, 0 100%);
-  border-top-right-radius: 12px;
-  border-bottom-right-radius: 12px;
-}
 /* =========================================================
    FIX: HERO POSITION (make it start from top, then push down)
    Paste at VERY END of theme_A.css
@@ -998,225 +814,7 @@ body::before{ filter:none !important; }
 }
 
 
-/* =========================================================
-   NAV TABS — ORANGE SPACE RAIL (1:1 like screenshot)
-   Works with your HTML:
-   <div class="navbar navRail">
-     <span class="navCap navCap--L"></span>
-     <button class="nav-btn ..."><span>...</span></button>...
-     <span class="navCap navCap--R"></span>
-   </div>
-   ========================================================= */
 
-:root{
-  --tabH: 46px;
-  --tabW: min(860px, 92vw);
-
-  --tabLine: rgba(255,255,255,.12);
-  --tabLine2: rgba(255,255,255,.06);
-
-  --tabOrange: #ff3b1f;
-  --tabOrange2:#ff8a4a;
-
-  --tabGlassTop: rgba(255,255,255,.06);
-  --tabSteelA: rgba(18,18,22,.78);
-  --tabSteelB: rgba(8,8,10,.88);
-}
-
-/* navbar контейнер — тільки тримає вкладки вгорі */
-.navbar.navRail{
-  position: sticky;
-  top: 0;
-  z-index: 9999;
-
-  height: auto !important;
-  padding: 18px 0 10px !important;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  background: transparent !important;
-  border: 0 !important;
-  box-shadow: none !important;
-  backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;
-}
-
-/* прибираємо стару "металеву планку" (вона дає зайвий фон) */
-.navbar.navRail::before,
-.navbar.navRail::after{
-  content: none !important;
-}
-
-/* caps по краях — як "направляючі" */
-.navCap{
-  width: 70px;
-  height: var(--tabH);
-  flex: 0 0 auto;
-  position: relative;
-  pointer-events: none;
-  opacity: .9;
-
-  background:
-    linear-gradient(180deg, var(--tabGlassTop), rgba(255,255,255,0) 45%),
-    linear-gradient(180deg, var(--tabSteelA), var(--tabSteelB));
-  border: 1px solid var(--tabLine);
-  box-shadow:
-    0 18px 50px rgba(0,0,0,.55),
-    inset 0 0 0 1px rgba(0,0,0,.35);
-}
-
-.navCap--L{
-  margin-right: -14px; /* злипання з першою кнопкою */
-  clip-path: polygon(0 50%, 22px 0, 100% 0, 100% 100%, 22px 100%);
-  border-top-left-radius: 12px;
-  border-bottom-left-radius: 12px;
-}
-.navCap--R{
-  margin-left: -14px;
-  clip-path: polygon(0 0, calc(100% - 22px) 0, 100% 50%, calc(100% - 22px) 100%, 0 100%);
-  border-top-right-radius: 12px;
-  border-bottom-right-radius: 12px;
-}
-
-/* кнопки */
-.navbar.navRail .nav-btn{
-  height: var(--tabH);
-  min-width: 180px;
-  padding: 0 22px;
-  margin: 0 -14px; /* злипання як у рефі */
-  position: relative;
-
-  border: 1px solid var(--tabLine);
-  background:
-    linear-gradient(180deg, var(--tabGlassTop), rgba(255,255,255,0) 45%),
-    linear-gradient(180deg, var(--tabSteelA), var(--tabSteelB));
-  box-shadow:
-    0 18px 50px rgba(0,0,0,.55),
-    inset 0 0 0 1px rgba(0,0,0,.35);
-
-  color: rgba(255,255,255,.75);
-  font-family: var(--font-ui);
-  font-weight: 800;
-  font-size: 12px;
-  letter-spacing: .18em;
-  text-transform: uppercase;
-
-  cursor: pointer;
-  outline: none;
-
-  clip-path: polygon(
-    0 50%,
-    22px 0,
-    calc(100% - 22px) 0,
-    100% 50%,
-    calc(100% - 22px) 100%,
-    22px 100%
-  );
-
-  transition: transform .12s ease, filter .12s ease, color .12s ease, border-color .12s ease;
-}
-
-.navbar.navRail .nav-btn span{
-  position: relative;
-  display: inline-block;
-  transform: translateY(0.5px);
-}
-
-/* тонка внутрішня рамка */
-.navbar.navRail .nav-btn::before{
-  content:"";
-  position:absolute;
-  inset: 2px;
-  clip-path: inherit;
-  border: 1px solid var(--tabLine2);
-  opacity: .7;
-  pointer-events:none;
-}
-
-/* hover */
-.navbar.navRail .nav-btn:hover{
-  color: rgba(255,255,255,.92);
-  transform: translateY(-1px);
-}
-
-/* ACTIVE — як на скріні (помаранчеве свічення + нижня лінія) */
-.navbar.navRail .nav-btn.active{
-  color: rgba(255,255,255,.95);
-  border-color: color-mix(in srgb, var(--tabOrange) 60%, rgba(255,255,255,.18));
-
-  background:
-    radial-gradient(160px 70px at 50% 55%, rgba(255,70,30,.22), transparent 62%),
-    linear-gradient(180deg, var(--tabGlassTop), rgba(255,255,255,0) 45%),
-    linear-gradient(180deg, rgba(50,16,12,.72), rgba(8,8,10,.90));
-
-  box-shadow:
-    0 18px 56px rgba(0,0,0,.62),
-    0 0 44px rgba(255,70,30,.16),
-    inset 0 0 0 1px rgba(0,0,0,.35);
-}
-
-/* нижня помаранчева "рейка" на активній вкладці */
-.navbar.navRail .nav-btn.active::after{
-  content:"";
-  position:absolute;
-  left: 26px;
-  right: 26px;
-  bottom: 6px;
-  height: 2px;
-  border-radius: 999px;
-  background: linear-gradient(90deg, transparent, var(--tabOrange), transparent);
-  box-shadow: 0 0 18px rgba(255,70,30,.35);
-  opacity: 1;
-}
-
-/* ВАЖЛИВО: прибираємо "червону точку", яку ти бачив раніше */
-.navbar.navRail .nav-btn.active span::after{
-  content: none !important;
-}
-/* --- NAV: remove side caps (1:1 like your screenshot) --- */
-.navbar.navRail .navCap{
-  display: none !important;
-}
-/* tabs no longer need negative overlap with caps */
-.navbar.navRail .nav-btn{
-  margin: 0 -10px !important; /* трохи менше злипання, як у рефі */
-}
-
-/* FIRST tab: left edge straight, right edge angled */
-.navbar.navRail .nav-btn:first-of-type{
-  margin-left: 0 !important;
-  clip-path: polygon(
-    0 0,
-    calc(100% - 22px) 0,
-    100% 50%,
-    calc(100% - 22px) 100%,
-    0 100%
-  ) !important;
-  border-top-left-radius: 10px;
-  border-bottom-left-radius: 10px;
-}
-
-/* LAST tab: right edge straight, left edge angled */
-.navbar.navRail .nav-btn:last-of-type{
-  margin-right: 0 !important;
-  clip-path: polygon(
-    22px 0,
-    100% 0,
-    100% 100%,
-    22px 100%,
-    0 50%
-  ) !important;
-  border-top-right-radius: 10px;
-  border-bottom-right-radius: 10px;
-}
-
-/* make inner seam match new shapes */
-.navbar.navRail .nav-btn:first-of-type::before,
-.navbar.navRail .nav-btn:last-of-type::before{
-  clip-path: inherit !important;
-}
 /* ==========================================================
    NAV TABS — RECT (match reference) ✅ paste VERY END
    ========================================================== */
@@ -5352,7 +4950,7 @@ body[data-rank="harbinger"] #dashboard.section.active .rankHome .pulseGrid .metr
   box-shadow: none !important;
 }
 /* =========================================================
-   HARBINGER — FINAL PNG NAVBAR
+   HARBINGER — FINAL CLEAN PNG NAVBAR
    active:   /assets/img/ui/tab_active_harbinger.png
    inactive: /assets/img/ui/tab_inactive_harbinger.png
    divider:  /assets/img/ui/tab_divider_harbinger.png
@@ -5370,14 +4968,14 @@ body[data-rank="harbinger"] .navbar.navTabs{
   z-index: 20 !important;
 }
 
-/* прибираємо зовнішню обводку navbar */
+/* прибираємо зовнішню обводку біля всього navbar */
 body[data-rank="harbinger"] .navbar.navTabs::before,
 body[data-rank="harbinger"] .navbar.navTabs::after{
   content: none !important;
   display: none !important;
 }
 
-/* не обрізати PNG */
+/* важливо: не обрізати PNG */
 body[data-rank="harbinger"] .navbar.navTabs,
 body[data-rank="harbinger"] .topbar,
 body[data-rank="harbinger"] .topbar-inner,
@@ -5386,7 +4984,7 @@ body[data-rank="harbinger"] .header-inner{
   overflow: visible !important;
 }
 
-/* ВАЖЛИВО: не міняємо розміри кнопок */
+/* не міняємо геометрію кнопок */
 body[data-rank="harbinger"] .navbar.navTabs > .nav-btn{
   position: relative !important;
   overflow: visible !important;
@@ -5414,9 +5012,9 @@ body[data-rank="harbinger"] .navbar.navTabs > .nav-btn::after{
   content: "" !important;
   position: absolute !important;
   top: 50% !important;
-  right: -7px !important;
-  width: 14px !important;
-  height: 54px !important;
+  right: -8px !important;
+  width: 16px !important;
+  height: 58px !important;
   transform: translateY(-50%) !important;
   z-index: 3 !important;
   pointer-events: none !important;
@@ -5440,17 +5038,16 @@ body[data-rank="harbinger"] .navbar.navTabs > .nav-btn > .nav-btn__label{
 /* active PNG */
 body[data-rank="harbinger"] .navbar.navTabs > .nav-btn > .nav-btn__ornament{
   position: absolute !important;
-  left: -30px !important;
-  right: -30px !important;
-  top: -26px !important;
-  height: 118px !important;
+  left: -24px !important;
+  right: -24px !important;
+  top: -18px !important;
+  height: 92px !important;
   z-index: 8 !important;
   pointer-events: none !important;
   display: block !important;
   opacity: 0 !important;
   overflow: visible !important;
-
-  background: url('/assets/img/ui/tab_active_harbinger.png') center 50% / 100% auto no-repeat !important;
+  background: url('/assets/img/ui/tab_active_harbinger.png') center center / 100% 100% no-repeat !important;
 }
 
 /* active */
@@ -5470,7 +5067,7 @@ body[data-rank="harbinger"] .navbar.navTabs > .nav-btn.active > .nav-btn__orname
   opacity: 1 !important;
 }
 
-/* прибираємо старі артефакти */
+/* прибираємо старі декоративні артефакти */
 body[data-rank="harbinger"] .navbar.navTabs > .nav-btn > .nav-btn__label::before,
 body[data-rank="harbinger"] .navbar.navTabs > .nav-btn > .nav-btn__label::after,
 body[data-rank="harbinger"] .navbar.navTabs > .nav-btn > .nav-btn__ornament::before,
