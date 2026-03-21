@@ -561,42 +561,7 @@ body {
   min-height: 100vh;
 }
 
-/* ====== NAV BAR ====== */
-.navbar {
-  display: flex;
-  justify-content: center;
-  gap: 30px;
-  padding: 20px;
-  background: linear-gradient(180deg, #0f172a, #020617);
-  border-bottom: 1px solid rgba(255,255,255,0.05);
-}
 
-.nav-btn {
-  background: transparent;
-  border: none;
-  color: #9ca3af;
-  font-size: 15px;
-  letter-spacing: 1px;
-  cursor: pointer;
-  padding: 10px 20px;
-  position: relative;
-  transition: color 0.3s;
-}
-
-.nav-btn:hover { color: #38bdf8; }
-.nav-btn.active { color: #22d3ee; }
-
-.nav-btn.active::after {
-  content: '';
-  position: absolute;
-  bottom: -6px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 40%;
-  height: 2px;
-  background: linear-gradient(90deg, #22d3ee, #38bdf8);
-  box-shadow: 0 0 12px #22d3ee;
-}
 
 /* ====== CONTENT ====== */
 .section {
@@ -2369,31 +2334,6 @@ window.addEventListener("pageshow", function(){
     }
   }catch(e){}
 });
-
-
-  
-  // Safety: ensure navbar always switches tabs even if inline onclick glitches
-(function bindNavClicks(){
-  var map = {
-    "PLAYER HUB": "dashboard",
-    "RANK": "rank",
-    "MATCH HISTORY": "history",
-    "ADD MATCH": "add"
-  };
-
-  var btns = document.querySelectorAll(".nav-btn");
-  for (var i = 0; i < btns.length; i++) {
-    (function(b){
-      b.addEventListener("click", function(){
-        var key = (b.textContent || "").trim().toUpperCase();
-        var id = map[key];
-        if (id) showTab(id, b);
-      });
-    })(btns[i]);
-  }
-})();
-  
-
 /* ===== STORAGE ===== */
 var STORAGE_KEY = "bf6_ranked_matches_v1";
   var BACKUP_KEY = "bf6_backup_v1";
@@ -4896,10 +4836,21 @@ function setDashboardMode(isDash){
 // Hook into showTab (keep your original showTab logic)
 (function wrapShowTab(){
   if (typeof window.showTab !== "function") return;
+
   const _showTab = window.showTab;
+
   window.showTab = function(tabId, btn){
     _showTab(tabId, btn);
     setDashboardMode(tabId === "dashboard");
+
+    if (
+      document.body &&
+      document.body.dataset.rank === "harbinger" &&
+      typeof window.updateHarbingerNavFrame === "function"
+    ) {
+      requestAnimationFrame(window.updateHarbingerNavFrame);
+      setTimeout(window.updateHarbingerNavFrame, 40);
+    }
   };
 })();
 
@@ -5235,27 +5186,21 @@ renderHistoryFromStorage();
     const navRect = nav.getBoundingClientRect();
     const btnRect = active.getBoundingClientRect();
 
-    const frameX = btnRect.left - navRect.left - 24;
-    const frameW = btnRect.width + 48;
+    const bleed = 22;
+    const frameX = btnRect.left - navRect.left - bleed;
+    const frameW = btnRect.width + bleed * 2;
 
     frame.style.transform = `translateX(${frameX}px)`;
     frame.style.width = `${frameW}px`;
   }
 
   function bindHarbingerNavFrame(){
-    const nav = document.getElementById("rankNavTabs");
-    if (!nav) return;
-
-    nav.querySelectorAll(".nav-btn").forEach((btn) => {
-      btn.addEventListener("click", () => {
-        requestAnimationFrame(updateHarbingerNavFrame);
-        setTimeout(updateHarbingerNavFrame, 40);
-      });
-    });
+    if (!document.body || document.body.dataset.rank !== "harbinger") return;
 
     window.addEventListener("resize", updateHarbingerNavFrame);
     window.addEventListener("load", updateHarbingerNavFrame);
-    document.addEventListener("visibilitychange", () => {
+
+    document.addEventListener("visibilitychange", function(){
       if (!document.hidden) requestAnimationFrame(updateHarbingerNavFrame);
     });
 
