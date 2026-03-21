@@ -2274,10 +2274,10 @@ function showTab(tabId, btn) {
 
   // Dashboard mode toggle (CSS controls overlay + no-scroll)
 document.body.classList.toggle("is-dashboard", tabId === "dashboard");
-
-if (tabId === "dashboard") {
   restoreRankFromStorage();
-}
+  // (optional safety) force overlay visibility even if old CSS exists
+var overlay = document.getElementById("rankEmblemOverlay");
+if (overlay) overlay.style.display = (tabId === "dashboard") ? "block" : "none";
   
 
   // Always reset scroll when switching tabs
@@ -2290,14 +2290,12 @@ if (tabId === "dashboard") {
 
   // Emblem overlay: only on dashboard
   try{
-   var overlay = ensureRankEmblemOverlay();
-   if (overlay){
-     overlay.style.display = (tabId === "dashboard") ? "block" : "none";
-     if (tabId === "dashboard") {
-       lockRankEmblemOverlayPosition();
-     }
-   }
- }catch(e){}
+    var overlay = ensureRankEmblemOverlay();
+    if (overlay){
+      overlay.style.display = (tabId === "dashboard") ? "block" : "none";
+      if (tabId === "dashboard") lockRankEmblemOverlayPosition();
+    }
+  }catch(e){}
 
 
   // 4) season lock for ADD tab
@@ -2347,6 +2345,20 @@ function restoreRankFromStorage(){
 // ensure correct mode on initial load (dashboard is default)
 document.body.classList.add("is-dashboard");
 window.scrollTo(0, 0);
+
+document.addEventListener("visibilitychange", function(){
+  if (!document.hidden) {
+    restoreRankFromStorage();
+  }
+});
+
+window.addEventListener("focus", function(){
+  restoreRankFromStorage();
+});
+
+window.addEventListener("pageshow", function(){
+  restoreRankFromStorage();
+});
 
  window.addEventListener("blur", function(){
   try{
@@ -4882,6 +4894,16 @@ function setDashboardMode(isDash){
 
   if (isDash) lockRankEmblemOverlayPosition();
 }
+
+// Hook into showTab (keep your original showTab logic)
+(function wrapShowTab(){
+  if (typeof window.showTab !== "function") return;
+  const _showTab = window.showTab;
+  window.showTab = function(tabId, btn){
+    _showTab(tabId, btn);
+    setDashboardMode(tabId === "dashboard");
+  };
+})();
 
 document.addEventListener("DOMContentLoaded", function(){
   // default tab is dashboard
