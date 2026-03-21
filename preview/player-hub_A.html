@@ -5171,54 +5171,6 @@ renderHistoryFromStorage();
   });
 })();
 </script>
-<script>
-(function(){
-  function updateHarbingerNavFrame(){
-    const body = document.body;
-    if (!body || body.dataset.rank !== "harbinger") return;
-
-    const nav = document.getElementById("rankNavTabs");
-    if (!nav) return;
-
-    const frame = nav.querySelector(".nav-active-frame");
-    const active = nav.querySelector(".nav-btn.active");
-    if (!frame || !active) return;
-
-    const navRect = nav.getBoundingClientRect();
-    const btnRect = active.getBoundingClientRect();
-
-    const bleedX = 58;
-    const frameX = btnRect.left - navRect.left - bleedX;
-    const frameW = btnRect.width + bleedX * 2;
-
-    frame.style.width = `${frameW}px`;
-    frame.style.transform = `translateX(${frameX}px)`;
-  }
-
-  function bindHarbingerNavFrame(){
-    if (!document.body || document.body.dataset.rank !== "harbinger") return;
-
-    window.addEventListener("resize", updateHarbingerNavFrame);
-    window.addEventListener("load", updateHarbingerNavFrame);
-
-    document.addEventListener("visibilitychange", function(){
-      if (!document.hidden) requestAnimationFrame(updateHarbingerNavFrame);
-    });
-
-    requestAnimationFrame(updateHarbingerNavFrame);
-    setTimeout(updateHarbingerNavFrame, 60);
-    setTimeout(updateHarbingerNavFrame, 180);
-  }
-
-  if (document.readyState === "loading"){
-    document.addEventListener("DOMContentLoaded", bindHarbingerNavFrame);
-  } else {
-    bindHarbingerNavFrame();
-  }
-
-  window.updateHarbingerNavFrame = updateHarbingerNavFrame;
-})();
-</script>
 
 
 <script src="assets/js/stats.js?v=1"></script>
