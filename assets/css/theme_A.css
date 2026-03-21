@@ -5352,199 +5352,166 @@ body[data-rank="harbinger"] #dashboard.section.active .rankHome .pulseGrid .metr
   box-shadow: none !important;
 }
 /* =========================================================
-   HARBINGER — FINAL HARD OVERRIDE
-   place this at the VERY END of theme_A.css
+   HARBINGER — REBUILT CLEAN NAV
+   put at the VERY END of theme_A.css
    ========================================================= */
 
-body[data-rank="harbinger"] #rankNavTabs.navbar.navTabs{
+body[data-rank="harbinger"] #rankNavTabs.harbingerNav{
   position: relative !important;
   left: 50% !important;
-  right: auto !important;
   transform: translateX(-50%) !important;
+  right: auto !important;
   top: 0 !important;
 
-  width: min(1060px, calc(100% - 72px)) !important;
-  margin: 8px 0 0 !important;
+  width: min(1120px, calc(100% - 72px)) !important;
+  margin: 10px 0 0 !important;
   padding: 0 !important;
 
-  display: flex !important;
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
   align-items: center !important;
-  justify-content: center !important;
-  gap: 0 !important;
+  gap: 14px !important;
 
   background: transparent !important;
-  background-image: none !important;
   border: 0 !important;
   border-radius: 0 !important;
   box-shadow: none !important;
   outline: 0 !important;
   filter: none !important;
-  backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;
 
   overflow: visible !important;
   isolation: isolate !important;
-  z-index: 50 !important;
+  z-index: 80 !important;
 }
 
-body[data-rank="harbinger"] #rankNavTabs.navbar.navTabs::before,
-body[data-rank="harbinger"] #rankNavTabs.navbar.navTabs::after{
+body[data-rank="harbinger"] #rankNavTabs.harbingerNav::before,
+body[data-rank="harbinger"] #rankNavTabs.harbingerNav::after{
   content: none !important;
   display: none !important;
 }
 
-body[data-rank="harbinger"] #rankNavTabs.navbar.navTabs .nav-active-frame{
+body[data-rank="harbinger"] #rankNavTabs.harbingerNav .nav-active-frame{
   position: absolute !important;
-  top: -6px !important;
+  top: -8px !important;
   left: 0 !important;
-  width: 236px !important;
-  height: 68px !important;
+  width: 260px !important;
+  height: 74px !important;
   pointer-events: none !important;
-  opacity: 1 !important;
   z-index: 1 !important;
+  opacity: 1 !important;
 
   background: url('/assets/img/ui/tab_active_harbinger.png') center center / 100% 100% no-repeat !important;
 
   transform: translateX(0) !important;
   transition:
-    transform 240ms cubic-bezier(.22,.85,.22,1),
-    width 240ms cubic-bezier(.22,.85,.22,1),
+    transform 260ms cubic-bezier(.22,.85,.22,1),
+    width 260ms cubic-bezier(.22,.85,.22,1),
     opacity 180ms ease !important;
 
   filter:
-    drop-shadow(0 0 6px rgba(95,220,110,.08))
-    drop-shadow(0 0 12px rgba(95,220,110,.04)) !important;
+    drop-shadow(0 0 8px rgba(95,220,110,.10))
+    drop-shadow(0 0 16px rgba(95,220,110,.05)) !important;
 }
 
-body[data-rank="harbinger"] #rankNavTabs.navbar.navTabs > .nav-btn{
-  position: relative !important;
-  z-index: 2 !important;
-  isolation: isolate !important;
-  overflow: visible !important;
+body[data-rank="harbinger"] #rankNavTabs.harbingerNav > .nav-btn{
+  appearance: none !important;
+  -webkit-appearance: none !important;
 
-  flex: 1 1 0 !important;
+  position: relative !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  width: 100% !important;
   min-width: 0 !important;
-  height: 50px !important;
+  height: 58px !important;
   margin: 0 !important;
   padding: 0 18px !important;
 
-  border: 0 !important;
-  border-radius: 0 !important;
   background: transparent !important;
   background-image: none !important;
+  border: 0 !important;
+  border-radius: 0 !important;
   clip-path: none !important;
   transform: none !important;
   box-shadow: none !important;
-  filter: none !important;
   outline: 0 !important;
+  filter: none !important;
+  overflow: visible !important;
+
+  isolation: isolate !important;
+  z-index: 2 !important;
+  cursor: pointer !important;
+}
+
+body[data-rank="harbinger"] #rankNavTabs.harbingerNav > .nav-btn::before{
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  pointer-events: none !important;
+  z-index: 0 !important;
+
+  border-radius: 10px !important;
+  border: 1px solid rgba(88,168,88,.16) !important;
+  background: linear-gradient(
+    180deg,
+    rgba(10,13,10,.88) 0%,
+    rgba(5,7,5,.96) 100%
+  ) !important;
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.03),
+    inset 0 -1px 0 rgba(0,0,0,.28) !important;
+}
+
+body[data-rank="harbinger"] #rankNavTabs.harbingerNav > .nav-btn::after{
+  content: none !important;
+  display: none !important;
+}
+
+body[data-rank="harbinger"] #rankNavTabs.harbingerNav > .nav-btn.active{
+  z-index: 5 !important;
+}
+
+body[data-rank="harbinger"] #rankNavTabs.harbingerNav > .nav-btn.active::before{
+  opacity: 0 !important;
+}
+
+body[data-rank="harbinger"] #rankNavTabs.harbingerNav > .nav-btn > .nav-btn__label{
+  position: relative !important;
+  z-index: 3 !important;
+
+  display: block !important;
+  white-space: nowrap !important;
 
   font-family: "Exo 2", "Rajdhani", sans-serif !important;
   font-weight: 700 !important;
   font-size: 14px !important;
   letter-spacing: .14em !important;
   text-transform: uppercase !important;
-  color: rgba(244,248,244,.82) !important;
+  line-height: 1 !important;
 
-  cursor: pointer !important;
+  color: rgba(244,248,244,.84) !important;
+  text-shadow: none !important;
   transition: color .18s ease !important;
 }
 
-body[data-rank="harbinger"] #rankNavTabs.navbar.navTabs > .nav-btn + .nav-btn{
-  margin-left: 0 !important;
-}
-
-body[data-rank="harbinger"] #rankNavTabs.navbar.navTabs > .nav-btn::before{
-  content: "" !important;
-  position: absolute !important;
-  inset: 5px 7px !important;
-  border-radius: 9px !important;
-  pointer-events: none !important;
-  z-index: 0 !important;
-
-  border: 1px solid rgba(90,170,90,.10) !important;
-  background: linear-gradient(
-    180deg,
-    rgba(12,14,12,.84) 0%,
-    rgba(6,8,6,.94) 100%
-  ) !important;
-
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.025),
-    inset 0 -1px 0 rgba(0,0,0,.28) !important;
-}
-
-body[data-rank="harbinger"] #rankNavTabs.navbar.navTabs > .nav-btn.active{
-  z-index: 5 !important;
+body[data-rank="harbinger"] #rankNavTabs.harbingerNav > .nav-btn.active > .nav-btn__label{
   color: #ffffff !important;
   text-shadow:
     0 0 8px rgba(255,255,255,.10),
-    0 0 14px rgba(120,220,120,.05) !important;
+    0 0 16px rgba(120,220,120,.06) !important;
 }
 
-body[data-rank="harbinger"] #rankNavTabs.navbar.navTabs > .nav-btn.active::before{
-  opacity: 0 !important;
-  background: transparent !important;
-  border-color: transparent !important;
-  box-shadow: none !important;
-}
-
-body[data-rank="harbinger"] #rankNavTabs.navbar.navTabs > .nav-btn > .nav-btn__label{
-  position: relative !important;
-  z-index: 3 !important;
-  display: block !important;
-  white-space: nowrap !important;
-  color: inherit !important;
-  text-shadow: none !important;
-}
-
-body[data-rank="harbinger"] #rankNavTabs.navbar.navTabs > .nav-btn > .nav-btn__label::before,
-body[data-rank="harbinger"] #rankNavTabs.navbar.navTabs > .nav-btn > .nav-btn__label::after{
-  content: none !important;
-  display: none !important;
-}
-
-body[data-rank="harbinger"] #rankNavTabs.navbar.navTabs > .nav-btn::after{
-  content: "" !important;
-  position: absolute !important;
-  top: 13px !important;
-  bottom: 13px !important;
-  right: 0 !important;
-  width: 1px !important;
-  pointer-events: none !important;
-  z-index: 4 !important;
-
-  background: linear-gradient(
-    180deg,
-    transparent 0%,
-    rgba(110,210,110,.12) 22%,
-    rgba(245,255,245,.22) 50%,
-    rgba(110,210,110,.12) 78%,
-    transparent 100%
-  ) !important;
-
-  box-shadow: none !important;
-  opacity: 1 !important;
-}
-
-body[data-rank="harbinger"] #rankNavTabs.navbar.navTabs > .nav-btn:last-child::after{
-  content: none !important;
-  display: none !important;
-}
-
-body[data-rank="harbinger"] #rankNavTabs.navbar.navTabs > .nav-btn:hover{
-  transform: none !important;
-  filter: none !important;
-}
-
-body[data-rank="harbinger"] #rankNavTabs.navbar.navTabs > .nav-btn:not(.active):hover{
+body[data-rank="harbinger"] #rankNavTabs.harbingerNav > .nav-btn:not(.active):hover > .nav-btn__label{
   color: rgba(255,255,255,.92) !important;
 }
 
-body[data-rank="harbinger"] #rankNavTabs.navbar.navTabs > .nav-btn:not(.active):hover::before{
-  border-color: rgba(110,200,110,.14) !important;
+body[data-rank="harbinger"] #rankNavTabs.harbingerNav > .nav-btn:not(.active):hover::before{
+  border-color: rgba(110,200,110,.20) !important;
   background: linear-gradient(
     180deg,
-    rgba(16,19,16,.88) 0%,
-    rgba(8,10,8,.96) 100%
+    rgba(14,18,14,.90) 0%,
+    rgba(7,9,7,.97) 100%
   ) !important;
 }
