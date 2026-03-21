@@ -5447,7 +5447,7 @@ body[data-rank="harbinger"] .navbar.navTabs > .nav-btn > .nav-btn__ornament{
   opacity: 0 !important;
   overflow: visible !important;
 
-  background-image: url('/assets/img/ui/tab_active_harbinger.png') !important;
+  background-image: url('assets/img/ui/tab_active_harbinger.png') !important;
   background-repeat: no-repeat !important;
   background-position: center 50% !important;
   background-size: 100% auto !important;
