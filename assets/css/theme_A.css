@@ -5548,3 +5548,15 @@ body[data-rank="harbinger"] .navbar.navTabs > .nav-btn:not(.active):hover::befor
     inset 0 -1px 0 rgba(0,0,0,.38),
     0 0 8px rgba(90,190,90,.04) !important;
 }
+/* =========================================================
+   HARBINGER — NAV RED TINT KILL
+   ========================================================= */
+
+body[data-rank="harbinger"] .navbar.navTabs,
+body[data-rank="harbinger"] .navbar.navTabs::before,
+body[data-rank="harbinger"] .navbar.navTabs::after,
+body[data-rank="harbinger"] .navbar.navTabs > .nav-btn,
+body[data-rank="harbinger"] .navbar.navTabs > .nav-btn::before,
+body[data-rank="harbinger"] .navbar.navTabs > .nav-btn::after{
+  outline-color: transparent !important;
+}
