@@ -3687,138 +3687,7 @@ body[data-rank="eidolon"]{
     0 0 22px var(--rank-ui-textglow-a),
     0 0 46px color-mix(in srgb, var(--rank-ui-primary) 24%, transparent) !important;
 }
-/* =========================================================
-   NAV TABS — rank color override on top of old good style
-   вставити ОДРАЗУ ПІСЛЯ nav-btn span::after
-   ========================================================= */
 
-/* outer frame glow */
-body .navbar.navTabs::after{
-  border: 1px solid color-mix(in srgb, var(--rank-ui-primary) 42%, rgba(255,150,90,0.38)) !important;
-
-  background:
-    linear-gradient(90deg,
-      transparent,
-      color-mix(in srgb, var(--rank-ui-primary) 70%, transparent),
-      color-mix(in srgb, var(--rank-ui-primary) 18%, white 82%),
-      color-mix(in srgb, var(--rank-ui-primary) 70%, transparent),
-      transparent
-    ) top / 100% 2px no-repeat,
-
-    linear-gradient(90deg,
-      transparent,
-      color-mix(in srgb, var(--rank-ui-primary) 75%, transparent),
-      color-mix(in srgb, var(--rank-ui-primary) 18%, white 82%),
-      color-mix(in srgb, var(--rank-ui-primary) 75%, transparent),
-      transparent
-    ) bottom / 100% 2px no-repeat,
-
-    linear-gradient(180deg,
-      rgba(255,200,160,0.08),
-      rgba(255,200,160,0.00) 45%,
-      color-mix(in srgb, var(--rank-ui-primary) 12%, transparent)
-    ) !important;
-
-  box-shadow:
-    0 0 0 1px color-mix(in srgb, var(--rank-ui-primary) 22%, transparent),
-    0 0 18px color-mix(in srgb, var(--rank-ui-primary) 28%, transparent),
-    0 0 60px color-mix(in srgb, var(--rank-ui-primary) 14%, transparent) !important;
-}
-
-/* segment divider lines */
-body .navbar.navTabs > .nav-btn::after{
-  background: linear-gradient(180deg,
-    transparent,
-    color-mix(in srgb, var(--rank-ui-primary) 28%, transparent),
-    transparent
-  ) !important;
-}
-
-/* default segment border */
-body .navbar.navTabs > .nav-btn::before{
-  border: 1px solid color-mix(in srgb, var(--rank-ui-primary) 24%, rgba(255,140,80,0.22)) !important;
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,0.07),
-    inset 0 -1px 0 rgba(0,0,0,0.35),
-    0 0 18px color-mix(in srgb, var(--rank-ui-primary) 10%, transparent) !important;
-}
-
-/* active tab text */
-body .navbar.navTabs > .nav-btn.active{
-  color: rgba(255,250,245,1) !important;
-  text-shadow:
-    0 0 12px rgba(255,255,255,0.10),
-    0 0 24px color-mix(in srgb, var(--rank-ui-primary) 32%, transparent),
-    0 0 42px color-mix(in srgb, var(--rank-ui-primary) 16%, transparent) !important;
-}
-
-/* active tab plate */
-body .navbar.navTabs > .nav-btn.active::before{
-  border-color: color-mix(in srgb, var(--rank-ui-primary) 54%, rgba(255,120,40,0.38)) !important;
-
-  background:
-    radial-gradient(240px 70px at 20% 50%, color-mix(in srgb, var(--rank-ui-primary) 18%, transparent), transparent 65%),
-    radial-gradient(240px 70px at 80% 50%, color-mix(in srgb, var(--rank-ui-primary) 12%, transparent), transparent 65%),
-    linear-gradient(180deg, rgba(28,18,14,0.56), rgba(8,8,10,0.48)) !important;
-
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,0.10),
-    inset 0 -1px 0 rgba(0,0,0,0.34),
-    0 0 30px color-mix(in srgb, var(--rank-ui-primary) 22%, transparent),
-    0 0 66px color-mix(in srgb, var(--rank-ui-primary) 12%, transparent) !important;
-
-  outline: 1px solid color-mix(in srgb, var(--rank-ui-primary) 46%, transparent) !important;
-  filter: brightness(1.10) !important;
-}
-
-/* clean active top line — same old placement, just recolored */
-body .navbar.navTabs > .nav-btn.active > span::before{
-  content:"" !important;
-  display:block !important;
-  position:absolute !important;
-  z-index: 50 !important;
-  pointer-events:none !important;
-
-  left: 0 !important;
-  right: 0 !important;
-  top: -13px !important;
-  height: 3px !important;
-
-  background: linear-gradient(90deg,
-    var(--rank-ui-primary) 0%,
-    var(--rank-ui-primary) 100%
-  ) !important;
-
-  box-shadow:
-    0 0 12px color-mix(in srgb, var(--rank-ui-primary) 100%, transparent),
-    0 0 26px color-mix(in srgb, var(--rank-ui-primary) 82%, transparent),
-    0 0 48px color-mix(in srgb, var(--rank-ui-primary) 42%, transparent) !important;
-
-  border-radius: 0 !important;
-  opacity: 1 !important;
-  visibility: visible !important;
-  clip-path: none !important;
-  filter: none !important;
-  mix-blend-mode: screen !important;
-}
-
-/* exact fit per tab, using your old good dimensions */
-body .navbar.navTabs > .nav-btn.active:first-child > span::before{
-  left: -50px !important;
-  right: -60px !important;
-}
-body .navbar.navTabs > .nav-btn.active:nth-child(2) > span::before{
-  left: -86px !important;
-  right: -92px !important;
-}
-body .navbar.navTabs > .nav-btn.active:nth-child(3) > span::before{
-  left: -34px !important;
-  right: -40px !important;
-}
-body .navbar.navTabs > .nav-btn.active:last-child > span::before{
-  left: -56px !important;
-  right: -62px !important;
-}
 /* =========================================================
    HARBINGER — emblem size / text polish
    ========================================================= */
@@ -4872,4 +4741,41 @@ body[data-rank="harbinger"] .navbar.navTabs > .nav-btn{
   clip-path: none !important;
   transform: none !important;
   filter: none !important;
+}
+/* =========================================================
+   HARBINGER NAVBAR — LAST OVERRIDE
+   ========================================================= */
+
+/* kill all old global navTabs visuals */
+body[data-rank="harbinger"] .navbar,
+body[data-rank="harbinger"] .navbar.navTabs{
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+body[data-rank="harbinger"] .navbar.navTabs::before,
+body[data-rank="harbinger"] .navbar.navTabs::after{
+  content: none !important;
+  display: none !important;
+}
+
+/* kill old generic nav button visuals */
+body[data-rank="harbinger"] .navbar.navTabs > .nav-btn{
+  color: inherit !important;
+  transform: none !important;
+  filter: none !important;
+}
+
+body[data-rank="harbinger"] .navbar.navTabs > .nav-btn:hover{
+  transform: none !important;
+  filter: none !important;
+}
+
+body[data-rank="harbinger"] .navbar.navTabs > .nav-btn > span::after,
+body[data-rank="harbinger"] .navbar.navTabs > .nav-btn > span::before{
+  content: none !important;
+  display: none !important;
 }
