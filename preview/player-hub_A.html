@@ -1845,6 +1845,7 @@ body{
 
 <!-- NAVIGATION (TABS) -->
 <div class="navbar navTabs harbingerNav" id="rankNavTabs">
+  <div class="harbingerNav__rail"></div>
   <div class="nav-active-frame" aria-hidden="true"></div>
 
   <button class="nav-btn active" onclick="showTab('dashboard', this)">
@@ -5186,13 +5187,11 @@ renderHistoryFromStorage();
     const navRect = nav.getBoundingClientRect();
     const btnRect = active.getBoundingClientRect();
 
-    const frameHeight = 74;
-    const bleed = 6;
-    const frameX = btnRect.left - navRect.left - bleed;
-    const frameW = btnRect.width + bleed * 2;
+    const bleedX = 10;
+    const frameX = btnRect.left - navRect.left - bleedX;
+    const frameW = btnRect.width + bleedX * 2;
 
     frame.style.width = `${frameW}px`;
-    frame.style.height = `${frameHeight}px`;
     frame.style.transform = `translateX(${frameX}px)`;
   }
 
