@@ -5186,12 +5186,14 @@ renderHistoryFromStorage();
     const navRect = nav.getBoundingClientRect();
     const btnRect = active.getBoundingClientRect();
 
-    const bleed = 10;
+    const frameHeight = 74;
+    const bleed = 6;
     const frameX = btnRect.left - navRect.left - bleed;
     const frameW = btnRect.width + bleed * 2;
 
-    frame.style.transform = `translateX(${frameX}px)`;
     frame.style.width = `${frameW}px`;
+    frame.style.height = `${frameHeight}px`;
+    frame.style.transform = `translateX(${frameX}px)`;
   }
 
   function bindHarbingerNavFrame(){
@@ -5206,6 +5208,7 @@ renderHistoryFromStorage();
 
     requestAnimationFrame(updateHarbingerNavFrame);
     setTimeout(updateHarbingerNavFrame, 60);
+    setTimeout(updateHarbingerNavFrame, 180);
   }
 
   if (document.readyState === "loading"){
