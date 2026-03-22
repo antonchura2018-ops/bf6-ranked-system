@@ -6415,5 +6415,5 @@ body[data-rank="harbinger"] .navbar.navTabs > .nav-btn.active + .nav-btn::after{
    ========================================================= */
 
 body[data-rank="harbinger"] #dashboard.section.active .rankHome .rankHome__infoStack{
-  transform: translateY(12px) !important;
+  transform: translateY(14px) !important;
 }
