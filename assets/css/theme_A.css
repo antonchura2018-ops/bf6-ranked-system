@@ -5866,4 +5866,15 @@ body[data-rank="harbinger"] .navbar.navTabs > .nav-btn.active + .nav-btn::after{
     transform-origin: top center !important;
   }
 }
+/* =========================================================
+   HARBINGER — INFO BLOCK TRUE CENTER + SLIGHTLY LOWER
+   ========================================================= */
 
+body[data-rank="harbinger"] #dashboard.section.active .rankHome .rankHome__infoStack{
+  position: relative !important;
+  left: 50% !important;
+  right: auto !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  transform: translateX(-50%) translateY(-34px) !important;
+}
