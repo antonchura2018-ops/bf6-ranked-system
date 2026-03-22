@@ -6078,3 +6078,73 @@ body[data-rank="harbinger"] .navbar.navTabs > .nav-btn.active + .nav-btn::after{
     transform-origin: top center !important;
   }
 }
+/* =========================================================
+   HARBINGER NAVBAR — MICRO FIX AFTER FINAL OVERRIDE
+   paste at absolute end of theme_A.css
+   ========================================================= */
+
+body[data-rank="harbinger"] .navbar.navTabs{
+  gap: 0 !important;
+}
+
+/* inactive tabs closer to the reference */
+body[data-rank="harbinger"] .navbar.navTabs > .nav-btn:not(.active){
+  flex: 0 0 228px !important;
+  width: 228px !important;
+  min-width: 228px !important;
+  max-width: 228px !important;
+}
+
+/* active tab slightly wider like in reference */
+body[data-rank="harbinger"] .navbar.navTabs > .nav-btn.active{
+  flex: 0 0 266px !important;
+  width: 266px !important;
+  min-width: 266px !important;
+  max-width: 266px !important;
+}
+
+/* dark body of inactive tabs should fill more of the segment */
+body[data-rank="harbinger"] .navbar.navTabs > .nav-btn:not(.active)::before{
+  left: 8px !important;
+  right: 8px !important;
+  top: 7px !important;
+  bottom: 7px !important;
+}
+
+/* inactive frame should sit on top of the tab, not look detached */
+body[data-rank="harbinger"] .navbar.navTabs > .nav-btn:not(.active) > .nav-btn__ornament{
+  left: -6px !important;
+  right: -6px !important;
+  top: -3px !important;
+  height: 60px !important;
+  background-position: center center !important;
+  background-size: 100% 100% !important;
+}
+
+/* active frame a bit tighter */
+body[data-rank="harbinger"] .navbar.navTabs > .nav-btn.active > .nav-btn__ornament{
+  left: -18px !important;
+  right: -18px !important;
+  top: -18px !important;
+  height: 90px !important;
+}
+
+/* tabs must visually connect more tightly */
+body[data-rank="harbinger"] .navbar.navTabs > .nav-btn + .nav-btn{
+  margin-left: -10px !important;
+}
+
+/* divider should sit inside the seam, not far away */
+body[data-rank="harbinger"] .navbar.navTabs > .nav-btn + .nav-btn::after{
+  left: -8px !important;
+  width: 18px !important;
+  height: 52px !important;
+  opacity: .95 !important;
+}
+
+/* first divider after active tab */
+body[data-rank="harbinger"] .navbar.navTabs > .nav-btn.active + .nav-btn::after{
+  left: -9px !important;
+  width: 20px !important;
+  height: 54px !important;
+}
