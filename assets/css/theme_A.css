@@ -5646,12 +5646,11 @@ body[data-rank="harbinger"] .navbar.navTabs > .nav-btn > .nav-btn__label{
 /* базовий ornament span */
 body[data-rank="harbinger"] .navbar.navTabs > .nav-btn > .nav-btn__ornament{
   position: absolute !important;
-  inset: 0 !important;
-  z-index: 3 !important;
   pointer-events: none !important;
   display: block !important;
   opacity: 0 !important;
   overflow: visible !important;
+  z-index: 3 !important;
   background-repeat: no-repeat !important;
   background-position: center center !important;
 }
@@ -5696,14 +5695,18 @@ body[data-rank="harbinger"] .navbar.navTabs > .nav-btn:not(.active)::before{
 }
 
 body[data-rank="harbinger"] .navbar.navTabs > .nav-btn:not(.active) > .nav-btn__ornament{
-  inset: 0 !important;
+  left: -14px !important;
+  right: -14px !important;
+  top: -8px !important;
+  bottom: auto !important;
+  height: 70px !important;
   opacity: 1 !important;
   z-index: 3 !important;
 
   background-image: url('/assets/img/ui/tab_inactive_harbinger.png') !important;
   background-size: 100% 100% !important;
   background-repeat: no-repeat !important;
-  background-position: center center !important;
+  background-position: center top !important;
 
   filter:
     drop-shadow(0 0 6px rgba(80,160,80,.05))
