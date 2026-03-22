@@ -5555,8 +5555,8 @@ body[data-rank="harbinger"] .navbar.navTabs > .nav-btn:not(.active):hover::befor
     0 0 8px rgba(90,190,90,.04) !important;
 }
 /* =========================================================
-   HARBINGER NAVBAR — FIXED ACTIVE FRAME + SEGMENT DIVIDERS
-   only for 4 rank
+   HARBINGER NAVBAR — PNG INACTIVE TABS + PNG DIVIDERS
+   safe override only for rank 4
    paste at absolute end of theme_A.css
    ========================================================= */
 
@@ -5581,25 +5581,26 @@ body[data-rank="harbinger"] .navbar.navTabs{
   z-index: 40 !important;
 }
 
-/* прибираємо зайву зовнішню коробку */
+/* прибираємо стару зовнішню коробку */
 body[data-rank="harbinger"] .navbar.navTabs::before,
 body[data-rank="harbinger"] .navbar.navTabs::after{
-  content: none !important;
   display: none !important;
+  content: none !important;
 }
 
-/* кнопки */
+/* усі вкладки однакової ширини */
 body[data-rank="harbinger"] .navbar.navTabs > .nav-btn{
   position: relative !important;
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
-  flex: 0 0 auto !important;
-
-  height: 50px !important;
-  min-width: 0 !important;
+  flex: 0 0 220px !important;
+  width: 220px !important;
+  min-width: 220px !important;
+  max-width: 220px !important;
+  height: 54px !important;
   margin: 0 !important;
-  padding: 0 34px !important;
+  padding: 0 18px !important;
 
   background: transparent !important;
   border: 0 !important;
@@ -5609,189 +5610,131 @@ body[data-rank="harbinger"] .navbar.navTabs > .nav-btn{
   isolation: isolate !important;
 
   font-family: var(--font-ui) !important;
-  font-size: 16px !important;
+  font-size: 15px !important;
   font-weight: 800 !important;
-  letter-spacing: .08em !important;
+  letter-spacing: .06em !important;
   text-transform: uppercase !important;
-  color: rgba(248,244,232,.92) !important;
-  text-shadow: 0 0 6px rgba(255,255,255,.05) !important;
+  color: rgba(248,244,232,.94) !important;
+  text-shadow:
+    0 0 4px rgba(255,255,255,.05),
+    0 0 10px rgba(90,180,90,.04) !important;
 
-  transition: color .16s ease, transform .16s ease !important;
+  transition:
+    transform .16s ease,
+    color .16s ease,
+    filter .16s ease !important;
 }
 
-/* базова темна пластина для ВСІХ вкладок */
-body[data-rank="harbinger"] .navbar.navTabs > .nav-btn::before{
-  content: "" !important;
-  position: absolute !important;
-  inset: 0 !important;
-  z-index: 1 !important;
-  pointer-events: none !important;
-
-  clip-path: polygon(
-    12px 0,
-    calc(100% - 12px) 0,
-    100% 12px,
-    100% calc(100% - 12px),
-    calc(100% - 12px) 100%,
-    12px 100%,
-    0 calc(100% - 12px),
-    0 12px
-  ) !important;
-
-  border: 1px solid rgba(112,180,112,.30) !important;
-  background:
-    linear-gradient(
-      180deg,
-      rgba(18,23,18,.78) 0%,
-      rgba(8,10,8,.93) 55%,
-      rgba(4,5,4,.98) 100%
-    ) !important;
-
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.05),
-    inset 0 -1px 0 rgba(0,0,0,.38),
-    0 0 8px rgba(88,180,88,.05) !important;
+/* прибираємо старі системні underline/divider */
+body[data-rank="harbinger"] .navbar.navTabs > .nav-btn::before,
+body[data-rank="harbinger"] .navbar.navTabs > .nav-btn::after{
+  content: none !important;
+  display: none !important;
 }
 
-/* текст поверх всього */
+/* текст завжди зверху */
 body[data-rank="harbinger"] .navbar.navTabs > .nav-btn > .nav-btn__label{
   position: relative !important;
-  z-index: 5 !important;
+  z-index: 6 !important;
   display: block !important;
+  width: 100% !important;
+  text-align: center !important;
   white-space: nowrap !important;
   line-height: 1 !important;
 }
 
-/* ornament */
+/* базовий ornament span */
 body[data-rank="harbinger"] .navbar.navTabs > .nav-btn > .nav-btn__ornament{
   position: absolute !important;
-  left: -28px !important;
-  right: -28px !important;
-  top: -23px !important;
-  height: 108px !important;
-  z-index: 4 !important;
+  inset: 0 !important;
+  z-index: 3 !important;
   pointer-events: none !important;
   display: block !important;
   opacity: 0 !important;
   overflow: visible !important;
-
-  background-image: url('/assets/img/ui/tab_active_harbinger.png') !important;
   background-repeat: no-repeat !important;
   background-position: center center !important;
-  background-size: 100% 100% !important;
-
-  filter:
-    drop-shadow(0 0 10px rgba(110,220,110,.12))
-    drop-shadow(0 4px 12px rgba(0,0,0,.25)) !important;
 }
 
-/* hover */
+/* неактивні вкладки — через PNG, без прозорості */
+body[data-rank="harbinger"] .navbar.navTabs > .nav-btn:not(.active){
+  color: rgba(255,248,236,.92) !important;
+}
+
+body[data-rank="harbinger"] .navbar.navTabs > .nav-btn:not(.active) > .nav-btn__ornament{
+  inset: 0 !important;
+  opacity: 1 !important;
+  background-image: url('/assets/img/ui/tab_inactive_harbinger.png') !important;
+  background-size: 100% 100% !important;
+  filter:
+    drop-shadow(0 0 6px rgba(80,160,80,.06))
+    drop-shadow(0 2px 8px rgba(0,0,0,.22)) !important;
+}
+
 body[data-rank="harbinger"] .navbar.navTabs > .nav-btn:not(.active):hover{
   color: #ffffff !important;
   transform: translateY(-1px) !important;
 }
 
-body[data-rank="harbinger"] .navbar.navTabs > .nav-btn:not(.active):hover::before{
-  border-color: rgba(142,220,142,.38) !important;
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.06),
-    inset 0 -1px 0 rgba(0,0,0,.38),
-    0 0 14px rgba(92,200,92,.08) !important;
-}
-
-/* ACTIVE — вкладка не прозора, рамка сидить на місці */
+/* активна вкладка */
 body[data-rank="harbinger"] .navbar.navTabs > .nav-btn.active{
   z-index: 8 !important;
-  color: #f3ffd9 !important;
+  color: #f4ffdd !important;
   text-shadow:
-    0 0 8px rgba(255,255,255,.15),
-    0 0 16px rgba(128,255,128,.10) !important;
+    0 0 8px rgba(255,255,255,.16),
+    0 0 18px rgba(120,255,120,.10) !important;
 }
 
-/* важливо: активну темну пластину НЕ прибираємо */
-body[data-rank="harbinger"] .navbar.navTabs > .nav-btn.active::before{
-  border-color: rgba(145,240,145,.24) !important;
-  background:
-    linear-gradient(
-      180deg,
-      rgba(28,38,26,.86) 0%,
-      rgba(10,15,10,.95) 56%,
-      rgba(4,7,4,.98) 100%
-    ) !important;
-
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.08),
-    inset 0 -1px 0 rgba(0,0,0,.42),
-    0 0 10px rgba(100,220,100,.10) !important;
-}
-
+/* активна рамка — твій існуючий PNG */
 body[data-rank="harbinger"] .navbar.navTabs > .nav-btn.active > .nav-btn__ornament{
+  left: -30px !important;
+  right: -30px !important;
+  top: -26px !important;
+  bottom: auto !important;
+  height: 118px !important;
   opacity: 1 !important;
+
+  background-image: url('/assets/img/ui/tab_active_harbinger.png') !important;
+  background-size: 100% auto !important;
+  background-position: center 50% !important;
+
+  filter:
+    drop-shadow(0 0 10px rgba(100,220,100,.12))
+    drop-shadow(0 0 22px rgba(100,220,100,.05)) !important;
 }
 
-/* сегментне розмежування між вкладками */
+/* PNG-розмежування між вкладками */
 body[data-rank="harbinger"] .navbar.navTabs > .nav-btn + .nav-btn{
-  margin-left: 10px !important;
+  margin-left: -6px !important;
 }
 
-body[data-rank="harbinger"] .navbar.navTabs > .nav-btn + .nav-btn::after{
+body[data-rank="harbinger"] .navbar.navTabs > .nav-btn + .nav-btn .nav-btn__ornament{
+  overflow: visible !important;
+}
+
+body[data-rank="harbinger"] .navbar.navTabs > .nav-btn + .nav-btn::before{
   content: "" !important;
+  display: block !important;
   position: absolute !important;
-  left: -11px !important;
+  left: -18px !important;
   top: 50% !important;
-  width: 22px !important;
-  height: 22px !important;
   transform: translateY(-50%) !important;
-  z-index: 6 !important;
+  width: 36px !important;
+  height: 54px !important;
+  z-index: 7 !important;
   pointer-events: none !important;
 
-  clip-path: polygon(
-    50% 0,
-    88% 12%,
-    100% 50%,
-    88% 88%,
-    50% 100%,
-    12% 88%,
-    0 50%,
-    12% 12%
-  ) !important;
-
-  background:
-    linear-gradient(
-      135deg,
-      rgba(220,255,220,.20) 0%,
-      rgba(112,185,112,.18) 24%,
-      rgba(24,32,24,.96) 50%,
-      rgba(112,185,112,.18) 76%,
-      rgba(220,255,220,.20) 100%
-    ) !important;
-
-  border: 1px solid rgba(118,188,118,.34) !important;
-  box-shadow:
-    0 0 0 1px rgba(0,0,0,.28),
-    0 0 8px rgba(112,205,112,.08) !important;
+  background: url('/assets/img/ui/tab_divider_harbinger.png') center / 100% 100% no-repeat !important;
+  filter: drop-shadow(0 0 6px rgba(90,180,90,.08)) !important;
 }
 
-/* widths closer to your reference */
-body[data-rank="harbinger"] .navbar.navTabs > .nav-btn:nth-child(1){
-  min-width: 248px !important;
-  padding-left: 42px !important;
-  padding-right: 42px !important;
+/* прибрати hover background з shared css */
+body[data-rank="harbinger"] .navbar.navTabs > .nav-btn:hover{
+  background: transparent !important;
+  box-shadow: none !important;
 }
 
-body[data-rank="harbinger"] .navbar.navTabs > .nav-btn:nth-child(2){
-  min-width: 168px !important;
-}
-
-body[data-rank="harbinger"] .navbar.navTabs > .nav-btn:nth-child(3){
-  min-width: 224px !important;
-}
-
-body[data-rank="harbinger"] .navbar.navTabs > .nav-btn:nth-child(4){
-  min-width: 184px !important;
-}
-
-/* на менших екранах не ламаємо позицію */
+/* маленька стабілізація для екранів */
 @media (max-width: 1100px){
   body[data-rank="harbinger"] .navbar.navTabs{
     transform: translateX(-50%) scale(.94) !important;
