@@ -6411,9 +6411,17 @@ body[data-rank="harbinger"] .navbar.navTabs > .nav-btn.active + .nav-btn::after{
   }
 }
 /* =========================================================
-   HARBINGER — LOWER INFO STACK SLIGHTLY
+   HARBINGER — KEEP INFO BLOCK CENTERED, MOVE SLIGHTLY DOWN
    ========================================================= */
 
+body[data-rank="harbinger"] #dashboard.section.active .rankHome .rankHome__center{
+  padding-top: calc(var(--hubTextPadTop) + 18px) !important;
+}
+
 body[data-rank="harbinger"] #dashboard.section.active .rankHome .rankHome__infoStack{
-  transform: translateY(14px) !important;
+  transform: none !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  left: auto !important;
+  right: auto !important;
 }
