@@ -6410,3 +6410,10 @@ body[data-rank="harbinger"] .navbar.navTabs > .nav-btn.active + .nav-btn::after{
     transform-origin: top center !important;
   }
 }
+/* =========================================================
+   HARBINGER — LOWER INFO STACK SLIGHTLY
+   ========================================================= */
+
+body[data-rank="harbinger"] #dashboard.section.active .rankHome .rankHome__infoStack{
+  transform: translateY(10px) !important;
+}
