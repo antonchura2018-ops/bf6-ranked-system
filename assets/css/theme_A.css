@@ -6774,3 +6774,53 @@ body[data-rank="thrall"] #dashboard.section.active .rankHome .pulseGrid .metric,
 body[data-rank="marauder"] #dashboard.section.active .rankHome .pulseGrid .metric{
   border-left: 1px solid color-mix(in srgb, var(--home-rank-line) 30%, transparent) !important;
 }
+/* =========================================================
+   RANKS 1–3 — RAILS STRONGER / STATS LINES SOFTER
+   ========================================================= */
+
+/* 1) PLAYER ASCENSION side rails — stronger and more visible */
+body[data-rank="outcast"] #dashboard.section.active .rankHome .pulseHeader::before,
+body[data-rank="outcast"] #dashboard.section.active .rankHome .pulseHeader::after,
+body[data-rank="outcast"] #dashboard.section.active .rankHome .pulseHeader span::before,
+body[data-rank="outcast"] #dashboard.section.active .rankHome .pulseHeader span::after,
+
+body[data-rank="thrall"] #dashboard.section.active .rankHome .pulseHeader::before,
+body[data-rank="thrall"] #dashboard.section.active .rankHome .pulseHeader::after,
+body[data-rank="thrall"] #dashboard.section.active .rankHome .pulseHeader span::before,
+body[data-rank="thrall"] #dashboard.section.active .rankHome .pulseHeader span::after,
+
+body[data-rank="marauder"] #dashboard.section.active .rankHome .pulseHeader::before,
+body[data-rank="marauder"] #dashboard.section.active .rankHome .pulseHeader::after,
+body[data-rank="marauder"] #dashboard.section.active .rankHome .pulseHeader span::before,
+body[data-rank="marauder"] #dashboard.section.active .rankHome .pulseHeader span::after{
+  background: linear-gradient(
+    90deg,
+    rgba(0,0,0,0) 0%,
+    color-mix(in srgb, var(--home-rank-line) 24%, transparent) 16%,
+    color-mix(in srgb, var(--home-rank-line) 88%, transparent) 50%,
+    color-mix(in srgb, var(--home-rank-line) 24%, transparent) 84%,
+    rgba(0,0,0,0) 100%
+  ) !important;
+
+  box-shadow:
+    0 0 12px color-mix(in srgb, var(--home-rank-line) 34%, transparent),
+    0 0 24px color-mix(in srgb, var(--home-rank-line) 20%, transparent) !important;
+
+  opacity: 1 !important;
+}
+
+/* 2) stats grid top/bottom lines — softer again */
+body[data-rank="outcast"] #dashboard.section.active .rankHome .pulseGrid,
+body[data-rank="thrall"] #dashboard.section.active .rankHome .pulseGrid,
+body[data-rank="marauder"] #dashboard.section.active .rankHome .pulseGrid{
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, var(--home-rank-line) 16%, transparent),
+    inset 0 -1px 0 color-mix(in srgb, var(--home-rank-line) 16%, transparent) !important;
+}
+
+/* 3) vertical separators in stats grid — softer again */
+body[data-rank="outcast"] #dashboard.section.active .rankHome .pulseGrid .metric,
+body[data-rank="thrall"] #dashboard.section.active .rankHome .pulseGrid .metric,
+body[data-rank="marauder"] #dashboard.section.active .rankHome .pulseGrid .metric{
+  border-left: 1px solid color-mix(in srgb, var(--home-rank-line) 18%, transparent) !important;
+}
