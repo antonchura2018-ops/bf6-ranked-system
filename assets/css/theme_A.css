@@ -6531,3 +6531,129 @@ body[data-rank="thrall"] #dashboard.section.active .rankHome .pulseGrid .metric:
 body[data-rank="marauder"] #dashboard.section.active .rankHome .pulseGrid .metric:first-child{
   border-left: 0 !important;
 }
+/* =========================================================
+   RANKS 1–3 — REMOVE WHITE FROM LINES + ADD SOFT WHITE TEXT GLOW
+   OUTCAST / THRALL / MARAUDER only
+   paste at absolute end of theme_A.css
+   ========================================================= */
+
+/* ---------------------------------------------------------
+   1) white text with soft Harbinger-like glow
+   --------------------------------------------------------- */
+body[data-rank="outcast"] #dashboard.section.active .rankHome .rankTitle,
+body[data-rank="outcast"] #dashboard.section.active .rankHome .rankRP,
+body[data-rank="outcast"] #dashboard.section.active .rankHome .rankRP span,
+body[data-rank="outcast"] #dashboard.section.active .rankHome .rankProgress__label,
+body[data-rank="outcast"] #dashboard.section.active .rankHome .rankProgress__label b,
+body[data-rank="outcast"] #dashboard.section.active .rankHome .pulseHeader,
+body[data-rank="outcast"] #dashboard.section.active .rankHome .pulseHeader span,
+body[data-rank="outcast"] #dashboard.section.active .rankHome .pulseGrid .metric .k,
+body[data-rank="outcast"] #dashboard.section.active .rankHome .pulseGrid .metric .v,
+body[data-rank="outcast"] #dashboard.section.active .rankHome .pulseGrid .metric .v span,
+
+body[data-rank="thrall"] #dashboard.section.active .rankHome .rankTitle,
+body[data-rank="thrall"] #dashboard.section.active .rankHome .rankRP,
+body[data-rank="thrall"] #dashboard.section.active .rankHome .rankRP span,
+body[data-rank="thrall"] #dashboard.section.active .rankHome .rankProgress__label,
+body[data-rank="thrall"] #dashboard.section.active .rankHome .rankProgress__label b,
+body[data-rank="thrall"] #dashboard.section.active .rankHome .pulseHeader,
+body[data-rank="thrall"] #dashboard.section.active .rankHome .pulseHeader span,
+body[data-rank="thrall"] #dashboard.section.active .rankHome .pulseGrid .metric .k,
+body[data-rank="thrall"] #dashboard.section.active .rankHome .pulseGrid .metric .v,
+body[data-rank="thrall"] #dashboard.section.active .rankHome .pulseGrid .metric .v span,
+
+body[data-rank="marauder"] #dashboard.section.active .rankHome .rankTitle,
+body[data-rank="marauder"] #dashboard.section.active .rankHome .rankRP,
+body[data-rank="marauder"] #dashboard.section.active .rankHome .rankRP span,
+body[data-rank="marauder"] #dashboard.section.active .rankHome .rankProgress__label,
+body[data-rank="marauder"] #dashboard.section.active .rankHome .rankProgress__label b,
+body[data-rank="marauder"] #dashboard.section.active .rankHome .pulseHeader,
+body[data-rank="marauder"] #dashboard.section.active .rankHome .pulseHeader span,
+body[data-rank="marauder"] #dashboard.section.active .rankHome .pulseGrid .metric .k,
+body[data-rank="marauder"] #dashboard.section.active .rankHome .pulseGrid .metric .v,
+body[data-rank="marauder"] #dashboard.section.active .rankHome .pulseGrid .metric .v span{
+  color: #f7f5ef !important;
+  -webkit-text-fill-color: #f7f5ef !important;
+  background: none !important;
+  -webkit-background-clip: border-box !important;
+  text-shadow:
+    0 0 4px rgba(255,255,255,.10),
+    0 0 10px rgba(255,255,255,.05),
+    0 0 18px rgba(var(--home-rank-accent-rgb), .10) !important;
+}
+
+/* ---------------------------------------------------------
+   2) RP underline — rank color only, no white
+   --------------------------------------------------------- */
+body[data-rank="outcast"] #dashboard.section.active .rankHome .rankRP::after,
+body[data-rank="thrall"] #dashboard.section.active .rankHome .rankRP::after,
+body[data-rank="marauder"] #dashboard.section.active .rankHome .rankRP::after{
+  background: linear-gradient(
+    90deg,
+    rgba(var(--home-rank-accent-rgb), 0) 0%,
+    rgba(var(--home-rank-accent-rgb), .42) 16%,
+    rgba(var(--home-rank-accent-rgb), .95) 50%,
+    rgba(var(--home-rank-accent-rgb), .42) 84%,
+    rgba(var(--home-rank-accent-rgb), 0) 100%
+  ) !important;
+
+  box-shadow:
+    0 0 8px rgba(var(--home-rank-accent-rgb), .18),
+    0 0 18px rgba(var(--home-rank-accent-rgb), .10) !important;
+}
+
+/* ---------------------------------------------------------
+   3) PLAYER ASCENSION rails — rank color only, no white
+   --------------------------------------------------------- */
+body[data-rank="outcast"] #dashboard.section.active .rankHome .pulseHeader::before,
+body[data-rank="outcast"] #dashboard.section.active .rankHome .pulseHeader::after,
+body[data-rank="outcast"] #dashboard.section.active .rankHome .pulseHeader span::before,
+body[data-rank="outcast"] #dashboard.section.active .rankHome .pulseHeader span::after,
+
+body[data-rank="thrall"] #dashboard.section.active .rankHome .pulseHeader::before,
+body[data-rank="thrall"] #dashboard.section.active .rankHome .pulseHeader::after,
+body[data-rank="thrall"] #dashboard.section.active .rankHome .pulseHeader span::before,
+body[data-rank="thrall"] #dashboard.section.active .rankHome .pulseHeader span::after,
+
+body[data-rank="marauder"] #dashboard.section.active .rankHome .pulseHeader::before,
+body[data-rank="marauder"] #dashboard.section.active .rankHome .pulseHeader::after,
+body[data-rank="marauder"] #dashboard.section.active .rankHome .pulseHeader span::before,
+body[data-rank="marauder"] #dashboard.section.active .rankHome .pulseHeader span::after{
+  background: linear-gradient(
+    90deg,
+    rgba(var(--home-rank-accent-rgb), 0) 0%,
+    rgba(var(--home-rank-accent-rgb), .12) 18%,
+    rgba(var(--home-rank-accent-rgb), .62) 50%,
+    rgba(var(--home-rank-accent-rgb), .12) 82%,
+    rgba(var(--home-rank-accent-rgb), 0) 100%
+  ) !important;
+
+  box-shadow:
+    0 0 8px rgba(var(--home-rank-accent-rgb), .12),
+    0 0 18px rgba(var(--home-rank-accent-rgb), .12) !important;
+
+  opacity: 1 !important;
+}
+
+/* ---------------------------------------------------------
+   4) stat grid top/bottom lines and separators — rank color only
+   --------------------------------------------------------- */
+body[data-rank="outcast"] #dashboard.section.active .rankHome .pulseGrid,
+body[data-rank="thrall"] #dashboard.section.active .rankHome .pulseGrid,
+body[data-rank="marauder"] #dashboard.section.active .rankHome .pulseGrid{
+  box-shadow:
+    inset 0 1px 0 rgba(var(--home-rank-accent-rgb), .16),
+    inset 0 -1px 0 rgba(var(--home-rank-accent-rgb), .16) !important;
+}
+
+body[data-rank="outcast"] #dashboard.section.active .rankHome .pulseGrid .metric,
+body[data-rank="thrall"] #dashboard.section.active .rankHome .pulseGrid .metric,
+body[data-rank="marauder"] #dashboard.section.active .rankHome .pulseGrid .metric{
+  border-left: 1px solid rgba(var(--home-rank-accent-rgb), .16) !important;
+}
+
+body[data-rank="outcast"] #dashboard.section.active .rankHome .pulseGrid .metric:first-child,
+body[data-rank="thrall"] #dashboard.section.active .rankHome .pulseGrid .metric:first-child,
+body[data-rank="marauder"] #dashboard.section.active .rankHome .pulseGrid .metric:first-child{
+  border-left: 0 !important;
+}
