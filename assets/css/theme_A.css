@@ -6902,3 +6902,28 @@ body[data-rank="reaper"] .navbar.navTabs > .nav-btn.active + .nav-btn::after{
   height: 68px !important;
   z-index: 8 !important;
 }
+/* =========================================================
+   REAPER NAVBAR — MICRO CLEANUP
+   remove extra purple streaks
+   make divider slightly shorter
+   ========================================================= */
+
+/* 1) прибрати зайві фіолетові штрихи/світіння від inactive tabs */
+body[data-rank="reaper"] .navbar.navTabs > .nav-btn:not(.active) > .nav-btn__ornament{
+  filter: none !important;
+}
+
+/* 2) прибрати зайві фіолетові штрихи/світіння від active tab */
+body[data-rank="reaper"] .navbar.navTabs > .nav-btn.active > .nav-btn__ornament{
+  filter: none !important;
+}
+
+/* 3) divider — залишити той самий розмір по ширині, але трохи менший по висоті */
+body[data-rank="reaper"] .navbar.navTabs > .nav-btn + .nav-btn::after{
+  height: 62px !important;
+}
+
+/* 4) і для першого divider після active tab теж */
+body[data-rank="reaper"] .navbar.navTabs > .nav-btn.active + .nav-btn::after{
+  height: 62px !important;
+}
