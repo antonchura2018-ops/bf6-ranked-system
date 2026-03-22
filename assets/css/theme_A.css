@@ -6903,27 +6903,33 @@ body[data-rank="reaper"] .navbar.navTabs > .nav-btn.active + .nav-btn::after{
   z-index: 8 !important;
 }
 /* =========================================================
-   REAPER NAVBAR — MICRO CLEANUP
-   remove extra purple streaks
-   make divider slightly shorter
+   REAPER NAVBAR — MICRO FIX 2
+   tighten ornaments, shorter dividers
    ========================================================= */
 
-/* 1) прибрати зайві фіолетові штрихи/світіння від inactive tabs */
+/* inactive tabs: прибрати зайві хвости по боках */
 body[data-rank="reaper"] .navbar.navTabs > .nav-btn:not(.active) > .nav-btn__ornament{
+  left: -8px !important;
+  right: -8px !important;
+  top: -5px !important;
+  height: 72px !important;
   filter: none !important;
 }
 
-/* 2) прибрати зайві фіолетові штрихи/світіння від active tab */
+/* active tab: трохи щільніше посадити ornament, щоб не було зайвого хвоста */
 body[data-rank="reaper"] .navbar.navTabs > .nav-btn.active > .nav-btn__ornament{
+  left: -14px !important;
+  right: -14px !important;
+  top: -16px !important;
+  height: 86px !important;
   filter: none !important;
 }
 
-/* 3) divider — залишити той самий розмір по ширині, але трохи менший по висоті */
+/* divider: ще трохи нижчий, ширину не чіпаємо */
 body[data-rank="reaper"] .navbar.navTabs > .nav-btn + .nav-btn::after{
-  height: 62px !important;
+  height: 56px !important;
 }
 
-/* 4) і для першого divider після active tab теж */
 body[data-rank="reaper"] .navbar.navTabs > .nav-btn.active + .nav-btn::after{
-  height: 62px !important;
+  height: 56px !important;
 }
