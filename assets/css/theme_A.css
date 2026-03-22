@@ -6234,7 +6234,7 @@ body[data-rank="harbinger"] .navbar.navTabs > .nav-btn.active{
   width: 266px !important;
   min-width: 266px !important;
   max-width: 266px !important;
-  z-index: 20 !important;
+  z-index: 40 !important;
   color: #f3ffdc !important;
   text-shadow:
     0 0 8px rgba(255,255,255,.16),
@@ -6320,6 +6320,7 @@ body[data-rank="harbinger"] .navbar.navTabs > .nav-btn.active > .nav-btn__orname
   bottom: auto !important;
   height: 90px !important;
   opacity: 1 !important;
+  z-index: 50 !important;
 
   background-image: url('/assets/img/ui/tab_active_harbinger.png') !important;
   filter:
@@ -6362,9 +6363,9 @@ body[data-rank="harbinger"] .navbar.navTabs > .nav-btn:not(.active)::before{
 body[data-rank="harbinger"] .navbar.navTabs > .nav-btn:not(.active) > .nav-btn__ornament{
   left: -14px !important;
   right: -14px !important;
-  top: -4px !important;
+  top: -7px !important;
   bottom: auto !important;
-  height: 74px !important;
+  height: 78px !important;
   opacity: 1 !important;
   z-index: 4 !important;
 
@@ -6389,7 +6390,7 @@ body[data-rank="harbinger"] .navbar.navTabs > .nav-btn + .nav-btn::after{
   transform: translateY(-50%) !important;
   width: 28px !important;
   height: 68px !important;
-  z-index: 12 !important;
+  z-index: 8 !important;
   pointer-events: none !important;
 
   background: url('/assets/img/ui/tab_divider_harbinger.png') center / 100% 100% no-repeat !important;
@@ -6399,6 +6400,7 @@ body[data-rank="harbinger"] .navbar.navTabs > .nav-btn.active + .nav-btn::after{
   left: -10px !important;
   width: 28px !important;
   height: 68px !important;
+  z-index: 8 !important;
 }
 
 /* безпечне масштабування */
