@@ -6983,3 +6983,27 @@ body[data-rank="reaper"] .navbar.navTabs > .nav-btn.active{
 body[data-rank="reaper"] .navbar.navTabs > .nav-btn.active > .nav-btn__ornament{
   z-index: 70 !important;
 }
+/* =========================================================
+   REAPER NAVBAR — KILL GLOBAL TOP STRIP
+   paste at absolute end of theme_A.css
+   ========================================================= */
+
+/* kill the old full-width rail line only for rank 5 */
+body[data-rank="reaper"] .navbar.navRail::after,
+body[data-rank="reaper"] .navbar::after{
+  content: none !important;
+  display: none !important;
+  background: none !important;
+  box-shadow: none !important;
+  border: 0 !important;
+}
+
+/* make sure no old top line survives through generic pseudo-layers */
+body[data-rank="reaper"] .navbar::before,
+body[data-rank="reaper"] .navbar.navRail::before{
+  content: none !important;
+  display: none !important;
+  background: none !important;
+  box-shadow: none !important;
+  border: 0 !important;
+}
