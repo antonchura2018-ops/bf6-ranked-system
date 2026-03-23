@@ -7036,5 +7036,5 @@ body[data-rank="reaper"] #dashboard.section.active .rankHome .rankHome__infoStac
 body[data-rank="reaper"] #dashboard.section.active .rankHome .rankEmblemOverlay,
 body[data-rank="reaper"] #dashboard.section.active .rankHome #rankEmblemOverlay,
 body[data-rank="reaper"] #rankEmblemOverlay{
-  transform: translate(-50%, -50%) scale(.96) !important;
+  transform: translate(-50%, -50%) scale(.98) !important;
 }
