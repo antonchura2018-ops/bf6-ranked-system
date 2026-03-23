@@ -7034,3 +7034,46 @@ body[data-rank="reaper"] .navbar.navTabs > .nav-btn.active > .nav-btn__ornament{
 body[data-rank="reaper"] .navbar.navTabs > .nav-btn + .nav-btn::after{
   z-index: 8 !important;
 }
+/* =========================================================
+   REAPER NAVBAR — ADJACENT TAB OVERLAP FIX
+   only tabs next to active are tightened
+   ========================================================= */
+
+/* ліва вкладка поруч з active */
+body[data-rank="reaper"] .navbar.navTabs > .nav-btn:has(+ .nav-btn.active) > .nav-btn__ornament{
+  width: 224px !important;
+  min-width: 224px !important;
+  max-width: 224px !important;
+  left: 50% !important;
+  right: auto !important;
+  transform: translateX(-50%) !important;
+  background-size: 224px 78px !important;
+}
+
+/* права вкладка поруч з active */
+body[data-rank="reaper"] .navbar.navTabs > .nav-btn.active + .nav-btn > .nav-btn__ornament{
+  width: 224px !important;
+  min-width: 224px !important;
+  max-width: 224px !important;
+  left: 50% !important;
+  right: auto !important;
+  transform: translateX(-50%) !important;
+  background-size: 224px 78px !important;
+}
+
+/* трохи послабити overlap саме біля active seams */
+body[data-rank="reaper"] .navbar.navTabs > .nav-btn:has(+ .nav-btn.active){
+  z-index: 6 !important;
+}
+
+body[data-rank="reaper"] .navbar.navTabs > .nav-btn.active + .nav-btn{
+  z-index: 6 !important;
+}
+
+body[data-rank="reaper"] .navbar.navTabs > .nav-btn.active{
+  z-index: 80 !important;
+}
+
+body[data-rank="reaper"] .navbar.navTabs > .nav-btn.active > .nav-btn__ornament{
+  z-index: 90 !important;
+}
