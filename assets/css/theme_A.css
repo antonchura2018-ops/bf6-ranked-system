@@ -7029,3 +7029,12 @@ body[data-rank="reaper"] #dashboard.section.active .rankHome .rankHome__infoStac
   margin-right: 0 !important;
   transform: translateX(-50%) translateY(-40px) !important;
 }
+/* =========================================================
+   REAPER — emblem slightly smaller
+   ========================================================= */
+
+body[data-rank="reaper"] #dashboard.section.active .rankHome .rankEmblemOverlay,
+body[data-rank="reaper"] #dashboard.section.active .rankHome #rankEmblemOverlay,
+body[data-rank="reaper"] #rankEmblemOverlay{
+  transform: translate(-50%, -50%) scale(.88) !important;
+}
