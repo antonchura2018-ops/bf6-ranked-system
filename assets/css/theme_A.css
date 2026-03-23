@@ -6902,4 +6902,69 @@ body[data-rank="reaper"] .navbar.navTabs > .nav-btn.active + .nav-btn::after{
   height: 68px !important;
   z-index: 8 !important;
 }
+/* =========================================================
+   REAPER NAVBAR — FINAL OVERLAP FIX
+   remove side streaks around active tab
+   paste at absolute end of theme_A.css
+   ========================================================= */
 
+/* active tab always above neighbors */
+body[data-rank="reaper"] .navbar.navTabs > .nav-btn.active{
+  z-index: 60 !important;
+}
+
+body[data-rank="reaper"] .navbar.navTabs > .nav-btn.active > .nav-btn__ornament{
+  z-index: 70 !important;
+  left: 50% !important;
+  right: auto !important;
+  top: -18px !important;
+  width: 302px !important;
+  height: 90px !important;
+  transform: translateX(-50%) !important;
+  background-size: 302px 90px !important;
+  background-position: center center !important;
+  filter: none !important;
+}
+
+/* neighbors under active tab */
+body[data-rank="reaper"] .navbar.navTabs > .nav-btn:not(.active){
+  z-index: 8 !important;
+}
+
+/* make inactive ornaments tighter so they do not bleed into active seam */
+body[data-rank="reaper"] .navbar.navTabs > .nav-btn:not(.active) > .nav-btn__ornament{
+  left: 50% !important;
+  right: auto !important;
+  top: 3px !important;
+  width: 232px !important;
+  min-width: 232px !important;
+  max-width: 232px !important;
+  height: 58px !important;
+  transform: translateX(-50%) !important;
+  background-size: 232px 58px !important;
+  background-position: center center !important;
+  filter: none !important;
+  z-index: 4 !important;
+}
+
+/* slightly reduce seam overlap */
+body[data-rank="reaper"] .navbar.navTabs > .nav-btn + .nav-btn{
+  margin-left: -8px !important;
+}
+
+/* keep dividers, only slightly shorter */
+body[data-rank="reaper"] .navbar.navTabs > .nav-btn + .nav-btn::after{
+  left: -8px !important;
+  width: 18px !important;
+  height: 50px !important;
+  z-index: 12 !important;
+  background: url('/assets/img/ui/tab_divider_reaper.png') center / 18px 50px no-repeat !important;
+}
+
+body[data-rank="reaper"] .navbar.navTabs > .nav-btn.active + .nav-btn::after{
+  left: -8px !important;
+  width: 18px !important;
+  height: 50px !important;
+  z-index: 12 !important;
+  background: url('/assets/img/ui/tab_divider_reaper.png') center / 18px 50px no-repeat !important;
+}
