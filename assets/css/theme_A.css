@@ -7007,3 +7007,42 @@ body[data-rank="reaper"] .navbar.navRail::before{
   box-shadow: none !important;
   border: 0 !important;
 }
+/* =========================================================
+   REAPER NAVBAR — FINAL REAL FIX
+   clip inactive tab overflow, keep active visible
+   ========================================================= */
+
+/* active tab stays open, because frame extends outside */
+body[data-rank="reaper"] .navbar.navTabs > .nav-btn.active{
+  overflow: visible !important;
+  z-index: 60 !important;
+}
+
+body[data-rank="reaper"] .navbar.navTabs > .nav-btn.active > .nav-btn__ornament{
+  z-index: 70 !important;
+}
+
+/* inactive tabs must clip stray PNG parts */
+body[data-rank="reaper"] .navbar.navTabs > .nav-btn:not(.active){
+  overflow: hidden !important;
+  z-index: 8 !important;
+}
+
+/* tighten inactive ornament a bit so it stays inside better */
+body[data-rank="reaper"] .navbar.navTabs > .nav-btn:not(.active) > .nav-btn__ornament{
+  left: -8px !important;
+  right: -8px !important;
+  top: -3px !important;
+  height: 68px !important;
+  filter: none !important;
+  z-index: 4 !important;
+}
+
+/* keep dividers visible but under the active frame */
+body[data-rank="reaper"] .navbar.navTabs > .nav-btn + .nav-btn::after{
+  z-index: 12 !important;
+}
+
+body[data-rank="reaper"] .navbar.navTabs > .nav-btn.active + .nav-btn::after{
+  z-index: 12 !important;
+}
