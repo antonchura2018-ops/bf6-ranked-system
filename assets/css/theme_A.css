@@ -7007,3 +7007,13 @@ body[data-rank="reaper"] .navbar.navRail::before{
   box-shadow: none !important;
   border: 0 !important;
 }
+/* =========================================================
+   REAPER NAVBAR — KILL OLD ACTIVE TOP LINE
+   ========================================================= */
+
+body[data-rank="reaper"] .navbar.navTabs > .nav-btn.active > span::before{
+  content: none !important;
+  display: none !important;
+  background: none !important;
+  box-shadow: none !important;
+}
