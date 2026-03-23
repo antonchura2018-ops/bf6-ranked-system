@@ -6938,3 +6938,48 @@ body[data-rank="reaper"] .navbar.navTabs > .nav-btn.active + .nav-btn::after{
   z-index: 8 !important;
   background: url('/assets/img/ui/tab_divider_reaper.png') center / 100% 100% no-repeat !important;
 }
+/* =========================================================
+   REAPER NAVBAR — KILL GLOBAL STRIPS / UNDERLINES
+   paste at absolute end of theme_A.css
+   ========================================================= */
+
+/* 1) прибрати всі глобальні navbar/navRail смуги тільки для REAPER */
+body[data-rank="reaper"] .navbar::before,
+body[data-rank="reaper"] .navbar::after,
+body[data-rank="reaper"] .navbar.navRail::before,
+body[data-rank="reaper"] .navbar.navRail::after{
+  content: none !important;
+  display: none !important;
+  background: none !important;
+  box-shadow: none !important;
+  border: 0 !important;
+}
+
+/* 2) прибрати shared active underline з ui-kit тільки для REAPER */
+body[data-rank="reaper"] .navbar .nav-btn.active::after{
+  content: none !important;
+  display: none !important;
+  background: none !important;
+  box-shadow: none !important;
+}
+
+/* 3) прибрати старі hover/active background traces */
+body[data-rank="reaper"] .navbar .nav-btn,
+body[data-rank="reaper"] .navbar .nav-btn:hover,
+body[data-rank="reaper"] .navbar .nav-btn.active{
+  background-image: none !important;
+  box-shadow: none !important;
+}
+
+/* 4) залишити тільки твої reaper divider-и, але нижчим шаром за active ornament */
+body[data-rank="reaper"] .navbar.navTabs > .nav-btn + .nav-btn::after{
+  z-index: 8 !important;
+}
+
+body[data-rank="reaper"] .navbar.navTabs > .nav-btn.active{
+  z-index: 60 !important;
+}
+
+body[data-rank="reaper"] .navbar.navTabs > .nav-btn.active > .nav-btn__ornament{
+  z-index: 70 !important;
+}
