@@ -7007,3 +7007,30 @@ body[data-rank="reaper"] .navbar.navRail::before{
   box-shadow: none !important;
   border: 0 !important;
 }
+/* =========================================================
+   REAPER NAVBAR — KILL GLOBAL NAVTABS RAILS
+   paste at absolute end of theme_A.css
+   ========================================================= */
+
+/* kill the old full-width navTabs shell/rails only for reaper */
+body[data-rank="reaper"] .navbar.navTabs::before,
+body[data-rank="reaper"] .navbar.navTabs::after{
+  content: none !important;
+  display: none !important;
+  background: none !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+/* keep only the reaper tab ornaments/dividers */
+body[data-rank="reaper"] .navbar.navTabs > .nav-btn.active{
+  z-index: 60 !important;
+}
+
+body[data-rank="reaper"] .navbar.navTabs > .nav-btn.active > .nav-btn__ornament{
+  z-index: 70 !important;
+}
+
+body[data-rank="reaper"] .navbar.navTabs > .nav-btn + .nav-btn::after{
+  z-index: 8 !important;
+}
