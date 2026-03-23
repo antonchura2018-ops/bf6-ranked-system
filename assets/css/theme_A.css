@@ -7046,6 +7046,9 @@ body[data-rank="reaper"] .navbar.navTabs > .nav-btn + .nav-btn::after{
 body[data-rank="reaper"] .navbar.navTabs > .nav-btn.active + .nav-btn::after{
   z-index: 12 !important;
 }
-body[data-rank="reaper"] .navbar.navTabs > .nav-btn > .nav-btn__ornament{
+body[data-rank="reaper"] .navbar.navTabs > .nav-btn::before,
+body[data-rank="reaper"] .navbar.navTabs::before,
+body[data-rank="reaper"] .navbar.navTabs::after{
   display: none !important;
+  content: none !important;
 }
