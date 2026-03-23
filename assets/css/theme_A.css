@@ -6686,9 +6686,11 @@ body[data-rank="reaper"] #dashboard.section.active .rankHome .pulseGrid .metric:
   border-left: 0 !important;
 }
 
-/* ---------------------------------------------------------
-   REAPER navbar — same geometry as Harbinger, new PNG assets
-   --------------------------------------------------------- */
+/* =========================================================
+   REAPER — FINAL COPY OF HARBINGER NAVBAR LOGIC
+   built from rank 4 geometry, recolored for rank 5
+   paste at absolute end of theme_A.css
+   ========================================================= */
 
 body[data-rank="reaper"] .navbar.navTabs{
   position: relative !important;
@@ -6746,9 +6748,14 @@ body[data-rank="reaper"] .navbar.navTabs > .nav-btn{
   text-transform: uppercase !important;
   text-shadow:
     0 0 4px rgba(255,255,255,.06),
-    0 0 10px rgba(203,88,252,.06) !important;
+    0 0 10px rgba(203,88,252,.05) !important;
+
+  transition:
+    color .16s ease,
+    transform .16s ease !important;
 }
 
+/* inactive tabs — same geometry as Harbinger */
 body[data-rank="reaper"] .navbar.navTabs > .nav-btn:not(.active){
   flex: 0 0 228px !important;
   width: 228px !important;
@@ -6757,16 +6764,27 @@ body[data-rank="reaper"] .navbar.navTabs > .nav-btn:not(.active){
   z-index: 10 !important;
 }
 
+/* active tab — same geometry as Harbinger */
 body[data-rank="reaper"] .navbar.navTabs > .nav-btn.active{
   flex: 0 0 266px !important;
   width: 266px !important;
   min-width: 266px !important;
   max-width: 266px !important;
   z-index: 40 !important;
-  color: #f7f1ff !important;
+  color: #f3ffdc !important;
   text-shadow:
     0 0 8px rgba(255,255,255,.16),
-    0 0 18px rgba(203,88,252,.14) !important;
+    0 0 18px rgba(203,88,252,.10) !important;
+}
+
+body[data-rank="reaper"] .navbar.navTabs > .nav-btn:hover{
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+body[data-rank="reaper"] .navbar.navTabs > .nav-btn:not(.active):hover{
+  color: #ffffff !important;
+  transform: translateY(-1px) !important;
 }
 
 body[data-rank="reaper"] .navbar.navTabs > .nav-btn > .nav-btn__label{
@@ -6779,6 +6797,7 @@ body[data-rank="reaper"] .navbar.navTabs > .nav-btn > .nav-btn__label{
   line-height: 1 !important;
 }
 
+/* ornament reset */
 body[data-rank="reaper"] .navbar.navTabs > .nav-btn > .nav-btn__ornament{
   position: absolute !important;
   pointer-events: none !important;
@@ -6789,12 +6808,15 @@ body[data-rank="reaper"] .navbar.navTabs > .nav-btn > .nav-btn__ornament{
   background-repeat: no-repeat !important;
   background-position: center center !important;
   background-size: 100% 100% !important;
+  filter: none !important;
 }
 
 body[data-rank="reaper"] .navbar.navTabs > .nav-btn::after{
   content: none !important;
   display: none !important;
 }
+
+/* ---------------- ACTIVE ---------------- */
 
 body[data-rank="reaper"] .navbar.navTabs > .nav-btn.active::before{
   content: "" !important;
@@ -6805,12 +6827,15 @@ body[data-rank="reaper"] .navbar.navTabs > .nav-btn.active::before{
   bottom: 8px !important;
   z-index: 1 !important;
   pointer-events: none !important;
-  background: linear-gradient(
-    180deg,
-    rgba(26,18,32,.99) 0%,
-    rgba(9,8,12,.995) 58%,
-    rgba(4,3,6,1) 100%
-  ) !important;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(20,18,28,.99) 0%,
+      rgba(8,8,12,.995) 58%,
+      rgba(3,3,5,1) 100%
+    ) !important;
+
   clip-path: polygon(
     10px 0,
     calc(100% - 10px) 0,
@@ -6831,11 +6856,14 @@ body[data-rank="reaper"] .navbar.navTabs > .nav-btn.active > .nav-btn__ornament{
   height: 90px !important;
   opacity: 1 !important;
   z-index: 50 !important;
+
   background-image: url('/assets/img/ui/tab_active_reaper.png') !important;
-  filter:
-    drop-shadow(0 0 8px rgba(203,88,252,.12))
-    drop-shadow(0 2px 8px rgba(0,0,0,.22)) !important;
+  background-position: center center !important;
+  background-size: 100% 100% !important;
+  filter: none !important;
 }
+
+/* ---------------- INACTIVE ---------------- */
 
 body[data-rank="reaper"] .navbar.navTabs > .nav-btn:not(.active)::before{
   content: "" !important;
@@ -6846,12 +6874,15 @@ body[data-rank="reaper"] .navbar.navTabs > .nav-btn:not(.active)::before{
   bottom: 8px !important;
   z-index: 1 !important;
   pointer-events: none !important;
-  background: linear-gradient(
-    180deg,
-    rgba(22,18,26,.99) 0%,
-    rgba(8,7,10,.997) 58%,
-    rgba(4,3,4,1) 100%
-  ) !important;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(18,18,22,.99) 0%,
+      rgba(7,7,9,.997) 58%,
+      rgba(3,3,4,1) 100%
+    ) !important;
+
   clip-path: polygon(
     8px 0,
     calc(100% - 8px) 0,
@@ -6872,14 +6903,17 @@ body[data-rank="reaper"] .navbar.navTabs > .nav-btn:not(.active) > .nav-btn__orn
   height: 78px !important;
   opacity: 1 !important;
   z-index: 4 !important;
+
   background-image: url('/assets/img/ui/tab_inactive_reaper.png') !important;
-  filter:
-    drop-shadow(0 0 4px rgba(203,88,252,.07))
-    drop-shadow(0 1px 4px rgba(0,0,0,.14)) !important;
+  background-position: center center !important;
+  background-size: 100% 100% !important;
+  filter: none !important;
 }
 
+/* ---------------- DIVIDERS ---------------- */
+
 body[data-rank="reaper"] .navbar.navTabs > .nav-btn + .nav-btn{
-  margin-left: -8px !important;
+  margin-left: -12px !important;
 }
 
 body[data-rank="reaper"] .navbar.navTabs > .nav-btn + .nav-btn::after{
@@ -6890,81 +6924,17 @@ body[data-rank="reaper"] .navbar.navTabs > .nav-btn + .nav-btn::after{
   top: 50% !important;
   transform: translateY(-50%) !important;
   width: 28px !important;
-  height: 68px !important;
+  height: 52px !important;
   z-index: 8 !important;
   pointer-events: none !important;
+
   background: url('/assets/img/ui/tab_divider_reaper.png') center / 100% 100% no-repeat !important;
 }
 
 body[data-rank="reaper"] .navbar.navTabs > .nav-btn.active + .nav-btn::after{
   left: -10px !important;
   width: 28px !important;
-  height: 68px !important;
+  height: 52px !important;
   z-index: 8 !important;
-}
-/* =========================================================
-   REAPER NAVBAR — FINAL OVERLAP FIX
-   remove side streaks around active tab
-   paste at absolute end of theme_A.css
-   ========================================================= */
-
-/* active tab always above neighbors */
-body[data-rank="reaper"] .navbar.navTabs > .nav-btn.active{
-  z-index: 60 !important;
-}
-
-body[data-rank="reaper"] .navbar.navTabs > .nav-btn.active > .nav-btn__ornament{
-  z-index: 70 !important;
-  left: 50% !important;
-  right: auto !important;
-  top: -18px !important;
-  width: 302px !important;
-  height: 90px !important;
-  transform: translateX(-50%) !important;
-  background-size: 302px 90px !important;
-  background-position: center center !important;
-  filter: none !important;
-}
-
-/* neighbors under active tab */
-body[data-rank="reaper"] .navbar.navTabs > .nav-btn:not(.active){
-  z-index: 8 !important;
-}
-
-/* make inactive ornaments tighter so they do not bleed into active seam */
-body[data-rank="reaper"] .navbar.navTabs > .nav-btn:not(.active) > .nav-btn__ornament{
-  left: 50% !important;
-  right: auto !important;
-  top: 3px !important;
-  width: 232px !important;
-  min-width: 232px !important;
-  max-width: 232px !important;
-  height: 58px !important;
-  transform: translateX(-50%) !important;
-  background-size: 232px 58px !important;
-  background-position: center center !important;
-  filter: none !important;
-  z-index: 4 !important;
-}
-
-/* slightly reduce seam overlap */
-body[data-rank="reaper"] .navbar.navTabs > .nav-btn + .nav-btn{
-  margin-left: -8px !important;
-}
-
-/* keep dividers, only slightly shorter */
-body[data-rank="reaper"] .navbar.navTabs > .nav-btn + .nav-btn::after{
-  left: -8px !important;
-  width: 18px !important;
-  height: 50px !important;
-  z-index: 12 !important;
-  background: url('/assets/img/ui/tab_divider_reaper.png') center / 18px 50px no-repeat !important;
-}
-
-body[data-rank="reaper"] .navbar.navTabs > .nav-btn.active + .nav-btn::after{
-  left: -8px !important;
-  width: 18px !important;
-  height: 50px !important;
-  z-index: 12 !important;
-  background: url('/assets/img/ui/tab_divider_reaper.png') center / 18px 50px no-repeat !important;
+  background: url('/assets/img/ui/tab_divider_reaper.png') center / 100% 100% no-repeat !important;
 }
