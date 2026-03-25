@@ -7038,3 +7038,154 @@ body[data-rank="reaper"] #dashboard.section.active .rankHome #rankEmblemOverlay,
 body[data-rank="reaper"] #rankEmblemOverlay{
   transform: translate(-50%, -50%) scale(.98) !important;
 }
+/* =========================================================
+   REAPER — PREMIUM HUD POLISH (SAFE / LOW-LAG)
+   paste at absolute end of theme_A.css
+   ========================================================= */
+
+body[data-rank="reaper"]{
+  --rank-ui-primary: #cb58fc;
+  --rank-ui-secondary: #9134fc;
+  --rank-ui-line: rgba(221,140,255,.92);
+  --rank-ui-line-soft: rgba(255,235,255,.14);
+  --rank-ui-textglow-a: rgba(203,88,252,.28);
+  --rank-ui-textglow-b: rgba(145,52,252,.18);
+}
+
+/* soft center spotlight behind emblem */
+body[data-rank="reaper"] #rankBgLayer::after{
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      560px 420px at 50% 28%,
+      rgba(203,88,252,.10) 0%,
+      rgba(145,52,252,.08) 32%,
+      rgba(13,5,65,0) 70%
+    );
+  opacity: 1;
+}
+
+/* emblem ambient halo */
+body[data-rank="reaper"] #rankEmblemOverlay{
+  isolation: isolate;
+}
+
+body[data-rank="reaper"] #rankEmblemOverlay::before{
+  content:"";
+  position:absolute;
+  inset:14%;
+  border-radius:50%;
+  background:
+    radial-gradient(circle,
+      rgba(255,255,255,.06) 0%,
+      rgba(203,88,252,.12) 22%,
+      rgba(145,52,252,.08) 44%,
+      rgba(13,5,65,0) 70%);
+  opacity:.95;
+  animation: reaperHaloBreath 5.8s ease-in-out infinite;
+  z-index:0;
+  pointer-events:none;
+}
+
+body[data-rank="reaper"] #rankEmblemOverlay::after{
+  content:"";
+  position:absolute;
+  inset:18%;
+  border-radius:50%;
+  border:1px solid rgba(244,210,255,.12);
+  box-shadow:
+    0 0 24px rgba(203,88,252,.16),
+    inset 0 0 18px rgba(255,255,255,.04);
+  opacity:.8;
+  animation: reaperHaloBreath 5.8s ease-in-out infinite reverse;
+  z-index:0;
+  pointer-events:none;
+}
+
+body[data-rank="reaper"] #rankEmblemOverlay .rankEmblem{
+  position:relative;
+  z-index:2;
+  filter:
+    drop-shadow(0 18px 48px rgba(0,0,0,.55))
+    drop-shadow(0 0 22px rgba(203,88,252,.18))
+    drop-shadow(0 0 42px rgba(145,52,252,.12));
+}
+
+/* title / meta polish */
+body[data-rank="reaper"] #dashboard.section.active .rankHome .rankTitle{
+  color: #fff8ff !important;
+  text-shadow:
+    0 0 10px rgba(255,255,255,.10),
+    0 0 22px rgba(203,88,252,.26),
+    0 0 42px rgba(145,52,252,.16) !important;
+}
+
+body[data-rank="reaper"] #dashboard.section.active .rankHome .rankRP,
+body[data-rank="reaper"] #dashboard.section.active .rankHome .rankProgress__label{
+  color: rgba(255,246,255,.96) !important;
+  text-shadow:
+    0 0 8px rgba(255,255,255,.08),
+    0 0 16px rgba(203,88,252,.18) !important;
+}
+
+/* progress track looks more premium */
+body[data-rank="reaper"] #dashboard.section.active .rankHome .rankProgress{
+  background: linear-gradient(
+    90deg,
+    rgba(255,255,255,.05),
+    rgba(203,88,252,.12),
+    rgba(255,255,255,.04)
+  ) !important;
+  box-shadow:
+    inset 0 0 0 1px rgba(203,88,252,.16),
+    0 0 14px rgba(145,52,252,.10) !important;
+}
+
+/* Player Ascension block becomes more like HUD glass/panel */
+body[data-rank="reaper"] #dashboard.section.active .rankHome .pulseGrid{
+  position: relative;
+  border-radius: 16px;
+  background: linear-gradient(
+    180deg,
+    rgba(255,255,255,.025),
+    rgba(203,88,252,.045) 48%,
+    rgba(10,7,24,.14) 100%
+  ) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.05),
+    inset 0 0 0 1px rgba(203,88,252,.10),
+    0 0 22px rgba(145,52,252,.08) !important;
+}
+
+body[data-rank="reaper"] #dashboard.section.active .rankHome .pulseGrid::before{
+  content:"";
+  position:absolute;
+  left: 6%;
+  right: 6%;
+  top: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255,255,255,.18),
+    rgba(203,88,252,.28),
+    rgba(255,255,255,.18),
+    transparent
+  );
+  pointer-events:none;
+  opacity: .8;
+}
+
+@keyframes reaperHaloBreath{
+  0%,100%{
+    opacity: .72;
+    transform: scale(1);
+  }
+  50%{
+    opacity: 1;
+    transform: scale(1.02);
+  }
+}
