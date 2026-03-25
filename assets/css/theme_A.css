@@ -7038,4 +7038,14 @@ body[data-rank="reaper"] #dashboard.section.active .rankHome #rankEmblemOverlay,
 body[data-rank="reaper"] #rankEmblemOverlay{
   transform: translate(-50%, -50%) scale(.98) !important;
 }
+/* subtle emblem idle motion */
+body[data-rank="reaper"] #rankEmblemOverlay{
+  animation: reaperEmblemFloat 5.5s ease-in-out infinite;
+  will-change: transform;
+}
 
+@keyframes reaperEmblemFloat{
+  0%   { transform: translate(-50%, -50%) scale(.98); }
+  50%  { transform: translate(-50%, calc(-50% - 4px)) scale(.99); }
+  100% { transform: translate(-50%, -50%) scale(.98); }
+}
