@@ -7724,3 +7724,58 @@ body[data-rank="archon"] #dashboard.section.active .rankHome .rankHome__infoStac
   margin-right: 0 !important;
   transform: translateX(-50%) translateY(-40px) !important;
 }
+/* =========================================================
+   ARCHON NAVBAR — FINAL MICRO FIX
+   ========================================================= */
+
+/* kill old active top line like on rank 5 */
+body[data-rank="archon"] .navbar.navTabs > .nav-btn.active > span::before{
+  content: none !important;
+  display: none !important;
+  background: none !important;
+  box-shadow: none !important;
+}
+
+/* active tab above all */
+body[data-rank="archon"] .navbar.navTabs > .nav-btn.active{
+  z-index: 60 !important;
+  overflow: visible !important;
+}
+
+body[data-rank="archon"] .navbar.navTabs > .nav-btn.active > .nav-btn__ornament{
+  left: -24px !important;
+  right: -24px !important;
+  top: -20px !important;
+  bottom: auto !important;
+  height: 96px !important;
+  z-index: 70 !important;
+  filter: none !important;
+}
+
+/* inactive tabs a bit tighter */
+body[data-rank="archon"] .navbar.navTabs > .nav-btn:not(.active){
+  overflow: hidden !important;
+  z-index: 8 !important;
+}
+
+body[data-rank="archon"] .navbar.navTabs > .nav-btn:not(.active) > .nav-btn__ornament{
+  left: -10px !important;
+  right: -10px !important;
+  top: -4px !important;
+  bottom: auto !important;
+  height: 70px !important;
+  z-index: 4 !important;
+  filter: none !important;
+}
+
+/* keep tabs closer together */
+body[data-rank="archon"] .navbar.navTabs > .nav-btn + .nav-btn{
+  margin-left: -12px !important;
+}
+
+/* divider only a bit shorter */
+body[data-rank="archon"] .navbar.navTabs > .nav-btn + .nav-btn::after,
+body[data-rank="archon"] .navbar.navTabs > .nav-btn.active + .nav-btn::after{
+  height: 50px !important;
+  z-index: 12 !important;
+}
