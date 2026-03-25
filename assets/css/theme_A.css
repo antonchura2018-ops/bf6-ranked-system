@@ -7050,8 +7050,8 @@ body[data-rank="reaper"] #rankEmblemOverlay{
   100% { transform: translate(-50%, -50%) scale(.98); }
 }
 /* =========================================================
-   REAPER — RING ENERGY LIGHTS FINAL
-   softer blend, better placement, slow pulse
+   REAPER — RING ENERGY LIGHTS FINAL V2
+   softer white-pink glow, better placement, async pulse
    ========================================================= */
 
 body[data-rank="reaper"] .rankHome .harbinger-ring-fx{
@@ -7065,80 +7065,85 @@ body[data-rank="reaper"] .rankHome .harbinger-ring-fx .ring-light{
   position: absolute !important;
   pointer-events: none !important;
   border-radius: 999px !important;
-  opacity: .72 !important;
-  transform: translate(-50%, -50%) scale(.94) !important;
+  opacity: .58 !important;
+  transform: translate(-50%, -50%) scale(.92) !important;
   will-change: transform, opacity !important;
   mix-blend-mode: screen !important;
 
   background:
     radial-gradient(
       ellipse at center,
-      rgba(255,255,255,.98) 0%,
-      rgba(255,245,255,.92) 12%,
-      rgba(251,120,250,.72) 34%,
-      rgba(251,120,250,.34) 58%,
-      rgba(251,120,250,.10) 76%,
+      rgba(255,255,255,.96) 0%,
+      rgba(255,250,255,.90) 10%,
+      rgba(255,236,252,.58) 26%,
+      rgba(251,120,250,.26) 48%,
+      rgba(251,120,250,.10) 66%,
+      rgba(251,120,250,.03) 78%,
       rgba(251,120,250,0) 100%
     ) !important;
 
-  animation: reaperRingLightPulse 4.2s ease-in-out infinite !important;
+  animation: reaperRingLightPulse 4.4s ease-in-out infinite !important;
 }
 
-/* upper left */
+/* big left — up and a little right */
 body[data-rank="reaper"] .rankHome .harbinger-ring-fx .ring-light--lt{
-  left: 30.9% !important;
-  top: 37.3% !important;
-  width: 64px !important;
-  height: 118px !important;
+  left: 32.0% !important;
+  top: 35.6% !important;
+  width: 58px !important;
+  height: 120px !important;
   animation-delay: 0s !important;
 }
 
-/* upper right — a bit more left */
+/* big right — up, a little left, and wider */
 body[data-rank="reaper"] .rankHome .harbinger-ring-fx .ring-light--rt{
-  left: 66.0% !important;
-  top: 37.3% !important;
-  width: 64px !important;
-  height: 118px !important;
-  animation-delay: 1.3s !important;
+  left: 65.1% !important;
+  top: 35.5% !important;
+  width: 78px !important;
+  height: 124px !important;
+  animation-delay: 1.35s !important;
 }
 
-/* lower left */
+/* small left — up well and a little right */
 body[data-rank="reaper"] .rankHome .harbinger-ring-fx .ring-light--lb{
-  left: 34.9% !important;
-  top: 60.7% !important;
-  width: 48px !important;
-  height: 74px !important;
-  animation-delay: .65s !important;
+  left: 36.0% !important;
+  top: 56.9% !important;
+  width: 42px !important;
+  height: 72px !important;
+  animation-delay: .7s !important;
 }
 
-/* lower right — a bit more left */
+/* small right — up */
 body[data-rank="reaper"] .rankHome .harbinger-ring-fx .ring-light--rb{
-  left: 63.1% !important;
-  top: 60.7% !important;
-  width: 48px !important;
-  height: 74px !important;
-  animation-delay: 1.95s !important;
+  left: 62.9% !important;
+  top: 56.9% !important;
+  width: 42px !important;
+  height: 72px !important;
+  animation-delay: 2.05s !important;
 }
 
 @keyframes reaperRingLightPulse{
   0%{
-    opacity: .20;
-    transform: translate(-50%, -50%) scale(.88);
+    opacity: .14;
+    transform: translate(-50%, -50%) scale(.86);
   }
-  35%{
-    opacity: .78;
-    transform: translate(-50%, -50%) scale(1.00);
+  20%{
+    opacity: .34;
+    transform: translate(-50%, -50%) scale(.93);
   }
-  50%{
-    opacity: .96;
+  45%{
+    opacity: .76;
+    transform: translate(-50%, -50%) scale(1.01);
+  }
+  58%{
+    opacity: .94;
     transform: translate(-50%, -50%) scale(1.05);
   }
-  70%{
-    opacity: .42;
-    transform: translate(-50%, -50%) scale(.96);
+  78%{
+    opacity: .30;
+    transform: translate(-50%, -50%) scale(.95);
   }
   100%{
-    opacity: .20;
-    transform: translate(-50%, -50%) scale(.88);
+    opacity: .14;
+    transform: translate(-50%, -50%) scale(.86);
   }
 }
