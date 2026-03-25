@@ -7051,7 +7051,7 @@ body[data-rank="reaper"] #rankEmblemOverlay{
 }
 /* =========================================================
    REAPER — RING ENERGY LIGHTS
-   subtle animated glow nodes around the ring
+   brighter pink-white animated glow nodes around the ring
    ========================================================= */
 
 body[data-rank="reaper"] .rankHome .harbinger-ring-fx{
@@ -7065,18 +7065,19 @@ body[data-rank="reaper"] .rankHome .harbinger-ring-fx .ring-light{
   position: absolute !important;
   pointer-events: none !important;
   border-radius: 999px !important;
-  opacity: .55 !important;
-  transform: translate(-50%, -50%) scale(.94) !important;
+  opacity: .82 !important;
+  transform: translate(-50%, -50%) scale(.96) !important;
   will-change: transform, opacity !important;
 
   background:
     radial-gradient(
       ellipse at center,
-      rgba(255,245,255,.95) 0%,
-      rgba(237,188,255,.78) 18%,
-      rgba(203,88,252,.56) 42%,
-      rgba(203,88,252,.18) 66%,
-      rgba(203,88,252,0) 100%
+      rgba(255,255,255,1) 0%,
+      rgba(255,245,255,.96) 14%,
+      rgba(251,120,250,.88) 34%,
+      rgba(251,120,250,.50) 56%,
+      rgba(251,120,250,.18) 74%,
+      rgba(251,120,250,0) 100%
     ) !important;
 
   animation: reaperRingLightPulse 3.4s ease-in-out infinite !important;
@@ -7085,48 +7086,48 @@ body[data-rank="reaper"] .rankHome .harbinger-ring-fx .ring-light{
 /* bigger upper side lights */
 body[data-rank="reaper"] .rankHome .harbinger-ring-fx .ring-light--lt{
   left: 31.6% !important;
-  top: 39.2% !important;
-  width: 74px !important;
-  height: 128px !important;
+  top: 35.8% !important;
+  width: 86px !important;
+  height: 144px !important;
   animation-delay: 0s !important;
 }
 
 body[data-rank="reaper"] .rankHome .harbinger-ring-fx .ring-light--rt{
-  left: 68.4% !important;
-  top: 39.2% !important;
-  width: 74px !important;
-  height: 128px !important;
+  left: 66.8% !important;
+  top: 35.8% !important;
+  width: 86px !important;
+  height: 144px !important;
   animation-delay: 1.1s !important;
 }
 
 /* smaller lower side lights */
 body[data-rank="reaper"] .rankHome .harbinger-ring-fx .ring-light--lb{
   left: 35.8% !important;
-  top: 58.8% !important;
-  width: 56px !important;
-  height: 86px !important;
+  top: 54.8% !important;
+  width: 64px !important;
+  height: 96px !important;
   animation-delay: .55s !important;
 }
 
 body[data-rank="reaper"] .rankHome .harbinger-ring-fx .ring-light--rb{
-  left: 64.2% !important;
-  top: 58.8% !important;
-  width: 56px !important;
-  height: 86px !important;
+  left: 62.8% !important;
+  top: 54.8% !important;
+  width: 64px !important;
+  height: 96px !important;
   animation-delay: 1.65s !important;
 }
 
 @keyframes reaperRingLightPulse{
   0%{
-    opacity: .28;
+    opacity: .38;
     transform: translate(-50%, -50%) scale(.90);
   }
   50%{
-    opacity: .95;
-    transform: translate(-50%, -50%) scale(1.08);
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.12);
   }
   100%{
-    opacity: .28;
+    opacity: .38;
     transform: translate(-50%, -50%) scale(.90);
   }
 }
