@@ -7050,8 +7050,8 @@ body[data-rank="reaper"] #rankEmblemOverlay{
   100% { transform: translate(-50%, -50%) scale(.98); }
 }
 /* =========================================================
-   REAPER — BLOOM FX FINAL
-   pink animated blooms with duplicated lower glow
+   REAPER — BLOOM FX FINAL SIMPLE
+   only 2 main pink glows, above emblem area like previous version
    ========================================================= */
 
 body[data-rank="reaper"] .rankHome__center{
@@ -7077,81 +7077,31 @@ body[data-rank="reaper"] .harbinger-ring-fx{
   height: 920px !important;
   transform: translate(-50%, -50%) !important;
   pointer-events: none !important;
-  z-index: 8 !important;
+  z-index: 14 !important;
 }
 
-/* hide old simple fx nodes */
+/* hide old nodes */
 body[data-rank="reaper"] .harbinger-ring-fx .fx{
   display: none !important;
 }
 
-/* main ambient layer */
-body[data-rank="reaper"] .harbinger-ring-fx::before{
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 1;
-
-  background:
-    radial-gradient(ellipse 220px 120px at 18% 57%,
-      rgba(255,210,245,.18) 0%,
-      rgba(251,120,250,.10) 36%,
-      rgba(0,0,0,0) 76%
-    ),
-    radial-gradient(ellipse 250px 120px at 82% 57%,
-      rgba(255,210,245,.20) 0%,
-      rgba(251,120,250,.11) 36%,
-      rgba(0,0,0,0) 76%
-    );
-
-  filter: blur(34px);
-  opacity: .34;
-  animation: reaperSideHaze 7.2s ease-in-out infinite;
-}
-
-/* soft arc shimmer */
-body[data-rank="reaper"] .harbinger-ring-fx::after{
-  content: "";
-  position: absolute;
-  left: 50%;
-  top: 92px;
-  width: 800px;
-  height: 280px;
-  transform: translateX(-50%);
-  pointer-events: none;
-  z-index: 1;
-
-  background:
-    radial-gradient(ellipse at center,
-      rgba(255,220,245,.08) 0%,
-      rgba(251,120,250,.06) 28%,
-      rgba(251,120,250,.03) 46%,
-      rgba(0,0,0,0) 76%
-    );
-
-  filter: blur(28px);
-  opacity: .22;
-  animation: reaperArcShimmer 8.0s ease-in-out infinite;
-}
-
-/* all glow nodes */
+/* reset all ring-light by default */
 body[data-rank="reaper"] .harbinger-ring-fx .ring-light{
+  display: none !important;
   position: absolute !important;
-  display: block !important;
   pointer-events: none !important;
   border-radius: 999px !important;
   mix-blend-mode: screen !important;
   will-change: transform, opacity !important;
-  opacity: .22 !important;
-  transform: translate(-50%, -50%) scale(.88) !important;
+  opacity: .20 !important;
+  transform: translate(-50%, -50%) scale(.86) !important;
 
   background:
     radial-gradient(
       ellipse at center,
-      rgba(255,220,245,.92) 0%,
-      rgba(255,190,238,.76) 14%,
-      rgba(251,120,250,.46) 34%,
+      rgba(255,220,245,.96) 0%,
+      rgba(255,190,238,.80) 14%,
+      rgba(251,120,250,.48) 34%,
       rgba(251,120,250,.20) 56%,
       rgba(251,120,250,.07) 74%,
       rgba(251,120,250,0) 100%
@@ -7160,10 +7110,11 @@ body[data-rank="reaper"] .harbinger-ring-fx .ring-light{
   animation: reaperRingLightPulse 4.8s ease-in-out infinite !important;
 }
 
-/* ---------- main four ---------- */
+/* show only 2 big lights */
 
-/* upper left — a bit right */
+/* left big — like previous version, a bit right */
 body[data-rank="reaper"] .harbinger-ring-fx .ring-light--lt{
+  display: block !important;
   left: 33.0% !important;
   top: 35.0% !important;
   width: 62px !important;
@@ -7171,8 +7122,9 @@ body[data-rank="reaper"] .harbinger-ring-fx .ring-light--lt{
   animation-delay: 0s !important;
 }
 
-/* upper right — a bit left */
+/* right big — like previous version, a bit left and wider */
 body[data-rank="reaper"] .harbinger-ring-fx .ring-light--rt{
+  display: block !important;
   left: 64.2% !important;
   top: 35.0% !important;
   width: 94px !important;
@@ -7180,71 +7132,17 @@ body[data-rank="reaper"] .harbinger-ring-fx .ring-light--rt{
   animation-delay: 1.45s !important;
 }
 
-/* lower left */
-body[data-rank="reaper"] .harbinger-ring-fx .ring-light--lb{
-  left: 36.2% !important;
-  top: 54.5% !important;
-  width: 46px !important;
-  height: 78px !important;
-  animation-delay: .8s !important;
-}
-
-/* lower right */
+/* explicitly hide lower duplicates */
+body[data-rank="reaper"] .harbinger-ring-fx .ring-light--lb,
 body[data-rank="reaper"] .harbinger-ring-fx .ring-light--rb{
-  left: 62.9% !important;
-  top: 54.3% !important;
-  width: 46px !important;
-  height: 78px !important;
-  animation-delay: 2.2s !important;
+  display: none !important;
 }
 
-/* ---------- duplicated lower glows ---------- */
-
-/* duplicate under upper left */
-body[data-rank="reaper"] .harbinger-ring-fx .ring-light--lt::after{
-  content: "";
-  position: absolute;
-  left: 6px;
-  top: 132px;
-  width: 46px;
-  height: 84px;
-  border-radius: 999px;
-  background:
-    radial-gradient(
-      ellipse at center,
-      rgba(255,220,245,.82) 0%,
-      rgba(255,190,238,.60) 16%,
-      rgba(251,120,250,.30) 38%,
-      rgba(251,120,250,.10) 62%,
-      rgba(251,120,250,0) 100%
-    );
-  opacity: .56;
-  filter: blur(4px);
+body[data-rank="reaper"] .harbinger-ring-fx::before,
+body[data-rank="reaper"] .harbinger-ring-fx::after{
+  content: none !important;
+  display: none !important;
 }
-
-/* duplicate under upper right */
-body[data-rank="reaper"] .harbinger-ring-fx .ring-light--rt::after{
-  content: "";
-  position: absolute;
-  left: 18px;
-  top: 136px;
-  width: 52px;
-  height: 88px;
-  border-radius: 999px;
-  background:
-    radial-gradient(
-      ellipse at center,
-      rgba(255,220,245,.84) 0%,
-      rgba(255,190,238,.62) 16%,
-      rgba(251,120,250,.32) 38%,
-      rgba(251,120,250,.10) 62%,
-      rgba(251,120,250,0) 100%
-    );
-  opacity: .58;
-  filter: blur(4px);
-}
-
-/* ---------- animations ---------- */
 
 @keyframes reaperRingLightPulse{
   0%{
@@ -7270,35 +7168,5 @@ body[data-rank="reaper"] .harbinger-ring-fx .ring-light--rt::after{
   100%{
     opacity: .08;
     transform: translate(-50%, -50%) scale(.82);
-  }
-}
-
-@keyframes reaperSideHaze{
-  0%{
-    opacity: .20;
-    filter: blur(34px) brightness(.94);
-  }
-  50%{
-    opacity: .38;
-    filter: blur(36px) brightness(1.08);
-  }
-  100%{
-    opacity: .20;
-    filter: blur(34px) brightness(.94);
-  }
-}
-
-@keyframes reaperArcShimmer{
-  0%{
-    opacity: .10;
-    filter: blur(28px) brightness(.94);
-  }
-  50%{
-    opacity: .24;
-    filter: blur(30px) brightness(1.08);
-  }
-  100%{
-    opacity: .10;
-    filter: blur(28px) brightness(.94);
   }
 }
