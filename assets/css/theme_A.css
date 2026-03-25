@@ -7830,3 +7830,45 @@ body[data-rank="archon"] .navbar.navTabs > .nav-btn.active + .nav-btn::after{
   z-index: 12 !important;
   background: url('/assets/img/ui/tab_divider_archon.png') center / 100% 100% no-repeat !important;
 }
+/* =========================================================
+   ARCHON NAVBAR — ARTIFACT ONLY FIX
+   do not change sizes
+   ========================================================= */
+
+/* active tab stays above everything */
+body[data-rank="archon"] .navbar.navTabs > .nav-btn.active{
+  z-index: 60 !important;
+}
+
+body[data-rank="archon"] .navbar.navTabs > .nav-btn.active > .nav-btn__ornament{
+  z-index: 70 !important;
+  filter: none !important;
+}
+
+/* kill old active top line */
+body[data-rank="archon"] .navbar.navTabs > .nav-btn.active > span::before{
+  content: none !important;
+  display: none !important;
+  background: none !important;
+  box-shadow: none !important;
+}
+
+/* only trim the LEFT neighbor of active to remove seam artifact */
+body[data-rank="archon"] .navbar.navTabs > .nav-btn:has(+ .nav-btn.active) > .nav-btn__ornament{
+  background-size: calc(100% - 26px) 100% !important;
+  background-position: center center !important;
+  filter: none !important;
+}
+
+/* only trim the RIGHT neighbor of active slightly */
+body[data-rank="archon"] .navbar.navTabs > .nav-btn.active + .nav-btn > .nav-btn__ornament{
+  background-size: calc(100% - 14px) 100% !important;
+  background-position: center center !important;
+  filter: none !important;
+}
+
+/* keep neighbors under active */
+body[data-rank="archon"] .navbar.navTabs > .nav-btn:has(+ .nav-btn.active),
+body[data-rank="archon"] .navbar.navTabs > .nav-btn.active + .nav-btn{
+  z-index: 8 !important;
+}
