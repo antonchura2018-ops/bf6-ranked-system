@@ -4963,23 +4963,23 @@ body[data-rank="harbinger"] .harbinger-ring-fx .fx{
    LEFT BLOOM
    ========================================= */
 body[data-rank="harbinger"] .harbinger-ring-fx .fx-left{
-  left: 8px !important;
-  top: 362px !important;
-  width: 248px !important;
-  height: 132px !important;
+  left: 18px !important;
+  top: 354px !important;
+  width: 272px !important;
+  height: 148px !important;
 
   background:
     radial-gradient(ellipse at center,
-      rgba(255,255,255,.92) 0%,
-      rgba(236,255,236,.58) 10%,
-      rgba(176,255,176,.32) 25%,
-      rgba(110,255,110,.17) 42%,
-      rgba(110,255,110,.07) 58%,
-      rgba(0,0,0,0) 78%
+      rgba(255,255,255,.96) 0%,
+      rgba(240,255,240,.68) 10%,
+      rgba(185,255,185,.40) 26%,
+      rgba(110,255,110,.22) 44%,
+      rgba(110,255,110,.09) 60%,
+      rgba(0,0,0,0) 80%
     );
 
-  filter: blur(17px);
-  opacity: .88;
+  filter: blur(19px);
+  opacity: .92;
   transform: rotate(-8deg);
   animation: harbingerLeftGlow 5.2s ease-in-out infinite;
 }
@@ -4988,23 +4988,23 @@ body[data-rank="harbinger"] .harbinger-ring-fx .fx-left{
    RIGHT BLOOM
    ========================================= */
 body[data-rank="harbinger"] .harbinger-ring-fx .fx-right{
-  right: 8px !important;
-  top: 362px !important;
-  width: 248px !important;
-  height: 132px !important;
+  right: 18px !important;
+  top: 354px !important;
+  width: 272px !important;
+  height: 148px !important;
 
   background:
     radial-gradient(ellipse at center,
-      rgba(255,255,255,.94) 0%,
-      rgba(236,255,236,.60) 10%,
-      rgba(176,255,176,.34) 25%,
-      rgba(110,255,110,.18) 42%,
-      rgba(110,255,110,.08) 58%,
-      rgba(0,0,0,0) 78%
+      rgba(255,255,255,.98) 0%,
+      rgba(240,255,240,.70) 10%,
+      rgba(185,255,185,.42) 26%,
+      rgba(110,255,110,.24) 44%,
+      rgba(110,255,110,.10) 60%,
+      rgba(0,0,0,0) 80%
     );
 
-  filter: blur(17px);
-  opacity: .90;
+  filter: blur(19px);
+  opacity: .94;
   transform: rotate(8deg);
   animation: harbingerRightGlow 5.8s ease-in-out infinite;
 }
