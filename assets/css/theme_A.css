@@ -7789,3 +7789,44 @@ body[data-rank="archon"] .navbar.navTabs > .nav-btn.active + .nav-btn{
 body[data-rank="archon"] .navbar.navTabs > .nav-btn.active{
   z-index: 60 !important;
 }
+/* =========================================================
+   ARCHON NAVBAR — SEAM ARTIFACT FIX + HARBINGER DIVIDER SIZE
+   ========================================================= */
+
+/* 1) прибрати артефакт у шві ЗЛІВА від active вкладки */
+body[data-rank="archon"] .navbar.navTabs > .nav-btn:has(+ .nav-btn.active) > .nav-btn__ornament{
+  left: -10px !important;
+  right: -10px !important;
+  top: -7px !important;
+  bottom: auto !important;
+  height: 78px !important;
+  background-size: calc(100% - 22px) 100% !important;
+  background-position: center center !important;
+  filter: none !important;
+}
+
+/* 2) active вкладка завжди зверху */
+body[data-rank="archon"] .navbar.navTabs > .nav-btn.active{
+  z-index: 60 !important;
+}
+
+body[data-rank="archon"] .navbar.navTabs > .nav-btn.active > .nav-btn__ornament{
+  z-index: 70 !important;
+}
+
+/* 3) divider зробити таким самим по розміру, як у rank 4 */
+body[data-rank="archon"] .navbar.navTabs > .nav-btn + .nav-btn::after{
+  left: -9px !important;
+  width: 28px !important;
+  height: 68px !important;
+  z-index: 12 !important;
+  background: url('/assets/img/ui/tab_divider_archon.png') center / 100% 100% no-repeat !important;
+}
+
+body[data-rank="archon"] .navbar.navTabs > .nav-btn.active + .nav-btn::after{
+  left: -10px !important;
+  width: 28px !important;
+  height: 68px !important;
+  z-index: 12 !important;
+  background: url('/assets/img/ui/tab_divider_archon.png') center / 100% 100% no-repeat !important;
+}
