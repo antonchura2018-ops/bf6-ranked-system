@@ -7091,24 +7091,24 @@ body[data-rank="reaper"] .harbinger-ring-fx .fx{
    LEFT BLOOM
    ========================================= */
 body[data-rank="reaper"] .harbinger-ring-fx .fx-left{
-  left: 36px !important;
+  left: 54px !important;
   top: 320px !important;
   width: 180px !important;
   height: 220px !important;
 
   background:
     radial-gradient(ellipse at center,
-      rgba(255,255,255,.98) 0%,
-      rgba(255,248,255,.92) 10%,
-      rgba(255,220,252,.62) 20%,
-      rgba(251,120,250,.34) 38%,
-      rgba(251,120,250,.14) 56%,
-      rgba(251,120,250,.05) 70%,
-      rgba(0,0,0,0) 84%
+      rgba(255,235,250,.96) 0%,
+      rgba(255,210,245,.88) 12%,
+      rgba(251,120,250,.64) 24%,
+      rgba(251,120,250,.34) 42%,
+      rgba(203,88,252,.14) 60%,
+      rgba(203,88,252,.05) 74%,
+      rgba(0,0,0,0) 86%
     );
 
   filter: blur(22px);
-  opacity: .72;
+  opacity: .78;
   transform: rotate(-7deg);
   animation: reaperLeftGlow 4.6s ease-in-out infinite;
 }
@@ -7117,24 +7117,24 @@ body[data-rank="reaper"] .harbinger-ring-fx .fx-left{
    RIGHT BLOOM
    ========================================= */
 body[data-rank="reaper"] .harbinger-ring-fx .fx-right{
-  right: 32px !important;
+  right: 52px !important;
   top: 320px !important;
   width: 210px !important;
   height: 220px !important;
 
   background:
     radial-gradient(ellipse at center,
-      rgba(255,255,255,.99) 0%,
-      rgba(255,248,255,.94) 10%,
-      rgba(255,220,252,.66) 20%,
-      rgba(251,120,250,.38) 38%,
-      rgba(251,120,250,.15) 56%,
-      rgba(251,120,250,.05) 70%,
-      rgba(0,0,0,0) 84%
+      rgba(255,235,250,.98) 0%,
+      rgba(255,210,245,.90) 12%,
+      rgba(251,120,250,.68) 24%,
+      rgba(251,120,250,.38) 42%,
+      rgba(203,88,252,.15) 60%,
+      rgba(203,88,252,.05) 74%,
+      rgba(0,0,0,0) 86%
     );
 
   filter: blur(22px);
-  opacity: .76;
+  opacity: .80;
   transform: rotate(7deg);
   animation: reaperRightGlow 5.0s ease-in-out infinite;
 }
