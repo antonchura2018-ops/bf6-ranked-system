@@ -8106,3 +8106,214 @@ body[data-rank="archon"] .navbar.navTabs > .nav-btn.active + .nav-btn::after{
     transform-origin: top center !important;
   }
 }
+/* =========================================================
+   ARCHON — FINAL TWEAK PATCH
+   вставити В САМИЙ КІНЕЦЬ theme_A.css
+   ========================================================= */
+
+/* ---------------------------------------------------------
+   1) NEW ARCHON COLOR PALETTE
+   primary: #D8173E
+   secondary: #E7688C
+   accent: #4443A8
+   --------------------------------------------------------- */
+body[data-rank="archon"]{
+  --rank-ui-primary: #D8173E;
+  --rank-ui-secondary: #E7688C;
+  --rank-ui-soft: rgba(216,23,62,.18);
+
+  --rank-ui-line: rgba(231,104,140,.92);
+  --rank-ui-line-soft: rgba(231,104,140,.16);
+
+  --rank-ui-textglow-a: rgba(216,23,62,.30);
+  --rank-ui-textglow-b: rgba(68,67,168,.22);
+
+  --rank-ui-tab-outline: rgba(216,23,62,.32);
+}
+
+/* ---------------------------------------------------------
+   2) EMBLEM — slightly smaller
+   було .98 / .99, робимо трохи менше
+   --------------------------------------------------------- */
+body[data-rank="archon"] #dashboard.section.active .rankHome .rankEmblemOverlay,
+body[data-rank="archon"] #dashboard.section.active .rankHome #rankEmblemOverlay,
+body[data-rank="archon"] #rankEmblemOverlay{
+  transform: translate(-50%, -50%) scale(.95) !important;
+}
+
+body[data-rank="archon"] #rankEmblemOverlay{
+  animation: archonEmblemFloatSmall 5.5s ease-in-out infinite !important;
+  will-change: transform;
+}
+
+@keyframes archonEmblemFloatSmall{
+  0%{
+    transform: translate(-50%, -50%) scale(.95);
+  }
+  50%{
+    transform: translate(-50%, calc(-50% - 4px)) scale(.96);
+  }
+  100%{
+    transform: translate(-50%, -50%) scale(.95);
+  }
+}
+
+/* ---------------------------------------------------------
+   3) INACTIVE TAB FRAME — slightly bigger + slightly lower
+   старе було:
+   left/right: -6px
+   top: -3px
+   height: 60px
+
+   нове:
+   bigger + lower
+   --------------------------------------------------------- */
+body[data-rank="archon"] .navbar.navTabs > .nav-btn:not(.active) > .nav-btn__ornament{
+  left: -8px !important;
+  right: -8px !important;
+  top: 0px !important;
+  bottom: auto !important;
+  height: 64px !important;
+
+  background-image: url('/assets/img/ui/tab_inactive_archon.png') !important;
+  background-size: 100% 100% !important;
+  background-repeat: no-repeat !important;
+  background-position: center center !important;
+
+  filter:
+    drop-shadow(0 0 4px rgba(216,23,62,.07))
+    drop-shadow(0 0 10px rgba(68,67,168,.04))
+    drop-shadow(0 1px 4px rgba(0,0,0,.14)) !important;
+}
+
+/* optional: make inactive base plate match the new tone a bit better */
+body[data-rank="archon"] .navbar.navTabs > .nav-btn:not(.active)::before{
+  border: 1px solid rgba(231,104,140,.16) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.02),
+    inset 0 -1px 0 rgba(0,0,0,.45),
+    0 0 10px rgba(216,23,62,.05) !important;
+}
+
+/* ---------------------------------------------------------
+   4) ACTIVE TAB — recolor to new archon palette
+   --------------------------------------------------------- */
+body[data-rank="archon"] .navbar.navTabs > .nav-btn{
+  text-shadow:
+    0 0 4px rgba(255,255,255,.06),
+    0 0 10px rgba(216,23,62,.05) !important;
+}
+
+body[data-rank="archon"] .navbar.navTabs > .nav-btn.active{
+  color: #fff1f5 !important;
+  text-shadow:
+    0 0 8px rgba(255,255,255,.16),
+    0 0 18px rgba(216,23,62,.12),
+    0 0 26px rgba(68,67,168,.06) !important;
+}
+
+body[data-rank="archon"] .navbar.navTabs > .nav-btn.active::before{
+  border-color: rgba(231,104,140,.24) !important;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(30,18,24,.86) 0%,
+      rgba(14,10,14,.96) 55%,
+      rgba(7,4,10,.99) 100%
+    ) !important;
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.06),
+    inset 0 -1px 0 rgba(0,0,0,.46),
+    0 0 10px rgba(216,23,62,.10),
+    0 0 18px rgba(68,67,168,.06) !important;
+}
+
+body[data-rank="archon"] .navbar.navTabs > .nav-btn.active > .nav-btn__ornament{
+  filter:
+    drop-shadow(0 0 10px rgba(216,23,62,.16))
+    drop-shadow(0 0 22px rgba(68,67,168,.07)) !important;
+}
+
+/* ---------------------------------------------------------
+   5) TITLE / META / LINES — recolor to the new palette
+   --------------------------------------------------------- */
+body[data-rank="archon"] #dashboard.section.active .rankHome .rankTitle,
+body[data-rank="archon"] #dashboard.section.active .rankHome .rankName,
+body[data-rank="archon"] #dashboard.section.active .rankHome .rankTierName{
+  text-shadow:
+    0 0 6px rgba(255,255,255,.18),
+    0 0 14px rgba(255,255,255,.10),
+    0 0 22px rgba(216,23,62,.18),
+    0 0 36px rgba(68,67,168,.16) !important;
+}
+
+body[data-rank="archon"] #dashboard.section.active .rankHome .rankSub,
+body[data-rank="archon"] #dashboard.section.active .rankHome .rankRP,
+body[data-rank="archon"] #dashboard.section.active .rankHome .rankMeta,
+body[data-rank="archon"] #dashboard.section.active .rankHome .rankNext,
+body[data-rank="archon"] #dashboard.section.active .rankHome .rankProgressLabel,
+body[data-rank="archon"] #dashboard.section.active .rankHome .rankProgress__label{
+  text-shadow:
+    0 0 5px rgba(255,255,255,.12),
+    0 0 12px rgba(216,23,62,.14),
+    0 0 20px rgba(68,67,168,.06) !important;
+}
+
+body[data-rank="archon"] #dashboard.section.active .rankHome .rankSub::after,
+body[data-rank="archon"] #dashboard.section.active .rankHome .rankMeta::after,
+body[data-rank="archon"] #dashboard.section.active .rankHome .rankRP::after,
+body[data-rank="archon"] #dashboard.section.active .rankHome .rankProgressLabel::after,
+body[data-rank="archon"] #dashboard.section.active .rankHome .rankProgress__label::after{
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(231,104,140,.22) 18%,
+    rgba(231,104,140,.88) 50%,
+    rgba(68,67,168,.18) 82%,
+    transparent 100%
+  ) !important;
+
+  box-shadow:
+    0 0 8px rgba(231,104,140,.18),
+    0 0 18px rgba(216,23,62,.14),
+    0 0 28px rgba(68,67,168,.08) !important;
+}
+
+body[data-rank="archon"] #dashboard.section.active .rankHome .pulseHeader::before,
+body[data-rank="archon"] #dashboard.section.active .rankHome .pulseHeader::after,
+body[data-rank="archon"] #dashboard.section.active .rankHome .pulseHeader span::before,
+body[data-rank="archon"] #dashboard.section.active .rankHome .pulseHeader span::after{
+  background: linear-gradient(
+    90deg,
+    rgba(0,0,0,0) 0%,
+    rgba(231,104,140,.16) 16%,
+    rgba(231,104,140,.90) 50%,
+    rgba(68,67,168,.18) 84%,
+    rgba(0,0,0,0) 100%
+  ) !important;
+
+  box-shadow:
+    0 0 12px rgba(231,104,140,.24),
+    0 0 24px rgba(216,23,62,.14),
+    0 0 34px rgba(68,67,168,.08) !important;
+}
+
+/* ---------------------------------------------------------
+   6) PROGRESS BAR — recolor to new palette
+   --------------------------------------------------------- */
+body[data-rank="archon"] #dashboard.section.active .rankHome .rankProgress__fill{
+  background: linear-gradient(
+    90deg,
+    #ffffff 0%,
+    #ffd7e2 18%,
+    #E7688C 46%,
+    #D8173E 76%,
+    #4443A8 100%
+  ) !important;
+
+  box-shadow:
+    0 0 8px rgba(255,255,255,.12),
+    0 0 14px rgba(216,23,62,.18),
+    0 0 24px rgba(68,67,168,.12) !important;
+}
