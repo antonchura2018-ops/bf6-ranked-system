@@ -7311,31 +7311,28 @@ body[data-rank="reaper"] .harbinger-ring-fx::after{
   }
 }
 /* =========================================================
-   ARCHON — FULL SAFE OVERRIDE
+   ARCHON — FINAL REAPER-BASED FULL OVERRIDE
    ВСТАВИТИ В САМИЙ КІНЕЦЬ theme_A.css
-
-   ЩО ЗРОБИТИ:
-   1) видали старі нижні ARCHON-блоки, якщо вони вже є
-   2) встав цей блок у самий кінець theme_A.css
+   Основа: логіка Reaper, але для 6 рангу Archon
    ========================================================= */
 
 /* =========================================================
-   ARCHON — rank variables
+   ARCHON — COLOR SYSTEM
    ========================================================= */
 body[data-rank="archon"]{
   --rank-bg-image: url('/assets/img/bg/cosmos_archon.png');
 
-  --rank-ui-primary: #de281c;
-  --rank-ui-secondary: #2a0908;
-  --rank-ui-soft: rgba(222,40,28,.18);
+  --rank-ui-primary: #9A211E;
+  --rank-ui-secondary: #38191D;
+  --rank-ui-soft: rgba(154,33,30,.18);
 
-  --rank-ui-line: rgba(255,91,77,.92);
-  --rank-ui-line-soft: rgba(255,230,225,.11);
+  --rank-ui-line: rgba(231,125,76,.92);
+  --rank-ui-line-soft: rgba(255,228,214,.12);
 
-  --rank-ui-textglow-a: rgba(222,40,28,.30);
-  --rank-ui-textglow-b: rgba(48,12,10,.24);
+  --rank-ui-textglow-a: rgba(154,33,30,.30);
+  --rank-ui-textglow-b: rgba(56,25,29,.22);
 
-  --rank-ui-tab-outline: rgba(222,40,28,.32);
+  --rank-ui-tab-outline: rgba(154,33,30,.32);
 }
 
 /* cleaner center focus */
@@ -7347,10 +7344,10 @@ body[data-rank="archon"] #rankBgLayer::after{
   z-index:1;
   background:
     radial-gradient(circle at 50% 34%,
-      rgba(16,4,4,0) 0%,
-      rgba(16,4,4,.08) 18%,
-      rgba(16,4,4,.18) 36%,
-      rgba(16,4,4,.28) 52%,
+      rgba(10,4,4,0) 0%,
+      rgba(10,4,4,.08) 18%,
+      rgba(10,4,4,.18) 36%,
+      rgba(10,4,4,.28) 52%,
       rgba(0,0,0,0) 72%),
     radial-gradient(circle at 50% 54%,
       rgba(0,0,0,0) 0%,
@@ -7360,16 +7357,42 @@ body[data-rank="archon"] #rankBgLayer::after{
 }
 
 /* =========================================================
-   ARCHON — emblem / text polish
+   ARCHON — INFO BLOCK TRUE CENTER + SLIGHTLY LOWER
    ========================================================= */
+body[data-rank="archon"] #dashboard.section.active .rankHome .rankHome__infoStack{
+  position: relative !important;
+  left: 50% !important;
+  right: auto !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  transform: translateX(-50%) translateY(-40px) !important;
+  z-index: 13 !important;
+}
 
+/* =========================================================
+   ARCHON — EMBLEM
+   ========================================================= */
 body[data-rank="archon"] #dashboard.section.active .rankHome .rankEmblemOverlay,
 body[data-rank="archon"] #dashboard.section.active .rankHome #rankEmblemOverlay,
 body[data-rank="archon"] #rankEmblemOverlay{
-  transform: translate(-50%, -50%) scale(.88) !important;
+  transform: translate(-50%, -50%) scale(.98) !important;
 }
 
-/* title */
+/* subtle emblem idle motion */
+body[data-rank="archon"] #rankEmblemOverlay{
+  animation: archonEmblemFloat 5.5s ease-in-out infinite;
+  will-change: transform;
+}
+
+@keyframes archonEmblemFloat{
+  0%   { transform: translate(-50%, -50%) scale(.98); }
+  50%  { transform: translate(-50%, calc(-50% - 4px)) scale(.99); }
+  100% { transform: translate(-50%, -50%) scale(.98); }
+}
+
+/* =========================================================
+   ARCHON — CLEAN TEXT / META / TITLE
+   ========================================================= */
 body[data-rank="archon"] #dashboard.section.active .rankHome .rankTitle,
 body[data-rank="archon"] #dashboard.section.active .rankHome .rankName,
 body[data-rank="archon"] #dashboard.section.active .rankHome .rankTierName{
@@ -7381,13 +7404,12 @@ body[data-rank="archon"] #dashboard.section.active .rankHome .rankTierName{
   text-shadow:
     0 0 6px rgba(255,255,255,.18),
     0 0 14px rgba(255,255,255,.10),
-    0 0 22px rgba(222,40,28,.18),
-    0 0 36px rgba(48,12,10,.20) !important;
+    0 0 22px rgba(154,33,30,.18),
+    0 0 36px rgba(56,25,29,.20) !important;
 
   letter-spacing: .10em !important;
 }
 
-/* RP / meta / next rank */
 body[data-rank="archon"] #dashboard.section.active .rankHome .rankSub,
 body[data-rank="archon"] #dashboard.section.active .rankHome .rankRP,
 body[data-rank="archon"] #dashboard.section.active .rankHome .rankMeta,
@@ -7397,7 +7419,7 @@ body[data-rank="archon"] #dashboard.section.active .rankHome .rankProgress__labe
   color:#ffffff !important;
   text-shadow:
     0 0 5px rgba(255,255,255,.12),
-    0 0 12px rgba(222,40,28,.14) !important;
+    0 0 12px rgba(154,33,30,.14) !important;
 }
 
 body[data-rank="archon"] #dashboard.section.active .rankHome .rankRP span,
@@ -7405,7 +7427,7 @@ body[data-rank="archon"] #dashboard.section.active .rankHome .rankProgress__labe
   color:#ffffff !important;
 }
 
-/* remove unwanted warm old underline and repaint it in archon color */
+/* lower decorative underline under meta rows */
 body[data-rank="archon"] #dashboard.section.active .rankHome .rankSub::after,
 body[data-rank="archon"] #dashboard.section.active .rankHome .rankMeta::after,
 body[data-rank="archon"] #dashboard.section.active .rankHome .rankRP::after,
@@ -7414,21 +7436,20 @@ body[data-rank="archon"] #dashboard.section.active .rankHome .rankProgress__labe
   background: linear-gradient(
     90deg,
     transparent 0%,
-    rgba(255,91,77,.28) 18%,
-    rgba(255,145,128,.88) 50%,
-    rgba(255,91,77,.28) 82%,
+    rgba(231,125,76,.20) 18%,
+    rgba(231,125,76,.82) 50%,
+    rgba(231,125,76,.20) 82%,
     transparent 100%
   ) !important;
 
   box-shadow:
-    0 0 8px rgba(255,145,128,.18),
-    0 0 18px rgba(222,40,28,.14) !important;
+    0 0 8px rgba(231,125,76,.18),
+    0 0 18px rgba(154,33,30,.14) !important;
 }
 
 /* =========================================================
-   ARCHON — player ascension text + rails
+   ARCHON — PLAYER ASCENSION TEXT + RAILS
    ========================================================= */
-
 body[data-rank="archon"] #dashboard.section.active .rankHome .pulseHeader,
 body[data-rank="archon"] #dashboard.section.active .rankHome .pulseHeader span{
   background: none !important;
@@ -7439,8 +7460,8 @@ body[data-rank="archon"] #dashboard.section.active .rankHome .pulseHeader span{
   text-shadow:
     0 0 5px rgba(255,255,255,.14),
     0 0 12px rgba(255,255,255,.08),
-    0 0 20px rgba(222,40,28,.16),
-    0 0 30px rgba(48,12,10,.18) !important;
+    0 0 20px rgba(154,33,30,.16),
+    0 0 30px rgba(56,25,29,.18) !important;
 }
 
 body[data-rank="archon"] #dashboard.section.active .rankHome .pulseHeader::before,
@@ -7449,32 +7470,42 @@ body[data-rank="archon"] #dashboard.section.active .rankHome .pulseHeader span::
 body[data-rank="archon"] #dashboard.section.active .rankHome .pulseHeader span::after{
   background: linear-gradient(
     90deg,
-    transparent 0%,
-    rgba(222,40,28,.10) 16%,
-    rgba(255,145,128,.72) 50%,
-    rgba(222,40,28,.10) 84%,
-    transparent 100%
+    rgba(0,0,0,0) 0%,
+    rgba(231,125,76,.16) 16%,
+    rgba(231,125,76,.86) 50%,
+    rgba(231,125,76,.16) 84%,
+    rgba(0,0,0,0) 100%
   ) !important;
 
   box-shadow:
-    0 0 8px rgba(255,145,128,.12),
-    0 0 18px rgba(222,40,28,.10) !important;
+    0 0 12px rgba(231,125,76,.24),
+    0 0 24px rgba(154,33,30,.14) !important;
 
-  opacity: .95 !important;
+  opacity: 1 !important;
 }
 
 /* =========================================================
-   ARCHON — metrics polish
+   ARCHON — METRICS POLISH
    ========================================================= */
-
 body[data-rank="archon"] #dashboard.section.active .rankHome .pulseGrid{
   background: linear-gradient(
     180deg,
     rgba(255,255,255,.02),
-    rgba(18,8,8,.10),
+    rgba(20,8,8,.10),
     rgba(0,0,0,0)
   ) !important;
   border-radius: 14px !important;
+  box-shadow:
+    inset 0 1px 0 rgba(231,125,76,.08),
+    inset 0 -1px 0 rgba(231,125,76,.08) !important;
+}
+
+body[data-rank="archon"] #dashboard.section.active .rankHome .pulseGrid .metric{
+  border-left: 1px solid rgba(231,125,76,.10) !important;
+}
+
+body[data-rank="archon"] #dashboard.section.active .rankHome .pulseGrid .metric:first-child{
+  border-left: 0 !important;
 }
 
 body[data-rank="archon"] #dashboard.section.active .rankHome .pulseGrid .metric .k{
@@ -7484,8 +7515,8 @@ body[data-rank="archon"] #dashboard.section.active .rankHome .pulseGrid .metric 
   background: linear-gradient(
     180deg,
     #ffffff 0%,
-    #fff0ed 72%,
-    #ffd6cf 100%
+    #fff1eb 72%,
+    #ffd8cc 100%
   ) !important;
 
   -webkit-background-clip: text !important;
@@ -7493,8 +7524,8 @@ body[data-rank="archon"] #dashboard.section.active .rankHome .pulseGrid .metric 
 
   text-shadow:
     0 0 4px rgba(255,255,255,.08),
-    0 0 10px rgba(222,40,28,.12),
-    0 0 18px rgba(222,40,28,.06) !important;
+    0 0 10px rgba(154,33,30,.12),
+    0 0 18px rgba(154,33,30,.06) !important;
 }
 
 body[data-rank="archon"] #dashboard.section.active .rankHome .pulseGrid .metric .v,
@@ -7502,8 +7533,8 @@ body[data-rank="archon"] #dashboard.section.active .rankHome .pulseGrid .metric 
   background: linear-gradient(
     180deg,
     #ffffff 0%,
-    #fff4f2 42%,
-    #ffd9d2 100%
+    #fff4f0 42%,
+    #ffd6ca 100%
   ) !important;
 
   -webkit-background-clip: text !important;
@@ -7511,8 +7542,8 @@ body[data-rank="archon"] #dashboard.section.active .rankHome .pulseGrid .metric 
 
   text-shadow:
     0 0 6px rgba(255,255,255,.10),
-    0 0 12px rgba(222,40,28,.16),
-    0 0 22px rgba(222,40,28,.08) !important;
+    0 0 12px rgba(154,33,30,.16),
+    0 0 22px rgba(154,33,30,.08) !important;
 }
 
 /* kill alternative separator if base theme still draws it */
@@ -7527,7 +7558,7 @@ body[data-rank="archon"] #dashboard .rankHome .metric:not(:last-child)::after{
     180deg,
     transparent 0%,
     rgba(255,255,255,.08) 22%,
-    rgba(255,120,102,.22) 50%,
+    rgba(231,125,76,.22) 50%,
     rgba(255,255,255,.08) 78%,
     transparent 100%
   ) !important;
@@ -7537,9 +7568,8 @@ body[data-rank="archon"] #dashboard .rankHome .metric:not(:last-child)::after{
 }
 
 /* =========================================================
-   ARCHON — progress track fix
+   ARCHON — PROGRESS TRACK FIX
    ========================================================= */
-
 body[data-rank="archon"] #dashboard.section.active .rankHome .rankProgress{
   background: transparent !important;
   box-shadow: none !important;
@@ -7581,22 +7611,22 @@ body[data-rank="archon"] #dashboard.section.active .rankHome .rankProgress__fill
   background: linear-gradient(
     90deg,
     #ffffff 0%,
-    #ffe6e0 18%,
-    #ff8d79 52%,
-    #de281c 82%,
-    #5d1410 100%
+    #ffe3d6 18%,
+    #E77D4C 52%,
+    #9A211E 82%,
+    #38191D 100%
   ) !important;
 
   box-shadow:
     0 0 8px rgba(255,255,255,.12),
-    0 0 14px rgba(222,40,28,.18),
-    0 0 24px rgba(222,40,28,.14) !important;
+    0 0 14px rgba(154,33,30,.18),
+    0 0 24px rgba(154,33,30,.14) !important;
 }
 
 /* =========================================================
    ARCHON — STATIC BLOOM FX
+   Reaper logic, recolored for Archon
    ========================================================= */
-
 body[data-rank="archon"] .rankHome__center{
   position: relative !important;
   isolation: isolate !important;
@@ -7605,11 +7635,6 @@ body[data-rank="archon"] .rankHome__center{
 body[data-rank="archon"] .rankEmblem{
   position: relative !important;
   z-index: 12 !important;
-}
-
-body[data-rank="archon"] .rankHome__infoStack{
-  position: relative !important;
-  z-index: 13 !important;
 }
 
 body[data-rank="archon"] .harbinger-ring-fx{
@@ -7630,75 +7655,77 @@ body[data-rank="archon"] .harbinger-ring-fx .fx{
   mix-blend-mode: screen;
 }
 
-/* left bloom */
+/* LEFT BLOOM */
 body[data-rank="archon"] .harbinger-ring-fx .fx-left{
-  left: 18px !important;
-  top: 354px !important;
-  width: 272px !important;
-  height: 148px !important;
+  left: 54px !important;
+  top: 320px !important;
+  width: 180px !important;
+  height: 220px !important;
 
   background:
     radial-gradient(ellipse at center,
-      rgba(255,255,255,.96) 0%,
-      rgba(255,236,232,.68) 10%,
-      rgba(255,145,128,.40) 26%,
-      rgba(255,91,77,.22) 44%,
-      rgba(255,91,77,.09) 60%,
-      rgba(0,0,0,0) 80%
+      rgba(255,242,236,.96) 0%,
+      rgba(255,225,213,.88) 12%,
+      rgba(231,125,76,.64) 24%,
+      rgba(231,125,76,.34) 42%,
+      rgba(154,33,30,.14) 60%,
+      rgba(154,33,30,.05) 74%,
+      rgba(0,0,0,0) 86%
     );
 
-  filter: blur(19px);
-  opacity: .92;
-  transform: rotate(-8deg);
-  animation: archonLeftGlow 5.2s ease-in-out infinite;
+  filter: blur(22px);
+  opacity: .78;
+  transform: rotate(-7deg);
+  animation: archonLeftGlow 4.6s ease-in-out infinite;
 }
 
-/* right bloom */
+/* RIGHT BLOOM */
 body[data-rank="archon"] .harbinger-ring-fx .fx-right{
-  right: 18px !important;
-  top: 354px !important;
-  width: 272px !important;
-  height: 148px !important;
+  right: 54px !important;
+  top: 320px !important;
+  width: 180px !important;
+  height: 220px !important;
 
   background:
     radial-gradient(ellipse at center,
-      rgba(255,255,255,.98) 0%,
-      rgba(255,236,232,.70) 10%,
-      rgba(255,145,128,.42) 26%,
-      rgba(255,91,77,.24) 44%,
-      rgba(255,91,77,.10) 60%,
-      rgba(0,0,0,0) 80%
+      rgba(255,242,236,.96) 0%,
+      rgba(255,225,213,.88) 12%,
+      rgba(231,125,76,.64) 24%,
+      rgba(231,125,76,.34) 42%,
+      rgba(154,33,30,.14) 60%,
+      rgba(154,33,30,.05) 74%,
+      rgba(0,0,0,0) 86%
     );
 
-  filter: blur(19px);
-  opacity: .94;
-  transform: rotate(8deg);
-  animation: archonRightGlow 5.8s ease-in-out infinite;
+  filter: blur(22px);
+  opacity: .78;
+  transform: rotate(7deg);
+  animation: archonRightGlow 4.8s ease-in-out infinite;
 }
 
-/* top bloom */
+/* TOP BLOOM */
 body[data-rank="archon"] .harbinger-ring-fx .fx-top{
   left: 50%;
-  top: 10px;
-  width: 560px;
-  height: 120px;
+  top: 18px;
+  width: 540px;
+  height: 110px;
   transform: translateX(-50%);
 
   background:
     radial-gradient(ellipse at center,
-      rgba(255,255,255,.20) 0%,
-      rgba(255,228,224,.15) 18%,
-      rgba(255,145,128,.09) 34%,
-      rgba(255,91,77,.04) 50%,
+      rgba(255,255,255,.16) 0%,
+      rgba(255,230,220,.12) 18%,
+      rgba(231,125,76,.08) 34%,
+      rgba(154,33,30,.03) 50%,
       rgba(0,0,0,0) 76%
     );
 
   filter: blur(28px);
-  opacity: .28;
-  animation: archonTopGlow 6.8s ease-in-out infinite;
+  opacity: .24;
+  animation: archonTopGlow 6.4s ease-in-out infinite;
 }
 
-/* inner halo */
+/* INNER HALO */
 body[data-rank="archon"] .harbinger-ring-fx::before{
   content: "";
   position: absolute;
@@ -7708,19 +7735,19 @@ body[data-rank="archon"] .harbinger-ring-fx::before{
 
   background:
     radial-gradient(circle at 50% 46%,
-      rgba(255,145,128,.10) 0%,
-      rgba(255,145,128,.06) 18%,
-      rgba(255,145,128,.03) 30%,
+      rgba(231,125,76,.10) 0%,
+      rgba(231,125,76,.06) 18%,
+      rgba(231,125,76,.03) 30%,
       rgba(0,0,0,0) 46%
     ),
     radial-gradient(ellipse 250px 96px at 14% 55%,
-      rgba(255,120,102,.15) 0%,
-      rgba(255,120,102,.07) 34%,
+      rgba(231,125,76,.15) 0%,
+      rgba(231,125,76,.07) 34%,
       rgba(0,0,0,0) 74%
     ),
     radial-gradient(ellipse 250px 96px at 86% 55%,
-      rgba(255,120,102,.16) 0%,
-      rgba(255,120,102,.07) 34%,
+      rgba(231,125,76,.16) 0%,
+      rgba(231,125,76,.07) 34%,
       rgba(0,0,0,0) 74%
     );
 
@@ -7729,118 +7756,75 @@ body[data-rank="archon"] .harbinger-ring-fx::before{
   animation: archonSideHaze 7.4s ease-in-out infinite;
 }
 
-/* soft arc shimmer */
-body[data-rank="archon"] .harbinger-ring-fx::after{
-  content: "";
-  position: absolute;
-  left: 50%;
-  top: 88px;
-  width: 760px;
-  height: 260px;
-  transform: translateX(-50%);
-  pointer-events: none;
-  z-index: 1;
-
-  background:
-    radial-gradient(ellipse at center,
-      rgba(255,236,232,.10) 0%,
-      rgba(255,145,128,.06) 26%,
-      rgba(255,91,77,.03) 44%,
-      rgba(0,0,0,0) 72%
-    );
-
-  filter: blur(24px);
-  opacity: .24;
-  animation: archonArcShimmer 8.5s ease-in-out infinite;
-}
-
 @keyframes archonLeftGlow{
-  0%{
-    opacity: .56;
-    filter: blur(17px) brightness(.96);
-  }
-  35%{
-    opacity: .96;
-    filter: blur(19px) brightness(1.14);
-  }
-  65%{
-    opacity: .70;
-    filter: blur(18px) brightness(1.03);
-  }
-  100%{
-    opacity: .56;
-    filter: blur(17px) brightness(.96);
-  }
+  0%   { opacity: .54; filter: blur(20px) brightness(.96); }
+  50%  { opacity: .82; filter: blur(22px) brightness(1.10); }
+  100% { opacity: .54; filter: blur(20px) brightness(.96); }
 }
 
 @keyframes archonRightGlow{
-  0%{
-    opacity: .60;
-    filter: blur(17px) brightness(.98);
-  }
-  32%{
-    opacity: .76;
-    filter: blur(18px) brightness(1.04);
-  }
-  68%{
-    opacity: .98;
-    filter: blur(19px) brightness(1.16);
-  }
-  100%{
-    opacity: .60;
-    filter: blur(17px) brightness(.98);
-  }
+  0%   { opacity: .56; filter: blur(20px) brightness(.98); }
+  50%  { opacity: .84; filter: blur(22px) brightness(1.12); }
+  100% { opacity: .56; filter: blur(20px) brightness(.98); }
 }
 
 @keyframes archonTopGlow{
-  0%{
-    opacity: .16;
-    filter: blur(28px) brightness(.95);
-  }
-  50%{
-    opacity: .34;
-    filter: blur(30px) brightness(1.05);
-  }
-  100%{
-    opacity: .16;
-    filter: blur(28px) brightness(.95);
-  }
+  0%   { opacity: .14; filter: blur(28px) brightness(.95); }
+  50%  { opacity: .28; filter: blur(30px) brightness(1.05); }
+  100% { opacity: .14; filter: blur(28px) brightness(.95); }
 }
 
 @keyframes archonSideHaze{
-  0%{
-    opacity: .24;
-    filter: blur(30px) brightness(.96);
-  }
-  50%{
-    opacity: .38;
-    filter: blur(32px) brightness(1.06);
-  }
-  100%{
-    opacity: .24;
-    filter: blur(30px) brightness(.96);
-  }
-}
-
-@keyframes archonArcShimmer{
-  0%{
-    opacity: .14;
-    filter: blur(24px) brightness(.96);
-  }
-  50%{
-    opacity: .30;
-    filter: blur(26px) brightness(1.04);
-  }
-  100%{
-    opacity: .14;
-    filter: blur(24px) brightness(.96);
-  }
+  0%   { opacity: .24; filter: blur(30px) brightness(.96); }
+  50%  { opacity: .36; filter: blur(32px) brightness(1.06); }
+  100% { opacity: .24; filter: blur(30px) brightness(.96); }
 }
 
 /* =========================================================
-   ARCHON NAVBAR — PNG FINAL SAFE SYSTEM
+   ARCHON NAVBAR — KILL GLOBAL STRIPS / UNDERLINES
    ========================================================= */
 
+/* 1) прибрати всі глобальні navbar/navRail смуги тільки для ARCHON */
+body[data-rank="archon"] .navbar::before,
+body[data-rank="archon"] .navbar::after,
+body[data-rank="archon"] .navbar.navRail::before,
+body[data-rank="archon"] .navbar.navRail::after{
+  content: none !important;
+  display: none !important;
+  background: none !important;
+  box-shadow: none !important;
+  border: 0 !important;
+}
+
+/* 2) прибрати shared active underline з ui-kit тільки для ARCHON */
+body[data-rank="archon"] .navbar .nav-btn.active::after{
+  content: none !important;
+  display: none !important;
+  background: none !important;
+  box-shadow: none !important;
+}
+
+/* 3) прибрати старі hover/active background traces */
+body[data-rank="archon"] .navbar .nav-btn,
+body[data-rank="archon"] .navbar .nav-btn:hover,
+body[data-rank="archon"] .navbar .nav-btn.active{
+  background-image: none !important;
+  box-shadow: none !important;
+}
+
+/* 4) kill old active top line */
+body[data-rank="archon"] .navbar.navTabs > .nav-btn.active > span::before,
+body[data-rank="archon"] .navbar.navTabs > .nav-btn.active > .nav-btn__label::before,
+body[data-rank="archon"] .navbar.navTabs > .nav-btn.active > .nav-btn__label::after{
+  content: none !important;
+  display: none !important;
+  background: none !important;
+  box-shadow: none !important;
+}
+
+/* =========================================================
+   ARCHON — FINAL COPY OF REAPER NAVBAR LOGIC
+   ========================================================= */
 body[data-rank="archon"] .navbar.navTabs{
   position: relative !important;
   left: 50% !important;
@@ -7852,21 +7836,23 @@ body[data-rank="archon"] .navbar.navTabs{
   align-items: center !important;
   gap: 0 !important;
 
+  width: auto !important;
   margin: 0 !important;
-  padding-top: 8px !important;
+  padding: 8px 0 0 !important;
+
   background: transparent !important;
   border: 0 !important;
+  outline: 0 !important;
   box-shadow: none !important;
   overflow: visible !important;
   isolation: isolate !important;
-  z-index: 40 !important;
+  z-index: 120 !important;
 }
 
-/* kill old outer shell */
 body[data-rank="archon"] .navbar.navTabs::before,
 body[data-rank="archon"] .navbar.navTabs::after{
-  display: none !important;
   content: none !important;
+  display: none !important;
 }
 
 body[data-rank="archon"] .navbar.navTabs,
@@ -7877,71 +7863,74 @@ body[data-rank="archon"] .header-inner{
   overflow: visible !important;
 }
 
-/* all tabs */
 body[data-rank="archon"] .navbar.navTabs > .nav-btn{
   position: relative !important;
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
 
+  height: 54px !important;
   margin: 0 !important;
   padding: 0 18px !important;
-  height: 54px !important;
 
   background: transparent !important;
   border: 0 !important;
   border-radius: 0 !important;
+  outline: 0 !important;
   box-shadow: none !important;
   overflow: visible !important;
   isolation: isolate !important;
 
+  color: rgba(248,243,232,.96) !important;
   font-family: var(--font-ui) !important;
-  font-size: 15px !important;
+  font-size: 16px !important;
   font-weight: 800 !important;
   letter-spacing: .06em !important;
   text-transform: uppercase !important;
-  color: rgba(248,244,232,.94) !important;
-
   text-shadow:
-    0 0 4px rgba(255,255,255,.05),
-    0 0 10px rgba(170,60,50,.04) !important;
+    0 0 4px rgba(255,255,255,.06),
+    0 0 10px rgba(154,33,30,.05) !important;
 
   transition:
-    transform .16s ease,
     color .16s ease,
-    filter .16s ease !important;
+    transform .16s ease !important;
 }
 
+/* inactive tabs — same geometry as Reaper */
 body[data-rank="archon"] .navbar.navTabs > .nav-btn:not(.active){
   flex: 0 0 228px !important;
   width: 228px !important;
   min-width: 228px !important;
   max-width: 228px !important;
+  z-index: 10 !important;
 }
 
+/* active tab — same geometry as Reaper */
 body[data-rank="archon"] .navbar.navTabs > .nav-btn.active{
   flex: 0 0 266px !important;
   width: 266px !important;
   min-width: 266px !important;
   max-width: 266px !important;
-
-  z-index: 8 !important;
-  color: #fff3ef !important;
+  z-index: 60 !important;
+  color: #fff4ef !important;
   text-shadow:
     0 0 8px rgba(255,255,255,.16),
-    0 0 18px rgba(255,145,128,.10) !important;
+    0 0 18px rgba(154,33,30,.10) !important;
 }
 
-/* remove old generated afters first */
-body[data-rank="archon"] .navbar.navTabs > .nav-btn::after{
-  content: none !important;
-  display: none !important;
+body[data-rank="archon"] .navbar.navTabs > .nav-btn:hover{
+  background: transparent !important;
+  box-shadow: none !important;
 }
 
-/* label always on top */
+body[data-rank="archon"] .navbar.navTabs > .nav-btn:not(.active):hover{
+  color: #ffffff !important;
+  transform: translateY(-1px) !important;
+}
+
 body[data-rank="archon"] .navbar.navTabs > .nav-btn > .nav-btn__label{
   position: relative !important;
-  z-index: 6 !important;
+  z-index: 8 !important;
   display: block !important;
   width: 100% !important;
   text-align: center !important;
@@ -7949,36 +7938,84 @@ body[data-rank="archon"] .navbar.navTabs > .nav-btn > .nav-btn__label{
   line-height: 1 !important;
 }
 
-/* kill old active top line / old extra bugs */
-body[data-rank="archon"] .navbar.navTabs > .nav-btn.active > span::before,
-body[data-rank="archon"] .navbar.navTabs > .nav-btn.active > .nav-btn__label::before,
-body[data-rank="archon"] .navbar.navTabs > .nav-btn.active > .nav-btn__label::after,
-body[data-rank="archon"] .navbar.navTabs > .nav-btn.active > .nav-btn__ornament::before,
-body[data-rank="archon"] .navbar.navTabs > .nav-btn.active > .nav-btn__ornament::after{
-  content: none !important;
-  display: none !important;
-}
-
-/* ornament base */
+/* ornament reset */
 body[data-rank="archon"] .navbar.navTabs > .nav-btn > .nav-btn__ornament{
   position: absolute !important;
   pointer-events: none !important;
   display: block !important;
   opacity: 0 !important;
   overflow: visible !important;
-  z-index: 3 !important;
+  z-index: 6 !important;
   background-repeat: no-repeat !important;
   background-position: center center !important;
+  background-size: 100% 100% !important;
+  filter: none !important;
 }
 
-/* inactive tabs */
-body[data-rank="archon"] .navbar.navTabs > .nav-btn:not(.active){
-  color: rgba(255,248,236,.92) !important;
+body[data-rank="archon"] .navbar.navTabs > .nav-btn::after{
+  content: none !important;
+  display: none !important;
 }
 
+/* ---------------- ACTIVE ---------------- */
+body[data-rank="archon"] .navbar.navTabs > .nav-btn.active::before{
+  content: "" !important;
+  position: absolute !important;
+  left: 18px !important;
+  right: 18px !important;
+  top: 8px !important;
+  bottom: 8px !important;
+  z-index: 1 !important;
+  pointer-events: none !important;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(28,18,18,.86) 0%,
+      rgba(14,10,10,.96) 55%,
+      rgba(7,4,4,.99) 100%
+    ) !important;
+
+  border: 1px solid rgba(231,125,76,.18) !important;
+  clip-path: polygon(
+    8px 0,
+    calc(100% - 8px) 0,
+    100% 8px,
+    100% calc(100% - 8px),
+    calc(100% - 8px) 100%,
+    8px 100%,
+    0 calc(100% - 8px),
+    0 8px
+  ) !important;
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.06),
+    inset 0 -1px 0 rgba(0,0,0,.46),
+    0 0 10px rgba(154,33,30,.08) !important;
+}
+
+/* active ornament */
+body[data-rank="archon"] .navbar.navTabs > .nav-btn.active > .nav-btn__ornament{
+  left: -18px !important;
+  right: -18px !important;
+  top: -18px !important;
+  bottom: auto !important;
+  height: 90px !important;
+  opacity: 1 !important;
+  z-index: 70 !important;
+
+  background-image: url('/assets/img/ui/tab_active_archon.png') !important;
+  background-size: 100% auto !important;
+  background-position: center 50% !important;
+
+  filter:
+    drop-shadow(0 0 10px rgba(154,33,30,.12))
+    drop-shadow(0 0 22px rgba(154,33,30,.05)) !important;
+}
+
+/* ---------------- INACTIVE ---------------- */
 body[data-rank="archon"] .navbar.navTabs > .nav-btn:not(.active)::before{
   content: "" !important;
-  display: block !important;
   position: absolute !important;
   left: 8px !important;
   right: 8px !important;
@@ -8027,52 +8064,11 @@ body[data-rank="archon"] .navbar.navTabs > .nav-btn:not(.active) > .nav-btn__orn
   background-position: center center !important;
 
   filter:
-    drop-shadow(0 0 4px rgba(170,60,50,.04))
+    drop-shadow(0 0 4px rgba(154,33,30,.04))
     drop-shadow(0 1px 4px rgba(0,0,0,.14)) !important;
 }
 
-body[data-rank="archon"] .navbar.navTabs > .nav-btn:not(.active):hover{
-  color: #ffffff !important;
-  transform: translateY(-1px) !important;
-}
-
-/* active tab */
-body[data-rank="archon"] .navbar.navTabs > .nav-btn.active::before{
-  border-color: rgba(255,110,96,.20) !important;
-  background:
-    linear-gradient(
-      180deg,
-      rgba(32,22,22,.84) 0%,
-      rgba(14,10,10,.94) 54%,
-      rgba(7,4,4,.98) 100%
-    ) !important;
-
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.08),
-    inset 0 -1px 0 rgba(0,0,0,.42),
-    0 0 10px rgba(255,91,77,.08) !important;
-
-  filter: brightness(1.06) !important;
-}
-
-body[data-rank="archon"] .navbar.navTabs > .nav-btn.active > .nav-btn__ornament{
-  left: -18px !important;
-  right: -18px !important;
-  top: -18px !important;
-  bottom: auto !important;
-  height: 90px !important;
-  opacity: 1 !important;
-
-  background-image: url('/assets/img/ui/tab_active_archon.png') !important;
-  background-size: 100% auto !important;
-  background-position: center 50% !important;
-
-  filter:
-    drop-shadow(0 0 10px rgba(222,40,28,.12))
-    drop-shadow(0 0 22px rgba(222,40,28,.05)) !important;
-}
-
-/* dividers */
+/* divider system */
 body[data-rank="archon"] .navbar.navTabs > .nav-btn + .nav-btn{
   margin-left: -10px !important;
 }
@@ -8081,27 +8077,29 @@ body[data-rank="archon"] .navbar.navTabs > .nav-btn + .nav-btn::after{
   content: "" !important;
   display: block !important;
   position: absolute !important;
-  left: -8px !important;
+  left: -10px !important;
   top: 50% !important;
   transform: translateY(-50%) !important;
-  width: 18px !important;
+  width: 28px !important;
   height: 52px !important;
   z-index: 8 !important;
   pointer-events: none !important;
   opacity: .95 !important;
 
   background: url('/assets/img/ui/tab_divider_archon.png') center / 100% 100% no-repeat !important;
-  filter:
-    drop-shadow(0 0 3px rgba(255,91,77,.08))
-    drop-shadow(0 1px 4px rgba(0,0,0,.16)) !important;
 }
 
-/* divider after active must stay visible */
 body[data-rank="archon"] .navbar.navTabs > .nav-btn.active + .nav-btn::after{
-  z-index: 12 !important;
+  left: -10px !important;
+  width: 28px !important;
+  height: 52px !important;
+  z-index: 8 !important;
+  background: url('/assets/img/ui/tab_divider_archon.png') center / 100% 100% no-repeat !important;
 }
 
-/* mobile safety */
+/* =========================================================
+   ARCHON — MOBILE SAFETY
+   ========================================================= */
 @media (max-width: 1100px){
   body[data-rank="archon"] .navbar.navTabs{
     transform: translateX(-50%) scale(.94) !important;
