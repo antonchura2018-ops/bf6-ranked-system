@@ -8319,14 +8319,14 @@ body[data-rank="archon"] #dashboard.section.active .rankHome .rankProgress__fill
 }
 /* =========================================================
    ARCHON — INACTIVE TAB FRAME
-   bigger upward, bottom stays good
+   tiny increase upward + downward
    ========================================================= */
 body[data-rank="archon"] .navbar.navTabs > .nav-btn:not(.active) > .nav-btn__ornament{
   left: -8px !important;
   right: -8px !important;
-  top: -4px !important;
+  top: -5px !important;
   bottom: auto !important;
-  height: 68px !important;
+  height: 70px !important;
 
   background-image: url('/assets/img/ui/tab_inactive_archon.png') !important;
   background-size: 100% 100% !important;
