@@ -7657,50 +7657,60 @@ body[data-rank="archon"] .harbinger-ring-fx .fx{
 
 /* LEFT BLOOM */
 body[data-rank="archon"] .harbinger-ring-fx .fx-left{
-  left: 54px !important;
-  top: 320px !important;
-  width: 180px !important;
-  height: 220px !important;
+  left: 46px !important;
+  top: 326px !important;
+  width: 206px !important;
+  height: 214px !important;
 
   background:
-    radial-gradient(ellipse at center,
-      rgba(255,242,236,.96) 0%,
-      rgba(255,225,213,.88) 12%,
-      rgba(231,125,76,.64) 24%,
-      rgba(231,125,76,.34) 42%,
-      rgba(154,33,30,.14) 60%,
-      rgba(154,33,30,.05) 74%,
-      rgba(0,0,0,0) 86%
+    radial-gradient(ellipse at 52% 50%,
+      rgba(255,255,255,.94) 0%,
+      rgba(255,214,226,.82) 10%,
+      rgba(231,104,140,.58) 24%,
+      rgba(216,23,62,.32) 44%,
+      rgba(68,67,168,.10) 64%,
+      rgba(0,0,0,0) 82%
+    ),
+    radial-gradient(ellipse at 58% 42%,
+      rgba(255,255,255,.34) 0%,
+      rgba(255,255,255,.12) 20%,
+      rgba(0,0,0,0) 44%
     );
 
-  filter: blur(22px);
-  opacity: .78;
-  transform: rotate(-7deg);
-  animation: archonLeftGlow 4.6s ease-in-out infinite;
+  filter: blur(18px);
+  opacity: .68;
+  transform: rotate(-8deg) scale(1);
+  transform-origin: center center;
+  animation: archonLeftGlowV2 6.2s ease-in-out infinite;
 }
 
 /* RIGHT BLOOM */
 body[data-rank="archon"] .harbinger-ring-fx .fx-right{
-  right: 54px !important;
-  top: 320px !important;
-  width: 180px !important;
-  height: 220px !important;
+  right: 46px !important;
+  top: 326px !important;
+  width: 206px !important;
+  height: 214px !important;
 
   background:
-    radial-gradient(ellipse at center,
-      rgba(255,242,236,.96) 0%,
-      rgba(255,225,213,.88) 12%,
-      rgba(231,125,76,.64) 24%,
-      rgba(231,125,76,.34) 42%,
-      rgba(154,33,30,.14) 60%,
-      rgba(154,33,30,.05) 74%,
-      rgba(0,0,0,0) 86%
+    radial-gradient(ellipse at 48% 50%,
+      rgba(255,255,255,.94) 0%,
+      rgba(255,214,226,.82) 10%,
+      rgba(231,104,140,.58) 24%,
+      rgba(216,23,62,.32) 44%,
+      rgba(68,67,168,.10) 64%,
+      rgba(0,0,0,0) 82%
+    ),
+    radial-gradient(ellipse at 42% 42%,
+      rgba(255,255,255,.34) 0%,
+      rgba(255,255,255,.12) 20%,
+      rgba(0,0,0,0) 44%
     );
 
-  filter: blur(22px);
-  opacity: .78;
-  transform: rotate(7deg);
-  animation: archonRightGlow 4.8s ease-in-out infinite;
+  filter: blur(18px);
+  opacity: .70;
+  transform: rotate(8deg) scale(1);
+  transform-origin: center center;
+  animation: archonRightGlowV2 6.6s ease-in-out infinite;
 }
 
 /* TOP BLOOM */
