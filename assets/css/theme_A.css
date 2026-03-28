@@ -7625,7 +7625,7 @@ body[data-rank="archon"] #dashboard.section.active .rankHome .rankProgress__fill
 
 /* =========================================================
    ARCHON — STATIC BLOOM FX
-   Reaper logic, recolored for Archon
+   upgraded: clearer visible blooms, better pulse, lighter animation
    ========================================================= */
 body[data-rank="archon"] .rankHome__center{
   position: relative !important;
@@ -7653,86 +7653,90 @@ body[data-rank="archon"] .harbinger-ring-fx .fx{
   display: block;
   pointer-events: none;
   mix-blend-mode: screen;
+  will-change: opacity, transform;
 }
 
 /* LEFT BLOOM */
 body[data-rank="archon"] .harbinger-ring-fx .fx-left{
-  left: 46px !important;
-  top: 326px !important;
-  width: 206px !important;
-  height: 214px !important;
+  left: 42px !important;
+  top: 320px !important;
+  width: 222px !important;
+  height: 232px !important;
 
   background:
-    radial-gradient(ellipse at 52% 50%,
-      rgba(255,255,255,.94) 0%,
-      rgba(255,214,226,.82) 10%,
-      rgba(231,104,140,.58) 24%,
-      rgba(216,23,62,.32) 44%,
-      rgba(68,67,168,.10) 64%,
-      rgba(0,0,0,0) 82%
+    radial-gradient(ellipse at 54% 50%,
+      rgba(255,255,255,.98) 0%,
+      rgba(255,230,238,.90) 10%,
+      rgba(231,104,140,.78) 24%,
+      rgba(216,23,62,.48) 42%,
+      rgba(68,67,168,.16) 62%,
+      rgba(0,0,0,0) 84%
     ),
-    radial-gradient(ellipse at 58% 42%,
-      rgba(255,255,255,.34) 0%,
-      rgba(255,255,255,.12) 20%,
-      rgba(0,0,0,0) 44%
+    radial-gradient(ellipse at 62% 42%,
+      rgba(255,255,255,.44) 0%,
+      rgba(255,255,255,.16) 18%,
+      rgba(0,0,0,0) 42%
     );
 
   filter: blur(18px);
-  opacity: .68;
-  transform: rotate(-8deg) scale(1);
+  opacity: .34;
+  transform: rotate(-8deg) scale(.93);
   transform-origin: center center;
-  animation: archonLeftGlowV2 6.2s ease-in-out infinite;
+  animation: archonLeftGlow 5.0s ease-in-out infinite;
 }
 
 /* RIGHT BLOOM */
 body[data-rank="archon"] .harbinger-ring-fx .fx-right{
-  right: 46px !important;
-  top: 326px !important;
-  width: 206px !important;
-  height: 214px !important;
+  right: 42px !important;
+  top: 320px !important;
+  width: 222px !important;
+  height: 232px !important;
 
   background:
-    radial-gradient(ellipse at 48% 50%,
-      rgba(255,255,255,.94) 0%,
-      rgba(255,214,226,.82) 10%,
-      rgba(231,104,140,.58) 24%,
-      rgba(216,23,62,.32) 44%,
-      rgba(68,67,168,.10) 64%,
-      rgba(0,0,0,0) 82%
+    radial-gradient(ellipse at 46% 50%,
+      rgba(255,255,255,.98) 0%,
+      rgba(255,230,238,.90) 10%,
+      rgba(231,104,140,.78) 24%,
+      rgba(216,23,62,.48) 42%,
+      rgba(68,67,168,.16) 62%,
+      rgba(0,0,0,0) 84%
     ),
-    radial-gradient(ellipse at 42% 42%,
-      rgba(255,255,255,.34) 0%,
-      rgba(255,255,255,.12) 20%,
-      rgba(0,0,0,0) 44%
+    radial-gradient(ellipse at 38% 42%,
+      rgba(255,255,255,.44) 0%,
+      rgba(255,255,255,.16) 18%,
+      rgba(0,0,0,0) 42%
     );
 
   filter: blur(18px);
-  opacity: .70;
-  transform: rotate(8deg) scale(1);
+  opacity: .36;
+  transform: rotate(8deg) scale(.93);
   transform-origin: center center;
-  animation: archonRightGlowV2 6.6s ease-in-out infinite;
+  animation: archonRightGlow 5.3s ease-in-out infinite;
 }
 
 /* TOP BLOOM */
 body[data-rank="archon"] .harbinger-ring-fx .fx-top{
   left: 50%;
-  top: 18px;
-  width: 540px;
-  height: 110px;
-  transform: translateX(-50%);
+  top: 8px;
+  width: 620px;
+  height: 132px;
+  transform: translateX(-50%) scale(.95);
+  transform-origin: center center;
 
   background:
     radial-gradient(ellipse at center,
-      rgba(255,255,255,.16) 0%,
-      rgba(255,230,220,.12) 18%,
-      rgba(231,125,76,.08) 34%,
-      rgba(154,33,30,.03) 50%,
-      rgba(0,0,0,0) 76%
+      rgba(255,255,255,.34) 0%,
+      rgba(255,228,236,.24) 16%,
+      rgba(231,104,140,.16) 34%,
+      rgba(216,23,62,.08) 50%,
+      rgba(68,67,168,.03) 64%,
+      rgba(0,0,0,0) 82%
     );
 
-  filter: blur(28px);
-  opacity: .24;
-  animation: archonTopGlow 6.4s ease-in-out infinite;
+  filter: blur(24px);
+  opacity: .10;
+  will-change: opacity, transform;
+  animation: archonTopGlow 5.8s ease-in-out infinite;
 }
 
 /* INNER HALO */
@@ -7745,49 +7749,140 @@ body[data-rank="archon"] .harbinger-ring-fx::before{
 
   background:
     radial-gradient(circle at 50% 46%,
-      rgba(231,125,76,.10) 0%,
-      rgba(231,125,76,.06) 18%,
-      rgba(231,125,76,.03) 30%,
+      rgba(231,104,140,.11) 0%,
+      rgba(231,104,140,.06) 18%,
+      rgba(216,23,62,.03) 30%,
       rgba(0,0,0,0) 46%
     ),
-    radial-gradient(ellipse 250px 96px at 14% 55%,
-      rgba(231,125,76,.15) 0%,
-      rgba(231,125,76,.07) 34%,
+    radial-gradient(ellipse 260px 104px at 14% 55%,
+      rgba(231,104,140,.16) 0%,
+      rgba(216,23,62,.08) 34%,
       rgba(0,0,0,0) 74%
     ),
-    radial-gradient(ellipse 250px 96px at 86% 55%,
-      rgba(231,125,76,.16) 0%,
-      rgba(231,125,76,.07) 34%,
+    radial-gradient(ellipse 260px 104px at 86% 55%,
+      rgba(231,104,140,.16) 0%,
+      rgba(216,23,62,.08) 34%,
       rgba(0,0,0,0) 74%
     );
 
   filter: blur(30px);
-  opacity: .34;
-  animation: archonSideHaze 7.4s ease-in-out infinite;
+  opacity: .24;
+  animation: archonSideHaze 7.2s ease-in-out infinite;
+}
+
+/* SOFT ARC SHIMMER */
+body[data-rank="archon"] .harbinger-ring-fx::after{
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 88px;
+  width: 760px;
+  height: 250px;
+  transform: translateX(-50%) scale(.97);
+  transform-origin: center center;
+  pointer-events: none;
+  z-index: 1;
+
+  background:
+    radial-gradient(ellipse at center,
+      rgba(255,240,245,.12) 0%,
+      rgba(231,104,140,.08) 26%,
+      rgba(216,23,62,.04) 44%,
+      rgba(68,67,168,.02) 58%,
+      rgba(0,0,0,0) 76%
+    );
+
+  filter: blur(22px);
+  opacity: .12;
+  animation: archonArcShimmer 8.0s ease-in-out infinite;
 }
 
 @keyframes archonLeftGlow{
-  0%   { opacity: .54; filter: blur(20px) brightness(.96); }
-  50%  { opacity: .82; filter: blur(22px) brightness(1.10); }
-  100% { opacity: .54; filter: blur(20px) brightness(.96); }
+  0%{
+    opacity: .24;
+    transform: rotate(-8deg) scale(.91);
+  }
+  22%{
+    opacity: .48;
+    transform: rotate(-8deg) scale(.97);
+  }
+  50%{
+    opacity: .98;
+    transform: rotate(-8deg) scale(1.08);
+  }
+  78%{
+    opacity: .52;
+    transform: rotate(-8deg) scale(.99);
+  }
+  100%{
+    opacity: .24;
+    transform: rotate(-8deg) scale(.91);
+  }
 }
 
 @keyframes archonRightGlow{
-  0%   { opacity: .56; filter: blur(20px) brightness(.98); }
-  50%  { opacity: .84; filter: blur(22px) brightness(1.12); }
-  100% { opacity: .56; filter: blur(20px) brightness(.98); }
+  0%{
+    opacity: .26;
+    transform: rotate(8deg) scale(.91);
+  }
+  22%{
+    opacity: .50;
+    transform: rotate(8deg) scale(.98);
+  }
+  50%{
+    opacity: 1;
+    transform: rotate(8deg) scale(1.09);
+  }
+  78%{
+    opacity: .54;
+    transform: rotate(8deg) scale(1.00);
+  }
+  100%{
+    opacity: .26;
+    transform: rotate(8deg) scale(.91);
+  }
 }
 
 @keyframes archonTopGlow{
-  0%   { opacity: .14; filter: blur(28px) brightness(.95); }
-  50%  { opacity: .28; filter: blur(30px) brightness(1.05); }
-  100% { opacity: .14; filter: blur(28px) brightness(.95); }
+  0%{
+    opacity: .06;
+    transform: translateX(-50%) scale(.93);
+  }
+  50%{
+    opacity: .34;
+    transform: translateX(-50%) scale(1.03);
+  }
+  100%{
+    opacity: .06;
+    transform: translateX(-50%) scale(.93);
+  }
 }
 
 @keyframes archonSideHaze{
-  0%   { opacity: .24; filter: blur(30px) brightness(.96); }
-  50%  { opacity: .36; filter: blur(32px) brightness(1.06); }
-  100% { opacity: .24; filter: blur(30px) brightness(.96); }
+  0%{
+    opacity: .18;
+  }
+  50%{
+    opacity: .34;
+  }
+  100%{
+    opacity: .18;
+  }
+}
+
+@keyframes archonArcShimmer{
+  0%{
+    opacity: .08;
+    transform: translateX(-50%) scale(.95);
+  }
+  50%{
+    opacity: .22;
+    transform: translateX(-50%) scale(1.02);
+  }
+  100%{
+    opacity: .08;
+    transform: translateX(-50%) scale(.95);
+  }
 }
 
 /* =========================================================
