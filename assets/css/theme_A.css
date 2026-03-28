@@ -8324,9 +8324,9 @@ body[data-rank="archon"] #dashboard.section.active .rankHome .rankProgress__fill
 body[data-rank="archon"] .navbar.navTabs > .nav-btn:not(.active) > .nav-btn__ornament{
   left: -8px !important;
   right: -8px !important;
-  top: -5px !important;
+  top: -6px !important;
   bottom: auto !important;
-  height: 70px !important;
+  height: 72px !important;
 
   background-image: url('/assets/img/ui/tab_inactive_archon.png') !important;
   background-size: 100% 100% !important;
