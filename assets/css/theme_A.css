@@ -3930,7 +3930,7 @@ body[data-rank="thrall"]{
 body[data-rank="marauder"]{
   --rank-bg-image: url('/assets/img/bg/cosmos_marauder.png');
 
-  --rank-ui-primary: #41365b;
+  --rank-ui-primary: #458e95;
   --rank-ui-secondary: #222733;
   --rank-ui-soft: rgba(65,54,91,.18);
 
@@ -6322,7 +6322,7 @@ body[data-rank="thrall"]{
 }
 
 body[data-rank="marauder"]{
-  --home-rank-accent: #41365b;
+  --home-rank-accent: #458e95;
   --home-rank-accent-rgb: 65, 54, 91;
   --home-rank-line: #6f5c96;
 }
