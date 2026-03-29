@@ -8533,60 +8533,176 @@ body[data-rank="marauder"] #dashboard.section.active .rankHome .rankProgress__fi
     0 0 24px rgba(79,5,18,.14) !important;
 }
 /* =========================================================
-   MARAUDER — NAVBAR ONLY recolor to #458e95
-   вставити в самий кінець theme_A.css
+   MARAUDER — FORCE NAVBAR TO #458e95
+   вставити В САМИЙ КІНЕЦЬ theme_A.css
    ========================================================= */
 
 body[data-rank="marauder"]{
-  --rank-ui-tab-outline: rgba(69,142,149,.36);
+  --marauder-nav-main: #458e95;
+  --marauder-nav-soft: #6ca59d;
+  --marauder-nav-accent: rgba(69,142,149,.36);
+  --marauder-nav-accent-strong: rgba(108,165,157,.48);
 }
 
-/* navbar text */
+/* прибити старі глобальні червоні смуги/обводки */
+body[data-rank="marauder"] .navbar::before,
+body[data-rank="marauder"] .navbar::after,
+body[data-rank="marauder"] .navbar.navRail::before,
+body[data-rank="marauder"] .navbar.navRail::after,
+body[data-rank="marauder"] .navbar.navTabs::before,
+body[data-rank="marauder"] .navbar.navTabs::after{
+  content: none !important;
+  display: none !important;
+  background: none !important;
+  box-shadow: none !important;
+  border: 0 !important;
+}
+
+/* сам контейнер navbar */
+body[data-rank="marauder"] .navbar.navTabs{
+  position: relative !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  isolation: isolate !important;
+}
+
+/* прибити старі червоні active/hover traces */
+body[data-rank="marauder"] .navbar .nav-btn,
+body[data-rank="marauder"] .navbar .nav-btn:hover,
+body[data-rank="marauder"] .navbar .nav-btn.active,
+body[data-rank="marauder"] .navbar .nav-btn.active::after{
+  background-image: none !important;
+  box-shadow: none !important;
+}
+
+/* текст вкладок */
 body[data-rank="marauder"] .navbar.navTabs > .nav-btn{
-  color: rgba(232,247,248,.92) !important;
+  color: rgba(235,248,248,.94) !important;
   text-shadow:
     0 0 4px rgba(255,255,255,.05),
-    0 0 10px rgba(69,142,149,.10) !important;
+    0 0 10px rgba(69,142,149,.12) !important;
 }
 
-/* active tab text */
+/* неактивна вкладка */
+body[data-rank="marauder"] .navbar.navTabs > .nav-btn:not(.active)::before{
+  content: "" !important;
+  position: absolute !important;
+  left: 10px !important;
+  right: 10px !important;
+  top: 8px !important;
+  bottom: 8px !important;
+  z-index: 1 !important;
+  pointer-events: none !important;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(12,18,19,.96) 0%,
+      rgba(7,10,11,.99) 58%,
+      rgba(3,5,6,1) 100%
+    ) !important;
+
+  clip-path: polygon(
+    8px 0,
+    calc(100% - 8px) 0,
+    100% 8px,
+    100% calc(100% - 8px),
+    calc(100% - 8px) 100%,
+    8px 100%,
+    0 calc(100% - 8px),
+    0 8px
+  ) !important;
+
+  border: 1px solid rgba(69,142,149,.24) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.03),
+    inset 0 -1px 0 rgba(0,0,0,.45),
+    0 0 10px rgba(69,142,149,.08) !important;
+}
+
+/* active вкладка */
 body[data-rank="marauder"] .navbar.navTabs > .nav-btn.active{
-  color: #f3ffff !important;
+  color: #f2ffff !important;
   text-shadow:
     0 0 8px rgba(255,255,255,.14),
-    0 0 18px rgba(69,142,149,.18) !important;
+    0 0 18px rgba(69,142,149,.20) !important;
 }
 
-/* active plate / frame */
 body[data-rank="marauder"] .navbar.navTabs > .nav-btn.active::before{
-  border-color: rgba(69,142,149,.30) !important;
+  content: "" !important;
+  position: absolute !important;
+  left: 10px !important;
+  right: 10px !important;
+  top: 8px !important;
+  bottom: 8px !important;
+  z-index: 1 !important;
+  pointer-events: none !important;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(14,24,25,.98) 0%,
+      rgba(8,13,14,.995) 58%,
+      rgba(4,6,7,1) 100%
+    ) !important;
+
+  clip-path: polygon(
+    8px 0,
+    calc(100% - 8px) 0,
+    100% 8px,
+    100% calc(100% - 8px),
+    calc(100% - 8px) 100%,
+    8px 100%,
+    0 calc(100% - 8px),
+    0 8px
+  ) !important;
+
+  border: 1px solid rgba(108,165,157,.42) !important;
   box-shadow:
     inset 0 1px 0 rgba(255,255,255,.06),
     inset 0 -1px 0 rgba(0,0,0,.42),
-    0 0 10px rgba(69,142,149,.12),
-    0 0 20px rgba(69,142,149,.06) !important;
-}
-
-/* inactive plate / frame */
-body[data-rank="marauder"] .navbar.navTabs > .nav-btn:not(.active)::before{
-  border-color: rgba(69,142,149,.18) !important;
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.02),
-    inset 0 -1px 0 rgba(0,0,0,.45),
-    0 0 8px rgba(69,142,149,.05) !important;
+    0 0 12px rgba(69,142,149,.16),
+    0 0 22px rgba(69,142,149,.08) !important;
 }
 
 /* hover */
 body[data-rank="marauder"] .navbar.navTabs > .nav-btn:not(.active):hover{
   color: #ffffff !important;
-  text-shadow:
-    0 0 6px rgba(255,255,255,.10),
-    0 0 14px rgba(69,142,149,.16) !important;
 }
 
-/* divider / separator */
-body[data-rank="marauder"] .navbar.navTabs > .nav-btn + .nav-btn::after{
+body[data-rank="marauder"] .navbar.navTabs > .nav-btn:not(.active):hover::before{
+  border-color: rgba(108,165,157,.34) !important;
   box-shadow:
-    0 0 6px rgba(69,142,149,.10),
-    0 0 14px rgba(69,142,149,.06) !important;
+    inset 0 1px 0 rgba(255,255,255,.04),
+    inset 0 -1px 0 rgba(0,0,0,.40),
+    0 0 12px rgba(69,142,149,.12) !important;
+}
+
+/* вертикальні divider-и */
+body[data-rank="marauder"] .navbar.navTabs > .nav-btn + .nav-btn::after{
+  content: "" !important;
+  position: absolute !important;
+  left: -1px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  width: 1px !important;
+  height: 34px !important;
+  z-index: 5 !important;
+  pointer-events: none !important;
+
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(108,165,157,.08) 14%,
+    rgba(69,142,149,.55) 50%,
+    rgba(108,165,157,.08) 86%,
+    transparent 100%
+  ) !important;
+
+  box-shadow:
+    0 0 6px rgba(69,142,149,.14),
+    0 0 14px rgba(69,142,149,.08) !important;
 }
