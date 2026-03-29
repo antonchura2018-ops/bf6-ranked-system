@@ -8532,3 +8532,61 @@ body[data-rank="marauder"] #dashboard.section.active .rankHome .rankProgress__fi
     0 0 14px rgba(79,5,18,.18),
     0 0 24px rgba(79,5,18,.14) !important;
 }
+/* =========================================================
+   MARAUDER — NAVBAR ONLY recolor to #458e95
+   вставити в самий кінець theme_A.css
+   ========================================================= */
+
+body[data-rank="marauder"]{
+  --rank-ui-tab-outline: rgba(69,142,149,.36);
+}
+
+/* navbar text */
+body[data-rank="marauder"] .navbar.navTabs > .nav-btn{
+  color: rgba(232,247,248,.92) !important;
+  text-shadow:
+    0 0 4px rgba(255,255,255,.05),
+    0 0 10px rgba(69,142,149,.10) !important;
+}
+
+/* active tab text */
+body[data-rank="marauder"] .navbar.navTabs > .nav-btn.active{
+  color: #f3ffff !important;
+  text-shadow:
+    0 0 8px rgba(255,255,255,.14),
+    0 0 18px rgba(69,142,149,.18) !important;
+}
+
+/* active plate / frame */
+body[data-rank="marauder"] .navbar.navTabs > .nav-btn.active::before{
+  border-color: rgba(69,142,149,.30) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.06),
+    inset 0 -1px 0 rgba(0,0,0,.42),
+    0 0 10px rgba(69,142,149,.12),
+    0 0 20px rgba(69,142,149,.06) !important;
+}
+
+/* inactive plate / frame */
+body[data-rank="marauder"] .navbar.navTabs > .nav-btn:not(.active)::before{
+  border-color: rgba(69,142,149,.18) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.02),
+    inset 0 -1px 0 rgba(0,0,0,.45),
+    0 0 8px rgba(69,142,149,.05) !important;
+}
+
+/* hover */
+body[data-rank="marauder"] .navbar.navTabs > .nav-btn:not(.active):hover{
+  color: #ffffff !important;
+  text-shadow:
+    0 0 6px rgba(255,255,255,.10),
+    0 0 14px rgba(69,142,149,.16) !important;
+}
+
+/* divider / separator */
+body[data-rank="marauder"] .navbar.navTabs > .nav-btn + .nav-btn::after{
+  box-shadow:
+    0 0 6px rgba(69,142,149,.10),
+    0 0 14px rgba(69,142,149,.06) !important;
+}
