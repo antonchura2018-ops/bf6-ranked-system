@@ -8707,10 +8707,12 @@ body[data-rank="marauder"] .navbar.navTabs > .nav-btn.active > .nav-btn__label::
 
   /* саме ці числа роблять лінію коротшою,
      але розмір самої вкладки не змінюють */
-  left: 37px !important;
-  right: 37px !important;
-  top: -6px !important;
-  height: 1px !important;
+  left: 50% !important;
+ right: auto !important;
+ width: 148px !important;
+ top: -6px !important;
+ height: 1px !important;
+ transform: translateX(-50%) !important;
 
   background: linear-gradient(
     90deg,
