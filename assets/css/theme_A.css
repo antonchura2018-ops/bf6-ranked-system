@@ -8683,42 +8683,7 @@ body[data-rank="marauder"] .navbar.navTabs > .nav-btn.active::before{
   filter: brightness(1.02) !important;
 }
 
-/* верхня active line — робимо її бірюзовою і меншою */
-body[data-rank="marauder"] .navbar.navTabs > .nav-btn.active > span::before,
-body[data-rank="marauder"] .navbar.navTabs > .nav-btn.active > .nav-btn__label::before{
-  content: "" !important;
-  display: block !important;
-  position: absolute !important;
-  pointer-events: none !important;
-  z-index: 50 !important;
 
-  left: 18px !important;
-  right: 18px !important;
-  top: -8px !important;
-  height: 2px !important;
-
-  background: linear-gradient(
-    90deg,
-    rgba(0,0,0,0) 0%,
-    rgba(108,165,157,.22) 18%,
-    rgba(69,142,149,.95) 50%,
-    rgba(108,165,157,.22) 82%,
-    rgba(0,0,0,0) 100%
-  ) !important;
-
-  box-shadow:
-    0 0 6px rgba(69,142,149,.16),
-    0 0 12px rgba(69,142,149,.06) !important;
-}
-
-/* active text glow теж у той самий колір */
-body[data-rank="marauder"] .navbar.navTabs > .nav-btn.active{
-  color: #f2ffff !important;
-  text-shadow:
-    0 0 8px rgba(255,255,255,.14),
-    0 0 16px rgba(69,142,149,.18),
-    0 0 24px rgba(69,142,149,.08) !important;
-}
 /* ---------------------------------------------------------
    MARAUDER — ACTIVE TOP LINE ONLY
    не міняє розмір вкладок
