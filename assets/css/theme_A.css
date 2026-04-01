@@ -8719,14 +8719,44 @@ body[data-rank="marauder"] .navbar.navTabs > .nav-btn.active{
     0 0 16px rgba(69,142,149,.18),
     0 0 24px rgba(69,142,149,.08) !important;
 }
-/* =========================================================
-   MARAUDER — ALL 4 TABS SAME SIZE
-   ========================================================= */
-body[data-rank="marauder"] .navbar.navTabs > .nav-btn,
-body[data-rank="marauder"] .navbar.navTabs > .nav-btn:not(.active),
-body[data-rank="marauder"] .navbar.navTabs > .nav-btn.active{
-  flex: 0 0 228px !important;
-  width: 228px !important;
-  min-width: 228px !important;
-  max-width: 228px !important;
+/* ---------------------------------------------------------
+   MARAUDER — ACTIVE TOP LINE ONLY
+   не міняє розмір вкладок
+   --------------------------------------------------------- */
+
+/* прибираємо зайві верхні лінії */
+body[data-rank="marauder"] .navbar.navTabs > .nav-btn.active > .nav-btn__ornament::before,
+body[data-rank="marauder"] .navbar.navTabs > .nav-btn.active > .nav-btn__ornament::after,
+body[data-rank="marauder"] .navbar.navTabs > .nav-btn.active > .nav-btn__label::after{
+  content: none !important;
+  display: none !important;
+}
+
+/* малюємо тільки одну акуратну верхню лінію */
+body[data-rank="marauder"] .navbar.navTabs > .nav-btn.active > .nav-btn__label::before{
+  content: "" !important;
+  display: block !important;
+  position: absolute !important;
+  pointer-events: none !important;
+  z-index: 50 !important;
+
+  /* саме ці числа роблять лінію коротшою,
+     але розмір самої вкладки не змінюють */
+  left: 37px !important;
+  right: 37px !important;
+  top: -6px !important;
+  height: 1px !important;
+
+  background: linear-gradient(
+    90deg,
+    rgba(0,0,0,0) 0%,
+    rgba(108,165,157,.20) 18%,
+    rgba(69,142,149,.95) 50%,
+    rgba(108,165,157,.20) 82%,
+    rgba(0,0,0,0) 100%
+  ) !important;
+
+  box-shadow:
+    0 0 5px rgba(69,142,149,.14),
+    0 0 10px rgba(69,142,149,.05) !important;
 }
