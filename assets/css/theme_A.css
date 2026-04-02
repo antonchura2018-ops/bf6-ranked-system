@@ -8727,3 +8727,899 @@ body[data-rank="marauder"] .navbar.navTabs > .nav-btn.active > .nav-btn__label::
     0 0 5px rgba(69,142,149,.14),
     0 0 10px rgba(69,142,149,.05) !important;
 }
+/* =========================================================
+   OVERLORD — FINAL ARCHON-BASED FULL OVERRIDE
+   вставити в самий кінець theme_A.css
+   кольори:
+   main glow / primary accent  = #6FE7FF
+   depth glow / secondary      = #2E5BFF
+   peak shine / highlight      = #F4FBFF
+   animation / energy pulse    = #9AF2FF
+   ========================================================= */
+
+/* =========================================================
+   OVERLORD — COLOR SYSTEM
+   ========================================================= */
+body[data-rank="overlord"]{
+  --rank-bg-image: url('/assets/img/bg/cosmos_overlord.png');
+
+  --rank-ui-primary: #6FE7FF;
+  --rank-ui-secondary: #2E5BFF;
+  --rank-ui-soft: rgba(111,231,255,.18);
+
+  --rank-ui-line: rgba(154,242,255,.94);
+  --rank-ui-line-soft: rgba(244,251,255,.14);
+
+  --rank-ui-textglow-a: rgba(111,231,255,.28);
+  --rank-ui-textglow-b: rgba(46,91,255,.20);
+
+  --rank-ui-tab-outline: rgba(111,231,255,.30);
+}
+
+/* cleaner center focus */
+body[data-rank="overlord"] #rankBgLayer::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  z-index:1;
+  background:
+    radial-gradient(circle at 50% 34%,
+      rgba(6,12,28,0) 0%,
+      rgba(6,12,28,.08) 18%,
+      rgba(6,12,28,.18) 36%,
+      rgba(6,12,28,.28) 52%,
+      rgba(0,0,0,0) 72%),
+    radial-gradient(circle at 50% 54%,
+      rgba(0,0,0,0) 0%,
+      rgba(0,0,0,.06) 32%,
+      rgba(0,0,0,.10) 55%,
+      rgba(0,0,0,0) 75%);
+}
+
+/* =========================================================
+   OVERLORD — INFO BLOCK TRUE CENTER + SLIGHTLY LOWER
+   ========================================================= */
+body[data-rank="overlord"] #dashboard.section.active .rankHome .rankHome__infoStack{
+  position: relative !important;
+  left: 50% !important;
+  right: auto !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  transform: translateX(-50%) translateY(-40px) !important;
+  z-index: 13 !important;
+}
+
+/* =========================================================
+   OVERLORD — EMBLEM
+   ========================================================= */
+body[data-rank="overlord"] #dashboard.section.active .rankHome .rankEmblemOverlay,
+body[data-rank="overlord"] #dashboard.section.active .rankHome #rankEmblemOverlay,
+body[data-rank="overlord"] #rankEmblemOverlay{
+  transform: translate(-50%, -50%) scale(.95) !important;
+}
+
+body[data-rank="overlord"] #rankEmblemOverlay{
+  animation: overlordEmblemFloat 5.5s ease-in-out infinite;
+  will-change: transform;
+}
+
+@keyframes overlordEmblemFloat{
+  0%   { transform: translate(-50%, -50%) scale(.95); }
+  50%  { transform: translate(-50%, calc(-50% - 4px)) scale(.96); }
+  100% { transform: translate(-50%, -50%) scale(.95); }
+}
+
+/* =========================================================
+   OVERLORD — CLEAN TEXT / META / TITLE
+   ========================================================= */
+body[data-rank="overlord"] #dashboard.section.active .rankHome .rankTitle,
+body[data-rank="overlord"] #dashboard.section.active .rankHome .rankName,
+body[data-rank="overlord"] #dashboard.section.active .rankHome .rankTierName{
+  background: none !important;
+  -webkit-background-clip: initial !important;
+  -webkit-text-fill-color: #F4FBFF !important;
+  color: #F4FBFF !important;
+
+  text-shadow:
+    0 0 6px rgba(244,251,255,.20),
+    0 0 14px rgba(244,251,255,.12),
+    0 0 22px rgba(111,231,255,.18),
+    0 0 36px rgba(46,91,255,.18) !important;
+
+  letter-spacing: .10em !important;
+}
+
+body[data-rank="overlord"] #dashboard.section.active .rankHome .rankSub,
+body[data-rank="overlord"] #dashboard.section.active .rankHome .rankRP,
+body[data-rank="overlord"] #dashboard.section.active .rankHome .rankMeta,
+body[data-rank="overlord"] #dashboard.section.active .rankHome .rankNext,
+body[data-rank="overlord"] #dashboard.section.active .rankHome .rankProgressLabel,
+body[data-rank="overlord"] #dashboard.section.active .rankHome .rankProgress__label{
+  color:#F4FBFF !important;
+  text-shadow:
+    0 0 5px rgba(244,251,255,.12),
+    0 0 12px rgba(111,231,255,.14) !important;
+}
+
+body[data-rank="overlord"] #dashboard.section.active .rankHome .rankRP span,
+body[data-rank="overlord"] #dashboard.section.active .rankHome .rankProgress__label b{
+  color:#F4FBFF !important;
+}
+
+body[data-rank="overlord"] #dashboard.section.active .rankHome .rankSub::after,
+body[data-rank="overlord"] #dashboard.section.active .rankHome .rankMeta::after,
+body[data-rank="overlord"] #dashboard.section.active .rankHome .rankRP::after,
+body[data-rank="overlord"] #dashboard.section.active .rankHome .rankProgressLabel::after,
+body[data-rank="overlord"] #dashboard.section.active .rankHome .rankProgress__label::after{
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(154,242,255,.20) 18%,
+    rgba(154,242,255,.88) 50%,
+    rgba(46,91,255,.18) 82%,
+    transparent 100%
+  ) !important;
+
+  box-shadow:
+    0 0 8px rgba(154,242,255,.18),
+    0 0 18px rgba(111,231,255,.14),
+    0 0 28px rgba(46,91,255,.08) !important;
+}
+
+/* =========================================================
+   OVERLORD — PLAYER ASCENSION TEXT + RAILS
+   ========================================================= */
+body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseHeader,
+body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseHeader span{
+  background: none !important;
+  -webkit-background-clip: initial !important;
+  -webkit-text-fill-color: #F4FBFF !important;
+  color: #F4FBFF !important;
+
+  text-shadow:
+    0 0 5px rgba(244,251,255,.14),
+    0 0 12px rgba(244,251,255,.08),
+    0 0 20px rgba(111,231,255,.16),
+    0 0 30px rgba(46,91,255,.16) !important;
+}
+
+body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseHeader::before,
+body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseHeader::after,
+body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseHeader span::before,
+body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseHeader span::after{
+  background: linear-gradient(
+    90deg,
+    rgba(0,0,0,0) 0%,
+    rgba(154,242,255,.16) 16%,
+    rgba(154,242,255,.92) 50%,
+    rgba(46,91,255,.18) 84%,
+    rgba(0,0,0,0) 100%
+  ) !important;
+
+  box-shadow:
+    0 0 12px rgba(154,242,255,.24),
+    0 0 24px rgba(111,231,255,.14),
+    0 0 34px rgba(46,91,255,.08) !important;
+
+  opacity: 1 !important;
+}
+
+/* =========================================================
+   OVERLORD — METRICS POLISH
+   ========================================================= */
+body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid{
+  background: linear-gradient(
+    180deg,
+    rgba(255,255,255,.02),
+    rgba(8,16,32,.10),
+    rgba(0,0,0,0)
+  ) !important;
+  border-radius: 14px !important;
+  box-shadow:
+    inset 0 1px 0 rgba(154,242,255,.08),
+    inset 0 -1px 0 rgba(154,242,255,.08) !important;
+}
+
+body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid .metric{
+  border-left: 1px solid rgba(154,242,255,.10) !important;
+}
+
+body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid .metric:first-child{
+  border-left: 0 !important;
+}
+
+body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid .metric .k{
+  font-size: clamp(15px, 1.12vw, 18px) !important;
+  letter-spacing: .18em !important;
+
+  background: linear-gradient(
+    180deg,
+    #F4FBFF 0%,
+    #dff8ff 72%,
+    #bfeeff 100%
+  ) !important;
+
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+
+  text-shadow:
+    0 0 4px rgba(244,251,255,.08),
+    0 0 10px rgba(111,231,255,.12),
+    0 0 18px rgba(46,91,255,.06) !important;
+}
+
+body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid .metric .v,
+body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid .metric .v span{
+  background: linear-gradient(
+    180deg,
+    #F4FBFF 0%,
+    #ebfaff 42%,
+    #c8f1ff 100%
+  ) !important;
+
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+
+  text-shadow:
+    0 0 6px rgba(244,251,255,.10),
+    0 0 12px rgba(111,231,255,.16),
+    0 0 22px rgba(46,91,255,.08) !important;
+}
+
+body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid .metric + .metric::before{
+  background: none !important;
+  box-shadow: none !important;
+}
+
+body[data-rank="overlord"] #dashboard .rankHome .metric:not(:last-child)::after{
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(244,251,255,.08) 22%,
+    rgba(154,242,255,.22) 50%,
+    rgba(244,251,255,.08) 78%,
+    transparent 100%
+  ) !important;
+
+  opacity: .72 !important;
+  filter: blur(.2px) !important;
+}
+
+/* =========================================================
+   OVERLORD — PROGRESS TRACK FIX
+   ========================================================= */
+body[data-rank="overlord"] #dashboard.section.active .rankHome .rankProgress{
+  background: transparent !important;
+  box-shadow: none !important;
+  border: 0 !important;
+}
+
+body[data-rank="overlord"] #dashboard.section.active .rankHome .rankProgress__track{
+  height: 4px !important;
+  border-radius: 999px !important;
+  overflow: hidden !important;
+
+  background: linear-gradient(
+    90deg,
+    rgba(6,10,20,.88) 0%,
+    rgba(10,16,30,.82) 100%
+  ) !important;
+
+  box-shadow:
+    inset 0 0 0 1px rgba(244,251,255,.04),
+    inset 0 1px 2px rgba(0,0,0,.45),
+    0 0 10px rgba(0,0,0,.18) !important;
+
+  border: 0 !important;
+  outline: 0 !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+body[data-rank="overlord"] #dashboard.section.active .rankHome .rankProgress__track::before,
+body[data-rank="overlord"] #dashboard.section.active .rankHome .rankProgress__track::after{
+  display: none !important;
+  content: none !important;
+}
+
+body[data-rank="overlord"] #dashboard.section.active .rankHome .rankProgress__fill{
+  height: 100% !important;
+  border-radius: 999px !important;
+
+  background: linear-gradient(
+    90deg,
+    #F4FBFF 0%,
+    #d7f8ff 18%,
+    #9AF2FF 44%,
+    #6FE7FF 72%,
+    #2E5BFF 100%
+  ) !important;
+
+  box-shadow:
+    0 0 8px rgba(244,251,255,.12),
+    0 0 14px rgba(111,231,255,.18),
+    0 0 24px rgba(46,91,255,.14) !important;
+}
+
+/* =========================================================
+   OVERLORD — STATIC BLOOM FX
+   ========================================================= */
+body[data-rank="overlord"] .rankHome__center{
+  position: relative !important;
+  isolation: isolate !important;
+}
+
+body[data-rank="overlord"] .rankEmblem{
+  position: relative !important;
+  z-index: 12 !important;
+}
+
+body[data-rank="overlord"] .harbinger-ring-fx{
+  position: absolute !important;
+  left: 50% !important;
+  top: 35.2% !important;
+  width: 1180px !important;
+  height: 920px !important;
+  transform: translate(-50%, -50%) !important;
+  pointer-events: none !important;
+  z-index: 8 !important;
+}
+
+body[data-rank="overlord"] .harbinger-ring-fx .fx{
+  position: absolute;
+  display: block;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  will-change: opacity, transform;
+}
+
+/* LEFT BLOOM */
+body[data-rank="overlord"] .harbinger-ring-fx .fx-left{
+  left: 42px !important;
+  top: 320px !important;
+  width: 222px !important;
+  height: 232px !important;
+
+  background:
+    radial-gradient(ellipse at 54% 50%,
+      rgba(244,251,255,.98) 0%,
+      rgba(226,248,255,.90) 10%,
+      rgba(154,242,255,.78) 24%,
+      rgba(111,231,255,.48) 42%,
+      rgba(46,91,255,.16) 62%,
+      rgba(0,0,0,0) 84%
+    ),
+    radial-gradient(ellipse at 62% 42%,
+      rgba(244,251,255,.44) 0%,
+      rgba(244,251,255,.16) 18%,
+      rgba(0,0,0,0) 42%
+    );
+
+  filter: blur(18px);
+  opacity: .34;
+  transform: rotate(-8deg) scale(.93);
+  transform-origin: center center;
+  animation: overlordLeftGlow 5.0s ease-in-out infinite;
+}
+
+/* RIGHT BLOOM */
+body[data-rank="overlord"] .harbinger-ring-fx .fx-right{
+  right: 42px !important;
+  top: 320px !important;
+  width: 222px !important;
+  height: 232px !important;
+
+  background:
+    radial-gradient(ellipse at 46% 50%,
+      rgba(244,251,255,.98) 0%,
+      rgba(226,248,255,.90) 10%,
+      rgba(154,242,255,.78) 24%,
+      rgba(111,231,255,.48) 42%,
+      rgba(46,91,255,.16) 62%,
+      rgba(0,0,0,0) 84%
+    ),
+    radial-gradient(ellipse at 38% 42%,
+      rgba(244,251,255,.44) 0%,
+      rgba(244,251,255,.16) 18%,
+      rgba(0,0,0,0) 42%
+    );
+
+  filter: blur(18px);
+  opacity: .36;
+  transform: rotate(8deg) scale(.93);
+  transform-origin: center center;
+  animation: overlordRightGlow 5.3s ease-in-out infinite;
+}
+
+/* TOP BLOOM */
+body[data-rank="overlord"] .harbinger-ring-fx .fx-top{
+  left: 50%;
+  top: 8px;
+  width: 620px;
+  height: 132px;
+  transform: translateX(-50%) scale(.95);
+  transform-origin: center center;
+
+  background:
+    radial-gradient(ellipse at center,
+      rgba(244,251,255,.34) 0%,
+      rgba(226,248,255,.24) 16%,
+      rgba(154,242,255,.16) 34%,
+      rgba(111,231,255,.08) 50%,
+      rgba(46,91,255,.03) 64%,
+      rgba(0,0,0,0) 82%
+    );
+
+  filter: blur(24px);
+  opacity: .10;
+  will-change: opacity, transform;
+  animation: overlordTopGlow 5.8s ease-in-out infinite;
+}
+
+/* INNER HALO */
+body[data-rank="overlord"] .harbinger-ring-fx::before{
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+
+  background:
+    radial-gradient(circle at 50% 46%,
+      rgba(154,242,255,.11) 0%,
+      rgba(154,242,255,.06) 18%,
+      rgba(111,231,255,.03) 30%,
+      rgba(0,0,0,0) 46%
+    ),
+    radial-gradient(ellipse 260px 104px at 14% 55%,
+      rgba(154,242,255,.16) 0%,
+      rgba(111,231,255,.08) 34%,
+      rgba(0,0,0,0) 74%
+    ),
+    radial-gradient(ellipse 260px 104px at 86% 55%,
+      rgba(154,242,255,.16) 0%,
+      rgba(111,231,255,.08) 34%,
+      rgba(0,0,0,0) 74%
+    );
+
+  filter: blur(30px);
+  opacity: .24;
+  animation: overlordSideHaze 7.2s ease-in-out infinite;
+}
+
+/* SOFT ARC SHIMMER */
+body[data-rank="overlord"] .harbinger-ring-fx::after{
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 88px;
+  width: 760px;
+  height: 250px;
+  transform: translateX(-50%) scale(.97);
+  transform-origin: center center;
+  pointer-events: none;
+  z-index: 1;
+
+  background:
+    radial-gradient(ellipse at center,
+      rgba(244,251,255,.12) 0%,
+      rgba(154,242,255,.08) 26%,
+      rgba(111,231,255,.04) 44%,
+      rgba(46,91,255,.02) 58%,
+      rgba(0,0,0,0) 76%
+    );
+
+  filter: blur(22px);
+  opacity: .12;
+  animation: overlordArcShimmer 8.0s ease-in-out infinite;
+}
+
+@keyframes overlordLeftGlow{
+  0%{
+    opacity: .24;
+    transform: rotate(-8deg) scale(.91);
+  }
+  22%{
+    opacity: .48;
+    transform: rotate(-8deg) scale(.97);
+  }
+  50%{
+    opacity: .98;
+    transform: rotate(-8deg) scale(1.08);
+  }
+  78%{
+    opacity: .52;
+    transform: rotate(-8deg) scale(.99);
+  }
+  100%{
+    opacity: .24;
+    transform: rotate(-8deg) scale(.91);
+  }
+}
+
+@keyframes overlordRightGlow{
+  0%{
+    opacity: .26;
+    transform: rotate(8deg) scale(.91);
+  }
+  22%{
+    opacity: .50;
+    transform: rotate(8deg) scale(.98);
+  }
+  50%{
+    opacity: 1;
+    transform: rotate(8deg) scale(1.09);
+  }
+  78%{
+    opacity: .54;
+    transform: rotate(8deg) scale(1.00);
+  }
+  100%{
+    opacity: .26;
+    transform: rotate(8deg) scale(.91);
+  }
+}
+
+@keyframes overlordTopGlow{
+  0%{
+    opacity: .06;
+    transform: translateX(-50%) scale(.93);
+  }
+  50%{
+    opacity: .34;
+    transform: translateX(-50%) scale(1.03);
+  }
+  100%{
+    opacity: .06;
+    transform: translateX(-50%) scale(.93);
+  }
+}
+
+@keyframes overlordSideHaze{
+  0%{
+    opacity: .18;
+  }
+  50%{
+    opacity: .34;
+  }
+  100%{
+    opacity: .18;
+  }
+}
+
+@keyframes overlordArcShimmer{
+  0%{
+    opacity: .08;
+    transform: translateX(-50%) scale(.95);
+  }
+  50%{
+    opacity: .22;
+    transform: translateX(-50%) scale(1.02);
+  }
+  100%{
+    opacity: .08;
+    transform: translateX(-50%) scale(.95);
+  }
+}
+
+/* =========================================================
+   OVERLORD NAVBAR — KILL GLOBAL STRIPS / UNDERLINES
+   ========================================================= */
+body[data-rank="overlord"] .navbar::before,
+body[data-rank="overlord"] .navbar::after,
+body[data-rank="overlord"] .navbar.navRail::before,
+body[data-rank="overlord"] .navbar.navRail::after{
+  content: none !important;
+  display: none !important;
+  background: none !important;
+  box-shadow: none !important;
+  border: 0 !important;
+}
+
+body[data-rank="overlord"] .navbar .nav-btn.active::after{
+  content: none !important;
+  display: none !important;
+  background: none !important;
+  box-shadow: none !important;
+}
+
+body[data-rank="overlord"] .navbar .nav-btn,
+body[data-rank="overlord"] .navbar .nav-btn:hover,
+body[data-rank="overlord"] .navbar .nav-btn.active{
+  background-image: none !important;
+  box-shadow: none !important;
+}
+
+body[data-rank="overlord"] .navbar.navTabs > .nav-btn.active > span::before,
+body[data-rank="overlord"] .navbar.navTabs > .nav-btn.active > .nav-btn__label::before,
+body[data-rank="overlord"] .navbar.navTabs > .nav-btn.active > .nav-btn__label::after{
+  content: none !important;
+  display: none !important;
+  background: none !important;
+  box-shadow: none !important;
+}
+
+/* =========================================================
+   OVERLORD — FINAL COPY OF ARCHON NAVBAR LOGIC
+   ========================================================= */
+body[data-rank="overlord"] .navbar.navTabs{
+  position: relative !important;
+  left: 50% !important;
+  right: auto !important;
+  transform: translateX(-50%) !important;
+
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  gap: 0 !important;
+
+  width: auto !important;
+  margin: 0 !important;
+  padding: 8px 0 0 !important;
+
+  background: transparent !important;
+  border: 0 !important;
+  outline: 0 !important;
+  box-shadow: none !important;
+  overflow: visible !important;
+  isolation: isolate !important;
+  z-index: 120 !important;
+}
+
+body[data-rank="overlord"] .navbar.navTabs::before,
+body[data-rank="overlord"] .navbar.navTabs::after{
+  content: none !important;
+  display: none !important;
+}
+
+body[data-rank="overlord"] .navbar.navTabs,
+body[data-rank="overlord"] .topbar,
+body[data-rank="overlord"] .topbar-inner,
+body[data-rank="overlord"] .header,
+body[data-rank="overlord"] .header-inner{
+  overflow: visible !important;
+}
+
+body[data-rank="overlord"] .navbar.navTabs > .nav-btn{
+  position: relative !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  height: 54px !important;
+  margin: 0 !important;
+  padding: 0 18px !important;
+
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  outline: 0 !important;
+  box-shadow: none !important;
+  overflow: visible !important;
+  isolation: isolate !important;
+
+  color: rgba(244,251,255,.96) !important;
+  font-family: var(--font-ui) !important;
+  font-size: 16px !important;
+  font-weight: 800 !important;
+  letter-spacing: .06em !important;
+  text-transform: uppercase !important;
+  text-shadow:
+    0 0 4px rgba(244,251,255,.06),
+    0 0 10px rgba(111,231,255,.06) !important;
+
+  transition:
+    color .16s ease,
+    transform .16s ease !important;
+}
+
+body[data-rank="overlord"] .navbar.navTabs > .nav-btn:not(.active){
+  flex: 0 0 228px !important;
+  width: 228px !important;
+  min-width: 228px !important;
+  max-width: 228px !important;
+  z-index: 10 !important;
+}
+
+body[data-rank="overlord"] .navbar.navTabs > .nav-btn.active{
+  flex: 0 0 266px !important;
+  width: 266px !important;
+  min-width: 266px !important;
+  max-width: 266px !important;
+  z-index: 60 !important;
+  color: #F4FBFF !important;
+  text-shadow:
+    0 0 8px rgba(244,251,255,.16),
+    0 0 18px rgba(111,231,255,.12),
+    0 0 26px rgba(46,91,255,.06) !important;
+}
+
+body[data-rank="overlord"] .navbar.navTabs > .nav-btn:hover{
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+body[data-rank="overlord"] .navbar.navTabs > .nav-btn:not(.active):hover{
+  color: #ffffff !important;
+  transform: translateY(-1px) !important;
+}
+
+body[data-rank="overlord"] .navbar.navTabs > .nav-btn > .nav-btn__label{
+  position: relative !important;
+  z-index: 8 !important;
+  display: block !important;
+  width: 100% !important;
+  text-align: center !important;
+  white-space: nowrap !important;
+  line-height: 1 !important;
+}
+
+body[data-rank="overlord"] .navbar.navTabs > .nav-btn > .nav-btn__ornament{
+  position: absolute !important;
+  pointer-events: none !important;
+  display: block !important;
+  opacity: 0 !important;
+  overflow: visible !important;
+  z-index: 6 !important;
+  background-repeat: no-repeat !important;
+  background-position: center center !important;
+  background-size: 100% 100% !important;
+  filter: none !important;
+}
+
+body[data-rank="overlord"] .navbar.navTabs > .nav-btn::after{
+  content: none !important;
+  display: none !important;
+}
+
+/* ---------------- ACTIVE ---------------- */
+body[data-rank="overlord"] .navbar.navTabs > .nav-btn.active::before{
+  content: "" !important;
+  position: absolute !important;
+  left: 18px !important;
+  right: 18px !important;
+  top: 8px !important;
+  bottom: 8px !important;
+  z-index: 1 !important;
+  pointer-events: none !important;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(16,28,36,.86) 0%,
+      rgba(8,14,24,.96) 55%,
+      rgba(4,8,14,.99) 100%
+    ) !important;
+
+  border: 1px solid rgba(154,242,255,.20) !important;
+  clip-path: polygon(
+    8px 0,
+    calc(100% - 8px) 0,
+    100% 8px,
+    100% calc(100% - 8px),
+    calc(100% - 8px) 100%,
+    8px 100%,
+    0 calc(100% - 8px),
+    0 8px
+  ) !important;
+
+  box-shadow:
+    inset 0 1px 0 rgba(244,251,255,.06),
+    inset 0 -1px 0 rgba(0,0,0,.46),
+    0 0 10px rgba(111,231,255,.10),
+    0 0 18px rgba(46,91,255,.06) !important;
+}
+
+body[data-rank="overlord"] .navbar.navTabs > .nav-btn.active > .nav-btn__ornament{
+  left: -18px !important;
+  right: -18px !important;
+  top: -18px !important;
+  bottom: auto !important;
+  height: 90px !important;
+  opacity: 1 !important;
+  z-index: 70 !important;
+
+  background-image: url('/assets/img/ui/tab_active_overlord.png') !important;
+  background-size: 100% auto !important;
+  background-position: center 50% !important;
+
+  filter:
+    drop-shadow(0 0 10px rgba(111,231,255,.14))
+    drop-shadow(0 0 22px rgba(46,91,255,.08)) !important;
+}
+
+/* ---------------- INACTIVE ---------------- */
+body[data-rank="overlord"] .navbar.navTabs > .nav-btn:not(.active)::before{
+  content: "" !important;
+  position: absolute !important;
+  left: 8px !important;
+  right: 8px !important;
+  top: 7px !important;
+  bottom: 7px !important;
+  z-index: 1 !important;
+  pointer-events: none !important;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(18,22,28,.985) 0%,
+      rgba(8,10,14,.995) 55%,
+      rgba(4,5,8,1) 100%
+    ) !important;
+
+  clip-path: polygon(
+    8px 0,
+    calc(100% - 8px) 0,
+    100% 8px,
+    100% calc(100% - 8px),
+    calc(100% - 8px) 100%,
+    8px 100%,
+    0 calc(100% - 8px),
+    0 8px
+  ) !important;
+
+  border: 1px solid rgba(111,231,255,.14) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(244,251,255,.02),
+    inset 0 -1px 0 rgba(0,0,0,.45) !important;
+}
+
+body[data-rank="overlord"] .navbar.navTabs > .nav-btn:not(.active) > .nav-btn__ornament{
+  left: -8px !important;
+  right: -8px !important;
+  top: -6px !important;
+  bottom: auto !important;
+  height: 72px !important;
+  opacity: 1 !important;
+  z-index: 4 !important;
+
+  background-image: url('/assets/img/ui/tab_inactive_overlord.png') !important;
+  background-size: 100% 100% !important;
+  background-repeat: no-repeat !important;
+  background-position: center center !important;
+
+  filter:
+    drop-shadow(0 0 4px rgba(111,231,255,.07))
+    drop-shadow(0 0 10px rgba(46,91,255,.04))
+    drop-shadow(0 1px 4px rgba(0,0,0,.14)) !important;
+}
+
+/* divider system */
+body[data-rank="overlord"] .navbar.navTabs > .nav-btn + .nav-btn{
+  margin-left: -10px !important;
+}
+
+body[data-rank="overlord"] .navbar.navTabs > .nav-btn + .nav-btn::after{
+  content: "" !important;
+  display: block !important;
+  position: absolute !important;
+  left: -10px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  width: 28px !important;
+  height: 56px !important;
+  z-index: 8 !important;
+  pointer-events: none !important;
+  opacity: .95 !important;
+
+  background: url('/assets/img/ui/tab_divider_overlord.png') center / 100% 100% no-repeat !important;
+}
+
+body[data-rank="overlord"] .navbar.navTabs > .nav-btn.active + .nav-btn::after{
+  left: -10px !important;
+  width: 28px !important;
+  height: 56px !important;
+  z-index: 8 !important;
+  background: url('/assets/img/ui/tab_divider_overlord.png') center / 100% 100% no-repeat !important;
+}
+
+/* =========================================================
+   OVERLORD — MOBILE SAFETY
+   ========================================================= */
+@media (max-width: 1100px){
+  body[data-rank="overlord"] .navbar.navTabs{
+    transform: translateX(-50%) scale(.94) !important;
+    transform-origin: top center !important;
+  }
+}
