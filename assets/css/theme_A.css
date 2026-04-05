@@ -9962,3 +9962,46 @@ body[data-rank="overlord"] #dashboard.section.active .rankHome .rankHome__infoSt
   filter: blur(16px);
   opacity: .88;
 }
+/* =========================================================
+   OVERLORD — METRICS FRAME SOFTEN MICRO PATCH
+   вставити в самий кінець theme_A.css
+   ========================================================= */
+
+body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid{
+  background: transparent !important;
+  border-radius: 14px !important;
+  box-shadow: none !important;
+  border: 0 !important;
+  outline: 0 !important;
+}
+
+/* дуже слабкі внутрішні межі комірок */
+body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid .metric{
+  border-left: 1px solid rgba(26,61,115,.07) !important;
+}
+
+body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid .metric:first-child{
+  border-left: 0 !important;
+}
+
+/* залишаємо розділення між комірками, але робимо його тоншим і менш сяючим */
+body[data-rank="overlord"] #dashboard.section.active .rankHome .metric:not(:last-child)::after{
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(26,61,115,.03) 22%,
+    rgba(190,232,255,.10) 50%,
+    rgba(26,61,115,.03) 78%,
+    transparent 100%
+  ) !important;
+
+  opacity: .34 !important;
+  filter: none !important;
+}
+
+/* якщо десь підтягується ще один декоративний розділювач */
+body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid .metric + .metric::before{
+  background: none !important;
+  box-shadow: none !important;
+  opacity: 0 !important;
+}
