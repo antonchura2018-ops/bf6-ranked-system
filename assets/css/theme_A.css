@@ -10060,3 +10060,101 @@ body[data-rank="overlord"] #dashboard .rankHome .metric:not(:last-child)::after{
   opacity: .50 !important;
   filter: blur(.2px) !important;
 }
+/* =========================================================
+   OVERLORD — TEXT SPLIT FIX
+   верхній/службовий текст = steel-blue
+   метрики = білий як у 6 рангу
+   вставити в самий кінець theme_A.css
+   ========================================================= */
+
+/* ---------------------------------------------------------
+   1) OVERLORD + 1,850 RP + NEXT RANK + PLAYER ASCENSION
+   НЕ білі, а холодний steel tone
+   --------------------------------------------------------- */
+body[data-rank="overlord"] #dashboard.section.active .rankHome .rankTitle,
+body[data-rank="overlord"] #dashboard.section.active .rankHome .rankName,
+body[data-rank="overlord"] #dashboard.section.active .rankHome .rankTierName{
+  background: none !important;
+  -webkit-background-clip: initial !important;
+  -webkit-text-fill-color: #DCE8F7 !important;
+  color: #DCE8F7 !important;
+
+  text-shadow:
+    0 1px 0 rgba(24,42,82,.95),
+    0 0 2px rgba(24,42,82,.88),
+    0 0 6px rgba(190,232,255,.05) !important;
+}
+
+body[data-rank="overlord"] #dashboard.section.active .rankHome .rankRP,
+body[data-rank="overlord"] #dashboard.section.active .rankHome .rankRP span,
+body[data-rank="overlord"] #dashboard.section.active .rankHome .rankMeta,
+body[data-rank="overlord"] #dashboard.section.active .rankHome .rankNext,
+body[data-rank="overlord"] #dashboard.section.active .rankHome .rankProgressLabel,
+body[data-rank="overlord"] #dashboard.section.active .rankHome .rankProgress__label,
+body[data-rank="overlord"] #dashboard.section.active .rankHome .rankProgress__label b,
+body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseHeader,
+body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseHeader span{
+  background: none !important;
+  -webkit-background-clip: initial !important;
+  -webkit-text-fill-color: #D6E3F3 !important;
+  color: #D6E3F3 !important;
+
+  text-shadow:
+    0 1px 0 rgba(24,42,82,.96),
+    0 0 2px rgba(24,42,82,.90),
+    0 0 4px rgba(24,42,82,.14) !important;
+}
+
+/* декоративні лінії зробити слабшими */
+body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseHeader::before,
+body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseHeader::after,
+body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseHeader span::before,
+body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseHeader span::after,
+body[data-rank="overlord"] #dashboard.section.active .rankHome .rankSub::after,
+body[data-rank="overlord"] #dashboard.section.active .rankHome .rankMeta::after,
+body[data-rank="overlord"] #dashboard.section.active .rankHome .rankRP::after,
+body[data-rank="overlord"] #dashboard.section.active .rankHome .rankProgressLabel::after,
+body[data-rank="overlord"] #dashboard.section.active .rankHome .rankProgress__label::after{
+  opacity: .48 !important;
+  box-shadow: none !important;
+}
+
+/* ---------------------------------------------------------
+   2) МЕТРИКИ — білий як у 6 рангу
+   WIN RATE / TOTAL MATCHES / KDA / AVG KILLS / MVP
+   і значення 50% / 6 / 0.0 / 0%
+   --------------------------------------------------------- */
+body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid .metric .k{
+  background: linear-gradient(
+    180deg,
+    #ffffff 0%,
+    #f7fbff 72%,
+    #eaf4ff 100%
+  ) !important;
+
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  color: #ffffff !important;
+
+  text-shadow:
+    0 1px 0 rgba(24,42,82,.92),
+    0 0 4px rgba(24,42,82,.34) !important;
+}
+
+body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid .metric .v,
+body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid .metric .v span{
+  background: linear-gradient(
+    180deg,
+    #ffffff 0%,
+    #fbfdff 42%,
+    #edf6ff 100%
+  ) !important;
+
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  color: #ffffff !important;
+
+  text-shadow:
+    0 1px 0 rgba(24,42,82,.96),
+    0 0 5px rgba(24,42,82,.38) !important;
+}
