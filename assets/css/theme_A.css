@@ -8861,14 +8861,13 @@ body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseHeader,
 body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseHeader span{
   background: none !important;
   -webkit-background-clip: initial !important;
-  -webkit-text-fill-color: #F4FBFF !important;
-  color: #F4FBFF !important;
+  -webkit-text-fill-color: #ffffff !important;
+  color: #ffffff !important;
+  -webkit-text-stroke: 0.55px rgba(22,38,74,.58) !important;
 
   text-shadow:
-    0 0 5px rgba(244,251,255,.14),
-    0 0 12px rgba(244,251,255,.08),
-    0 0 20px rgba(111,231,255,.16),
-    0 0 30px rgba(46,91,255,.16) !important;
+    0 1px 0 rgba(22,38,74,.78),
+    0 0 2px rgba(22,38,74,.34) !important;
 }
 
 body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseHeader::before,
@@ -8878,38 +8877,37 @@ body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseHeader span
   background: linear-gradient(
     90deg,
     rgba(0,0,0,0) 0%,
-    rgba(154,242,255,.16) 16%,
-    rgba(154,242,255,.92) 50%,
-    rgba(46,91,255,.18) 84%,
+    rgba(190,232,255,.10) 16%,
+    rgba(190,232,255,.48) 50%,
+    rgba(46,91,255,.08) 84%,
     rgba(0,0,0,0) 100%
   ) !important;
 
-  box-shadow:
-    0 0 12px rgba(154,242,255,.24),
-    0 0 24px rgba(111,231,255,.14),
-    0 0 34px rgba(46,91,255,.08) !important;
-
-  opacity: 1 !important;
+  box-shadow: none !important;
+  opacity: .42 !important;
 }
-
 /* =========================================================
    OVERLORD — METRICS POLISH
    ========================================================= */
 body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid{
-  background: linear-gradient(
-    180deg,
-    rgba(255,255,255,.02),
-    rgba(8,16,32,.10),
-    rgba(0,0,0,0)
-  ) !important;
+  background:
+    radial-gradient(
+      ellipse at center,
+      rgba(18,34,66,.060) 0%,
+      rgba(18,34,66,.040) 46%,
+      rgba(18,34,66,.016) 68%,
+      rgba(18,34,66,0) 86%
+    ) !important;
+
   border-radius: 14px !important;
   box-shadow:
-    inset 0 1px 0 rgba(154,242,255,.08),
-    inset 0 -1px 0 rgba(154,242,255,.08) !important;
+    inset 0 1px 0 rgba(255,255,255,.022),
+    inset 0 -1px 0 rgba(46,91,255,.015) !important;
 }
 
 body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid .metric{
-  border-left: 1px solid rgba(154,242,255,.10) !important;
+  border-left: 1px solid rgba(120,170,220,.07) !important;
+  background: none !important;
 }
 
 body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid .metric:first-child{
@@ -8922,55 +8920,56 @@ body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid .metri
 
   background: linear-gradient(
     180deg,
-    #F4FBFF 0%,
-    #dff8ff 72%,
-    #bfeeff 100%
+    #ffffff 0%,
+    #f8fbff 72%,
+    #eef6ff 100%
   ) !important;
 
   -webkit-background-clip: text !important;
   -webkit-text-fill-color: transparent !important;
+  -webkit-text-stroke: 0 !important;
 
   text-shadow:
-    0 0 4px rgba(244,251,255,.08),
-    0 0 10px rgba(111,231,255,.12),
-    0 0 18px rgba(46,91,255,.06) !important;
+    0 1px 0 rgba(20,34,66,.24),
+    0 0 4px rgba(20,34,66,.08) !important;
 }
 
 body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid .metric .v,
 body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid .metric .v span{
   background: linear-gradient(
     180deg,
-    #F4FBFF 0%,
-    #ebfaff 42%,
-    #c8f1ff 100%
+    #ffffff 0%,
+    #fbfdff 42%,
+    #f2f8ff 100%
   ) !important;
 
   -webkit-background-clip: text !important;
   -webkit-text-fill-color: transparent !important;
+  -webkit-text-stroke: 0 !important;
 
   text-shadow:
-    0 0 6px rgba(244,251,255,.10),
-    0 0 12px rgba(111,231,255,.16),
-    0 0 22px rgba(46,91,255,.08) !important;
+    0 1px 0 rgba(20,34,66,.28),
+    0 0 5px rgba(20,34,66,.10) !important;
 }
 
 body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid .metric + .metric::before{
   background: none !important;
   box-shadow: none !important;
+  content: none !important;
 }
 
 body[data-rank="overlord"] #dashboard .rankHome .metric:not(:last-child)::after{
   background: linear-gradient(
     180deg,
     transparent 0%,
-    rgba(244,251,255,.08) 22%,
-    rgba(154,242,255,.22) 50%,
-    rgba(244,251,255,.08) 78%,
+    rgba(255,255,255,.035) 22%,
+    rgba(120,170,220,.10) 50%,
+    rgba(255,255,255,.035) 78%,
     transparent 100%
   ) !important;
 
-  opacity: .72 !important;
-  filter: blur(.2px) !important;
+  opacity: .48 !important;
+  filter: blur(.15px) !important;
 }
 
 /* =========================================================
