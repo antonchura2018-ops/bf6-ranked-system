@@ -10148,3 +10148,84 @@ body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid .metri
     0 1px 0 rgba(20,34,66,.28),
     0 0 5px rgba(20,34,66,.10) !important;
 }
+/* =========================================================
+   OVERLORD — FINAL VISIBILITY BOOST
+   вставити в самий кінець theme_A.css
+   ========================================================= */
+
+/* PLAYER ASCENSION — трохи сильніше */
+body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseHeader,
+body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseHeader span{
+  -webkit-text-stroke: 0.75px rgba(22,38,74,.66) !important;
+  text-shadow:
+    0 1px 0 rgba(22,38,74,.84),
+    0 0 2px rgba(22,38,74,.42) !important;
+}
+
+/* верхній дрібний текст — трохи чіткіше */
+body[data-rank="overlord"] #dashboard.section.active .rankHome .rankRP,
+body[data-rank="overlord"] #dashboard.section.active .rankHome .rankRP span,
+body[data-rank="overlord"] #dashboard.section.active .rankHome .rankMeta,
+body[data-rank="overlord"] #dashboard.section.active .rankHome .rankNext,
+body[data-rank="overlord"] #dashboard.section.active .rankHome .rankProgressLabel,
+body[data-rank="overlord"] #dashboard.section.active .rankHome .rankProgress__label,
+body[data-rank="overlord"] #dashboard.section.active .rankHome .rankProgress__label b{
+  -webkit-text-stroke: 0.65px rgba(22,38,74,.64) !important;
+  text-shadow:
+    0 1px 0 rgba(22,38,74,.82),
+    0 0 2px rgba(22,38,74,.38) !important;
+}
+
+/* блок метрик — трохи видиміший, але без грубого прямокутника */
+body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid{
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,.045) 0%,
+      rgba(18,34,66,.070) 48%,
+      rgba(18,34,66,.024) 100%
+    ) !important;
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.06),
+    inset 0 -1px 0 rgba(255,255,255,.035) !important;
+}
+
+/* верхня і нижня лінія всього блока — трохи чіткіше */
+body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid::before,
+body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid::after{
+  opacity: .88 !important;
+}
+
+/* вертикальні поділи між комірками — сильніше */
+body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid .metric{
+  border-left: 1px solid rgba(255,255,255,.10) !important;
+}
+
+body[data-rank="overlord"] #dashboard .rankHome .metric:not(:last-child)::after{
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(255,255,255,.08) 18%,
+    rgba(190,232,255,.24) 50%,
+    rgba(255,255,255,.08) 82%,
+    transparent 100%
+  ) !important;
+
+  opacity: .82 !important;
+}
+
+/* назви метрик — трохи чіткіше */
+body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid .metric .k{
+  text-shadow:
+    0 1px 0 rgba(20,34,66,.30),
+    0 0 4px rgba(20,34,66,.10) !important;
+}
+
+/* значення метрик — трохи чіткіше */
+body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid .metric .v,
+body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid .metric .v span{
+  text-shadow:
+    0 1px 0 rgba(20,34,66,.34),
+    0 0 5px rgba(20,34,66,.12) !important;
+}
