@@ -8771,7 +8771,7 @@ body[data-rank="overlord"] #dashboard.section.active .rankHome .rankHome__infoSt
   right: auto !important;
   margin-left: 0 !important;
   margin-right: 0 !important;
-  transform: translateX(-50%) translateY(-18px) !important;
+  transform: translateX(-50%) translateY(-40px) !important;
   z-index: 13 !important;
 }
 
@@ -8863,12 +8863,12 @@ body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseHeader span
   -webkit-background-clip: initial !important;
   -webkit-text-fill-color: #ffffff !important;
   color: #ffffff !important;
-  -webkit-text-stroke: .9px rgba(22,38,74,.76) !important;
+  -webkit-text-stroke: .9px rgba(22,38,74,.78) !important;
 
   text-shadow:
-    0 1px 0 rgba(22,38,74,.88),
-    0 0 2px rgba(22,38,74,.42),
-    0 0 10px rgba(255,255,255,.08) !important;
+    0 1px 0 rgba(22,38,74,.92),
+    0 0 2px rgba(22,38,74,.50),
+    0 0 8px rgba(255,255,255,.08) !important;
 
   letter-spacing: .05em !important;
 }
@@ -8880,9 +8880,9 @@ body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseHeader span
   background: linear-gradient(
     90deg,
     transparent 0%,
-    rgba(255,255,255,.16) 16%,
+    rgba(255,255,255,.14) 16%,
     rgba(190,232,255,.56) 50%,
-    rgba(255,255,255,.16) 84%,
+    rgba(255,255,255,.14) 84%,
     transparent 100%
   ) !important;
 
@@ -8894,23 +8894,23 @@ body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseHeader span
    ========================================================= */
 body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid{
   position: relative !important;
-  margin-top: 10px !important;
-  padding-top: 8px !important;
-  padding-bottom: 10px !important;
+  margin-top: 14px !important;
+  padding-top: 10px !important;
+  padding-bottom: 12px !important;
 
   background:
     linear-gradient(
       180deg,
-      rgba(255,255,255,.11) 0%,
-      rgba(28,46,88,.15) 52%,
-      rgba(28,46,88,.06) 100%
+      rgba(255,255,255,.13) 0%,
+      rgba(28,46,88,.18) 52%,
+      rgba(28,46,88,.08) 100%
     ) !important;
 
-  border-radius: 10px !important;
+  border-radius: 8px !important;
 
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.10),
-    inset 0 -1px 0 rgba(255,255,255,.07) !important;
+    inset 0 1px 0 rgba(255,255,255,.12),
+    inset 0 -1px 0 rgba(255,255,255,.08) !important;
 }
 
 /* верхня і нижня межа панелі */
@@ -8926,9 +8926,9 @@ body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid::after
   background: linear-gradient(
     90deg,
     transparent 0%,
-    rgba(255,255,255,.18) 12%,
-    rgba(190,232,255,.42) 50%,
-    rgba(255,255,255,.18) 88%,
+    rgba(255,255,255,.20) 12%,
+    rgba(190,232,255,.48) 50%,
+    rgba(255,255,255,.20) 88%,
     transparent 100%
   ) !important;
 
@@ -8946,7 +8946,7 @@ body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid::after
 body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid .metric{
   position: relative !important;
   background: none !important;
-  border-left: 1px solid rgba(255,255,255,.14) !important;
+  border-left: 1px solid rgba(255,255,255,.16) !important;
 }
 
 body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid .metric:first-child{
@@ -8961,7 +8961,7 @@ body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid .metri
   box-shadow: none !important;
 }
 
-/* реальні вертикальні розділювачі між комірками */
+/* реальні вертикальні розділювачі */
 body[data-rank="overlord"] #dashboard .rankHome .metric:not(:last-child)::after{
   background: linear-gradient(
     180deg,
@@ -8993,8 +8993,8 @@ body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid .metri
   -webkit-text-stroke: 0 !important;
 
   text-shadow:
-    0 1px 0 rgba(20,34,66,.44),
-    0 0 4px rgba(20,34,66,.18) !important;
+    0 1px 0 rgba(20,34,66,.52),
+    0 0 4px rgba(20,34,66,.22) !important;
 }
 
 /* значення */
@@ -9012,8 +9012,8 @@ body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid .metri
   -webkit-text-stroke: 0 !important;
 
   text-shadow:
-    0 1px 0 rgba(20,34,66,.52),
-    0 0 5px rgba(20,34,66,.20) !important;
+    0 1px 0 rgba(20,34,66,.62),
+    0 0 5px rgba(20,34,66,.24) !important;
 }
 /* =========================================================
    OVERLORD — PROGRESS TRACK FIX
