@@ -10492,3 +10492,26 @@ body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid .metri
     0 1px 0 rgba(20,34,66,.78),
     0 0 5px rgba(20,34,66,.32) !important;
 }
+/* =========================================================
+   OVERLORD — DEBUG TEST BLOCK
+   вставити в самий кінець theme_A.css
+   ========================================================= */
+
+body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid{
+  background: rgba(255, 0, 0, 0.18) !important;
+  border: 2px solid lime !important;
+}
+
+body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseHeader,
+body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseHeader span{
+  color: yellow !important;
+  -webkit-text-fill-color: yellow !important;
+}
+
+body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid .metric .k,
+body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid .metric .v,
+body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid .metric .v span{
+  color: lime !important;
+  -webkit-text-fill-color: lime !important;
+  background: none !important;
+}
