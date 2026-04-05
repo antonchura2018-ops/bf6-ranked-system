@@ -8803,14 +8803,13 @@ body[data-rank="overlord"] #dashboard.section.active .rankHome .rankName,
 body[data-rank="overlord"] #dashboard.section.active .rankHome .rankTierName{
   background: none !important;
   -webkit-background-clip: initial !important;
-  -webkit-text-fill-color: #F4FBFF !important;
-  color: #F4FBFF !important;
+  -webkit-text-fill-color: #ffffff !important;
+  color: #ffffff !important;
+  -webkit-text-stroke: 0.85px rgba(22,38,74,.62) !important;
 
   text-shadow:
-    0 0 6px rgba(244,251,255,.20),
-    0 0 14px rgba(244,251,255,.12),
-    0 0 22px rgba(111,231,255,.18),
-    0 0 36px rgba(46,91,255,.18) !important;
+    0 1px 0 rgba(22,38,74,.82),
+    0 0 2px rgba(22,38,74,.42) !important;
 
   letter-spacing: .10em !important;
 }
@@ -8821,15 +8820,21 @@ body[data-rank="overlord"] #dashboard.section.active .rankHome .rankMeta,
 body[data-rank="overlord"] #dashboard.section.active .rankHome .rankNext,
 body[data-rank="overlord"] #dashboard.section.active .rankHome .rankProgressLabel,
 body[data-rank="overlord"] #dashboard.section.active .rankHome .rankProgress__label{
-  color:#F4FBFF !important;
+  background: none !important;
+  -webkit-background-clip: initial !important;
+  -webkit-text-fill-color: #ffffff !important;
+  color: #ffffff !important;
+  -webkit-text-stroke: 0.55px rgba(22,38,74,.58) !important;
+
   text-shadow:
-    0 0 5px rgba(244,251,255,.12),
-    0 0 12px rgba(111,231,255,.14) !important;
+    0 1px 0 rgba(22,38,74,.76),
+    0 0 2px rgba(22,38,74,.34) !important;
 }
 
 body[data-rank="overlord"] #dashboard.section.active .rankHome .rankRP span,
 body[data-rank="overlord"] #dashboard.section.active .rankHome .rankProgress__label b{
-  color:#F4FBFF !important;
+  color:#ffffff !important;
+  -webkit-text-fill-color:#ffffff !important;
 }
 
 body[data-rank="overlord"] #dashboard.section.active .rankHome .rankSub::after,
@@ -8840,18 +8845,15 @@ body[data-rank="overlord"] #dashboard.section.active .rankHome .rankProgress__la
   background: linear-gradient(
     90deg,
     transparent 0%,
-    rgba(154,242,255,.20) 18%,
-    rgba(154,242,255,.88) 50%,
-    rgba(46,91,255,.18) 82%,
+    rgba(190,232,255,.10) 18%,
+    rgba(190,232,255,.42) 50%,
+    rgba(46,91,255,.08) 82%,
     transparent 100%
   ) !important;
 
-  box-shadow:
-    0 0 8px rgba(154,242,255,.18),
-    0 0 18px rgba(111,231,255,.14),
-    0 0 28px rgba(46,91,255,.08) !important;
+  box-shadow: none !important;
+  opacity: .32 !important;
 }
-
 /* =========================================================
    OVERLORD — PLAYER ASCENSION TEXT + RAILS
    ========================================================= */
