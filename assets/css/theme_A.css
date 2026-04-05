@@ -9957,3 +9957,67 @@ body[data-rank="overlord"] #dashboard.section.active .rankHome .rankProgress__la
   box-shadow: none !important;
   opacity: .82 !important;
 }
+/* =========================================================
+   OVERLORD — MAKE GREEN-ARROW TEXT SAME STYLE AS RED-ARROW TEXT
+   вставити в самий кінець theme_A.css
+   ========================================================= */
+
+/* 1) 1,850 RP + NEXT RANK + дрібний службовий текст */
+body[data-rank="overlord"] #dashboard.section.active .rankHome .rankRP,
+body[data-rank="overlord"] #dashboard.section.active .rankHome .rankRP span,
+body[data-rank="overlord"] #dashboard.section.active .rankHome .rankMeta,
+body[data-rank="overlord"] #dashboard.section.active .rankHome .rankNext,
+body[data-rank="overlord"] #dashboard.section.active .rankHome .rankProgressLabel,
+body[data-rank="overlord"] #dashboard.section.active .rankHome .rankProgress__label,
+body[data-rank="overlord"] #dashboard.section.active .rankHome .rankProgress__label b{
+  background: none !important;
+  -webkit-background-clip: initial !important;
+  -webkit-text-fill-color: #EAF4FF !important;
+  color: #EAF4FF !important;
+
+  text-shadow:
+    0 1px 0 rgba(24,42,82,.98),
+    0 0 1px rgba(24,42,82,.92),
+    0 0 4px rgba(24,42,82,.16) !important;
+}
+
+/* 2) PLAYER ASCENSION */
+body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseHeader,
+body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseHeader span{
+  background: none !important;
+  -webkit-background-clip: initial !important;
+  -webkit-text-fill-color: #EAF4FF !important;
+  color: #EAF4FF !important;
+
+  text-shadow:
+    0 1px 0 rgba(24,42,82,.98),
+    0 0 1px rgba(24,42,82,.92),
+    0 0 4px rgba(24,42,82,.16) !important;
+}
+
+/* 3) назви метрик */
+body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid .metric .k{
+  background: none !important;
+  -webkit-background-clip: initial !important;
+  -webkit-text-fill-color: #EAF4FF !important;
+  color: #EAF4FF !important;
+
+  text-shadow:
+    0 1px 0 rgba(24,42,82,.98),
+    0 0 1px rgba(24,42,82,.92),
+    0 0 4px rgba(24,42,82,.16) !important;
+}
+
+/* 4) щоб декоративні лінії не були яскравіші за сам текст */
+body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseHeader::before,
+body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseHeader::after,
+body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseHeader span::before,
+body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseHeader span::after,
+body[data-rank="overlord"] #dashboard.section.active .rankHome .rankSub::after,
+body[data-rank="overlord"] #dashboard.section.active .rankHome .rankMeta::after,
+body[data-rank="overlord"] #dashboard.section.active .rankHome .rankRP::after,
+body[data-rank="overlord"] #dashboard.section.active .rankHome .rankProgressLabel::after,
+body[data-rank="overlord"] #dashboard.section.active .rankHome .rankProgress__label::after{
+  opacity: .55 !important;
+  box-shadow: none !important;
+}
