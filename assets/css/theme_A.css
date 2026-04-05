@@ -9963,45 +9963,69 @@ body[data-rank="overlord"] #dashboard.section.active .rankHome .rankHome__infoSt
   opacity: .88;
 }
 /* =========================================================
-   OVERLORD — METRICS FRAME SOFTEN MICRO PATCH
+   OVERLORD — KILL METRICS BACKPLATE HARD PATCH
    вставити в самий кінець theme_A.css
    ========================================================= */
 
+/* повністю прибираємо будь-яку загальну підкладку під info block */
+body[data-rank="overlord"] #dashboard.section.active .rankHome .rankHome__infoStack::before{
+  content: none !important;
+  display: none !important;
+  background: none !important;
+  box-shadow: none !important;
+  filter: none !important;
+  opacity: 0 !important;
+}
+
+/* прибираємо сам прямокутний фон метрик */
 body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid{
-  background: transparent !important;
-  border-radius: 14px !important;
+  background: none !important;
+  background-color: transparent !important;
   box-shadow: none !important;
   border: 0 !important;
   outline: 0 !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
 }
 
-/* дуже слабкі внутрішні межі комірок */
+/* на випадок якщо фон тягнеться псевдоелементами */
+body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid::before,
+body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid::after{
+  content: none !important;
+  display: none !important;
+  background: none !important;
+  box-shadow: none !important;
+}
+
+/* залишаємо вертикальні розділювачі, але дуже акуратно */
 body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid .metric{
-  border-left: 1px solid rgba(26,61,115,.07) !important;
+  border-left: 1px solid rgba(26,61,115,.08) !important;
+  background: transparent !important;
+  box-shadow: none !important;
 }
 
 body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid .metric:first-child{
   border-left: 0 !important;
 }
 
-/* залишаємо розділення між комірками, але робимо його тоншим і менш сяючим */
+/* тонка внутрішня світлова риска між комірками */
 body[data-rank="overlord"] #dashboard.section.active .rankHome .metric:not(:last-child)::after{
   background: linear-gradient(
     180deg,
     transparent 0%,
-    rgba(26,61,115,.03) 22%,
-    rgba(190,232,255,.10) 50%,
-    rgba(26,61,115,.03) 78%,
+    rgba(26,61,115,.04) 20%,
+    rgba(190,232,255,.11) 50%,
+    rgba(26,61,115,.04) 80%,
     transparent 100%
   ) !important;
-
-  opacity: .34 !important;
+  opacity: .30 !important;
   filter: none !important;
 }
 
-/* якщо десь підтягується ще один декоративний розділювач */
+/* прибрати все зайве, якщо ще є додатковий декоративний поділ */
 body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid .metric + .metric::before{
+  content: none !important;
+  display: none !important;
   background: none !important;
   box-shadow: none !important;
-  opacity: 0 !important;
 }
