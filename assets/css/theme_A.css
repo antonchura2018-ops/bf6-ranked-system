@@ -8805,13 +8805,14 @@ body[data-rank="overlord"] #dashboard.section.active .rankHome .rankTierName{
   -webkit-background-clip: initial !important;
   -webkit-text-fill-color: #ffffff !important;
   color: #ffffff !important;
-  -webkit-text-stroke: 1px rgba(22,38,74,.68) !important;
+  -webkit-text-stroke: 1.15px rgba(22,38,74,.78) !important;
 
   text-shadow:
-    0 1px 0 rgba(22,38,74,.82),
-    0 0 2px rgba(22,38,74,.42) !important;
+    0 1px 0 rgba(22,38,74,.96),
+    0 0 2px rgba(22,38,74,.58),
+    0 0 10px rgba(255,255,255,.08) !important;
 
-  letter-spacing: .08em !important;
+  letter-spacing: .06em !important;
 }
 
 body[data-rank="overlord"] #dashboard.section.active .rankHome .rankSub,
@@ -8824,11 +8825,12 @@ body[data-rank="overlord"] #dashboard.section.active .rankHome .rankProgress__la
   -webkit-background-clip: initial !important;
   -webkit-text-fill-color: #ffffff !important;
   color: #ffffff !important;
-  -webkit-text-stroke: .55px rgba(22,38,74,.60) !important;
+  -webkit-text-stroke: .72px rgba(22,38,74,.72) !important;
 
   text-shadow:
-    0 1px 0 rgba(22,38,74,.72),
-    0 0 2px rgba(22,38,74,.30) !important;
+    0 1px 0 rgba(22,38,74,.92),
+    0 0 2px rgba(22,38,74,.46),
+    0 0 8px rgba(255,255,255,.05) !important;
 }
 
 body[data-rank="overlord"] #dashboard.section.active .rankHome .rankRP span,
@@ -8845,9 +8847,9 @@ body[data-rank="overlord"] #dashboard.section.active .rankHome .rankProgress__la
   background: linear-gradient(
     90deg,
     transparent 0%,
-    rgba(190,232,255,.08) 18%,
+    rgba(190,232,255,.10) 18%,
     rgba(190,232,255,.34) 50%,
-    rgba(46,91,255,.06) 82%,
+    rgba(46,91,255,.08) 82%,
     transparent 100%
   ) !important;
 
@@ -8866,8 +8868,8 @@ body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseHeader span
   -webkit-text-stroke: .95px rgba(22,38,74,.80) !important;
 
   text-shadow:
-    0 1px 0 rgba(22,38,74,.94),
-    0 0 2px rgba(22,38,74,.54),
+    0 1px 0 rgba(22,38,74,.96),
+    0 0 2px rgba(22,38,74,.56),
     0 0 10px rgba(255,255,255,.10) !important;
 
   letter-spacing: .05em !important;
@@ -8894,16 +8896,16 @@ body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseHeader span
    ========================================================= */
 body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid{
   position: relative !important;
-  margin-top: 2px !important;
-  padding-top: 8px !important;
+  margin-top: 4px !important;
+  padding-top: 10px !important;
   padding-bottom: 14px !important;
 
   background:
     linear-gradient(
       180deg,
-      rgba(255,255,255,.085) 0%,
-      rgba(28,46,88,.120) 52%,
-      rgba(28,46,88,.050) 100%
+      rgba(255,255,255,.10) 0%,
+      rgba(28,46,88,.13) 52%,
+      rgba(28,46,88,.055) 100%
     ) !important;
 
   border-radius: 8px !important;
@@ -8927,12 +8929,12 @@ body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid::befor
     90deg,
     transparent 0%,
     rgba(255,255,255,.08) 12%,
-    rgba(190,232,255,.20) 50%,
+    rgba(190,232,255,.22) 50%,
     rgba(255,255,255,.08) 88%,
     transparent 100%
   ) !important;
 
-  opacity: .42 !important;
+  opacity: .48 !important;
 }
 
 /* нижня лінія — сильніша */
@@ -8948,13 +8950,13 @@ body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid::after
   background: linear-gradient(
     90deg,
     transparent 0%,
-    rgba(255,255,255,.18) 12%,
-    rgba(190,232,255,.42) 50%,
-    rgba(255,255,255,.18) 88%,
+    rgba(255,255,255,.20) 12%,
+    rgba(190,232,255,.44) 50%,
+    rgba(255,255,255,.20) 88%,
     transparent 100%
   ) !important;
 
-  opacity: .96 !important;
+  opacity: .98 !important;
 }
 
 body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid .metric{
@@ -8967,7 +8969,6 @@ body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid .metri
   border-left: 0 !important;
 }
 
-/* прибрати старий альтернативний divider */
 body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid .metric + .metric::before{
   content: none !important;
   display: none !important;
