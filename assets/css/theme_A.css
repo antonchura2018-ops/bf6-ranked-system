@@ -8863,12 +8863,12 @@ body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseHeader span
   -webkit-background-clip: initial !important;
   -webkit-text-fill-color: #ffffff !important;
   color: #ffffff !important;
-  -webkit-text-stroke: .9px rgba(22,38,74,.78) !important;
+  -webkit-text-stroke: 1px rgba(22,38,74,.84) !important;
 
   text-shadow:
-    0 1px 0 rgba(22,38,74,.92),
-    0 0 2px rgba(22,38,74,.50),
-    0 0 8px rgba(255,255,255,.08) !important;
+    0 1px 0 rgba(22,38,74,.96),
+    0 0 2px rgba(22,38,74,.62),
+    0 0 10px rgba(255,255,255,.10) !important;
 
   letter-spacing: .05em !important;
 }
@@ -8894,9 +8894,9 @@ body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseHeader span
    ========================================================= */
 body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid{
   position: relative !important;
-  margin-top: 14px !important;
-  padding-top: 10px !important;
-  padding-bottom: 12px !important;
+  margin-top: 2px !important;
+  padding-top: 9px !important;
+  padding-bottom: 13px !important;
 
   background:
     linear-gradient(
@@ -8922,25 +8922,32 @@ body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid::after
   right: 0 !important;
   height: 1px !important;
   pointer-events: none !important;
-
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    rgba(255,255,255,.20) 12%,
-    rgba(190,232,255,.48) 50%,
-    rgba(255,255,255,.20) 88%,
-    transparent 100%
-  ) !important;
-
-  opacity: 1 !important;
 }
 
 body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid::before{
   top: 0 !important;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255,255,255,.08) 12%,
+    rgba(190,232,255,.20) 50%,
+    rgba(255,255,255,.08) 88%,
+    transparent 100%
+  ) !important;
+  opacity: .42 !important;
 }
 
 body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid::after{
   bottom: 0 !important;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255,255,255,.18) 12%,
+    rgba(190,232,255,.44) 50%,
+    rgba(255,255,255,.18) 88%,
+    transparent 100%
+  ) !important;
+  opacity: .95 !important;
 }
 
 body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid .metric{
@@ -8966,13 +8973,13 @@ body[data-rank="overlord"] #dashboard .rankHome .metric:not(:last-child)::after{
   background: linear-gradient(
     180deg,
     transparent 0%,
-    rgba(255,255,255,.16) 18%,
-    rgba(190,232,255,.34) 50%,
-    rgba(255,255,255,.16) 82%,
+    rgba(255,255,255,.18) 18%,
+    rgba(190,232,255,.38) 50%,
+    rgba(255,255,255,.18) 82%,
     transparent 100%
   ) !important;
 
-  opacity: 1 !important;
+  opacity: .88 !important;
   filter: blur(.08px) !important;
 }
 
@@ -8993,8 +9000,8 @@ body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid .metri
   -webkit-text-stroke: 0 !important;
 
   text-shadow:
-    0 1px 0 rgba(20,34,66,.52),
-    0 0 4px rgba(20,34,66,.22) !important;
+    0 1px 0 rgba(20,34,66,.66),
+    0 0 4px rgba(20,34,66,.28) !important;
 }
 
 /* значення */
@@ -9012,8 +9019,8 @@ body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid .metri
   -webkit-text-stroke: 0 !important;
 
   text-shadow:
-    0 1px 0 rgba(20,34,66,.62),
-    0 0 5px rgba(20,34,66,.24) !important;
+    0 1px 0 rgba(20,34,66,.78),
+    0 0 5px rgba(20,34,66,.32) !important;
 }
 /* =========================================================
    OVERLORD — PROGRESS TRACK FIX
