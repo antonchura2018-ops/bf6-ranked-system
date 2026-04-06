@@ -10694,7 +10694,7 @@ body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid .metri
 body[data-rank="overlord"] #dashboard.section.active .rankHome .rankHome__infoStack{
   position: relative !important;
   left: 50% !important;
-  transform: translateX(-50%) translateY(-34px) !important;
+  transform: translateX(-50%) translateY(-52px) !important;
   z-index: 40 !important;
 }
 
@@ -10757,9 +10757,9 @@ body[data-rank="overlord"] #dashboard.section.active .rankHome .rankProgress__la
 /* ---------- player ascension ---------- */
 body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseHeader,
 body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseHeader span{
-  font-size: clamp(24px, 1.9vw, 34px) !important;
+  font-size: clamp(21px, 1.65vw, 30px) !important;
   line-height: 1 !important;
-  letter-spacing: .04em !important;
+  letter-spacing: .03em !important;
   white-space: nowrap !important;
 
   -webkit-text-fill-color: #ffffff !important;
@@ -10791,9 +10791,9 @@ body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseHeader span
 /* ---------- metrics panel ---------- */
 body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid{
   position: relative !important;
-  margin-top: 6px !important;
-  padding-top: 10px !important;
-  padding-bottom: 12px !important;
+  margin-top: 2px !important;
+  padding-top: 9px !important;
+  padding-bottom: 10px !important;
 
   background: linear-gradient(
     180deg,
