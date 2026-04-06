@@ -10895,3 +10895,192 @@ body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid .metri
     0 1px 0 rgba(20,34,66,.92),
     0 0 5px rgba(20,34,66,.40) !important;
 }
+/* =========================================================
+   OVERLORD — FINAL TYPO + PANEL BOOST
+   вставити в самий кінець theme_A.css
+   ========================================================= */
+
+/* ---------- top text ---------- */
+body[data-rank="overlord"] #dashboard.section.active .rankHome .rankTitle,
+body[data-rank="overlord"] #dashboard.section.active .rankHome .rankName,
+body[data-rank="overlord"] #dashboard.section.active .rankHome .rankTierName{
+  font-size: clamp(52px, 4.4vw, 74px) !important;
+  font-weight: 900 !important;
+  letter-spacing: .05em !important;
+
+  -webkit-text-fill-color: #ffffff !important;
+  color: #ffffff !important;
+  -webkit-text-stroke: 1.35px rgba(24,42,82,.90) !important;
+
+  text-shadow:
+    0 1px 0 rgba(24,42,82,1),
+    0 0 2px rgba(24,42,82,.74),
+    0 0 8px rgba(255,255,255,.08) !important;
+}
+
+body[data-rank="overlord"] #dashboard.section.active .rankHome .rankRP,
+body[data-rank="overlord"] #dashboard.section.active .rankHome .rankRP span{
+  font-size: clamp(24px, 1.9vw, 34px) !important;
+  font-weight: 900 !important;
+
+  -webkit-text-fill-color: #ffffff !important;
+  color: #ffffff !important;
+  -webkit-text-stroke: .95px rgba(24,42,82,.86) !important;
+
+  text-shadow:
+    0 1px 0 rgba(24,42,82,.98),
+    0 0 2px rgba(24,42,82,.64) !important;
+}
+
+body[data-rank="overlord"] #dashboard.section.active .rankHome .rankMeta,
+body[data-rank="overlord"] #dashboard.section.active .rankHome .rankNext,
+body[data-rank="overlord"] #dashboard.section.active .rankHome .rankProgressLabel,
+body[data-rank="overlord"] #dashboard.section.active .rankHome .rankProgress__label,
+body[data-rank="overlord"] #dashboard.section.active .rankHome .rankProgress__label b{
+  font-size: clamp(14px, 1.02vw, 18px) !important;
+  font-weight: 800 !important;
+  letter-spacing: .08em !important;
+
+  -webkit-text-fill-color: #ffffff !important;
+  color: #ffffff !important;
+  -webkit-text-stroke: .75px rgba(24,42,82,.82) !important;
+
+  text-shadow:
+    0 1px 0 rgba(24,42,82,.96),
+    0 0 2px rgba(24,42,82,.58) !important;
+}
+
+/* ---------- player ascension ---------- */
+body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseHeader,
+body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseHeader span{
+  font-size: clamp(28px, 2.2vw, 40px) !important;
+  font-weight: 900 !important;
+  letter-spacing: .045em !important;
+
+  -webkit-text-fill-color: #ffffff !important;
+  color: #ffffff !important;
+  -webkit-text-stroke: 1.05px rgba(24,42,82,.88) !important;
+
+  text-shadow:
+    0 1px 0 rgba(24,42,82,1),
+    0 0 2px rgba(24,42,82,.72),
+    0 0 10px rgba(255,255,255,.10) !important;
+}
+
+body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseHeader::before,
+body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseHeader::after,
+body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseHeader span::before,
+body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseHeader span::after{
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255,255,255,.18) 16%,
+    rgba(190,232,255,.66) 50%,
+    rgba(255,255,255,.18) 84%,
+    transparent 100%
+  ) !important;
+  opacity: 1 !important;
+  box-shadow: none !important;
+}
+
+/* ---------- metrics panel ---------- */
+body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid{
+  margin-top: 8px !important;
+  padding-top: 14px !important;
+  padding-bottom: 18px !important;
+
+  background: linear-gradient(
+    180deg,
+    rgba(255,255,255,.16) 0%,
+    rgba(34,54,98,.22) 52%,
+    rgba(34,54,98,.10) 100%
+  ) !important;
+
+  border-radius: 8px !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.14),
+    inset 0 -1px 0 rgba(255,255,255,.10) !important;
+}
+
+body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid::before{
+  opacity: .82 !important;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255,255,255,.14) 12%,
+    rgba(190,232,255,.34) 50%,
+    rgba(255,255,255,.14) 88%,
+    transparent 100%
+  ) !important;
+}
+
+body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid::after{
+  opacity: 1 !important;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255,255,255,.28) 12%,
+    rgba(190,232,255,.60) 50%,
+    rgba(255,255,255,.28) 88%,
+    transparent 100%
+  ) !important;
+}
+
+body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid .metric{
+  border-left: 1px solid rgba(255,255,255,.18) !important;
+}
+
+body[data-rank="overlord"] #dashboard .rankHome .metric:not(:last-child)::after{
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(255,255,255,.24) 18%,
+    rgba(190,232,255,.52) 50%,
+    rgba(255,255,255,.24) 82%,
+    transparent 100%
+  ) !important;
+  opacity: 1 !important;
+  filter: blur(.06px) !important;
+}
+
+/* ---------- metric labels ---------- */
+body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid .metric .k{
+  font-size: clamp(16px, 1.15vw, 20px) !important;
+  font-weight: 900 !important;
+  letter-spacing: .12em !important;
+
+  background: linear-gradient(
+    180deg,
+    #ffffff 0%,
+    #fbfdff 72%,
+    #f4f8ff 100%
+  ) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  -webkit-text-stroke: 0 !important;
+
+  text-shadow:
+    0 1px 0 rgba(20,34,66,.84),
+    0 0 4px rgba(20,34,66,.38) !important;
+}
+
+/* ---------- metric values ---------- */
+body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid .metric .v,
+body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid .metric .v span{
+  font-size: clamp(28px, 2.2vw, 42px) !important;
+  font-weight: 900 !important;
+
+  background: linear-gradient(
+    180deg,
+    #ffffff 0%,
+    #ffffff 42%,
+    #f5f9ff 100%
+  ) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  -webkit-text-stroke: 0 !important;
+
+  text-shadow:
+    0 1px 0 rgba(20,34,66,.96),
+    0 0 5px rgba(20,34,66,.42) !important;
+}
