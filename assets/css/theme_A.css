@@ -10986,7 +10986,7 @@ body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid .metri
   filter: none !important;
 }
 /* =========================================================
-   OVERLORD — SMALL LABELS MATCH REFERENCE
+   OVERLORD — SMALL TEXT SOLID WHITE FIX
    вставити в самий кінець theme_A.css
    ========================================================= */
 
@@ -10999,18 +10999,21 @@ body[data-rank="overlord"] #dashboard.section.active .rankHome .rankProgress__la
   font-size: clamp(13px, .98vw, 17px) !important;
   font-weight: 900 !important;
   line-height: 1 !important;
-  letter-spacing: .06em !important;
+  letter-spacing: .05em !important;
   white-space: nowrap !important;
 
   background: none !important;
   -webkit-background-clip: initial !important;
   -webkit-text-fill-color: #ffffff !important;
   color: #ffffff !important;
-  -webkit-text-stroke: .9px rgba(24,42,82,.92) !important;
+  -webkit-text-stroke: 0 !important;
 
   text-shadow:
-    0 1px 0 rgba(24,42,82,1),
-    0 0 2px rgba(24,42,82,.74) !important;
+    0 1px 0 rgba(24,42,82,.98),
+    0 0 2px rgba(24,42,82,.70),
+    1px 0 0 rgba(24,42,82,.42),
+    -1px 0 0 rgba(24,42,82,.42),
+    0 -1px 0 rgba(24,42,82,.32) !important;
 
   opacity: 1 !important;
 }
@@ -11020,7 +11023,7 @@ body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid .metri
   font-size: clamp(17px, 1.18vw, 21px) !important;
   font-weight: 900 !important;
   line-height: 1 !important;
-  letter-spacing: .07em !important;
+  letter-spacing: .06em !important;
   text-transform: uppercase !important;
   white-space: nowrap !important;
 
@@ -11028,16 +11031,19 @@ body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid .metri
   -webkit-background-clip: initial !important;
   -webkit-text-fill-color: #ffffff !important;
   color: #ffffff !important;
-  -webkit-text-stroke: .55px rgba(24,42,82,.82) !important;
+  -webkit-text-stroke: 0 !important;
 
   text-shadow:
     0 1px 0 rgba(20,34,66,.98),
-    0 0 3px rgba(20,34,66,.46) !important;
+    0 0 2px rgba(20,34,66,.62),
+    1px 0 0 rgba(20,34,66,.36),
+    -1px 0 0 rgba(20,34,66,.36),
+    0 -1px 0 rgba(20,34,66,.26) !important;
 
   opacity: 1 !important;
 }
 
-/* трохи ближче підписи до цифр */
+/* щоб підписи не були занадто далеко від цифр */
 body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid .metric{
-  gap: 6px !important;
+  gap: 5px !important;
 }
