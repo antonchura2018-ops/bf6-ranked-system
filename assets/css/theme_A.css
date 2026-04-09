@@ -11332,3 +11332,75 @@ body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid .metri
     font-size: clamp(20px, 1.55vw, 28px) !important;
   }
 }
+/* =========================================================
+   OVERLORD — ZOOM SAFETY PATCH
+   only fixes clipping on 75% / 80% / 90%
+   do not change visual style
+   ========================================================= */
+
+body[data-rank="overlord"] #dashboard.section.active{
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+}
+
+body[data-rank="overlord"] #dashboard .rankHome{
+  min-height: 100dvh !important;
+  height: auto !important;
+  overflow: visible !important;
+}
+
+body[data-rank="overlord"] #dashboard .rankHome__center{
+  min-height: 100dvh !important;
+  height: auto !important;
+  overflow: visible !important;
+  padding-bottom: clamp(140px, 14vh, 220px) !important;
+}
+
+body[data-rank="overlord"] #dashboard .rankHome__infoStack{
+  position: relative !important;
+  left: 50% !important;
+  bottom: auto !important;
+  top: auto !important;
+  transform: translateX(-50%) translateY(-40px) !important;
+  margin-top: clamp(620px, 63vh, 760px) !important;
+  margin-bottom: clamp(26px, 4vh, 56px) !important;
+}
+
+body[data-rank="overlord"] #dashboard .rankHome__infoStack > *{
+  flex-shrink: 0 !important;
+}
+
+body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid{
+  align-items: stretch !important;
+}
+
+body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid .metric{
+  min-width: 0 !important;
+  overflow: visible !important;
+}
+
+body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid .metric .k,
+body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid .metric .v,
+body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid .metric .v span{
+  overflow: visible !important;
+  white-space: nowrap !important;
+}
+
+/* zoom / smaller-height safety */
+@media (max-height: 980px){
+  body[data-rank="overlord"] #dashboard .rankHome__infoStack{
+    margin-top: clamp(560px, 62vh, 700px) !important;
+  }
+}
+
+@media (max-height: 860px){
+  body[data-rank="overlord"] #dashboard .rankHome__infoStack{
+    margin-top: clamp(500px, 60vh, 640px) !important;
+  }
+}
+
+@media (max-height: 760px){
+  body[data-rank="overlord"] #dashboard .rankHome__infoStack{
+    margin-top: clamp(450px, 58vh, 590px) !important;
+  }
+}
