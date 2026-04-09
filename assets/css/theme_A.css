@@ -11418,37 +11418,35 @@ body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid .metri
   }
 }
 /* =========================================================
-   GLOBAL — REMOVE BACKGROUND DARKENING ON ALL RANKS
+   ARCHON — REMOVE BACKGROUND DARKENING
    вставити в самий кінець theme_A.css
    ========================================================= */
 
-/* kill full-screen vignette */
-.rankHome__vignette{
-  display: none !important;
-  opacity: 0 !important;
-  background: none !important;
-}
-
-/* kill possible page overlays */
-body::before,
-body::after,
-.rankHome::before,
-.rankHome::after,
-.rankHome__center::before,
-.rankHome__center::after{
-  content: none !important;
-  display: none !important;
-  background: none !important;
-  box-shadow: none !important;
-  filter: none !important;
-}
-
-/* kill rank background darkening layer */
-#rankBgLayer::after{
+/* прибираємо затемнення самого background layer */
+body[data-rank="archon"] #rankBgLayer::after{
   content: none !important;
   display: none !important;
   background: none !important;
   box-shadow: none !important;
   filter: none !important;
   opacity: 0 !important;
+}
+
+/* прибираємо глобальний vignette саме для 6 рангу */
+body[data-rank="archon"] .rankHome__vignette{
+  display: none !important;
+  opacity: 0 !important;
+  background: none !important;
+}
+
+/* прибираємо можливий додатковий темний overlay у hero */
+body[data-rank="archon"] .rankHome::before,
+body[data-rank="archon"] .rankHome::after,
+body[data-rank="archon"] .rankHome__center::before,
+body[data-rank="archon"] .rankHome__center::after{
+  content: none !important;
+  display: none !important;
+  background: none !important;
+  box-shadow: none !important;
+  filter: none !important;
 }
