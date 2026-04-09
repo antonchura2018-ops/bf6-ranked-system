@@ -11333,148 +11333,87 @@ body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid .metri
   }
 }
 /* =========================================================
-   OVERLORD — LOWER INFO ZOOM SAFE PATCH
-   only for smaller viewport heights / browser zoom
+   OVERLORD — FINAL LOWER INFO ZOOM FIX
+   fixes clipping at 75% / 80% / 90%
    ========================================================= */
 
+/* базово трохи піднімаємо весь нижній стек */
+body[data-rank="overlord"] #dashboard.section.active .rankHome .rankHome__infoStack{
+  bottom: clamp(118px, 13vh, 190px) !important;
+  transform: translateX(-50%) translateY(-22px) !important;
+}
+
+/* трохи компактніше сам блок метрик, без зміни стилю */
+body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid{
+  margin-top: 6px !important;
+  padding: 4px 0 6px !important;
+}
+
+body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid .metric{
+  gap: 6px !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+/* 75% і схожі випадки */
 @media (max-height: 980px){
   body[data-rank="overlord"] #dashboard.section.active .rankHome .rankHome__infoStack{
-    transform: translateX(-50%) translateY(-78px) !important;
-  }
-}
-
-@media (max-height: 900px){
-  body[data-rank="overlord"] #dashboard.section.active .rankHome .rankHome__infoStack{
-    transform: translateX(-50%) translateY(-112px) !important;
-  }
-
-  body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid{
-    margin-top: 4px !important;
-  }
-}
-
-@media (max-height: 820px){
-  body[data-rank="overlord"] #dashboard.section.active .rankHome .rankHome__infoStack{
-    transform: translateX(-50%) translateY(-138px) !important;
-  }
-
-  body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseHeader,
-  body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseHeader span{
-    margin-top: 6px !important;
-  }
-
-  body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid{
-    margin-top: 2px !important;
-  }
-}
-
-/* extra clipping safety for overlord only */
-body[data-rank="overlord"] #dashboard.section.active{
-  overflow: hidden !important;
-}
-
-body[data-rank="overlord"] #dashboard.section.active .rankHome{
-  overflow: visible !important;
-}
-
-body[data-rank="overlord"] #dashboard.section.active .rankHome__center{
-  overflow: visible !important;
-  min-height: 100dvh !important;
-}
-/* =========================================================
-   OVERLORD — REAL ZOOM FIX
-   fixes lower info clipping at 75% / 80% / 90%
-   without changing the visual style
-   ========================================================= */
-
-@media (max-height: 980px){
-  body[data-rank="overlord"]{
-    --ph-emblemSize: clamp(620px, 37vw, 760px);
-    --ph-emblemTop: clamp(220px, 31vh, 360px);
-    --ph-infoBottom: clamp(118px, 14vh, 190px);
-
-    --ph-titleSize: clamp(24px, 2.1vw, 34px);
-    --ph-rpSize: clamp(10px, .82vw, 14px);
-    --ph-nextSize: clamp(9px, .64vw, 11px);
-    --ph-ascSize: clamp(14px, .92vw, 18px);
-
-    --ph-progressW: min(500px, 54vw);
-    --ph-pulseW: min(920px, 84vw);
+    bottom: clamp(138px, 15vh, 220px) !important;
+    transform: translateX(-50%) translateY(-16px) !important;
   }
 
   body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid .metric .k{
-    font-size: clamp(11px, .72vw, 14px) !important;
+    font-size: clamp(13px, .96vw, 17px) !important;
   }
 
-  body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid .metric .v{
-    font-size: clamp(20px, 1.18vw, 28px) !important;
+  body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid .metric .v,
+  body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid .metric .v span{
+    font-size: clamp(22px, 1.35vw, 30px) !important;
   }
 }
 
+/* 80–90% / нижча висота */
 @media (max-height: 900px){
-  body[data-rank="overlord"]{
-    --ph-emblemSize: clamp(560px, 34vw, 700px);
-    --ph-emblemTop: clamp(205px, 29vh, 320px);
-    --ph-infoBottom: clamp(132px, 16vh, 210px);
-
-    --ph-titleSize: clamp(22px, 1.95vw, 30px);
-    --ph-rpSize: clamp(9px, .74vw, 12px);
-    --ph-nextSize: clamp(8px, .58vw, 10px);
-    --ph-ascSize: clamp(13px, .84vw, 17px);
-
-    --ph-progressW: min(470px, 52vw);
-    --ph-pulseW: min(860px, 82vw);
-  }
-
-  body[data-rank="overlord"] #dashboard.section.active .rankHome .rankRP{
-    margin-top: 2px !important;
+  body[data-rank="overlord"] #dashboard.section.active .rankHome .rankHome__infoStack{
+    bottom: clamp(158px, 18vh, 250px) !important;
+    transform: translateX(-50%) translateY(-10px) !important;
   }
 
   body[data-rank="overlord"] #dashboard.section.active .rankHome .rankProgress{
-    margin-top: 4px !important;
+    margin-top: 8px !important;
   }
 
-  body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseHeader,
-  body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseHeader span{
-    margin-top: 5px !important;
+  body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseHeader{
+    margin-top: 10px !important;
   }
 
   body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid{
     margin-top: 2px !important;
-    padding: 6px 0 8px !important;
   }
 
   body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid .metric .k{
-    font-size: clamp(10px, .66vw, 12px) !important;
-    margin-bottom: 2px !important;
+    font-size: clamp(12px, .88vw, 15px) !important;
   }
 
-  body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid .metric .v{
-    font-size: clamp(18px, 1.02vw, 24px) !important;
+  body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid .metric .v,
+  body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid .metric .v span{
+    font-size: clamp(20px, 1.18vw, 26px) !important;
   }
 }
 
+/* дуже низькі вікна */
 @media (max-height: 820px){
-  body[data-rank="overlord"]{
-    --ph-emblemSize: clamp(500px, 30vw, 620px);
-    --ph-emblemTop: clamp(190px, 27vh, 290px);
-    --ph-infoBottom: clamp(145px, 18vh, 220px);
-
-    --ph-titleSize: clamp(20px, 1.72vw, 27px);
-    --ph-rpSize: clamp(8px, .66vw, 11px);
-    --ph-nextSize: clamp(8px, .54vw, 9px);
-    --ph-ascSize: clamp(12px, .74vw, 15px);
-
-    --ph-progressW: min(430px, 50vw);
-    --ph-pulseW: min(800px, 80vw);
+  body[data-rank="overlord"] #dashboard.section.active .rankHome .rankHome__infoStack{
+    bottom: clamp(182px, 21vh, 280px) !important;
+    transform: translateX(-50%) translateY(-4px) !important;
   }
 
   body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid .metric .k{
-    font-size: clamp(8px, .56vw, 10px) !important;
-    margin-bottom: 1px !important;
+    font-size: clamp(11px, .78vw, 13px) !important;
   }
 
-  body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid .metric .v{
-    font-size: clamp(16px, .92vw, 21px) !important;
+  body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid .metric .v,
+  body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid .metric .v span{
+    font-size: clamp(18px, 1.05vw, 23px) !important;
   }
 }
