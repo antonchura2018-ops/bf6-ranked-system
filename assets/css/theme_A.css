@@ -10986,7 +10986,7 @@ body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid .metri
   filter: none !important;
 }
 /* =========================================================
-   OVERLORD — SMALL TEXT READABILITY BOOST
+   OVERLORD — SMALL LABELS MATCH REFERENCE
    вставити в самий кінець theme_A.css
    ========================================================= */
 
@@ -10996,44 +10996,48 @@ body[data-rank="overlord"] #dashboard.section.active .rankHome .rankNext,
 body[data-rank="overlord"] #dashboard.section.active .rankHome .rankProgressLabel,
 body[data-rank="overlord"] #dashboard.section.active .rankHome .rankProgress__label,
 body[data-rank="overlord"] #dashboard.section.active .rankHome .rankProgress__label b{
-  font-size: clamp(12px, .92vw, 16px) !important;
+  font-size: clamp(13px, .98vw, 17px) !important;
   font-weight: 900 !important;
-  letter-spacing: .08em !important;
+  line-height: 1 !important;
+  letter-spacing: .06em !important;
+  white-space: nowrap !important;
 
   background: none !important;
   -webkit-background-clip: initial !important;
   -webkit-text-fill-color: #ffffff !important;
   color: #ffffff !important;
-  -webkit-text-stroke: .8px rgba(24,42,82,.88) !important;
+  -webkit-text-stroke: .9px rgba(24,42,82,.92) !important;
 
   text-shadow:
     0 1px 0 rgba(24,42,82,1),
-    0 0 2px rgba(24,42,82,.70),
-    0 0 6px rgba(255,255,255,.04) !important;
+    0 0 2px rgba(24,42,82,.74) !important;
 
   opacity: 1 !important;
 }
 
-/* назви метрик */
+/* WIN RATE / TOTAL MATCHES / KDA / AVG KILLS / MVP */
 body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid .metric .k{
-  font-size: clamp(16px, 1.12vw, 20px) !important;
+  font-size: clamp(17px, 1.18vw, 21px) !important;
   font-weight: 900 !important;
-  letter-spacing: .09em !important;
+  line-height: 1 !important;
+  letter-spacing: .07em !important;
+  text-transform: uppercase !important;
+  white-space: nowrap !important;
 
   background: none !important;
   -webkit-background-clip: initial !important;
   -webkit-text-fill-color: #ffffff !important;
   color: #ffffff !important;
-  -webkit-text-stroke: .45px rgba(24,42,82,.72) !important;
+  -webkit-text-stroke: .55px rgba(24,42,82,.82) !important;
 
   text-shadow:
-    0 1px 0 rgba(20,34,66,.96),
-    0 0 3px rgba(20,34,66,.40) !important;
+    0 1px 0 rgba(20,34,66,.98),
+    0 0 3px rgba(20,34,66,.46) !important;
 
   opacity: 1 !important;
 }
 
-/* трохи сильніше центруємо видимість метрик */
+/* трохи ближче підписи до цифр */
 body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid .metric{
-  gap: 8px !important;
+  gap: 6px !important;
 }
