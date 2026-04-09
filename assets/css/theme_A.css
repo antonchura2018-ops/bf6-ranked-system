@@ -11417,3 +11417,38 @@ body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid .metri
     font-size: clamp(18px, 1.05vw, 23px) !important;
   }
 }
+/* =========================================================
+   GLOBAL — REMOVE BACKGROUND DARKENING ON ALL RANKS
+   вставити в самий кінець theme_A.css
+   ========================================================= */
+
+/* kill full-screen vignette */
+.rankHome__vignette{
+  display: none !important;
+  opacity: 0 !important;
+  background: none !important;
+}
+
+/* kill possible page overlays */
+body::before,
+body::after,
+.rankHome::before,
+.rankHome::after,
+.rankHome__center::before,
+.rankHome__center::after{
+  content: none !important;
+  display: none !important;
+  background: none !important;
+  box-shadow: none !important;
+  filter: none !important;
+}
+
+/* kill rank background darkening layer */
+#rankBgLayer::after{
+  content: none !important;
+  display: none !important;
+  background: none !important;
+  box-shadow: none !important;
+  filter: none !important;
+  opacity: 0 !important;
+}
