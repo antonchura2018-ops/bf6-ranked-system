@@ -10921,3 +10921,67 @@ body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid .metri
 body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid{
   margin-top: -10px !important;
 }
+/* =========================================================
+   OVERLORD — METRICS TEXT MATCH REFERENCE
+   вставити в самий кінець theme_A.css
+   ========================================================= */
+
+/* підписи метрик: WIN RATE / TOTAL MATCHES / KDA / AVG KILLS / MVP */
+body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid .metric .k{
+  font-size: clamp(15px, 1.08vw, 18px) !important;
+  font-weight: 900 !important;
+  line-height: 1 !important;
+  letter-spacing: .08em !important;
+  text-transform: uppercase !important;
+  white-space: nowrap !important;
+
+  background: none !important;
+  -webkit-background-clip: initial !important;
+  -webkit-text-fill-color: #ffffff !important;
+  color: #ffffff !important;
+  -webkit-text-stroke: .35px rgba(28,46,88,.58) !important;
+
+  text-shadow:
+    0 1px 0 rgba(22,38,74,.92),
+    0 0 2px rgba(22,38,74,.42) !important;
+
+  opacity: 1 !important;
+}
+
+/* значення метрик: 50% / 6 / 0.0 / 0% */
+body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid .metric .v,
+body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid .metric .v span{
+  font-size: clamp(28px, 2.15vw, 42px) !important;
+  font-weight: 900 !important;
+  line-height: .95 !important;
+  letter-spacing: .01em !important;
+  white-space: nowrap !important;
+
+  background: none !important;
+  -webkit-background-clip: initial !important;
+  -webkit-text-fill-color: #ffffff !important;
+  color: #ffffff !important;
+  -webkit-text-stroke: .55px rgba(24,42,82,.66) !important;
+
+  text-shadow:
+    0 1px 0 rgba(20,34,66,.98),
+    0 0 3px rgba(20,34,66,.34) !important;
+
+  opacity: 1 !important;
+}
+
+/* трохи чистіше вирівняти вміст комірок */
+body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid .metric{
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 10px !important;
+}
+
+/* щоб старі м’які glow не перебивали */
+body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid .metric .k,
+body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid .metric .v,
+body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid .metric .v span{
+  filter: none !important;
+}
