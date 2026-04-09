@@ -11046,88 +11046,28 @@ body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid .metri
 /* щоб підписи не були занадто далеко від цифр */
 body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid .metric{
   gap: 5px !important;
-}
 /* =========================================================
-   OVERLORD — SMALL LABELS SOLID WHITE FINAL
+   OVERLORD — FINAL CLEAN ZOOM-SAFE INFO BLOCK
    вставити в самий кінець theme_A.css
    ========================================================= */
 
-/* NEXT RANK : 50 RP */
-body[data-rank="overlord"] #dashboard.section.active .rankHome .rankMeta,
-body[data-rank="overlord"] #dashboard.section.active .rankHome .rankNext,
-body[data-rank="overlord"] #dashboard.section.active .rankHome .rankProgressLabel,
-body[data-rank="overlord"] #dashboard.section.active .rankHome .rankProgress__label,
-body[data-rank="overlord"] #dashboard.section.active .rankHome .rankProgress__label b{
-  font-size: clamp(13px, .98vw, 17px) !important;
-  font-weight: 900 !important;
-  line-height: 1 !important;
-  letter-spacing: .05em !important;
-  white-space: nowrap !important;
-
-  background: none !important;
-  -webkit-background-clip: initial !important;
-  -webkit-text-fill-color: #ffffff !important;
-  color: #ffffff !important;
-  -webkit-text-stroke: 0 !important;
-
-  text-shadow:
-    0 1px 0 rgba(24,42,82,.96),
-    0 0 2px rgba(24,42,82,.58),
-    1px 0 0 rgba(24,42,82,.22),
-    -1px 0 0 rgba(24,42,82,.22) !important;
-
-  opacity: 1 !important;
-}
-
-/* WIN RATE / TOTAL MATCHES / KDA / AVG KILLS / MVP */
-body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid .metric .k{
-  font-size: clamp(17px, 1.18vw, 21px) !important;
-  font-weight: 900 !important;
-  line-height: 1 !important;
-  letter-spacing: .05em !important;
-  text-transform: uppercase !important;
-  white-space: nowrap !important;
-
-  background: none !important;
-  -webkit-background-clip: initial !important;
-  -webkit-text-fill-color: #ffffff !important;
-  color: #ffffff !important;
-  -webkit-text-stroke: 0 !important;
-
-  text-shadow:
-    0 1px 0 rgba(20,34,66,.98),
-    0 0 2px rgba(20,34,66,.56),
-    1px 0 0 rgba(20,34,66,.20),
-    -1px 0 0 rgba(20,34,66,.20) !important;
-
-  opacity: 1 !important;
-}
-
-/* щоб підписи були ближче до цифр */
-body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid .metric{
-  gap: 4px !important;
-}
-/* =========================================================
-   OVERLORD — FINAL ZOOM-SAFE METRICS + TEXT FIX
-   вставити в самий кінець theme_A.css
-   ========================================================= */
-
-/* whole info stack */
+/* ---------- whole info block ---------- */
 body[data-rank="overlord"] #dashboard.section.active .rankHome .rankHome__infoStack{
   position: relative !important;
   left: 50% !important;
-  transform: translateX(-50%) translateY(-64px) !important;
+  right: auto !important;
+  transform: translateX(-50%) translateY(-48px) !important;
   width: min(980px, 94vw) !important;
   max-width: 94vw !important;
-  z-index: 80 !important;
+  z-index: 50 !important;
 }
 
-/* OVERLORD */
+/* ---------- OVERLORD ---------- */
 body[data-rank="overlord"] #dashboard.section.active .rankHome .rankTitle,
 body[data-rank="overlord"] #dashboard.section.active .rankHome .rankName,
 body[data-rank="overlord"] #dashboard.section.active .rankHome .rankTierName{
-  font-size: clamp(40px, 3.3vw, 54px) !important;
-  line-height: .96 !important;
+  font-size: clamp(42px, 3.4vw, 56px) !important;
+  line-height: .95 !important;
   letter-spacing: .045em !important;
   white-space: nowrap !important;
 
@@ -11139,15 +11079,15 @@ body[data-rank="overlord"] #dashboard.section.active .rankHome .rankTierName{
 
   text-shadow:
     0 1px 0 rgba(24,42,82,.98),
-    0 0 2px rgba(24,42,82,.60),
-    1px 0 0 rgba(24,42,82,.30),
-    -1px 0 0 rgba(24,42,82,.30) !important;
+    0 0 2px rgba(24,42,82,.62),
+    1px 0 0 rgba(24,42,82,.28),
+    -1px 0 0 rgba(24,42,82,.28) !important;
 }
 
-/* 1,850 RP */
+/* ---------- 1,850 RP ---------- */
 body[data-rank="overlord"] #dashboard.section.active .rankHome .rankRP,
 body[data-rank="overlord"] #dashboard.section.active .rankHome .rankRP span{
-  font-size: clamp(18px, 1.35vw, 24px) !important;
+  font-size: clamp(18px, 1.45vw, 24px) !important;
   font-weight: 900 !important;
   line-height: 1 !important;
   white-space: nowrap !important;
@@ -11160,18 +11100,18 @@ body[data-rank="overlord"] #dashboard.section.active .rankHome .rankRP span{
 
   text-shadow:
     0 1px 0 rgba(20,34,66,.98),
-    0 0 2px rgba(20,34,66,.52),
+    0 0 2px rgba(20,34,66,.54),
     1px 0 0 rgba(20,34,66,.18),
     -1px 0 0 rgba(20,34,66,.18) !important;
 }
 
-/* NEXT RANK : 50 RP */
+/* ---------- NEXT RANK : 50 RP ---------- */
 body[data-rank="overlord"] #dashboard.section.active .rankHome .rankMeta,
 body[data-rank="overlord"] #dashboard.section.active .rankHome .rankNext,
 body[data-rank="overlord"] #dashboard.section.active .rankHome .rankProgressLabel,
 body[data-rank="overlord"] #dashboard.section.active .rankHome .rankProgress__label,
 body[data-rank="overlord"] #dashboard.section.active .rankHome .rankProgress__label b{
-  font-size: clamp(13px, .90vw, 16px) !important;
+  font-size: clamp(13px, .92vw, 16px) !important;
   font-weight: 900 !important;
   line-height: 1 !important;
   letter-spacing: .04em !important;
@@ -11188,17 +11128,15 @@ body[data-rank="overlord"] #dashboard.section.active .rankHome .rankProgress__la
     0 0 2px rgba(24,42,82,.64),
     1px 0 0 rgba(24,42,82,.22),
     -1px 0 0 rgba(24,42,82,.22) !important;
-
-  opacity: 1 !important;
 }
 
-/* PLAYER ASCENSION — залишаємо гарний стиль, але стабільніший */
+/* ---------- PLAYER ASCENSION ---------- */
 body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseHeader,
 body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseHeader span{
   font-size: clamp(22px, 1.7vw, 30px) !important;
   font-weight: 900 !important;
   line-height: 1 !important;
-  letter-spacing: .025em !important;
+  letter-spacing: .03em !important;
   white-space: nowrap !important;
 
   background: none !important;
@@ -11230,12 +11168,12 @@ body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseHeader span
   box-shadow: none !important;
 }
 
-/* metrics panel */
+/* ---------- METRICS PANEL ---------- */
 body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid{
   position: relative !important;
   width: 100% !important;
   max-width: 100% !important;
-  margin-top: 0 !important;
+  margin-top: 2px !important;
   padding: 8px 0 10px !important;
 
   display: grid !important;
@@ -11257,6 +11195,7 @@ body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid{
   overflow: visible !important;
 }
 
+/* top line */
 body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid::before{
   content: "" !important;
   position: absolute !important;
@@ -11275,6 +11214,7 @@ body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid::befor
   opacity: .62 !important;
 }
 
+/* bottom line */
 body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid::after{
   content: "" !important;
   position: absolute !important;
@@ -11329,7 +11269,7 @@ body[data-rank="overlord"] #dashboard .rankHome .metric:not(:last-child)::after{
   filter: blur(.08px) !important;
 }
 
-/* labels: WIN RATE etc */
+/* ---------- WIN RATE / TOTAL MATCHES / KDA / AVG KILLS / MVP ---------- */
 body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid .metric .k{
   font-size: clamp(13px, .92vw, 16px) !important;
   font-weight: 900 !important;
@@ -11351,7 +11291,7 @@ body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid .metri
     -1px 0 0 rgba(20,34,66,.16) !important;
 }
 
-/* values: 50% etc */
+/* ---------- 50% / 6 / 0.0 / 0% ---------- */
 body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid .metric .v,
 body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid .metric .v span{
   font-size: clamp(22px, 1.7vw, 32px) !important;
@@ -11370,4 +11310,25 @@ body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid .metri
     0 0 3px rgba(20,34,66,.32),
     1px 0 0 rgba(20,34,66,.14),
     -1px 0 0 rgba(20,34,66,.14) !important;
+}
+
+/* ---------- zoom-safe tweaks ---------- */
+@media (max-height: 900px){
+  body[data-rank="overlord"] #dashboard.section.active .rankHome .rankHome__infoStack{
+    transform: translateX(-50%) translateY(-72px) !important;
+  }
+
+  body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid{
+    padding-top: 6px !important;
+    padding-bottom: 8px !important;
+  }
+
+  body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid .metric .k{
+    font-size: clamp(12px, .86vw, 15px) !important;
+  }
+
+  body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid .metric .v,
+  body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid .metric .v span{
+    font-size: clamp(20px, 1.55vw, 28px) !important;
+  }
 }
