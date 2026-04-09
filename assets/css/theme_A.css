@@ -10638,23 +10638,19 @@ body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid .metri
     font-size: clamp(18px, 1.2vw, 24px) !important;
   }
 }
+
 /* =========================================================
-   OVERLORD — POSITION ONLY FIX
-   text style stays from existing Overlord blocks
+   OVERLORD — FINAL POSITION FIX
+   вставити в самий кінець theme_A.css
    ========================================================= */
 
 body[data-rank="overlord"] #dashboard.section.active .rankHome .rankHome__infoStack{
-  transform: translateX(-50%) translateY(-48px) !important;
+  transform: translateX(-50%) translateY(-56px) !important;
+  z-index: 40 !important;
 }
 
 @media (max-height: 900px){
   body[data-rank="overlord"] #dashboard.section.active .rankHome .rankHome__infoStack{
-    transform: translateX(-50%) translateY(-64px) !important;
-  }
-}
-
-@media (max-height: 820px){
-  body[data-rank="overlord"] #dashboard.section.active .rankHome .rankHome__infoStack{
-    transform: translateX(-50%) translateY(-76px) !important;
+    transform: translateX(-50%) translateY(-72px) !important;
   }
 }
