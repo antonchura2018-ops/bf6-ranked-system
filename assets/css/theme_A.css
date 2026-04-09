@@ -10638,3 +10638,42 @@ body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid .metri
     font-size: clamp(18px, 1.2vw, 24px) !important;
   }
 }
+/* =========================================================
+   OVERLORD — MICRO POSITION FIX
+   keeps current look, fixes 67% + zoom safety
+   ========================================================= */
+
+body[data-rank="overlord"] #dashboard.section.active .rankHome .rankHome__infoStack{
+  transform: translateX(-50%) translateY(-58px) !important;
+}
+
+body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid{
+  margin-top: -2px !important;
+}
+
+@media (max-height: 980px){
+  body[data-rank="overlord"] #dashboard.section.active .rankHome .rankHome__infoStack{
+    transform: translateX(-50%) translateY(-72px) !important;
+  }
+}
+
+@media (max-height: 900px){
+  body[data-rank="overlord"] #dashboard.section.active .rankHome .rankHome__infoStack{
+    transform: translateX(-50%) translateY(-88px) !important;
+  }
+}
+
+@media (max-height: 820px){
+  body[data-rank="overlord"] #dashboard.section.active .rankHome .rankHome__infoStack{
+    transform: translateX(-50%) translateY(-102px) !important;
+  }
+
+  body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid .metric .k{
+    font-size: clamp(12px, .84vw, 15px) !important;
+  }
+
+  body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid .metric .v,
+  body[data-rank="overlord"] #dashboard.section.active .rankHome .pulseGrid .metric .v span{
+    font-size: clamp(20px, 1.45vw, 28px) !important;
+  }
+}
